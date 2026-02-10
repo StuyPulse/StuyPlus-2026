@@ -35,6 +35,7 @@ public interface Motors {
     /** Classes to store all of the values a motor needs */
     public interface Shooter {
         TalonFXConfig MOTOR_CONFIG = new TalonFXConfig()
+            .withPIDConstants(Settings.Shooter.kP, Settings.Shooter.kI, Settings.Shooter.kD, 0)
             .withCurrentLimitAmps(80)
 			.withRampRate(0.25)
 			.withNeutralMode(NeutralModeValue.Brake)

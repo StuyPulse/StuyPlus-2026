@@ -1,7 +1,8 @@
 package com.stuypulse.robot.subsystems.shooter;
 import java.util.function.DoubleSupplier;
+
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import com.stuypulse.robot.constants.Settings;
 
 public abstract class Shooter extends SubsystemBase {
     public static final Shooter instance;
@@ -16,18 +17,18 @@ public abstract class Shooter extends SubsystemBase {
     }
 
     public enum ShooterState {
-        IDLE(0), 
-        SHOOTING(Shooter.getInstance().getShootSpeed()),
-        FERRYING(Shooter.getInstance().getFerrySpeed());
+        IDLE(() -> 0.0), 
+        SHOOTING(() -> Shooter.getInstance().getShootSpeed()),
+        FERRYING(() -> Shooter.getInstance().getFerrySpeed()); // supplier because 67
 
-        private final double targetRPM;
+        private final DoubleSupplier targetRPM;
         
-        private ShooterState(double targetRPM) {
+        private ShooterState(DoubleSupplier targetRPM) {
             this.targetRPM = targetRPM;
         }
 
-        public double getSpeed(){
-            return this.targetRPM;
+        public double getSpeed() {
+            return this.targetRPM.getAsDouble();
         }
         
     }
@@ -37,8 +38,23 @@ public abstract class Shooter extends SubsystemBase {
 
     public Shooter() {
         this.state = ShooterState.IDLE;
-        }
+    }
+
     public void setState(ShooterState state) {
         this.state = state;
+    }
+
+    public ShooterState getState() {
+        return this.state;
+    }
+
+    @Override
+    public void periodic() {
+        
+
+        SmartDashboard.putString("Shooter/State", state.name());
+        SmartDashboard.putString("States/Shooter", state.name());
+
+        SmartDashboard.putNumber("Shooter/Target RPM", getShootSpeed());
     }
 }
