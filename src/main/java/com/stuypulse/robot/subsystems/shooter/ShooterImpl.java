@@ -33,8 +33,11 @@ public class ShooterImpl extends Shooter {
         Motors.Shooter.MOTOR_CONFIG.configure(bottomMotor1);
         Motors.Shooter.MOTOR_CONFIG.configure(bottomMotor2);
 
+        // TODO: find out which motor has to be inverted
         shooterMotor2.setControl(new Follower(ShooterPorts.SHOOTER_MOTOR_1, MotorAlignmentValue.Aligned));
-        shooterMotor3.setControl(new Follower(ShooterPorts.SHOOTER_MOTOR_1, MotorAlignmentValue.Aligned));
+        shooterMotor3.setControl(new Follower(ShooterPorts.SHOOTER_MOTOR_1, MotorAlignmentValue.Opposed));
+
+        bottomMotor2.setControl(new Follower(ShooterPorts.BOTTOM_MOTOR_2, MotorAlignmentValue.Opposed));
     }
 
     public double getShootSpeed(){
