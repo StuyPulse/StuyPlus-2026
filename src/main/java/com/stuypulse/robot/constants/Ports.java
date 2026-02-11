@@ -12,4 +12,10 @@ public interface Ports {
         int OPERATOR = 1;
         int DEBUGGER = 2;
     }
+
+//TODO: Get ports from mech
+    public interface Feeder {
+        int FEEDER_MOTOR_1 = 3;
+        int FEEDER_MOTOR_2 = 4;
+    }
 }
