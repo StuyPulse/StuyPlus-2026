@@ -1,16 +1,18 @@
 package com.stuypulse.robot.subsystems.shooter;
 
 import com.ctre.phoenix6.controls.Follower;
+import com.ctre.phoenix6.controls.VelocityVoltage;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.MotorAlignmentValue;
 import com.stuypulse.robot.constants.Ports.ShooterPorts;
 import com.stuypulse.robot.constants.Motors;
-import com.stuypulse.robot.constants.Settings;
 import com.stuypulse.robot.util.ShooterInterpolation;
+
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 import com.stuypulse.robot.util.FerryInterpolation;
 
 public class ShooterImpl extends Shooter {
-
     private final TalonFX shooterMotor1;
     private final TalonFX shooterMotor2;
     private final TalonFX shooterMotor3;
@@ -43,10 +45,25 @@ public class ShooterImpl extends Shooter {
         return FerryInterpolation.getRPM(5); // TODO: write interpolation for this 六七 shi
     }
 
+    public void setVoltagesBasedOnState() {
+        double targetRPM = getState().getShooterSpeed();
+
+        
+        shooterMotor1.setControl(new VelocityVoltage(targetRPM / 60)); // TODO: periodic stuff
+        shooterMotor2.setControl(new VelocityVoltage(targetRPM / 60));
+        shooterMotor3.setControl(new VelocityVoltage(targetRPM / 60));
+        
+        bottomMotor1.setControl(new VelocityVoltage(getState().getBottomMotorSpeed()));
+        bottomMotor2.setControl(new VelocityVoltage(getState().getBottomMotorSpeed()));
+    }
+
     @Override
     public void periodic() {
-        shooterMotor1.setControl(); // TODO: periodic stuff        
-        
-        
+        super.periodic();
+
+        setVoltagesBasedOnState();
+
+        SmartDashboard.putNumber("Shooter/Target RPM", getState().getShooterSpeed());
+        SmartDashboard.putNumber("Shooter/Current RPM", shooterMotor1.getVelocity().getValueAsDouble() * 60);
     }
 }

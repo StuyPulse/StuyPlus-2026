@@ -20,8 +20,7 @@ public interface Settings {
     }
 
     public interface Shooter {
-        double SHOOTING_RPM = 30;
-        double FERRYING_RPM = 500;
+        double BOTTOM_MOTOR_RPM = 3000;
 
         double kP = 0;
         double kI = 0;
