@@ -1,7 +1,7 @@
 package com.stuypulse.robot.subsystems.shooter;
 import java.util.function.DoubleSupplier;
 
-import com.stuypulse.robot.constants.Settings;
+import com.stuypulse.robot.Robot;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -11,7 +11,11 @@ public abstract class Shooter extends SubsystemBase {
     private ShooterState state;
 
     static {
-        instance = new ShooterImpl();
+        if (Robot.isReal()) {
+            instance = new ShooterImpl();
+        } else {
+            instance = new ShooterSim();
+        }
     }
 
     public static Shooter getInstance() {
@@ -19,24 +23,18 @@ public abstract class Shooter extends SubsystemBase {
     }
 
     public enum ShooterState {
-        IDLE(() -> 0.0, 0), 
-        SHOOTING(() -> Shooter.getInstance().getShootSpeed(), Settings.Shooter.BOTTOM_MOTOR_RPM),
-        FERRYING(() -> Shooter.getInstance().getFerrySpeed(), Settings.Shooter.BOTTOM_MOTOR_RPM); // supplier because idk
+        IDLE(() -> 0.0), 
+        SHOOTING(() -> Shooter.getInstance().getShootSpeed()),
+        FERRYING(() -> Shooter.getInstance().getFerrySpeed()); // supplier because idk
 
         private final DoubleSupplier targetRPM;
-        private final double bottomMotorRPM;
         
-        private ShooterState(DoubleSupplier targetRPM, double bottomMotorRPM) {
+        private ShooterState(DoubleSupplier targetRPM) {
             this.targetRPM = targetRPM;
-            this.bottomMotorRPM = bottomMotorRPM;
         }
 
-        public double getShooterSpeed() {
+        public double getTargetRPM() {
             return targetRPM.getAsDouble();
-        }
-        
-        public double getBottomMotorSpeed() {
-            return bottomMotorRPM;
         }
     }
 
@@ -59,4 +57,4 @@ public abstract class Shooter extends SubsystemBase {
     public void periodic() {
         SmartDashboard.putString("Shooter/State", state.name());
     }
-}
+} // 67

@@ -33,8 +33,10 @@ public class ShooterImpl extends Shooter {
         Motors.Shooter.MOTOR_CONFIG.configure(bottomMotor1);
         Motors.Shooter.MOTOR_CONFIG.configure(bottomMotor2);
 
-        shooterMotor2.setControl(new Follower(ShooterPorts.SHOOTER_MOTOR_1, MotorAlignmentValue.Aligned));
-        shooterMotor3.setControl(new Follower(ShooterPorts.SHOOTER_MOTOR_1, MotorAlignmentValue.Aligned));
+        shooterMotor2.setControl(new Follower(ShooterPorts.SHOOTER_MOTOR_1, MotorAlignmentValue.Opposed));
+        shooterMotor3.setControl(new Follower(ShooterPorts.SHOOTER_MOTOR_1, MotorAlignmentValue.Opposed));
+
+        bottomMotor2.setControl(new Follower(ShooterPorts.BOTTOM_MOTOR_1, MotorAlignmentValue.Opposed));
     }
 
     public double getShootSpeed(){
@@ -46,15 +48,11 @@ public class ShooterImpl extends Shooter {
     }
 
     public void setVoltagesBasedOnState() {
-        double targetRPM = getState().getShooterSpeed();
+        double targetRPM = getState().getTargetRPM() / 60;
 
-        
-        shooterMotor1.setControl(new VelocityVoltage(targetRPM / 60)); // TODO: periodic stuff
-        shooterMotor2.setControl(new VelocityVoltage(targetRPM / 60));
-        shooterMotor3.setControl(new VelocityVoltage(targetRPM / 60));
-        
-        bottomMotor1.setControl(new VelocityVoltage(getState().getBottomMotorSpeed()));
-        bottomMotor2.setControl(new VelocityVoltage(getState().getBottomMotorSpeed()));
+        shooterMotor1.setControl(new VelocityVoltage(targetRPM)); // TODO: periodic stuff
+
+        bottomMotor1.setControl(new VelocityVoltage(targetRPM));
     }
 
     @Override
@@ -63,7 +61,7 @@ public class ShooterImpl extends Shooter {
 
         setVoltagesBasedOnState();
 
-        SmartDashboard.putNumber("Shooter/Target RPM", getState().getShooterSpeed());
+        SmartDashboard.putNumber("Shooter/Target RPM", getState().getTargetRPM());
         SmartDashboard.putNumber("Shooter/Current RPM", shooterMotor1.getVelocity().getValueAsDouble() * 60);
     }
 }

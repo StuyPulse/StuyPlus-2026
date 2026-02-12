@@ -15,6 +15,7 @@ import com.stuypulse.stuylib.network.SmartNumber;
  * values that we can edit on Shuffleboard.
  */
 public interface Settings {
+    double DT = 0.020;
     public class ShooterEnums {
         
     }
@@ -25,5 +26,10 @@ public interface Settings {
         double kP = 0;
         double kI = 0;
         double kD = 0;
+
+        double kS = 0;
+        double kV = 0;
+        double kA = 0;
+        double kG = 0;
     }
 }

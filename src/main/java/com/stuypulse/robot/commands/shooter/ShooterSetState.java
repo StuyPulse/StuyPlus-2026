@@ -10,14 +10,14 @@ public class ShooterSetState extends InstantCommand {
     private final ShooterState state;
 
     public ShooterSetState(ShooterState state) {
-        this.shooter = Shooter.getInstance();
+        shooter = Shooter.getInstance();
         this.state = state;
 
         addRequirements(shooter);
     }
 
-    @Override
-    public void execute() {
-        this.shooter.setState(state);
+    @Override 
+    public void initialize() {
+        shooter.setState(state);
     }
 }

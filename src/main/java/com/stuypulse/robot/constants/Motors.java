@@ -39,6 +39,7 @@ public interface Motors {
             .withCurrentLimitAmps(80)
 			.withRampRate(0.25)
 			.withNeutralMode(NeutralModeValue.Brake)
+            .withFFConstants(Settings.Shooter.kS, Settings.Shooter.kV, Settings.Shooter.kA, Settings.Shooter.kG, 0)
 			.withInvertedValue(InvertedValue.CounterClockwise_Positive);
     }
 
