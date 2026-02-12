@@ -30,7 +30,7 @@ public class ShooterSim extends Shooter {
             DCMotor.getKrakenX44(2)
         );
 
-        visualizer = new ShooterVisualizer();
+        visualizer = ShooterVisualizer.getInstance();
 
         shooterController = new PIDController(
             Settings.Shooter.kP,

@@ -16,6 +16,10 @@ public class ShooterVisualizer {
         instance = new ShooterVisualizer();
     }
 
+    public static ShooterVisualizer getInstance() {
+        return instance;
+    }
+
     private final Mechanism2d canvas;
     private final MechanismRoot2d shooterRoot;
     private final MechanismLigament2d spoke_1;
