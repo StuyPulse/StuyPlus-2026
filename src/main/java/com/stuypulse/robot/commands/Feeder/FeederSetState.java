@@ -1,8 +1,9 @@
-package com.stuypulse.robot.commands.Feeder;
+package com.stuypulse.robot.commands.feeder;
+
+import com.stuypulse.robot.subsystems.feeder.Feeder;
+import com.stuypulse.robot.subsystems.feeder.Feeder.FeederState;
 
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import com.stuypulse.robot.subsystems.Feeder.Feeder;
-import com.stuypulse.robot.subsystems.Feeder.Feeder.FeederState;
 
 public class FeederSetState extends InstantCommand{
     private final Feeder feeder;

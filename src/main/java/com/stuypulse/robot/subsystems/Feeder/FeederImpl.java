@@ -1,4 +1,4 @@
-package com.stuypulse.robot.subsystems.Feeder;
+package com.stuypulse.robot.subsystems.feeder;
 
 import com.ctre.phoenix6.controls.Follower;
 import com.ctre.phoenix6.controls.VelocityVoltage;

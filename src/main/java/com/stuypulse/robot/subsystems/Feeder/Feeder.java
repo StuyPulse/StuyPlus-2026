@@ -1,5 +1,6 @@
-package com.stuypulse.robot.subsystems.Feeder;
+package com.stuypulse.robot.subsystems.feeder;
 
+import com.stuypulse.robot.Robot;
 import com.stuypulse.robot.constants.Settings;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -10,7 +11,11 @@ public class Feeder extends SubsystemBase{
     private FeederState state;
 
     static {
-        instance = new FeederImpl();
+        if (Robot.isReal()) {
+            instance = new FeederImpl();
+        } else {
+            instance = new FeederSim();
+        }
     }
 
     public static Feeder getInstance(){

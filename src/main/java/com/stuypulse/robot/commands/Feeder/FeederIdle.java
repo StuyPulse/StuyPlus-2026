@@ -1,6 +1,6 @@
-package com.stuypulse.robot.commands.Feeder;
+package com.stuypulse.robot.commands.feeder;
 
-import com.stuypulse.robot.subsystems.Feeder.Feeder.FeederState;
+import com.stuypulse.robot.subsystems.feeder.Feeder.FeederState;
 
 public class FeederIdle extends FeederSetState{
     public FeederIdle() {
