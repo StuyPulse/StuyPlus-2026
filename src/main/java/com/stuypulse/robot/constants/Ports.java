@@ -12,4 +12,10 @@ public interface Ports {
         int OPERATOR = 1;
         int DEBUGGER = 2;
     }
+
+    public interface Intake {
+        int MOTOR_INTAKEROLLER= 30; 
+        int MOTOR_INTAKEPIVOT = 20; //Reminder: Config numbers
+    }
+    
 }
