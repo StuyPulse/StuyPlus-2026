@@ -47,6 +47,16 @@ public interface Motors {
 			.withInvertedValue(InvertedValue.Clockwise_Positive);
     }
 
+    public interface Shooter {
+        TalonFXConfig MOTOR_CONFIG = new TalonFXConfig()
+            .withPIDConstants(Settings.Shooter.kP, Settings.Shooter.kI, Settings.Shooter.kD, 0)
+            .withCurrentLimitAmps(80)
+			.withRampRate(0.25)
+			.withNeutralMode(NeutralModeValue.Brake)
+            .withFFConstants(Settings.Shooter.kS, Settings.Shooter.kV, Settings.Shooter.kA, Settings.Shooter.kG, 0)
+			.withInvertedValue(InvertedValue.CounterClockwise_Positive);
+    }
+
     public static class TalonFXConfig {
         private final TalonFXConfiguration configuration = new TalonFXConfiguration();
         private final Slot0Configs slot0Configs = new Slot0Configs();
