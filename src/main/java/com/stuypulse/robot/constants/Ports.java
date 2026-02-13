@@ -8,9 +8,13 @@ package com.stuypulse.robot.constants;
 /** This file contains the different ports of motors, solenoids and sensors */
 public interface Ports {
     public interface Gamepad {
-        int DRIVER = 0;
-        int OPERATOR = 1;
-        int DEBUGGER = 2;
+        int DRIVER = 0; // TODO: ask Plus-ME for the port
+        int OPERATOR = 1; // TODO: ask Plus-ME for the port
+        int DEBUGGER = 2; // TODO: ask Plus-ME for the port
+    }
+
+    public interface LED {
+        int PORT = 67; // TODO: ask Plus-ME for the port
     }
 
     public interface ShooterPorts { // Temporary until the big mec-e people give us the ports

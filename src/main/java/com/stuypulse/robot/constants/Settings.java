@@ -16,8 +16,13 @@ import com.stuypulse.stuylib.network.SmartNumber;
  */
 public interface Settings {
     double DT = 0.020;
-    public class ShooterEnums {
-        
+
+    public interface EnabledSubsystems {
+        SmartBoolean LED = new SmartBoolean("Enabled Subsystems/LED", true);
+    }
+
+    public interface LED {
+        int LED_LENGTH = 68; // TODO: ask Plus-ME for LED Length
     }
 
     public interface Shooter {

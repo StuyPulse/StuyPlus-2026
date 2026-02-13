@@ -8,7 +8,7 @@ package com.stuypulse.robot.commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 
 /*-
- * This command does a whole load of nothing...
+ * This command does a whole load of nothing... 
  *
  * @author Ivan Chen
  */
