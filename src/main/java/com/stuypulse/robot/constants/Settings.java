@@ -17,6 +17,11 @@ import com.stuypulse.stuylib.network.SmartNumber;
 public interface Settings {
     double DT = 0.020;
 
+    public interface Feeder {
+        double FEEDER_REVERSE = -3000;
+        double FEEDER_FORWARD = 3000;
+    }
+
     public interface EnabledSubsystems {
         SmartBoolean LED = new SmartBoolean("Enabled Subsystems/LED", true);
     }

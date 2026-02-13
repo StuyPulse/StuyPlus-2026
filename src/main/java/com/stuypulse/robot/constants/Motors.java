@@ -33,6 +33,20 @@ import com.ctre.phoenix6.signals.NeutralModeValue;
 public interface Motors {
 
     /** Classes to store all of the values a motor needs */
+    public interface Feeder {
+        // TODO: get values
+        TalonFXConfig MOTOR_CONFIG_1 = new TalonFXConfig()
+            .withCurrentLimitAmps(80)
+			.withRampRate(0.25)
+			.withNeutralMode(NeutralModeValue.Brake)
+			.withInvertedValue(InvertedValue.CounterClockwise_Positive);
+        TalonFXConfig MOTOR_CONFIG_2 = new TalonFXConfig()
+            .withCurrentLimitAmps(80)
+			.withRampRate(0.25)
+			.withNeutralMode(NeutralModeValue.Brake)
+			.withInvertedValue(InvertedValue.Clockwise_Positive);
+    }
+
     public interface Shooter {
         TalonFXConfig MOTOR_CONFIG = new TalonFXConfig()
             .withPIDConstants(Settings.Shooter.kP, Settings.Shooter.kI, Settings.Shooter.kD, 0)
