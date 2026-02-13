@@ -14,4 +14,12 @@ import com.stuypulse.stuylib.network.SmartNumber;
  * We use StuyLib's SmartNumber / SmartBoolean in order to have tunable
  * values that we can edit on Shuffleboard.
  */
-public interface Settings {}
+public interface Settings {
+    public interface EnabledSubsystems {
+        SmartBoolean LED = new SmartBoolean("Enabled Subsystems/LED", true);
+    }
+
+    public interface LED {
+        int LED_LENGTH = 68; // TODO: ask Plus-ME for LED Length 
+    }
+}
