@@ -66,7 +66,7 @@ public class ShooterVisualizer {
 
     public void update(double RPM) {
         SmartDashboard.putData("Visualizers/Shooter", canvas);
-        double rot = (RPM * 60) * Settings.DT;
+        double rot = RPM * 6 * Settings.DT;
         spoke_1.setAngle(spoke_1.getAngle() + rot);
         spoke_2.setAngle(spoke_2.getAngle() + rot);
         spoke_3.setAngle(spoke_3.getAngle() + rot);
