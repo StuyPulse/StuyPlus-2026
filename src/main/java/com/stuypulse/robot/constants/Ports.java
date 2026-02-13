@@ -16,4 +16,13 @@ public interface Ports {
     public interface LED {
         int PORT = 67; // TODO: ask Plus-ME for the port
     }
+
+    public interface ShooterPorts { // Temporary until the big mec-e people give us the ports
+        int SHOOTER_MOTOR_1 = 0;
+        int SHOOTER_MOTOR_2 = 1;
+        int SHOOTER_MOTOR_3 = 2;
+
+        int BOTTOM_MOTOR_1 = 3;
+        int BOTTOM_MOTOR_2 = 4;
+    }
 }
