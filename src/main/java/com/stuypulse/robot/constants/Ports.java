@@ -31,4 +31,10 @@ public interface Ports {
         int FEEDER_MOTOR_1 = 3;
         int FEEDER_MOTOR_2 = 4;
     }
+
+    public interface Intake {
+        int MOTOR_INTAKEROLLER= 30; 
+        int MOTOR_INTAKEPIVOT = 20; //Reminder: Config numbers
+    }
+    
 }

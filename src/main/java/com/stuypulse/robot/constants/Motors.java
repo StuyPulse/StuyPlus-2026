@@ -33,6 +33,19 @@ import com.ctre.phoenix6.signals.NeutralModeValue;
 public interface Motors {
 
     /** Classes to store all of the values a motor needs */
+    public interface Intake {
+        TalonFXConfig PIVOTConfig = new TalonFXConfig()
+                .withCurrentLimitAmps(0.25)
+                .withInvertedValue(InvertedValue.CounterClockwise_Positive) // not necessarily true, get inverted val
+                .withNeutralMode(NeutralModeValue.Brake)
+                .withPIDConstants(Settings.Intake.Pivot.kP, Settings.Intake.Pivot.kI, Settings.Intake.Pivot.kD, 0);
+        
+        TalonFXConfig ROLLERConfig = new TalonFXConfig() // TODO: apply later
+                .withCurrentLimitAmps(0.25)
+                .withInvertedValue(InvertedValue.Clockwise_Positive) // not necessarily true, get inverted val
+                .withNeutralMode(NeutralModeValue.Brake);
+    }
+
     public interface Feeder {
         // TODO: get values
         TalonFXConfig MOTOR_CONFIG_1 = new TalonFXConfig()

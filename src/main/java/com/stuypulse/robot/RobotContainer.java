@@ -13,10 +13,18 @@ import com.stuypulse.robot.commands.feeder.FeederForward;
 import com.stuypulse.robot.commands.shooter.ShooterFerry;
 import com.stuypulse.robot.commands.feeder.FeederReverse;
 import com.stuypulse.robot.constants.Ports;
+import com.stuypulse.robot.subsystems.intake.Intake;
+import com.stuypulse.robot.commands.intake.IntakeAgitateOnce;
+import com.stuypulse.robot.commands.intake.IntakeSetDown;
+import com.stuypulse.robot.commands.intake.IntakeSetIdle;
+import com.stuypulse.robot.commands.intake.IntakeSetIntake;
+import com.stuypulse.robot.commands.intake.IntakeSetOuttake;
+import com.stuypulse.robot.commands.intake.IntakeSetUp;
 import com.stuypulse.robot.subsystems.shooter.Shooter;
 import com.stuypulse.robot.subsystems.feeder.Feeder;
 import com.stuypulse.stuylib.input.Gamepad;
 import com.stuypulse.stuylib.input.gamepads.AutoGamepad;
+import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -26,9 +34,11 @@ public class RobotContainer {
 
     // Gamepads
     public final Gamepad driver = new AutoGamepad(Ports.Gamepad.DRIVER);
-    public final Gamepad operator = new AutoGamepad(Ports.Gamepad.OPERATOR);
+    public final CommandXboxController operator = new CommandXboxController(Ports.Gamepad.OPERATOR);
     
     // Subsystem
+
+    private final Intake intake = Intake.getInstance();
     private final Shooter shooter = Shooter.getInstance();
     private final Feeder feeder = Feeder.getInstance();
     // Autons

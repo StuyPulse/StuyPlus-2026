@@ -5,7 +5,6 @@ import com.stuypulse.stuylib.network.SmartBoolean;
 import com.stuypulse.robot.util.vision.LimelightHelpers;
 import com.stuypulse.robot.util.vision.LimelightHelpers.PoseEstimate;
 
-// import com.stuypulse.robot.util.vision.LimelightHelpers.PoseEstimate;
 import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -13,7 +12,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.stuypulse.robot.Robot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-public class LimelightVision extends SubsystemBase{
+public class LimelightVision extends SubsystemBase {
     private static LimelightVision instance;
 
     static {
@@ -30,7 +29,7 @@ public class LimelightVision extends SubsystemBase{
 
     public LimelightVision() {
         names = new String[Cameras.LimelightCameras.length];
-        for (int i = 0; i < Cameras.LimelightCameras.length; i++){
+        for (int i = 0; i < Cameras.LimelightCameras.length; i++) {
             names[i] = Cameras.LimelightCameras[i].getName();
             Pose3d robotRelativePose = Cameras.LimelightCameras[i].getLocation();
             LimelightHelpers.setCameraPose_RobotSpace(
@@ -47,29 +46,29 @@ public class LimelightVision extends SubsystemBase{
         enabled = new SmartBoolean("Vision/isEnabled", true);
     }
 
-    public void setTagWhitelist(int ... ids ){
-        for(String name : names){
+    public void setTagWhitelist(int ... ids ) {
+        for(String name : names) {
             LimelightHelpers.SetFiducialIDFiltersOverride(name, ids);
         }
     }
 
-    public void enable(){
+    public void enable() {
         enabled.set(true);
     }
 
-    public void disable(){
+    public void disable() {
         enabled.set(false);
     }
     
-    public void setCameraEnabled(String name, boolean enabled){
-        for(int i = 0; i < names.length; i++){
+    public void setCameraEnabled(String name, boolean enabled) {
+        for(int i = 0; i < names.length; i++) {
             if (names[i].equals(name))
                 camerasEnabled[i].set(enabled);
         }
     }
 
 
-    public void SetIMUMode(int mode){
+    public void SetIMUMode(int mode) {
         for (String name : names) {
             LimelightHelpers.SetIMUMode(name, mode);
         }
@@ -81,7 +80,7 @@ public class LimelightVision extends SubsystemBase{
             for (int i = 0; i < names.length; i++) {
                 if (camerasEnabled[i].get()) {              
                    String limelightName = names[i];
-            /* 
+                    /* 
                     LimelightHelpers.SetRobotOrientation(
                         limelightName,
                         (CommandSwerveDrivetrain.getInstance().getPose().getRotation().getDegrees() + (Robot.isBlue() ? 0 : 180)) % 360,
@@ -93,13 +92,12 @@ public class LimelightVision extends SubsystemBase{
                     );
                     */
 
-
                     PoseEstimate poseEstimate = Robot.isBlue() 
-                    ?   LimelightHelpers.getBotPoseEstimate_wpiBlue(limelightName)
-                    :   LimelightHelpers.getBotPoseEstimate_wpiRed(limelightName);
+                        ?   LimelightHelpers.getBotPoseEstimate_wpiBlue(limelightName)
+                        :   LimelightHelpers.getBotPoseEstimate_wpiRed(limelightName);
 
 
-                    if (poseEstimate !=null && poseEstimate.tagCount > 0 ){
+                    if (poseEstimate != null && poseEstimate.tagCount > 0 ) {
                         Pose2d robotPose = poseEstimate.pose;
                         double timestamp = poseEstimate.timestampSeconds; 
                         
@@ -109,9 +107,7 @@ public class LimelightVision extends SubsystemBase{
                         SmartDashboard.putNumber("Vision/Pose Theta (Degrees)", robotPose.getRotation().getDegrees());
                    
                         SmartDashboard.putBoolean("Vision" + names[i] + "Has Data", true);
-                    }   
-                    else {
-    
+                    } else {
                         SmartDashboard.putBoolean("Vision/" + names[i] + " Has Data", false);
                     }
                 }

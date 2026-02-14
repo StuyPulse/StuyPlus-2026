@@ -42,7 +42,7 @@ public class LEDController extends SubsystemBase {
     } 
 
     public void applyPattern(LEDPattern pattern) {
-        if (!Settings.EnabledSubsystems.LED.get()) return; // cuz 20 milliseconds intervals, it might blink, and it's unnecessary to set it if disabled
+        if (!Settings.EnabledSubsystems.LED.get()) return; // because 20 milliseconds intervals, it might blink, and it's unnecessary to set it if disabled
         pattern.applyTo(buffer);
     }
 
@@ -59,8 +59,6 @@ public class LEDController extends SubsystemBase {
 
     @Override
     public void simulationPeriodic() {
-        if (ledSim.getInitialized()) {
-            // Logger.processInputs
-        }
+        // AdvantageScope will go here eventually
     }
 } 
