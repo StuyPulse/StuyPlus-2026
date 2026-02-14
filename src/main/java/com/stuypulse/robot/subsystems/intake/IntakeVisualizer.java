@@ -8,8 +8,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj.util.Color8Bit;
 import edu.wpi.first.wpilibj.smartdashboard.MechanismLigament2d;
-//import edu.wpi.first.math.geometry.Rotation2d;
-//import com.stuypulse.robot.subsystems.intake.IntakeSim;
 import com.stuypulse.robot.subsystems.intake.Intake.IntakeState;
 
 public class IntakeVisualizer {

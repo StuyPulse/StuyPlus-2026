@@ -38,9 +38,9 @@ public interface Motors {
                 .withCurrentLimitAmps(0.25)
                 .withInvertedValue(InvertedValue.CounterClockwise_Positive) // not necessarily true, get inverted val
                 .withNeutralMode(NeutralModeValue.Brake)
-                .withPIDConstants(Settings.Intake.kP, Settings.Intake.kI, Settings.Intake.kD, 0);
+                .withPIDConstants(Settings.Intake.Pivot.kP, Settings.Intake.Pivot.kI, Settings.Intake.Pivot.kD, 0);
         
-        TalonFXConfig ROLLERConfig = new TalonFXConfig() // ODO: apply later
+        TalonFXConfig ROLLERConfig = new TalonFXConfig() // TODO: apply later
                 .withCurrentLimitAmps(0.25)
                 .withInvertedValue(InvertedValue.Clockwise_Positive) // not necessarily true, get inverted val
                 .withNeutralMode(NeutralModeValue.Brake);
