@@ -20,7 +20,7 @@ public abstract class Intake extends SubsystemBase {
         }
          else {
             instance = new IntakeSim();
-    }
+        }
     }
     
     public static Intake getInstance() {
@@ -53,6 +53,10 @@ public abstract class Intake extends SubsystemBase {
         }
     }
 
+    protected Intake() {
+        this.state = IntakeState.IDLE;
+    }
+
     public void setState(IntakeState state) {
         this.state = state;
     }
@@ -68,5 +72,4 @@ public abstract class Intake extends SubsystemBase {
         SmartDashboard.putString("Intake/State", getState().name());
         SmartDashboard.putString("States/Intake", getState().name());
     }
-}
-// 6767677676767676767676767
+}   

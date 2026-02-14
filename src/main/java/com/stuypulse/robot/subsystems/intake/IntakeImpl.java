@@ -21,12 +21,12 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 //import edu.wpi.first.wpilibj2.command.SubsystemBase;
 //import edu.wpi.first.wpilibj.DutyCycleEncoder;
 
-public class IntakeImpl extends Intake{
+public class IntakeImpl extends Intake {
     private final TalonFX intakePivotMotor;
     private final TalonFX intakeRollerMotor;
     private final PositionVoltage pivotPositionVoltageController;
 
-    public IntakeImpl(){
+    public IntakeImpl() {
         intakePivotMotor = new TalonFX(Ports.Intake.MOTOR_INTAKEPIVOT);
         Motors.Intake.PIVOTConfig.configure(intakePivotMotor);
         
@@ -41,6 +41,8 @@ public class IntakeImpl extends Intake{
     public Rotation2d getRelativeAngle(){
         return Rotation2d.fromRotations(intakePivotMotor.getPosition().getValueAsDouble());
     }
+
+    @Override
     public void periodic() {
 
         currentPivotState.position = getRelativeAngle().getRadians();
@@ -54,7 +56,7 @@ public class IntakeImpl extends Intake{
         );
 
         TrapezoidProfile.State nextPivot = profile.calculate(
-            Settings.dT,
+            Settings.DT,
             currentPivotState, 
             targetPivotState
         );

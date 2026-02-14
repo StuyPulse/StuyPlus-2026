@@ -19,7 +19,7 @@ package com.stuypulse.robot.constants;
  * values that we can edit on Shuffleboard.
  */
 public interface Settings {
-    double dT = 0.020;
+    double DT = 0.02;
     boolean DEBUG_MODE = true;
 
 public interface Intake{
@@ -36,7 +36,13 @@ public interface Intake{
     double AGITATE_ANGLE = 0;
     double JKgMetersSquared = 0.001;
     double PIVOT_MIN_ANGLE = 0.0;
-    double PIVOT_MAX_ANGLE = 90.0;
+    double PIVOT_MAX_ANGLE = Math.PI / 2;
     double GEAR_RATIO = 20.0;
+
+    double ANGLE_TOLERANCE = 0.5; // degrees    
+
+    double kP = 0;
+    double kI = 0;
+    double kD = 0;
     }
 }

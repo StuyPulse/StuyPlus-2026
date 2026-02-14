@@ -37,7 +37,8 @@ public interface Motors {
         TalonFXConfig PIVOTConfig = new TalonFXConfig()
                 .withCurrentLimitAmps(0.25)
                 .withInvertedValue(InvertedValue.CounterClockwise_Positive) // not necessarily true, get inverted val
-                .withNeutralMode(NeutralModeValue.Brake);
+                .withNeutralMode(NeutralModeValue.Brake)
+                .withPIDConstants(Settings.Intake.kP, Settings.Intake.kI, Settings.Intake.kD, 0);
         
         TalonFXConfig ROLLERConfig = new TalonFXConfig() // ODO: apply later
                 .withCurrentLimitAmps(0.25)
