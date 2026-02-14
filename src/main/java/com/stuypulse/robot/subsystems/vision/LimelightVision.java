@@ -4,6 +4,7 @@ import com.stuypulse.robot.constants.Cameras;
 import com.stuypulse.stuylib.network.SmartBoolean;
 import com.stuypulse.robot.util.vision.LimelightHelpers;
 import com.stuypulse.robot.util.vision.LimelightHelpers.PoseEstimate;
+import com.stuypulse.robot.subsystems.swerve.CommandSwerveDrivetrain;
 
 import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Pose2d;
@@ -80,7 +81,6 @@ public class LimelightVision extends SubsystemBase {
             for (int i = 0; i < names.length; i++) {
                 if (camerasEnabled[i].get()) {              
                    String limelightName = names[i];
-                    /* 
                     LimelightHelpers.SetRobotOrientation(
                         limelightName,
                         (CommandSwerveDrivetrain.getInstance().getPose().getRotation().getDegrees() + (Robot.isBlue() ? 0 : 180)) % 360,
@@ -90,7 +90,6 @@ public class LimelightVision extends SubsystemBase {
                         0,
                         0
                     );
-                    */
 
                     PoseEstimate poseEstimate = Robot.isBlue() 
                         ?   LimelightHelpers.getBotPoseEstimate_wpiBlue(limelightName)
