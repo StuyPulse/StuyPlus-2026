@@ -33,7 +33,7 @@ import com.ctre.phoenix6.signals.NeutralModeValue;
 public interface Motors {
 
     /** Classes to store all of the values a motor needs */
-    public interface Intake{
+    public interface Intake {
         TalonFXConfig PIVOTConfig = new TalonFXConfig()
                 .withCurrentLimitAmps(0.25)
                 .withInvertedValue(InvertedValue.CounterClockwise_Positive) // not necessarily true, get inverted val
@@ -46,6 +46,29 @@ public interface Motors {
                 .withNeutralMode(NeutralModeValue.Brake);
     }
 
+    public interface Feeder {
+        // TODO: get values
+        TalonFXConfig MOTOR_CONFIG_1 = new TalonFXConfig()
+            .withCurrentLimitAmps(80)
+			.withRampRate(0.25)
+			.withNeutralMode(NeutralModeValue.Brake)
+			.withInvertedValue(InvertedValue.CounterClockwise_Positive);
+        TalonFXConfig MOTOR_CONFIG_2 = new TalonFXConfig()
+            .withCurrentLimitAmps(80)
+			.withRampRate(0.25)
+			.withNeutralMode(NeutralModeValue.Brake)
+			.withInvertedValue(InvertedValue.Clockwise_Positive);
+    }
+
+    public interface Shooter {
+        TalonFXConfig MOTOR_CONFIG = new TalonFXConfig()
+            .withPIDConstants(Settings.Shooter.kP, Settings.Shooter.kI, Settings.Shooter.kD, 0)
+            .withCurrentLimitAmps(80)
+			.withRampRate(0.25)
+			.withNeutralMode(NeutralModeValue.Brake)
+            .withFFConstants(Settings.Shooter.kS, Settings.Shooter.kV, Settings.Shooter.kA, Settings.Shooter.kG, 0)
+			.withInvertedValue(InvertedValue.CounterClockwise_Positive);
+    }
 
     public static class TalonFXConfig {
         private final TalonFXConfiguration configuration = new TalonFXConfiguration();
