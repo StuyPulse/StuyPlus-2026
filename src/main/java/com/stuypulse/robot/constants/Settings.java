@@ -77,6 +77,8 @@ public interface Settings {
         LEDPattern feederForward= LEDPattern.solid(Color.kBlue);
         LEDPattern feederReverse = LEDPattern.solid(Color.kRed);
         LEDPattern ferrying = LEDPattern.solid(Color.kPurple);
+        LEDPattern intaking = LEDPattern.solid(Color.kYellow);
+        LEDPattern outtaking = LEDPattern.solid(Color.kGreen);
     }
 
     public interface Shooter {
