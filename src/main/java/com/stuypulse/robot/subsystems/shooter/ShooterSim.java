@@ -2,14 +2,10 @@ package com.stuypulse.robot.subsystems.shooter;
 
 import com.stuypulse.robot.constants.Settings;
 import com.stuypulse.stuylib.control.feedback.PIDController;
-import com.stuypulse.stuylib.math.Angle;
 
-import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.numbers.*;
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.math.system.plant.LinearSystemId;
 import edu.wpi.first.wpilibj.simulation.FlywheelSim;
-import edu.wpi.first.wpilibj.simulation.LinearSystemSim;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class ShooterSim extends Shooter {
@@ -45,12 +41,12 @@ public class ShooterSim extends Shooter {
 
     @Override
     public double getShootSpeed() {
-        return 41;
+        return 25;
     };
 
     @Override
     public double getFerrySpeed() {
-        return 41; // arbitrary speeds because we don't have a drivetrain sim
+        return 67; // arbitrary speeds because we don't have a drivetrain sim
     };
 
     @Override

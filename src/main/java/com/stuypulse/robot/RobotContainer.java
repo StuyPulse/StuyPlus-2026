@@ -1,16 +1,23 @@
 /************************ PROJECT PHIL ************************/
-/* Copyright (c) 2024 StuyPulse Robotics. All rights reserved.*/
+/* Copyright (c) 2026 StuyPulse Robotics. All rights reserved.*/
 /* This work is licensed under the terms of the MIT license.  */
 /**************************************************************/
 
 package com.stuypulse.robot;
 
 import com.stuypulse.robot.commands.auton.DoNothingAuton;
+import com.stuypulse.robot.commands.shooter.ShooterIdle;
+import com.stuypulse.robot.commands.feeder.FeederIdle;
 import com.stuypulse.robot.commands.shooter.ShooterShoot;
+import com.stuypulse.robot.commands.feeder.FeederForward;
+import com.stuypulse.robot.commands.shooter.ShooterFerry;
+import com.stuypulse.robot.commands.feeder.FeederReverse;
 import com.stuypulse.robot.constants.Ports;
 import com.stuypulse.robot.subsystems.shooter.Shooter;
+import com.stuypulse.robot.subsystems.feeder.Feeder;
 import com.stuypulse.stuylib.input.Gamepad;
 import com.stuypulse.stuylib.input.gamepads.AutoGamepad;
+import com.stuypulse.robot.commands.shooter.ShooterIdle;
 
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -24,6 +31,7 @@ public class RobotContainer {
     
     // Subsystem
     private final Shooter shooter = Shooter.getInstance();
+    private final Feeder feeder = Feeder.getInstance();
     // Autons
     private static SendableChooser<Command> autonChooser = new SendableChooser<>();
 
@@ -40,14 +48,26 @@ public class RobotContainer {
     /****************/
 
     private void configureDefaultCommands() {
-        shooter.setDefaultCommand(new ShooterShoot());
     }
 
     /***************/
     /*** BUTTONS ***/
     /***************/
 
-    private void configureButtonBindings() {}
+    private void configureButtonBindings() {
+        driver.getTopButton()
+            .whileTrue(new FeederForward());
+        driver.getBottomButton()
+            .whileTrue(new FeederReverse());
+        driver.getRightBumper()
+            .whileTrue(new ShooterShoot());
+        driver.getRightButton()
+            .whileTrue(new ShooterFerry());
+        driver.getRightBumper()
+            .whileTrue(new ShooterIdle());
+        driver.getLeftBumper()
+            .whileTrue(new FeederIdle());
+    }
 
     /**************/
     /*** AUTONS ***/

@@ -46,7 +46,7 @@ public class Feeder extends SubsystemBase{
         this.state = state;
     }
 
-    public FeederState getState(){
+    public FeederState getState() {
         return state;
     }
 

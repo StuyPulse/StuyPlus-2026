@@ -8,6 +8,9 @@ package com.stuypulse.robot.constants;
 import com.stuypulse.stuylib.network.SmartBoolean;
 import com.stuypulse.stuylib.network.SmartNumber;
 
+import edu.wpi.first.wpilibj.LEDPattern;
+import edu.wpi.first.wpilibj.util.Color;
+
 /*-
  * File containing tunable settings for every subsystem on the robot.
  *
@@ -18,8 +21,12 @@ public interface Settings {
     double DT = 0.020;
 
     public interface Feeder {
-        double FEEDER_REVERSE = -3000;
-        double FEEDER_FORWARD = 3000;
+        double FEEDER_REVERSE = -41;
+        double FEEDER_FORWARD = 41;
+
+        double kP = 1.0;
+        double kI = 1.0;
+        double kD = 1.0;
     }
 
     public interface EnabledSubsystems {
@@ -28,6 +35,11 @@ public interface Settings {
 
     public interface LED {
         int LED_LENGTH = 68; // TODO: ask Plus-ME for LED Length
+
+        LEDPattern shooterShooting = LEDPattern.solid(Color.kOrange);
+        LEDPattern feederForward= LEDPattern.solid(Color.kBlue);
+        LEDPattern feederReverse = LEDPattern.solid(Color.kRed);
+        LEDPattern ferrying = LEDPattern.solid(Color.kPurple);
     }
 
     public interface Shooter {

@@ -7,6 +7,7 @@ import com.stuypulse.robot.constants.Settings;
 import edu.wpi.first.wpilibj.AddressableLED;
 import edu.wpi.first.wpilibj.AddressableLEDBuffer;
 import edu.wpi.first.wpilibj.LEDPattern;
+import edu.wpi.first.wpilibj.simulation.AddressableLEDSim;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -15,6 +16,7 @@ public class LEDController extends SubsystemBase {
 
     private final LEDPattern defaultPattern = LEDPattern.kOff;
     private AddressableLED led;
+    private AddressableLEDSim ledSim;
     private AddressableLEDBuffer buffer;
 
     static {
@@ -26,7 +28,8 @@ public class LEDController extends SubsystemBase {
     }
 
     protected LEDController(int port, int length) {
-        this.led = new AddressableLED(port); 
+        this.led = new AddressableLED(port);
+        this.ledSim = new AddressableLEDSim(led);
         this.buffer = new AddressableLEDBuffer(length);
 
         led.setLength(length);
@@ -51,6 +54,13 @@ public class LEDController extends SubsystemBase {
         } else {
             LEDPattern.kOff.applyTo(buffer);
             led.setData(buffer);
+        }
+    }
+
+    @Override
+    public void simulationPeriodic() {
+        if (ledSim.getInitialized()) {
+            // Logger.processInputs
         }
     }
 } 
