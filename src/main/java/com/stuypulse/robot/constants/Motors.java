@@ -38,7 +38,7 @@ public interface Motors {
                 .withCurrentLimitAmps(0.25)
                 .withInvertedValue(InvertedValue.CounterClockwise_Positive) // not necessarily true, get inverted val
                 .withNeutralMode(NeutralModeValue.Brake)
-                .withPIDConstants(Settings.Intake.Pivot.kP, Settings.Intake.Pivot.kI, Settings.Intake.Pivot.kD, 0);
+                .withPIDConstants(Gains.Intake.kP, Gains.Intake.kI, Gains.Intake.kD, 0);
         
         TalonFXConfig ROLLERConfig = new TalonFXConfig() // TODO: apply later
                 .withCurrentLimitAmps(0.25)
@@ -62,11 +62,11 @@ public interface Motors {
 
     public interface Shooter {
         TalonFXConfig MOTOR_CONFIG = new TalonFXConfig()
-            .withPIDConstants(Settings.Shooter.kP, Settings.Shooter.kI, Settings.Shooter.kD, 0)
+            .withPIDConstants(Gains.Shooter.kP, Gains.Shooter.kI, Gains.Shooter.kI, 0)
             .withCurrentLimitAmps(80)
 			.withRampRate(0.25)
 			.withNeutralMode(NeutralModeValue.Brake)
-            .withFFConstants(Settings.Shooter.kS, Settings.Shooter.kV, Settings.Shooter.kA, Settings.Shooter.kG, 0)
+            .withFFConstants(Gains.Shooter.kS, Gains.Shooter.kV, Gains.Shooter.kA, Gains.Shooter.kG, 0)
 			.withInvertedValue(InvertedValue.CounterClockwise_Positive);
     }
 

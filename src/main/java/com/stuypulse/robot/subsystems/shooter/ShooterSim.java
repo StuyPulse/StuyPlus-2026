@@ -1,5 +1,6 @@
 package com.stuypulse.robot.subsystems.shooter;
 
+import com.stuypulse.robot.constants.Gains;
 import com.stuypulse.robot.constants.Settings;
 import com.stuypulse.stuylib.control.feedback.PIDController;
 
@@ -29,9 +30,9 @@ public class ShooterSim extends Shooter {
         visualizer = ShooterVisualizer.getInstance();
 
         shooterController = new PIDController(
-            Settings.Shooter.kP,
-            Settings.Shooter.kI,
-            Settings.Shooter.kD
+            Gains.Shooter.kP,
+            Gains.Shooter.kI,
+            Gains.Shooter.kD
         );
     }
 

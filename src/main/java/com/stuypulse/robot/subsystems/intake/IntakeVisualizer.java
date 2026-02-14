@@ -19,8 +19,8 @@ public class IntakeVisualizer {
     
     public static IntakeVisualizer getInstance(){
         return instance;
-
     }
+
     private final Mechanism2d canvas;
     private final MechanismLigament2d intake;
     private final MechanismRoot2d pivot;

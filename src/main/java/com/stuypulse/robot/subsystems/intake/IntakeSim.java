@@ -1,5 +1,6 @@
 package com.stuypulse.robot.subsystems.intake;
 
+import com.stuypulse.robot.constants.Gains;
 import com.stuypulse.robot.constants.Settings;
 import com.stuypulse.stuylib.math.SLMath;
 
@@ -15,11 +16,10 @@ import edu.wpi.first.wpilibj.simulation.SingleJointedArmSim;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 
-public class IntakeSim extends Intake{
+public class IntakeSim extends Intake {
     private DCMotorSim intakeRollerMotor;
     private DCMotorSim intakePivotMotor;
     private PIDController pivotController;
-    private final PIDController rollerController; // TODO: find how to implement this
     private final SingleJointedArmSim sim;
     private IntakeVisualizer visualizer;
     
@@ -31,15 +31,11 @@ public class IntakeSim extends Intake{
 
         visualizer = IntakeVisualizer.getInstance();
         pivotController = new PIDController(
-            Settings.Intake.Pivot.kP,
-            Settings.Intake.Pivot.kI,
-            Settings.Intake.Pivot.kD
+            Gains.Intake.kP,
+            Gains.Intake.kI,
+            Gains.Intake.kD
         );
-        rollerController = new PIDController(
-            Settings.Intake.Roller.kP,
-            Settings.Intake.Roller.kI,
-            Settings.Intake.Roller.kD        
-        );
+
         sim = new SingleJointedArmSim(
             system,
             gearbox,

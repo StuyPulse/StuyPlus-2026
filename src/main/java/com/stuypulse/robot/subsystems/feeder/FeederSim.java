@@ -11,8 +11,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class FeederSim extends Feeder {
     private final FlywheelSim feeder;
     private final FeederVisualizer visualizer;
-
-    private final PIDController feederController;
+    private double velocity;
 
     public FeederSim() {
         super();
@@ -27,12 +26,6 @@ public class FeederSim extends Feeder {
         );
 
         visualizer = FeederVisualizer.getInstance();
-
-        feederController = new PIDController(
-            Settings.Feeder.kP,
-            Settings.Feeder.kI,
-            Settings.Feeder.kD
-        );
     }
 
     public double getFeederRPM() {
@@ -42,11 +35,9 @@ public class FeederSim extends Feeder {
     @Override
     public void periodic() {
         super.periodic();
+        velocity = getState().getTargetRPM() * 2 * Math.PI / 60;
 
-        feederController.update(getState().getTargetRPM(), getFeederRPM());
-        // SmartDashboard.putNumber("hdsr/Output Voltage", controller);
-
-        feeder.setInputVoltage(feederController.getOutput());
+        feeder.setAngularVelocity(velocity);
     }
 
     @Override
