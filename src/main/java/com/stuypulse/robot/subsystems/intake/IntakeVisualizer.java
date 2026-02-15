@@ -48,7 +48,7 @@ public class IntakeVisualizer {
         intake.setAngle(pivotAngle);
         
         intake.setColor(new Color8Bit(Color.kCoral));
-        SmartDashboard.putData("Pivot", canvas);
+        SmartDashboard.putData("Visualizers/Intake Pivot", canvas);
     }
 
     public double getAngles() {

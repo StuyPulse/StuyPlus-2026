@@ -48,7 +48,7 @@ public interface Settings {
         double ROLLER_MAX_ACCEL = 0;
         double ROLLER_MAX_VEL = 0;
         double INITIAL_POSITION = 0;
-        double AGITATE_ANGLE = 0;
+        double AGITATE_ANGLE = 90;
         double JKgMetersSquared = 0.001;
         double PIVOT_MIN_ANGLE = 0.0;
         double PIVOT_MAX_ANGLE = Math.PI / 2;

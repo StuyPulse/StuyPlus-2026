@@ -11,7 +11,7 @@ public class IntakeSetState extends InstantCommand{
 
     public IntakeSetState(IntakeState state) {
         this.intake = Intake.getInstance();
-        intakeState = state;
+        this.intakeState = state;
 
         addRequirements(intake);
     }
