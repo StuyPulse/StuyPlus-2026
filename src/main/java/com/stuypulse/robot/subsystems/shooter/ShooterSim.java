@@ -58,12 +58,6 @@ public class ShooterSim extends Shooter {
         // SmartDashboard.putNumber("hdsr/Output Voltage", controller);
 
         shooter.setInputVoltage(shooterController.getOutput());
-    }
-
-    @Override
-    public void simulationPeriodic(){
-        super.simulationPeriodic();
-
         shooter.update(Settings.DT);
         visualizer.update(getState().getTargetRPM());
         SmartDashboard.putNumber("Shooter/TargetRPM", getState().getTargetRPM());

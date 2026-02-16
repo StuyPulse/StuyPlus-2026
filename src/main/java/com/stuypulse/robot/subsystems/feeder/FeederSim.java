@@ -38,12 +38,6 @@ public class FeederSim extends Feeder {
         velocity = getState().getTargetRPM() * 2 * Math.PI / 60;
 
         feeder.setAngularVelocity(velocity);
-    }
-
-    @Override
-    public void simulationPeriodic(){
-        super.simulationPeriodic();
-
         feeder.update(Settings.DT);
         visualizer.update(getState().getTargetRPM());
         SmartDashboard.putNumber("Feeder/TargetRPM", getState().getTargetRPM());

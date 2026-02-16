@@ -37,6 +37,9 @@ public class IntakeImpl extends Intake {
 
         currentPivotState.position = getRelativeAngle().getRadians();
         currentPivotState.velocity = 0.0;
+
+        targetPivotState.position = getState().getAngle() * Math.PI / 180;
+        targetPivotState.velocity = 0.0;
         
         intakePivotMotor.setPosition(Ports.Intake.MOTOR_INTAKEPIVOT);
         intakeRollerMotor.setPosition(Ports.Intake.MOTOR_INTAKEROLLER);
