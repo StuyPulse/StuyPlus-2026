@@ -119,7 +119,7 @@ public interface Settings {
             }
 
             public interface Targets {
-
+                
             }
         }
     }

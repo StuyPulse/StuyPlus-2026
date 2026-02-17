@@ -13,7 +13,7 @@ import com.stuypulse.stuylib.util.StopWatch;
 
 
 
-public class TranslationMotionProfileIan implements VFilter {
+public class TranslationMotionProfile implements VFilter {
 
     // Default number of times to apply filter (helps accuracy)
     private static final int kDefaultSteps = 64;
@@ -32,7 +32,7 @@ public class TranslationMotionProfileIan implements VFilter {
     // Number of times to apply filter (helps accuracy)
     private final int mSteps;
 
-    public TranslationMotionProfileIan(
+    public TranslationMotionProfile(
         Number velLimit, 
         Number accelLimit, 
         Vector2D startingTranslation, 
@@ -50,11 +50,11 @@ public class TranslationMotionProfileIan implements VFilter {
         mSteps = steps;
     }
 
-    public TranslationMotionProfileIan(Number velLimit, Number accelLimit, Vector2D startingTranslation, Vector2D startingVelocity) {
+    public TranslationMotionProfile(Number velLimit, Number accelLimit, Vector2D startingTranslation, Vector2D startingVelocity) {
         this(velLimit, accelLimit, startingTranslation, startingVelocity, kDefaultSteps);
     }
 
-    public TranslationMotionProfileIan(Number velLimit, Number accelLimit) {
+    public TranslationMotionProfile(Number velLimit, Number accelLimit) {
         this(velLimit, accelLimit, Vector2D.kOrigin, Vector2D.kOrigin, kDefaultSteps);
     }
 
@@ -112,7 +112,7 @@ public class TranslationMotionProfileIan implements VFilter {
             mOutput = mOutput.add(mVelocity.mul(dt));
         }
 
-        // Field.FIELD2D.getObject("Translation Motion Profile Ian").setPose(!Robot.isBlue()
+        // Field.FIELD2D.getObject("Translation Motion Profile").setPose(!Robot.isBlue()
         //     ? new Pose2d(mOutput.x, mOutput.y, new Rotation2d())
         //     : Field.transformToOppositeAlliance(new Pose2d(mOutput.x, mOutput.y, new Rotation2d())));
             
