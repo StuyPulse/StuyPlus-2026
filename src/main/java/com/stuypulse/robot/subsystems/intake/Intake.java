@@ -65,7 +65,7 @@ public abstract class Intake extends SubsystemBase {
         return state;
     }
 
-    public abstract Rotation2d getRelativeAngle();
+    public abstract Rotation2d getRelativePosition();
 
     @Override
     public void periodic() {

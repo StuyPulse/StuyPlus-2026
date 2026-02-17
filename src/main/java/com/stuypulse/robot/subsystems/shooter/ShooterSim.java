@@ -2,8 +2,8 @@ package com.stuypulse.robot.subsystems.shooter;
 
 import com.stuypulse.robot.constants.Gains;
 import com.stuypulse.robot.constants.Settings;
-import com.stuypulse.stuylib.control.feedback.PIDController;
 
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.math.system.plant.LinearSystemId;
 import edu.wpi.first.wpilibj.simulation.FlywheelSim;
@@ -54,12 +54,10 @@ public class ShooterSim extends Shooter {
     public void periodic() {
         super.periodic();
 
-        shooterController.update(getState().getTargetRPM(), getShooterRPM());
-        // SmartDashboard.putNumber("hdsr/Output Voltage", controller);
-
-        shooter.setInputVoltage(shooterController.getOutput());
-        shooter.update(Settings.DT);
-        visualizer.update(getState().getTargetRPM());
+        shooter.setInputVoltage(shooterController.calculate(getShooterRPM(), getState().getTargetRPM()));
+        shooter.update(Settings.DT); // ooooooohhhhhhhhhhh
+        visualizer.update(getShooterRPM());
         SmartDashboard.putNumber("Shooter/TargetRPM", getState().getTargetRPM());
+        SmartDashboard.putNumber("Shooter/SimRPM", getShooterRPM());
     }
 }

@@ -39,7 +39,7 @@ public class FeederSim extends Feeder {
 
         feeder.setAngularVelocity(velocity);
         feeder.update(Settings.DT);
-        visualizer.update(getState().getTargetRPM());
+        visualizer.update(feeder.getAngularVelocityRPM());
         SmartDashboard.putNumber("Feeder/TargetRPM", getState().getTargetRPM());
     }
 }

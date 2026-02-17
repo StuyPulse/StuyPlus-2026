@@ -4,7 +4,7 @@ import com.pathplanner.lib.config.PIDConstants;
 
 public class Gains {
     public interface Shooter {
-        double kP = 0;
+        double kP = 0.9;
         double kI = 0;
         double kD = 0;
 

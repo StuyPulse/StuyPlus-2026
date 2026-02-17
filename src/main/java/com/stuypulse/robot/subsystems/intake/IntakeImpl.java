@@ -1,4 +1,4 @@
-package com.stuypulse.robot.subsystems.intake;
+        package com.stuypulse.robot.subsystems.intake;
 
 import com.ctre.phoenix6.controls.PositionVoltage;
 import com.ctre.phoenix6.hardware.TalonFX;
@@ -28,17 +28,17 @@ public class IntakeImpl extends Intake {
     }  
 
     @Override
-    public Rotation2d getRelativeAngle(){
+    public Rotation2d getRelativePosition() {
         return Rotation2d.fromRotations(intakePivotMotor.getPosition().getValueAsDouble());
     }
 
     @Override
     public void periodic() {
 
-        currentPivotState.position = getRelativeAngle().getRadians();
+        currentPivotState.position = getRelativePosition().getRotations();
         currentPivotState.velocity = 0.0;
 
-        targetPivotState.position = getState().getAngle() * Math.PI / 180;
+        targetPivotState.position = getState().getAngle() / 360;
         targetPivotState.velocity = 0.0;
         
         intakePivotMotor.setPosition(Ports.Intake.MOTOR_INTAKEPIVOT);
@@ -50,7 +50,7 @@ public class IntakeImpl extends Intake {
 
         TrapezoidProfile.State nextPivot = profile.calculate(
             Settings.DT,
-            currentPivotState, 
+            currentPivotState,
             targetPivotState
         );
         

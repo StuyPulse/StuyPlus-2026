@@ -72,7 +72,7 @@ public class RobotContainer {
             .whileTrue(new ShooterShoot());
         driver.getRightButton()
             .whileTrue(new ShooterFerry());
-        driver.getRightBumper()
+        driver.getDPadDown()
             .whileTrue(new ShooterIdle());
         driver.getLeftBumper()
             .whileTrue(new FeederIdle());

@@ -47,7 +47,7 @@ public class IntakeSim extends Intake {
             Settings.Intake.INITIAL_POSITION);
     }
     @Override
-    public Rotation2d getRelativeAngle() {
+    public Rotation2d getRelativePosition() {
         return Rotation2d.fromDegrees(SLMath.clamp(Math.toDegrees(intakePivotMotor.getAngularPositionRad()),
         Settings.Intake.PIVOT_MIN_ANGLE, Settings.Intake.PIVOT_MAX_ANGLE));
     }
