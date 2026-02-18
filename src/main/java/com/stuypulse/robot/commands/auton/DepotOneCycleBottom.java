@@ -5,13 +5,17 @@
 /***************************************************************/
 package com.stuypulse.robot.commands.auton;
 
-import com.stuypulse.robot.commands.hoodedshooter.HoodedShooterShoot;
-import com.stuypulse.robot.commands.intake.IntakeIntake;
-import com.stuypulse.robot.commands.intake.IntakeStop;
-import com.stuypulse.robot.commands.swerve.SwerveClimbAlign;
+import com.stuypulse.robot.commands.swerve.driveAligned.SwerveDriveAlignedToAllianceZone;
+import com.stuypulse.robot.commands.swerve.driveAligned.SwerveDriveAlignedToHub;
+import com.stuypulse.robot.constants.Settings;
+import com.stuypulse.robot.commands.feeder.FeederForward;
+import com.stuypulse.robot.commands.feeder.FeederIdle;
+import com.stuypulse.robot.commands.intake.IntakeAgitateOnce;
+import com.stuypulse.robot.commands.intake.IntakeSetIntake;
 import com.stuypulse.robot.subsystems.swerve.CommandSwerveDrivetrain;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 
 import com.pathplanner.lib.path.PathPlannerPath;
 
@@ -20,21 +24,23 @@ public class DepotOneCycleBottom extends SequentialCommandGroup {
     public DepotOneCycleBottom(PathPlannerPath... paths) {
 
         addCommands(
-
             CommandSwerveDrivetrain.getInstance().followPathCommand(paths[0])
-                .alongWith(new IntakeIntake()),
-            CommandSwerveDrivetrain.getInstance().followPathCommand(paths[1])
-                .alongWith(new IntakeStop()),
-            new HoodedShooterShoot(),
+                .alongWith(new IntakeSetIntake()),
+            new WaitCommand(2), // wait for intaking
+
+            CommandSwerveDrivetrain.getInstance().followPathCommand(paths[1]),
+            
+            new SwerveDriveAlignedToHub(),
+            new FeederForward(),
+            new WaitCommand(Settings.Shooter.SHOOT_TIME_AUTO).deadlineFor(new IntakeAgitateOnce().repeatedly()),
+            new FeederIdle(),
 
             CommandSwerveDrivetrain.getInstance().followPathCommand(paths[2])
-                .alongWith(new IntakeIntake()),
-            CommandSwerveDrivetrain.getInstance().followPathCommand(paths[3])
-                .alongWith(new IntakeStop()),
-            new HoodedShooterShoot()
-
+                .alongWith(new IntakeSetIntake()),
+            new SwerveDriveAlignedToAllianceZone(),
+            new FeederForward(),
+            new WaitCommand(Settings.Shooter.SHOOT_TIME_AUTO).deadlineFor(new IntakeAgitateOnce().repeatedly()),
+            new FeederIdle()
         );
-
     }
-
 }
