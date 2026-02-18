@@ -1,4 +1,4 @@
-package com.stuypulse.robot.commands.swerve.driveAligned;
+package com.stuypulse.robot.commands.swerve;
 
 import com.stuypulse.robot.constants.Field;
 import com.stuypulse.robot.constants.Settings;

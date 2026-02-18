@@ -39,9 +39,7 @@ public class Robot extends TimedRobot {
     /*********************/
 
     @Override
-    public void disabledInit() {
-        robot.robotMode = RobotContainer.RobotMode.DISABLED;
-    }
+    public void disabledInit() {}
 
     @Override
     public void disabledPeriodic() {}
@@ -52,7 +50,6 @@ public class Robot extends TimedRobot {
 
     @Override
     public void autonomousInit() {
-        robot.robotMode = RobotContainer.RobotMode.AUTONOMOUS;
         auto = robot.getAutonomousCommand();
 
         if (auto != null) {
@@ -72,8 +69,6 @@ public class Robot extends TimedRobot {
 
     @Override
     public void teleopInit() {
-        robot.robotMode = RobotContainer.RobotMode.TELEOP;
-
         if (auto != null) {
             auto.cancel();
         }
@@ -91,8 +86,6 @@ public class Robot extends TimedRobot {
 
     @Override
     public void testInit() {
-        robot.robotMode = RobotContainer.RobotMode.TEST;
-
         CommandScheduler.getInstance().cancelAll();
     }
 

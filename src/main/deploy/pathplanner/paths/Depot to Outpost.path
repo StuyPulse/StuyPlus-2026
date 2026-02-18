@@ -3,32 +3,37 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.1443025173611117,
-        "y": 5.981664496527778
+        "x": 0.5819269646538634,
+        "y": 6.004058191370081
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.3817169748891,
-        "y": 5.903342243261602
+        "x": 2.4516769516556356,
+        "y": 6.024042236893265
       },
       "isLocked": false,
-      "linkedName": "Depot Shoot"
+      "linkedName": "Depot"
     },
     {
       "anchor": {
-        "x": 0.4679885877315162,
-        "y": 0.6903566333743993
+        "x": 0.4540909932495296,
+        "y": 0.6619030693880505
       },
       "prevControl": {
-        "x": 3.133352353780314,
-        "y": 3.2910271041369485
+        "x": 1.9144986625934766,
+        "y": 1.592707390682264
       },
       "nextControl": null,
       "isLocked": false,
       "linkedName": "Outpost"
     }
   ],
-  "rotationTargets": [],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 1,
+      "rotationDegrees": 0.0
+    }
+  ],
   "constraintZones": [],
   "pointTowardsZones": [],
   "eventMarkers": [],
@@ -42,13 +47,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 0.0
+    "rotation": 0.42333251472054245
   },
   "reversed": false,
   "folder": null,
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -39.27997907356316
+    "rotation": -179.90738990762557
   },
   "useDefaultConstraints": true
 }
