@@ -36,9 +36,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 
 public class RobotContainer {
-
-    public RobotMode robotMode;
-
     // Gamepads
     public final Gamepad driver = new AutoGamepad(Ports.Gamepad.DRIVER);
     public final CommandXboxController operator = new CommandXboxController(Ports.Gamepad.OPERATOR);
@@ -48,7 +45,7 @@ public class RobotContainer {
     private final Intake intake = Intake.getInstance();
     private final Shooter shooter = Shooter.getInstance();
     private final Feeder feeder = Feeder.getInstance();
-    private final ShiftTimer shiftTimer = new ShiftTimer(() -> robotMode);
+    private final ShiftTimer shiftTimer = ShiftTimer.getInstance();
     private final CommandSwerveDrivetrain swerve = CommandSwerveDrivetrain.getInstance();
     // Autons
     private static SendableChooser<Command> autonChooser = new SendableChooser<>();
@@ -59,13 +56,6 @@ public class RobotContainer {
         configureDefaultCommands();
         configureButtonBindings();
         configureAutons();
-    }
-
-    public enum RobotMode {
-        DISABLED,
-        AUTONOMOUS,
-        TELEOP,
-        TEST
     }
 
     /****************/
