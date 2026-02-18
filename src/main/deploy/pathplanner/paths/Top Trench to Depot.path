@@ -8,8 +8,8 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.1191748654332394,
-        "y": 7.032820843154916
+        "x": 3.350317503064945,
+        "y": 7.150086513944317
       },
       "isLocked": false,
       "linkedName": "Top Trench"
@@ -20,7 +20,7 @@
         "y": 6.0
       },
       "prevControl": {
-        "x": 1.3136026542393404,
+        "x": 1.0,
         "y": 6.0
       },
       "nextControl": null,
@@ -48,7 +48,7 @@
   "folder": null,
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 0.0
+    "rotation": -68.74949449286669
   },
   "useDefaultConstraints": true
 }
