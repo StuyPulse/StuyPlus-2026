@@ -12,7 +12,7 @@
         "y": 5.903342243261602
       },
       "isLocked": false,
-      "linkedName": "Depot"
+      "linkedName": "Depot Shoot"
     },
     {
       "anchor": {
@@ -20,8 +20,8 @@
         "y": 0.6903566333743993
       },
       "prevControl": {
-        "x": 0.8216525202366833,
-        "y": 2.9689805951988237
+        "x": 3.133352353780314,
+        "y": 3.2910271041369485
       },
       "nextControl": null,
       "isLocked": false,
@@ -48,7 +48,7 @@
   "folder": null,
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 180.0
+    "rotation": -39.27997907356316
   },
   "useDefaultConstraints": true
 }

@@ -20,6 +20,7 @@
         "y": 5.981664496527778
       },
       "prevControl": {
+<<<<<<< HEAD
         "x": 0.7240700185522804,
         "y": 6.013916759877545
       },
@@ -48,7 +49,7 @@
   "folder": null,
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 0.0
+    "rotation": -55.30484646876596
   },
   "useDefaultConstraints": true
 }

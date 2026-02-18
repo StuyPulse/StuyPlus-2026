@@ -5,6 +5,8 @@
 
 package com.stuypulse.robot;
 
+import java.util.function.Supplier;
+
 import com.stuypulse.robot.commands.auton.DoNothingAuton;
 import com.stuypulse.robot.commands.shooter.ShooterIdle;
 import com.stuypulse.robot.commands.feeder.FeederIdle;
@@ -15,6 +17,7 @@ import com.stuypulse.robot.commands.shooter.ShooterFerry;
 import com.stuypulse.robot.commands.feeder.FeederReverse;
 import com.stuypulse.robot.constants.Ports;
 import com.stuypulse.robot.subsystems.intake.Intake;
+import com.stuypulse.robot.subsystems.shifttimer.ShiftTimer;
 // import com.stuypulse.robot.commands.intake.IntakeAgitateOnce;
 // import com.stuypulse.robot.commands.intake.IntakeSetDown;
 // import com.stuypulse.robot.commands.intake.IntakeSetIdle;
@@ -34,6 +37,8 @@ import edu.wpi.first.wpilibj2.command.Command;
 
 public class RobotContainer {
 
+    public RobotMode robotMode;
+
     // Gamepads
     public final Gamepad driver = new AutoGamepad(Ports.Gamepad.DRIVER);
     public final CommandXboxController operator = new CommandXboxController(Ports.Gamepad.OPERATOR);
@@ -43,6 +48,7 @@ public class RobotContainer {
     private final Intake intake = Intake.getInstance();
     private final Shooter shooter = Shooter.getInstance();
     private final Feeder feeder = Feeder.getInstance();
+    private final ShiftTimer shiftTimer = new ShiftTimer(() -> robotMode);
     private final CommandSwerveDrivetrain swerve = CommandSwerveDrivetrain.getInstance();
     // Autons
     private static SendableChooser<Command> autonChooser = new SendableChooser<>();
@@ -53,6 +59,13 @@ public class RobotContainer {
         configureDefaultCommands();
         configureButtonBindings();
         configureAutons();
+    }
+
+    public enum RobotMode {
+        DISABLED,
+        AUTONOMOUS,
+        TELEOP,
+        TEST
     }
 
     /****************/
