@@ -8,6 +8,11 @@
       "/SmartDashboard/Visualizers/Shooter": "Mechanism2d"
     },
     "windows": {
+      "/SmartDashboard/Autonomous": {
+        "window": {
+          "visible": true
+        }
+      },
       "/SmartDashboard/Visualizers/Feeder": {
         "window": {
           "visible": true
@@ -26,14 +31,13 @@
         "Feeder": {
           "open": true
         },
-        "Shooter": {
+        "ShiftTimer": {
           "open": true
         },
         "Swerve": {
           "Pose": {
             "open": true
-          },
-          "open": true
+          }
         },
         "open": true
       }
