@@ -4,15 +4,15 @@
     {
       "anchor": {
         "x": 3.5732667617689007,
-        "y": 7.224379457917262
+        "y": 7.263195435092724
       },
       "prevControl": null,
       "nextControl": {
         "x": 3.1191748654332394,
-        "y": 6.994004865979454
+        "y": 7.032820843154916
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "Top Trench"
     },
     {
       "anchor": {
@@ -48,7 +48,7 @@
   "folder": null,
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 180.0
+    "rotation": 0.0
   },
   "useDefaultConstraints": true
 }

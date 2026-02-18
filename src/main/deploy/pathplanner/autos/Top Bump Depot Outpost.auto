@@ -7,37 +7,25 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Top Trench to Depot"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "ShooterShoot"
+            "pathName": "Top Bump to Top Neutral"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "depot_to_bottom_trench_blue"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "ShooterIdle"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "IntakeSetIntake"
+            "pathName": "Top Neutral to Top Bump"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "bottom_trench_blue_to_top_neutral"
+            "pathName": "Top Bump to Depot"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Depot to Outpost"
           }
         }
       ]
