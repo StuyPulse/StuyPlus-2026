@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 0.75,
-        "y": 6.0
+        "x": 1.1443025173611117,
+        "y": 5.981664496527778
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.75,
-        "y": 6.0
+        "x": 2.144302517361112,
+        "y": 5.981664496527778
       },
       "isLocked": false,
       "linkedName": "Depot"
@@ -21,7 +21,7 @@
       },
       "prevControl": {
         "x": 2.525,
-        "y": 0.625
+        "y": 0.6250000000000001
       },
       "nextControl": null,
       "isLocked": false,

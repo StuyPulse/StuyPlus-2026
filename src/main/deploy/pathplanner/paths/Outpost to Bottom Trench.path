@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.1443025173611117,
-        "y": 5.981664496527778
+        "x": 0.75,
+        "y": 0.6903566333743993
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.3817169748891,
-        "y": 5.903342243261602
+        "x": 1.75,
+        "y": 0.6903566333743996
       },
       "isLocked": false,
-      "linkedName": "Depot"
+      "linkedName": "Outpost 2"
     },
     {
       "anchor": {
-        "x": 0.4679885877315162,
-        "y": 0.6903566333743993
+        "x": 3.525,
+        "y": 0.625
       },
       "prevControl": {
-        "x": 0.8216525202366833,
-        "y": 2.9689805951988237
+        "x": 2.525,
+        "y": 0.625
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Outpost"
+      "linkedName": "Bottom Trench 2"
     }
   ],
   "rotationTargets": [],
@@ -48,7 +48,7 @@
   "folder": null,
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 180.0
+    "rotation": 59.99999999999999
   },
   "useDefaultConstraints": true
 }

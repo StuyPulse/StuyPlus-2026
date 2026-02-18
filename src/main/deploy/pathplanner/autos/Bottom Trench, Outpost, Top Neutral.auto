@@ -1,0 +1,31 @@
+{
+  "version": "2025.0",
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Bottom Trench to Outpost"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Outpost to Bottom Trench"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Bottom Trench to Top Neutral"
+          }
+        }
+      ]
+    }
+  },
+  "resetOdom": true,
+  "folder": null,
+  "choreoAuto": false
+}
