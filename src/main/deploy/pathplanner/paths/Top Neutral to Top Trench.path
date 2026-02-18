@@ -16,16 +16,16 @@
     },
     {
       "anchor": {
-        "x": 3.443880171184022,
-        "y": 7.2890727532097
+        "x": 3.5732667617689007,
+        "y": 7.263195435092724
       },
       "prevControl": {
-        "x": 5.708145506419401,
-        "y": 8.065392296718972
+        "x": 5.83753209700428,
+        "y": 8.039514978601996
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Top Trench"
+      "linkedName": "Top Trench Shoot"
     }
   ],
   "rotationTargets": [],
@@ -42,7 +42,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -61.78264414527062
+    "rotation": -58.626994859891454
   },
   "reversed": false,
   "folder": null,

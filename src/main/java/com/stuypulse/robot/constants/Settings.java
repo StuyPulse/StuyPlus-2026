@@ -42,13 +42,13 @@ public interface Settings {
         double INTAKE_VOLTAGE = 1.0;
         double INTAKE_ANGLE = 67;
         double OUTTAKE_VOLTAGE = -1.0;
-        double OUTTAKE_ANGLE = 90;
+        double OUTTAKE_ANGLE = 67;
         double IDLE_ANGLE = 67;
         double IDLE_VOLTAGE = 0;
         double ROLLER_MAX_ACCEL = 0;
         double ROLLER_MAX_VEL = 0;
         double INITIAL_POSITION = 0;
-        double AGITATE_ANGLE = 90;
+        double AGITATE_ANGLE = 0;
         double JKgMetersSquared = 0.001;
         double PIVOT_MIN_ANGLE = 0.0;
         double PIVOT_MAX_ANGLE = Math.PI / 2;
@@ -75,6 +75,8 @@ public interface Settings {
 
     public interface Shooter {
         double BOTTOM_MOTOR_RPM = 3000;
+
+        double SHOOT_TIME_AUTO = 1.5;
     }
 
     public interface Swerve {
