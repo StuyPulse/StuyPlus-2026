@@ -1,0 +1,31 @@
+{
+  "version": "2025.0",
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "btmTrench-Neutral"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "neutral-TopTrench"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "toDepot"
+          }
+        }
+      ]
+    }
+  },
+  "resetOdom": true,
+  "folder": null,
+  "choreoAuto": false
+}
