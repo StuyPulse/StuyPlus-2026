@@ -9,7 +9,7 @@ import com.stuypulse.robot.commands.auton.DoNothingAuton;
 import com.stuypulse.robot.commands.shooter.ShooterIdle;
 import com.stuypulse.robot.commands.feeder.FeederIdle;
 import com.stuypulse.robot.commands.shooter.ShooterShoot;
-import com.stuypulse.robot.commands.swerve.SwerveDriveWaitUntilAlignedToHub;
+import com.stuypulse.robot.commands.swerve.driveAligned.SwerveDriveWaitUntilAlignedToHub;
 import com.stuypulse.robot.commands.feeder.FeederForward;
 import com.stuypulse.robot.commands.shooter.ShooterFerry;
 import com.stuypulse.robot.commands.feeder.FeederReverse;
