@@ -7,31 +7,19 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Top Bump to Top Neutral"
+            "pathName": "Bump to Neutral"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Top Neutral to Top Trench"
+            "pathName": "Neutral to Top Trench"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Top Trench to Depot"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "Rotate at Depot"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "Top Bump to Depot"
+            "pathName": "Top Trench to Neutral"
           }
         }
       ]
