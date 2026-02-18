@@ -1,0 +1,43 @@
+{
+  "version": "2025.0",
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Top Bump to Top Neutral"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Top Neutral to Top Trench"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Top Trench to Depot"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Rotate at Depot"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Top Bump to Depot"
+          }
+        }
+      ]
+    }
+  },
+  "resetOdom": true,
+  "folder": null,
+  "choreoAuto": false
+}
