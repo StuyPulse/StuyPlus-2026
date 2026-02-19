@@ -31,13 +31,13 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Outpost to Right Trench"
+            "pathName": "Outpost to Right Bump"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Right Trench to Left Neutral"
+            "pathName": "right_bump_to_left_neutral"
           }
         }
       ]
