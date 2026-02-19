@@ -7,19 +7,19 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Top Bump to Top Neutral"
+            "pathName": "Left Bump to Left Neutral"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Top Neutral to Top Trench"
+            "pathName": "Left Neutral to Left Trench"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Top Trench to Depot"
+            "pathName": "Left Trench to Depot"
           }
         },
         {
@@ -31,7 +31,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Top Bump to Depot"
+            "pathName": "Depot to Outpost"
           }
         }
       ]

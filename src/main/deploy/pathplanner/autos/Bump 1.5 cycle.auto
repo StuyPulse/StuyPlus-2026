@@ -13,13 +13,13 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Neutral to Top Trench"
+            "pathName": "Neutral to Left Trench"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Top Trench to Neutral"
+            "pathName": "Left Trench to Neutral"
           }
         }
       ]

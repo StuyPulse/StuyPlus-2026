@@ -7,13 +7,13 @@
         {
           "type": "path",
           "data": {
-            "pathName": "btmTrench-Neutral"
+            "pathName": "RightTrench-Neutral"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "neutral-TopTrench"
+            "pathName": "neutral-LeftTrench"
           }
         },
         {

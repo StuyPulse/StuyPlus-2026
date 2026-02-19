@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.560328102710413,
-        "y": 5.503537803138374
+        "x": 0.5819269646538634,
+        "y": 6.004058191370081
       },
       "prevControl": null,
       "nextControl": {
-        "x": 4.57448077966119,
-        "y": 5.599239018604658
+        "x": 1.5819269646538634,
+        "y": 6.004058191370081
       },
       "isLocked": false,
-      "linkedName": "Top Bump"
+      "linkedName": "Depot"
     },
     {
       "anchor": {
-        "x": 0.75,
-        "y": 6.0
+        "x": 3.5732667617689007,
+        "y": 7.263195435092724
       },
       "prevControl": {
-        "x": 0.3297675011911686,
-        "y": 6.032252263349767
+        "x": 5.83753209700428,
+        "y": 8.039514978601996
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Depot"
+      "linkedName": "Top Trench Shoot"
     }
   ],
   "rotationTargets": [],
@@ -42,13 +42,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 180.0
+    "rotation": -58.626994859891454
   },
   "reversed": false,
   "folder": null,
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -55.30484646876596
+    "rotation": -179.90738990762557
   },
   "useDefaultConstraints": true
 }

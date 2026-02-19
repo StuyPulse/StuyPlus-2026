@@ -3,16 +3,16 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.3516976312707976,
-        "y": 7.386069732100875
+        "x": 3.560328102710413,
+        "y": 5.503537803138374
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.6551528902911645,
-        "y": 6.840739390297541
+        "x": 4.57448077966119,
+        "y": 5.599239018604658
       },
       "isLocked": false,
-      "linkedName": "Top_Trench"
+      "linkedName": "Top Bump"
     },
     {
       "anchor": {
@@ -20,8 +20,8 @@
         "y": 6.004058191370081
       },
       "prevControl": {
-        "x": 1.0,
-        "y": 6.0
+        "x": 0.161694465845032,
+        "y": 6.036310454719848
       },
       "nextControl": null,
       "isLocked": false,
@@ -48,7 +48,7 @@
   "folder": null,
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -69.5743323651023
+    "rotation": -55.30484646876596
   },
   "useDefaultConstraints": true
 }
