@@ -3,6 +3,8 @@
     "types": {
       "/FMSInfo": "FMSInfo",
       "/SmartDashboard/Autonomous": "String Chooser",
+      "/SmartDashboard/Field": "Field2d",
+      "/SmartDashboard/PathPlanner": "Alerts",
       "/SmartDashboard/Visualizers/Feeder": "Mechanism2d",
       "/SmartDashboard/Visualizers/Intake Pivot": "Mechanism2d",
       "/SmartDashboard/Visualizers/Shooter": "Mechanism2d"
@@ -13,12 +15,13 @@
           "visible": true
         }
       },
-      "/SmartDashboard/Visualizers/Feeder": {
-        "window": {
-          "visible": true
-        }
-      },
-      "/SmartDashboard/Visualizers/Shooter": {
+      "/SmartDashboard/Field": {
+        "bottom": 1914,
+        "height": 8.069275856018066,
+        "left": 245,
+        "right": 3942,
+        "top": 118,
+        "width": 16.54119300842285,
         "window": {
           "visible": true
         }
@@ -27,63 +30,19 @@
   },
   "NetworkTables": {
     "transitory": {
+      "FMSInfo": {
+        "open": true
+      },
       "SmartDashboard": {
-        "Feeder": {
-          "open": true
-        },
-        "ShiftTimer": {
-          "open": true
-        },
         "Swerve": {
           "Pose": {
-            "open": true
+            "open": false
           }
-        },
-        "open": true
+        }
       }
     }
   },
   "NetworkTables Info": {
     "visible": true
-  },
-  "Plot": {
-    "Plot <0>": {
-      "plots": [
-        {
-          "axis": [
-            {
-              "autoFit": true
-            }
-          ],
-          "backgroundColor": [
-            0.0,
-            0.0,
-            0.0,
-            0.8500000238418579
-          ],
-          "height": 32,
-          "series": [
-            {
-              "color": [
-                0.2980392277240753,
-                0.44705885648727417,
-                0.6901960968971252,
-                1.0
-              ],
-              "id": "NT:/SmartDashboard/Shooter/SimRPM"
-            },
-            {
-              "color": [
-                0.8666667342185974,
-                0.5176470875740051,
-                0.32156863808631897,
-                1.0
-              ],
-              "id": "NT:/SmartDashboard/Shooter/TargetRPM"
-            }
-          ]
-        }
-      ]
-    }
   }
 }
