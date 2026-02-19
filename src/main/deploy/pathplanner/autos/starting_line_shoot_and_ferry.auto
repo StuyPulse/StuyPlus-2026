@@ -19,13 +19,13 @@
         {
           "type": "path",
           "data": {
-            "pathName": "depot_to_right_trench"
+            "pathName": "depot_to_right_bump"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "right_trench_blue_to_left_neutral"
+            "pathName": "right_bump_to_left_neutral"
           }
         }
       ]

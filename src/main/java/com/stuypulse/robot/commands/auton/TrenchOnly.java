@@ -19,39 +19,33 @@ import edu.wpi.first.wpilibj2.command.WaitCommand;
 
 import com.pathplanner.lib.path.PathPlannerPath;
 
-public class topBumpDepotOutpost extends SequentialCommandGroup {
+public class TrenchOnly extends SequentialCommandGroup {
 
-    public topBumpDepotOutpost(PathPlannerPath... paths) {
-
+    public TrenchOnly(PathPlannerPath... paths) {
         addCommands(
+            
             new SwerveDriveAlignedToHub(),
             new FeederForward(),
             new WaitCommand(Settings.Shooter.SHOOT_TIME_AUTO).deadlineFor(new IntakeAgitateOnce().repeatedly()),
             new FeederIdle(),
 
             CommandSwerveDrivetrain.getInstance().followPathCommand(paths[0])
-                .alongWith(new IntakeSetIntake()),
+            .alongWith(new IntakeSetIntake()),
             CommandSwerveDrivetrain.getInstance().followPathCommand(paths[1])
-                .alongWith(new IntakeSetIdle()),
-            
-            
+            .alongWith(new IntakeSetIdle()).andThen(new WaitCommand(2)),
+
             new SwerveDriveAlignedToHub(),
             new FeederForward(),
             new WaitCommand(Settings.Shooter.SHOOT_TIME_AUTO).deadlineFor(new IntakeAgitateOnce().repeatedly()),
             new FeederIdle(),
 
             CommandSwerveDrivetrain.getInstance().followPathCommand(paths[2])
-                .alongWith(new IntakeSetIntake()),
-            CommandSwerveDrivetrain.getInstance().followPathCommand(paths[3])
-                .alongWith(new IntakeSetIdle()),
-            
+            .alongWith(new IntakeSetIntake()).andThen(
             new SwerveDriveAlignedToHub(),
             new FeederForward(),
-            new WaitCommand(3).deadlineFor(new IntakeAgitateOnce().repeatedly()),
-            new FeederIdle(),
-
-            CommandSwerveDrivetrain.getInstance().followPathCommand(paths[4])
-
+            new WaitCommand(Settings.Shooter.SHOOT_TIME_AUTO).deadlineFor(new IntakeAgitateOnce().repeatedly()),
+            new FeederIdle())
         );
     }
 }
+            

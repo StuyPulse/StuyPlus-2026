@@ -17,10 +17,8 @@ import com.stuypulse.robot.constants.Field;
 import com.stuypulse.robot.constants.Ports;
 import com.stuypulse.robot.subsystems.intake.Intake;
 import com.stuypulse.robot.subsystems.shifttimer.ShiftTimer;
-import com.pathplanner.lib.commands.PathPlannerAuto;
-import com.pathplanner.lib.path.PathPlannerPath;
-import com.stuypulse.robot.commands.auton.StartingLineShootAndFerry;
 import com.stuypulse.robot.commands.auton.topBumpDepotOutpost;
+import com.stuypulse.robot.commands.auton.StartingLineShootAndFerry;
 import com.stuypulse.robot.util.PathUtil.AutonConfig;
 // import com.stuypulse.robot.commands.intake.IntakeAgitateOnce;
 // import com.stuypulse.robot.commands.intake.IntakeSetDown;
@@ -34,7 +32,6 @@ import com.stuypulse.robot.subsystems.feeder.Feeder;
 import com.stuypulse.stuylib.input.Gamepad;
 import com.stuypulse.stuylib.input.gamepads.AutoGamepad;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
-import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -71,6 +68,7 @@ public class RobotContainer {
 
     private void configureDefaultCommands() {
         swerve.setDefaultCommand(new SwerveDriveDrive(driver));
+        new ShooterShoot();
     }
 
     /***************/
@@ -96,8 +94,14 @@ public class RobotContainer {
     /*** AUTONS ***/
     /**************/
     public void configureAutons() {
+        autonChooser.addOption("Do Nothing", new DoNothingAuton());
+
         AutonConfig topBumpDepotOutpostAuton = new AutonConfig("Top Bump Depot Outpost", topBumpDepotOutpost::new, "Left Bump to Left Neutral", "Left Neutral to Left Trench", "Left Trench to Depot", "Rotate at Depot", "Depot to Outpost");
         topBumpDepotOutpostAuton.register(autonChooser);
+
+        AutonConfig startingLineShootAndFerryAuton = new AutonConfig("Starting Line Shoot and Ferry", StartingLineShootAndFerry::new, "Left Trench to Depot", "Rotate at Depot", "depot_to_right_bump", "right_bump_to_left_neutral");
+        startingLineShootAndFerryAuton.register(autonChooser);
+
         SmartDashboard.putData("Autonomous", autonChooser);
     }
 

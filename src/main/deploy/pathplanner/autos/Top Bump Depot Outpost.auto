@@ -13,13 +13,13 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Left Neutral to Left Trench"
+            "pathName": "Left Neutral to Left Bump"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Left Trench to Depot"
+            "pathName": "Left Bump to Depot"
           }
         },
         {
