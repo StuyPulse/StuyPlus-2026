@@ -33,14 +33,22 @@ public class Outpost_Depot_Ferry extends SequentialCommandGroup {
             new FeederForward(),
             new WaitCommand(Settings.Shooter.SHOOT_TIME_AUTO).deadlineFor(new IntakeAgitateOnce().repeatedly()),
             new FeederIdle(),
-
+            new WaitCommand(2),
+            
             CommandSwerveDrivetrain.getInstance().followPathCommand(paths[2])
-                .alongWith(new IntakeSetIdle()),
+                .alongWith(new IntakeSetIntake()),
 
             new SwerveDriveAlignedToHub(),
             new FeederForward(),
             new WaitCommand(Settings.Shooter.SHOOT_TIME_AUTO).deadlineFor(new IntakeAgitateOnce().repeatedly()),
-            new FeederIdle()
+            new FeederIdle(),
+
+            CommandSwerveDrivetrain.getInstance().followPathCommand(paths[3])
+                .alongWith(new IntakeSetIntake()),
+
+            CommandSwerveDrivetrain.getInstance().followPathCommand(paths[4])
+                .alongWith(new IntakeSetIntake()),
+            new IntakeSetIdle()
         );
     }
 }

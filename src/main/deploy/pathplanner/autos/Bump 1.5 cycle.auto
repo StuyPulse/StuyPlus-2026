@@ -7,19 +7,19 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Bump to Neutral"
+            "pathName": "Left Bump to Left Neutral"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Neutral to Left Trench"
+            "pathName": "Left Neutral to Left Bump"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Left Trench to Neutral"
+            "pathName": "Left Bump to Depot"
           }
         }
       ]

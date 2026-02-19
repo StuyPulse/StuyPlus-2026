@@ -31,6 +31,7 @@ public class topBumpDepotOutpost extends SequentialCommandGroup {
 
             CommandSwerveDrivetrain.getInstance().followPathCommand(paths[0])
                 .alongWith(new IntakeSetIntake()),
+            new WaitCommand(2), //Intake time
             CommandSwerveDrivetrain.getInstance().followPathCommand(paths[1])
                 .alongWith(new IntakeSetIdle()),
             
@@ -42,6 +43,7 @@ public class topBumpDepotOutpost extends SequentialCommandGroup {
 
             CommandSwerveDrivetrain.getInstance().followPathCommand(paths[2])
                 .alongWith(new IntakeSetIntake()),
+            new WaitCommand(3), //Intake time
             CommandSwerveDrivetrain.getInstance().followPathCommand(paths[3])
                 .alongWith(new IntakeSetIdle()),
             
