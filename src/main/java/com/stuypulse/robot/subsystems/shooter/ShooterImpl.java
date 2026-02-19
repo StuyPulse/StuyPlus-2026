@@ -5,10 +5,14 @@ import com.ctre.phoenix6.controls.VelocityVoltage;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.MotorAlignmentValue;
 import com.stuypulse.robot.constants.Ports.ShooterPorts;
+import com.stuypulse.robot.subsystems.swerve.CommandSwerveDrivetrain;
+import com.stuypulse.robot.constants.Field;
 import com.stuypulse.robot.constants.Motors;
 import com.stuypulse.robot.util.ShooterInterpolation;
 
+import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.Commands;
 
 import com.stuypulse.robot.util.FerryInterpolation;
 
@@ -18,6 +22,7 @@ public class ShooterImpl extends Shooter {
     private final TalonFX shooterMotor3;
     private final TalonFX bottomMotor1;
     private final TalonFX bottomMotor2;
+    private final CommandSwerveDrivetrain drivetrain;
 
     public ShooterImpl() {
         shooterMotor1 = new TalonFX(ShooterPorts.SHOOTER_MOTOR_1);
@@ -37,14 +42,20 @@ public class ShooterImpl extends Shooter {
         shooterMotor3.setControl(new Follower(ShooterPorts.SHOOTER_MOTOR_1, MotorAlignmentValue.Opposed));
 
         bottomMotor2.setControl(new Follower(ShooterPorts.BOTTOM_MOTOR_1, MotorAlignmentValue.Opposed));
+
+        drivetrain = CommandSwerveDrivetrain.getInstance();
+    }
+
+    public Translation2d getDrivetrainPosition() {
+        return drivetrain.getPose().getTranslation();
     }
 
     public double getShootSpeed(){
-        return ShooterInterpolation.getRPM(5 /*TODO: we do  */);
+        return ShooterInterpolation.getRPM(getDrivetrainPosition().getDistance(Field.getAllianceHubPose().getTranslation()));
     }
 
     public double getFerrySpeed(){
-        return FerryInterpolation.getRPM(5); // TODO: write interpolation for this 六七 shi
+        return FerryInterpolation.getRPM(getDrivetrainPosition().getDistance(Field.getFerryZonePose(getDrivetrainPosition()).getTranslation())); 
     }
 
     public void setVoltagesBasedOnState() {
