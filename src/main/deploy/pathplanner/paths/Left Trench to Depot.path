@@ -3,16 +3,16 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.5732667617689007,
-        "y": 7.263195435092724
+        "x": 3.443880171184022,
+        "y": 7.2890727532097
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.8767220207892676,
-        "y": 6.71786509328939
+        "x": 2.747335430204389,
+        "y": 6.743742411406366
       },
       "isLocked": false,
-      "linkedName": "Left Trench"
+      "linkedName": "Top Trench"
     },
     {
       "anchor": {
@@ -48,7 +48,7 @@
   "folder": null,
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -58.626994859891454
+    "rotation": -154.13364320590554
   },
   "useDefaultConstraints": true
 }

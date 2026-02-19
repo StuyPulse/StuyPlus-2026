@@ -1,0 +1,31 @@
+{
+  "version": "2025.0",
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Bump to Neutral"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Intake Neutral and Ferry"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Rotate at Bottom Neutral"
+          }
+        }
+      ]
+    }
+  },
+  "resetOdom": true,
+  "folder": null,
+  "choreoAuto": false
+}

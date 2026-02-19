@@ -69,7 +69,7 @@
   "folder": null,
   "idealStartingState": {
     "velocity": 2.0,
-    "rotation": 90.1074098024714
+    "rotation": -90.86820936449413
   },
   "useDefaultConstraints": true
 }
