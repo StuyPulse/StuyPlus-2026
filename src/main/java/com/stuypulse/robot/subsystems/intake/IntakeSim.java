@@ -52,6 +52,13 @@ public class IntakeSim extends Intake {
         Settings.Intake.PIVOT_MIN_ANGLE, Settings.Intake.PIVOT_MAX_ANGLE));
     }
 
+    @Override
+    public boolean atAngle() {
+        return Math.abs(
+            (getRelativePosition().getRotations()) - getState().getTargetAngle().getRotations()) 
+                < Settings.Intake.ANGLE_TOLERANCE.getRotations();
+    }
+
     public double getRollerRPM() {
         return intakeRollerMotor.getAngularVelocityRPM();
     }
@@ -60,13 +67,13 @@ public class IntakeSim extends Intake {
     public void periodic() {
         super.periodic();
 
-        double voltage = pivotController.calculate(sim.getAngleRads(), Math.toRadians(getState().getAngle()));
+        double voltage = pivotController.calculate(sim.getAngleRads(), getState().getTargetAngle().getRadians());
         sim.setInputVoltage(voltage);
         sim.update(Settings.DT);
         visualizer.updatePivotAngle(new Rotation2d(sim.getAngleRads()));
 
         SmartDashboard.putNumber("Pivot/voltage", voltage);
         SmartDashboard.putNumber("Pivot/currentAngle", visualizer.getAngles());
-        SmartDashboard.putNumber("Pivot/targetAngle", getState().getAngle());
+        SmartDashboard.putNumber("Pivot/targetAngle", getState().getTargetAngle().getRadians());
     }
 }
