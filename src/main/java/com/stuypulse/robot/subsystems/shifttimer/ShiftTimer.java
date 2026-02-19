@@ -17,7 +17,7 @@ public class ShiftTimer extends SubsystemBase {
     private Timer timer;
     private ShiftState currentState;
     public String gameData;
-    Optional<Alliance> alliance;
+    private Optional<Alliance> alliance;
     Boolean isHubActive;
     Alliance firstActiveAlliance;
 
@@ -83,6 +83,16 @@ public class ShiftTimer extends SubsystemBase {
         AUTONOMOUS,
         TELEOP,
         TEST
+    }
+
+    public boolean getIsHubActive() {
+        if (this.currentState == ShiftState.NOT_GAME) this.isHubActive = false;
+        if (getRobotMode() == RobotState.DISABLED) this.isHubActive = false;
+        if (getRobotMode() == RobotState.TEST) this.isHubActive = false;
+        if (getRobotMode() == RobotState.AUTONOMOUS) this.isHubActive = true;
+        if (getRobotMode() != RobotState.TELEOP) this.isHubActive = true;
+
+        return this.isHubActive;
     }
 
     @Override
