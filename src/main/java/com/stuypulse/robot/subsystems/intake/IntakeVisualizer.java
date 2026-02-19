@@ -35,7 +35,7 @@ public class IntakeVisualizer {
         intake = new MechanismLigament2d(
             "intake",
             Units.inchesToMeters(5),
-            IntakeState.IDLE.getAngle(), 4,
+            IntakeState.IDLE.getTargetAngle().getDegrees(), 4,
             new Color8Bit(Color.kAliceBlue));
 
         pivot = canvas.getRoot("pivot", width / 2, height / 2);

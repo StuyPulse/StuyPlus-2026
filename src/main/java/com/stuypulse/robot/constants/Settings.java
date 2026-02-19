@@ -34,27 +34,28 @@ public interface Settings {
         SmartBoolean LED = new SmartBoolean("Enabled Subsystems/LED", true);
         SmartBoolean Shooter = new SmartBoolean("Enabled Subsystems/Shooter", true);
         SmartBoolean Vision = new SmartBoolean("Enabled Subsystems/Vision", true);
-        SmartBoolean SWERVE = new SmartBoolean("Enabled Subsystems/Swerve", true);
+        SmartBoolean Swerve = new SmartBoolean("Enabled Subsystems/Swerve", true);
     }
 
     public interface Intake {
         double ARM_LENGTH = 1.0; // TODO: get actual value
-        double INTAKE_VOLTAGE = 1.0;
-        double INTAKE_ANGLE = 67;
-        double OUTTAKE_VOLTAGE = -1.0;
-        double OUTTAKE_ANGLE = 67;
-        double IDLE_ANGLE = 67;
-        double IDLE_VOLTAGE = 0;
+        double INTAKE_DUTY_CYCLE = 0.8;
+        Rotation2d INTAKE_ANGLE = Rotation2d.fromDegrees(67);
+        double OUTTAKE_DUTY_CYCLE = -0.8;
+        Rotation2d OUTTAKE_ANGLE = Rotation2d.fromDegrees(67);
+        Rotation2d IDLE_ANGLE = Rotation2d.fromDegrees(67);
+        double IDLE_DUTY_CYCLE = 0;
         double ROLLER_MAX_ACCEL = 0;
         double ROLLER_MAX_VEL = 0;
         double INITIAL_POSITION = 0;
-        double AGITATE_ANGLE = 0;
+        Rotation2d AGITATE_UP_ANGLE = Rotation2d.fromDegrees(10);
+        Rotation2d AGITATE_DOWN_ANGLE = Rotation2d.fromDegrees(-10);
         double JKgMetersSquared = 0.001;
         double PIVOT_MIN_ANGLE = 0.0;
         double PIVOT_MAX_ANGLE = Math.PI / 2;
         double GEAR_RATIO = 20.0;
 
-        double ANGLE_TOLERANCE = 0.5; // degrees
+        Rotation2d ANGLE_TOLERANCE = Rotation2d.fromDegrees(0.5); // degrees
     }
 
     public interface Feeder {

@@ -4,15 +4,12 @@ import com.stuypulse.robot.Robot;
 import com.stuypulse.robot.constants.Settings;
 
 import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public abstract class Intake extends SubsystemBase {
     private static final Intake instance;
     private IntakeState state;
-    protected TrapezoidProfile.State currentPivotState;
-    protected TrapezoidProfile.State targetPivotState;
 
     static {
         if (Robot.isReal()){
@@ -28,28 +25,28 @@ public abstract class Intake extends SubsystemBase {
     }
 
     public enum IntakeState {
-        IDLE(Settings.Intake.IDLE_ANGLE, Settings.Intake.IDLE_VOLTAGE), // (rollers do not run)
-        INTAKE(Settings.Intake.INTAKE_ANGLE, Settings.Intake.INTAKE_VOLTAGE), // (sucks in the balls) [pivot down,
+        IDLE(Settings.Intake.IDLE_ANGLE, Settings.Intake.IDLE_DUTY_CYCLE), // (rollers do not run)
+        INTAKE(Settings.Intake.INTAKE_ANGLE, Settings.Intake.INTAKE_DUTY_CYCLE), // (sucks in the balls) [pivot down,
                                                                               // rollers running]
-        OUTTAKE(Settings.Intake.OUTTAKE_ANGLE, Settings.Intake.OUTTAKE_VOLTAGE), // (trips the balls out) [pivot down,
+        OUTTAKE(Settings.Intake.OUTTAKE_ANGLE, Settings.Intake.OUTTAKE_DUTY_CYCLE), // (trips the balls out) [pivot down,
                                                                                  // rollers running reverse]
-        UP(Settings.Intake.AGITATE_ANGLE, 0),
-        DOWN(-Settings.Intake.AGITATE_ANGLE, 0);
+        UP(Settings.Intake.AGITATE_UP_ANGLE, Settings.Intake.IDLE_DUTY_CYCLE),
+        DOWN(Settings.Intake.AGITATE_DOWN_ANGLE, Settings.Intake.IDLE_DUTY_CYCLE);
 
-        private double voltage;
-        private double angle;
+        private double dutyCycle;
+        private Rotation2d angle;
 
-        private IntakeState(double angle, double voltage) {
-            this.voltage = voltage;
+        private IntakeState(Rotation2d angle, double dutyCycle) {
+            this.dutyCycle = dutyCycle;
             this.angle = angle;
         }
 
-        protected double getAngle() {
+        protected Rotation2d getTargetAngle() {
             return angle;
         }
 
-        protected double getVoltage() {
-            return voltage;
+        protected double getTargetDutyCycle() {
+            return dutyCycle;
         }
     }
 
@@ -66,6 +63,7 @@ public abstract class Intake extends SubsystemBase {
     }
 
     public abstract Rotation2d getRelativePosition();
+    public abstract boolean atAngle();
 
     @Override
     public void periodic() {

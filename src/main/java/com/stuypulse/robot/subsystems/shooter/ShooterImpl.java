@@ -44,7 +44,7 @@ public class ShooterImpl extends Shooter {
     }
 
     public double getFerrySpeed(){
-        return FerryInterpolation.getRPM(5); // TODO: write interpolation for this 六七 shi
+        return FerryInterpolation.getRPM(5); // TODO: write interpolation for this
     }
 
     public void setVoltagesBasedOnState() {
