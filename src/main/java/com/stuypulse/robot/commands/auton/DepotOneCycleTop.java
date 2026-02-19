@@ -29,7 +29,7 @@ public class DepotOneCycleTop extends SequentialCommandGroup {
         addCommands(
             new SwerveDriveAlignedToHub(),
             new FeederForward(),
-            new WaitCommand(Settings.Shooter.SHOOT_TIME_AUTO),
+            new WaitCommand(Settings.Shooter.SHOOT_TIME_AUTO).deadlineFor(new IntakeAgitateOnce().repeatedly()),
             new FeederIdle(),
 
             CommandSwerveDrivetrain.getInstance().followPathCommand(paths[0])

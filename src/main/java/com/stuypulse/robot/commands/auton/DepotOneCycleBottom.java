@@ -12,6 +12,8 @@ import com.stuypulse.robot.commands.feeder.FeederForward;
 import com.stuypulse.robot.commands.feeder.FeederIdle;
 import com.stuypulse.robot.commands.intake.IntakeAgitateOnce;
 import com.stuypulse.robot.commands.intake.IntakeSetIntake;
+import com.stuypulse.robot.commands.shooter.ShooterFerry;
+import com.stuypulse.robot.commands.shooter.ShooterShoot;
 import com.stuypulse.robot.subsystems.swerve.CommandSwerveDrivetrain;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
@@ -38,9 +40,11 @@ public class DepotOneCycleBottom extends SequentialCommandGroup {
             CommandSwerveDrivetrain.getInstance().followPathCommand(paths[2])
                 .alongWith(new IntakeSetIntake()),
             new SwerveDriveAlignedToAllianceZone(),
+            new ShooterFerry(),
             new FeederForward(),
             new WaitCommand(Settings.Shooter.SHOOT_TIME_AUTO).deadlineFor(new IntakeAgitateOnce().repeatedly()),
-            new FeederIdle()
+            new FeederIdle(),
+            new ShooterShoot()
         );
     }
 }
