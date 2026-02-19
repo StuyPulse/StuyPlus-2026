@@ -23,17 +23,11 @@ public class Outpost_Depot_Ferry extends SequentialCommandGroup {
 
     public Outpost_Depot_Ferry(PathPlannerPath... paths){
         addCommands(
-            CommandSwerveDrivetrain.getInstance().followPathCommand(paths[0])
-                .alongWith(new IntakeSetIntake()),
+            CommandSwerveDrivetrain.getInstance().followPathCommand(paths[0]),
             new WaitCommand(2),
 
-            CommandSwerveDrivetrain.getInstance().followPathCommand(paths[1]),
-            
-            new SwerveDriveAlignedToHub(),
-            new FeederForward(),
-            new WaitCommand(Settings.Shooter.SHOOT_TIME_AUTO).deadlineFor(new IntakeAgitateOnce().repeatedly()),
-            new FeederIdle(),
-            new WaitCommand(2),
+            CommandSwerveDrivetrain.getInstance().followPathCommand(paths[1])
+                .alongWith(new IntakeSetIntake()),
             
             CommandSwerveDrivetrain.getInstance().followPathCommand(paths[2])
                 .alongWith(new IntakeSetIntake()),
@@ -48,7 +42,10 @@ public class Outpost_Depot_Ferry extends SequentialCommandGroup {
 
             CommandSwerveDrivetrain.getInstance().followPathCommand(paths[4])
                 .alongWith(new IntakeSetIntake()),
-            new IntakeSetIdle()
+            new SwerveDriveAlignedToHub(),
+            new FeederForward(),
+            new WaitCommand(Settings.Shooter.SHOOT_TIME_AUTO).deadlineFor(new IntakeAgitateOnce().repeatedly()),
+            new FeederIdle()
         );
     }
 }

@@ -24,7 +24,6 @@ public class bumpOnePointFiveCycle extends SequentialCommandGroup{
 
             CommandSwerveDrivetrain.getInstance().followPathCommand(paths[0])
                 .alongWith(new IntakeSetIntake()),
-            new WaitCommand(2), //Intake Time
             CommandSwerveDrivetrain.getInstance().followPathCommand(paths[1])
                 .alongWith(new IntakeSetIdle()),
 

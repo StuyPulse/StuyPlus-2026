@@ -6,6 +6,7 @@
 package com.stuypulse.robot;
 
 import com.stuypulse.robot.commands.auton.DoNothingAuton;
+import com.stuypulse.robot.commands.auton.DoubleBump;
 import com.stuypulse.robot.commands.shooter.ShooterIdle;
 import com.stuypulse.robot.commands.feeder.FeederIdle;
 import com.stuypulse.robot.commands.shooter.ShooterShoot;
@@ -107,6 +108,9 @@ public class RobotContainer {
 
         AutonConfig outpostDepotFerryAuton = new AutonConfig("Output_Depot_Ferry", Outpost_Depot_Ferry::new, "2nd Right Trench to Outpost", "2nd Outpost to Depot", "Rotate at Depot", "Depot to Neutral", "Rotate at Neutral");
         outpostDepotFerryAuton.register(autonChooser);
+
+        AutonConfig doubleBumpauto = new AutonConfig("Double Bump", DoubleBump::new, "right_bump_to_left_neutral", "Left Neutral to Left Bump");
+        doubleBumpauto.register(autonChooser);
 
         SmartDashboard.putData("Autonomous", autonChooser);
     }
