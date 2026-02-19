@@ -1,0 +1,43 @@
+{
+  "version": "2025.0",
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "2nd Right Trench to Outpost"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "2nd Outpost to Depot"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Rotate at Depot"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Depot to Neutral"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Rotate at Neutral"
+          }
+        }
+      ]
+    }
+  },
+  "resetOdom": true,
+  "folder": null,
+  "choreoAuto": false
+}
