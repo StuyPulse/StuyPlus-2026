@@ -12,20 +12,20 @@
         "y": 1.8179127880971178
       },
       "isLocked": false,
-      "linkedName": "Bottom Trench Blue"
+      "linkedName": "Right Bump"
     },
     {
       "anchor": {
-        "x": 7.8,
-        "y": 6.7
+        "x": 7.791269614835947,
+        "y": 6.021084165477889
       },
       "prevControl": {
-        "x": 8.754671320535195,
-        "y": 2.565680628272249
+        "x": 8.745940935371141,
+        "y": 1.886764793750138
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "Left Neutral"
     }
   ],
   "rotationTargets": [

@@ -16,16 +16,16 @@
     },
     {
       "anchor": {
-        "x": 3.525,
-        "y": 0.625
+        "x": 3.366248216833095,
+        "y": 2.3465049928673327
       },
       "prevControl": {
-        "x": 2.525,
-        "y": 0.6250000000000001
+        "x": 2.366248216833095,
+        "y": 2.3465049928673327
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "Right Bump"
     }
   ],
   "rotationTargets": [],
@@ -42,7 +42,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 90.0
+    "rotation": 64.98310652190001
   },
   "reversed": false,
   "folder": null,
