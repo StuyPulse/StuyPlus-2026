@@ -10,8 +10,8 @@ import com.stuypulse.robot.constants.Settings;
 import com.stuypulse.robot.commands.feeder.FeederForward;
 import com.stuypulse.robot.commands.feeder.FeederIdle;
 import com.stuypulse.robot.commands.intake.IntakeAgitateOnce;
-import com.stuypulse.robot.commands.intake.IntakeSetIntake;
 import com.stuypulse.robot.commands.intake.IntakeSetIdle;
+import com.stuypulse.robot.commands.intake.IntakeSetIntake;
 import com.stuypulse.robot.subsystems.swerve.CommandSwerveDrivetrain;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
@@ -19,33 +19,39 @@ import edu.wpi.first.wpilibj2.command.WaitCommand;
 
 import com.pathplanner.lib.path.PathPlannerPath;
 
-public class Outpost_Depot_Ferry extends SequentialCommandGroup {
+public class LeftBumpDepotOutpost extends SequentialCommandGroup {
 
-    public Outpost_Depot_Ferry(PathPlannerPath... paths){
+    public LeftBumpDepotOutpost(PathPlannerPath... paths) {
+
         addCommands(
-            CommandSwerveDrivetrain.getInstance().followPathCommand(paths[0]),
-            new WaitCommand(2),
-
-            CommandSwerveDrivetrain.getInstance().followPathCommand(paths[1])
-                .alongWith(new IntakeSetIntake()),
-            
-            CommandSwerveDrivetrain.getInstance().followPathCommand(paths[2])
-                .alongWith(new IntakeSetIntake()),
-
             new SwerveDriveAlignedToHub(),
             new FeederForward(),
             new WaitCommand(Settings.Shooter.SHOOT_TIME_AUTO).deadlineFor(new IntakeAgitateOnce().repeatedly()),
             new FeederIdle(),
 
-            CommandSwerveDrivetrain.getInstance().followPathCommand(paths[3])
+            CommandSwerveDrivetrain.getInstance().followPathCommand(paths[0])
                 .alongWith(new IntakeSetIntake()),
-
-            CommandSwerveDrivetrain.getInstance().followPathCommand(paths[4])
-                .alongWith(new IntakeSetIntake()),
+            new WaitCommand(2), // intake time
+            CommandSwerveDrivetrain.getInstance().followPathCommand(paths[1])
+                .alongWith(new IntakeSetIdle()),
+            
             new SwerveDriveAlignedToHub(),
             new FeederForward(),
             new WaitCommand(Settings.Shooter.SHOOT_TIME_AUTO).deadlineFor(new IntakeAgitateOnce().repeatedly()),
-            new FeederIdle()
+            new FeederIdle(),
+
+            CommandSwerveDrivetrain.getInstance().followPathCommand(paths[2]),
+            new IntakeSetIntake(),
+            new WaitCommand(3), //Intake time
+            CommandSwerveDrivetrain.getInstance().followPathCommand(paths[3]) // rotate off of the depot
+                .alongWith(new IntakeSetIdle()),
+            
+            new SwerveDriveAlignedToHub(), // shooting from depot
+            new FeederForward(),
+            new WaitCommand(3).deadlineFor(new IntakeAgitateOnce().repeatedly()),
+            new FeederIdle(),
+
+            CommandSwerveDrivetrain.getInstance().followPathCommand(paths[4])
         );
     }
 }

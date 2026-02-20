@@ -8,11 +8,11 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 4.57448077966119,
-        "y": 5.599239018604658
+        "x": 1.7958115183246073,
+        "y": 5.943074461896451
       },
       "isLocked": false,
-      "linkedName": "Top Bump"
+      "linkedName": "Left Bump"
     },
     {
       "anchor": {
@@ -48,7 +48,7 @@
   "folder": null,
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 0.04179122491046753
+    "rotation": -55.30484646876596
   },
   "useDefaultConstraints": true
 }

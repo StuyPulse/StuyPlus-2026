@@ -7,7 +7,13 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Left Trench to Depot"
+            "pathName": "Right Trench to Outpost"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Outpost to Depot"
           }
         },
         {
@@ -19,25 +25,13 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Depot to Outpost"
+            "pathName": "Depot to Neutral"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Rotate at Outpost"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "Outpost to Right Bump"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "right_bump_to_left_neutral"
+            "pathName": "Intake Neutral and Middle Ferry"
           }
         }
       ]

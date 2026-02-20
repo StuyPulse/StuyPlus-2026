@@ -15,12 +15,6 @@
           "data": {
             "pathName": "Intake Neutral and Ferry"
           }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "Rotate at Bottom Neutral"
-          }
         }
       ]
     }

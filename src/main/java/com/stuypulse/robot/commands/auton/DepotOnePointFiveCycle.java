@@ -21,9 +21,9 @@ import edu.wpi.first.wpilibj2.command.WaitCommand;
 
 import com.pathplanner.lib.path.PathPlannerPath;
 
-public class StartingLineShootAndFerry extends SequentialCommandGroup {
+public class DepotOnePointFiveCycle extends SequentialCommandGroup {
 
-    public StartingLineShootAndFerry(PathPlannerPath... paths) {
+    public DepotOnePointFiveCycle(PathPlannerPath... paths) {
 
         addCommands(
             CommandSwerveDrivetrain.getInstance().followPathCommand(paths[0])
@@ -37,14 +37,9 @@ public class StartingLineShootAndFerry extends SequentialCommandGroup {
             new WaitCommand(Settings.Shooter.SHOOT_TIME_AUTO).deadlineFor(new IntakeAgitateOnce().repeatedly()),
             new FeederIdle(),
 
-            CommandSwerveDrivetrain.getInstance().followPathCommand(paths[2])
-                .alongWith(new IntakeSetIntake()),
-            new SwerveDriveAlignedToAllianceZone(),
-            new ShooterFerry(),
-            new FeederForward(),
-            new WaitCommand(Settings.Shooter.SHOOT_TIME_AUTO).deadlineFor(new IntakeAgitateOnce().repeatedly()),
-            new FeederIdle(),
-            new ShooterShoot()
+            CommandSwerveDrivetrain.getInstance().followPathCommand(paths[2]),
+            CommandSwerveDrivetrain.getInstance().followPathCommand(paths[3])
+                .alongWith(new IntakeSetIntake()) // consider ferrying here
         );
     }
 }

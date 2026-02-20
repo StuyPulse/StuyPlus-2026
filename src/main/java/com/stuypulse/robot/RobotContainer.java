@@ -19,9 +19,9 @@ import com.stuypulse.robot.constants.Field;
 import com.stuypulse.robot.constants.Ports;
 import com.stuypulse.robot.subsystems.intake.Intake;
 import com.stuypulse.robot.subsystems.shifttimer.ShiftTimer;
-import com.stuypulse.robot.commands.auton.topBumpDepotOutpost;
-import com.stuypulse.robot.commands.auton.StartingLineShootAndFerry;
-import com.stuypulse.robot.commands.auton.Outpost_Depot_Ferry;
+import com.stuypulse.robot.commands.auton.LeftBumpDepotOutpost;
+import com.stuypulse.robot.commands.auton.DepotOnePointFiveCycle;
+import com.stuypulse.robot.commands.auton.OutpostDepotOnePointFiveCycle;
 import com.stuypulse.robot.util.PathUtil.AutonConfig;
 // import com.stuypulse.robot.commands.intake.IntakeAgitateOnce;
 // import com.stuypulse.robot.commands.intake.IntakeSetDown;
@@ -100,17 +100,34 @@ public class RobotContainer {
     public void configureAutons() {
         autonChooser.addOption("Do Nothing", new DoNothingAuton());
 
-        AutonConfig topBumpDepotOutpostAuton = new AutonConfig("Top Bump Depot Outpost", topBumpDepotOutpost::new, "Left Bump to Left Neutral", "Left Neutral to Left Trench", "Left Trench to Depot", "Rotate at Depot", "Depot to Outpost");
-        topBumpDepotOutpostAuton.register(autonChooser);
 
-        AutonConfig startingLineShootAndFerryAuton = new AutonConfig("Starting Line Shoot and Ferry", StartingLineShootAndFerry::new, "Left Trench to Depot", "Rotate at Depot", "depot_to_right_bump", "right_bump_to_left_neutral");
-        startingLineShootAndFerryAuton.register(autonChooser);
+        AutonConfig outpostDepotOnePointFiveAuton = new AutonConfig("Outpost Depot 1.5 cycle", OutpostDepotOnePointFiveCycle::new, 
+            "Right Trench to Outpost", 
+            "Outpost to Depot", 
+            "Rotate at Depot", 
+            "Depot to Neutral", 
+            "Intake Neutral and Middle Ferry");
+        outpostDepotOnePointFiveAuton.register(autonChooser);
 
-        AutonConfig outpostDepotFerryAuton = new AutonConfig("Output_Depot_Ferry", Outpost_Depot_Ferry::new, "2nd Right Trench to Outpost", "2nd Outpost to Depot", "Rotate at Depot", "Depot to Neutral", "Rotate at Neutral");
-        outpostDepotFerryAuton.register(autonChooser);
+        AutonConfig leftBumpDepotOutpostAuton = new AutonConfig("Left Bump Depot Outpost", LeftBumpDepotOutpost::new, 
+            "Left Bump to Left Neutral", 
+            "Left Neutral to Left Bump", 
+            "Left Bump to Depot", 
+            "Rotate at Depot", 
+            "Depot to Outpost");
+        leftBumpDepotOutpostAuton.register(autonChooser);
 
-        AutonConfig doubleBumpauto = new AutonConfig("Double Bump", DoubleBump::new, "right_bump_to_left_neutral", "Left Neutral to Left Bump");
-        doubleBumpauto.register(autonChooser);
+        AutonConfig depotOnePointFiveAuton = new AutonConfig("Depot 1.5 cycle", DepotOnePointFiveCycle::new, 
+            "Left Trench to Depot", 
+            "Rotate at Depot", 
+            "Depot to Right Bump", 
+            "Right Bump to Left Neutral");
+        depotOnePointFiveAuton.register(autonChooser);
+
+        AutonConfig doubleBumpAuton = new AutonConfig("Double Bump", DoubleBump::new, 
+            "Right Bump to Left Neutral", 
+            "Left Neutral to Left Bump");
+        doubleBumpAuton.register(autonChooser);
 
         SmartDashboard.putData("Autonomous", autonChooser);
     }

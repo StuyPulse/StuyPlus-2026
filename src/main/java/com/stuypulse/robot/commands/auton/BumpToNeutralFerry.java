@@ -26,8 +26,8 @@ public class BumpToNeutralFerry extends SequentialCommandGroup {
             
             CommandSwerveDrivetrain.getInstance().followPathCommand(paths[0]) 
                 .alongWith(new IntakeSetIntake()),
-            CommandSwerveDrivetrain.getInstance().followPathCommand(paths[1]),
-            CommandSwerveDrivetrain.getInstance().followPathCommand(paths[2]),
+            CommandSwerveDrivetrain.getInstance().followPathCommand(paths[1])
+                .alongWith(new IntakeSetIntake()),
             new SwerveDriveAlignedToAllianceZone(),
             new ShooterFerry(),
             new FeederForward(),

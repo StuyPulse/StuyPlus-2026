@@ -7,13 +7,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "2nd Right Trench to Outpost"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "2nd Outpost to Depot"
+            "pathName": "Left Trench to Depot"
           }
         },
         {
@@ -25,13 +19,25 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Depot to Neutral"
+            "pathName": "Depot to Outpost"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Rotate at Neutral"
+            "pathName": "Rotate at Outpost"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Outpost to Right Bump"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Right Bump to Left Neutral"
           }
         }
       ]

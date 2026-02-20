@@ -14,8 +14,8 @@ import com.stuypulse.robot.constants.Settings;
 import com.stuypulse.robot.subsystems.swerve.CommandSwerveDrivetrain;
 
 
-public class bumpOnePointFiveCycle extends SequentialCommandGroup{
-    public bumpOnePointFiveCycle(PathPlannerPath... paths) {
+public class LeftBumpOnePointFiveCycle extends SequentialCommandGroup{
+    public LeftBumpOnePointFiveCycle(PathPlannerPath... paths) {
         addCommands(
             new SwerveDriveAlignedToHub(),
             new FeederForward(),
@@ -32,14 +32,15 @@ public class bumpOnePointFiveCycle extends SequentialCommandGroup{
             new WaitCommand(Settings.Shooter.SHOOT_TIME_AUTO).deadlineFor(new IntakeAgitateOnce().repeatedly()),
             new FeederIdle(),
 
-            CommandSwerveDrivetrain.getInstance().followPathCommand(paths[2])
-                .alongWith(new IntakeSetIntake()), 
-            new WaitCommand(3), //Intake Time
+            CommandSwerveDrivetrain.getInstance().followPathCommand(paths[2]),
+            new IntakeSetIntake(), 
+            new WaitCommand(3), // intake Time
             
             new SwerveDriveAlignedToHub(),
             new FeederForward(),
             new WaitCommand(Settings.Shooter.SHOOT_TIME_AUTO).deadlineFor(new IntakeAgitateOnce().repeatedly()),
-            new FeederIdle()
+            new FeederIdle() // done without the usage of a rotation path?
+            // TODO: consider removing usage of rotation paths (paths that only rotate the robot about a point)
         );
     }
 }
