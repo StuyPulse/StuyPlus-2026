@@ -37,7 +37,7 @@ public class SwerveDriveDrive extends Command {
             new VRateLimit(Swerve.Constraints.MAX_ACCEL_M_PER_S_SQUARED),
             new VLowPassFilter(Drive.RC)
         );
-
+        
         turn = IStream.create(driver::getRightX)
         .filtered(
             x -> SLMath.deadband(x, Turn.DEADBAND),
@@ -52,7 +52,7 @@ public class SwerveDriveDrive extends Command {
     }
 
     private Vector2D getDriverInputAsVelocity() {
-        return new Vector2D(-driver.getLeftStick().y, driver.getLeftStick().x);
+        return new Vector2D(driver.getLeftStick().y, -driver.getLeftStick().x);
     }
 
     @Override

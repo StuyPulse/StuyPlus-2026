@@ -8,17 +8,27 @@ import com.stuypulse.robot.subsystems.shooter.Shooter.ShooterState;
 import com.stuypulse.robot.constants.Settings;
 import com.stuypulse.robot.subsystems.feeder.Feeder;
 import com.stuypulse.robot.subsystems.feeder.Feeder.FeederState;
+import com.stuypulse.robot.subsystems.intake.Intake;
+import com.stuypulse.robot.subsystems.intake.Intake.IntakeState;
+import com.stuypulse.robot.subsystems.shifttimer.ShiftTimer;
+import com.stuypulse.robot.subsystems.shifttimer.ShiftTimer.RobotState;
+import com.stuypulse.robot.subsystems.vision.LimelightVision;
+
+
+
 
 public class LEDDefaultCommand extends Command {
 
     private final LEDController leds;
     private final Shooter shooter;
     private final Feeder feeder;
+    private final Intake intake;
 
     public LEDDefaultCommand() {
         this.leds = LEDController.getInstance();
         this.shooter = Shooter.getInstance();
         this.feeder = Feeder.getInstance();
+        this.intake = Intake.getInstance();
         
     }
 
@@ -39,16 +49,16 @@ public class LEDDefaultCommand extends Command {
 
     }
 
+    private boolean intaking(){
+        return intake.getState() == IntakeState.INTAKE;
+    }
+
     @Override
     public void execute() {
-        /*
-        if (Robot.getMode()== RobotMode.DISABLED) {
-            leds.applyPattern(LEDPattern.kOff);
-        }
-        */
-
-         
-        if (isShooting()) {
+        
+        if (ShiftTimer.getInstance().getRobotMode() == RobotState.DISABLED) { 
+            leds.applyPattern(Settings.LED.DISABLED);
+        } else if (isShooting()) {
             leds.applyPattern(Settings.LED.shooterShooting);
         } 
         else if (feederForward()) {
@@ -60,10 +70,12 @@ public class LEDDefaultCommand extends Command {
         else if (isFerrying()) {
             leds.applyPattern(Settings.LED.ferrying);
         }
+        else if (intaking()){
+            leds.applyPattern(Settings.LED.intaking);
+        }
         else {
             leds.applyPattern(LEDPattern.kOff);
         }
         
     }
 }
-

@@ -319,7 +319,7 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
      * <p>
      * Note that the vision measurement standard deviations passed into this method
      * will continue to apply to future measurements until a subsequent call to
-     * {@link #setVisionMeasurementStdDevs(Matrix)} or this method.
+     * {@link #setVisionMeasurementStdDevs(Matrgix)} or this method.
      *
      * @param visionRobotPoseMeters The pose of the robot as measured by the vision camera.
      * @param timestampSeconds The timestamp of the vision measurement in seconds.
@@ -339,7 +339,7 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
         return getState().Pose;
     }
 
-    public void configureAutoBuilder() {
+    public void configureAutoBuilder(){
         try{
             AutoBuilder.configure(
                 this::getPose,

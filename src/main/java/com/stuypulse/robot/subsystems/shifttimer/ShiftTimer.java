@@ -1,8 +1,6 @@
 package com.stuypulse.robot.subsystems.shifttimer;
 
-import java.sql.Driver;
 import java.util.Optional;
-import java.util.function.Supplier;
 
 import com.stuypulse.robot.constants.Shifts;
 import com.stuypulse.robot.constants.Shifts.ShiftState;
@@ -37,13 +35,13 @@ public class ShiftTimer extends SubsystemBase {
         this.isHubActive = false;
 
         this.alliance = DriverStation.getAlliance();
-        if (!alliance.isPresent()) {
+        if (!alliance.isPresent()) { // TODO: add proper competition mode check
             this.currentState = ShiftState.NOT_GAME;
         } else {
             this.currentState = ShiftState.PRE_GAME;
         }
         SmartDashboard.putString("ShiftTimer/ShiftState", this.currentState.name());
-    }
+    } 
 
     private String formatTime(double time) {
         int minutes = (int) Math.floor(time / 60);
@@ -53,8 +51,10 @@ public class ShiftTimer extends SubsystemBase {
     }
 
     private void setFirstActiveAlliance() {
-        this.gameData = DriverStation.getGameSpecificMessage();
-        SmartDashboard.putString("ShiftTimer/GameData", gameData);
+        if (!DriverStation.getAlliance().isPresent()) return;
+        this.gameData = DriverStation.getAlliance().get().name();
+
+        if (gameData.isEmpty()) return;
 
         switch (gameData.charAt(0)) {
             case 'R' -> {
@@ -66,7 +66,7 @@ public class ShiftTimer extends SubsystemBase {
         }
     }
 
-    private RobotState getRobotMode() {
+    public RobotState getRobotMode() {
         if (DriverStation.isDisabled())
             return RobotState.DISABLED;
         if (DriverStation.isAutonomousEnabled())
@@ -155,5 +155,6 @@ public class ShiftTimer extends SubsystemBase {
         SmartDashboard.putString("ShiftTimer/Time", formatTime(timer.get()));
         SmartDashboard.putNumber("ShiftTimer/RawTimer", timer.get());
         SmartDashboard.putBoolean("ShiftTimer/IsHubActive", this.isHubActive);
+        SmartDashboard.putString("ShiftTimer/GameData", gameData);
     }
 }

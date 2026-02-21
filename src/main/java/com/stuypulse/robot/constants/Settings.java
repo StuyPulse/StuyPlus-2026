@@ -66,12 +66,20 @@ public interface Settings {
     public interface LED {
         int LED_LENGTH = 68; // TODO: ask Plus-ME for LED Length
 
+        //shooter
         LEDPattern shooterShooting = LEDPattern.solid(Color.kOrange);
+        LEDPattern ferrying = LEDPattern.solid(Color.kPurple);
+
+        //feeder
         LEDPattern feederForward= LEDPattern.solid(Color.kBlue);
         LEDPattern feederReverse = LEDPattern.solid(Color.kRed);
-        LEDPattern ferrying = LEDPattern.solid(Color.kPurple);
+
+        //intake
         LEDPattern intaking = LEDPattern.solid(Color.kYellow);
         LEDPattern outtaking = LEDPattern.solid(Color.kGreen);
+
+        //states
+        LEDPattern DISABLED = LEDPattern.solid(Color.kGray);
     }
 
     public interface Shooter {
