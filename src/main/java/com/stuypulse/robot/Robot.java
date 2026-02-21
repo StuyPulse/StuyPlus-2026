@@ -19,7 +19,7 @@ public class Robot extends TimedRobot {
 
     public static boolean isBlue() {
         return alliance == Alliance.Blue;
-    }
+    } 
 
     /*************************/
     /*** ROBOT SCHEDULEING ***/

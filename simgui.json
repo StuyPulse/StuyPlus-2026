@@ -1,4 +1,18 @@
 {
+  "HALProvider": {
+    "Addressable LEDs": {
+      "window": {
+        "visible": true
+      }
+    },
+    "Other Devices": {
+      "Talon FX (v6)[13]/Fwd Limit": {
+        "header": {
+          "open": true
+        }
+      }
+    }
+  },
   "NTProvider": {
     "types": {
       "/FMSInfo": "FMSInfo",
@@ -10,6 +24,11 @@
       "/SmartDashboard/Visualizers/Shooter": "Mechanism2d"
     },
     "windows": {
+      "/SmartDashboard/Autonomous": {
+        "window": {
+          "visible": true
+        }
+      },
       "/SmartDashboard/Field": {
         "bottom": 1914,
         "height": 8.069275856018066,
@@ -41,11 +60,15 @@
   "NetworkTables": {
     "transitory": {
       "SmartDashboard": {
+        "Shooter": {
+          "open": true
+        },
         "Swerve": {
           "Pose": {
             "open": false
           }
-        }
+        },
+        "open": true
       }
     }
   },

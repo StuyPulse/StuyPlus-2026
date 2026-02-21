@@ -1,6 +1,7 @@
 package com.stuypulse.robot.commands.led;
 
 import edu.wpi.first.wpilibj.LEDPattern;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import com.stuypulse.robot.subsystems.led.LEDController;
 import com.stuypulse.robot.subsystems.shooter.Shooter;
@@ -15,8 +16,6 @@ import com.stuypulse.robot.subsystems.shifttimer.ShiftTimer.RobotState;
 import com.stuypulse.robot.subsystems.vision.LimelightVision;
 
 
-
-
 public class LEDDefaultCommand extends Command {
 
     private final LEDController leds;
@@ -29,7 +28,8 @@ public class LEDDefaultCommand extends Command {
         this.shooter = Shooter.getInstance();
         this.feeder = Feeder.getInstance();
         this.intake = Intake.getInstance();
-        
+
+        addRequirements(leds);
     }
 
     private boolean isShooting() {
@@ -46,36 +46,49 @@ public class LEDDefaultCommand extends Command {
 
     private boolean feederReversed() {
         return feeder.getState() == FeederState.REVERSE;
-
     }
 
     private boolean intaking(){
         return intake.getState() == IntakeState.INTAKE;
     }
 
+    private boolean outtaking(){
+        return intake.getState() == IntakeState.OUTTAKE;
+    }
+
+
+// https://docs.wpilib.org/en/stable/docs/software/hardware-apis/misc/addressable-leds.html
+    
     @Override
     public void execute() {
         
         if (ShiftTimer.getInstance().getRobotMode() == RobotState.DISABLED) { 
             leds.applyPattern(Settings.LED.DISABLED);
-        } else if (isShooting()) {
-            leds.applyPattern(Settings.LED.shooterShooting);
-        } 
-        else if (feederForward()) {
-            leds.applyPattern(Settings.LED.feederForward);
-        }
-        else if (feederReversed()) {
-            leds.applyPattern(Settings.LED.feederReverse);
-        }
-        else if (isFerrying()) {
-            leds.applyPattern(Settings.LED.ferrying);
-        }
-        else if (intaking()){
-            leds.applyPattern(Settings.LED.intaking);
-        }
-        else {
+        } else {
             leds.applyPattern(LEDPattern.kOff);
         }
         
+        if (isShooting()) {
+            leds.applyShoot(Settings.LED.shooterShooting);
+        } 
+        if (feederForward()) {
+            leds.applyFeed(Settings.LED.feederForward);
+        } 
+        if (feederReversed()) {
+            leds.applyFeed(Settings.LED.feederReverse);
+        } 
+        if (isFerrying()) {
+            leds.applyShoot(Settings.LED.ferrying);
+        } 
+        if (intaking()){
+            leds.applyIntake(Settings.LED.intaking);
+        } 
+        if (outtaking()){
+            leds.applyIntake(Settings.LED.outtaking);
+        } 
+        
+        if (!isShooting() && !feederForward() && !feederReversed() && !isFerrying() && !intaking() && !outtaking()) {
+            leds.applyPattern(LEDPattern.kOff);
+        }
     }
 }

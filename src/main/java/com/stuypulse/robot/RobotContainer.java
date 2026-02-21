@@ -12,13 +12,19 @@ import com.stuypulse.robot.commands.shooter.ShooterIdle;
 import com.stuypulse.robot.commands.feeder.FeederIdle;
 import com.stuypulse.robot.commands.shooter.ShooterShoot;
 import com.stuypulse.robot.commands.swerve.SwerveDriveDrive;
+import com.stuypulse.robot.commands.swerve.driveAligned.SwerveDriveAlignedToHub;
 import com.stuypulse.robot.commands.feeder.FeederForward;
 import com.stuypulse.robot.commands.shooter.ShooterFerry;
 import com.stuypulse.robot.commands.feeder.FeederReverse;
 import com.stuypulse.robot.commands.intake.IntakeSetIdle;
+import com.stuypulse.robot.commands.intake.IntakeSetIntake;
+import com.stuypulse.robot.commands.led.LEDApplyPattern;
+import com.stuypulse.robot.commands.led.LEDDefaultCommand;
 import com.stuypulse.robot.constants.Field;
 import com.stuypulse.robot.constants.Ports;
+import com.stuypulse.robot.constants.Settings;
 import com.stuypulse.robot.subsystems.intake.Intake;
+import com.stuypulse.robot.subsystems.led.LEDController;
 import com.stuypulse.robot.subsystems.shifttimer.ShiftTimer;
 import com.stuypulse.robot.commands.auton.LeftBumpDepotOutpost;
 import com.stuypulse.robot.commands.auton.DepotOnePointFiveCycle;
@@ -48,15 +54,16 @@ public class RobotContainer {
     
     // Subsystem
 
-    @SuppressWarnings("unused")
+    // @SuppressWarnings("unused")
 	private final Intake intake = Intake.getInstance();
-    @SuppressWarnings("unused")
+    // @SuppressWarnings("unused")
     private final Shooter shooter = Shooter.getInstance();
-    @SuppressWarnings("unused")
+    // @SuppressWarnings("unused")
     private final Feeder feeder = Feeder.getInstance();
-    @SuppressWarnings("unused") 
+    // @SuppressWarnings("unused") 
     private final ShiftTimer shiftTimer = ShiftTimer.getInstance();
     private final CommandSwerveDrivetrain swerve = CommandSwerveDrivetrain.getInstance();
+    private final LEDController leds = LEDController.getInstance();
     // Autons
     private static SendableChooser<Command> autonChooser = new SendableChooser<>();
 
@@ -77,8 +84,9 @@ public class RobotContainer {
 
     private void configureDefaultCommands() {
         swerve.setDefaultCommand(new SwerveDriveDrive(driver));
-        new ShooterShoot();
-        new IntakeSetIdle();
+        shooter.setDefaultCommand(new ShooterShoot());
+        intake.setDefaultCommand(new IntakeSetIdle());
+        leds.setDefaultCommand(new LEDDefaultCommand());
     }
 
     /***************/
@@ -89,15 +97,7 @@ public class RobotContainer {
         driver.getTopButton()
             .whileTrue(new FeederForward());
         driver.getBottomButton()
-            .whileTrue(new FeederReverse());
-        driver.getRightBumper()
-            .whileTrue(new ShooterShoot());
-        driver.getRightButton()
-            .whileTrue(new ShooterFerry());
-        driver.getDPadDown()
-            .whileTrue(new ShooterIdle());
-        driver.getLeftBumper()
-            .whileTrue(new FeederIdle());
+            .whileTrue(new IntakeSetIntake());
     }
 
     /**************/

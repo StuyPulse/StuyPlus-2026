@@ -14,7 +14,7 @@ public interface Ports {
     }
 
     public interface LED {
-        int PORT = 67; // TODO: ask Plus-ME for the port
+        int PORT = 2; // TODO: ask Plus-ME for the port
     }
 
     public interface ShooterPorts { // Temporary until the big mec-e people give us the ports
