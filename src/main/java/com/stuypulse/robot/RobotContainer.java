@@ -98,6 +98,8 @@ public class RobotContainer {
             .whileTrue(new FeederForward());
         driver.getBottomButton()
             .whileTrue(new IntakeSetIntake());
+        driver.getLeftButton()
+            .whileTrue(new FeederIdle());
     }
 
     /**************/

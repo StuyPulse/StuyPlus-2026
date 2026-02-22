@@ -60,6 +60,9 @@
   "NetworkTables": {
     "transitory": {
       "SmartDashboard": {
+        "Feeder": {
+          "open": true
+        },
         "Shooter": {
           "open": true
         },

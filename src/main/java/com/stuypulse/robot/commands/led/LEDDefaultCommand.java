@@ -40,6 +40,10 @@ public class LEDDefaultCommand extends Command {
         return shooter.getState() == ShooterState.FERRYING;
     }
 
+    private boolean shooterIdle() {
+        return shooter.getState() == ShooterState.IDLE;
+    }
+
     private boolean feederForward() {
         return feeder.getState() == FeederState.FORWARD;
     }
@@ -48,12 +52,20 @@ public class LEDDefaultCommand extends Command {
         return feeder.getState() == FeederState.REVERSE;
     }
 
+    private boolean feederIdle() {
+        return feeder.getState() == FeederState.STOP;
+    }
+
     private boolean intaking(){
         return intake.getState() == IntakeState.INTAKE;
     }
 
     private boolean outtaking(){
         return intake.getState() == IntakeState.OUTTAKE;
+    }
+
+    private boolean intakeIdle() {
+        return intake.getState() == IntakeState.IDLE;
     }
 
 
@@ -71,24 +83,29 @@ public class LEDDefaultCommand extends Command {
         if (isShooting()) {
             leds.applyShoot(Settings.LED.shooterShooting);
         } 
+        if (isFerrying()) {
+            leds.applyShoot(Settings.LED.ferrying);
+        } 
+        if (shooterIdle()) {
+            leds.applyShoot(LEDPattern.kOff);
+        }
         if (feederForward()) {
             leds.applyFeed(Settings.LED.feederForward);
         } 
         if (feederReversed()) {
             leds.applyFeed(Settings.LED.feederReverse);
         } 
-        if (isFerrying()) {
-            leds.applyShoot(Settings.LED.ferrying);
-        } 
+        if (feederIdle()) {
+            leds.applyFeed(LEDPattern.kOff);
+        }
         if (intaking()){
             leds.applyIntake(Settings.LED.intaking);
         } 
         if (outtaking()){
             leds.applyIntake(Settings.LED.outtaking);
         } 
-        
-        if (!isShooting() && !feederForward() && !feederReversed() && !isFerrying() && !intaking() && !outtaking()) {
-            leds.applyPattern(LEDPattern.kOff);
+        if (intakeIdle()) {
+            leds.applyIntake(LEDPattern.kOff);
         }
     }
 }
