@@ -24,7 +24,7 @@ public class FeederImpl extends Feeder {
     }
 
     public void setMotors() {
-        feederMotor1.setControl(new VelocityVoltage(getState().getTargetRPM()));
+        feederMotor1.setControl(new VelocityVoltage(getState().getTargetRPM() / 60));
     }
 
     @Override

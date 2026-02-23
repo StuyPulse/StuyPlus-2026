@@ -58,11 +58,11 @@ public class ShooterImpl extends Shooter {
     }
 
     public void setVoltagesBasedOnState() {
-        double targetRPM = getState().getTargetRPM() / 60;
+        double targetRPS = getState().getTargetRPM() / 60;
 
-        shooterMotor1.setControl(new VelocityVoltage(targetRPM)); // TODO: periodic stuff
+        shooterMotor1.setControl(new VelocityVoltage(targetRPS)); // TODO: periodic stuff
 
-        bottomMotor1.setControl(new VelocityVoltage(targetRPM));
+        bottomMotor1.setControl(new VelocityVoltage(targetRPS));
     }
 
     @Override

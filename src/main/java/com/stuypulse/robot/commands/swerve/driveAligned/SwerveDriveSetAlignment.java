@@ -12,12 +12,12 @@ import edu.wpi.first.wpilibj2.command.Command;
 
 import com.ctre.phoenix6.swerve.SwerveRequest; 
 
-public class SwerveDriveGetAlignment extends Command {
+public class SwerveDriveSetAlignment extends Command {
     protected static final CommandSwerveDrivetrain instance;
     protected final BStream isAligned;
     private Pose2d pose;
     
-    protected SwerveDriveGetAlignment(Pose2d pose) {
+    protected SwerveDriveSetAlignment(Pose2d pose) {
         this.isAligned = BStream.create(this::isAligned)
             .filtered(new BDebounceRC.Both(Settings.Swerve.Alignment.Tolerances.ALIGNMENT_DEBOUNCE));
         this.pose = pose;

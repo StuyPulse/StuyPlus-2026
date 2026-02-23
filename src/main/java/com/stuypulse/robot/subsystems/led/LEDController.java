@@ -68,7 +68,7 @@ public class LEDController extends SubsystemBase {
 
     public void applyPattern(LEDPattern pattern) {
         if (!Settings.EnabledSubsystems.LED.get()) return; // because 20 milliseconds intervals, it might blink, and it's unnecessary to set it if disabled
-        //pattern.applyTo(buffer);
+        pattern.applyTo(buffer);
     }
 
 
