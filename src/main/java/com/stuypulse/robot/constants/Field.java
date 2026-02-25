@@ -50,6 +50,11 @@ public interface Field {
         }
     }
 
+    // ZONE COORDINATES
+
+    public static final Pose2d allianceZone = new Pose2d(Units.inchesToMeters(182.11), WIDTH, new Rotation2d());
+
+
     /*** APRILTAGS ***/
 
     enum NamedTags {

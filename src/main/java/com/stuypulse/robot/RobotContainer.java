@@ -14,6 +14,7 @@ import com.stuypulse.robot.commands.shooter.ShooterShoot;
 import com.stuypulse.robot.commands.swerve.SwerveDriveDrive;
 import com.stuypulse.robot.commands.swerve.driveAligned.SwerveDriveAlignedToHub;
 import com.stuypulse.robot.commands.feeder.FeederForward;
+import com.stuypulse.robot.commands.shooter.ShooterDefaultCommand;
 import com.stuypulse.robot.commands.shooter.ShooterFerry;
 import com.stuypulse.robot.commands.feeder.FeederReverse;
 import com.stuypulse.robot.commands.intake.IntakeSetIdle;
@@ -24,6 +25,7 @@ import com.stuypulse.robot.constants.Field;
 import com.stuypulse.robot.constants.Ports;
 import com.stuypulse.robot.constants.Settings;
 import com.stuypulse.robot.subsystems.intake.Intake;
+import com.stuypulse.robot.commands.intake.IntakeDefaultCommand;
 import com.stuypulse.robot.subsystems.led.LEDController;
 import com.stuypulse.robot.subsystems.shifttimer.ShiftTimer;
 import com.stuypulse.robot.commands.auton.LeftBumpDepotOutpost;
@@ -84,8 +86,8 @@ public class RobotContainer {
 
     private void configureDefaultCommands() {
         swerve.setDefaultCommand(new SwerveDriveDrive(driver));
-        shooter.setDefaultCommand(new ShooterShoot());
-        intake.setDefaultCommand(new IntakeSetIdle());
+        shooter.setDefaultCommand(new ShooterDefaultCommand());
+       // intake.setDefaultCommand(new IntakeDefaultCommand());
         leds.setDefaultCommand(new LEDDefaultCommand());
     }
 
@@ -100,6 +102,8 @@ public class RobotContainer {
             .whileTrue(new IntakeSetIntake());
         driver.getLeftButton()
             .whileTrue(new FeederIdle());
+        driver.getRightButton()
+            .whileTrue(new ShooterFerry());
     }
 
     /**************/
