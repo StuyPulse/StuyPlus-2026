@@ -85,10 +85,10 @@ public class ShooterImpl extends Shooter {
         if (Settings.EnabledSubsystems.Shooter.get()) {
             if (voltageOverride.isPresent()) {
                 shooterMotor1.setVoltage(voltageOverride.get());
+            } else {
+                setVoltagesBasedOnState();
             }
-
         }
-        setVoltagesBasedOnState();
 
         SmartDashboard.putNumber("Shooter/Target RPM", getState().getTargetRPM());
         SmartDashboard.putNumber("Shooter/Current RPM", shooterMotor1.getVelocity().getValueAsDouble() * 60);
