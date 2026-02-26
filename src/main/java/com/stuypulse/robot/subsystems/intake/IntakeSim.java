@@ -21,7 +21,6 @@ public class IntakeSim extends Intake {
     private DCMotorSim intakePivotMotor;
     private PIDController pivotController;
     private final SingleJointedArmSim sim;
-    private IntakeVisualizer visualizer;
     
     public IntakeSim() {
         DCMotor gearbox = DCMotor.getKrakenX60(1);
@@ -29,7 +28,6 @@ public class IntakeSim extends Intake {
         intakePivotMotor = new DCMotorSim(system, gearbox);
         intakeRollerMotor = new DCMotorSim(system, gearbox);
 
-        visualizer = IntakeVisualizer.getInstance();
         pivotController = new PIDController(
             Gains.Intake.kP,
             Gains.Intake.kI,
@@ -59,6 +57,7 @@ public class IntakeSim extends Intake {
                 < Settings.Intake.ANGLE_TOLERANCE.getRotations();
     }
 
+    @Override
     public double getRollerRPM() {
         return intakeRollerMotor.getAngularVelocityRPM();
     }
@@ -70,10 +69,9 @@ public class IntakeSim extends Intake {
         double voltage = pivotController.calculate(sim.getAngleRads(), getState().getTargetAngle().getRadians());
         sim.setInputVoltage(voltage);
         sim.update(Settings.DT);
-        visualizer.updatePivotAngle(new Rotation2d(sim.getAngleRads()));
 
         SmartDashboard.putNumber("Pivot/voltage", voltage);
-        SmartDashboard.putNumber("Pivot/currentAngle", visualizer.getAngles());
+        SmartDashboard.putNumber("Pivot/currentAngle", Math.toDegrees(sim.getAngleRads()));
         SmartDashboard.putNumber("Pivot/targetAngle", getState().getTargetAngle().getRadians());
     }
 }

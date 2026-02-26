@@ -256,7 +256,7 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
 
     @Override
     public void setControl(SwerveRequest request) {
-        if (Settings.EnabledSubsystems.Swerve.get()) {
+        if (Settings.EnabledSubsystems.SWERVE.get()) {
             super.setControl(request);
         }
         else {

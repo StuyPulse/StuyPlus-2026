@@ -4,14 +4,11 @@ import java.util.Optional;
 
 import com.ctre.phoenix6.controls.DutyCycleOut;
 import com.ctre.phoenix6.controls.MotionMagicVoltage;
-import com.ctre.phoenix6.controls.PositionVoltage;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.stuypulse.robot.constants.Ports;
 import com.stuypulse.robot.constants.Settings;
 import com.stuypulse.robot.constants.Settings.EnabledSubsystems;
 import com.stuypulse.robot.constants.Motors;
-import edu.wpi.first.math.trajectory.TrapezoidProfile;
-import edu.wpi.first.math.trajectory.TrapezoidProfile.Constraints;
 
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -52,9 +49,13 @@ public class IntakeImpl extends Intake {
     }
 
     @Override
+    public double getRollerRPM() {
+        return intakeRollerMotor.getVelocity().getValueAsDouble() * 60;
+    }
+
+    @Override
     public void periodic() {
-        
-        if (EnabledSubsystems.Intake.get()) {
+        if (EnabledSubsystems.INTAKE.get()) {
             if (pivotVoltageOverride.isPresent()) {
                 intakePivotMotor.setVoltage(pivotVoltageOverride.get());
             } else {
