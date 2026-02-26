@@ -25,7 +25,6 @@ import com.stuypulse.robot.constants.Field;
 import com.stuypulse.robot.constants.Ports;
 import com.stuypulse.robot.constants.Settings;
 import com.stuypulse.robot.subsystems.intake.Intake;
-import com.stuypulse.robot.commands.intake.IntakeDefaultCommand;
 import com.stuypulse.robot.subsystems.led.LEDController;
 import com.stuypulse.robot.subsystems.shifttimer.ShiftTimer;
 import com.stuypulse.robot.commands.auton.LeftBumpDepotOutpost;

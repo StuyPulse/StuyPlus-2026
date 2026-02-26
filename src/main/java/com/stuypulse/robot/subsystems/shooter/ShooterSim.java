@@ -1,8 +1,11 @@
 package com.stuypulse.robot.subsystems.shooter;
 
+import com.stuypulse.robot.constants.Field;
 import com.stuypulse.robot.constants.Gains;
 import com.stuypulse.robot.constants.Settings;
-
+import com.stuypulse.robot.subsystems.swerve.CommandSwerveDrivetrain;
+import com.stuypulse.robot.util.FerryInterpolation;
+import com.stuypulse.robot.util.ShooterInterpolation;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.math.system.plant.LinearSystemId;
@@ -12,6 +15,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class ShooterSim extends Shooter {
     private final FlywheelSim shooter;
     private final ShooterVisualizer visualizer;
+    private final CommandSwerveDrivetrain drivetrain;
 
     private final PIDController shooterController;
 
@@ -28,6 +32,7 @@ public class ShooterSim extends Shooter {
         );
 
         visualizer = ShooterVisualizer.getInstance();
+        drivetrain = CommandSwerveDrivetrain.getInstance();
 
         shooterController = new PIDController(
             Gains.Shooter.kP,
@@ -42,12 +47,12 @@ public class ShooterSim extends Shooter {
 
     @Override
     public double getShootSpeed() {
-        return 25;
+        return ShooterInterpolation.getRPM(drivetrain.getPose().getTranslation().getDistance(Field.getAllianceHubPose().getTranslation()));
     };
 
     @Override
     public double getFerrySpeed() {
-        return 67; // arbitrary speeds because we don't have a drivetrain sim
+        return FerryInterpolation.getRPM(drivetrain.getPose().getTranslation().getDistance(Field.getFerryZonePose(drivetrain.getPose().getTranslation()).getTranslation()));
     };
 
     @Override
@@ -59,5 +64,10 @@ public class ShooterSim extends Shooter {
         visualizer.update(getShooterRPM());
         SmartDashboard.putNumber("Shooter/TargetRPM", getState().getTargetRPM());
         SmartDashboard.putNumber("Shooter/SimRPM", getShooterRPM());
+        SmartDashboard.putNumber("Drivetrain/Pose X", drivetrain.getPose().getX());
+        SmartDashboard.putNumber("Drivetrain/Pose Y", drivetrain.getPose().getY());
+        SmartDashboard.putNumber("Shooter/Hub Distance", drivetrain.getPose().getTranslation().getDistance(Field.getAllianceHubPose().getTranslation()));
+        SmartDashboard.putNumber("Shooter/Transformed Distance", drivetrain.getPose().getTranslation().getDistance(Field.blueHubCenter.getTranslation()));
+        SmartDashboard.putNumber("Shooter/Ferry Distance", drivetrain.getPose().getTranslation().getDistance(Field.getFerryZonePose(drivetrain.getPose().getTranslation()).getTranslation()));
     }
 }

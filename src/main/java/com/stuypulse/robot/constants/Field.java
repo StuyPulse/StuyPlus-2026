@@ -171,7 +171,7 @@ public interface Field {
     public final int[] RED_HP_TAG_IDS = {13, 14};
     public final int[] BLUE_HP_TAG_IDS = {29, 30};
 
-    public final Pose2d blueHubCenter = new Pose2d(Units.inchesToMeters(158.60), Units.inchesToMeters(WIDTH / 2.0), new Rotation2d());
+    public final Pose2d blueHubCenter = new Pose2d(Units.inchesToMeters(492.61), Units.inchesToMeters(158.84), new Rotation2d());
 
     public static Pose2d getAllianceHubPose() {
         return (Robot.isBlue() ? blueHubCenter : transformToOppositeAlliance(blueHubCenter));
