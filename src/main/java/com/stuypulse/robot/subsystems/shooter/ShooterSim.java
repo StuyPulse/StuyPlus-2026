@@ -11,7 +11,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class ShooterSim extends Shooter {
     private final FlywheelSim shooter;
-    private final ShooterVisualizer visualizer;
 
     private final PIDController shooterController;
 
@@ -26,8 +25,6 @@ public class ShooterSim extends Shooter {
             ),
             DCMotor.getKrakenX44(2)
         );
-
-        visualizer = ShooterVisualizer.getInstance();
 
         shooterController = new PIDController(
             Gains.Shooter.kP,
@@ -55,8 +52,7 @@ public class ShooterSim extends Shooter {
         super.periodic();
 
         shooter.setInputVoltage(shooterController.calculate(getShooterRPM(), getState().getTargetRPM()));
-        shooter.update(Settings.DT); // ooooooohhhhhhhhhhh
-        visualizer.update(getShooterRPM());
+        shooter.update(Settings.DT);
         SmartDashboard.putNumber("Shooter/TargetRPM", getState().getTargetRPM());
         SmartDashboard.putNumber("Shooter/SimRPM", getShooterRPM());
     }

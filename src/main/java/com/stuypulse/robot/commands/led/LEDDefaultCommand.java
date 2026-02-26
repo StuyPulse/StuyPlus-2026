@@ -1,7 +1,6 @@
 package com.stuypulse.robot.commands.led;
 
 import edu.wpi.first.wpilibj.LEDPattern;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import com.stuypulse.robot.subsystems.led.LEDController;
 import com.stuypulse.robot.subsystems.shooter.Shooter;
@@ -14,8 +13,6 @@ import com.stuypulse.robot.subsystems.intake.Intake;
 import com.stuypulse.robot.subsystems.intake.Intake.IntakeState;
 import com.stuypulse.robot.subsystems.shifttimer.ShiftTimer;
 import com.stuypulse.robot.subsystems.shifttimer.ShiftTimer.RobotState;
-import com.stuypulse.robot.subsystems.vision.LimelightVision;
-
 
 public class LEDDefaultCommand extends Command {
 
@@ -33,6 +30,47 @@ public class LEDDefaultCommand extends Command {
         addRequirements(leds);
     }
 
+    private boolean isShooting() {
+        return shooter.getState() == ShooterState.SHOOTING;
+    }
+    
+    private boolean isFerrying() {
+        return shooter.getState() == ShooterState.FERRYING;
+    }
+
+    private boolean shooterIdle() {
+        return shooter.getState() == ShooterState.IDLE;
+    }
+
+    private boolean feederForward() {
+        return feeder.getState() == FeederState.FORWARD;
+    }
+
+    private boolean feederReversed() {
+        return feeder.getState() == FeederState.REVERSE;
+    }
+
+    private boolean feederIdle() {
+        return feeder.getState() == FeederState.STOP;
+    }
+
+    private boolean intaking(){
+        return intake.getState() == IntakeState.INTAKE;
+    }
+
+    private boolean outtaking(){
+        return intake.getState() == IntakeState.OUTTAKE;
+    }
+
+    private boolean isAgitating(){
+        return intake.getState() == IntakeState.UP || intake.getState() == IntakeState.DOWN;
+    }
+
+    private boolean intakeIdle() {
+        return intake.getState() == IntakeState.IDLE;
+    }
+
+
 // https://docs.wpilib.org/en/stable/docs/software/hardware-apis/misc/addressable-leds.html
     
     @Override
@@ -43,39 +81,36 @@ public class LEDDefaultCommand extends Command {
         } else {
             leds.applyPattern(LEDPattern.kOff);
         }
-
-        switch (shooter.getState()) {
-            case SHOOTING:
-                leds.applyShoot(Settings.LED.shooterShooting);
-            break;
-            case FERRYING:
-                leds.applyShoot(Settings.LED.ferrying);
-            break;
-            case IDLE:
-                leds.applyShoot(LEDPattern.kOff);
-            break; 
+        
+        if (isShooting()) {
+            leds.applyShoot(Settings.LED.SHOOTING);
+        } 
+        if (isFerrying()) {
+            leds.applyShoot(Settings.LED.FERRYING);
+        } 
+        if (shooterIdle()) {
+            leds.applyShoot(LEDPattern.kOff);
         }
-        switch (feeder.getState()) {
-            case FORWARD:
-                leds.applyFeed(Settings.LED.feederForward);
-            break;
-            case REVERSE:
-                leds.applyFeed(Settings.LED.feederReverse);
-            break;
-            case STOP:
-                leds.applyFeed(LEDPattern.kOff);
-            break;
+        if (feederForward()) {
+            leds.applyFeed(Settings.LED.FEEDER_FORWARD);
+        } 
+        if (feederReversed()) {
+            leds.applyFeed(Settings.LED.FEEDER_REVERSE);
+        } 
+        if (feederIdle()) {
+            leds.applyFeed(LEDPattern.kOff);
         }
-        switch (intake.getState()) {
-            case INTAKE:
-                leds.applyIntake(Settings.LED.intaking);
-            break;
-            case OUTTAKE:
-                leds.applyIntake(Settings.LED.outtaking);
-            break;
-            case IDLE:
-                leds.applyIntake(LEDPattern.kOff);
-            break;
+        if (intaking()){
+            leds.applyIntake(Settings.LED.INTAKING);
+        } 
+        if (outtaking()){
+            leds.applyIntake(Settings.LED.OUTTAKING);
+        } 
+        if (isAgitating()){
+            leds.applyIntake(Settings.LED.AGITATING);
+        } 
+        if (intakeIdle()) {
+            leds.applyIntake(LEDPattern.kOff);
         }
     }
 }

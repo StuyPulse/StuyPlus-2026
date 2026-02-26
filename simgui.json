@@ -7,6 +7,7 @@
       "/SmartDashboard/PathPlanner": "Alerts",
       "/SmartDashboard/Visualizers/Feeder": "Mechanism2d",
       "/SmartDashboard/Visualizers/Intake Pivot": "Mechanism2d",
+      "/SmartDashboard/Visualizers/Robot": "Mechanism2d",
       "/SmartDashboard/Visualizers/Shooter": "Mechanism2d"
     },
     "windows": {
@@ -17,6 +18,11 @@
         "right": 3942,
         "top": 118,
         "width": 16.54119300842285,
+        "window": {
+          "visible": true
+        }
+      },
+      "/SmartDashboard/Visualizers/Robot": {
         "window": {
           "visible": true
         }
