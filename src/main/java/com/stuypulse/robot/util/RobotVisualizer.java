@@ -52,18 +52,16 @@ public class RobotVisualizer {
         canvas = new Mechanism2d(width, height);
 
         // Feeder
-        feederRoot = canvas.getRoot("Feeder Root", 40, 10); // TODO: figure out positioning of each root
+        feederRoot = canvas.getRoot("Feeder Root", 45, 15); // TODO: figure out positioning of each root
         feederSpokes = new MechanismLigament2d[4];
-        
-        
+
         // Shooter
-        shooterRoot = canvas.getRoot("Shooter Root", 45, 45);
+        shooterRoot = canvas.getRoot("Shooter Root", 55, 45);
         shooterSpokes = new MechanismLigament2d[4];
 
         // intake :D
-        intakeRoot = canvas.getRoot("Intake Root", 10, 10);
+        intakeRoot = canvas.getRoot("Intake Root", 15, 10);
         intakeSpokes = new MechanismLigament2d[4];
-
 
         intakePivot = new MechanismLigament2d(
             "Intake Arm",
@@ -103,14 +101,13 @@ public class RobotVisualizer {
     }
 
     public void updateIntake(Rotation2d pivotAngle, double RPM) {
-        intakePivot.setAngle(pivotAngle);
+        intakePivot.setAngle(Rotation2d.fromDegrees(180).minus(pivotAngle)); // plus 90 degrees to make it face left
         double rot = RPM * 6 * Settings.DT;
         for (int i = 0; i < numSpokes; i++) {
             intakeSpokes[i].setAngle(intakeSpokes[i].getAngle() + rot);
         }
         
         intakePivot.setColor(new Color8Bit(Color.kCoral));
-        SmartDashboard.putNumber("Pivot/SpokeRot", rot);
         SmartDashboard.putData("Visualizers/Robot", canvas);
     }
 

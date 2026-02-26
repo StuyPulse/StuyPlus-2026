@@ -82,15 +82,16 @@ public class IntakeSim extends Intake {
 
         double rollerVoltage = getState().getTargetDutyCycle() * 12;
         intakeRollerMotor.setInputVoltage(rollerVoltage); // TODO: stop doing ts the manual way
+        intakeRollerMotor.update(Settings.DT);
 
         double voltage = pivotController.calculate(sim.getAngleRads(), getState().getTargetAngle().getRadians());
         sim.setInputVoltage(voltage);
         sim.update(Settings.DT);
 
-        SmartDashboard.putNumber("Pivot/voltage", voltage);
-        SmartDashboard.putNumber("Pivot/rollerVoltage", rollerVoltage);
-        SmartDashboard.putNumber("Pivot/rollerRPM", getRollerRPM());
-        SmartDashboard.putNumber("Pivot/currentAngle", Math.toDegrees(sim.getAngleRads()));
-        SmartDashboard.putNumber("Pivot/targetAngle", getState().getTargetAngle().getDegrees());
+        SmartDashboard.putNumber("Intake/rollerVoltage", rollerVoltage);
+        SmartDashboard.putNumber("Intake/rollerRPM", getRollerRPM());
+        SmartDashboard.putNumber("Intake/pivotVoltage", voltage);
+        SmartDashboard.putNumber("Intake/pivotAngle", Math.toDegrees(sim.getAngleRads()));
+        SmartDashboard.putNumber("Intake/pivotTarget", getState().getTargetAngle().getDegrees());
     }
 }
