@@ -25,7 +25,8 @@ public class RobotVisualizer {
     }
 
     private final Mechanism2d canvas;
-    private double width, height;
+    private final double width, height;
+    private final int numSpokes;
     // we only have feeder, intake, and shooter visualizers. copy and paste now
 
     
@@ -44,13 +45,14 @@ public class RobotVisualizer {
     private final MechanismLigament2d[] shooterSpokes;
     
     private RobotVisualizer() {
-        width = 67; // not final
-        height = 67;// not final
+        width = 67;
+        height = 67;
+        numSpokes = 4;
 
         canvas = new Mechanism2d(width, height);
 
         // Feeder
-        feederRoot = canvas.getRoot("Feeder Root", 20, 10); // TODO: figure out positioning of each root
+        feederRoot = canvas.getRoot("Feeder Root", 40, 10); // TODO: figure out positioning of each root
         feederSpokes = new MechanismLigament2d[4];
         
         
@@ -65,26 +67,27 @@ public class RobotVisualizer {
 
         intakePivot = new MechanismLigament2d(
             "Intake Arm",
-            Units.inchesToMeters(5),
-            IntakeState.IDLE.getTargetAngle().getDegrees(), 4,
-            new Color8Bit(Color.kAliceBlue)
+            9,
+            IntakeState.IDLE.getTargetAngle().getDegrees(),
+            4,
+            new Color8Bit(Color.kOrange)
         );
-        intakePivot.append(intakePivot); // TODO: ആറ് ഏഴ്
+        intakeRoot.append(intakePivot); // TODO: ആറ് ഏഴ്
         
         // fill all the spoke arrays
-        for (int i = 0; i < 4; i++) {
+        for (int i = 0; i < numSpokes; i++) {
             feederSpokes[i] = new MechanismLigament2d("Feeder Spoke " + i, 6.7, 90 * i, 2, new Color8Bit(Color.kWhite));
             feederRoot.append(feederSpokes[i]);
             shooterSpokes[i] = new MechanismLigament2d("Shooter Spoke " + i, 6.7, 90 * i, 2, new Color8Bit(Color.kYellow));
             shooterRoot.append(shooterSpokes[i]);
             intakeSpokes[i] = new MechanismLigament2d("Intake Spoke " + i, 6.7, 90 * i, 2, new Color8Bit(Color.kRed));
-            intakeRoot.append(intakeSpokes[i]); // TODO: spoke lengths and thicknesses
+            intakePivot.append(intakeSpokes[i]); // TODO: spoke lengths and thicknesses
         }
     }
 
     public void updateFeeder(double RPM) {
         double rot = RPM * 6 * Settings.DT;
-        for (int i = 0; i < 4; i++) {
+        for (int i = 0; i < numSpokes; i++) {
             feederSpokes[i].setAngle(feederSpokes[i].getAngle() + rot);
         }
         SmartDashboard.putData("Visualizers/Robot", canvas);
@@ -92,7 +95,7 @@ public class RobotVisualizer {
 
     public void updateShooter(double RPM){
         double rot = RPM * 6 * Settings.DT;
-        for (int i = 0; i < 4; i++) {
+        for (int i = 0; i < numSpokes; i++) {
             // ആറ് ഏഴ്
             shooterSpokes[i].setAngle(shooterSpokes[i].getAngle() + rot);
         }
@@ -102,11 +105,12 @@ public class RobotVisualizer {
     public void updateIntake(Rotation2d pivotAngle, double RPM) {
         intakePivot.setAngle(pivotAngle);
         double rot = RPM * 6 * Settings.DT;
-        for (int i = 0; i < 4; i++) {
+        for (int i = 0; i < numSpokes; i++) {
             intakeSpokes[i].setAngle(intakeSpokes[i].getAngle() + rot);
         }
         
         intakePivot.setColor(new Color8Bit(Color.kCoral));
+        SmartDashboard.putNumber("Pivot/SpokeRot", rot);
         SmartDashboard.putData("Visualizers/Robot", canvas);
     }
 
