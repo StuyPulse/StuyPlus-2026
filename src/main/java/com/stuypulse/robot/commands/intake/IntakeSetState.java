@@ -6,7 +6,7 @@ import com.stuypulse.robot.subsystems.intake.Intake.IntakeState;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 
-public class IntakeSetState extends Command{
+public class IntakeSetState extends InstantCommand{
     private Intake intake;
     private IntakeState intakeState;
 
@@ -18,7 +18,7 @@ public class IntakeSetState extends Command{
     }
 
     @Override
-    public void execute() {
+    public void initialize() {
         intake.setState(intakeState);
     }
 

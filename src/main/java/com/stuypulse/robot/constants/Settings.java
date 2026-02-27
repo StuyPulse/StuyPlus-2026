@@ -55,6 +55,9 @@ public interface Settings {
         double PIVOT_MAX_ANGLE = 2 * Math.PI;
         double GEAR_RATIO = 20.0;
 
+        double RAMP_RATE = 0.25;
+        double STEP_VOLTAGE = 900;
+
         Rotation2d ANGLE_TOLERANCE = Rotation2d.fromDegrees(0.5); // degrees
     }
 
@@ -86,6 +89,8 @@ public interface Settings {
     public interface Shooter {
         double BOTTOM_MOTOR_RPM = 3000;
         double SHOOT_TIME_AUTO = 1.5;
+        double RAMP_RATE = 0.25;
+        double STEP_VOLTAGE = 900;
     }
 
     public interface Swerve {

@@ -14,6 +14,7 @@ import com.stuypulse.robot.commands.shooter.ShooterShoot;
 import com.stuypulse.robot.commands.swerve.SwerveDriveDrive;
 import com.stuypulse.robot.commands.swerve.driveAligned.SwerveDriveAlignedToHub;
 import com.stuypulse.robot.commands.feeder.FeederForward;
+import com.stuypulse.robot.commands.shooter.ShooterDefaultCommand;
 import com.stuypulse.robot.commands.shooter.ShooterFerry;
 import com.stuypulse.robot.commands.feeder.FeederReverse;
 import com.stuypulse.robot.commands.intake.IntakeSetIdle;
@@ -84,8 +85,8 @@ public class RobotContainer {
 
     private void configureDefaultCommands() {
         swerve.setDefaultCommand(new SwerveDriveDrive(driver));
-        shooter.setDefaultCommand(new ShooterShoot());
-        intake.setDefaultCommand(new IntakeSetIdle());
+        shooter.setDefaultCommand(new ShooterDefaultCommand());
+       // intake.setDefaultCommand(new IntakeDefaultCommand());
         leds.setDefaultCommand(new LEDDefaultCommand());
     }
 
@@ -100,6 +101,8 @@ public class RobotContainer {
             .whileTrue(new IntakeSetIntake());
         driver.getLeftButton()
             .whileTrue(new FeederIdle());
+        driver.getRightButton()
+            .whileTrue(new ShooterFerry());
     }
 
     /**************/
