@@ -11,7 +11,6 @@ import com.stuypulse.robot.constants.Settings;
 import com.stuypulse.robot.subsystems.intake.Intake.IntakeState;
 
 import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.util.Units;
 
 public class RobotVisualizer {
     public static RobotVisualizer instance;

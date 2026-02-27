@@ -40,10 +40,10 @@ public interface Settings {
     public interface Intake {
         double ARM_LENGTH = 1.0; // TODO: get actual value
         double INTAKE_DUTY_CYCLE = 0.8;
-        Rotation2d INTAKE_ANGLE = Rotation2d.fromDegrees(60.67);
+        Rotation2d INTAKE_ANGLE = Rotation2d.fromDegrees(56.7);
         double OUTTAKE_DUTY_CYCLE = -0.8;
         Rotation2d OUTTAKE_ANGLE = Rotation2d.fromDegrees(67);
-        Rotation2d IDLE_ANGLE = Rotation2d.fromDegrees(120);
+        Rotation2d IDLE_ANGLE = Rotation2d.fromDegrees(140);
         double IDLE_DUTY_CYCLE = 0;
         double ROLLER_MAX_ACCEL = 0;
         double ROLLER_MAX_VEL = 0;
@@ -52,7 +52,7 @@ public interface Settings {
         Rotation2d AGITATE_DOWN_ANGLE = Rotation2d.fromDegrees(-10);
         double JKgMetersSquared = 0.1;
         double PIVOT_MIN_ANGLE = 0.0;
-        double PIVOT_MAX_ANGLE = Math.PI / 2;
+        double PIVOT_MAX_ANGLE = 2 * Math.PI;
         double GEAR_RATIO = 20.0;
 
         Rotation2d ANGLE_TOLERANCE = Rotation2d.fromDegrees(0.5); // degrees
