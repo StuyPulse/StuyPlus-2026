@@ -12,6 +12,7 @@ import com.stuypulse.robot.commands.shooter.ShooterIdle;
 import com.stuypulse.robot.commands.feeder.FeederIdle;
 import com.stuypulse.robot.commands.shooter.ShooterShoot;
 import com.stuypulse.robot.commands.swerve.SwerveDriveDrive;
+import com.stuypulse.robot.commands.swerve.driveAligned.SwerveDriveAlignedToAllianceZone;
 import com.stuypulse.robot.commands.swerve.driveAligned.SwerveDriveAlignedToHub;
 import com.stuypulse.robot.commands.feeder.FeederForward;
 import com.stuypulse.robot.commands.shooter.ShooterDefaultCommand;
@@ -106,10 +107,17 @@ public class RobotContainer {
             .whileTrue(new FeederReverse().alongWith(new IntakeSetOuttake()));
         
         //Intake
-        driver.getDPadLeft()
+        driver.getLeftBumper()
             .whileTrue(new IntakeSetIntake());
-        driver.getDPadUp()
+        driver.getRightBumper()
             .whileTrue(new IntakeSetIdle());
+
+
+        //Shooter Alignment
+        driver.getDPadUp()
+            .whileTrue(new SwerveDriveAlignedToHub());
+        driver.getDPadDown()
+            .whileTrue(new SwerveDriveAlignedToAllianceZone());
     }
 
     /**************/
