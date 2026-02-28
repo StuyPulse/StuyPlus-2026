@@ -25,6 +25,7 @@ import com.stuypulse.robot.constants.Field;
 import com.stuypulse.robot.constants.Ports;
 import com.stuypulse.robot.constants.Settings;
 import com.stuypulse.robot.subsystems.intake.Intake;
+import com.stuypulse.robot.commands.intake.IntakeDefaultCommand;
 import com.stuypulse.robot.subsystems.led.LEDController;
 import com.stuypulse.robot.subsystems.shifttimer.ShiftTimer;
 import com.stuypulse.robot.commands.auton.LeftBumpDepotOutpost;
@@ -110,7 +111,6 @@ public class RobotContainer {
     /**************/
     public void configureAutons() {
         autonChooser.addOption("Do Nothing", new DoNothingAuton());
-
 
         AutonConfig outpostDepotOnePointFiveAuton = new AutonConfig("Outpost Depot 1.5 cycle", OutpostDepotOnePointFiveCycle::new, 
             "Right Trench to Outpost", 

@@ -33,7 +33,7 @@ public class LeftBumpDepotOutpost extends SequentialCommandGroup {
                 .alongWith(new IntakeSetIntake()),
             new WaitCommand(2), // intake time
             CommandSwerveDrivetrain.getInstance().followPathCommand(paths[1])
-                .alongWith(new IntakeSetIdle()),
+                .alongWith(new IntakeSetIdle()), 
             
             new SwerveDriveAlignedToHub(),
             new FeederForward(),

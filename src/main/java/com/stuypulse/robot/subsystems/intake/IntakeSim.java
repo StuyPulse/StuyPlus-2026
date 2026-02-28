@@ -1,51 +1,43 @@
 package com.stuypulse.robot.subsystems.intake;
 
-import com.ctre.phoenix6.controls.DutyCycleOut;
 import com.stuypulse.robot.constants.Gains;
 import com.stuypulse.robot.constants.Settings;
 import com.stuypulse.stuylib.math.SLMath;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.numbers.N1;
+import edu.wpi.first.math.numbers.N2;
+import edu.wpi.first.math.system.LinearSystem;
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.math.system.plant.LinearSystemId;
-import edu.wpi.first.wpilibj.simulation.FlywheelSim;
+import edu.wpi.first.wpilibj.simulation.DCMotorSim;
 import edu.wpi.first.wpilibj.simulation.SingleJointedArmSim;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 
 public class IntakeSim extends Intake {
-    private final FlywheelSim intakeRollerMotor;
-    private final PIDController pivotController;
-    private final DutyCycleOut rollerController;
+    private DCMotorSim intakeRollerMotor;
+    private DCMotorSim intakePivotMotor;
+    private PIDController pivotController;
     private final SingleJointedArmSim sim;
+    private IntakeVisualizer visualizer;
     
     public IntakeSim() {
         DCMotor gearbox = DCMotor.getKrakenX60(1);
+        LinearSystem<N2, N1, N2> system = LinearSystemId.createDCMotorSystem(DCMotor.getKrakenX60(1), Settings.Intake.JKgMetersSquared,Settings.Intake.GEAR_RATIO);
+        intakePivotMotor = new DCMotorSim(system, gearbox);
+        intakeRollerMotor = new DCMotorSim(system, gearbox);
 
-        intakeRollerMotor = new FlywheelSim(
-            LinearSystemId.createFlywheelSystem(
-                DCMotor.getKrakenX60(1),
-                Settings.Intake.JKgMetersSquared,
-                Settings.Intake.GEAR_RATIO
-            ),
-            DCMotor.getKrakenX60(1)
-        );
-
+        visualizer = IntakeVisualizer.getInstance();
         pivotController = new PIDController(
             Gains.Intake.kP,
             Gains.Intake.kI,
             Gains.Intake.kD
         );
 
-        rollerController = new DutyCycleOut(getState().getTargetDutyCycle());
-
         sim = new SingleJointedArmSim(
-            LinearSystemId.createDCMotorSystem(
-                DCMotor.getKrakenX60(1),
-                Settings.Intake.JKgMetersSquared,
-                Settings.Intake.GEAR_RATIO
-            ),
+            system,
             gearbox,
             Settings.Intake.GEAR_RATIO,
             Settings.Intake.ARM_LENGTH,
@@ -56,7 +48,7 @@ public class IntakeSim extends Intake {
     }
     @Override
     public Rotation2d getRelativePosition() {
-        return new Rotation2d(SLMath.clamp(sim.getAngleRads(),
+        return Rotation2d.fromDegrees(SLMath.clamp(Math.toDegrees(intakePivotMotor.getAngularPositionRad()),
         Settings.Intake.PIVOT_MIN_ANGLE, Settings.Intake.PIVOT_MAX_ANGLE));
     }
 
@@ -67,7 +59,6 @@ public class IntakeSim extends Intake {
                 < Settings.Intake.ANGLE_TOLERANCE.getRotations();
     }
 
-    @Override
     public double getRollerRPM() {
         return intakeRollerMotor.getAngularVelocityRPM();
     }
@@ -76,18 +67,13 @@ public class IntakeSim extends Intake {
     public void periodic() {
         super.periodic();
 
-        double rollerVoltage = getState().getTargetDutyCycle() * 12;
-        intakeRollerMotor.setInputVoltage(rollerVoltage); // TODO: stop doing ts the manual way
-        intakeRollerMotor.update(Settings.DT);
-
         double voltage = pivotController.calculate(sim.getAngleRads(), getState().getTargetAngle().getRadians());
         sim.setInputVoltage(voltage);
         sim.update(Settings.DT);
+        visualizer.updatePivotAngle(new Rotation2d(sim.getAngleRads()));
 
-        SmartDashboard.putNumber("Intake/rollerVoltage", rollerVoltage);
-        SmartDashboard.putNumber("Intake/rollerRPM", getRollerRPM());
-        SmartDashboard.putNumber("Intake/pivotVoltage", voltage);
-        SmartDashboard.putNumber("Intake/pivotAngle", Math.toDegrees(sim.getAngleRads()));
-        SmartDashboard.putNumber("Intake/pivotTarget", getState().getTargetAngle().getDegrees());
+        SmartDashboard.putNumber("Pivot/voltage", voltage);
+        SmartDashboard.putNumber("Pivot/currentAngle", visualizer.getAngles());
+        SmartDashboard.putNumber("Pivot/targetAngle", getState().getTargetAngle().getRadians());
     }
 }
