@@ -41,11 +41,11 @@ public abstract class Intake extends SubsystemBase {
             this.angle = angle;
         }
 
-        protected Rotation2d getTargetAngle() {
+        public Rotation2d getTargetAngle() {
             return angle;
         }
 
-        protected double getTargetDutyCycle() {
+        public double getTargetDutyCycle() {
             return dutyCycle;
         }
     }
