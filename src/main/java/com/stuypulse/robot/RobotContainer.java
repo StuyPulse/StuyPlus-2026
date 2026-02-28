@@ -12,22 +12,20 @@ import com.stuypulse.robot.commands.shooter.ShooterIdle;
 import com.stuypulse.robot.commands.feeder.FeederIdle;
 import com.stuypulse.robot.commands.shooter.ShooterShoot;
 import com.stuypulse.robot.commands.swerve.SwerveDriveDrive;
-import com.stuypulse.robot.commands.swerve.driveAligned.SwerveDriveAlignedToAllianceZone;
 import com.stuypulse.robot.commands.swerve.driveAligned.SwerveDriveAlignedToHub;
 import com.stuypulse.robot.commands.feeder.FeederForward;
 import com.stuypulse.robot.commands.shooter.ShooterDefaultCommand;
 import com.stuypulse.robot.commands.shooter.ShooterFerry;
 import com.stuypulse.robot.commands.feeder.FeederReverse;
-import com.stuypulse.robot.commands.intake.IntakeAgitateOnce;
 import com.stuypulse.robot.commands.intake.IntakeSetIdle;
 import com.stuypulse.robot.commands.intake.IntakeSetIntake;
-import com.stuypulse.robot.commands.intake.IntakeSetOuttake;
 import com.stuypulse.robot.commands.led.LEDApplyPattern;
 import com.stuypulse.robot.commands.led.LEDDefaultCommand;
 import com.stuypulse.robot.constants.Field;
 import com.stuypulse.robot.constants.Ports;
 import com.stuypulse.robot.constants.Settings;
 import com.stuypulse.robot.subsystems.intake.Intake;
+import com.stuypulse.robot.commands.intake.IntakeDefaultCommand;
 import com.stuypulse.robot.subsystems.led.LEDController;
 import com.stuypulse.robot.subsystems.shifttimer.ShiftTimer;
 import com.stuypulse.robot.commands.auton.LeftBumpDepotOutpost;
@@ -98,26 +96,14 @@ public class RobotContainer {
     /***************/
 
     private void configureButtonBindings() {
-        //Feeder
-        driver.getLeftButton()
-            .whileTrue(new FeederForward().alongWith(new IntakeAgitateOnce().repeatedly()));
         driver.getTopButton()
-            .whileTrue(new FeederIdle());  
-        driver.getRightButton()
-            .whileTrue(new FeederReverse().alongWith(new IntakeSetOuttake()));
-        
-        //Intake
-        driver.getLeftBumper()
+            .whileTrue(new FeederForward());
+        driver.getBottomButton()
             .whileTrue(new IntakeSetIntake());
-        driver.getRightBumper()
-            .whileTrue(new IntakeSetIdle());
-
-
-        //Shooter Alignment
-        driver.getDPadUp()
-            .whileTrue(new SwerveDriveAlignedToHub());
-        driver.getDPadDown()
-            .whileTrue(new SwerveDriveAlignedToAllianceZone());
+        driver.getLeftButton()
+            .whileTrue(new FeederIdle());
+        driver.getRightButton()
+            .whileTrue(new ShooterFerry());
     }
 
     /**************/
@@ -125,7 +111,6 @@ public class RobotContainer {
     /**************/
     public void configureAutons() {
         autonChooser.addOption("Do Nothing", new DoNothingAuton());
-
 
         AutonConfig outpostDepotOnePointFiveAuton = new AutonConfig("Outpost Depot 1.5 cycle", OutpostDepotOnePointFiveCycle::new, 
             "Right Trench to Outpost", 

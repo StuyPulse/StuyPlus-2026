@@ -2,7 +2,6 @@ package com.stuypulse.robot.subsystems.intake;
 
 import com.stuypulse.robot.Robot;
 import com.stuypulse.robot.constants.Settings;
-import com.stuypulse.robot.util.RobotVisualizer;
 
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -42,7 +41,7 @@ public abstract class Intake extends SubsystemBase {
             this.angle = angle;
         }
 
-        public Rotation2d getTargetAngle() {
+        protected Rotation2d getTargetAngle() {
             return angle;
         }
 
@@ -65,20 +64,10 @@ public abstract class Intake extends SubsystemBase {
 
     public abstract Rotation2d getRelativePosition();
     public abstract boolean atAngle();
-    public abstract double getRollerRPM();
 
     @Override
     public void periodic() {
         SmartDashboard.putString("Intake/State", getState().name());
         SmartDashboard.putString("States/Intake", getState().name());
-        
-        if (Settings.DEBUG_MODE) {
-            if (Settings.EnabledSubsystems.FEEDER.get()) {
-                RobotVisualizer.getInstance().updateIntake(getRelativePosition(), getRollerRPM());
-            }
-            else {
-                RobotVisualizer.getInstance().updateIntake(IntakeState.IDLE.getTargetAngle(), IntakeState.IDLE.getTargetDutyCycle());
-            }
-        }
     }
 }   

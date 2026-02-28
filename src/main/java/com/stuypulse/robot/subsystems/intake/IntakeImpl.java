@@ -56,18 +56,14 @@ public class IntakeImpl extends Intake {
     }
 
     @Override
-    public double getRollerRPM() {
-        return intakeRollerMotor.getVelocity().getValueAsDouble() * 60;
-    }
-
-    @Override
     public void periodic() {
-        if (EnabledSubsystems.INTAKE.get()) {
-            if (pivotVoltageOverride.isPresent()) {
-                intakePivotMotor.setVoltage(pivotVoltageOverride.get());
-            } else {
+
+        if (EnabledSubsystems.Intake.get()) {
+            if (!pivotVoltageOverride.isPresent()) {
                 intakePivotMotor.setControl(pivotController.withPosition(getState().getTargetAngle().getRotations()));
                 intakeRollerMotor.setControl(rollerController.withOutput(getState().getTargetDutyCycle()));
+            } else {
+                intakePivotMotor.setVoltage(pivotVoltageOverride.get());
             }
         } else {
             intakePivotMotor.stopMotor();

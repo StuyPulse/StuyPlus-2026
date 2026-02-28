@@ -2,8 +2,6 @@ package com.stuypulse.robot.subsystems.shooter;
 import java.util.function.DoubleSupplier;
 
 import com.stuypulse.robot.Robot;
-import com.stuypulse.robot.constants.Settings;
-import com.stuypulse.robot.util.RobotVisualizer;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -59,14 +57,5 @@ public abstract class Shooter extends SubsystemBase {
     public void periodic() {
         SmartDashboard.putString("Shooter/State", state.name());
         SmartDashboard.putString("States/Shooter", state.name());
-
-        if (Settings.DEBUG_MODE) {
-            if (Settings.EnabledSubsystems.INTAKE.get()){
-                 RobotVisualizer.getInstance().updateShooter(getState().getTargetRPM());
-            } else {
-                 RobotVisualizer.getInstance().updateShooter(ShooterState.IDLE.getTargetRPM());
-            }
-
-        }
     }
 }

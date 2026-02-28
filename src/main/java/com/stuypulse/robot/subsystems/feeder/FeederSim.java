@@ -1,6 +1,7 @@
 package com.stuypulse.robot.subsystems.feeder;
 
 import com.stuypulse.robot.constants.Settings;
+import com.stuypulse.stuylib.control.feedback.PIDController;
 
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.math.system.plant.LinearSystemId;
@@ -9,6 +10,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class FeederSim extends Feeder {
     private final FlywheelSim feeder;
+    private final FeederVisualizer visualizer;
     private double velocity;
 
     public FeederSim() {
@@ -22,6 +24,8 @@ public class FeederSim extends Feeder {
             ),
             DCMotor.getKrakenX44(2)
         );
+
+        visualizer = FeederVisualizer.getInstance();
     }
 
     public double getFeederRPM() {
@@ -35,6 +39,7 @@ public class FeederSim extends Feeder {
 
         feeder.setAngularVelocity(velocity);
         feeder.update(Settings.DT);
+        visualizer.update(feeder.getAngularVelocityRPM());
         SmartDashboard.putNumber("Feeder/TargetRPM", getState().getTargetRPM());
     }
 }
