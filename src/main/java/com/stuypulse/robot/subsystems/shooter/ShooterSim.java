@@ -14,7 +14,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class ShooterSim extends Shooter {
     private final FlywheelSim shooter;
-
     private final CommandSwerveDrivetrain drivetrain;
 
     private final PIDController shooterController;
