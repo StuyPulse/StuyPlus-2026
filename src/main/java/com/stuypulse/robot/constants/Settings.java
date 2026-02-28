@@ -48,8 +48,8 @@ public interface Settings {
         double ROLLER_MAX_ACCEL = 0;
         double ROLLER_MAX_VEL = 0;
         double INITIAL_POSITION = 0;
-        Rotation2d AGITATE_UP_ANGLE = Rotation2d.fromDegrees(10);
-        Rotation2d AGITATE_DOWN_ANGLE = Rotation2d.fromDegrees(-10);
+        Rotation2d AGITATE_UP_ANGLE = Rotation2d.fromDegrees(115);
+        Rotation2d AGITATE_DOWN_ANGLE = Rotation2d.fromDegrees(67);
         double JKgMetersSquared = 0.1;
         double PIVOT_MIN_ANGLE = 0.0;
         double PIVOT_MAX_ANGLE = 2 * Math.PI;

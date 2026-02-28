@@ -17,8 +17,10 @@ import com.stuypulse.robot.commands.feeder.FeederForward;
 import com.stuypulse.robot.commands.shooter.ShooterDefaultCommand;
 import com.stuypulse.robot.commands.shooter.ShooterFerry;
 import com.stuypulse.robot.commands.feeder.FeederReverse;
+import com.stuypulse.robot.commands.intake.IntakeAgitateOnce;
 import com.stuypulse.robot.commands.intake.IntakeSetIdle;
 import com.stuypulse.robot.commands.intake.IntakeSetIntake;
+import com.stuypulse.robot.commands.intake.IntakeSetOuttake;
 import com.stuypulse.robot.commands.led.LEDApplyPattern;
 import com.stuypulse.robot.commands.led.LEDDefaultCommand;
 import com.stuypulse.robot.constants.Field;
@@ -95,14 +97,19 @@ public class RobotContainer {
     /***************/
 
     private void configureButtonBindings() {
-        driver.getTopButton()
-            .whileTrue(new FeederForward());
-        driver.getBottomButton()
-            .whileTrue(new IntakeSetIntake());
+        //Feeder
         driver.getLeftButton()
-            .whileTrue(new FeederIdle());
+            .whileTrue(new FeederForward().alongWith(new IntakeAgitateOnce().repeatedly()));
+        driver.getTopButton()
+            .whileTrue(new FeederIdle());  
         driver.getRightButton()
-            .whileTrue(new ShooterFerry());
+            .whileTrue(new FeederReverse().alongWith(new IntakeSetOuttake()));
+        
+        //Intake
+        driver.getDPadLeft()
+            .whileTrue(new IntakeSetIntake());
+        driver.getDPadUp()
+            .whileTrue(new IntakeSetIdle());
     }
 
     /**************/
