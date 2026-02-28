@@ -8,13 +8,13 @@ public class FerryInterpolation {
 
     //TODO: Get from testing
     private static final double[][] RPMAndDistance = {
-        {0,0},
+        {5,100},
     };
 
     static {
         interpolater = new InterpolatingDoubleTreeMap();
         for (double[] data:RPMAndDistance) {
-            interpolater.put(data[1], data[0]);
+            interpolater.put(data[0], data[1]);
         }
     }
 

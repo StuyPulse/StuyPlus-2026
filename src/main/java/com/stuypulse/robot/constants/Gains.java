@@ -15,7 +15,7 @@ public class Gains {
     }
 
     public interface Intake {
-        double kP = 1.0; 
+        double kP = 3.0; 
         double kI = 0.0;
         double kD = 0.0;
     }

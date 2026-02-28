@@ -8,13 +8,15 @@ public class ShooterInterpolation {
 
     //TODO: Get from testing
     private static final double[][] RPMAndDistance = {
-        {0,0},
+        {0, 50},
+        {5, 100},
+        {10, 200}
     };
 
     static {
         interpolater = new InterpolatingDoubleTreeMap();
         for (double[] data:RPMAndDistance) {
-            interpolater.put(data[1], data[0]);
+            interpolater.put(data[0], data[1]);
         }
     }
 

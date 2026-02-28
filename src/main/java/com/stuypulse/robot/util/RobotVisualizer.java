@@ -133,6 +133,7 @@ public class RobotVisualizer {
             spoke.setAngle(spoke.getAngle() + rot);
 
         SmartDashboard.putData("Visualizers/Robot", canvas);
+        SmartDashboard.putNumber("Shooter/rot", rot);
     }
 
     public void updateIntake(Rotation2d pivotAngle, double RPM) {

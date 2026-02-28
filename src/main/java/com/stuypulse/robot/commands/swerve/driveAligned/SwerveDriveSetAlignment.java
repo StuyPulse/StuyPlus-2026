@@ -58,9 +58,5 @@ public class SwerveDriveSetAlignment extends Command {
             .withVelocityY(0)
             .withHeadingPID(Alignment.akP, Alignment.akI, Alignment.akD);
         instance.setControl(request);
-
-        SmartDashboard.putNumber("States/SwerveAlignTargetAngle", getTargetAngle().getDegrees());
-        SmartDashboard.putNumber("States/SwerveAlignTargetX", pose.getX());
-        SmartDashboard.putNumber("States/SwerveAlignTargetY", pose.getY());
     }
 }

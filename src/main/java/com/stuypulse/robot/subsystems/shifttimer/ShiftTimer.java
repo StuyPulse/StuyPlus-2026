@@ -7,17 +7,16 @@ import com.stuypulse.robot.constants.Shifts.ShiftState;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
-import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.RobotState;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class ShiftTimer extends SubsystemBase {
-    private Timer timer;
     private ShiftState currentState;
-    public String gameData;
     private Optional<Alliance> alliance;
-    Boolean isHubActive;
-    Alliance firstActiveAlliance;
+    private boolean isFirstActiveAlliance;
+    private boolean isHubActive;
+    private double matchTime;
 
     private final static ShiftTimer instance;
 
@@ -30,18 +29,13 @@ public class ShiftTimer extends SubsystemBase {
     }
 
     protected ShiftTimer() {
-        this.timer = new Timer();
-
-        this.isHubActive = false;
-
         this.alliance = DriverStation.getAlliance();
-        if (!alliance.isPresent()) { // TODO: add proper competition mode check
-            this.currentState = ShiftState.NOT_GAME;
-        } else {
-            this.currentState = ShiftState.PRE_GAME;
+        if (this.alliance.isEmpty()) {
+            this.currentState = ShiftState.NOT_GAME; // if there is no alliance, this means that the robot is likely not
+                                                     // in competition
         }
-        SmartDashboard.putString("ShiftTimer/ShiftState", this.currentState.name());
-    } 
+
+    }
 
     private String formatTime(double time) {
         int minutes = (int) Math.floor(time / 60);
@@ -50,20 +44,87 @@ public class ShiftTimer extends SubsystemBase {
         return (minutes < 10 ? "0" + minutes : minutes) + ":" + (seconds < 10 ? "0" + seconds : seconds);
     }
 
-    private void setFirstActiveAlliance() {
-        if (!DriverStation.getAlliance().isPresent()) return;
-        this.gameData = DriverStation.getAlliance().get().name();
+    // Source:
+    // https://docs.wpilib.org/en/stable/docs/yearly-overview/2026-game-data.html
+    // Modified to fit the subsystem
+    public void setIsHubActive() {
+        // If we have no alliance, we cannot be enabled, therefore no hub.
+        if (alliance.isEmpty()) {
+            this.isHubActive = false;
+            return;
+        }
+        // Hub is always enabled in autonomous.
+        if (DriverStation.isAutonomousEnabled()) {
+            this.isHubActive = true;
+            return;
+        }
+        // At this point, if we're not teleop enabled, there is no hub.
+        if (!DriverStation.isTeleopEnabled()) {
+            this.isHubActive = false;
+            return;
+        }
 
-        if (gameData.isEmpty()) return;
+        // We're teleop enabled, compute.
+        String gameData = DriverStation.getGameSpecificMessage();
+        // If we have no game data, we cannot compute, assume hub is active, as its
+        // likely early in teleop.
+        if (gameData.isEmpty()) {
+            this.isHubActive = true;
+            return;
+        }
 
         switch (gameData.charAt(0)) {
-            case 'R' -> {
-                this.firstActiveAlliance = Alliance.Blue;
-            }
-            case 'B' -> {
-                this.firstActiveAlliance = Alliance.Red;
+            case 'R' -> this.isFirstActiveAlliance = alliance.get() == Alliance.Red;
+            case 'B' -> this.isFirstActiveAlliance = alliance.get() == Alliance.Blue;
+            default -> {
+                // If we have invalid game data, assume hub is active.
+                this.isHubActive = true;
+                return;
             }
         }
+
+        // Shift was is active for blue if red won auto, or red if blue won auto.
+        boolean shift1Active = switch (alliance.get()) {
+            case Red -> !isFirstActiveAlliance;
+            case Blue -> isFirstActiveAlliance;
+        };
+
+        if (matchTime > 130) {
+            // Transition shift, hub is active.
+            this.isHubActive = true;
+            return;
+        } else if (matchTime > 105) {
+            // Shift 1
+            this.isHubActive = shift1Active;
+            return;
+        } else if (matchTime > 80) {
+            // Shift 2
+            this.isHubActive = !shift1Active;
+            return;
+        } else if (matchTime > 55) {
+            // Shift 3
+            this.isHubActive = shift1Active;
+            return;
+        } else if (matchTime > 30) {
+            // Shift 4
+            this.isHubActive = !shift1Active;
+            return;
+        } else {
+            // End game, hub always active.
+            this.isHubActive = true;
+            return;
+        }
+    }
+
+    public boolean isHubActive() {
+        return this.isHubActive;
+    }
+
+    public enum RobotState {
+        DISABLED,
+        AUTONOMOUS,
+        TELEOP,
+        TEST
     }
 
     public RobotState getRobotMode() {
@@ -78,83 +139,15 @@ public class ShiftTimer extends SubsystemBase {
         return null;
     }
 
-    public enum RobotState {
-        DISABLED,
-        AUTONOMOUS,
-        TELEOP,
-        TEST
-    }
-
-    public boolean getIsHubActive() {
-        if (this.currentState == ShiftState.NOT_GAME) this.isHubActive = false;
-        if (getRobotMode() == RobotState.DISABLED) this.isHubActive = false;
-        if (getRobotMode() == RobotState.TEST) this.isHubActive = false;
-        if (getRobotMode() == RobotState.AUTONOMOUS) this.isHubActive = true;
-        if (getRobotMode() != RobotState.TELEOP) this.isHubActive = true;
-
-        return this.isHubActive;
-    }
-
     @Override
     public void periodic() {
-        if (this.currentState == ShiftState.NOT_GAME)
-            return;
-
-        if (getRobotMode() == RobotState.AUTONOMOUS) {
-            if (this.currentState == ShiftState.PRE_GAME) {
-                timer.start();
-                this.currentState = ShiftState.AUTO;
-                this.isHubActive = true;
-            } else {
-                if (timer.get() >= Shifts.AUTO) {
-                    timer.stop();
-                    timer.reset();
-                }
-            }
-        } else {
-            if (this.firstActiveAlliance == null) {
-                setFirstActiveAlliance();
-                return;
-            }
-        }
-
-        if (getRobotMode() == RobotState.TELEOP) {
-            if (this.currentState == ShiftState.AUTO) {
-                timer.start();
-                this.currentState = ShiftState.TRANSITION_SHIFT;
-                this.isHubActive = true;
-            }
-            if (timer.get() >= Shifts.TRANSITION_SHIFT) {
-                this.currentState = ShiftState.SHIFT_1;
-                this.isHubActive = alliance.get() == this.firstActiveAlliance;
-            }
-            if (timer.get() >= Shifts.SHIFT_1) {
-                this.currentState = ShiftState.SHIFT_2;
-                this.isHubActive = !this.isHubActive;
-            }
-            if (timer.get() >= Shifts.SHIFT_2) {
-                this.currentState = ShiftState.SHIFT_3;
-                this.isHubActive = !this.isHubActive;
-            }
-            if (timer.get() >= Shifts.SHIFT_3) {
-                this.currentState = ShiftState.SHIFT_4;
-                this.isHubActive = !this.isHubActive;
-            }
-            if (timer.get() >= Shifts.SHIFT_4) {
-                this.isHubActive = true;
-                this.currentState = ShiftState.END_GAME;
-            }
-            if (timer.get() >= Shifts.END_GAME) {
-                this.currentState = ShiftState.POST_GAME;
-                timer.stop();
-            }
+        // TODO Auto-generated method stub
+        super.periodic();
+        if (this.currentState != ShiftState.NOT_GAME) {
+            setIsHubActive();
         }
 
         SmartDashboard.putString("ShiftTimer/ShiftState", this.currentState.name());
-        SmartDashboard.putString("ShiftTimer/RobotState", getRobotMode().name());
-        SmartDashboard.putString("ShiftTimer/Time", formatTime(timer.get()));
-        SmartDashboard.putNumber("ShiftTimer/RawTimer", timer.get());
         SmartDashboard.putBoolean("ShiftTimer/IsHubActive", this.isHubActive);
-        SmartDashboard.putString("ShiftTimer/GameData", gameData);
     }
 }

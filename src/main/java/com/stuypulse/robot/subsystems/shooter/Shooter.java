@@ -61,12 +61,11 @@ public abstract class Shooter extends SubsystemBase {
         SmartDashboard.putString("States/Shooter", state.name());
 
         if (Settings.DEBUG_MODE) {
-            if (Settings.EnabledSubsystems.INTAKE.get()){
+            if (Settings.EnabledSubsystems.SHOOTER.get()){
                  RobotVisualizer.getInstance().updateShooter(getState().getTargetRPM());
             } else {
                  RobotVisualizer.getInstance().updateShooter(ShooterState.IDLE.getTargetRPM());
             }
-
         }
     }
 }
