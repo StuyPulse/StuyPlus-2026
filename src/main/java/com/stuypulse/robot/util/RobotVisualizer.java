@@ -2,6 +2,7 @@ package com.stuypulse.robot.util;
 
 import edu.wpi.first.wpilibj.smartdashboard.Mechanism2d;
 import edu.wpi.first.wpilibj.smartdashboard.MechanismLigament2d;
+import edu.wpi.first.wpilibj.smartdashboard.MechanismObject2d;
 import edu.wpi.first.wpilibj.smartdashboard.MechanismRoot2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.util.Color;
@@ -27,6 +28,7 @@ public class RobotVisualizer {
     private final double width, height;
     private final int numSpokes;
     private final double spokeSpacing;
+    private final Color8Bit spokeColor;
     // we only have feeder, intake, and shooter visualizers. copy and paste now
 
     // silhouette
@@ -53,6 +55,7 @@ public class RobotVisualizer {
         height = 67;
         numSpokes = 5;
         spokeSpacing = 360 / numSpokes;
+        spokeColor = new Color8Bit(Color.kWhite);
 
         canvas = new Mechanism2d(width, height);
 
@@ -63,17 +66,14 @@ public class RobotVisualizer {
 
         // Feeder
         feederRoot = canvas.getRoot("Feeder Root", 45, 15); // TODO: figure out positioning of each root
-        feederSpokes = new MechanismLigament2d[numSpokes];
+        feederSpokes = createSpokes(numSpokes, feederRoot, "Feeder Spoke", 6.7, 2, spokeColor);
 
         // Shooter
         shooterRoot = canvas.getRoot("Shooter Root", 55, 45);
-        shooterSpokes = new MechanismLigament2d[numSpokes];
+        shooterSpokes = createSpokes(numSpokes, shooterRoot, "Shooter Spoke", 6.7, 2, spokeColor);
 
         // intake :D
         intakeRoot = canvas.getRoot("Intake Root", 15, 10);
-        intakeTopSpokes = new MechanismLigament2d[numSpokes];
-        intakeMiddleSpokes = new MechanismLigament2d[numSpokes];
-        intakeBottomSpokes = new MechanismLigament2d[numSpokes];
 
         intakePivot = new MechanismLigament2d(
             "Intake Arm",
@@ -83,6 +83,7 @@ public class RobotVisualizer {
             new Color8Bit(Color.kGray)
         );
         intakeRoot.append(intakePivot); // TODO: Find a better way to do all of this spoke/roller business
+
         MechanismLigament2d intakeTopRollers = new MechanismLigament2d("Intake Top Rollers", 4, -20, 4, new Color8Bit(Color.kGray));
         MechanismLigament2d intakeMiddleRollers = new MechanismLigament2d("Intake Middle Rollers", 4, 150, 4, new Color8Bit(Color.kGray));
         MechanismLigament2d intakeBottomRollers = new MechanismLigament2d("Intake Bottom Rollers", 8, 90, 4, new Color8Bit(Color.kGray));
@@ -97,21 +98,18 @@ public class RobotVisualizer {
             intakeMiddleRollers.append(intakeTopRollers);
             intakePivot.append(a);
         }
-        
-        // fill all the spoke arrays
-        for (int i = 0; i < numSpokes; i++) {
-            feederSpokes[i] = new MechanismLigament2d("Feeder Spoke " + i, 6.7, spokeSpacing * i, 2, new Color8Bit(Color.kWhite));
-            feederRoot.append(feederSpokes[i]);
-            shooterSpokes[i] = new MechanismLigament2d("Shooter Spoke " + i, 6.7, spokeSpacing * i, 2, new Color8Bit(Color.kYellow));
-            shooterRoot.append(shooterSpokes[i]);
 
-            intakeTopSpokes[i] = new MechanismLigament2d("Intake Top Spoke " + i, .67, spokeSpacing * i, 2, new Color8Bit(Color.kWhite));
-            intakeTopRollers.append(intakeTopSpokes[i]); // TODO: spoke lengths and thicknesses
-            intakeMiddleSpokes[i] = new MechanismLigament2d("Intake Middle Spoke " + i, .67, spokeSpacing * i, 2, new Color8Bit(Color.kWhite));
-            intakeMiddleRollers.append(intakeMiddleSpokes[i]);
-            intakeBottomSpokes[i] = new MechanismLigament2d("Intake Bottom Spoke " + i, .67, spokeSpacing * i, 2, new Color8Bit(Color.kWhite));
-            intakeBottomRollers.append(intakeBottomSpokes[i]);
-        }
+        intakeTopSpokes = createSpokes(numSpokes, intakeTopRollers, "Intake Top Spoke", .67, 2, spokeColor);
+        intakeMiddleSpokes = createSpokes(numSpokes, intakeMiddleRollers, "Intake Middle Spoke", .67, 2, spokeColor);
+        intakeBottomSpokes = createSpokes(numSpokes, intakeBottomRollers, "Intake Bottom Spoke", .67, 2, spokeColor);
+    }
+
+    private MechanismLigament2d[] createSpokes(int spokeNum, MechanismObject2d target, String name, double length, double width, Color8Bit color) {
+        MechanismLigament2d[] spokes = new MechanismLigament2d[spokeNum];
+        double spacing = 360 / numSpokes;
+        for (int i = 0; i < spokeNum; i++)
+            spokes[i] = target.append(new MechanismLigament2d(name.trim() + " " + i, length, spacing * i, width, color));
+        return spokes;
     }
 
     public void updateFeeder(double RPM) {
