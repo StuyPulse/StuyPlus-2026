@@ -21,6 +21,7 @@
       "/SmartDashboard/PathPlanner": "Alerts",
       "/SmartDashboard/Visualizers/Feeder": "Mechanism2d",
       "/SmartDashboard/Visualizers/Intake Pivot": "Mechanism2d",
+      "/SmartDashboard/Visualizers/Robot": "Mechanism2d",
       "/SmartDashboard/Visualizers/Shooter": "Mechanism2d"
     },
     "windows": {
@@ -40,17 +41,7 @@
           "visible": true
         }
       },
-      "/SmartDashboard/Visualizers/Feeder": {
-        "window": {
-          "visible": true
-        }
-      },
-      "/SmartDashboard/Visualizers/Intake Pivot": {
-        "window": {
-          "visible": true
-        }
-      },
-      "/SmartDashboard/Visualizers/Shooter": {
+      "/SmartDashboard/Visualizers/Robot": {
         "window": {
           "visible": true
         }

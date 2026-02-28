@@ -5,15 +5,11 @@
 
 package com.stuypulse.robot.constants;
 
-import java.util.Map;
-
 import com.ctre.phoenix6.CANBus;
 import com.pathplanner.lib.path.PathConstraints;
 import com.stuypulse.stuylib.network.SmartBoolean;
 import com.stuypulse.stuylib.network.SmartNumber;
 
-import edu.wpi.first.wpilibj.AddressableLEDBuffer;
-import edu.wpi.first.wpilibj.AddressableLEDBufferView;
 import edu.wpi.first.wpilibj.LEDPattern;
 import edu.wpi.first.wpilibj.util.Color;
 
@@ -33,30 +29,30 @@ public interface Settings {
     CANBus CANIVORE = new CANBus("swerve");
 
     public interface EnabledSubsystems {
-        SmartBoolean Feeder = new SmartBoolean("Enabled Subsystems/Feeder", true);
-        SmartBoolean Intake = new SmartBoolean("Enabled Subsystems/Intake", true);
+        SmartBoolean FEEDER = new SmartBoolean("Enabled Subsystems/Feeder", true);
+        SmartBoolean INTAKE = new SmartBoolean("Enabled Subsystems/Intake", true);
         SmartBoolean LED = new SmartBoolean("Enabled Subsystems/LED", true);
-        SmartBoolean Shooter = new SmartBoolean("Enabled Subsystems/Shooter", true);
-        SmartBoolean Vision = new SmartBoolean("Enabled Subsystems/Vision", true);
-        SmartBoolean Swerve = new SmartBoolean("Enabled Subsystems/Swerve", true);
+        SmartBoolean SHOOTER = new SmartBoolean("Enabled Subsystems/Shooter", true);
+        SmartBoolean VISION = new SmartBoolean("Enabled Subsystems/Vision", true);
+        SmartBoolean SWERVE = new SmartBoolean("Enabled Subsystems/Swerve", true);
     }
 
     public interface Intake {
         double ARM_LENGTH = 1.0; // TODO: get actual value
         double INTAKE_DUTY_CYCLE = 0.8;
-        Rotation2d INTAKE_ANGLE = Rotation2d.fromDegrees(67);
+        Rotation2d INTAKE_ANGLE = Rotation2d.fromDegrees(56.7);
         double OUTTAKE_DUTY_CYCLE = -0.8;
         Rotation2d OUTTAKE_ANGLE = Rotation2d.fromDegrees(67);
-        Rotation2d IDLE_ANGLE = Rotation2d.fromDegrees(67);
+        Rotation2d IDLE_ANGLE = Rotation2d.fromDegrees(140);
         double IDLE_DUTY_CYCLE = 0;
         double ROLLER_MAX_ACCEL = 0;
         double ROLLER_MAX_VEL = 0;
         double INITIAL_POSITION = 0;
         Rotation2d AGITATE_UP_ANGLE = Rotation2d.fromDegrees(10);
         Rotation2d AGITATE_DOWN_ANGLE = Rotation2d.fromDegrees(-10);
-        double JKgMetersSquared = 0.001;
+        double JKgMetersSquared = 0.1;
         double PIVOT_MIN_ANGLE = 0.0;
-        double PIVOT_MAX_ANGLE = Math.PI / 2;
+        double PIVOT_MAX_ANGLE = 2 * Math.PI;
         double GEAR_RATIO = 20.0;
 
         double RAMP_RATE = 0.25;
@@ -74,16 +70,17 @@ public interface Settings {
         int LED_LENGTH = 60; // TODO: ask Plus-ME for LED Length
  
         //shooter
-        LEDPattern shooterShooting = LEDPattern.solid(Color.kOrange);
-        LEDPattern ferrying = LEDPattern.solid(Color.kPurple);
+        LEDPattern SHOOTING = LEDPattern.solid(Color.kOrange);
+        LEDPattern FERRYING = LEDPattern.solid(Color.kPurple);
 
         //feeder
-        LEDPattern feederForward = LEDPattern.solid(Color.kBlue);
-        LEDPattern feederReverse = LEDPattern.solid(Color.kRed);
+        LEDPattern FEEDER_FORWARD = LEDPattern.solid(Color.kBlue);
+        LEDPattern FEEDER_REVERSE = LEDPattern.solid(Color.kRed);
 
         //take
-        LEDPattern intaking = LEDPattern.solid(Color.kYellow);
-        LEDPattern outtaking = LEDPattern.solid(Color.kGreen);
+        LEDPattern INTAKING = LEDPattern.solid(Color.kYellow);
+        LEDPattern OUTTAKING = LEDPattern.solid(Color.kGreen);
+        LEDPattern AGITATING = LEDPattern.solid(Color.kCyan);
         
         //states
         LEDPattern DISABLED = LEDPattern.solid(Color.kGray);
