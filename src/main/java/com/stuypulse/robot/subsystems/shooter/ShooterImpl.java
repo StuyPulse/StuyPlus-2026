@@ -82,7 +82,7 @@ public class ShooterImpl extends Shooter {
     @Override
     public void periodic() {
         super.periodic();
-        if (Settings.EnabledSubsystems.Shooter.get()) {
+        if (Settings.EnabledSubsystems.SHOOTER.get()) {
             if (voltageOverride.isPresent()) {
                 shooterMotor1.setVoltage(voltageOverride.get());
             } else {

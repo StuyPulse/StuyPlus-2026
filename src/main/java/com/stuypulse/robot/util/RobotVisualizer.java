@@ -29,11 +29,13 @@ public class RobotVisualizer {
     private final double spokeSpacing;
     // we only have feeder, intake, and shooter visualizers. copy and paste now
 
-    
+    // silhouette
+    private final MechanismRoot2d bumperRoot;
+    private final MechanismLigament2d bumper;
+
     //feeder:
     private final MechanismRoot2d feederRoot;
     private final MechanismLigament2d[] feederSpokes;
-
     
     //intake:
     private final MechanismRoot2d intakeRoot;
@@ -53,6 +55,11 @@ public class RobotVisualizer {
         spokeSpacing = 360 / numSpokes;
 
         canvas = new Mechanism2d(width, height);
+
+        // Silhouette
+        bumperRoot = canvas.getRoot("Bumper Root", 10, 5);
+        bumper = new MechanismLigament2d("Bumper", 50, 0, 90, new Color8Bit(Color.kRed));
+        bumperRoot.append(bumper);
 
         // Feeder
         feederRoot = canvas.getRoot("Feeder Root", 45, 15); // TODO: figure out positioning of each root
