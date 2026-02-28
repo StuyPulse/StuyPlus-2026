@@ -28,7 +28,7 @@ public interface Field {
     public static final Field2d FIELD2D = new Field2d();
 
     double WIDTH = Units.inchesToMeters(317.000); 
-    double LENGTH = Units.inchesToMeters(690.876);
+    double LENGTH = Units.inchesToMeters(650.000);
 
      // Alliance relative hub center coordinates
     public static final Pose2d hubCenter = new Pose2d(Units.inchesToMeters(182.11), WIDTH / 2.0, new Rotation2d());

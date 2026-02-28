@@ -43,8 +43,8 @@ public class Gains {
             double kP = 0.0;
             double kI = 0.0;
             double kD = 0.0;
-            double akP = 0.0;
-            double akI = 0.0;
+            double akP = 5.0;
+            double akI = 0.001;
             double akD = 0.0;
 
             PIDConstants XY = new PIDConstants(0.0, 0.0, 0.0);
