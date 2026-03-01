@@ -6,7 +6,6 @@
 
 package com.stuypulse.robot.constants;
 
-import com.pathplanner.lib.util.GeometryUtil;
 import com.stuypulse.robot.Robot;
 import com.stuypulse.robot.util.vision.AprilTag;
 
@@ -28,7 +27,6 @@ import java.util.List;
 public interface Field {
 
     public static final Field2d FIELD2D = new Field2d();
-    public static final FlippingUtil flipper = new FlippingUtil();
 
     double WIDTH = Units.inchesToMeters(317.000); 
     double LENGTH = Units.inchesToMeters(650.000);
@@ -199,7 +197,7 @@ public interface Field {
         //         rotated.getTranslation().plus(new Translation2d(LENGTH - pose.getX(), WIDTH - pose.getY())),
         //         rotated.getRotation()
         //     );
-        return flipper.flipFieldPose(pose);
+        return FlippingUtil.flipFieldPose(pose);
     }
     
     public static Translation2d transformToOppositeAlliance(Translation2d translation) {

@@ -61,11 +61,7 @@ public class ShooterSim extends Shooter {
         shooter.update(Settings.DT);
         SmartDashboard.putNumber("Shooter/TargetRPM", getState().getTargetRPM());
         SmartDashboard.putNumber("Shooter/SimRPM", getShooterRPM());
-        SmartDashboard.putNumber("Shooter/SimSpeed", getShootSpeed());
-        SmartDashboard.putNumber("Drivetrain/Pose X", drivetrain.getPose().getX());
-        SmartDashboard.putNumber("Drivetrain/Pose Y", drivetrain.getPose().getY());
         SmartDashboard.putNumber("Shooter/Hub Distance", drivetrain.getPose().getTranslation().getDistance(Field.getHubPose().getTranslation()));
-        SmartDashboard.putNumber("Shooter/Transformed Distance", drivetrain.getPose().getTranslation().getDistance(Field.blueHubCenter.getTranslation()));
         SmartDashboard.putNumber("Shooter/Ferry Distance", drivetrain.getPose().getTranslation().getDistance(Field.getFerryZonePose(drivetrain.getPose().getTranslation()).getTranslation()));
     }
 }
