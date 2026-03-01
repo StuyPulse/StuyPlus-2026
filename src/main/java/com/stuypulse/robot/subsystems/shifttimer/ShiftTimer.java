@@ -33,6 +33,8 @@ public class ShiftTimer extends SubsystemBase {
         if (this.alliance.isEmpty()) {
             this.currentState = ShiftState.NOT_GAME; // if there is no alliance, this means that the robot is likely not
                                                      // in competition
+        } else {
+            this.currentState = ShiftState.PRE_GAME;
         }
 
     }

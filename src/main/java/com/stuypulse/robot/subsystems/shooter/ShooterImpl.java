@@ -59,7 +59,7 @@ public class ShooterImpl extends Shooter {
 
     @Override
     public double getShootSpeed() {
-        return ShooterInterpolation.getRPM(getDrivetrainPosition().getDistance(Field.getAllianceHubPose().getTranslation()));
+        return ShooterInterpolation.getRPM(getDrivetrainPosition().getDistance(Field.getHubPose().getTranslation()));
     }
 
     @Override

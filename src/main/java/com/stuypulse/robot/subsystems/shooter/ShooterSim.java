@@ -45,7 +45,7 @@ public class ShooterSim extends Shooter {
 
     @Override
     public double getShootSpeed() {
-        return ShooterInterpolation.getRPM(drivetrain.getPose().getTranslation().getDistance(Field.getAllianceHubPose().getTranslation()));
+        return ShooterInterpolation.getRPM(drivetrain.getPose().getTranslation().getDistance(Field.getHubPose().getTranslation()));
     };
 
     @Override
@@ -64,7 +64,7 @@ public class ShooterSim extends Shooter {
         SmartDashboard.putNumber("Shooter/SimSpeed", getShootSpeed());
         SmartDashboard.putNumber("Drivetrain/Pose X", drivetrain.getPose().getX());
         SmartDashboard.putNumber("Drivetrain/Pose Y", drivetrain.getPose().getY());
-        SmartDashboard.putNumber("Shooter/Hub Distance", drivetrain.getPose().getTranslation().getDistance(Field.getAllianceHubPose().getTranslation()));
+        SmartDashboard.putNumber("Shooter/Hub Distance", drivetrain.getPose().getTranslation().getDistance(Field.getHubPose().getTranslation()));
         SmartDashboard.putNumber("Shooter/Transformed Distance", drivetrain.getPose().getTranslation().getDistance(Field.blueHubCenter.getTranslation()));
         SmartDashboard.putNumber("Shooter/Ferry Distance", drivetrain.getPose().getTranslation().getDistance(Field.getFerryZonePose(drivetrain.getPose().getTranslation()).getTranslation()));
     }

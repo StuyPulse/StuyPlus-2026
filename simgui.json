@@ -32,6 +32,9 @@
   "NetworkTables": {
     "transitory": {
       "SmartDashboard": {
+        "Shooter": {
+          "open": true
+        },
         "States": {
           "open": true
         },

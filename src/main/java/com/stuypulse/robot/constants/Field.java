@@ -6,6 +6,7 @@
 
 package com.stuypulse.robot.constants;
 
+import com.pathplanner.lib.util.GeometryUtil;
 import com.stuypulse.robot.Robot;
 import com.stuypulse.robot.util.vision.AprilTag;
 
@@ -18,6 +19,7 @@ import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.FieldObject2d;
+import com.pathplanner.lib.util.FlippingUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +28,7 @@ import java.util.List;
 public interface Field {
 
     public static final Field2d FIELD2D = new Field2d();
+    public static final FlippingUtil flipper = new FlippingUtil();
 
     double WIDTH = Units.inchesToMeters(317.000); 
     double LENGTH = Units.inchesToMeters(650.000);
@@ -171,7 +174,7 @@ public interface Field {
     public final int[] RED_HP_TAG_IDS = {13, 14};
     public final int[] BLUE_HP_TAG_IDS = {29, 30};
 
-    public final Pose2d blueHubCenter = new Pose2d(Units.inchesToMeters(158.60), Units.inchesToMeters(WIDTH / 2.0), new Rotation2d());
+    public final Pose2d blueHubCenter = new Pose2d(Units.inchesToMeters(158.60), Units.inchesToMeters(158.84), new Rotation2d());
 
     public static Pose2d getAllianceHubPose() {
         return (Robot.isBlue() ? blueHubCenter : transformToOppositeAlliance(blueHubCenter));
@@ -188,10 +191,15 @@ public interface Field {
     }
 
     public static Pose2d transformToOppositeAlliance(Pose2d pose) {
-        Pose2d rotated = pose.rotateBy(Rotation2d.fromDegrees(180));
-        return new Pose2d(
-            rotated.getTranslation().plus(new Translation2d(LENGTH, WIDTH)),
-            rotated.getRotation());
+        //Pose2d rotated = pose.rotateBy(Rotation2d.fromDegrees(180));
+        // return new Pose2d(
+        //     rotated.getTranslation().plus(new Translation2d(LENGTH, WIDTH)),
+        //     rotated.getRotation());
+        // return new Pose2d(
+        //         rotated.getTranslation().plus(new Translation2d(LENGTH - pose.getX(), WIDTH - pose.getY())),
+        //         rotated.getRotation()
+        //     );
+        return flipper.flipFieldPose(pose);
     }
     
     public static Translation2d transformToOppositeAlliance(Translation2d translation) {
