@@ -32,7 +32,6 @@ public class RobotVisualizer {
     private final double width, height;
     private final int numSpokes;
     private final Color8Bit spokeColor;
-    // we only have feeder, intake, and shooter visualizers. copy and paste now
 
     // silhouette
     private final MechanismRoot2d bumperRoot;
@@ -41,7 +40,7 @@ public class RobotVisualizer {
     //feeder:
     private final MechanismRoot2d feederRoot;
     private final MechanismLigament2d[] feederSpokes;
-    
+
     //intake:
     private final MechanismRoot2d intakeRoot;
     private final MechanismLigament2d intakePivot;
@@ -50,7 +49,7 @@ public class RobotVisualizer {
     //shooter:
     private final MechanismRoot2d shooterRoot;
     private final MechanismLigament2d[] shooterSpokes;
-    
+
     private RobotVisualizer() {
         width = 67;
         height = 67;
@@ -110,10 +109,10 @@ public class RobotVisualizer {
         .collect(Collectors.toList());
     }
 
-    private MechanismLigament2d[] createSpokes(int spokeNum, MechanismObject2d target, String name, double length, double width, Color8Bit color) {
-        MechanismLigament2d[] spokes = new MechanismLigament2d[spokeNum];
-        double spacing = 360 / numSpokes;
-        for (int i = 0; i < spokeNum; i++)
+    private MechanismLigament2d[] createSpokes(int num, MechanismObject2d target, String name, double length, double width, Color8Bit color) {
+        MechanismLigament2d[] spokes = new MechanismLigament2d[num];
+        double spacing = 360 / num;
+        for (int i = 0; i < num; i++)
             spokes[i] = target.append(new MechanismLigament2d(name.trim() + " " + i, length, spacing * i, width, color));
         return spokes;
     }
@@ -137,7 +136,7 @@ public class RobotVisualizer {
     }
 
     public void updateIntake(Rotation2d pivotAngle, double RPM) {
-        intakePivot.setAngle(Rotation2d.fromDegrees(180).minus(pivotAngle)); // plus 90 degrees to make it face left
+        intakePivot.setAngle(Rotation2d.fromDegrees(180).minus(pivotAngle)); // 180 degrees to make it face left
         double rot = RPM * 6 * Settings.DT;
         for (MechanismLigament2d spoke : intakeSpokes)
             spoke.setAngle(spoke.getAngle() + rot);

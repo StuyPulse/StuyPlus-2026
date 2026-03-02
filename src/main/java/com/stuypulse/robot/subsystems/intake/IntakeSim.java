@@ -26,7 +26,7 @@ public class IntakeSim extends Intake {
         intakeRollerMotor = new FlywheelSim(
             LinearSystemId.createFlywheelSystem(
                 DCMotor.getKrakenX60(1),
-                Settings.Intake.JKgMetersSquared,
+                Settings.Intake.J_KG_METERS_SQUARED,
                 Settings.Intake.GEAR_RATIO
             ),
             DCMotor.getKrakenX60(1)
@@ -43,7 +43,7 @@ public class IntakeSim extends Intake {
         sim = new SingleJointedArmSim(
             LinearSystemId.createDCMotorSystem(
                 DCMotor.getKrakenX60(1),
-                Settings.Intake.JKgMetersSquared,
+                Settings.Intake.J_KG_METERS_SQUARED,
                 Settings.Intake.GEAR_RATIO
             ),
             gearbox,

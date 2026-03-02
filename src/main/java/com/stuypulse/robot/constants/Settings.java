@@ -38,25 +38,31 @@ public interface Settings {
     }
 
     public interface Intake {
-        double ARM_LENGTH = 1.0; // TODO: get actual value
-        double INTAKE_DUTY_CYCLE = 0.8;
-        Rotation2d INTAKE_ANGLE = Rotation2d.fromDegrees(56.7);
-        double OUTTAKE_DUTY_CYCLE = -0.8;
-        Rotation2d OUTTAKE_ANGLE = Rotation2d.fromDegrees(67);
-        Rotation2d IDLE_ANGLE = Rotation2d.fromDegrees(140);
-        double IDLE_DUTY_CYCLE = 0;
+        double ARM_LENGTH = 1.0; // TODO: get actual values
         double ROLLER_MAX_ACCEL = 0;
         double ROLLER_MAX_VEL = 0;
         double INITIAL_POSITION = 0;
+
+        double IDLE_DUTY_CYCLE = 0;
+
+        Rotation2d INTAKE_ANGLE = Rotation2d.fromDegrees(56.7);
+        double INTAKE_DUTY_CYCLE = 0.8;
+
+        Rotation2d OUTTAKE_ANGLE = Rotation2d.fromDegrees(67);
+        double OUTTAKE_DUTY_CYCLE = -0.8;
+
+        Rotation2d IDLE_ANGLE = Rotation2d.fromDegrees(140);
+
         Rotation2d AGITATE_UP_ANGLE = Rotation2d.fromDegrees(115);
         Rotation2d AGITATE_DOWN_ANGLE = Rotation2d.fromDegrees(67);
-        double JKgMetersSquared = 0.1;
+
+        double J_KG_METERS_SQUARED = 0.1;
         double PIVOT_MIN_ANGLE = 0.0;
         double PIVOT_MAX_ANGLE = 2 * Math.PI;
         double GEAR_RATIO = 20.0;
 
         double RAMP_RATE = 0.25;
-        double STEP_VOLTAGE = 900;
+        double STEP_VOLTAGE = 900; // volts
 
         Rotation2d ANGLE_TOLERANCE = Rotation2d.fromDegrees(0.5); // degrees
     }
@@ -140,7 +146,6 @@ public interface Settings {
         }
     }
     public interface Driver {
-
         double BUZZ_TIME = 1.0;
         double BUZZ_INTENSITY = 1.0;
 
@@ -150,6 +155,7 @@ public interface Settings {
             double RC = 0.05;
             double POWER = 2.0;
         }
+
         public interface Turn {
             double DEADBAND = 0.05;
 

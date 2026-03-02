@@ -30,7 +30,6 @@ import com.stuypulse.robot.subsystems.intake.Intake;
 import com.stuypulse.robot.commands.intake.IntakeAgitateOnce;
 import com.stuypulse.robot.commands.intake.IntakeDefaultCommand;
 import com.stuypulse.robot.subsystems.led.LEDController;
-import com.stuypulse.robot.subsystems.shifttimer.ShiftTimer;
 import com.stuypulse.robot.commands.auton.LeftBumpDepotOutpost;
 import com.stuypulse.robot.commands.auton.DepotOnePointFiveCycle;
 import com.stuypulse.robot.commands.auton.OutpostDepotOnePointFiveCycle;
@@ -65,8 +64,7 @@ public class RobotContainer {
     private final Shooter shooter = Shooter.getInstance();
     // @SuppressWarnings("unused")
     private final Feeder feeder = Feeder.getInstance();
-    // @SuppressWarnings("unused") 
-    private final ShiftTimer shiftTimer = ShiftTimer.getInstance();
+    // @SuppressWarnings("unused")
     private final CommandSwerveDrivetrain swerve = CommandSwerveDrivetrain.getInstance();
     private final LEDController leds = LEDController.getInstance();
     // Autons
