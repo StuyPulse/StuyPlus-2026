@@ -1,7 +1,10 @@
 package com.stuypulse.robot.subsystems.feeder;
 
+import com.stuypulse.robot.constants.Gains;
 import com.stuypulse.robot.constants.Settings;
 
+import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.math.system.plant.LinearSystemId;
 import edu.wpi.first.wpilibj.simulation.FlywheelSim;
@@ -9,19 +12,24 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class FeederSim extends Feeder {
     private final FlywheelSim feeder;
-    private double velocity;
+    private final SimpleMotorFeedforward feedForward;
+    private final PIDController controller;
 
     public FeederSim() {
         super();
 
+        DCMotor motor = DCMotor.getKrakenX60(2);
         feeder = new FlywheelSim(
             LinearSystemId.createFlywheelSystem(
-                DCMotor.getKrakenX60(5),
-                1.0,
+                motor,
+                0.1,
                 3.0
             ),
-            DCMotor.getKrakenX44(2)
+            motor
         );
+
+        feedForward = new SimpleMotorFeedforward(Gains.Feeder.kS, Gains.Feeder.kV.getAsDouble(), Gains.Feeder.kA.getAsDouble());
+        controller = new PIDController(Gains.Feeder.kP, Gains.Feeder.kI, Gains.Feeder.kD);
     }
 
     public double getFeederRPM() {
@@ -31,10 +39,18 @@ public class FeederSim extends Feeder {
     @Override
     public void periodic() {
         super.periodic();
-        velocity = getState().getTargetRPM() * 2 * Math.PI / 60;
+        feedForward.setKv(Gains.Feeder.kV.getAsDouble());
+        feedForward.setKa(Gains.Feeder.kA.getAsDouble());
 
-        feeder.setAngularVelocity(velocity);
+        double velocity = getState().getTargetRPM();
+        double voltage = feedForward.calculate(velocity) + controller.calculate(getFeederRPM(), velocity);
+
+        feeder.setInputVoltage(voltage);
         feeder.update(Settings.DT);
+
         SmartDashboard.putNumber("Feeder/TargetRPM", getState().getTargetRPM());
+        SmartDashboard.putNumber("Feeder/RPM", getFeederRPM());
+        SmartDashboard.putNumber("Feeder/CalculatedRadPerSec", velocity);
+        SmartDashboard.putNumber("Feeder/CalculatedVoltage", voltage);
     }
 }

@@ -68,8 +68,8 @@ public interface Settings {
     }
 
     public interface Feeder {
-        double FEEDER_REVERSE = -41;
-        double FEEDER_FORWARD = 41;
+        double FEEDER_REVERSE = -1900;
+        double FEEDER_FORWARD = 1900;
     }
 
     public interface LED {
