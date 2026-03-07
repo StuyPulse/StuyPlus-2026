@@ -26,6 +26,8 @@ import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.math.numbers.N1;
 import edu.wpi.first.math.numbers.N3;
+import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.networktables.StructPublisher;
 import edu.wpi.first.wpilibj.Notifier;
 import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -421,8 +423,12 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
         ));
     }
 
+    private final StructPublisher<Pose2d> publisher = NetworkTableInstance.getDefault()
+        .getStructTopic("AdvScope/DTPose", Pose2d.struct).publish();
     @Override
     public void periodic() {
+        publisher.set(Robot.isBlue() ? getPose() : Field.transformToOppositeAlliance(getPose()));
+
         SmartDashboard.putNumber("Swerve/Pose/X", getPose().getX());
         SmartDashboard.putNumber("Swerve/Pose/Y", getPose().getY());
         SmartDashboard.putNumber("Swerve/Pose/Theta", getPose().getRotation().getDegrees());

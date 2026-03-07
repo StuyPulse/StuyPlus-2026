@@ -6,9 +6,12 @@ import com.stuypulse.robot.constants.Settings;
 import com.stuypulse.stuylib.math.SLMath;
 
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.math.system.plant.LinearSystemId;
+import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.networktables.StructPublisher;
 import edu.wpi.first.wpilibj.simulation.FlywheelSim;
 import edu.wpi.first.wpilibj.simulation.SingleJointedArmSim;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -19,6 +22,9 @@ public class IntakeSim extends Intake {
     private final PIDController pivotController;
     private final DutyCycleOut rollerController;
     private final SingleJointedArmSim sim;
+
+    private final StructPublisher<Pose2d> publisher = NetworkTableInstance.getDefault()
+        .getStructTopic("AdvScope/IntakePose", Pose2d.struct).publish();
     
     public IntakeSim() {
         DCMotor gearbox = DCMotor.getKrakenX60(1);
@@ -83,6 +89,9 @@ public class IntakeSim extends Intake {
         double voltage = pivotController.calculate(sim.getAngleRads(), getState().getTargetAngle().getRadians());
         sim.setInputVoltage(voltage);
         sim.update(Settings.DT);
+
+
+        publisher.set(new Pose2d(0, 0, getRelativePosition()));
 
         SmartDashboard.putNumber("Intake/rollerVoltage", rollerVoltage);
         SmartDashboard.putNumber("Intake/rollerRPM", getRollerRPM());
