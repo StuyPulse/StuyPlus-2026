@@ -3,11 +3,13 @@ package com.stuypulse.robot.subsystems.intake;
 import com.ctre.phoenix6.controls.DutyCycleOut;
 import com.stuypulse.robot.constants.Gains;
 import com.stuypulse.robot.constants.Settings;
+import com.stuypulse.robot.subsystems.swerve.CommandSwerveDrivetrain;
 import com.stuypulse.stuylib.math.SLMath;
 
 import edu.wpi.first.math.controller.PIDController;
-import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.math.system.plant.LinearSystemId;
 import edu.wpi.first.networktables.NetworkTableInstance;
@@ -23,8 +25,10 @@ public class IntakeSim extends Intake {
     private final DutyCycleOut rollerController;
     private final SingleJointedArmSim sim;
 
-    private final StructPublisher<Pose2d> publisher = NetworkTableInstance.getDefault()
-        .getStructTopic("AdvScope/IntakePose", Pose2d.struct).publish();
+    private final StructPublisher<Pose3d> pivotPublisher = NetworkTableInstance.getDefault()
+        .getStructTopic("AdvScope/IntakePose", Pose3d.struct).publish();
+    private final StructPublisher<Pose3d> hopperPublisher = NetworkTableInstance.getDefault()
+        .getStructTopic("AdvScope/HopperPose", Pose3d.struct).publish();
     
     public IntakeSim() {
         DCMotor gearbox = DCMotor.getKrakenX60(1);
@@ -62,8 +66,7 @@ public class IntakeSim extends Intake {
     }
     @Override
     public Rotation2d getRelativePosition() {
-        return new Rotation2d(SLMath.clamp(sim.getAngleRads(),
-        Settings.Intake.PIVOT_MIN_ANGLE, Settings.Intake.PIVOT_MAX_ANGLE));
+        return new Rotation2d(sim.getAngleRads());
     }
 
     @Override
@@ -90,8 +93,30 @@ public class IntakeSim extends Intake {
         sim.setInputVoltage(voltage);
         sim.update(Settings.DT);
 
-
-        publisher.set(new Pose2d(0, 0, getRelativePosition()));
+        pivotPublisher.set(
+            new Pose3d(
+                0.31,
+                0,
+                0.225,
+                new Rotation3d(
+                    getRelativePosition().getRadians() - Math.toRadians(55), // 55 is roughly the offset from CAD zero angle and robot zero angle
+                    0,
+                    Math.toRadians(90) // turn it to face same direction as robot
+                )
+            )
+        );
+        hopperPublisher.set(
+            new Pose3d(
+                -0.15 + 0.310209692 * Math.sin(SLMath.clamp(
+                    getRelativePosition().getRadians() - Math.toRadians(55),
+                    Settings.Intake.PIVOT_MIN_ANGLE,
+                    Settings.Intake.PIVOT_MAX_ANGLE
+                )),
+                0,
+                0.275,
+                new Rotation3d(Math.toRadians(90), 0, Math.toRadians(90))
+            )
+        );
 
         SmartDashboard.putNumber("Intake/rollerVoltage", rollerVoltage);
         SmartDashboard.putNumber("Intake/rollerRPM", getRollerRPM());
