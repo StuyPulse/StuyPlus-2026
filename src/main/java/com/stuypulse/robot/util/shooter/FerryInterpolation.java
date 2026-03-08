@@ -1,4 +1,4 @@
-package com.stuypulse.robot.util;
+package com.stuypulse.robot.util.shooter;
 
 import edu.wpi.first.math.interpolation.InterpolatingDoubleTreeMap;
 
@@ -7,7 +7,7 @@ public class FerryInterpolation {
 
 
     //TODO: Get from testing
-    private static final double[][] RPMAndDistance = {
+    public static final double[][] RPMAndDistance = {
         {5,100},
     };
 

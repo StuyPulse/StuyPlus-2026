@@ -19,7 +19,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import com.ctre.phoenix6.swerve.SwerveRequest; 
 
 public class SwerveDriveSetAlignment extends Command {
-    protected static final CommandSwerveDrivetrain instance;
+    protected static final CommandSwerveDrivetrain swerve;
     protected final BStream isAligned;
     private Pose2d pose;
     
@@ -28,21 +28,21 @@ public class SwerveDriveSetAlignment extends Command {
             .filtered(new BDebounceRC.Both(Settings.Swerve.Alignment.Tolerances.ALIGNMENT_DEBOUNCE));
         this.pose = pose;
 
-        addRequirements(instance);
+        addRequirements(swerve);
     }
 
     static {
-        instance = CommandSwerveDrivetrain.getInstance();
+        swerve = CommandSwerveDrivetrain.getInstance();
     }
     
     public Rotation2d getTargetAngle() {
-        Pose2d currentPose = instance.getPose();
+        Pose2d currentPose = swerve.getPose();
         double atan = Math.atan2(pose.getY() - currentPose.getY(), pose.getX() - currentPose.getX());
         return new Rotation2d((atan));
     };
 
     private boolean isAligned() {
-        return Math.abs(instance.getPose().getRotation().minus(getTargetAngle()).getDegrees()) < Settings.Swerve.Alignment.Tolerances.THETA_TOLERANCE.getDegrees();
+        return Math.abs(swerve.getPose().getRotation().minus(getTargetAngle()).getDegrees()) < Settings.Swerve.Alignment.Tolerances.THETA_TOLERANCE.getDegrees();
     }
 
     @Override
@@ -57,6 +57,6 @@ public class SwerveDriveSetAlignment extends Command {
             .withVelocityX(0)
             .withVelocityY(0)
             .withHeadingPID(Alignment.akP, Alignment.akI, Alignment.akD);
-        instance.setControl(request);
+        swerve.setControl(request);
     }
 }

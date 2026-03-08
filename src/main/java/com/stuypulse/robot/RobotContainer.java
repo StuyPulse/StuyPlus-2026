@@ -8,39 +8,28 @@ package com.stuypulse.robot;
 import com.stuypulse.robot.commands.auton.DoNothingAuton;
 import com.stuypulse.robot.commands.auton.DoubleBump;
 import com.stuypulse.robot.commands.auton.BumpToNeutralFerry;
-import com.stuypulse.robot.commands.shooter.ShooterIdle;
 import com.stuypulse.robot.commands.feeder.FeederIdle;
-import com.stuypulse.robot.commands.shooter.ShooterShoot;
 import com.stuypulse.robot.commands.swerve.SwerveDriveDrive;
 import com.stuypulse.robot.commands.swerve.driveAligned.SwerveDriveAlignedToAllianceZone;
 import com.stuypulse.robot.commands.swerve.driveAligned.SwerveDriveAlignedToHub;
+import com.stuypulse.robot.commands.swerve.driveAligned.SwerveDriveDriveWhileAligned;
 import com.stuypulse.robot.commands.feeder.FeederForward;
 import com.stuypulse.robot.commands.shooter.ShooterDefaultCommand;
-import com.stuypulse.robot.commands.shooter.ShooterFerry;
 import com.stuypulse.robot.commands.feeder.FeederReverse;
 import com.stuypulse.robot.commands.intake.IntakeSetIdle;
 import com.stuypulse.robot.commands.intake.IntakeSetIntake;
 import com.stuypulse.robot.commands.intake.IntakeSetOuttake;
-import com.stuypulse.robot.commands.led.LEDApplyPattern;
 import com.stuypulse.robot.commands.led.LEDDefaultCommand;
 import com.stuypulse.robot.constants.Field;
 import com.stuypulse.robot.constants.Ports;
-import com.stuypulse.robot.constants.Settings;
 import com.stuypulse.robot.subsystems.intake.Intake;
 import com.stuypulse.robot.commands.intake.IntakeAgitateOnce;
-import com.stuypulse.robot.commands.intake.IntakeDefaultCommand;
 import com.stuypulse.robot.subsystems.led.LEDController;
 import com.stuypulse.robot.commands.auton.LeftBumpDepotOutpost;
 import com.stuypulse.robot.commands.auton.DepotOnePointFiveCycle;
 import com.stuypulse.robot.commands.auton.OutpostDepotOnePointFiveCycle;
 import com.stuypulse.robot.commands.auton.LeftBumpOnePointFiveCycle;
 import com.stuypulse.robot.util.PathUtil.AutonConfig;
-// import com.stuypulse.robot.commands.intake.IntakeAgitateOnce;
-// import com.stuypulse.robot.commands.intake.IntakeSetDown;
-// import com.stuypulse.robot.commands.intake.IntakeSetIdle;
-// import com.stuypulse.robot.commands.intake.IntakeSetIntake;
-// import com.stuypulse.robot.commands.intake.IntakeSetOuttake;
-// import com.stuypulse.robot.commands.intake.IntakeSetUp;
 import com.stuypulse.robot.subsystems.shooter.Shooter;
 import com.stuypulse.robot.subsystems.swerve.CommandSwerveDrivetrain;
 import com.stuypulse.robot.subsystems.feeder.Feeder;
@@ -99,7 +88,12 @@ public class RobotContainer {
     private void configureButtonBindings() {
         //Feeder
         driver.getLeftButton()
-            .whileTrue(new FeederForward().alongWith(new IntakeAgitateOnce().repeatedly()));
+            .whileTrue(
+                new FeederForward()
+                    .alongWith(new IntakeAgitateOnce().repeatedly())
+                    .alongWith(new SwerveDriveDriveWhileAligned(driver)
+                )
+            );
         driver.getTopButton()
             .whileTrue(new FeederIdle());  
         driver.getRightButton()

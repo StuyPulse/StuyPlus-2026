@@ -21,6 +21,7 @@ import com.stuypulse.robot.subsystems.swerve.TunerConstants.TunerSwerveDrivetrai
 import edu.wpi.first.math.Matrix;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Transform2d;
 import edu.wpi.first.math.geometry.Twist2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
@@ -339,6 +340,10 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
 
     public Pose2d getPose() {
         return getState().Pose;
+    }
+    
+    public Pose2d getShooterPose() {
+        return getPose().plus(new Transform2d()); // TODO: subtract shooter offset
     }
 
     public void configureAutoBuilder(){

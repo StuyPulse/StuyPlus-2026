@@ -8,13 +8,13 @@ import com.stuypulse.robot.constants.Field;
 import com.stuypulse.robot.constants.Motors;
 import com.stuypulse.robot.constants.Ports.ShooterPorts;
 import com.stuypulse.robot.subsystems.swerve.CommandSwerveDrivetrain;
-import com.stuypulse.robot.util.FerryInterpolation;
-import com.stuypulse.robot.util.ShooterInterpolation;
 
 import java.util.Optional;
 
 import com.stuypulse.robot.constants.Settings;
 import com.stuypulse.robot.util.SysId;
+import com.stuypulse.robot.util.shooter.FerryInterpolation;
+import com.stuypulse.robot.util.shooter.ShooterInterpolation;
 
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
