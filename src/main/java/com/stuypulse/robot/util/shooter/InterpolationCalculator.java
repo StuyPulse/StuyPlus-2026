@@ -4,9 +4,7 @@ import java.util.function.Supplier;
 
 import com.stuypulse.robot.constants.Settings;
 import com.stuypulse.robot.constants.Field;
-import com.stuypulse.robot.util.shooter.FerryInterpolation;
-import com.stuypulse.robot.util.shooter.ShooterInterpolation;
-import com.stuypulse.robot.util.shooter.TOFInterpolation; // Time of flight
+import com.stuypulse.robot.util.shooter.Interpolation;
 import com.stuypulse.robot.subsystems.swerve.CommandSwerveDrivetrain;
 
 import edu.wpi.first.math.geometry.Pose2d;
@@ -16,39 +14,21 @@ import edu.wpi.first.math.interpolation.InterpolatingDoubleTreeMap;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class InterpolationCalculator {
-
-    public static InterpolatingDoubleTreeMap distanceAngleInterpolator;
     public static InterpolatingDoubleTreeMap distanceRPMInterpolator;
     public static InterpolatingDoubleTreeMap distanceTOFInterpolator;
 
     public static InterpolatingDoubleTreeMap ferryingDistanceRPMInterpolator;
 
     static {
-        distanceAngleInterpolator = new InterpolatingDoubleTreeMap();
-
-        distanceRPMInterpolator = new InterpolatingDoubleTreeMap();
-        for (double[] pair : ShooterInterpolation.RPMAndDistance) {
-            distanceRPMInterpolator.put(pair[0], pair[1]);
-        }
-
-        distanceTOFInterpolator = new InterpolatingDoubleTreeMap();
-        for (double[] pair : TOFInterpolation.RPMAndDistance) {
-            distanceTOFInterpolator.put(pair[0], pair[1]);
-        }
-
-        ferryingDistanceRPMInterpolator = new InterpolatingDoubleTreeMap();
-        for(double[] pair: FerryInterpolation.RPMAndDistance) {
-            ferryingDistanceRPMInterpolator.put(pair[0], pair[1]);
-        }
+        distanceRPMInterpolator = Interpolation.Shooting.getInterpolator();
+        ferryingDistanceRPMInterpolator = Interpolation.Ferrying.getInterpolator();
+        distanceTOFInterpolator = Interpolation.TOF.getInterpolator();
     }
     
     
-    public record InterpolatedShotInfo(
-        double targetRPM,
-        double flightTimeSeconds) {
-    }
+    public record InterpolatedShotInfo(double targetRPM, double flightTimeSeconds) {}
 
-    public static InterpolatedShotInfo interpolateShotInfo(){
+    public static InterpolatedShotInfo interpolateShotInfo() {
         return interpolateShotInfo(Field.getHubPose());
     }
 

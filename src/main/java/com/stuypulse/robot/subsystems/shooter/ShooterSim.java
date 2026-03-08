@@ -4,8 +4,7 @@ import com.stuypulse.robot.constants.Field;
 import com.stuypulse.robot.constants.Gains;
 import com.stuypulse.robot.constants.Settings;
 import com.stuypulse.robot.subsystems.swerve.CommandSwerveDrivetrain;
-import com.stuypulse.robot.util.shooter.FerryInterpolation;
-import com.stuypulse.robot.util.shooter.ShooterInterpolation;
+import com.stuypulse.robot.util.shooter.Interpolation;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.system.plant.DCMotor;
@@ -46,12 +45,12 @@ public class ShooterSim extends Shooter {
 
     @Override
     public double getShootSpeed() {
-        return ShooterInterpolation.getRPM(drivetrain.getPose().getTranslation().getDistance(Field.getHubPose().getTranslation()));
+        return Interpolation.Shooting.getRPM(drivetrain.getPose().getTranslation().getDistance(Field.getHubPose().getTranslation()));
     };
 
     @Override
     public double getFerrySpeed() {
-        return FerryInterpolation.getRPM(drivetrain.getPose().getTranslation().getDistance(Field.getFerryZonePose(drivetrain.getPose().getTranslation()).getTranslation()));
+        return Interpolation.Ferrying.getRPM(drivetrain.getPose().getTranslation().getDistance(Field.getFerryZonePose(drivetrain.getPose().getTranslation()).getTranslation()));
     };
 
     @Override

@@ -343,7 +343,7 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
     }
     
     public Pose2d getShooterPose() {
-        return getPose().plus(new Transform2d()); // TODO: subtract shooter offset
+        return getPose().plus(new Transform2d(0.0, -7.836, new Rotation2d())); // offset is negative because the shooter is behind the robot center
     }
 
     public void configureAutoBuilder(){
