@@ -99,7 +99,7 @@ public class IntakeSim extends Intake {
                 0,
                 0.225,
                 new Rotation3d(
-                    getRelativePosition().getRadians() - Math.toRadians(55), // 55 is roughly the offset from CAD zero angle and robot zero angle
+                    sim.getAngleRads() - Math.toRadians(55), // 55 is roughly the offset from CAD zero angle and robot zero angle
                     0,
                     Math.toRadians(90) // turn it to face same direction as robot
                 )
@@ -107,9 +107,9 @@ public class IntakeSim extends Intake {
         );
         hopperPublisher.set(
             new Pose3d(
-                0.1910209692 * Math.sin(
-                    getRelativePosition().getRadians() - Math.toRadians(55)
-                ) - .08,
+                -0.310209692 * Math.cos(
+                    getRelativePosition().getRadians() + Math.toRadians(50)
+                ) - 0.15,
                 0,
                 0.275,
                 new Rotation3d(Math.toRadians(90), 0, Math.toRadians(90))
