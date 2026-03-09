@@ -7,37 +7,37 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Left Trench to Depot"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "Rotate at Depot"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "Depot to Outpost"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "Rotate at Outpost"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "Outpost to Right Bump"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
             "pathName": "Right Bump to Neutral"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Neutral to Right Bump"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Right Bump Aim at Hub"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Right Bump Face Left"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Right Bump Circle by Hub"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Right Neutral to Left Bump"
           }
         }
       ]

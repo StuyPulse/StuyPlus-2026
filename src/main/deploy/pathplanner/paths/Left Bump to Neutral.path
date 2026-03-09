@@ -3,29 +3,45 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 0.44935599284436445,
-        "y": 0.6520035778175304
+        "x": 3.560328102710413,
+        "y": 5.503537803138374
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.4493559928443642,
-        "y": 0.6520035778175304
+        "x": 4.711868758915834,
+        "y": 4.74015691868759
       },
       "isLocked": false,
-      "linkedName": "Outpost"
+      "linkedName": "Left Bump Start"
     },
     {
       "anchor": {
-        "x": 3.5732667617689007,
-        "y": 2.3723823109843067
+        "x": 7.90771754636234,
+        "y": 6.862097004279601
       },
       "prevControl": {
-        "x": 2.5732667617689007,
-        "y": 2.3723823109843067
+        "x": 7.877931241207733,
+        "y": 7.1103162139013305
+      },
+      "nextControl": {
+        "x": 7.985349500713266,
+        "y": 6.215164051355207
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 8.101797432239657,
+        "y": 4.183794579172611
+      },
+      "prevControl": {
+        "x": 7.852033392650892,
+        "y": 4.172935273103533
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Right Bump"
+      "linkedName": "Neutral Right Facing"
     }
   ],
   "rotationTargets": [],
@@ -42,13 +58,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 91.3322198538696
+    "rotation": -90.0
   },
   "reversed": false,
   "folder": null,
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -1.145762838175079
+    "rotation": -90.0
   },
   "useDefaultConstraints": true
 }
