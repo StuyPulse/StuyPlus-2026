@@ -19,19 +19,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Depot to Outpost"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "Rotate at Outpost"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "Outpost to Right Bump"
+            "pathName": "turn to schoot 2"
           }
         },
         {
