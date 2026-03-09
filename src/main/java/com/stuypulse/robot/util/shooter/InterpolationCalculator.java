@@ -36,9 +36,9 @@ public class InterpolationCalculator {
         CommandSwerveDrivetrain swerve = CommandSwerveDrivetrain.getInstance();
 
         Translation2d hubPose = targetPose.getTranslation();
-        Translation2d turretPose = swerve.getShooterPose().getTranslation();
+        Translation2d shooterPose = swerve.getShooterPose().getTranslation();
 
-        double distanceMeters = turretPose.getDistance(hubPose);
+        double distanceMeters = shooterPose.getDistance(hubPose);
 
         double targetRPM = distanceRPMInterpolator.get(distanceMeters);
         double flightTime = distanceTOFInterpolator.get(distanceMeters);

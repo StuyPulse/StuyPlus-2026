@@ -107,11 +107,9 @@ public class IntakeSim extends Intake {
         );
         hopperPublisher.set(
             new Pose3d(
-                -0.15 + 0.310209692 * Math.sin(SLMath.clamp(
-                    getRelativePosition().getRadians() - Math.toRadians(55),
-                    Settings.Intake.PIVOT_MIN_ANGLE,
-                    Settings.Intake.PIVOT_MAX_ANGLE
-                )),
+                0.1910209692 * Math.sin(
+                    getRelativePosition().getRadians() - Math.toRadians(55)
+                ) - .08,
                 0,
                 0.275,
                 new Rotation3d(Math.toRadians(90), 0, Math.toRadians(90))

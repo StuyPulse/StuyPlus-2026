@@ -14,6 +14,7 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.interpolation.InterpolatingDoubleTreeMap;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import com.stuypulse.robot.util.shooter.InterpolationCalculator.InterpolatedShotInfo;
 
 public final class ShotCalculator {
     public static final double g = 9.81;
@@ -62,7 +63,6 @@ public final class ShotCalculator {
     // }
 
     public record SOTMSolution(
-        Rotation2d targetHoodAngle,
         Rotation2d targetTurretAngle,
         Pose2d virtualPose,
         double flightTime) {
@@ -159,7 +159,6 @@ public final class ShotCalculator {
             Rotation2d.fromRadians(yaw).minus(robotPose.getRotation());
 
         return new SOTMSolution(
-            sol.targetHoodAngle(),
             targetTurretAngle,
             virtualPose,
             sol.flightTimeSeconds()
