@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.560328102710413,
-        "y": 5.503537803138374
+        "x": 3.6250213980028523,
+        "y": 5.89169757489301
       },
       "prevControl": null,
       "nextControl": {
-        "x": 4.711868758915834,
-        "y": 4.74015691868759
+        "x": 6.406833095577745,
+        "y": 5.193009985734665
       },
       "isLocked": false,
       "linkedName": "Left Bump Start"
@@ -21,7 +21,7 @@
       },
       "prevControl": {
         "x": 7.877931241207733,
-        "y": 7.1103162139013305
+        "y": 7.110316213901331
       },
       "nextControl": {
         "x": 7.985349500713266,
@@ -57,7 +57,7 @@
     "unlimited": false
   },
   "goalEndState": {
-    "velocity": 0,
+    "velocity": 1.0,
     "rotation": -90.0
   },
   "reversed": false,

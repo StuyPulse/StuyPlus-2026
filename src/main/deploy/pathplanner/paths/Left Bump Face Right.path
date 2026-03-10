@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.301554921540655,
-        "y": 5.516476462196862
+        "x": 3.2886162624821687,
+        "y": 5.852881597717547
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.551554921540655,
-        "y": 5.516476462196862
+        "x": 3.6435980014663105,
+        "y": 5.883570658212922
       },
       "isLocked": false,
       "linkedName": "Left Bump Aimed at Hub"
     },
     {
       "anchor": {
-        "x": 3.560328102710413,
-        "y": 5.503537803138374
+        "x": 3.6250213980028523,
+        "y": 5.89169757489301
       },
       "prevControl": {
-        "x": 3.310328102710413,
-        "y": 5.503537803138374
+        "x": 3.373989536041448,
+        "y": 5.875045988995388
       },
       "nextControl": null,
       "isLocked": false,
@@ -41,7 +41,7 @@
     "unlimited": false
   },
   "goalEndState": {
-    "velocity": 0,
+    "velocity": 1.0,
     "rotation": -90.0
   },
   "reversed": false,

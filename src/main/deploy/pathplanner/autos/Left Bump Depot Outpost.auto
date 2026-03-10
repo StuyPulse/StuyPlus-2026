@@ -13,7 +13,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Left Neutral to Left Bump"
+            "pathName": "Right Facing Neutral to Left Bump"
           }
         },
         {
@@ -25,13 +25,19 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Rotate at Depot"
+            "pathName": "depot shoot"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Depot to Outpost"
+            "pathName": "Left Bump Shooting to Outpost"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Outpost Shoot"
           }
         }
       ]

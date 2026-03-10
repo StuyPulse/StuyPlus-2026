@@ -19,19 +19,19 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Rotate at Depot"
+            "pathName": "depot shoot"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Depot to Neutral"
+            "pathName": "Left Bump Face Right"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Intake Neutral and Middle Ferry"
+            "pathName": "Left Bump to Neutral"
           }
         }
       ]

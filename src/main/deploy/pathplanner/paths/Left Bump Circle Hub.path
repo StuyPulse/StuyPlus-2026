@@ -3,28 +3,28 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.560328102710413,
-        "y": 5.503537803138374
+        "x": 3.6250213980028523,
+        "y": 5.89169757489301
       },
       "prevControl": null,
       "nextControl": {
-        "x": 7.6101283880171176,
-        "y": 6.551569186875891
+        "x": 7.5066191155492135,
+        "y": 5.71055634807418
       },
       "isLocked": false,
       "linkedName": "Left Bump Start"
     },
     {
       "anchor": {
-        "x": 5.863409415121255,
+        "x": 6.419771754636234,
         "y": 3.8732667617689023
       },
       "prevControl": {
-        "x": 5.302439372325249,
+        "x": 5.858801711840229,
         "y": 3.747114835948646
       },
       "nextControl": {
-        "x": 6.42437945791726,
+        "x": 6.980741797432239,
         "y": 3.9994186875891584
       },
       "isLocked": false,
@@ -67,7 +67,7 @@
     },
     {
       "waypointRelativePos": 2,
-      "rotationDegrees": 95.52754015165621
+      "rotationDegrees": 71.56505117707817
     }
   ],
   "constraintZones": [],
@@ -82,7 +82,7 @@
     "unlimited": false
   },
   "goalEndState": {
-    "velocity": 0,
+    "velocity": 1.0,
     "rotation": 91.19348942398204
   },
   "reversed": false,

@@ -7,13 +7,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Bump to Neutral"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "Intake Neutral and Ferry"
+            "pathName": "Left Bump to Neutral"
           }
         }
       ]

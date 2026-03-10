@@ -7,25 +7,31 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Left Trench to Depot"
+            "pathName": "Left Bump to Neutral"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Rotate at Depot"
+            "pathName": "Right Facing Neutral to Left Bump"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "turn to schoot 2"
+            "pathName": "Left Bump Aim at Hub"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Right Bump to Neutral"
+            "pathName": "Left Bump to Depot"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "depot shoot"
           }
         }
       ]

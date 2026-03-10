@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 0.47,
-        "y": 5.95
+        "x": 0.6750071326676175,
+        "y": 5.982268188302426
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.6710078352483069,
-        "y": 5.6279633483480005
+        "x": 1.8760149679159244,
+        "y": 5.660231536650426
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "Depot"
     },
     {
       "anchor": {
-        "x": 3.0309981122679575,
-        "y": 5.195975823329804
+        "x": 3.2886162624821687,
+        "y": 5.852881597717547
       },
       "prevControl": {
-        "x": 2.5410166484761088,
-        "y": 5.360333538031407
+        "x": 2.79863479869032,
+        "y": 6.017239312419149
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "Left Bump Aimed at Hub"
     }
   ],
   "rotationTargets": [],
@@ -42,13 +42,13 @@
   },
   "goalEndState": {
     "velocity": 0.0,
-    "rotation": -29.753691062571054
+    "rotation": -52.18441257441064
   },
   "reversed": false,
   "folder": null,
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 179.5748772262604
+    "rotation": -178.4088597288055
   },
   "useDefaultConstraints": true
 }

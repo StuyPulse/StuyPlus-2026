@@ -7,13 +7,19 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Right Bump to Neutral"
+            "pathName": "Right Bump to Left Neutral"
           }
         },
         {
           "type": "path",
           "data": {
             "pathName": "Left Neutral to Left Bump"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Left Bump Left Facing Aim at Hub"
           }
         }
       ]

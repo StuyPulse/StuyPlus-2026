@@ -7,25 +7,25 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Bump Neutral"
+            "pathName": "Right Bump to Neutral"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Neutral to Bump"
+            "pathName": "Neutral to Right Bump"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "turn to schoot"
+            "pathName": "Right Bump Aim at Hub"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "To Outpost"
+            "pathName": "Right Bump to Outpost"
           }
         },
         {
