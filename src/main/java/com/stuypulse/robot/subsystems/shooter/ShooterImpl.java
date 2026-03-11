@@ -14,6 +14,7 @@ import java.util.Optional;
 import com.stuypulse.robot.constants.Settings;
 import com.stuypulse.robot.util.SysId;
 import com.stuypulse.robot.util.shooter.Interpolation;
+import com.stuypulse.robot.util.shooter.InterpolationCalculator;
 
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -52,18 +53,16 @@ public class ShooterImpl extends Shooter {
         voltageOverride = Optional.empty();
     }
 
-    public Translation2d getDrivetrainPosition() {
-        return drivetrain.getPose().getTranslation();
-    }
-
     @Override
     public double getShootSpeed() {
-        return Interpolation.Shooting.getRPM(getDrivetrainPosition().getDistance(Field.getHubPose().getTranslation()));
+        return InterpolationCalculator.interpolateShotInfo().targetRPM();
+        //return Interpolation.Shooting.getRPM(getDrivetrainPosition().getDistance(Field.getHubPose().getTranslation()));
     }
 
     @Override
     public double getFerrySpeed() {
-        return Interpolation.Ferrying.getRPM(getDrivetrainPosition().getDistance(Field.getFerryZonePose(getDrivetrainPosition()).getTranslation()));
+        return InterpolationCalculator.interpolateFerryingRPM().get();
+        //return Interpolation.Ferrying.getRPM(getDrivetrainPosition().getDistance(Field.getFerryZonePose(getDrivetrainPosition()).getTranslation()));
     }
 
     public void setVoltagesBasedOnState() {

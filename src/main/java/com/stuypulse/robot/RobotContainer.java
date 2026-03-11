@@ -13,8 +13,12 @@ import com.stuypulse.robot.commands.swerve.SwerveDriveDrive;
 import com.stuypulse.robot.commands.swerve.driveAligned.SwerveDriveAlignedToAllianceZone;
 import com.stuypulse.robot.commands.swerve.driveAligned.SwerveDriveAlignedToHub;
 import com.stuypulse.robot.commands.swerve.driveAligned.SwerveDriveDriveWhileAligned;
+import com.stuypulse.robot.commands.swerve.driveAligned.SwerveFOTM;
+import com.stuypulse.robot.commands.swerve.driveAligned.SwerveSOTM;
 import com.stuypulse.robot.commands.feeder.FeederForward;
 import com.stuypulse.robot.commands.shooter.ShooterDefaultCommand;
+import com.stuypulse.robot.commands.shooter.ShooterFOTM;
+import com.stuypulse.robot.commands.shooter.ShooterSOTM;
 import com.stuypulse.robot.commands.feeder.FeederReverse;
 import com.stuypulse.robot.commands.intake.IntakeSetIdle;
 import com.stuypulse.robot.commands.intake.IntakeSetIntake;
@@ -89,10 +93,9 @@ public class RobotContainer {
         //Feeder
         driver.getLeftButton()
             .whileTrue(
-                new FeederForward()
+                (Field.inAllianceZone() ? new SwerveSOTM(driver).alongWith(new ShooterSOTM()) : new SwerveFOTM(driver).alongWith(new ShooterFOTM()))
                     .alongWith(new IntakeAgitateOnce().repeatedly())
-                    .alongWith(new SwerveDriveDriveWhileAligned(driver)
-                )
+                    .alongWith(new FeederForward())
             );
         driver.getTopButton()
             .whileTrue(new FeederIdle());  

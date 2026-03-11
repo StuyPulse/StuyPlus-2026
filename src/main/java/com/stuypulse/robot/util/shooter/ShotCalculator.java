@@ -6,7 +6,10 @@
 package com.stuypulse.robot.util.shooter;
 
 import com.stuypulse.robot.Robot;
+import com.stuypulse.robot.constants.Field;
 import com.stuypulse.robot.constants.Settings;
+import com.stuypulse.robot.constants.Gains.Swerve;
+import com.stuypulse.robot.subsystems.swerve.CommandSwerveDrivetrain;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -18,7 +21,6 @@ import com.stuypulse.robot.util.shooter.InterpolationCalculator.InterpolatedShot
 
 public final class ShotCalculator {
     public static final double g = 9.81;
-
 
     // public record StationarySolution(
     //     Rotation2d targetHoodAngle,
@@ -63,13 +65,12 @@ public final class ShotCalculator {
     // }
 
     public record SOTMSolution(
-        Rotation2d targetTurretAngle,
         Pose2d virtualPose,
-        double flightTime) {
+        double flightTime,
+        double targetRPM) {
     }
 
     public static SOTMSolution solveShootOnTheMove(
-        Pose2d turretPose,
         Pose2d robotPose,
         Pose2d targetPose,
         ChassisSpeeds fieldRelativeSpeeds,
@@ -145,23 +146,21 @@ public final class ShotCalculator {
             sol = newSol;
 
         }
-        
-        Translation2d virtualTranslation = virtualPose.getTranslation();
-        Translation2d turretTranslation = turretPose.getTranslation();
-
-        double yaw = Math.atan2(
-            virtualTranslation.getY() - turretTranslation.getY(),
-            virtualTranslation.getX() - turretTranslation.getX() 
-        );
-        
-        Rotation2d targetTurretAngle = Robot.isReal() ? 
-            Rotation2d.fromRadians(-yaw).plus(robotPose.getRotation()) :
-            Rotation2d.fromRadians(yaw).minus(robotPose.getRotation());
 
         return new SOTMSolution(
-            targetTurretAngle,
             virtualPose,
-            sol.flightTimeSeconds()
+            sol.flightTimeSeconds(),
+            sol.targetRPM()
         );
+    }
+
+    public static double calculateShootingRPM() {
+        CommandSwerveDrivetrain swerve = CommandSwerveDrivetrain.getInstance();
+        return solveShootOnTheMove(swerve.getPose(), Field.getHubPose(), swerve.getChassisSpeeds(), 5, 0.02).targetRPM();
+    }
+
+    public static double calculateFerryingRPM() {
+        CommandSwerveDrivetrain swerve = CommandSwerveDrivetrain.getInstance();
+        return solveShootOnTheMove(swerve.getPose(), Field.getFerryZonePose(swerve.getPose().getTranslation()), swerve.getChassisSpeeds(), 5, 0.02).targetRPM();
     }
 }

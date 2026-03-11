@@ -1,6 +1,5 @@
 package com.stuypulse.robot.commands.swerve.driveAligned;
 
-import java.util.Optional;
 
 import com.ctre.phoenix6.swerve.SwerveRequest;
 import com.stuypulse.robot.constants.Gains.Swerve.Alignment;
@@ -20,13 +19,12 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 
 public class SwerveDriveDriveWhileAligned extends Command {
-    private final CommandSwerveDrivetrain swerve;
+    protected static final CommandSwerveDrivetrain swerve;
     private final Gamepad driver;
     private final VStream speed;
+    private final Pose2d targetPose;
 
-    public SwerveDriveDriveWhileAligned(Gamepad driver) {
-        this.swerve = CommandSwerveDrivetrain.getInstance();
-
+    public SwerveDriveDriveWhileAligned(Gamepad driver, Pose2d targetPose) {
         this.speed = VStream.create(this::getDriverInputAsVelocity)
             .filtered(
                 new VDeadZone(Drive.DEADBAND),
@@ -37,21 +35,22 @@ public class SwerveDriveDriveWhileAligned extends Command {
                 new VLowPassFilter(Drive.RC)
             );
         this.driver = driver;
-
+        this.targetPose = targetPose;
         addRequirements(swerve);
+    }
+
+    static {
+        swerve = CommandSwerveDrivetrain.getInstance();
     }
 
     private Vector2D getDriverInputAsVelocity() {
         return new Vector2D(driver.getLeftStick().y, -driver.getLeftStick().x);
     }
 
-    public Pose2d getTargetPose() {
-        return new Pose2d();
-    }
     public Rotation2d getTargetAngle() {
         Pose2d currentPose = swerve.getPose();
-        double atan = Math.atan2(getTargetPose().getY() - currentPose.getY(), getTargetPose().getX() - currentPose.getX());
-        return new Rotation2d((atan));
+        double atan = Math.atan2(targetPose.getY() - currentPose.getY(), targetPose.getX() - currentPose.getX());
+        return new Rotation2d(atan);
     };
 
     @Override

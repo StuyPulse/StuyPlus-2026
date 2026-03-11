@@ -33,6 +33,6 @@ public class FeederImpl extends Feeder {
         setMotors();
 
         SmartDashboard.putNumber("Feeder/Target RPM", getState().getTargetRPM());
-        SmartDashboard.putNumber("Feeder/Current RPM", feederMotor1.getVelocity().getValueAsDouble());
+        SmartDashboard.putNumber("Feeder/Current RPM", feederMotor1.getVelocity().getValueAsDouble() * 60);
     }
 }

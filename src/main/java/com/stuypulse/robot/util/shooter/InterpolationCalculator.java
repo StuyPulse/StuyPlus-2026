@@ -26,7 +26,8 @@ public class InterpolationCalculator {
     }
     
     
-    public record InterpolatedShotInfo(double targetRPM, double flightTimeSeconds) {}
+    public record InterpolatedShotInfo(double targetRPM, double flightTimeSeconds) {
+    }
 
     public static InterpolatedShotInfo interpolateShotInfo() {
         return interpolateShotInfo(Field.getHubPose());
@@ -62,8 +63,6 @@ public class InterpolationCalculator {
             double distanceMeters = cornerPose.getDistance(currentPose);
 
             double targetRPM = ferryingDistanceRPMInterpolator.get(distanceMeters);
-
-            SmartDashboard.putNumber("HoodedShooter/Interpolated Ferrying RPM", targetRPM);
             
             return targetRPM;
         };

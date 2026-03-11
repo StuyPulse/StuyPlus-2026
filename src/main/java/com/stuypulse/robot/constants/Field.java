@@ -7,6 +7,7 @@
 package com.stuypulse.robot.constants;
 
 import com.stuypulse.robot.Robot;
+import com.stuypulse.robot.subsystems.swerve.CommandSwerveDrivetrain;
 import com.stuypulse.robot.util.vision.AprilTag;
 
 import edu.wpi.first.math.geometry.Pose2d;
@@ -54,6 +55,10 @@ public interface Field {
     // ZONE COORDINATES
 
     public static final Pose2d allianceZone = new Pose2d(Units.inchesToMeters(182.11), WIDTH, new Rotation2d());
+
+    public static boolean inAllianceZone() {
+        return CommandSwerveDrivetrain.getInstance().getPose().getX() < allianceZone.getX(); 
+    }
 
 
     /*** APRILTAGS ***/

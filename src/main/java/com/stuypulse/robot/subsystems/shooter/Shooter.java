@@ -4,6 +4,7 @@ import java.util.function.DoubleSupplier;
 import com.stuypulse.robot.Robot;
 import com.stuypulse.robot.constants.Settings;
 import com.stuypulse.robot.util.RobotVisualizer;
+import com.stuypulse.robot.util.shooter.ShotCalculator;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -27,7 +28,9 @@ public abstract class Shooter extends SubsystemBase {
     public enum ShooterState {
         IDLE(() -> 0.0), 
         SHOOTING(() -> Shooter.getInstance().getShootSpeed()),
-        FERRYING(() -> Shooter.getInstance().getFerrySpeed()); // supplier because idk
+        FERRYING(() -> Shooter.getInstance().getFerrySpeed()), // supplier because idk
+        SOTM(() -> ShotCalculator.calculateShootingRPM()),
+        FOTM(() -> ShotCalculator.calculateFerryingRPM());
 
         private final DoubleSupplier targetRPM;
         
