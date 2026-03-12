@@ -38,6 +38,8 @@ public class LEDDefaultCommand extends Command {
         switch (shooter.getState()) {
             case SHOOTING -> leds.applyShoot(Settings.LED.SHOOTING);
             case FERRYING -> leds.applyShoot(Settings.LED.FERRYING);
+            case SOTM -> leds.applyShoot(Settings.LED.SHOOTING);
+            case FOTM -> leds.applyShoot(Settings.LED.FERRYING);
             case IDLE -> leds.applyShoot(LEDPattern.kOff);
         }
 

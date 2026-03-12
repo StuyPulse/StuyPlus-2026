@@ -81,6 +81,7 @@ public class RobotContainer {
     private void configureDefaultCommands() {
         swerve.setDefaultCommand(new SwerveDriveDrive(driver));
         shooter.setDefaultCommand(new ShooterDefaultCommand());
+        feeder.setDefaultCommand(new FeederIdle());
        // intake.setDefaultCommand(new IntakeDefaultCommand());
         leds.setDefaultCommand(new LEDDefaultCommand());
     }
@@ -96,8 +97,7 @@ public class RobotContainer {
                 (Field.inAllianceZone() ? new SwerveSOTM(driver).alongWith(new ShooterSOTM()) : new SwerveFOTM(driver).alongWith(new ShooterFOTM()))
                     .alongWith(new IntakeAgitateOnce().repeatedly())
                     .alongWith(new FeederForward())
-            )
-            .onFalse(new FeederIdle());
+            );
         driver.getTopButton()
             .whileTrue(new FeederIdle());  
         driver.getRightButton()
