@@ -96,7 +96,8 @@ public class RobotContainer {
                 (Field.inAllianceZone() ? new SwerveSOTM(driver).alongWith(new ShooterSOTM()) : new SwerveFOTM(driver).alongWith(new ShooterFOTM()))
                     .alongWith(new IntakeAgitateOnce().repeatedly())
                     .alongWith(new FeederForward())
-            );
+            )
+            .onFalse(new FeederIdle());
         driver.getTopButton()
             .whileTrue(new FeederIdle());  
         driver.getRightButton()
