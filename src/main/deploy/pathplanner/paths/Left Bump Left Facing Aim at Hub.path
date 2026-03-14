@@ -8,8 +8,8 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.2886162624821687,
-        "y": 6.102881597717547
+        "x": 3.074878289330783,
+        "y": 6.003830407987762
       },
       "isLocked": false,
       "linkedName": "Left Bump Left Facing"
@@ -20,8 +20,8 @@
         "y": 5.852881597717547
       },
       "prevControl": {
-        "x": 3.2739357569943004,
-        "y": 5.603313004423797
+        "x": 3.5457950110902803,
+        "y": 5.669162321175151
       },
       "nextControl": null,
       "isLocked": false,

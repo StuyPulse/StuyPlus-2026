@@ -11,6 +11,7 @@ import com.stuypulse.robot.constants.Settings;
 import com.stuypulse.robot.commands.feeder.FeederForward;
 import com.stuypulse.robot.commands.feeder.FeederIdle;
 import com.stuypulse.robot.commands.intake.IntakeAgitateOnce;
+import com.stuypulse.robot.commands.intake.IntakeSetIdle;
 import com.stuypulse.robot.commands.intake.IntakeSetIntake;
 import com.stuypulse.robot.commands.shooter.ShooterFerry;
 import com.stuypulse.robot.commands.shooter.ShooterShoot;
@@ -21,25 +22,27 @@ import edu.wpi.first.wpilibj2.command.WaitCommand;
 
 import com.pathplanner.lib.path.PathPlannerPath;
 
-public class DepotOnePointFiveCycle extends SequentialCommandGroup {
+public class Depot extends SequentialCommandGroup {
 
-    public DepotOnePointFiveCycle(PathPlannerPath... paths) {
+    public Depot(PathPlannerPath... paths) {
 
         addCommands(
             CommandSwerveDrivetrain.getInstance().followPathCommand(paths[0])
                 .alongWith(new IntakeSetIntake()),
-            new WaitCommand(2), // wait for intaking
 
-            CommandSwerveDrivetrain.getInstance().followPathCommand(paths[1]),
-            
-            new SwerveDriveAlignedToHub(),
-            new FeederForward(),
-            new WaitCommand(Settings.Shooter.SHOOT_TIME_AUTO).deadlineFor(new IntakeAgitateOnce().repeatedly()),
-            new FeederIdle(),
+            CommandSwerveDrivetrain.getInstance().followPathCommand(paths[1])
+                .alongWith(new IntakeSetIdle()),
 
             CommandSwerveDrivetrain.getInstance().followPathCommand(paths[2]),
+                new WaitCommand(2).deadlineFor(new IntakeSetIntake()),
+
             CommandSwerveDrivetrain.getInstance().followPathCommand(paths[3])
-                .alongWith(new IntakeSetIntake()) // consider ferrying here
+                .alongWith(new IntakeSetIdle()),
+            
+            new SwerveDriveAlignedToHub(),
+            new WaitCommand(Settings.Shooter.SHOOT_TIME_AUTO).deadlineFor(new FeederForward(), new IntakeAgitateOnce().repeatedly()),
+
+            new FeederIdle().alongWith(new IntakeSetIdle())
         );
     }
 }

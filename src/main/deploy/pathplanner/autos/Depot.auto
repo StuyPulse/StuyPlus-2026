@@ -19,12 +19,6 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Left Bump Aim at Hub"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
             "pathName": "Left Bump to Depot"
           }
         },

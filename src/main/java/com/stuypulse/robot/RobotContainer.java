@@ -10,6 +10,7 @@ import com.stuypulse.robot.commands.auton.DoubleBump;
 import com.stuypulse.robot.commands.auton.BumpToNeutralFerry;
 import com.stuypulse.robot.commands.feeder.FeederIdle;
 import com.stuypulse.robot.commands.swerve.SwerveDriveDrive;
+import com.stuypulse.robot.commands.swerve.SwerveDriveXMode;
 import com.stuypulse.robot.commands.swerve.driveAligned.SwerveDriveAlignedToAllianceZone;
 import com.stuypulse.robot.commands.swerve.driveAligned.SwerveDriveAlignedToHub;
 import com.stuypulse.robot.commands.swerve.driveAligned.SwerveDriveDriveWhileAligned;
@@ -30,9 +31,10 @@ import com.stuypulse.robot.subsystems.intake.Intake;
 import com.stuypulse.robot.commands.intake.IntakeAgitateOnce;
 import com.stuypulse.robot.subsystems.led.LEDController;
 import com.stuypulse.robot.commands.auton.LeftBumpDepotOutpost;
-import com.stuypulse.robot.commands.auton.DepotOnePointFiveCycle;
+import com.stuypulse.robot.commands.auton.LeftBumpNeutralTwoX;
+import com.stuypulse.robot.commands.auton.Depot;
 import com.stuypulse.robot.commands.auton.OutpostDepotOnePointFiveCycle;
-import com.stuypulse.robot.commands.auton.LeftBumpOnePointFiveCycle;
+import com.stuypulse.robot.commands.auton.RightBumpNeutralTwoX;
 import com.stuypulse.robot.util.PathUtil.AutonConfig;
 import com.stuypulse.robot.subsystems.shooter.Shooter;
 import com.stuypulse.robot.subsystems.swerve.CommandSwerveDrivetrain;
@@ -43,6 +45,7 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.ConditionalCommand;
 
 public class RobotContainer {
     // Gamepads
@@ -81,8 +84,6 @@ public class RobotContainer {
     private void configureDefaultCommands() {
         swerve.setDefaultCommand(new SwerveDriveDrive(driver));
         shooter.setDefaultCommand(new ShooterDefaultCommand());
-        feeder.setDefaultCommand(new FeederIdle());
-       // intake.setDefaultCommand(new IntakeDefaultCommand());
         leds.setDefaultCommand(new LEDDefaultCommand());
     }
 
@@ -91,30 +92,42 @@ public class RobotContainer {
     /***************/
 
     private void configureButtonBindings() {
-        //Feeder
+        //TODO:Get actual button bindings from our driver, these are just random buttons
+
+        //SOTM which automatically switches between SOTM and FOTM based on position
         driver.getLeftButton()
             .whileTrue(
-                (Field.inAllianceZone() ? new SwerveSOTM(driver).alongWith(new ShooterSOTM()) : new SwerveFOTM(driver).alongWith(new ShooterFOTM()))
-                    .alongWith(new IntakeAgitateOnce().repeatedly())
-                    .alongWith(new FeederForward())
-            );
-        driver.getTopButton()
-            .whileTrue(new FeederIdle());  
+                new ConditionalCommand(
+                    new SwerveSOTM(driver).alongWith(new ShooterSOTM(), new FeederForward(), new IntakeAgitateOnce().repeatedly()),
+                    new SwerveFOTM(driver).alongWith(new ShooterFOTM(), new FeederForward(), new IntakeAgitateOnce().repeatedly()),
+                    () -> Field.inAllianceZone()
+                ))
+            .onFalse(new FeederIdle().alongWith(new IntakeSetIdle()));
+
+        //Outtaking
         driver.getRightButton()
-            .whileTrue(new FeederReverse().alongWith(new IntakeSetOuttake()));
+            .whileTrue(new FeederReverse().alongWith(new IntakeSetOuttake()))
+            .onFalse(new FeederIdle().alongWith(new IntakeSetIdle()));
         
-        //Intake
+        //Intaking
         driver.getLeftBumper()
-            .whileTrue(new IntakeSetIntake());
+            .whileTrue(new IntakeSetIntake())
+            .onFalse(new IntakeSetIdle());
+
+        //Shoot or Ferry while stationary
         driver.getRightBumper()
-            .whileTrue(new IntakeSetIdle());
+            .whileTrue(new ConditionalCommand(
+                new SwerveDriveAlignedToHub().andThen(new SwerveDriveXMode()).alongWith(new FeederForward(), new IntakeAgitateOnce().repeatedly()),
+                new SwerveDriveAlignedToAllianceZone().andThen(new SwerveDriveXMode()).alongWith(new FeederForward(), new IntakeAgitateOnce().repeatedly()),
+                () -> Field.inAllianceZone()))
+            .onFalse(new IntakeSetIdle().alongWith(new FeederIdle()));
 
 
-        //Shooter Alignment
+        //Drive while aligned, just for testing purposes
         driver.getDPadUp()
-            .onTrue(new SwerveDriveAlignedToHub());
+            .whileTrue(new SwerveDriveDriveWhileAligned(driver, Field.getHubPose()));
         driver.getDPadDown()
-            .onTrue(new SwerveDriveAlignedToAllianceZone());
+            .whileTrue(new SwerveDriveDriveWhileAligned(driver, Field.getFerryZonePose(swerve.getPose().getTranslation())));
     }
 
     /**************/
@@ -126,41 +139,54 @@ public class RobotContainer {
         AutonConfig outpostDepotOnePointFiveAuton = new AutonConfig("Outpost Depot 1.5 cycle", OutpostDepotOnePointFiveCycle::new, 
             "Right Trench to Outpost", 
             "Outpost to Depot", 
-            "Rotate at Depot", 
-            "Depot to Neutral", 
-            "Intake Neutral and Middle Ferry");
+            "depot shoot", 
+            "Left Bump Face Right", 
+            "Left Bump to Neutral");
         outpostDepotOnePointFiveAuton.register(autonChooser);
 
         AutonConfig leftBumpDepotOutpostAuton = new AutonConfig("Left Bump Depot Outpost", LeftBumpDepotOutpost::new, 
-            "Left Bump to Left Neutral", 
-            "Left Neutral to Left Bump", 
+            "Left Bump to Neutral", 
+            "Right Facing Neutral to Left Bump", 
             "Left Bump to Depot", 
-            "Rotate at Depot", 
-            "Depot to Outpost");
+            "depot shoot",
+            "Left Bump Shooting to Outpost", 
+            "Outpost Shoot");
         leftBumpDepotOutpostAuton.register(autonChooser);
 
-        AutonConfig depotOnePointFiveAuton = new AutonConfig("Depot 1.5 cycle", DepotOnePointFiveCycle::new, 
-            "Left Trench to Depot", 
-            "Rotate at Depot", 
-            "Depot to Right Bump", 
-            "Right Bump to Left Neutral");
-        depotOnePointFiveAuton.register(autonChooser);
+        AutonConfig depotAuton = new AutonConfig("Depot", Depot::new, 
+            "Left Bump to Neutral", 
+            "Right Facing Neutral to Left Bump", 
+            "Left Bump to Depot", 
+            "depot shoot");
+        depotAuton.register(autonChooser);
 
         AutonConfig doubleBumpAuton = new AutonConfig("Double Bump", DoubleBump::new, 
             "Right Bump to Left Neutral", 
-            "Left Neutral to Left Bump");
+            "Left Neutral to Left Bump",
+            "Left Bump Left Facing Aim at Hub");
         doubleBumpAuton.register(autonChooser);
 
-        AutonConfig bumpToNeutralFerry = new AutonConfig("Bump To Neutral Ferry", BumpToNeutralFerry::new,
-            "Bump to Neutral",
-            "Intake Neutral and Ferry");
-        bumpToNeutralFerry.register(autonChooser);
+        AutonConfig bumpToNeutralFerryAuton = new AutonConfig("Bump To Neutral Ferry", BumpToNeutralFerry::new,
+            "Left Bump to Neutral");
+        bumpToNeutralFerryAuton.register(autonChooser);
 
-        AutonConfig leftBumpOnePointFiveCycle = new AutonConfig("Left Bump 1.5 cycle", LeftBumpOnePointFiveCycle::new, 
-             "Left Bump to Left Neutral", 
-             "Left Neutral to Left Bump", 
-             "Left Bump to Depot");
-         leftBumpOnePointFiveCycle.register(autonChooser);
+        AutonConfig leftBumpNeutral2XAuton = new AutonConfig("Left Bump Neutral 2X", LeftBumpNeutralTwoX::new, 
+            "Left Bump to Neutral",
+            "Right Facing Neutral to Left Bump",
+            "Left Bump Aim at Hub",
+            "Left Bump Face Right",
+            "Left Bump Circle Hub",
+            "Left Neutral to Left Bump");
+        leftBumpNeutral2XAuton.register(autonChooser);
+
+        AutonConfig rightBumpNeutral2XAuton = new AutonConfig("Right Bump Neutral 2X", RightBumpNeutralTwoX::new,
+            "Right Bump to Neutral",
+            "Neutral to Right Bump",
+            "Right Bump Aim at Hub",
+            "Right Bump Face Left",
+            "Right Bump Circle by Hub",
+            "Right Neutral to Left Bump");
+        rightBumpNeutral2XAuton.register(autonChooser);
 
         SmartDashboard.putData("Autonomous", autonChooser);
     }
