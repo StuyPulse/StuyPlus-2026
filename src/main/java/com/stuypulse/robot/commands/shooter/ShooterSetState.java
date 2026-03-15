@@ -18,7 +18,7 @@ public class ShooterSetState extends Command {
     }
 
     @Override 
-    public void initialize() {
+    public void execute() {
         shooter.setState(state);
     }
 }

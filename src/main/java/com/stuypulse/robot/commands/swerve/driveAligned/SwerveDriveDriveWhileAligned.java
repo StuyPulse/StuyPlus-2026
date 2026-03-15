@@ -1,8 +1,11 @@
 package com.stuypulse.robot.commands.swerve.driveAligned;
 
 
+import java.util.function.Supplier;
+
 import com.ctre.phoenix6.swerve.SwerveRequest;
 import com.stuypulse.robot.constants.Gains.Swerve.Alignment;
+import com.stuypulse.robot.constants.Settings;
 import com.stuypulse.robot.constants.Settings.Driver.Drive;
 import com.stuypulse.robot.constants.Settings.Swerve;
 import com.stuypulse.robot.subsystems.swerve.CommandSwerveDrivetrain;
@@ -22,9 +25,9 @@ public class SwerveDriveDriveWhileAligned extends Command {
     protected static final CommandSwerveDrivetrain swerve;
     private final Gamepad driver;
     private final VStream speed;
-    private final Pose2d targetPose;
+    private final Supplier<Pose2d> targetPose;
 
-    public SwerveDriveDriveWhileAligned(Gamepad driver, Pose2d targetPose) {
+    public SwerveDriveDriveWhileAligned(Gamepad driver, Supplier<Pose2d> targetPose) {
         this.speed = VStream.create(this::getDriverInputAsVelocity)
             .filtered(
                 new VDeadZone(Drive.DEADBAND),
@@ -49,7 +52,7 @@ public class SwerveDriveDriveWhileAligned extends Command {
 
     public Rotation2d getTargetAngle() {
         Pose2d currentPose = swerve.getPose();
-        double atan = Math.atan2(targetPose.getY() - currentPose.getY(), targetPose.getX() - currentPose.getX());
+        double atan = Math.atan2(targetPose.get().getY() - currentPose.getY(), targetPose.get().getX() - currentPose.getX());
         return new Rotation2d(atan);
     };
 
@@ -63,5 +66,8 @@ public class SwerveDriveDriveWhileAligned extends Command {
         );
 
         SmartDashboard.putNumber("Swerve/targetAngle", getTargetAngle().getDegrees());
+        SmartDashboard.putNumber("Swerve/Target Pose X", targetPose.get().getX());
+        SmartDashboard.putNumber("Swerve/Target Pose Y", targetPose.get().getY());
     }
+
 }

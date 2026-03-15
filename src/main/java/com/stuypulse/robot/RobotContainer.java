@@ -125,9 +125,9 @@ public class RobotContainer {
 
         //Drive while aligned, just for testing purposes
         driver.getDPadUp()
-            .whileTrue(new SwerveDriveDriveWhileAligned(driver, Field.getHubPose()));
+            .whileTrue(new SwerveDriveDriveWhileAligned(driver, () -> Field.getHubPose()));
         driver.getDPadDown()
-            .whileTrue(new SwerveDriveDriveWhileAligned(driver, Field.getFerryZonePose(swerve.getPose().getTranslation())));
+            .whileTrue(new SwerveDriveDriveWhileAligned(driver, () -> Field.getFerryZonePose(swerve.getPose().getTranslation())));
     }
 
     /**************/

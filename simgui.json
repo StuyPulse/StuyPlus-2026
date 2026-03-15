@@ -41,6 +41,12 @@
   "NetworkTables": {
     "transitory": {
       "SmartDashboard": {
+        "Shooter": {
+          "open": true
+        },
+        "Swerve": {
+          "open": true
+        },
         "open": true
       }
     }
