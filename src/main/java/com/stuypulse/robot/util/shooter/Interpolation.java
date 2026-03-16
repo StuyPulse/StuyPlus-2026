@@ -28,11 +28,11 @@ public interface Interpolation {
     }
 
     public class Ferrying {
-        private static final double[][] RPMAndDistance = {
+        private static final double[][] DistanceAndRPM = {
             {5, 100}
         };
 
-        private static final InterpolatingDoubleTreeMap interpolator = build(RPMAndDistance);
+        private static final InterpolatingDoubleTreeMap interpolator = build(DistanceAndRPM);
 
         public static double getRPM(double distance) {
             return interpolator.get(distance);
@@ -43,12 +43,28 @@ public interface Interpolation {
         }
     }
 
-    public class TOF { // time of flight
-        private static final double[][] RPMAndDistance = {
+    public class TOFShooting { // time of flight
+        private static final double[][] DistanceAndRPM = {
             {6, 7}
         };
 
-        private static final InterpolatingDoubleTreeMap interpolator = build(RPMAndDistance);
+        private static final InterpolatingDoubleTreeMap interpolator = build(DistanceAndRPM);
+
+        public static double getRPM(double distance) {
+            return interpolator.get(distance);
+        }
+
+        public static InterpolatingDoubleTreeMap getInterpolator() {
+            return interpolator;
+        }
+    }
+
+    public class TOFFerrying {
+        private static final double[][] DistanceAndRPM = {
+            {6,7}
+        };
+
+        private static InterpolatingDoubleTreeMap interpolator = build(DistanceAndRPM);
 
         public static double getRPM(double distance) {
             return interpolator.get(distance);

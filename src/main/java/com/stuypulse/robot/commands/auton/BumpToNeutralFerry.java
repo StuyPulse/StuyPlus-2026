@@ -23,7 +23,7 @@ public class BumpToNeutralFerry extends SequentialCommandGroup {
             new WaitCommand(5).deadlineFor(new IntakeAgitateOnce().repeatedly(), new FeederForward()),
             new WaitCommand(5).deadlineFor(new IntakeSetIntake(), new FeederIdle()),
             new WaitCommand(5).deadlineFor(new IntakeAgitateOnce().repeatedly(), new FeederForward()),
-            new IntakeSetIdle().alongWith(new FeederIdle())
+            new IntakeSetIntake().alongWith(new FeederIdle())
         );
     }
 }

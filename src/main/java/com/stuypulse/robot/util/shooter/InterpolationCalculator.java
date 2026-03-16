@@ -15,14 +15,15 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class InterpolationCalculator {
     public static InterpolatingDoubleTreeMap distanceRPMInterpolator;
-    public static InterpolatingDoubleTreeMap distanceTOFInterpolator;
-
+    public static InterpolatingDoubleTreeMap distanceTOFShootingInterpolator;
+    public static InterpolatingDoubleTreeMap distanceTOFFerryingInterpolator;
     public static InterpolatingDoubleTreeMap ferryingDistanceRPMInterpolator;
 
     static {
         distanceRPMInterpolator = Interpolation.Shooting.getInterpolator();
         ferryingDistanceRPMInterpolator = Interpolation.Ferrying.getInterpolator();
-        distanceTOFInterpolator = Interpolation.TOF.getInterpolator();
+        distanceTOFShootingInterpolator = Interpolation.TOFShooting.getInterpolator();
+        distanceTOFFerryingInterpolator = Interpolation.TOFFerrying.getInterpolator();
     }
     
     
@@ -42,7 +43,7 @@ public class InterpolationCalculator {
         double distanceMeters = shooterPose.getDistance(hubPose);
 
         double targetRPM = distanceRPMInterpolator.get(distanceMeters);
-        double flightTime = distanceTOFInterpolator.get(distanceMeters);
+        double flightTime = distanceTOFShootingInterpolator.get(distanceMeters);
 
         SmartDashboard.putNumber("HoodedShooter/Interpolated RPM", targetRPM);
         SmartDashboard.putNumber("HoodedShooter/Interpolated TOF", flightTime);
@@ -53,7 +54,7 @@ public class InterpolationCalculator {
         );
     }
 
-    public static Supplier<Double> interpolateFerryingRPM() {
+    public static Supplier<InterpolatedShotInfo> interpolateFerryingRPM() {
         return () -> {
             CommandSwerveDrivetrain swerve = CommandSwerveDrivetrain.getInstance();
 
@@ -63,8 +64,9 @@ public class InterpolationCalculator {
             double distanceMeters = cornerPose.getDistance(currentPose);
 
             double targetRPM = ferryingDistanceRPMInterpolator.get(distanceMeters);
+            double flightTime = distanceTOFFerryingInterpolator.get(distanceMeters);
             
-            return targetRPM;
+            return new InterpolatedShotInfo(targetRPM, flightTime);
         };
     }   
 }

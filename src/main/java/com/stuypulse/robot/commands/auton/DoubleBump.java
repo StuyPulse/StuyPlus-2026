@@ -19,14 +19,13 @@ public class DoubleBump extends SequentialCommandGroup {
             CommandSwerveDrivetrain.getInstance().followPathCommand(paths[0])
                 .alongWith(new IntakeSetIntake()),
 
-            CommandSwerveDrivetrain.getInstance().followPathCommand(paths[1])
-                .alongWith(new IntakeSetIdle()),
+            CommandSwerveDrivetrain.getInstance().followPathCommand(paths[1]),
 
             CommandSwerveDrivetrain.getInstance().followPathCommand(paths[2]),
                 new SwerveDriveAlignedToHub(),
                 new WaitCommand(Settings.Shooter.SHOOT_TIME_AUTO).deadlineFor(new FeederForward(), new IntakeAgitateOnce().repeatedly()),
 
-                new FeederIdle().alongWith(new IntakeSetIdle())
+                new FeederIdle().alongWith(new IntakeSetIntake())
         );
 
     }

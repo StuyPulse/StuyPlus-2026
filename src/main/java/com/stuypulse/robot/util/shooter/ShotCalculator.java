@@ -5,6 +5,8 @@
 /***************************************************************/
 package com.stuypulse.robot.util.shooter;
 
+import java.util.function.Supplier;
+
 import com.stuypulse.robot.Robot;
 import com.stuypulse.robot.constants.Field;
 import com.stuypulse.robot.constants.Settings;
@@ -72,51 +74,16 @@ public final class ShotCalculator {
 
     public static SOTMSolution solveShootOnTheMove(
         Pose2d robotPose,
-        Pose2d targetPose,
         ChassisSpeeds fieldRelativeSpeeds,
         int maxIterations,
         double timeTolerance) {
 
-        /*
-        Start with v_ball * flightTime = distanceToTargetPose.
-        
-        We know that v_ball = v_robot + v_shooter, so 
-        (v_robot + v_shooter) * flightTime = distanceToTargetPose
-
-        Rearranging, we can get
-        (v_shooter) * flight_time = distanceToTargetPose - v_robot * flightTime
-
-        So we can instead shoot at a virtual pose and treat the robot as stationary:
-        distanceToVirtualPose = distanceToTargetPose - v_robot * flightTime
-        (v_shooter) * flight_time = distanceToVirtualPose
-
-        Looking at the first equation, we can find the virtual pose with the flight time, 
-        but looking at the second equation, to get the flight time we need to solveBallisticWithSpeed()
-        using the virtual pose, so we have a circular dependence.
-
-        Thus, we can make an initial guess for the flight time: the flight time if the robot were stationary
-        We want our guess to converge such that the left side equals the right side:
-        (v_shooter) * t_guess = distanceToVirtualPose = distance - v_robot * t_guess, which would make t_guess = flightTime
-
-        We do the right side first using our inital guess, and then update t_guess with a new guess by 
-        calculating the flightTime to that virtualPose.
-
-        The pose is that the flightTime converges within maxIterations.
-        */
-        
-
-        // StationarySolution sol = solveBallisticWithSpeed(
-        //     turretPose,
-        //     targetPose,
-        //     targetRPM
-        // );
-
         InterpolatedShotInfo sol = InterpolationCalculator.interpolateShotInfo();
-
+        Pose2d hubPose = Field.getHubPose();
         
         double t_guess = sol.flightTimeSeconds();
         
-        Pose2d virtualPose = targetPose;
+        Pose2d virtualPose = hubPose;
 
              
         for (int i = 0; i < maxIterations; i++) {
@@ -125,15 +92,9 @@ public final class ShotCalculator {
             double dy = fieldRelativeSpeeds.vyMetersPerSecond * t_guess;
 
             virtualPose = new Pose2d(
-                targetPose.getX() - dx,
-                targetPose.getY() - dy,
-                targetPose.getRotation());
-
-            // StationarySolution newSol = solveBallisticWithSpeed(
-            //     turretPose,
-            //     virtualPose,
-            //     targetRPM
-            // );
+                hubPose.getX() - dx,
+                hubPose.getY() - dy,
+                hubPose.getRotation());
 
             InterpolatedShotInfo newSol = InterpolationCalculator.interpolateShotInfo(virtualPose);
 
@@ -144,7 +105,47 @@ public final class ShotCalculator {
             t_guess = newSol.flightTimeSeconds();
 
             sol = newSol;
+        }
 
+        return new SOTMSolution(
+            virtualPose,
+            sol.flightTimeSeconds(),
+            sol.targetRPM()
+        );
+    }
+
+    public static SOTMSolution solveFerryOnTheMove(
+        Pose2d robotPose,
+        ChassisSpeeds fieldRelativeSpeeds,
+        int maxIterations,
+        double timeTolerance) {
+
+        InterpolatedShotInfo sol = InterpolationCalculator.interpolateShotInfo();
+        Supplier<Pose2d> ferryZone = () -> Field.getFerryZonePose(robotPose.getTranslation());
+        
+        double t_guess = sol.flightTimeSeconds();
+        
+        Pose2d virtualPose = ferryZone.get();
+
+        for (int i = 0; i < maxIterations; i++) {
+
+            double dx = fieldRelativeSpeeds.vxMetersPerSecond * t_guess;
+            double dy = fieldRelativeSpeeds.vyMetersPerSecond * t_guess;
+
+            virtualPose = new Pose2d(
+                ferryZone.get().getX() - dx,
+                ferryZone.get().getY() - dy,
+                ferryZone.get().getRotation());
+
+            InterpolatedShotInfo newSol = InterpolationCalculator.interpolateFerryingRPM().get();
+
+            if (Math.abs(newSol.flightTimeSeconds() - t_guess) < timeTolerance) {
+                break;
+            }
+
+            t_guess = newSol.flightTimeSeconds();
+
+            sol = newSol;
         }
 
         return new SOTMSolution(
@@ -156,11 +157,11 @@ public final class ShotCalculator {
 
     public static double calculateShootingRPM() {
         CommandSwerveDrivetrain swerve = CommandSwerveDrivetrain.getInstance();
-        return solveShootOnTheMove(swerve.getPose(), Field.getHubPose(), swerve.getChassisSpeeds(), 5, 0.02).targetRPM();
+        return solveShootOnTheMove(swerve.getPose(), swerve.getChassisSpeeds(), 5, 0.02).targetRPM();
     }
 
     public static double calculateFerryingRPM() {
         CommandSwerveDrivetrain swerve = CommandSwerveDrivetrain.getInstance();
-        return solveShootOnTheMove(swerve.getPose(), Field.getFerryZonePose(swerve.getPose().getTranslation()), swerve.getChassisSpeeds(), 5, 0.02).targetRPM();
+        return solveFerryOnTheMove(swerve.getPose(), swerve.getChassisSpeeds(), 5, 0.02).targetRPM();
     }
 }

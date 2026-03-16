@@ -27,26 +27,24 @@ public class LeftBumpDepotOutpost extends SequentialCommandGroup {
             CommandSwerveDrivetrain.getInstance().followPathCommand(paths[0])
                 .alongWith(new IntakeSetIntake()),
             
-            CommandSwerveDrivetrain.getInstance().followPathCommand(paths[1])
-                .alongWith(new IntakeSetIdle()),
+            CommandSwerveDrivetrain.getInstance().followPathCommand(paths[1]),
 
             CommandSwerveDrivetrain.getInstance().followPathCommand(paths[2]),
-                new WaitCommand(2).deadlineFor(new IntakeSetIntake()), //Intake at depot
+                new WaitCommand(2), //Intake at depot
 
-            CommandSwerveDrivetrain.getInstance().followPathCommand(paths[3])
-                .alongWith(new IntakeSetIdle()),
+            CommandSwerveDrivetrain.getInstance().followPathCommand(paths[3]),
                 new SwerveDriveAlignedToHub(),
                 new WaitCommand(Settings.Shooter.SHOOT_TIME_AUTO).deadlineFor(new FeederForward(), new IntakeAgitateOnce().repeatedly()),
 
             CommandSwerveDrivetrain.getInstance().followPathCommand(paths[4])
-                .alongWith(new FeederIdle(), new IntakeSetIdle()),
+                .alongWith(new FeederIdle(), new IntakeSetIntake()),
                 new WaitCommand(1.5), //Get balls at outpost
             
             CommandSwerveDrivetrain.getInstance().followPathCommand(paths[5]),
                 new SwerveDriveAlignedToHub(),
                 new WaitCommand(Settings.Shooter.SHOOT_TIME_AUTO).deadlineFor(new FeederForward(), new IntakeAgitateOnce().repeatedly()),
 
-            new FeederIdle().alongWith(new IntakeSetIdle())
+            new FeederIdle().alongWith(new IntakeSetIntake())
         );
     }
 }

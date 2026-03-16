@@ -56,13 +56,11 @@ public class ShooterImpl extends Shooter {
     @Override
     public double getShootSpeed() {
         return InterpolationCalculator.interpolateShotInfo().targetRPM();
-        //return Interpolation.Shooting.getRPM(getDrivetrainPosition().getDistance(Field.getHubPose().getTranslation()));
     }
 
     @Override
     public double getFerrySpeed() {
-        return InterpolationCalculator.interpolateFerryingRPM().get();
-        //return Interpolation.Ferrying.getRPM(getDrivetrainPosition().getDistance(Field.getFerryZonePose(getDrivetrainPosition()).getTranslation()));
+        return InterpolationCalculator.interpolateFerryingRPM().get().targetRPM();
     }
 
     public void setVoltagesBasedOnState() {

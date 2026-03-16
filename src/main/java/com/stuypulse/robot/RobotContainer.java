@@ -24,10 +24,12 @@ import com.stuypulse.robot.commands.feeder.FeederReverse;
 import com.stuypulse.robot.commands.intake.IntakeSetIdle;
 import com.stuypulse.robot.commands.intake.IntakeSetIntake;
 import com.stuypulse.robot.commands.intake.IntakeSetOuttake;
+import com.stuypulse.robot.commands.intake.IntakeToggleSwitch;
 import com.stuypulse.robot.commands.led.LEDDefaultCommand;
 import com.stuypulse.robot.constants.Field;
 import com.stuypulse.robot.constants.Ports;
 import com.stuypulse.robot.subsystems.intake.Intake;
+import com.stuypulse.robot.subsystems.intake.Intake.IntakeState;
 import com.stuypulse.robot.commands.intake.IntakeAgitateOnce;
 import com.stuypulse.robot.subsystems.led.LEDController;
 import com.stuypulse.robot.commands.auton.LeftBumpDepotOutpost;
@@ -102,17 +104,16 @@ public class RobotContainer {
                     new SwerveFOTM(driver).alongWith(new ShooterFOTM(), new FeederForward(), new IntakeAgitateOnce().repeatedly()),
                     () -> Field.inAllianceZone()
                 ))
-            .onFalse(new FeederIdle().alongWith(new IntakeSetIdle()));
+            .onFalse(new FeederIdle().alongWith(new IntakeSetIntake()));
 
         //Outtaking
         driver.getRightButton()
             .whileTrue(new FeederReverse().alongWith(new IntakeSetOuttake()))
-            .onFalse(new FeederIdle().alongWith(new IntakeSetIdle()));
+            .onFalse(new FeederIdle().alongWith(new IntakeSetIntake()));
         
-        //Intaking
+        //Toggle Intake On or Off
         driver.getLeftBumper()
-            .whileTrue(new IntakeSetIntake())
-            .onFalse(new IntakeSetIdle());
+            .onTrue(new IntakeToggleSwitch());
 
         //Shoot or Ferry while stationary
         driver.getRightBumper()

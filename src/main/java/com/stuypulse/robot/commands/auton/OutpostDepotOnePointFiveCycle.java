@@ -24,28 +24,26 @@ public class OutpostDepotOnePointFiveCycle extends SequentialCommandGroup {
 
     public OutpostDepotOnePointFiveCycle(PathPlannerPath... paths){
         addCommands(
-            CommandSwerveDrivetrain.getInstance().followPathCommand(paths[0]),
+            CommandSwerveDrivetrain.getInstance().followPathCommand(paths[0])
+                .alongWith(new IntakeSetIntake()),
                 new WaitCommand(1), // Wait at outpost for balls
 
             CommandSwerveDrivetrain.getInstance().followPathCommand(paths[1]),
-                new WaitCommand(2).deadlineFor(new IntakeSetIntake()), //Intake at depot
+                new WaitCommand(2), //Intake at depot
 
-            CommandSwerveDrivetrain.getInstance().followPathCommand(paths[2])
-                .alongWith(new IntakeSetIdle()),
+            CommandSwerveDrivetrain.getInstance().followPathCommand(paths[2]),
                 new SwerveDriveAlignedToHub(),
                 new WaitCommand(Settings.Shooter.SHOOT_TIME_AUTO).deadlineFor(new FeederForward(), new IntakeAgitateOnce().repeatedly()),
             
             CommandSwerveDrivetrain.getInstance().followPathCommand(paths[3])   
-                .alongWith(new FeederIdle(), new IntakeSetIdle()),
+                .alongWith(new FeederIdle(), new IntakeSetIntake()),
 
-            CommandSwerveDrivetrain.getInstance().followPathCommand(paths[4])
-                .alongWith(new IntakeSetIntake()),
+            CommandSwerveDrivetrain.getInstance().followPathCommand(paths[4]),
             
-            new IntakeSetIdle(),
             new SwerveDriveAlignedToAllianceZone(),
             new WaitCommand(2).deadlineFor(new FeederForward(), new IntakeAgitateOnce().repeatedly()), // Ferry from neutral zone
 
-            new FeederIdle().alongWith(new IntakeSetIdle())
+            new FeederIdle().alongWith(new IntakeSetIntake())
         );
     }
 }
