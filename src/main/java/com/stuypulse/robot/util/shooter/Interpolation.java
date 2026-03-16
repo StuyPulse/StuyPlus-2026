@@ -10,13 +10,13 @@ public interface Interpolation {
     }
 
     public class Shooting {
-        private static final double[][] RPMAndDistance = {
+        private static final double[][] DistanceAndRPM = {
             {0, 50},
             {5, 100},
             {10, 200}
         };
 
-        private static final InterpolatingDoubleTreeMap interpolator = build(RPMAndDistance);
+        private static final InterpolatingDoubleTreeMap interpolator = build(DistanceAndRPM);
 
         public static double getRPM(double distance) {
             return interpolator.get(distance);

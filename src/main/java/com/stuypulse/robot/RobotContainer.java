@@ -117,8 +117,8 @@ public class RobotContainer {
         //Shoot or Ferry while stationary
         driver.getRightBumper()
             .whileTrue(new ConditionalCommand(
-                new SwerveDriveAlignedToHub().andThen(new SwerveDriveXMode()).alongWith(new FeederForward(), new IntakeAgitateOnce().repeatedly()),
-                new SwerveDriveAlignedToAllianceZone().andThen(new SwerveDriveXMode()).alongWith(new FeederForward(), new IntakeAgitateOnce().repeatedly()),
+                new SwerveDriveAlignedToHub().andThen(new SwerveDriveXMode().alongWith(new FeederForward(), new IntakeAgitateOnce().repeatedly())),
+                new SwerveDriveAlignedToAllianceZone().andThen(new SwerveDriveXMode().alongWith(new FeederForward(), new IntakeAgitateOnce().repeatedly())),
                 () -> Field.inAllianceZone()))
             .onFalse(new IntakeSetIdle().alongWith(new FeederIdle()));
 
