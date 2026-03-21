@@ -7,31 +7,37 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Left Bump to Neutral"
+            "pathName": "R.B. to R.N."
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Right Facing Neutral to Left Bump"
+            "pathName": "Neutral to Right Bump"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Left Bump Aim at Hub"
+            "pathName": "Right Bump Aim at Hub"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Left Bump to Depot"
+            "pathName": "Right Bump Face Left"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "depot shoot"
+            "pathName": "Right Bump Circle by Hub"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Right Neutral to Left Bump"
           }
         }
       ]
