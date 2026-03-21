@@ -3,29 +3,45 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.301554921540655,
-        "y": 5.516476462196862
+        "x": 8.101797432239657,
+        "y": 4.183794579172611
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.0529701891081573,
-        "y": 5.489912750079325
+        "x": 8.10683906477438,
+        "y": 3.4436912072416304
       },
       "isLocked": false,
-      "linkedName": "Left Bump Right Facing"
+      "linkedName": "Neutral Left Facing"
     },
     {
       "anchor": {
-        "x": 0.5521686226346434,
-        "y": 5.979417587791121
+        "x": 7.320006425127365,
+        "y": 1.1979843863719066
       },
       "prevControl": {
-        "x": 0.38582132313847706,
-        "y": 6.16604174472246
+        "x": 7.717736137645559,
+        "y": 1.6056872611899564
+      },
+      "nextControl": {
+        "x": 6.814441417762054,
+        "y": 0.6797422223525001
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 5.243095376182677,
+        "y": 0.6222337268013098
+      },
+      "prevControl": {
+        "x": 5.7583089405931585,
+        "y": 0.6140557337154291
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Depot"
+      "linkedName": "Right Trench Facing"
     }
   ],
   "rotationTargets": [],
@@ -42,13 +58,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -178.4088597288055
+    "rotation": -179.32661776427992
   },
   "reversed": false,
   "folder": null,
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -90.0
+    "rotation": 90.0
   },
   "useDefaultConstraints": true
 }
