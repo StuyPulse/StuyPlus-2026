@@ -52,7 +52,7 @@ public class Gains {
         }
 
         public interface Alignment {
-            double kP = 0.0;
+            double kP = 1.0;
             double kI = 0.0;
             double kD = 0.0;
             double akP = 5.0;

@@ -5,6 +5,8 @@
 
 package com.stuypulse.robot.constants;
 
+import java.util.function.Supplier;
+
 import com.ctre.phoenix6.CANBus;
 import com.pathplanner.lib.path.PathConstraints;
 import com.stuypulse.stuylib.network.SmartBoolean;
@@ -97,6 +99,9 @@ public interface Settings {
         double SHOOT_TIME_AUTO = 1.5;
         double RAMP_RATE = 0.25;
         double STEP_VOLTAGE = 900;
+
+        double CORNER = 2700; // TODO: Test RPM
+        double HUB = 2500;
     }
 
     public interface Swerve {
@@ -141,7 +146,8 @@ public interface Settings {
             }
 
             public interface Targets {
-                
+                Rotation2d HUB_LEFT_CORNER = Rotation2d.fromDegrees(45); //TODO: Get actual angle
+                Rotation2d HUB_RIGHT_CORNER = Rotation2d.fromDegrees(-45);
             }
         }
     }

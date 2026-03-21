@@ -10,6 +10,9 @@ import com.stuypulse.robot.commands.auton.DoubleBump;
 import com.stuypulse.robot.commands.auton.BumpToNeutralFerry;
 import com.stuypulse.robot.commands.feeder.FeederIdle;
 import com.stuypulse.robot.commands.swerve.SwerveDriveDrive;
+import com.stuypulse.robot.commands.swerve.SwerveDriveLeftCorner;
+import com.stuypulse.robot.commands.swerve.SwerveDriveResetRotation;
+import com.stuypulse.robot.commands.swerve.SwerveDriveRightCorner;
 import com.stuypulse.robot.commands.swerve.SwerveDriveXMode;
 import com.stuypulse.robot.commands.swerve.driveAligned.SwerveDriveAlignedToAllianceZone;
 import com.stuypulse.robot.commands.swerve.driveAligned.SwerveDriveAlignedToHub;
@@ -17,14 +20,15 @@ import com.stuypulse.robot.commands.swerve.driveAligned.SwerveDriveDriveWhileAli
 import com.stuypulse.robot.commands.swerve.driveAligned.SwerveFOTM;
 import com.stuypulse.robot.commands.swerve.driveAligned.SwerveSOTM;
 import com.stuypulse.robot.commands.feeder.FeederForward;
+import com.stuypulse.robot.commands.shooter.ShooterCorner;
 import com.stuypulse.robot.commands.shooter.ShooterDefaultCommand;
 import com.stuypulse.robot.commands.shooter.ShooterFOTM;
+import com.stuypulse.robot.commands.shooter.ShooterHub;
 import com.stuypulse.robot.commands.shooter.ShooterSOTM;
 import com.stuypulse.robot.commands.feeder.FeederReverse;
 import com.stuypulse.robot.commands.intake.IntakeSetIdle;
 import com.stuypulse.robot.commands.intake.IntakeSetIntake;
 import com.stuypulse.robot.commands.intake.IntakeSetOuttake;
-import com.stuypulse.robot.commands.intake.IntakeToggleSwitch;
 import com.stuypulse.robot.commands.led.LEDDefaultCommand;
 import com.stuypulse.robot.constants.Field;
 import com.stuypulse.robot.constants.Ports;
@@ -97,38 +101,59 @@ public class RobotContainer {
         //TODO:Get actual button bindings from our driver, these are just random buttons
 
         //SOTM which automatically switches between SOTM and FOTM based on position
-        driver.getLeftButton()
+        driver.getRightMenuButton()
             .whileTrue(
                 new ConditionalCommand(
                     new SwerveSOTM(driver).alongWith(new ShooterSOTM(), new FeederForward(), new IntakeAgitateOnce().repeatedly()),
                     new SwerveFOTM(driver).alongWith(new ShooterFOTM(), new FeederForward(), new IntakeAgitateOnce().repeatedly()),
-                    () -> Field.inAllianceZone()
-                ))
+                    () -> Field.inAllianceZone()))
             .onFalse(new FeederIdle().alongWith(new IntakeSetIntake()));
 
         //Outtaking
-        driver.getRightButton()
+        driver.getDPadRight()
             .whileTrue(new FeederReverse().alongWith(new IntakeSetOuttake()))
             .onFalse(new FeederIdle().alongWith(new IntakeSetIntake()));
         
-        //Toggle Intake On or Off
+        //Manual Shooting
+        driver.getRightButton()
+            .whileTrue(new SwerveDriveRightCorner())
+            .onFalse(new FeederIdle().alongWith(new IntakeSetIntake()));
+        driver.getLeftButton()
+            .whileTrue(new SwerveDriveLeftCorner())
+            .onFalse(new FeederIdle().alongWith(new IntakeSetIntake()));
+        driver.getBottomButton()
+            .whileTrue(new ShooterHub().alongWith(new FeederForward(), new IntakeAgitateOnce().repeatedly()))
+            .onFalse(new FeederIdle().alongWith(new IntakeSetIntake()));
+
+        //Reset Heading
+        driver.getDPadUp()
+            .onTrue(new SwerveDriveResetRotation());
+        
+        //X Mode
         driver.getLeftBumper()
-            .onTrue(new IntakeToggleSwitch());
+            .onTrue(new SwerveDriveXMode());            
+
+        //Toggle Intake On or Off
+        driver.getLeftTriggerButton()
+            .onTrue(new IntakeSetIdle());
+
+        driver.getRightTriggerButton()
+            .onTrue(new IntakeSetIntake());
 
         //Shoot or Ferry while stationary
-        driver.getRightBumper()
+        driver.getTopButton()
             .whileTrue(new ConditionalCommand(
                 new SwerveDriveAlignedToHub().andThen(new SwerveDriveXMode().alongWith(new FeederForward(), new IntakeAgitateOnce().repeatedly())),
                 new SwerveDriveAlignedToAllianceZone().andThen(new SwerveDriveXMode().alongWith(new FeederForward(), new IntakeAgitateOnce().repeatedly())),
                 () -> Field.inAllianceZone()))
-            .onFalse(new IntakeSetIdle().alongWith(new FeederIdle()));
+            .onFalse(new IntakeSetIntake().alongWith(new FeederIdle()));
 
 
-        //Drive while aligned, just for testing purposes
-        driver.getDPadUp()
-            .whileTrue(new SwerveDriveDriveWhileAligned(driver, () -> Field.getHubPose()));
-        driver.getDPadDown()
-            .whileTrue(new SwerveDriveDriveWhileAligned(driver, () -> Field.getFerryZonePose(swerve.getPose().getTranslation())));
+        // //Drive while aligned, just for testing purposes
+        // driver.getDPadRight()
+        //     .whileTrue(new SwerveDriveDriveWhileAligned(driver, () -> Field.getHubPose()));
+        // driver.getDPadDown()
+        //     .whileTrue(new SwerveDriveDriveWhileAligned(driver, () -> Field.getFerryZonePose(swerve.getPose().getTranslation())));
     }
 
     /**************/

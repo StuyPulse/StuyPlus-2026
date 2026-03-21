@@ -5,12 +5,16 @@ import com.stuypulse.robot.subsystems.swerve.CommandSwerveDrivetrain;
 
 import edu.wpi.first.wpilibj2.command.Command;
 
-
 public class SwerveDriveXMode extends Command{
-    private CommandSwerveDrivetrain drivetrain = CommandSwerveDrivetrain.getInstance();
+    private CommandSwerveDrivetrain swerve;
 
     public SwerveDriveXMode() {
+        swerve = CommandSwerveDrivetrain.getInstance();
+    }
+
+    @Override
+    public void initialize() {
         SwerveRequest request = new SwerveRequest.SwerveDriveBrake();
-        drivetrain.setControl(request);
+        swerve.setControl(request);
     }
 }

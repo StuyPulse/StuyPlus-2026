@@ -3,6 +3,8 @@ package com.stuypulse.robot.commands.swerve.driveAligned;
 
 import com.stuypulse.robot.constants.Field;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 
 public class SwerveDriveAlignedToHub extends SwerveDriveSetAlignment {
     public SwerveDriveAlignedToHub() {
@@ -12,5 +14,7 @@ public class SwerveDriveAlignedToHub extends SwerveDriveSetAlignment {
     @Override
     public void execute() {
         super.execute();
+
+        SmartDashboard.putNumber("Swerve/Target Angle", getTargetAngle().getDegrees());
     }
 }

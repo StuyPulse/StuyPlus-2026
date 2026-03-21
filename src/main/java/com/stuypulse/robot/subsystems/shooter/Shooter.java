@@ -30,7 +30,9 @@ public abstract class Shooter extends SubsystemBase {
         SHOOTING(() -> Shooter.getInstance().getShootSpeed()),
         FERRYING(() -> Shooter.getInstance().getFerrySpeed()), // supplier because idk
         SOTM(() -> ShotCalculator.calculateShootingRPM()),
-        FOTM(() -> ShotCalculator.calculateFerryingRPM());
+        FOTM(() -> ShotCalculator.calculateFerryingRPM()),
+        CORNER(() -> Settings.Shooter.CORNER),
+        HUB(() -> Settings.Shooter.HUB);
 
         private final DoubleSupplier targetRPM;
         
