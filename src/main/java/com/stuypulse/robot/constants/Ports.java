@@ -17,20 +17,20 @@ public interface Ports {
         int PORT = 2; // TODO: ask Plus-ME for the port
     }
 
-    public interface ShooterPorts { // Temporary until the big mec-e people give us the ports
-        int SHOOTER_MOTOR_1 = 0;
-        int SHOOTER_MOTOR_2 = 1;
-        int SHOOTER_MOTOR_3 = 2;
+    // public interface ShooterPorts { // Temporary until the big mec-e people give us the ports
+    //     int SHOOTER_MOTOR_1 = 0;
+    //     int SHOOTER_MOTOR_2 = 1;
+    //     int SHOOTER_MOTOR_3 = 2;
 
-        int BOTTOM_MOTOR_1 = 3;
-        int BOTTOM_MOTOR_2 = 4;
-    }
+    //     int BOTTOM_MOTOR_1 = 3;
+    //     int BOTTOM_MOTOR_2 = 4;
+    // }
 
 //TODO: Get ports from mech
-    public interface Feeder {
-        int FEEDER_MOTOR_1 = 3;
-        int FEEDER_MOTOR_2 = 4;
-    }
+    // public interface Feeder {
+    //     int FEEDER_MOTOR_1 = 3;
+    //     int FEEDER_MOTOR_2 = 4;
+    // }
 
     public interface Intake {
         int MOTOR_INTAKEROLLER= 30; 

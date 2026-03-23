@@ -31,10 +31,10 @@ public interface Settings {
     CANBus CANIVORE = new CANBus("swerve");
 
     public interface EnabledSubsystems {
-        SmartBoolean FEEDER = new SmartBoolean("Enabled Subsystems/Feeder", true);
+        // SmartBoolean FEEDER = new SmartBoolean("Enabled Subsystems/Feeder", true);
         SmartBoolean INTAKE = new SmartBoolean("Enabled Subsystems/Intake", true);
-        SmartBoolean LED = new SmartBoolean("Enabled Subsystems/LED", true);
-        SmartBoolean SHOOTER = new SmartBoolean("Enabled Subsystems/Shooter", true);
+        // SmartBoolean LED = new SmartBoolean("Enabled Subsystems/LED", true);
+        // SmartBoolean SHOOTER = new SmartBoolean("Enabled Subsystems/Shooter", true);
         SmartBoolean VISION = new SmartBoolean("Enabled Subsystems/Vision", true);
         SmartBoolean SWERVE = new SmartBoolean("Enabled Subsystems/Swerve", true);
     }
@@ -69,40 +69,40 @@ public interface Settings {
         Rotation2d ANGLE_TOLERANCE = Rotation2d.fromDegrees(0.5); // degrees
     }
 
-    public interface Feeder {
-        double FEEDER_REVERSE = -1900;
-        double FEEDER_FORWARD = 1900;
-    }
+    // public interface Feeder {
+    //     double FEEDER_REVERSE = -1900;
+    //     double FEEDER_FORWARD = 1900;
+    // }
 
-    public interface LED {
-        int LED_LENGTH = 60; // TODO: ask Plus-ME for LED Length
+    // public interface LED {
+    //     int LED_LENGTH = 60; // TODO: ask Plus-ME for LED Length
  
-        //shooter
-        LEDPattern SHOOTING = LEDPattern.solid(Color.kOrange);
-        LEDPattern FERRYING = LEDPattern.solid(Color.kPurple);
+    //     //shooter
+    //     LEDPattern SHOOTING = LEDPattern.solid(Color.kOrange);
+    //     LEDPattern FERRYING = LEDPattern.solid(Color.kPurple);
 
-        //feeder
-        LEDPattern FEEDER_FORWARD = LEDPattern.solid(Color.kBlue);
-        LEDPattern FEEDER_REVERSE = LEDPattern.solid(Color.kRed);
+    //     //feeder
+    //     LEDPattern FEEDER_FORWARD = LEDPattern.solid(Color.kBlue);
+    //     LEDPattern FEEDER_REVERSE = LEDPattern.solid(Color.kRed);
 
-        //take
-        LEDPattern INTAKING = LEDPattern.solid(Color.kYellow);
-        LEDPattern OUTTAKING = LEDPattern.solid(Color.kGreen);
-        LEDPattern AGITATING = LEDPattern.solid(Color.kCyan);
+    //     //take
+    //     LEDPattern INTAKING = LEDPattern.solid(Color.kYellow);
+    //     LEDPattern OUTTAKING = LEDPattern.solid(Color.kGreen);
+    //     LEDPattern AGITATING = LEDPattern.solid(Color.kCyan);
         
-        //states
-        LEDPattern DISABLED = LEDPattern.solid(Color.kGray);
-    }
+    //     //states
+    //     LEDPattern DISABLED = LEDPattern.solid(Color.kGray);
+    // }
 
-    public interface Shooter {
-        double BOTTOM_MOTOR_RPM = 3000;
-        double SHOOT_TIME_AUTO = 1.5;
-        double RAMP_RATE = 0.25;
-        double STEP_VOLTAGE = 900;
+    // public interface Shooter {
+    //     double BOTTOM_MOTOR_RPM = 3000;
+    //     double SHOOT_TIME_AUTO = 1.5;
+    //     double RAMP_RATE = 0.25;
+    //     double STEP_VOLTAGE = 900;
 
-        double CORNER = 2700; // TODO: Test RPM
-        double HUB = 2500;
-    }
+    //     double CORNER = 2700; // TODO: Test RPM
+    //     double HUB = 2500;
+    // }
 
     public interface Swerve {
         double MODULE_VELOCITY_DEADBAND_M_PER_S = 0.1;

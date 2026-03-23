@@ -46,29 +46,29 @@ public interface Motors {
             .withNeutralMode(NeutralModeValue.Brake);
     }
 
-    public interface Feeder {
-        // TODO: get values
-        TalonFXConfig MOTOR_CONFIG_1 = new TalonFXConfig()
-            .withCurrentLimitAmps(80)
-			.withRampRate(0.25)
-			.withNeutralMode(NeutralModeValue.Brake)
-			.withInvertedValue(InvertedValue.CounterClockwise_Positive);
-        TalonFXConfig MOTOR_CONFIG_2 = new TalonFXConfig()
-            .withCurrentLimitAmps(80)
-			.withRampRate(0.25)
-			.withNeutralMode(NeutralModeValue.Brake)
-			.withInvertedValue(InvertedValue.Clockwise_Positive);
-    }
+    // public interface Feeder {
+    //     // TODO: get values
+    //     TalonFXConfig MOTOR_CONFIG_1 = new TalonFXConfig()
+    //         .withCurrentLimitAmps(80)
+	// 		.withRampRate(0.25)
+	// 		.withNeutralMode(NeutralModeValue.Brake)
+	// 		.withInvertedValue(InvertedValue.CounterClockwise_Positive);
+    //     TalonFXConfig MOTOR_CONFIG_2 = new TalonFXConfig()
+    //         .withCurrentLimitAmps(80)
+	// 		.withRampRate(0.25)
+	// 		.withNeutralMode(NeutralModeValue.Brake)
+	// 		.withInvertedValue(InvertedValue.Clockwise_Positive);
+    // }
 
-    public interface Shooter {
-        TalonFXConfig MOTOR_CONFIG = new TalonFXConfig()
-            .withPIDConstants(Gains.Shooter.kP, Gains.Shooter.kI, Gains.Shooter.kI, 0)
-            .withCurrentLimitAmps(80)
-			.withRampRate(0.25)
-			.withNeutralMode(NeutralModeValue.Brake)
-            .withFFConstants(Gains.Shooter.kS, Gains.Shooter.kV, Gains.Shooter.kA, Gains.Shooter.kG, 0)
-			.withInvertedValue(InvertedValue.CounterClockwise_Positive);
-    }
+    // public interface Shooter {
+    //     TalonFXConfig MOTOR_CONFIG = new TalonFXConfig()
+    //         .withPIDConstants(Gains.Shooter.kP, Gains.Shooter.kI, Gains.Shooter.kI, 0)
+    //         .withCurrentLimitAmps(80)
+	// 		.withRampRate(0.25)
+	// 		.withNeutralMode(NeutralModeValue.Brake)
+    //         .withFFConstants(Gains.Shooter.kS, Gains.Shooter.kV, Gains.Shooter.kA, Gains.Shooter.kG, 0)
+	// 		.withInvertedValue(InvertedValue.CounterClockwise_Positive);
+    // }
 
     public static class TalonFXConfig {
         private final TalonFXConfiguration configuration = new TalonFXConfiguration();

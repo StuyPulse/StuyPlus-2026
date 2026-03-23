@@ -6,52 +6,25 @@
 package com.stuypulse.robot;
 
 import com.stuypulse.robot.commands.auton.DoNothingAuton;
-import com.stuypulse.robot.commands.auton.DoubleBump;
-import com.stuypulse.robot.commands.auton.BumpToNeutralFerry;
-import com.stuypulse.robot.commands.feeder.FeederIdle;
+import com.stuypulse.robot.commands.auton.LeftBumpFerry;
+import com.stuypulse.robot.commands.auton.RightBumpFerry;
 import com.stuypulse.robot.commands.swerve.SwerveDriveDrive;
-import com.stuypulse.robot.commands.swerve.SwerveDriveLeftCorner;
 import com.stuypulse.robot.commands.swerve.SwerveDriveResetRotation;
-import com.stuypulse.robot.commands.swerve.SwerveDriveRightCorner;
 import com.stuypulse.robot.commands.swerve.SwerveDriveXMode;
-import com.stuypulse.robot.commands.swerve.driveAligned.SwerveDriveAlignedToAllianceZone;
-import com.stuypulse.robot.commands.swerve.driveAligned.SwerveDriveAlignedToHub;
-import com.stuypulse.robot.commands.swerve.driveAligned.SwerveDriveDriveWhileAligned;
-import com.stuypulse.robot.commands.swerve.driveAligned.SwerveFOTM;
-import com.stuypulse.robot.commands.swerve.driveAligned.SwerveSOTM;
-import com.stuypulse.robot.commands.feeder.FeederForward;
-import com.stuypulse.robot.commands.shooter.ShooterCorner;
-import com.stuypulse.robot.commands.shooter.ShooterDefaultCommand;
-import com.stuypulse.robot.commands.shooter.ShooterFOTM;
-import com.stuypulse.robot.commands.shooter.ShooterHub;
-import com.stuypulse.robot.commands.shooter.ShooterSOTM;
-import com.stuypulse.robot.commands.feeder.FeederReverse;
 import com.stuypulse.robot.commands.intake.IntakeSetIdle;
 import com.stuypulse.robot.commands.intake.IntakeSetIntake;
 import com.stuypulse.robot.commands.intake.IntakeSetOuttake;
-import com.stuypulse.robot.commands.led.LEDDefaultCommand;
 import com.stuypulse.robot.constants.Field;
 import com.stuypulse.robot.constants.Ports;
 import com.stuypulse.robot.subsystems.intake.Intake;
-import com.stuypulse.robot.subsystems.intake.Intake.IntakeState;
-import com.stuypulse.robot.commands.intake.IntakeAgitateOnce;
-import com.stuypulse.robot.subsystems.led.LEDController;
-import com.stuypulse.robot.commands.auton.LeftBumpDepotOutpost;
-import com.stuypulse.robot.commands.auton.LeftBumpNeutralTwoX;
-import com.stuypulse.robot.commands.auton.Depot;
-import com.stuypulse.robot.commands.auton.OutpostDepotOnePointFiveCycle;
-import com.stuypulse.robot.commands.auton.RightBumpNeutralTwoX;
 import com.stuypulse.robot.util.PathUtil.AutonConfig;
-import com.stuypulse.robot.subsystems.shooter.Shooter;
 import com.stuypulse.robot.subsystems.swerve.CommandSwerveDrivetrain;
-import com.stuypulse.robot.subsystems.feeder.Feeder;
 import com.stuypulse.stuylib.input.Gamepad;
 import com.stuypulse.stuylib.input.gamepads.AutoGamepad;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.ConditionalCommand;
 
 public class RobotContainer {
     // Gamepads
@@ -63,12 +36,9 @@ public class RobotContainer {
     // @SuppressWarnings("unused")
 	private final Intake intake = Intake.getInstance();
     // @SuppressWarnings("unused")
-    private final Shooter shooter = Shooter.getInstance();
     // @SuppressWarnings("unused")
-    private final Feeder feeder = Feeder.getInstance();
     // @SuppressWarnings("unused")
     private final CommandSwerveDrivetrain swerve = CommandSwerveDrivetrain.getInstance();
-    private final LEDController leds = LEDController.getInstance();
     // Autons
     private static SendableChooser<Command> autonChooser = new SendableChooser<>();
 
@@ -89,8 +59,6 @@ public class RobotContainer {
 
     private void configureDefaultCommands() {
         swerve.setDefaultCommand(new SwerveDriveDrive(driver));
-        shooter.setDefaultCommand(new ShooterDefaultCommand());
-        leds.setDefaultCommand(new LEDDefaultCommand());
     }
 
     /***************/
@@ -98,32 +66,10 @@ public class RobotContainer {
     /***************/
 
     private void configureButtonBindings() {
-        //TODO:Get actual button bindings from our driver, these are just random buttons
-
-        //SOTM which automatically switches between SOTM and FOTM based on position
-        driver.getRightMenuButton()
-            .whileTrue(
-                new ConditionalCommand(
-                    new SwerveSOTM(driver).alongWith(new ShooterSOTM(), new FeederForward(), new IntakeAgitateOnce().repeatedly()),
-                    new SwerveFOTM(driver).alongWith(new ShooterFOTM(), new FeederForward(), new IntakeAgitateOnce().repeatedly()),
-                    () -> Field.inAllianceZone()))
-            .onFalse(new FeederIdle().alongWith(new IntakeSetIntake()));
-
         //Outtaking
         driver.getDPadRight()
-            .whileTrue(new FeederReverse().alongWith(new IntakeSetOuttake()))
-            .onFalse(new FeederIdle().alongWith(new IntakeSetIntake()));
-        
-        //Manual Shooting
-        driver.getRightButton()
-            .whileTrue(new SwerveDriveRightCorner())
-            .onFalse(new FeederIdle().alongWith(new IntakeSetIntake()));
-        driver.getLeftButton()
-            .whileTrue(new SwerveDriveLeftCorner())
-            .onFalse(new FeederIdle().alongWith(new IntakeSetIntake()));
-        driver.getBottomButton()
-            .whileTrue(new ShooterHub().alongWith(new FeederForward(), new IntakeAgitateOnce().repeatedly()))
-            .onFalse(new FeederIdle().alongWith(new IntakeSetIntake()));
+            .whileTrue(new IntakeSetOuttake())
+            .onFalse(new IntakeSetIntake());
 
         //Reset Heading
         driver.getDPadUp()
@@ -139,21 +85,6 @@ public class RobotContainer {
 
         driver.getRightTriggerButton()
             .onTrue(new IntakeSetIntake());
-
-        //Shoot or Ferry while stationary
-        driver.getTopButton()
-            .whileTrue(new ConditionalCommand(
-                new SwerveDriveAlignedToHub().andThen(new SwerveDriveXMode().alongWith(new FeederForward(), new IntakeAgitateOnce().repeatedly())),
-                new SwerveDriveAlignedToAllianceZone().andThen(new SwerveDriveXMode().alongWith(new FeederForward(), new IntakeAgitateOnce().repeatedly())),
-                () -> Field.inAllianceZone()))
-            .onFalse(new IntakeSetIntake().alongWith(new FeederIdle()));
-
-
-        // //Drive while aligned, just for testing purposes
-        // driver.getDPadRight()
-        //     .whileTrue(new SwerveDriveDriveWhileAligned(driver, () -> Field.getHubPose()));
-        // driver.getDPadDown()
-        //     .whileTrue(new SwerveDriveDriveWhileAligned(driver, () -> Field.getFerryZonePose(swerve.getPose().getTranslation())));
     }
 
     /**************/
@@ -162,57 +93,20 @@ public class RobotContainer {
     public void configureAutons() {
         autonChooser.addOption("Do Nothing", new DoNothingAuton());
 
-        AutonConfig outpostDepotOnePointFiveAuton = new AutonConfig("Outpost Depot 1.5 cycle", OutpostDepotOnePointFiveCycle::new, 
-            "Right Trench to Outpost", 
-            "Outpost to Depot", 
-            "depot shoot", 
-            "Left Bump Face Right", 
-            "Left Bump to Neutral");
-        outpostDepotOnePointFiveAuton.register(autonChooser);
+        AutonConfig LeftBumpFerry = new AutonConfig("Left Bump Ferry", LeftBumpFerry::new, 
+        "Left Bump to Neutral", 
+        "N to L.T.", 
+        "L.T. Circle Hub", 
+        "N to Depot", 
+        "Depot to H.P.");
+        LeftBumpFerry.register(autonChooser);
 
-        AutonConfig leftBumpDepotOutpostAuton = new AutonConfig("Left Bump Depot Outpost", LeftBumpDepotOutpost::new, 
-            "Left Bump to Neutral", 
-            "Right Facing Neutral to Left Bump", 
-            "Left Bump to Depot", 
-            "depot shoot",
-            "Left Bump Shooting to Outpost", 
-            "Outpost Shoot");
-        leftBumpDepotOutpostAuton.register(autonChooser);
-
-        AutonConfig depotAuton = new AutonConfig("Depot", Depot::new, 
-            "Left Bump to Neutral", 
-            "Right Facing Neutral to Left Bump", 
-            "Left Bump to Depot", 
-            "depot shoot");
-        depotAuton.register(autonChooser);
-
-        AutonConfig doubleBumpAuton = new AutonConfig("Double Bump", DoubleBump::new, 
-            "Right Bump to Left Neutral", 
-            "Left Neutral to Left Bump",
-            "Left Bump Left Facing Aim at Hub");
-        doubleBumpAuton.register(autonChooser);
-
-        AutonConfig bumpToNeutralFerryAuton = new AutonConfig("Bump To Neutral Ferry", BumpToNeutralFerry::new,
-            "Left Bump to Neutral");
-        bumpToNeutralFerryAuton.register(autonChooser);
-
-        AutonConfig leftBumpNeutral2XAuton = new AutonConfig("Left Bump Neutral 2X", LeftBumpNeutralTwoX::new, 
-            "Left Bump to Neutral",
-            "Right Facing Neutral to Left Bump",
-            "Left Bump Aim at Hub",
-            "Left Bump Face Right",
-            "Left Bump Circle Hub",
-            "Left Neutral to Left Bump");
-        leftBumpNeutral2XAuton.register(autonChooser);
-
-        AutonConfig rightBumpNeutral2XAuton = new AutonConfig("Right Bump Neutral 2X", RightBumpNeutralTwoX::new,
-            "Right Bump to Neutral",
-            "Neutral to Right Bump",
-            "Right Bump Aim at Hub",
-            "Right Bump Face Left",
-            "Right Bump Circle by Hub",
-            "Right Neutral to Left Bump");
-        rightBumpNeutral2XAuton.register(autonChooser);
+        AutonConfig RightBumpFerry = new AutonConfig("Left Bump Ferry", RightBumpFerry::new, 
+        "R.B. to N", 
+        "N to R.T.", 
+        "R.T. Circle Hub", 
+        "R.N. to H.P.");
+        RightBumpFerry.register(autonChooser);
 
         SmartDashboard.putData("Autonomous", autonChooser);
     }

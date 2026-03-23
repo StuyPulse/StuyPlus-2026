@@ -70,13 +70,13 @@ public abstract class Intake extends SubsystemBase {
         SmartDashboard.putString("Intake/State", getState().name());
         SmartDashboard.putString("States/Intake", getState().name());
         
-        if (Settings.DEBUG_MODE) {
-            if (Settings.EnabledSubsystems.FEEDER.get()) {
-                RobotVisualizer.getInstance().updateIntake(getRelativePosition(), getRollerRPM());
-            }
-            else {
-                RobotVisualizer.getInstance().updateIntake(IntakeState.IDLE.getTargetAngle(), IntakeState.IDLE.getTargetDutyCycle());
-            }
-        }
+        // if (Settings.DEBUG_MODE) {
+        //     if (Settings.EnabledSubsystems.FEEDER.get()) {
+        //         RobotVisualizer.getInstance().updateIntake(getRelativePosition(), getRollerRPM());
+        //     }
+        //     else {
+        //         RobotVisualizer.getInstance().updateIntake(IntakeState.IDLE.getTargetAngle(), IntakeState.IDLE.getTargetDutyCycle());
+        //     }
+        // }
     }
 }   
