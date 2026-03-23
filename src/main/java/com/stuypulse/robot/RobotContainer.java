@@ -80,10 +80,10 @@ public class RobotContainer {
             .onTrue(new SwerveDriveXMode());            
 
         //Toggle Intake On or Off
-        driver.getLeftTriggerButton()
+        driver.getLeftButton()
             .onTrue(new IntakeSetIdle());
 
-        driver.getRightTriggerButton()
+        driver.getRightButton()
             .onTrue(new IntakeSetIntake());
     }
 
@@ -101,8 +101,8 @@ public class RobotContainer {
         "Depot to H.P.");
         LeftBumpFerry.register(autonChooser);
 
-        AutonConfig RightBumpFerry = new AutonConfig("Left Bump Ferry", RightBumpFerry::new, 
-        "R.B. to N", 
+        AutonConfig RightBumpFerry = new AutonConfig("Right Bump Ferry", RightBumpFerry::new, 
+        "R.B. to R.N.", 
         "N to R.T.", 
         "R.T. Circle Hub", 
         "R.N. to H.P.");
