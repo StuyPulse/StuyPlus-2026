@@ -206,7 +206,7 @@ public class RobotContainer {
         leftBumpNeutral2XAuton.register(autonChooser);
 
         AutonConfig rightBumpNeutral2XAuton = new AutonConfig("Right Bump Neutral 2X", RightBumpNeutralTwoX::new,
-            "Right Bump to Neutral",
+            "R.B. to R.N.",
             "Neutral to Right Bump",
             "Right Bump Aim at Hub",
             "Right Bump Face Left",
