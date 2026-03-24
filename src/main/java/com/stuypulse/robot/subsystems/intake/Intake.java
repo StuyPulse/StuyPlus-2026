@@ -71,7 +71,7 @@ public abstract class Intake extends SubsystemBase {
         SmartDashboard.putString("States/Intake", getState().name());
         
         if (Settings.DEBUG_MODE) {
-            if (Settings.EnabledSubsystems.FEEDER.get()) {
+            if (Settings.EnabledSubsystems.INTAKE.get()) {
                 RobotVisualizer.getInstance().updateIntake(getRelativePosition(), getRollerRPM());
             }
             else {
