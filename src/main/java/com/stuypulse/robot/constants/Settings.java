@@ -40,7 +40,7 @@ public interface Settings {
     }
 
     public interface Intake {
-        double ARM_LENGTH = 1.0; // TODO: get actual values
+        double PIVOT_LENGTH = 1.0; // TODO: get actual values
         double ROLLER_MAX_ACCEL = 0;
         double ROLLER_MAX_VEL = 0;
         double INITIAL_POSITION = 0;
@@ -61,7 +61,8 @@ public interface Settings {
         double J_KG_METERS_SQUARED = 0.1;
         double PIVOT_MIN_ANGLE = 0.0;
         double PIVOT_MAX_ANGLE = 2 * Math.PI;
-        double GEAR_RATIO = 20.0;
+        double PIVOT_GEAR_RATIO = 20.0;
+        double ROLLER_GEAR_RATIO = 20.0;
 
         double RAMP_RATE = 0.25;
         double STEP_VOLTAGE = 900; // volts

@@ -37,7 +37,7 @@ public class IntakeSim extends Intake {
             LinearSystemId.createFlywheelSystem(
                 DCMotor.getKrakenX60(1),
                 Settings.Intake.J_KG_METERS_SQUARED,
-                Settings.Intake.GEAR_RATIO
+                Settings.Intake.ROLLER_GEAR_RATIO
             ),
             DCMotor.getKrakenX60(1)
         );
@@ -54,11 +54,11 @@ public class IntakeSim extends Intake {
             LinearSystemId.createDCMotorSystem(
                 DCMotor.getKrakenX60(1),
                 Settings.Intake.J_KG_METERS_SQUARED,
-                Settings.Intake.GEAR_RATIO
+                Settings.Intake.PIVOT_GEAR_RATIO
             ),
             gearbox,
-            Settings.Intake.GEAR_RATIO,
-            Settings.Intake.ARM_LENGTH,
+            Settings.Intake.PIVOT_GEAR_RATIO,
+            Settings.Intake.PIVOT_LENGTH,
             Settings.Intake.PIVOT_MIN_ANGLE,
             Settings.Intake.PIVOT_MAX_ANGLE,
             true,
