@@ -23,9 +23,11 @@ import com.stuypulse.robot.subsystems.swerve.CommandSwerveDrivetrain;
 import com.stuypulse.stuylib.input.Gamepad;
 import com.stuypulse.stuylib.input.gamepads.AutoGamepad;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
 
 public class RobotContainer {
     // Gamepads
@@ -105,6 +107,12 @@ public class RobotContainer {
         "R.T. Circle Hub", 
         "R.N. to H.P.");
         RightBumpFerry.register(autonChooser);
+
+        SysIdRoutine intakeSysId = intake.getIntakeSysIdRoutine();
+        autonChooser.addOption("Intake SysId Dynamic Forward", intakeSysId.dynamic(Direction.kForward));
+        autonChooser.addOption("Intake SysId Dynamic Backward", intakeSysId.dynamic(Direction.kReverse));
+        autonChooser.addOption("Intake SysId Quasistatic Forward", intakeSysId.quasistatic(Direction.kForward));
+        autonChooser.addOption("Intake SysId Quasistatic Backward", intakeSysId.quasistatic(Direction.kReverse));
 
         SmartDashboard.putData("Autonomous", autonChooser);
     }

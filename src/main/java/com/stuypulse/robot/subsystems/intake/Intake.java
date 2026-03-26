@@ -7,6 +7,7 @@ import com.stuypulse.robot.util.RobotVisualizer;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 
 public abstract class Intake extends SubsystemBase {
     private static final Intake instance;
@@ -64,6 +65,7 @@ public abstract class Intake extends SubsystemBase {
     public abstract Rotation2d getRelativePosition();
     public abstract boolean atAngle();
     public abstract double getRollerRPM();
+    public abstract SysIdRoutine getIntakeSysIdRoutine();
 
     @Override
     public void periodic() {

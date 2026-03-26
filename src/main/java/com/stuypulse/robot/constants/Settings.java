@@ -64,8 +64,8 @@ public interface Settings {
         double PIVOT_GEAR_RATIO = 20.0;
         double ROLLER_GEAR_RATIO = 20.0;
 
-        double RAMP_RATE = 0.25;
-        double STEP_VOLTAGE = 900; // volts
+        double RAMP_RATE = 2;
+        double STEP_VOLTAGE = 6; // volts
 
         Rotation2d ANGLE_TOLERANCE = Rotation2d.fromDegrees(0.5); // degrees
     }

@@ -83,7 +83,7 @@ public class IntakeImpl extends Intake {
         SmartDashboard.putBoolean("Intake/Pivot At Target Angle", atAngle());
     }
 
-    public SysIdRoutine getShooterSysIdRoutine() {
+    public SysIdRoutine getIntakeSysIdRoutine() {
         return SysId.getRoutine(Settings.Intake.RAMP_RATE,
                 Settings.Intake.STEP_VOLTAGE,
                 "Intake",
