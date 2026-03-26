@@ -1,9 +1,12 @@
 package com.stuypulse.robot.subsystems.intake;
 
+import java.util.Optional;
+
 import com.ctre.phoenix6.controls.DutyCycleOut;
 import com.stuypulse.robot.constants.Gains;
 import com.stuypulse.robot.constants.Settings;
 import com.stuypulse.robot.subsystems.swerve.CommandSwerveDrivetrain;
+import com.stuypulse.robot.util.SysId;
 import com.stuypulse.stuylib.math.SLMath;
 
 import edu.wpi.first.math.controller.PIDController;
@@ -17,6 +20,7 @@ import edu.wpi.first.networktables.StructPublisher;
 import edu.wpi.first.wpilibj.simulation.FlywheelSim;
 import edu.wpi.first.wpilibj.simulation.SingleJointedArmSim;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 
 
 public class IntakeSim extends Intake {
@@ -24,6 +28,8 @@ public class IntakeSim extends Intake {
     private final PIDController pivotController;
     private final DutyCycleOut rollerController;
     private final SingleJointedArmSim sim;
+
+    private Optional<Double> pivotVoltageOverride;
 
     private final StructPublisher<Pose3d> pivotPublisher = NetworkTableInstance.getDefault()
         .getStructTopic("AdvScope/IntakePose", Pose3d.struct).publish();
@@ -63,6 +69,8 @@ public class IntakeSim extends Intake {
             Settings.Intake.PIVOT_MAX_ANGLE,
             true,
             Settings.Intake.PIVOT_INITIAL_ANGLE);
+        
+        pivotVoltageOverride = Optional.empty();
     }
     @Override
     public Rotation2d getRelativePosition() {
@@ -79,6 +87,22 @@ public class IntakeSim extends Intake {
     @Override
     public double getRollerRPM() {
         return intakeRollerMotor.getAngularVelocityRPM();
+    }
+
+    public void setPivotVoltageOverride(Optional<Double> pivotVoltageOverride) {
+        this.pivotVoltageOverride = pivotVoltageOverride;
+    }
+
+    public SysIdRoutine getIntakeSysIdRoutine() {
+        return SysId.getRoutine(Settings.Intake.RAMP_RATE,
+                Settings.Intake.STEP_VOLTAGE,
+                "Intake",
+                voltage -> setPivotVoltageOverride(Optional.of(voltage)),
+                () -> getRelativePosition().getRotations(),
+                () -> sim.getVelocityRadPerSec(),
+                () -> pivotVoltageOverride.orElse(0.0),
+                getInstance()
+        );
     }
 
     @Override
