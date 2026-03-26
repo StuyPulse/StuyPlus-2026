@@ -185,8 +185,8 @@ public interface SimulationConstants {
         PIDConstants XY = new PIDConstants(2.2, 0, 0.0); // alignment
         PIDConstants THETA = new PIDConstants(3, 0, 0.0);
 
-        Distance LENGTH = Inches.of(30.0); // TODO: get actual
-        Distance WIDTH = Inches.of(38.0); // TODO: get actual
+        Distance LENGTH = Inches.of(27);
+        Distance WIDTH = Inches.of(25.5);
         double WHEEL_COF = 1.2; // TODO: Get actual
 
         Time SIMULATION_STEP_TIME = Seconds.of(0.005);
