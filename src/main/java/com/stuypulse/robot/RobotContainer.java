@@ -11,6 +11,7 @@ import com.stuypulse.robot.commands.auton.RightBumpFerry;
 import com.stuypulse.robot.commands.swerve.SwerveDriveDrive;
 import com.stuypulse.robot.commands.swerve.SwerveDriveResetRotation;
 import com.stuypulse.robot.commands.swerve.SwerveDriveXMode;
+import com.stuypulse.robot.commands.intake.IntakeAgitateOnce;
 import com.stuypulse.robot.commands.intake.IntakeSetIdle;
 import com.stuypulse.robot.commands.intake.IntakeSetIntake;
 import com.stuypulse.robot.commands.intake.IntakeSetOuttake;
@@ -28,8 +29,8 @@ import edu.wpi.first.wpilibj2.command.Command;
 
 public class RobotContainer {
     // Gamepads
-    public final Gamepad driver = new AutoGamepad(Ports.Gamepad.DRIVER);
-    public final CommandXboxController operator = new CommandXboxController(Ports.Gamepad.OPERATOR);
+    public final CommandXboxController driver = new CommandXboxController(Ports.Gamepad.DRIVER);
+    //public final Gamepad driver = new AutoGamepad(Ports.Gamepad.DRIVER);
     
     // Subsystem
 
@@ -67,24 +68,21 @@ public class RobotContainer {
 
     private void configureButtonBindings() {
         //Outtaking
-        driver.getDPadRight()
-            .whileTrue(new IntakeSetOuttake())
-            .onFalse(new IntakeSetIntake());
-
-        //Reset Heading
-        driver.getDPadUp()
-            .onTrue(new SwerveDriveResetRotation());
-        
-        //X Mode
-        driver.getLeftBumper()
-            .onTrue(new SwerveDriveXMode());            
-
-        //Toggle Intake On or Off
-        driver.getLeftButton()
+        driver.povRight()
+            .onTrue(new IntakeSetIntake());
+        driver.povLeft()
+            .onTrue(new IntakeSetOuttake());
+        driver.povDown()
             .onTrue(new IntakeSetIdle());
 
-        driver.getRightButton()
-            .onTrue(new IntakeSetIntake());
+
+        //Reset Heading
+        // driver.povUp()
+        //     .onTrue(new SwerveDriveResetRotation());
+        
+        //X Mode
+
+
     }
 
     /**************/

@@ -10,11 +10,4 @@ public class SwerveDriveAlignedToHub extends SwerveDriveSetAlignment {
     public SwerveDriveAlignedToHub() {
         super(Field.getHubPose());
     }
-
-    @Override
-    public void execute() {
-        super.execute();
-
-        SmartDashboard.putNumber("Swerve/Target Angle", getTargetAngle().getDegrees());
-    }
 }

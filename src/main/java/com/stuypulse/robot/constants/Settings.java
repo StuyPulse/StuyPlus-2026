@@ -43,17 +43,17 @@ public interface Settings {
         double PIVOT_LENGTH = 1.0; // TODO: get actual values
         double ROLLER_MAX_ACCEL = 0;
         double ROLLER_MAX_VEL = 0;
-        double INITIAL_POSITION = 0;
+        double PIVOT_INITIAL_ANGLE = 30;
 
         double IDLE_DUTY_CYCLE = 0;
 
-        Rotation2d INTAKE_ANGLE = Rotation2d.fromDegrees(40);
+        Rotation2d INTAKE_ANGLE = Rotation2d.fromDegrees(150);
         double INTAKE_DUTY_CYCLE = 0.8;
 
-        Rotation2d OUTTAKE_ANGLE = Rotation2d.fromDegrees(40);
+        Rotation2d OUTTAKE_ANGLE = Rotation2d.fromDegrees(150);
         double OUTTAKE_DUTY_CYCLE = -0.8;
 
-        Rotation2d IDLE_ANGLE = Rotation2d.fromDegrees(140);
+        Rotation2d IDLE_ANGLE = Rotation2d.fromDegrees(30);
 
         Rotation2d AGITATE_UP_ANGLE = Rotation2d.fromDegrees(115);
         Rotation2d AGITATE_DOWN_ANGLE = Rotation2d.fromDegrees(67);

@@ -31,7 +31,7 @@ public class IntakeImpl extends Intake {
 
         intakeRollerMotor = new TalonFX(Ports.Intake.MOTOR_INTAKEROLLER);
         Motors.Intake.ROLLER_CONFIG.configure(intakeRollerMotor);
-        intakePivotMotor.setPosition(Settings.Intake.INITIAL_POSITION);
+        intakePivotMotor.setPosition(Settings.Intake.PIVOT_INITIAL_ANGLE);
 
         rollerController = new DutyCycleOut(getState().getTargetDutyCycle());
         pivotController = new MotionMagicVoltage(getState().getTargetAngle().getRotations());

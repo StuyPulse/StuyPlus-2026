@@ -7,9 +7,4 @@ public class SwerveDriveAlignedToAllianceZone extends SwerveDriveSetAlignment {
     public SwerveDriveAlignedToAllianceZone() {
         super(Field.getFerryZonePose(swerve.getPose().getTranslation()));
     }
-
-    @Override
-    public void execute() {
-        super.execute();
-    }
 }

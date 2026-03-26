@@ -136,7 +136,7 @@ public class RobotVisualizer {
     // }
 
     public void updateIntake(Rotation2d pivotAngle, double RPM) {
-        intakePivot.setAngle(Rotation2d.fromDegrees(180).minus(pivotAngle)); // 180 degrees to make it face left
+        intakePivot.setAngle(pivotAngle); // 180 degrees to make it face left
         double rot = RPM * 6 * Settings.DT;
         for (MechanismLigament2d spoke : intakeSpokes)
             spoke.setAngle(spoke.getAngle() + rot);

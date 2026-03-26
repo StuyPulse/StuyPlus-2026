@@ -20,14 +20,15 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 
 public class SwerveDriveDriveWhileAligned extends Command {
     protected static final CommandSwerveDrivetrain swerve;
-    private final Gamepad driver;
+    private final CommandXboxController driver;
     private final VStream speed;
     private final Supplier<Pose2d> targetPose;
 
-    public SwerveDriveDriveWhileAligned(Gamepad driver, Supplier<Pose2d> targetPose) {
+    public SwerveDriveDriveWhileAligned(CommandXboxController driver, Supplier<Pose2d> targetPose) {
         this.speed = VStream.create(this::getDriverInputAsVelocity)
             .filtered(
                 new VDeadZone(Drive.DEADBAND),
@@ -47,7 +48,7 @@ public class SwerveDriveDriveWhileAligned extends Command {
     }
 
     private Vector2D getDriverInputAsVelocity() {
-        return new Vector2D(driver.getLeftStick().y, -driver.getLeftStick().x);
+        return new Vector2D(-driver.getLeftY(), -driver.getLeftX());
     }
 
     public Rotation2d getTargetAngle() {

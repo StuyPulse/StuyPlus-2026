@@ -62,7 +62,7 @@ public class IntakeSim extends Intake {
             Settings.Intake.PIVOT_MIN_ANGLE,
             Settings.Intake.PIVOT_MAX_ANGLE,
             true,
-            Settings.Intake.INITIAL_POSITION);
+            Settings.Intake.PIVOT_INITIAL_ANGLE);
     }
     @Override
     public Rotation2d getRelativePosition() {

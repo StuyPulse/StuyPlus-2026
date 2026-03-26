@@ -440,7 +440,7 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
 
         for (int i = 0; i < 4; i++) {
             SmartDashboard.putNumber("Swerve/Modules/Module " + i + "/Speed (m per s)", getModule(i).getCurrentState().speedMetersPerSecond);
-            SmartDashboard.putNumber("Swerve/Modules/Module " + i + "/Target Speed (m per s)", getModule(i).getTargetState().speedMetersPerSecond);
+              SmartDashboard.putNumber("Swerve/Modules/Module " + i + "/Target Speed (m per s)", getModule(i).getTargetState().speedMetersPerSecond);
             SmartDashboard.putNumber("Swerve/Modules/Module " + i + "/Angle (deg)", getModule(i).getCurrentState().angle.getDegrees() % 360);
             SmartDashboard.putNumber("Swerve/Modules/Module " + i + "/Target Angle (deg)", getModule(i).getTargetState().angle.getDegrees() % 360);
         }

@@ -1,11 +1,11 @@
 package com.stuypulse.robot.commands.swerve.driveAligned;
 
 import com.stuypulse.robot.util.shooter.ShotCalculator;
-import com.stuypulse.stuylib.input.Gamepad;
+
+import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 
 public class SwerveSOTM extends SwerveDriveDriveWhileAligned {
-    public SwerveSOTM(Gamepad driver) {
+    public SwerveSOTM(CommandXboxController driver) {
         super(driver, () -> ShotCalculator.solveShootOnTheMove(swerve.getPose(), swerve.getChassisSpeeds(), 5, 0.02).virtualPose());
     }
-
 }

@@ -15,17 +15,18 @@ import com.stuypulse.stuylib.streams.vectors.filters.VLowPassFilter;
 import com.stuypulse.stuylib.streams.vectors.filters.VRateLimit;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 
 public class SwerveDriveDrive extends Command {
 
     private final CommandSwerveDrivetrain swerve;
 
-    private final Gamepad driver;
+    private final CommandXboxController driver;
 
     private final VStream speed;
     private final IStream turn;
 
-    public SwerveDriveDrive(Gamepad driver) {
+    public SwerveDriveDrive(CommandXboxController driver) {
         swerve = CommandSwerveDrivetrain.getInstance();
 
         speed = VStream.create(this::getDriverInputAsVelocity)
@@ -52,7 +53,7 @@ public class SwerveDriveDrive extends Command {
     }
 
     private Vector2D getDriverInputAsVelocity() {
-        return new Vector2D(driver.getLeftStick().y, -driver.getLeftStick().x);
+        return new Vector2D(-driver.getLeftY(), -driver.getLeftX());
     }
 
     @Override
