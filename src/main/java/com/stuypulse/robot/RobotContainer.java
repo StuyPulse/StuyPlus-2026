@@ -120,7 +120,7 @@ public class RobotContainer {
     /**************/
     /*** AUTONS ***/
     /**************/
-    public void configureAutons() {
+     public void configureAutons() {
         autonChooser.addOption("Do Nothing", new DoNothingAuton());
 
         AutonConfig outpostDepotOnePointFiveAuton = new AutonConfig("Outpost Depot 1.5 cycle", OutpostDepotOnePointFiveCycle::new, 
