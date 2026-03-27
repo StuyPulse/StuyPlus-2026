@@ -132,7 +132,7 @@ public class RobotContainer {
         outpostDepotOnePointFiveAuton.register(autonChooser);
 
         AutonConfig leftBumpDepotOutpostAuton = new AutonConfig("Left Bump Depot Outpost", LeftBumpDepotOutpost::new, 
-            "Left Bump to Left Neutral", 
+            "Left Bump to Neutral", 
             "Left Neutral to Left Bump", 
             "Left Bump to Depot", 
             "Rotate at Depot", 
@@ -157,7 +157,7 @@ public class RobotContainer {
         bumpToNeutralFerry.register(autonChooser);
 
         AutonConfig leftBumpOnePointFiveCycle = new AutonConfig("Left Bump 1.5 cycle", LeftBumpOnePointFiveCycle::new, 
-             "Left Bump to Left Neutral", 
+             "Left Bump to Neutral", 
              "Left Neutral to Left Bump", 
              "Left Bump to Depot");
          leftBumpOnePointFiveCycle.register(autonChooser);
