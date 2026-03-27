@@ -74,18 +74,18 @@ public class RobotContainer {
 
     private void configureButtonBindings() {
         //Outtaking
-        driver.povRight()
+        driver.rightBumper()
             .onTrue(new IntakeSetIntake());
-        driver.povLeft()
+        driver.leftBumper()
             .onTrue(new IntakeSetOuttake());
-        driver.povDown()
+        driver.povUp()
             .onTrue(new IntakeSetIdle());
 
         //Turn towards alliance Zone
         driver.a()
-            .onTrue(new SwerveDriveRotate(Rotation2d.fromDegrees(180)));
+            .onTrue(new SwerveDriveRotate(Rotation2d.k180deg));
 
-        driver.b()
+        driver.y()
             .onTrue(new SwerveDriveRotate(Rotation2d.kZero));
         
         driver.x()
