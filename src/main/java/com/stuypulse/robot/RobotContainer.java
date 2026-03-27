@@ -83,7 +83,7 @@ public class RobotContainer {
 
         //Turn towards alliance Zone
         driver.a()
-            .onTrue(new SwerveDriveRotate(Rotation2d.k180deg));
+            .onTrue(new SwerveDriveRotate(Rotation2d.fromDegrees(180)));
 
         driver.b()
             .onTrue(new SwerveDriveRotate(Rotation2d.kZero));
