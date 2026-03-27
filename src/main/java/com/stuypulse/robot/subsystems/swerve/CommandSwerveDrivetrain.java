@@ -289,6 +289,14 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
         return m_sysIdRoutineToApply.dynamic(direction);
     }
 
+    public Command sysidRotationDynamic(SysIdRoutine.Direction direction) {
+        return m_sysIdRoutineRotation.dynamic(direction);
+    }
+
+    public Command sysidRotationQuasiStatic(SysIdRoutine.Direction direction) {
+        return m_sysIdRoutineRotation.quasistatic(direction);
+    }
+
     private void startSimThread() {
         m_lastSimTime = Utils.getCurrentTimeSeconds();
 

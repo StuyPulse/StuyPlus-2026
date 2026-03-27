@@ -108,6 +108,16 @@ public class RobotContainer {
         "R.N. to H.P.");
         RightBumpFerry.register(autonChooser);
 
+        autonChooser.addOption("SysID Module Translation Dynamic Forwards", swerve.sysIdDynamic(Direction.kForward));
+        autonChooser.addOption("SysID Module Translation Dynamic Backwards", swerve.sysIdDynamic(Direction.kReverse));
+        autonChooser.addOption("SysID Module Translation Quasi Forwards", swerve.sysIdQuasistatic(Direction.kForward));
+        autonChooser.addOption("SysID Module Translation Quasi Backwards", swerve.sysIdQuasistatic(Direction.kReverse)); 
+
+        autonChooser.addOption("SysID Rotation Translation Dynamic Forwards", swerve.sysidRotationDynamic(Direction.kForward));
+        autonChooser.addOption("SysID Rotation Translation Dynamic Backwards", swerve.sysidRotationDynamic(Direction.kReverse));
+        autonChooser.addOption("SysID Rotation Translation Quasi Forwards", swerve.sysidRotationQuasiStatic(Direction.kForward));
+        autonChooser.addOption("SysID Rotation Translation Quasi Backwards", swerve.sysidRotationQuasiStatic(Direction.kReverse)); 
+
         SysIdRoutine intakeSysId = intake.getIntakeSysIdRoutine();
         autonChooser.addOption("Intake SysId Dynamic Forward", intakeSysId.dynamic(Direction.kForward));
         autonChooser.addOption("Intake SysId Dynamic Backward", intakeSysId.dynamic(Direction.kReverse));
