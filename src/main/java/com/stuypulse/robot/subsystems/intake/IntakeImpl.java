@@ -2,9 +2,11 @@ package com.stuypulse.robot.subsystems.intake;
 
 import java.util.Optional;
 
+import com.ctre.phoenix6.controls.Follower;
 import com.ctre.phoenix6.controls.DutyCycleOut;
 import com.ctre.phoenix6.controls.MotionMagicVoltage;
 import com.ctre.phoenix6.hardware.TalonFX;
+import com.ctre.phoenix6.signals.MotorAlignmentValue;
 import com.stuypulse.robot.constants.Motors;
 import com.stuypulse.robot.constants.Ports;
 import com.stuypulse.robot.constants.Settings;
@@ -18,7 +20,8 @@ import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 public class IntakeImpl extends Intake {
 
     private final TalonFX intakePivotMotor;
-    private final TalonFX intakeRollerMotor;
+    private final TalonFX intakeRollerMotorLeft;
+    private final TalonFX intakeRollerMotorRight;
 
     private final DutyCycleOut rollerController;
     private final MotionMagicVoltage pivotController;
@@ -26,12 +29,15 @@ public class IntakeImpl extends Intake {
     private Optional<Double> pivotVoltageOverride;
 
     public IntakeImpl() {
-        intakePivotMotor = new TalonFX(Ports.Intake.MOTOR_INTAKEPIVOT);
+        intakePivotMotor = new TalonFX(Ports.Intake.MOTOR_INTAKE_PIVOT, Settings.CANIVORE);
         Motors.Intake.PIVOT_CONFIG.configure(intakePivotMotor);
 
-        intakeRollerMotor = new TalonFX(Ports.Intake.MOTOR_INTAKEROLLER);
-        Motors.Intake.ROLLER_CONFIG.configure(intakeRollerMotor);
+        intakeRollerMotorLeft = new TalonFX(Ports.Intake.MOTOR_INTAKE_ROLLER_LEFT, Settings.CANIVORE);
+        Motors.Intake.LEFT_ROLLER_CONFIG.configure(intakeRollerMotorLeft);
         intakePivotMotor.setPosition(Settings.Intake.PIVOT_INITIAL_ANGLE);
+
+        intakeRollerMotorRight = new TalonFX(Ports.Intake.MOTOR_INTAKE_ROLLER_RIGHT, Settings.CANIVORE);
+        intakeRollerMotorRight.setControl(new Follower(Ports.Intake.MOTOR_INTAKE_ROLLER_LEFT, MotorAlignmentValue.Opposed));
 
         rollerController = new DutyCycleOut(getState().getTargetDutyCycle());
         pivotController = new MotionMagicVoltage(getState().getTargetAngle().getRotations());
@@ -57,7 +63,7 @@ public class IntakeImpl extends Intake {
 
     @Override
     public double getRollerRPM() {
-        return intakeRollerMotor.getVelocity().getValueAsDouble() * 60;
+        return intakeRollerMotorLeft.getVelocity().getValueAsDouble() * 60;
     }
 
     @Override
@@ -67,15 +73,15 @@ public class IntakeImpl extends Intake {
                 intakePivotMotor.setVoltage(pivotVoltageOverride.get());
             } else {
                 intakePivotMotor.setControl(pivotController.withPosition(getState().getTargetAngle().getRotations()));
-                intakeRollerMotor.setControl(rollerController.withOutput(getState().getTargetDutyCycle()));
+                intakeRollerMotorLeft.setControl(rollerController.withOutput(getState().getTargetDutyCycle()));
             }
         } else {
             intakePivotMotor.stopMotor();
-            intakeRollerMotor.stopMotor();
+            intakeRollerMotorLeft.stopMotor();
         }
 
-        SmartDashboard.putNumber("Intake/Roller Current (amps)", intakeRollerMotor.getStatorCurrent().getValueAsDouble());
-        SmartDashboard.putNumber("Intake/Roller Voltage", intakeRollerMotor.getMotorVoltage().getValueAsDouble());
+        SmartDashboard.putNumber("Intake/Roller Current (amps)", intakeRollerMotorLeft.getStatorCurrent().getValueAsDouble());
+        SmartDashboard.putNumber("Intake/Roller Voltage", intakeRollerMotorLeft.getMotorVoltage().getValueAsDouble());
 
         SmartDashboard.putNumber("Intake/Pivot Current (amps)", intakePivotMotor.getStatorCurrent().getValueAsDouble());
         SmartDashboard.putNumber("Intake/Pivot Voltage", intakePivotMotor.getMotorVoltage().getValueAsDouble());

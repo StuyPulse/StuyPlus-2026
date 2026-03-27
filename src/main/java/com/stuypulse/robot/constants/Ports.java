@@ -33,8 +33,9 @@ public interface Ports {
     // }
 
     public interface Intake {
-        int MOTOR_INTAKEROLLER= 30; 
-        int MOTOR_INTAKEPIVOT = 20; //Reminder: Config numbers
+        int MOTOR_INTAKE_ROLLER_LEFT = 30;
+        int MOTOR_INTAKE_ROLLER_RIGHT = 31;
+        int MOTOR_INTAKE_PIVOT = 10; //Reminder: Config numbers
     }
     
 }
