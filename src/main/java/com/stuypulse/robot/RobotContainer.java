@@ -5,11 +5,14 @@
 
 package com.stuypulse.robot;
 
+import static edu.wpi.first.units.Units.Rotation;
+
 import com.stuypulse.robot.commands.auton.DoNothingAuton;
 import com.stuypulse.robot.commands.auton.LeftBumpFerry;
 import com.stuypulse.robot.commands.auton.RightBumpFerry;
 import com.stuypulse.robot.commands.swerve.SwerveDriveDrive;
 import com.stuypulse.robot.commands.swerve.SwerveDriveResetRotation;
+import com.stuypulse.robot.commands.swerve.SwerveDriveRotate;
 import com.stuypulse.robot.commands.swerve.SwerveDriveXMode;
 import com.stuypulse.robot.commands.intake.IntakeAgitateOnce;
 import com.stuypulse.robot.commands.intake.IntakeSetIdle;
@@ -24,6 +27,7 @@ import com.stuypulse.stuylib.input.Gamepad;
 import com.stuypulse.stuylib.input.gamepads.AutoGamepad;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -77,6 +81,15 @@ public class RobotContainer {
         driver.povDown()
             .onTrue(new IntakeSetIdle());
 
+        //Turn towards alliance Zone
+        driver.a()
+            .onTrue(new SwerveDriveRotate(Rotation2d.k180deg));
+
+        driver.b()
+            .onTrue(new SwerveDriveRotate(Rotation2d.kZero));
+        
+        driver.x()
+            .onTrue(new SwerveDriveXMode());
 
         //Reset Heading
         // driver.povUp()
