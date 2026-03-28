@@ -88,6 +88,8 @@ public class IntakeImpl extends Intake {
         SmartDashboard.putNumber("Intake/Pivot Current (amps)", intakePivotMotor.getStatorCurrent().getValueAsDouble());
         SmartDashboard.putNumber("Intake/Pivot Voltage", intakePivotMotor.getMotorVoltage().getValueAsDouble());
 
+        SmartDashboard.putNumber("Intake/Pivot Angle (deg)", getRelativePosition().getDegrees());
+
         SmartDashboard.putBoolean("Intake/Pivot At Target Angle", atAngle());
     }
 
