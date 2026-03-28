@@ -1,10 +1,7 @@
 package com.stuypulse.robot.util.simulation;
 
-import com.stuypulse.robot.Robot;
 import com.stuypulse.robot.subsystems.intake.Intake;
-import com.stuypulse.robot.subsystems.intake.Intake.IntakeState;
 import com.stuypulse.robot.subsystems.swerve.CommandSwerveDrivetrain;
-import com.stuypulse.robot.subsystems.swerve.TunerConstants;
 
 import com.stuypulse.robot.constants.Settings;
 import edu.wpi.first.math.geometry.Pose2d;
@@ -12,7 +9,6 @@ import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
-import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.networktables.StructArrayPublisher;
 import edu.wpi.first.networktables.StructPublisher;
@@ -26,7 +22,6 @@ import org.ironmaple.simulation.IntakeSimulation;
 import org.ironmaple.simulation.SimulatedArena;
 import org.ironmaple.simulation.drivesims.SwerveDriveSimulation;
 import org.ironmaple.simulation.drivesims.SwerveModuleSimulation;
-import org.ironmaple.simulation.motorsims.MapleMotorSim;
 import org.ironmaple.simulation.seasonspecific.rebuilt2026.Arena2026Rebuilt;
 
 public class Simulation {
@@ -114,7 +109,7 @@ public class Simulation {
         ));
     }
 
-    public void update() {
+    public synchronized void update() {
         if (swerveMSim == null) return;
 
         drivetrain.set(swerveMSim.getSimulatedDriveTrainPose());

@@ -12,10 +12,6 @@ import com.ctre.phoenix6.configs.CANcoderConfiguration;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.swerve.SwerveModuleConstants;
 import com.pathplanner.lib.config.PIDConstants;
-import com.stuypulse.robot.Robot;
-import com.stuypulse.robot.constants.Field;
-import com.stuypulse.robot.constants.Settings;
-import com.stuypulse.robot.subsystems.swerve.CommandSwerveDrivetrain;
 import com.stuypulse.robot.subsystems.swerve.TunerConstants;
 
 import static edu.wpi.first.units.Units.*;
@@ -209,4 +205,20 @@ public interface SimulationConstants {
                 new Translation2d(MODULE_CONSTANTS[3].LocationX, MODULE_CONSTANTS[3].LocationY)
         };
     }
+
+    public static final Pose2d[] ROBOT_QUEENING_POSITIONS = new Pose2d[] {
+			new Pose2d(-6, 0, new Rotation2d()),
+			new Pose2d(-5, 0, new Rotation2d()),
+			new Pose2d(-4, 0, new Rotation2d()),
+			new Pose2d(-3, 0, new Rotation2d()),
+			new Pose2d(-2, 0, new Rotation2d())
+	};
+
+	public static final Pose2d[] ROBOTS_STARTING_POSITIONS = new Pose2d[] {
+			new Pose2d(12.5, 0.5, Rotation2d.fromDegrees(90)), // depot side trench facing hub
+			new Pose2d(12.5, 7.777, Rotation2d.fromDegrees(270)),
+			new Pose2d(15, 2, Rotation2d.fromDegrees(180)),
+			new Pose2d(1.6, 6, new Rotation2d()),
+			new Pose2d(1.6, 4, new Rotation2d())
+	};
 }

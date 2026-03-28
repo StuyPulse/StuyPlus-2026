@@ -309,14 +309,13 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
     @SuppressWarnings("unchecked")
     private void startSimThread() {
         mapleSimSwerveDrivetrain = new MapleSimSwerveDrivetrain(
-                Seconds.of(kSimLoopPeriod),
-                // TODO: modify the following constants according to your robot
-                SimulationConstants.Drivetrain.ROBOT_WEIGHT, // robot weight
-                SimulationConstants.Drivetrain.LENGTH, // bumper length
-                SimulationConstants.Drivetrain.WIDTH, // bumper width
-                DCMotor.getKrakenX60(1), // drive motor type
-                DCMotor.getFalcon500(1), // steer motor type
-                SimulationConstants.Drivetrain.WHEEL_COF, // wheel COF
+                Seconds.of(Settings.DT),
+                SimulationConstants.Drivetrain.ROBOT_WEIGHT,
+                SimulationConstants.Drivetrain.LENGTH,
+                SimulationConstants.Drivetrain.WIDTH,
+                DCMotor.getKrakenX60(1),
+                DCMotor.getKrakenX60(1),
+                SimulationConstants.Drivetrain.WHEEL_COF,
                 getModuleLocations(),
                 getPigeon2(),
                 getModules(),
@@ -324,9 +323,8 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
                 TunerConstants.FrontRight,
                 TunerConstants.BackLeft,
                 TunerConstants.BackRight);
-        /* Run simulation at a faster rate so PID gains behave more reasonably */
         m_simNotifier = new Notifier(mapleSimSwerveDrivetrain::update);
-        m_simNotifier.startPeriodic(kSimLoopPeriod);
+        m_simNotifier.startPeriodic(Settings.DT);
     }
 
     public SwerveDriveSimulation getMapleSimDrivetrain() {
@@ -492,8 +490,9 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
                     getModule(i).getTargetState().angle.getDegrees() % 360);
         }
 
+        Pose2d pose = mapleSimSwerveDrivetrain != null ? mapleSimSwerveDrivetrain.mapleSimDrive.getSimulatedDriveTrainPose() : getPose();
         Field.FIELD2D.getRobotObject()
-                .setPose(Robot.isBlue() ? getPose() : Field.transformToOppositeAlliance(getPose()));
+                .setPose(Robot.isBlue() ? pose : Field.transformToOppositeAlliance(pose));
 
         if (Settings.DEBUG_MODE) {
             for (int i = 0; i < 4; i++) {
