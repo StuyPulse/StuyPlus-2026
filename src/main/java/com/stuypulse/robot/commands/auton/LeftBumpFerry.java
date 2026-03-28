@@ -1,8 +1,7 @@
 package com.stuypulse.robot.commands.auton;
 
 import com.pathplanner.lib.path.PathPlannerPath;
-// import com.stuypulse.robot.commands.feeder.FeederForward;
-// import com.stuypulse.robot.commands.feeder.FeederIdle;
+
 import com.stuypulse.robot.commands.intake.IntakeAgitateOnce;
 import com.stuypulse.robot.commands.intake.IntakeSetIdle;
 import com.stuypulse.robot.commands.intake.IntakeSetIntake;
