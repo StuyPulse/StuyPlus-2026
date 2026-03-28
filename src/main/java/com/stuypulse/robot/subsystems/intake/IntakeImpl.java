@@ -31,14 +31,16 @@ public class IntakeImpl extends Intake {
     public IntakeImpl() {
         intakePivotMotor = new TalonFX(Ports.Intake.MOTOR_INTAKE_PIVOT, Settings.CANIVORE);
         Motors.Intake.PIVOT_CONFIG.configure(intakePivotMotor);
-
-        intakeRollerMotorLeft = new TalonFX(Ports.Intake.MOTOR_INTAKE_ROLLER_LEFT, Settings.CANIVORE);
-        Motors.Intake.LEFT_ROLLER_CONFIG.configure(intakeRollerMotorLeft);
         intakePivotMotor.setPosition(Settings.Intake.PIVOT_INITIAL_ANGLE);
 
+        intakeRollerMotorLeft = new TalonFX(Ports.Intake.MOTOR_INTAKE_ROLLER_LEFT, Settings.CANIVORE);
         intakeRollerMotorRight = new TalonFX(Ports.Intake.MOTOR_INTAKE_ROLLER_RIGHT, Settings.CANIVORE);
-        intakeRollerMotorRight.setControl(new Follower(Ports.Intake.MOTOR_INTAKE_ROLLER_LEFT, MotorAlignmentValue.Opposed));
 
+        Motors.Intake.ROLLER_CONFIG.configure(intakeRollerMotorLeft);
+        Motors.Intake.ROLLER_CONFIG.configure(intakeRollerMotorRight);
+
+        intakeRollerMotorRight.setControl(new Follower(Ports.Intake.MOTOR_INTAKE_ROLLER_LEFT, MotorAlignmentValue.Opposed));
+        
         rollerController = new DutyCycleOut(getState().getTargetDutyCycle());
         pivotController = new MotionMagicVoltage(getState().getTargetAngle().getRotations());
 

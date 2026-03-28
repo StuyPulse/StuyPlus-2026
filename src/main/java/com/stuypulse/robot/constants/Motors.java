@@ -41,7 +41,7 @@ public interface Motors {
             .withPIDConstants(Gains.Intake.kP, Gains.Intake.kI, Gains.Intake.kD, 0)
             .withSensorToMechanismRatio(Settings.Intake.PIVOT_GEAR_RATIO);
         
-        TalonFXConfig LEFT_ROLLER_CONFIG = new TalonFXConfig() // TODO: apply later
+        TalonFXConfig ROLLER_CONFIG = new TalonFXConfig() // TODO: apply later
             .withCurrentLimitAmps(50)
             .withInvertedValue(InvertedValue.Clockwise_Positive) // not necessarily true, get inverted val
             .withNeutralMode(NeutralModeValue.Brake)
