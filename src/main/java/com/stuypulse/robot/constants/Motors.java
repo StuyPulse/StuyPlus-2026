@@ -44,13 +44,13 @@ public interface Motors {
         TalonFXConfig LEFT_ROLLER_CONFIG = new TalonFXConfig() // TODO: apply later
             .withCurrentLimitAmps(50)
             .withInvertedValue(InvertedValue.CounterClockwise_Positive) // not necessarily true, get inverted val
-            .withNeutralMode(NeutralModeValue.Brake)
+            .withNeutralMode(NeutralModeValue.Coast)
             .withSensorToMechanismRatio(Settings.Intake.ROLLER_GEAR_RATIO);
         
         TalonFXConfig RIGHT_ROLLER_CONFIG = new TalonFXConfig() // TODO: apply later
             .withCurrentLimitAmps(50)
             .withInvertedValue(InvertedValue.Clockwise_Positive) // not necessarily true, get inverted val
-            .withNeutralMode(NeutralModeValue.Brake)
+            .withNeutralMode(NeutralModeValue.Coast)
             .withSensorToMechanismRatio(Settings.Intake.ROLLER_GEAR_RATIO);
 
     }

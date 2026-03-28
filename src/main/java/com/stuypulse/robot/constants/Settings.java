@@ -28,7 +28,7 @@ import edu.wpi.first.math.util.Units;
 public interface Settings {
     double DT = 0.020;
     boolean DEBUG_MODE = true;
-    CANBus CANIVORE = new CANBus("swerve");
+    CANBus CANIVORE = new CANBus("rio");
 
     public interface EnabledSubsystems {
         // SmartBoolean FEEDER = new SmartBoolean("Enabled Subsystems/Feeder", true);
@@ -43,7 +43,7 @@ public interface Settings {
         double PIVOT_LENGTH = 1.0; // TODO: get actual values
         double ROLLER_MAX_ACCEL = 0;
         double ROLLER_MAX_VEL = 0;
-        double PIVOT_INITIAL_ANGLE = 30;
+        Rotation2d PIVOT_INITIAL_ANGLE = Rotation2d.fromDegrees(30);
 
         double IDLE_DUTY_CYCLE = 0;
 
@@ -62,7 +62,7 @@ public interface Settings {
         double PIVOT_MIN_ANGLE = 0.0;
         double PIVOT_MAX_ANGLE = 2 * Math.PI;
         double PIVOT_GEAR_RATIO = 60.0;
-        double ROLLER_GEAR_RATIO = 20.0;
+        double ROLLER_GEAR_RATIO = 1;
 
         double RAMP_RATE = 2;
         double STEP_VOLTAGE = 6; // volts

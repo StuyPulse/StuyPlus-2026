@@ -31,7 +31,7 @@ public class IntakeImpl extends Intake {
     public IntakeImpl() {
         intakePivotMotor = new TalonFX(Ports.Intake.MOTOR_INTAKE_PIVOT, Settings.CANIVORE);
         Motors.Intake.PIVOT_CONFIG.configure(intakePivotMotor);
-        intakePivotMotor.setPosition(Settings.Intake.PIVOT_INITIAL_ANGLE);
+        intakePivotMotor.setPosition(Settings.Intake.PIVOT_INITIAL_ANGLE.getRotations());
 
         intakeRollerMotorLeft = new TalonFX(Ports.Intake.MOTOR_INTAKE_ROLLER_LEFT, Settings.CANIVORE);
         intakeRollerMotorRight = new TalonFX(Ports.Intake.MOTOR_INTAKE_ROLLER_RIGHT, Settings.CANIVORE);

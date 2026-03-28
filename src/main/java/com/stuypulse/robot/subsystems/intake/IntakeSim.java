@@ -68,7 +68,7 @@ public class IntakeSim extends Intake {
             Settings.Intake.PIVOT_MIN_ANGLE,
             Settings.Intake.PIVOT_MAX_ANGLE,
             true,
-            Settings.Intake.PIVOT_INITIAL_ANGLE);
+            Settings.Intake.PIVOT_INITIAL_ANGLE.getRadians());
         
         pivotVoltageOverride = Optional.empty();
     }
