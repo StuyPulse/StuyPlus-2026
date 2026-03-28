@@ -34,6 +34,7 @@ import com.stuypulse.robot.commands.auton.DepotOnePointFiveCycle;
 import com.stuypulse.robot.commands.auton.OutpostDepotOnePointFiveCycle;
 import com.stuypulse.robot.commands.auton.LeftBumpOnePointFiveCycle;
 import com.stuypulse.robot.util.PathUtil.AutonConfig;
+import com.stuypulse.robot.util.simulation.Simulation;
 import com.stuypulse.robot.subsystems.shooter.Shooter;
 import com.stuypulse.robot.subsystems.swerve.CommandSwerveDrivetrain;
 import com.stuypulse.robot.subsystems.feeder.Feeder;
@@ -60,6 +61,7 @@ public class RobotContainer {
     // @SuppressWarnings("unused")
     private final CommandSwerveDrivetrain swerve = CommandSwerveDrivetrain.getInstance();
     private final LEDController leds = LEDController.getInstance();
+    private final Simulation sim = Simulation.getInstance();
     // Autons
     private static SendableChooser<Command> autonChooser = new SendableChooser<>();
 

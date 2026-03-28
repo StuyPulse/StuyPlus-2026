@@ -1,8 +1,12 @@
 package com.stuypulse.robot.util.simulation;
 
+import com.stuypulse.robot.Robot;
 import com.stuypulse.robot.subsystems.intake.Intake;
+import com.stuypulse.robot.subsystems.intake.Intake.IntakeState;
+import com.stuypulse.robot.subsystems.swerve.CommandSwerveDrivetrain;
 import com.stuypulse.robot.subsystems.swerve.TunerConstants;
 
+import com.stuypulse.robot.constants.Settings;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Rotation3d;
@@ -12,6 +16,7 @@ import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.networktables.StructArrayPublisher;
 import edu.wpi.first.networktables.StructPublisher;
+import edu.wpi.first.wpilibj.Notifier;
 
 import static edu.wpi.first.units.Units.*;
 
@@ -29,8 +34,8 @@ public class Simulation {
 
     public final Arena2026Rebuilt ARENA;
 
-    private final SwerveDriveSimulation swerveSim;
-    // private final IntakeSimulation mapleSimIntake;
+    private final SwerveDriveSimulation swerveMSim;
+    private final IntakeSimulation intakeMSim;
     private final Intake intakeSim;
 
     private final StructPublisher<Pose2d> drivetrain;
@@ -40,6 +45,7 @@ public class Simulation {
     private final StructPublisher<Pose3d> intakePivot;
     private final StructPublisher<Pose3d> intakeRollers;
 
+    private final Notifier simUpdateNotifier;
 
     static {
         instance = new Simulation();
@@ -49,12 +55,13 @@ public class Simulation {
         return instance;
     }
 
-    public Simulation() {
+    private Simulation() {
         intakeSim = Intake.getInstance();
-        swerveSim = MapleSimSwerveDrivetrain.getInstance().mapleSimDrive;
+        swerveMSim = CommandSwerveDrivetrain.getInstance().getMapleSimDrivetrain();
+        intakeMSim = createIntakeSimulation();
 
-
-        ARENA = new Arena2026Rebuilt();
+        ARENA = new Arena2026Rebuilt(false);
+        configureDrivetrain(); // do this after creating arena
 
         NetworkTableInstance table = NetworkTableInstance.getDefault();
         drivetrain = table.getStructTopic("AdvScope/DTPose", Pose2d.struct).publish();
@@ -63,27 +70,27 @@ public class Simulation {
         fuel = table.getStructArrayTopic("AdvScope/FuelPoses", Pose3d.struct).publish();
         intakePivot = table.getStructTopic("AdvScope/IntakePose", Pose3d.struct).publish();
         intakeRollers = table.getStructTopic("AdvScope/IntakeRollerPose", Pose3d.struct).publish();
+
+        simUpdateNotifier = new Notifier(this::update);
+        simUpdateNotifier.startPeriodic(Settings.DT);
     }
 
     private void configureDrivetrain() {
         ARENA.resetFieldForAuto();
-        ARENA.addDriveTrainSimulation(this.swerveSim);
+        ARENA.addDriveTrainSimulation(this.swerveMSim);
         SimulatedArena.overrideInstance(ARENA);
     }
 
     private IntakeSimulation createIntakeSimulation() {
         return IntakeSimulation.OverTheBumperIntake(
             "Fuel",
-            swerveSim,
+            swerveMSim,
             Meters.of(SimulationConstants.Intake.INTAKE_WIDTH),
             Meters.of(SimulationConstants.Intake.INTAKE_LENGTH),
             IntakeSimulation.IntakeSide.FRONT,
             SimulationConstants.Hopper.FUEL_CAPACITY
         );
     }
-
-
-    
 
     private Pose3d getIntakePivotPose() {
         return SimulationConstants.Intake.PIVOT_OFFSETS.withRotation(new Rotation3d(
@@ -97,9 +104,7 @@ public class Simulation {
             + SimulationConstants.Intake.PIVOT_ARM_LENGTH
             * Math.cos(Math.toRadians(intakeSim.getRelativePosition().getDegrees()));
     }
-    private Pose3d getHopperPose(double armEndX) {
-        return SimulationConstants.Hopper.OFFSETS.applyToPose3d(new Pose3d(armEndX, 0, 0, new Rotation3d()));
-    }
+
     private Pose3d getIntakeRollerPose(double armEndX) {
         return SimulationConstants.Intake.ROLLER_OFFSETS.applyToPose3d(new Pose3d(
             armEndX,
@@ -109,14 +114,14 @@ public class Simulation {
         ));
     }
 
-    public synchronized void update() {
-        if (swerveSim == null) return;
+    public void update() {
+        if (swerveMSim == null) return;
 
-        drivetrain.set(swerveSim.getSimulatedDriveTrainPose());
-        swerve.set(Arrays.stream(swerveSim.getModules())
+        drivetrain.set(swerveMSim.getSimulatedDriveTrainPose());
+        swerve.set(Arrays.stream(swerveMSim.getModules())
             .map(SwerveModuleSimulation::getCurrentState)
             .toArray(SwerveModuleState[]::new));
-        chassis.set(swerveSim.getDriveTrainSimulatedChassisSpeedsFieldRelative());
+        chassis.set(swerveMSim.getDriveTrainSimulatedChassisSpeedsFieldRelative());
 
         fuel.set(ARENA.getGamePiecesArrayByType("Fuel"));
 

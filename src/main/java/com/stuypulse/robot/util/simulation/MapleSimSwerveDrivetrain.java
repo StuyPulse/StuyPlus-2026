@@ -21,9 +21,6 @@ import com.ctre.phoenix6.sim.TalonFXSimState;
 import com.ctre.phoenix6.swerve.SwerveDrivetrain;
 import com.ctre.phoenix6.swerve.SwerveModule;
 import com.ctre.phoenix6.swerve.SwerveModuleConstants;
-import com.stuypulse.robot.subsystems.swerve.CommandSwerveDrivetrain;
-import com.stuypulse.robot.subsystems.swerve.TunerConstants;
-
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.system.plant.DCMotor;
@@ -48,36 +45,10 @@ import org.ironmaple.simulation.motorsims.SimulatedMotorController;
  *
  * <p>It replaces the {@link com.ctre.phoenix6.swerve.SimSwerveDrivetrain} class.
  */
-@SuppressWarnings("unchecked")
 public class MapleSimSwerveDrivetrain {
     private final Pigeon2SimState pigeonSim;
     private final SimSwerveModule[] simModules;
     public final SwerveDriveSimulation mapleSimDrive;
-
-    private final static MapleSimSwerveDrivetrain instance;
-
-    static {
-        instance = new MapleSimSwerveDrivetrain(
-            SimulationConstants.Drivetrain.SIMULATION_STEP_TIME,
-            SimulationConstants.Drivetrain.ROBOT_WEIGHT,
-            SimulationConstants.Drivetrain.LENGTH,
-            SimulationConstants.Drivetrain.WIDTH,
-            DCMotor.getKrakenX60(1),
-            DCMotor.getKrakenX44(1),
-            SimulationConstants.Drivetrain.WHEEL_COF,
-            SimulationConstants.Drivetrain.MODULE_TRANSLATIONS,
-            new Pigeon2(SimulationConstants.Drivetrain.PIGEON_ID),
-            CommandSwerveDrivetrain.getInstance().getModules(),
-            TunerConstants.FrontLeft,
-            TunerConstants.FrontRight,
-            TunerConstants.BackLeft,
-            TunerConstants.BackRight
-            );
-    }
-
-    public static MapleSimSwerveDrivetrain getInstance() {
-        return instance;
-    }
 
     /**
      *
