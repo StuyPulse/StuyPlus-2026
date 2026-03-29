@@ -5,6 +5,10 @@
 
 package com.stuypulse.robot;
 
+import com.stuypulse.robot.commands.vision.SetIMUMode;
+import com.stuypulse.robot.commands.vision.SetMegaTagMode;
+import com.stuypulse.robot.subsystems.vision.LimelightVision.MegaTagMode;
+
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -50,6 +54,8 @@ public class Robot extends TimedRobot {
 
     @Override
     public void disabledInit() {
+        CommandScheduler.getInstance().schedule(new SetIMUMode(1));
+        CommandScheduler.getInstance().schedule(new SetMegaTagMode(MegaTagMode.MEGATAG1));
     }
 
     @Override
@@ -62,6 +68,9 @@ public class Robot extends TimedRobot {
     @Override
     public void autonomousInit() {
         auto = robot.getAutonomousCommand();
+
+        CommandScheduler.getInstance().schedule(new SetIMUMode(4));
+        CommandScheduler.getInstance().schedule(new SetMegaTagMode(MegaTagMode.MEGATAG2));
 
         if (auto != null) {
             auto.schedule();
@@ -80,6 +89,8 @@ public class Robot extends TimedRobot {
 
     @Override
     public void teleopInit() {
+        CommandScheduler.getInstance().schedule(new SetIMUMode(4));
+        CommandScheduler.getInstance().schedule(new SetMegaTagMode(MegaTagMode.MEGATAG2));
 
         if (auto != null) {
             auto.cancel();

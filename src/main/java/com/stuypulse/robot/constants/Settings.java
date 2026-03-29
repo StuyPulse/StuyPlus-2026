@@ -14,9 +14,11 @@ import com.stuypulse.stuylib.network.SmartNumber;
 
 import edu.wpi.first.wpilibj.LEDPattern;
 import edu.wpi.first.wpilibj.util.Color;
-
+import edu.wpi.first.math.VecBuilder;
+import edu.wpi.first.math.Vector;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.numbers.N3;
 import edu.wpi.first.math.util.Units;
 
 /*-
@@ -37,6 +39,12 @@ public interface Settings {
         // SmartBoolean SHOOTER = new SmartBoolean("Enabled Subsystems/Shooter", true);
         SmartBoolean VISION = new SmartBoolean("Enabled Subsystems/Vision", false);
         SmartBoolean SWERVE = new SmartBoolean("Enabled Subsystems/Swerve", false);
+    }
+
+    public interface Vision {
+        public final Vector<N3> MT1_STDEVS = VecBuilder.fill(0.5, 0.5, 1.0);
+        public final Vector<N3> MT2_STDEVS = VecBuilder.fill(0.7, 0.7, 694694.0);
+
     }
 
     public interface Intake {
