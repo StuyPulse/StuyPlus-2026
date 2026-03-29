@@ -157,9 +157,10 @@ public class LimelightVision extends SubsystemBase{
                         Pose2d robotPose = poseEstimate.pose;
                         double timestamp = poseEstimate.timestampSeconds;
 
-                        switch(megaTagMode) {
-                            case MEGATAG1 -> CommandSwerveDrivetrain.getInstance().addVisionMeasurement(robotPose, timestamp, Settings.Vision.MT1_STDEVS);
-                            case MEGATAG2 -> CommandSwerveDrivetrain.getInstance().addVisionMeasurement(robotPose, timestamp, Settings.Vision.MT1_STDEVS);
+                        if (megaTagMode == MegaTagMode.MEGATAG1) {
+                            CommandSwerveDrivetrain.getInstance().addVisionMeasurement(robotPose, timestamp, Settings.Vision.MT1_STDEVS);
+                        } else {
+                            CommandSwerveDrivetrain.getInstance().addVisionMeasurement(robotPose, timestamp, Settings.Vision.MT2_STDEVS);
                         }
                         
                         SmartDashboard.putNumber("Vision/Pose X Component", robotPose.getX());

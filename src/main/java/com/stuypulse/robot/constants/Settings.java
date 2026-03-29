@@ -42,6 +42,7 @@ public interface Settings {
     }
 
     public interface Vision {
+        //TODO: These numbers are temporary, may need testing
         public final Vector<N3> MT1_STDEVS = VecBuilder.fill(0.5, 0.5, 1.0);
         public final Vector<N3> MT2_STDEVS = VecBuilder.fill(0.7, 0.7, 694694.0);
 
