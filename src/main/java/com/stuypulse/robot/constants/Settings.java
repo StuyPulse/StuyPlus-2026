@@ -51,7 +51,8 @@ public interface Settings {
         double INTAKE_DUTY_CYCLE = 0.8;
 
         Rotation2d OUTTAKE_ANGLE = Rotation2d.fromDegrees(150);
-        double OUTTAKE_DUTY_CYCLE = -0.8;
+        double FERRY_DUTY_CYCLE = -1;
+        double OUTPOST_DUTY_CYCLE = -0.8;
 
         Rotation2d IDLE_ANGLE = Rotation2d.fromDegrees(30);
 

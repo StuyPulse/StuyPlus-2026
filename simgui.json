@@ -41,6 +41,9 @@
   "NetworkTables": {
     "transitory": {
       "SmartDashboard": {
+        "Enabled Subsystems": {
+          "open": true
+        },
         "Intake": {
           "open": true
         },

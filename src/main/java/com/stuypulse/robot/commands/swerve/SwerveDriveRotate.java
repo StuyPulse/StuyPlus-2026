@@ -15,6 +15,8 @@ public class SwerveDriveRotate extends InstantCommand{
     public SwerveDriveRotate(Rotation2d rotation) {
         this.swerve = CommandSwerveDrivetrain.getInstance();
         this.rotation = rotation;
+
+        addRequirements(swerve);
     }
 
     @Override

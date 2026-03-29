@@ -5,7 +5,8 @@ import com.pathplanner.lib.path.PathPlannerPath;
 import com.stuypulse.robot.commands.intake.IntakeAgitateOnce;
 import com.stuypulse.robot.commands.intake.IntakeSetIdle;
 import com.stuypulse.robot.commands.intake.IntakeSetIntake;
-import com.stuypulse.robot.commands.intake.IntakeSetOuttake;
+import com.stuypulse.robot.commands.intake.IntakeSetOutpost;
+import com.stuypulse.robot.commands.intake.IntakeSetFerry;
 import com.stuypulse.robot.commands.swerve.driveAligned.SwerveDriveAlignedToHub;
 import com.stuypulse.robot.constants.Settings;
 import com.stuypulse.robot.subsystems.swerve.CommandSwerveDrivetrain;
@@ -24,9 +25,10 @@ public class RightBumpMid extends SequentialCommandGroup{
             CommandSwerveDrivetrain.getInstance().followPathCommand(paths[1]),
 
             CommandSwerveDrivetrain.getInstance().followPathCommand(paths[2]),
-                new WaitCommand(2).deadlineFor(new IntakeSetOuttake())
-        );
+                new WaitCommand(2).deadlineFor(new IntakeSetOutpost()),
 
+            new IntakeSetIntake()
+        );
     }
     
 }

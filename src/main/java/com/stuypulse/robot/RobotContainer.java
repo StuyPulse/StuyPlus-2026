@@ -17,7 +17,8 @@ import com.stuypulse.robot.commands.swerve.SwerveDriveXMode;
 import com.stuypulse.robot.commands.intake.IntakeAgitateOnce;
 import com.stuypulse.robot.commands.intake.IntakeSetIdle;
 import com.stuypulse.robot.commands.intake.IntakeSetIntake;
-import com.stuypulse.robot.commands.intake.IntakeSetOuttake;
+import com.stuypulse.robot.commands.intake.IntakeSetOutpost;
+import com.stuypulse.robot.commands.intake.IntakeSetFerry;
 import com.stuypulse.robot.constants.Field;
 import com.stuypulse.robot.constants.Ports;
 import com.stuypulse.robot.subsystems.intake.Intake;
@@ -73,11 +74,12 @@ public class RobotContainer {
     /***************/
 
     private void configureButtonBindings() {
-        //Outtaking
-        driver.rightBumper()
+        driver.leftTrigger()
+            .onTrue(new IntakeSetFerry());
+        driver.leftBumper()//TODO:This binding is temporary, may change later
+            .onTrue(new IntakeSetOutpost());
+        driver.rightTrigger()    
             .onTrue(new IntakeSetIntake());
-        driver.leftBumper()
-            .onTrue(new IntakeSetOuttake());
         driver.povUp()
             .onTrue(new IntakeSetIdle());
 
@@ -90,14 +92,6 @@ public class RobotContainer {
         
         driver.x()
             .onTrue(new SwerveDriveXMode());
-
-        //Reset Heading
-        // driver.povUp()
-        //     .onTrue(new SwerveDriveResetRotation());
-        
-        //X Mode
-
-
     }
 
     /**************/
