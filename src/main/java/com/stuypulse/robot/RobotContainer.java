@@ -9,9 +9,7 @@ import static edu.wpi.first.units.Units.Rotation;
 
 import com.stuypulse.robot.commands.auton.DoNothingAuton;
 import com.stuypulse.robot.commands.auton.LeftBumpFerry;
-import com.stuypulse.robot.commands.auton.LeftBumpMid;
 import com.stuypulse.robot.commands.auton.RightBumpFerry;
-import com.stuypulse.robot.commands.auton.RightBumpMid;
 import com.stuypulse.robot.commands.swerve.SwerveDriveDrive;
 import com.stuypulse.robot.commands.swerve.SwerveDriveResetRotation;
 import com.stuypulse.robot.commands.swerve.SwerveDriveRotate;
@@ -116,18 +114,6 @@ public class RobotContainer {
         // "R.T. Circle Hub", 
         // "R.N. to H.P.");
         // RightBumpFerry.register(autonChooser);
-
-        // AutonConfig LeftBumpMid = new AutonConfig("Left Bump Mid", LeftBumpMid::new, 
-        // "LB to N", 
-        // "LB Return");
-        // LeftBumpMid.register(autonChooser);
-
-        // AutonConfig RightBumpMid = new AutonConfig("Right Bump Mid", RightBumpMid::new, 
-        // "RB to N", 
-        // "RB Return",
-        // "RB to Outpost");
-        // RightBumpMid.register(autonChooser);
-
 
         autonChooser.addOption("SysID Module Translation Dynamic Forwards", swerve.sysIdDynamic(Direction.kForward));
         autonChooser.addOption("SysID Module Translation Dynamic Backwards", swerve.sysIdDynamic(Direction.kReverse));
