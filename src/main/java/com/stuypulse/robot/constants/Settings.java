@@ -38,7 +38,7 @@ public interface Settings {
         // SmartBoolean LED = new SmartBoolean("Enabled Subsystems/LED", true);
         // SmartBoolean SHOOTER = new SmartBoolean("Enabled Subsystems/Shooter", true);
         SmartBoolean VISION = new SmartBoolean("Enabled Subsystems/Vision", false);
-        SmartBoolean SWERVE = new SmartBoolean("Enabled Subsystems/Swerve", false);
+        SmartBoolean SWERVE = new SmartBoolean("Enabled Subsystems/Swerve", true);
     }
 
     public interface Vision {

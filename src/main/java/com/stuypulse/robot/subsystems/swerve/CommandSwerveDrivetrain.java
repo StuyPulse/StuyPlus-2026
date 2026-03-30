@@ -38,7 +38,13 @@ import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 
 import com.ctre.phoenix6.SignalLogger;
 import com.ctre.phoenix6.Utils;
+import com.ctre.phoenix6.configs.MotorOutputConfigs;
+import com.ctre.phoenix6.configs.TalonFXConfiguration;
+import com.ctre.phoenix6.hardware.CANcoder;
+import com.ctre.phoenix6.hardware.TalonFX;
+import com.ctre.phoenix6.signals.NeutralModeValue;
 import com.ctre.phoenix6.swerve.SwerveDrivetrainConstants;
+import com.ctre.phoenix6.swerve.SwerveModule;
 import com.ctre.phoenix6.swerve.SwerveModule.DriveRequestType;
 import com.ctre.phoenix6.swerve.SwerveModuleConstants;
 import com.ctre.phoenix6.swerve.SwerveRequest;
@@ -446,6 +452,36 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
 
     private final StructPublisher<Pose2d> publisher = NetworkTableInstance.getDefault()
         .getStructTopic("AdvScope/DTPose", Pose2d.struct).publish();
+
+
+    public void onDisabled() {
+        for(SwerveModule<TalonFX, TalonFX, CANcoder> module : getModules()) {
+            TalonFXConfiguration newDriveConfiguration  = new TalonFXConfiguration();
+            module.getDriveMotor().getConfigurator().refresh(newDriveConfiguration);
+            newDriveConfiguration.withMotorOutput(new MotorOutputConfigs().withNeutralMode(NeutralModeValue.Coast));
+            module.getDriveMotor().getConfigurator().apply(newDriveConfiguration);
+
+            TalonFXConfiguration newSteerConfiguration = new TalonFXConfiguration();
+            module.getSteerMotor().getConfigurator().refresh(newSteerConfiguration);
+            newSteerConfiguration.withMotorOutput(new MotorOutputConfigs().withNeutralMode(NeutralModeValue.Coast));
+            module.getSteerMotor().getConfigurator().apply(newSteerConfiguration);
+        }
+    }
+
+    public void onEnabled() {
+        for(SwerveModule<TalonFX, TalonFX, CANcoder> module : getModules()) {
+            TalonFXConfiguration newConfig = new TalonFXConfiguration();
+            module.getDriveMotor().getConfigurator().refresh(newConfig);
+            newConfig.withMotorOutput(new MotorOutputConfigs().withNeutralMode(NeutralModeValue.Brake));
+            module.getDriveMotor().getConfigurator().apply(newConfig);
+
+            TalonFXConfiguration newSteerConfiguration = new TalonFXConfiguration();
+            module.getSteerMotor().getConfigurator().refresh(newSteerConfiguration);
+            newSteerConfiguration.withMotorOutput(new MotorOutputConfigs().withNeutralMode(NeutralModeValue.Brake));
+            module.getSteerMotor().getConfigurator().apply(newSteerConfiguration);
+        }
+    }
+
     @Override
     public void periodic() {
         publisher.set(Robot.isBlue() ? getPose() : Field.transformToOppositeAlliance(getPose()));

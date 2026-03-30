@@ -7,6 +7,7 @@ package com.stuypulse.robot;
 
 import com.stuypulse.robot.commands.vision.SetIMUMode;
 import com.stuypulse.robot.commands.vision.SetMegaTagMode;
+import com.stuypulse.robot.subsystems.swerve.CommandSwerveDrivetrain;
 import com.stuypulse.robot.subsystems.vision.LimelightVision.MegaTagMode;
 
 import edu.wpi.first.wpilibj.DriverStation;
@@ -21,6 +22,7 @@ public class Robot extends TimedRobot {
     private RobotContainer robot;
     private Command auto;
     private static Alliance alliance;
+    private CommandSwerveDrivetrain swerve;
 
     public static boolean isBlue() {
         return alliance == Alliance.Blue;
@@ -33,6 +35,7 @@ public class Robot extends TimedRobot {
     @Override
     public void robotInit() {
         robot = new RobotContainer();
+        swerve = CommandSwerveDrivetrain.getInstance();
     }
 
     @Override
@@ -56,6 +59,8 @@ public class Robot extends TimedRobot {
     public void disabledInit() {
         CommandScheduler.getInstance().schedule(new SetIMUMode(1));
         CommandScheduler.getInstance().schedule(new SetMegaTagMode(MegaTagMode.MEGATAG1));
+
+        swerve.onDisabled();
     }
 
     @Override
@@ -71,6 +76,8 @@ public class Robot extends TimedRobot {
 
         CommandScheduler.getInstance().schedule(new SetIMUMode(4));
         CommandScheduler.getInstance().schedule(new SetMegaTagMode(MegaTagMode.MEGATAG2));
+
+        swerve.onEnabled();
 
         if (auto != null) {
             auto.schedule();
@@ -91,6 +98,8 @@ public class Robot extends TimedRobot {
     public void teleopInit() {
         CommandScheduler.getInstance().schedule(new SetIMUMode(4));
         CommandScheduler.getInstance().schedule(new SetMegaTagMode(MegaTagMode.MEGATAG2));
+
+        swerve.onEnabled();
 
         if (auto != null) {
             auto.cancel();
