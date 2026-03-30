@@ -12,7 +12,7 @@
         "y": 5.04132071542292
       },
       "isLocked": false,
-      "linkedName": "mid neutral right facing"
+      "linkedName": "Mid Neutral"
     },
     {
       "anchor": {
@@ -73,7 +73,7 @@
   "folder": null,
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -90.14487688217345
+    "rotation": 0.8743127834828545
   },
   "useDefaultConstraints": true
 }
