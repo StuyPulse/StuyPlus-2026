@@ -54,19 +54,14 @@ public interface Settings {
         double ROLLER_MAX_VEL = 0;
         Rotation2d PIVOT_INITIAL_ANGLE = Rotation2d.fromDegrees(30);
 
+        Rotation2d IDLE_ANGLE = Rotation2d.fromDegrees(30);
         double IDLE_DUTY_CYCLE = 0;
 
         Rotation2d INTAKE_ANGLE = Rotation2d.fromDegrees(150);
         double INTAKE_DUTY_CYCLE = 0.8;
 
         Rotation2d OUTTAKE_ANGLE = Rotation2d.fromDegrees(150);
-        double FERRY_DUTY_CYCLE = -1;
-        double OUTPOST_DUTY_CYCLE = -0.8;
-
-        Rotation2d IDLE_ANGLE = Rotation2d.fromDegrees(30);
-
-        Rotation2d AGITATE_UP_ANGLE = Rotation2d.fromDegrees(115);
-        Rotation2d AGITATE_DOWN_ANGLE = Rotation2d.fromDegrees(67);
+        double OUTTAKE_DUTY_CYCLE = -1;
 
         double J_KG_METERS_SQUARED = 0.1;
         double PIVOT_MIN_ANGLE = 0.0;

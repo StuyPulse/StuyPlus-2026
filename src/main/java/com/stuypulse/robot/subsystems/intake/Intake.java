@@ -29,10 +29,9 @@ public abstract class Intake extends SubsystemBase {
     public enum IntakeState {
         IDLE(Settings.Intake.IDLE_ANGLE, Settings.Intake.IDLE_DUTY_CYCLE), // (rollers do not run)
         INTAKE(Settings.Intake.INTAKE_ANGLE, Settings.Intake.INTAKE_DUTY_CYCLE), // (sucks in the balls) [pivot down, rollers running]
-        FERRY(Settings.Intake.OUTTAKE_ANGLE, Settings.Intake.FERRY_DUTY_CYCLE), // (trips the balls out) [pivot down, rollers running reverse]
-        OUTPOST(Settings.Intake.OUTTAKE_ANGLE, Settings.Intake.OUTPOST_DUTY_CYCLE),
-        UP(Settings.Intake.AGITATE_UP_ANGLE, Settings.Intake.IDLE_DUTY_CYCLE),
-        DOWN(Settings.Intake.AGITATE_DOWN_ANGLE, Settings.Intake.IDLE_DUTY_CYCLE);
+        OUTTAKE(Settings.Intake.OUTTAKE_ANGLE, Settings.Intake.OUTTAKE_DUTY_CYCLE), // (trips the balls out) [pivot down, rollers running reverse]
+        UP(Settings.Intake.IDLE_ANGLE, Settings.Intake.IDLE_DUTY_CYCLE),
+        DOWN(Settings.Intake.OUTTAKE_ANGLE, Settings.Intake.IDLE_DUTY_CYCLE);
 
         private double dutyCycle;
         private Rotation2d angle;

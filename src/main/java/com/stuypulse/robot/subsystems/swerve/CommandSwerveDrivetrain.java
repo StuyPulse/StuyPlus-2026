@@ -454,33 +454,20 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
         .getStructTopic("AdvScope/DTPose", Pose2d.struct).publish();
 
 
-    public void onDisabled() {
-        for(SwerveModule<TalonFX, TalonFX, CANcoder> module : getModules()) {
-            TalonFXConfiguration newDriveConfiguration  = new TalonFXConfiguration();
-            module.getDriveMotor().getConfigurator().refresh(newDriveConfiguration);
-            newDriveConfiguration.withMotorOutput(new MotorOutputConfigs().withNeutralMode(NeutralModeValue.Coast));
-            module.getDriveMotor().getConfigurator().apply(newDriveConfiguration);
+    // public void onDisabled() {
+    //     for(SwerveModule<TalonFX, TalonFX, CANcoder> module : getModules()) {
+    //         TalonFXConfiguration newDriveConfiguration  = new TalonFXConfiguration();
+    //         module.getDriveMotor().getConfigurator().refresh(newDriveConfiguration);
+    //         newDriveConfiguration.withMotorOutput(new MotorOutputConfigs().withNeutralMode(NeutralModeValue.Coast));
+    //         module.getDriveMotor().getConfigurator().apply(newDriveConfiguration);
+    //     }
+    // }
 
-            TalonFXConfiguration newSteerConfiguration = new TalonFXConfiguration();
-            module.getSteerMotor().getConfigurator().refresh(newSteerConfiguration);
-            newSteerConfiguration.withMotorOutput(new MotorOutputConfigs().withNeutralMode(NeutralModeValue.Coast));
-            module.getSteerMotor().getConfigurator().apply(newSteerConfiguration);
-        }
-    }
-
-    public void onEnabled() {
-        for(SwerveModule<TalonFX, TalonFX, CANcoder> module : getModules()) {
-            TalonFXConfiguration newConfig = new TalonFXConfiguration();
-            module.getDriveMotor().getConfigurator().refresh(newConfig);
-            newConfig.withMotorOutput(new MotorOutputConfigs().withNeutralMode(NeutralModeValue.Brake));
-            module.getDriveMotor().getConfigurator().apply(newConfig);
-
-            TalonFXConfiguration newSteerConfiguration = new TalonFXConfiguration();
-            module.getSteerMotor().getConfigurator().refresh(newSteerConfiguration);
-            newSteerConfiguration.withMotorOutput(new MotorOutputConfigs().withNeutralMode(NeutralModeValue.Brake));
-            module.getSteerMotor().getConfigurator().apply(newSteerConfiguration);
-        }
-    }
+    // public void onEnabled() {
+    //     for(SwerveModule<TalonFX, TalonFX, CANcoder> module : getModules()) {
+    //         module.getDriveMotor().getConfigurator().apply(new TalonFXConfiguration());
+    //     }
+    // }
 
     @Override
     public void periodic() {

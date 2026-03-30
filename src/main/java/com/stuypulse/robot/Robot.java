@@ -36,6 +36,8 @@ public class Robot extends TimedRobot {
     public void robotInit() {
         robot = new RobotContainer();
         swerve = CommandSwerveDrivetrain.getInstance();
+
+        // SmartDashboard.putData(CommandScheduler.getInstance());
     }
 
     @Override
@@ -60,7 +62,7 @@ public class Robot extends TimedRobot {
         CommandScheduler.getInstance().schedule(new SetIMUMode(1));
         CommandScheduler.getInstance().schedule(new SetMegaTagMode(MegaTagMode.MEGATAG1));
 
-        swerve.onDisabled();
+        // swerve.onDisabled();
     }
 
     @Override
@@ -77,7 +79,7 @@ public class Robot extends TimedRobot {
         CommandScheduler.getInstance().schedule(new SetIMUMode(4));
         CommandScheduler.getInstance().schedule(new SetMegaTagMode(MegaTagMode.MEGATAG2));
 
-        swerve.onEnabled();
+        // swerve.onEnabled();
 
         if (auto != null) {
             auto.schedule();
@@ -99,7 +101,7 @@ public class Robot extends TimedRobot {
         CommandScheduler.getInstance().schedule(new SetIMUMode(4));
         CommandScheduler.getInstance().schedule(new SetMegaTagMode(MegaTagMode.MEGATAG2));
 
-        swerve.onEnabled();
+        // swerve.onEnabled();
 
         if (auto != null) {
             auto.cancel();

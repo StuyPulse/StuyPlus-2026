@@ -15,10 +15,10 @@ import com.stuypulse.robot.commands.swerve.SwerveDriveResetRotation;
 import com.stuypulse.robot.commands.swerve.SwerveDriveRotate;
 import com.stuypulse.robot.commands.swerve.SwerveDriveXMode;
 import com.stuypulse.robot.commands.intake.IntakeAgitateOnce;
+import com.stuypulse.robot.commands.intake.IntakeSetDown;
 import com.stuypulse.robot.commands.intake.IntakeSetIdle;
 import com.stuypulse.robot.commands.intake.IntakeSetIntake;
-import com.stuypulse.robot.commands.intake.IntakeSetOutpost;
-import com.stuypulse.robot.commands.intake.IntakeSetFerry;
+import com.stuypulse.robot.commands.intake.IntakeSetOuttake;
 import com.stuypulse.robot.constants.Field;
 import com.stuypulse.robot.constants.Ports;
 import com.stuypulse.robot.subsystems.intake.Intake;
@@ -75,20 +75,22 @@ public class RobotContainer {
 
     private void configureButtonBindings() {
         driver.leftTrigger()
-            .onTrue(new IntakeSetFerry());
-        driver.leftBumper()//TODO:This binding is temporary, may change later
-            .onTrue(new IntakeSetOutpost());
+            .whileTrue(new IntakeSetOuttake());
+        driver.leftTrigger()
+            .onFalse(new IntakeSetIntake());
+        
         driver.rightTrigger()    
             .onTrue(new IntakeSetIntake());
+
+        driver.rightBumper()
+            .onTrue(new IntakeSetDown());
+
         driver.povUp()
             .onTrue(new IntakeSetIdle());
 
         //Turn towards alliance Zone
-        driver.a()
-            .onTrue(new SwerveDriveRotate(Rotation2d.k180deg));
-
-        driver.y()
-            .onTrue(new SwerveDriveRotate(Rotation2d.kZero));
+        // driver.a()
+        //     .whileTrue(new SwerveDriveRotate(driver, Rotation2d.k180deg));
         
         driver.x()
             .onTrue(new SwerveDriveXMode());
