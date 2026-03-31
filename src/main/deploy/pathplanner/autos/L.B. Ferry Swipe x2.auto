@@ -27,12 +27,6 @@
           "data": {
             "pathName": "N to Depot"
           }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "Depot to Outpost"
-          }
         }
       ]
     }
