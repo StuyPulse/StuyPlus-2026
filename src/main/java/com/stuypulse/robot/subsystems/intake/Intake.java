@@ -69,8 +69,7 @@ public abstract class Intake extends SubsystemBase {
 
     @Override
     public void periodic() {
-        SmartDashboard.putString("Intake/State", getState().name());
-        SmartDashboard.putString("States/Intake", getState().name());
+        SmartDashboard.putString("Intake/Intake State", getState().name());
         SmartDashboard.putNumber("Intake/Roller Target Duty Cycle", getState().getTargetDutyCycle());
         
         if (Settings.DEBUG_MODE) {
