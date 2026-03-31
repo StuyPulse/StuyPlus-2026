@@ -8,8 +8,8 @@
         "layouts": [
           {
             "title": "Enabled Subsystems",
-            "x": 1190.0,
-            "y": 70.0,
+            "x": 1120.0,
+            "y": 0.0,
             "width": 280.0,
             "height": 280.0,
             "type": "List Layout",
@@ -18,20 +18,16 @@
             },
             "children": [
               {
-                "title": "Intake",
+                "title": "Vision",
                 "x": 0.0,
                 "y": 0.0,
                 "width": 140.0,
                 "height": 140.0,
-                "type": "Boolean Box",
+                "type": "Toggle Switch",
                 "properties": {
-                  "topic": "SmartDashboard/Enabled Subsystems/Intake",
+                  "topic": "SmartDashboard/Enabled Subsystems/Vision",
                   "period": 0.06,
-                  "data_type": "boolean",
-                  "true_color": 4283215696,
-                  "false_color": 4294198070,
-                  "true_icon": "None",
-                  "false_icon": "None"
+                  "data_type": "boolean"
                 }
               },
               {
@@ -40,32 +36,24 @@
                 "y": 0.0,
                 "width": 140.0,
                 "height": 140.0,
-                "type": "Boolean Box",
+                "type": "Toggle Switch",
                 "properties": {
                   "topic": "SmartDashboard/Enabled Subsystems/Swerve",
                   "period": 0.06,
-                  "data_type": "boolean",
-                  "true_color": 4283215696,
-                  "false_color": 4294198070,
-                  "true_icon": "None",
-                  "false_icon": "None"
+                  "data_type": "boolean"
                 }
               },
               {
-                "title": "Vision",
+                "title": "Intake",
                 "x": 0.0,
                 "y": 0.0,
                 "width": 140.0,
                 "height": 140.0,
-                "type": "Boolean Box",
+                "type": "Toggle Switch",
                 "properties": {
-                  "topic": "SmartDashboard/Enabled Subsystems/Vision",
+                  "topic": "SmartDashboard/Enabled Subsystems/Intake",
                   "period": 0.06,
-                  "data_type": "boolean",
-                  "true_color": 4283215696,
-                  "false_color": 4294198070,
-                  "true_icon": "None",
-                  "false_icon": "None"
+                  "data_type": "boolean"
                 }
               }
             ]
@@ -94,53 +82,9 @@
             }
           },
           {
-            "title": "Pivot At Tol?",
-            "x": 980.0,
-            "y": 70.0,
-            "width": 140.0,
-            "height": 70.0,
-            "type": "Boolean Box",
-            "properties": {
-              "topic": "/SmartDashboard/Intake/Pivot At Tolerance?",
-              "period": 0.06,
-              "data_type": "boolean",
-              "true_color": 4283215696,
-              "false_color": 4294198070,
-              "true_icon": "None",
-              "false_icon": "None"
-            }
-          },
-          {
-            "title": "Pivot State",
-            "x": 840.0,
-            "y": 70.0,
-            "width": 140.0,
-            "height": 70.0,
-            "type": "Text Display",
-            "properties": {
-              "topic": "/SmartDashboard/Intake/Pivot State",
-              "period": 0.06,
-              "data_type": "string",
-              "show_submit_button": false
-            }
-          },
-          {
-            "title": "Shift",
-            "x": 0.0,
-            "y": 560.0,
-            "width": 280.0,
-            "height": 140.0,
-            "type": "Large Text Display",
-            "properties": {
-              "topic": "/SmartDashboard/FMSUtil/Field State",
-              "period": 0.06,
-              "data_type": "string"
-            }
-          },
-          {
             "title": "Is Active Shift?",
             "x": 280.0,
-            "y": 560.0,
+            "y": 420.0,
             "width": 140.0,
             "height": 140.0,
             "type": "Boolean Box",
@@ -156,8 +100,8 @@
           },
           {
             "title": "Time Left In Shift",
-            "x": 280.0,
-            "y": 420.0,
+            "x": 0.0,
+            "y": 560.0,
             "width": 280.0,
             "height": 140.0,
             "type": "Match Time",
@@ -172,8 +116,8 @@
           },
           {
             "title": "Set Megatag 2",
-            "x": 770.0,
-            "y": 420.0,
+            "x": 560.0,
+            "y": 560.0,
             "width": 280.0,
             "height": 140.0,
             "type": "Command",
@@ -186,7 +130,7 @@
           },
           {
             "title": "Set Megatag 1",
-            "x": 1050.0,
+            "x": 560.0,
             "y": 420.0,
             "width": 280.0,
             "height": 140.0,
@@ -216,9 +160,9 @@
           },
           {
             "title": "Autonomous",
-            "x": 560.0,
-            "y": 420.0,
-            "width": 210.0,
+            "x": 280.0,
+            "y": 560.0,
+            "width": 280.0,
             "height": 140.0,
             "type": "ComboBox Chooser",
             "properties": {
@@ -229,8 +173,8 @@
           },
           {
             "title": "Camera Is Enabled",
-            "x": 630.0,
-            "y": 560.0,
+            "x": 420.0,
+            "y": 420.0,
             "width": 140.0,
             "height": 140.0,
             "type": "Boolean Box",
@@ -242,6 +186,65 @@
               "false_color": 4294198070,
               "true_icon": "None",
               "false_icon": "None"
+            }
+          },
+          {
+            "title": "Intake State",
+            "x": 840.0,
+            "y": 0.0,
+            "width": 140.0,
+            "height": 140.0,
+            "type": "Text Display",
+            "properties": {
+              "topic": "/SmartDashboard/Intake/Intake State",
+              "period": 0.06,
+              "data_type": "string",
+              "show_submit_button": false
+            }
+          },
+          {
+            "title": "Pivot At Target Angle",
+            "x": 980.0,
+            "y": 0.0,
+            "width": 140.0,
+            "height": 140.0,
+            "type": "Boolean Box",
+            "properties": {
+              "topic": "/SmartDashboard/Intake/Pivot At Tolerance?",
+              "period": 0.06,
+              "data_type": "boolean",
+              "true_color": 4283215696,
+              "false_color": 4294198070,
+              "true_icon": "None",
+              "false_icon": "None"
+            }
+          },
+          {
+            "title": "Pivot Angle (deg)",
+            "x": 840.0,
+            "y": 140.0,
+            "width": 140.0,
+            "height": 140.0,
+            "type": "Text Display",
+            "properties": {
+              "topic": "/SmartDashboard/Intake/Current Angle (deg)",
+              "period": 0.5,
+              "data_type": "double",
+              "show_submit_button": false
+            }
+          },
+          {
+            "title": "Roller Duty Cycle",
+            "x": 840.0,
+            "y": 280.0,
+            "width": 140.0,
+            "height": 70.0,
+            "type": "Text Display",
+            "properties": {
+              "topic": "/SmartDashboard/Intake/Pivot State",
+              "period": 0.06,
+              "data_type": "string",
+              "show_submit_button": false
             }
           }
         ]
@@ -256,7 +259,7 @@
             "x": 1120.0,
             "y": 0.0,
             "width": 280.0,
-            "height": 420.0,
+            "height": 280.0,
             "type": "List Layout",
             "properties": {
               "label_position": "TOP"
@@ -276,58 +279,6 @@
                 }
               },
               {
-                "title": "Climber",
-                "x": 0.0,
-                "y": 0.0,
-                "width": 166.0,
-                "height": 166.0,
-                "type": "Toggle Switch",
-                "properties": {
-                  "topic": "SmartDashboard/Enabled Subsystems/Climber-Hopper Is Enabled",
-                  "period": 0.06,
-                  "data_type": "boolean"
-                }
-              },
-              {
-                "title": "Handoff",
-                "x": 0.0,
-                "y": 0.0,
-                "width": 166.0,
-                "height": 166.0,
-                "type": "Toggle Switch",
-                "properties": {
-                  "topic": "SmartDashboard/Enabled Subsystems/Handoff Is Enabled",
-                  "period": 0.06,
-                  "data_type": "boolean"
-                }
-              },
-              {
-                "title": "Hood",
-                "x": 0.0,
-                "y": 0.0,
-                "width": 166.0,
-                "height": 166.0,
-                "type": "Toggle Switch",
-                "properties": {
-                  "topic": "SmartDashboard/Enabled Subsystems/Hood Is Enabled",
-                  "period": 0.06,
-                  "data_type": "boolean"
-                }
-              },
-              {
-                "title": "Spindexer",
-                "x": 0.0,
-                "y": 0.0,
-                "width": 166.0,
-                "height": 166.0,
-                "type": "Toggle Switch",
-                "properties": {
-                  "topic": "SmartDashboard/Enabled Subsystems/Spindexer Is Enabled",
-                  "period": 0.06,
-                  "data_type": "boolean"
-                }
-              },
-              {
                 "title": "Swerve",
                 "x": 0.0,
                 "y": 0.0,
@@ -341,59 +292,7 @@
                 }
               },
               {
-                "title": "Shooter",
-                "x": 0.0,
-                "y": 0.0,
-                "width": 166.0,
-                "height": 166.0,
-                "type": "Toggle Switch",
-                "properties": {
-                  "topic": "SmartDashboard/Enabled Subsystems/Shooter Is Enabled",
-                  "period": 0.06,
-                  "data_type": "boolean"
-                }
-              },
-              {
-                "title": "Turret",
-                "x": 0.0,
-                "y": 0.0,
-                "width": 166.0,
-                "height": 166.0,
-                "type": "Toggle Switch",
-                "properties": {
-                  "topic": "SmartDashboard/Enabled Subsystems/Turret Is Enabled",
-                  "period": 0.06,
-                  "data_type": "boolean"
-                }
-              },
-              {
-                "title": "Back Limelight",
-                "x": 0.0,
-                "y": 0.0,
-                "width": 166.0,
-                "height": 166.0,
-                "type": "Toggle Switch",
-                "properties": {
-                  "topic": "SmartDashboard/Enabled Subsystems/Back Limelight Is Enabled",
-                  "period": 0.06,
-                  "data_type": "boolean"
-                }
-              },
-              {
-                "title": "Left Limelight",
-                "x": 0.0,
-                "y": 0.0,
-                "width": 166.0,
-                "height": 166.0,
-                "type": "Toggle Switch",
-                "properties": {
-                  "topic": "SmartDashboard/Enabled Subsystems/Left Limelight Is Enabled",
-                  "period": 0.06,
-                  "data_type": "boolean"
-                }
-              },
-              {
-                "title": "Right Limelight",
+                "title": "vision",
                 "x": 0.0,
                 "y": 0.0,
                 "width": 166.0,
@@ -431,42 +330,11 @@
             }
           },
           {
-            "title": "Handoff At Tol?",
+            "title": "Pivot At Target Angle",
             "x": 980.0,
             "y": 0.0,
             "width": 140.0,
-            "height": 70.0,
-            "type": "Boolean Box",
-            "properties": {
-              "topic": "/SmartDashboard/Handoff/At Tolerance?",
-              "period": 0.06,
-              "data_type": "boolean",
-              "true_color": 4283215696,
-              "false_color": 4294198070,
-              "true_icon": "None",
-              "false_icon": "None"
-            }
-          },
-          {
-            "title": "Handoff State",
-            "x": 840.0,
-            "y": 0.0,
-            "width": 140.0,
-            "height": 70.0,
-            "type": "Text Display",
-            "properties": {
-              "topic": "/SmartDashboard/Handoff/State",
-              "period": 0.06,
-              "data_type": "string",
-              "show_submit_button": false
-            }
-          },
-          {
-            "title": "Pivot At Tol?",
-            "x": 980.0,
-            "y": 70.0,
-            "width": 140.0,
-            "height": 70.0,
+            "height": 140.0,
             "type": "Boolean Box",
             "properties": {
               "topic": "/SmartDashboard/Intake/Pivot At Tolerance?",
@@ -479,9 +347,9 @@
             }
           },
           {
-            "title": "Pivot State",
+            "title": "Roller Duty Cycle",
             "x": 840.0,
-            "y": 70.0,
+            "y": 280.0,
             "width": 140.0,
             "height": 70.0,
             "type": "Text Display",
@@ -490,99 +358,6 @@
               "period": 0.06,
               "data_type": "string",
               "show_submit_button": false
-            }
-          },
-          {
-            "title": "Hood State",
-            "x": 840.0,
-            "y": 140.0,
-            "width": 140.0,
-            "height": 70.0,
-            "type": "Text Display",
-            "properties": {
-              "topic": "/SmartDashboard/Superstructure/Hood/State",
-              "period": 0.06,
-              "data_type": "string",
-              "show_submit_button": false
-            }
-          },
-          {
-            "title": "Shooter State",
-            "x": 840.0,
-            "y": 210.0,
-            "width": 140.0,
-            "height": 70.0,
-            "type": "Text Display",
-            "properties": {
-              "topic": "/SmartDashboard/Superstructure/Shooter/State",
-              "period": 0.06,
-              "data_type": "string",
-              "show_submit_button": false
-            }
-          },
-          {
-            "title": "Turret State",
-            "x": 840.0,
-            "y": 280.0,
-            "width": 140.0,
-            "height": 70.0,
-            "type": "Text Display",
-            "properties": {
-              "topic": "/SmartDashboard/Superstructure/Turret/State",
-              "period": 0.06,
-              "data_type": "string",
-              "show_submit_button": false
-            }
-          },
-          {
-            "title": "Hood At Tol?",
-            "x": 980.0,
-            "y": 140.0,
-            "width": 140.0,
-            "height": 70.0,
-            "type": "Boolean Box",
-            "properties": {
-              "topic": "/SmartDashboard/Superstructure/Hood At Tolerance?",
-              "period": 0.06,
-              "data_type": "boolean",
-              "true_color": 4283215696,
-              "false_color": 4294198070,
-              "true_icon": "None",
-              "false_icon": "None"
-            }
-          },
-          {
-            "title": "Shooter At Tol?",
-            "x": 980.0,
-            "y": 210.0,
-            "width": 140.0,
-            "height": 70.0,
-            "type": "Boolean Box",
-            "properties": {
-              "topic": "/SmartDashboard/Superstructure/Shooter At Tolerance?",
-              "period": 0.06,
-              "data_type": "boolean",
-              "true_color": 4283215696,
-              "false_color": 4294198070,
-              "true_icon": "None",
-              "false_icon": "None"
-            }
-          },
-          {
-            "title": "Turret At Tol?",
-            "x": 980.0,
-            "y": 280.0,
-            "width": 140.0,
-            "height": 70.0,
-            "type": "Boolean Box",
-            "properties": {
-              "topic": "/SmartDashboard/Superstructure/Turret At Tolerance?",
-              "period": 0.06,
-              "data_type": "boolean",
-              "true_color": 4283215696,
-              "false_color": 4294198070,
-              "true_icon": "None",
-              "false_icon": "None"
             }
           },
           {
@@ -649,20 +424,6 @@
             }
           },
           {
-            "title": "Handoff Reverse",
-            "x": 1120.0,
-            "y": 420.0,
-            "width": 280.0,
-            "height": 280.0,
-            "type": "Command",
-            "properties": {
-              "topic": "/SmartDashboard/Robot/Handoff Reverse",
-              "period": 0.06,
-              "show_type": false,
-              "maximize_button_space": true
-            }
-          },
-          {
             "title": "Intake Reverse",
             "x": 560.0,
             "y": 420.0,
@@ -677,69 +438,10 @@
             }
           },
           {
-            "title": "Spindexer Reverse",
+            "title": "Pivot Angle (deg)",
             "x": 840.0,
-            "y": 420.0,
-            "width": 280.0,
-            "height": 280.0,
-            "type": "Command",
-            "properties": {
-              "topic": "/SmartDashboard/Robot/Spindexer Reverse",
-              "period": 0.06,
-              "show_type": false,
-              "maximize_button_space": true
-            }
-          },
-          {
-            "title": "Spin At Tol?",
-            "x": 980.0,
-            "y": 350.0,
+            "y": 140.0,
             "width": 140.0,
-            "height": 70.0,
-            "type": "Boolean Box",
-            "properties": {
-              "topic": "/SmartDashboard/Spindexer/At Tolerance",
-              "period": 0.06,
-              "data_type": "boolean",
-              "true_color": 4283215696,
-              "false_color": 4294198070,
-              "true_icon": "None",
-              "false_icon": "None"
-            }
-          },
-          {
-            "title": "Spin State",
-            "x": 840.0,
-            "y": 350.0,
-            "width": 140.0,
-            "height": 70.0,
-            "type": "Text Display",
-            "properties": {
-              "topic": "/SmartDashboard/Spindexer/State",
-              "period": 0.06,
-              "data_type": "string",
-              "show_submit_button": false
-            }
-          },
-          {
-            "title": "Seed Hood Relative Encoder At Upper Hardstop",
-            "x": 0.0,
-            "y": 700.0,
-            "width": 280.0,
-            "height": 140.0,
-            "type": "Command",
-            "properties": {
-              "topic": "/SmartDashboard/Robot/Seed Hood Relative Encoder At Upper Hardstop",
-              "period": 0.5,
-              "show_type": true,
-              "maximize_button_space": false
-            }
-          },
-          {
-            "title": "Current Intake Angle (deg)",
-            "x": 770.0,
-            "y": 700.0,
-            "width": 210.0,
             "height": 140.0,
             "type": "Text Display",
             "properties": {
@@ -766,16 +468,16 @@
             }
           },
           {
-            "title": "Current Hood Angle",
-            "x": 280.0,
-            "y": 700.0,
-            "width": 210.0,
+            "title": "Intake State",
+            "x": 840.0,
+            "y": 0.0,
+            "width": 140.0,
             "height": 140.0,
             "type": "Text Display",
             "properties": {
-              "topic": "/SmartDashboard/Superstructure/Hood/Current Angle (deg)",
-              "period": 0.5,
-              "data_type": "double",
+              "topic": "/SmartDashboard/Intake/Intake State",
+              "period": 0.06,
+              "data_type": "string",
               "show_submit_button": false
             }
           }
