@@ -65,7 +65,7 @@ public class LimelightVision extends SubsystemBase{
         setMegaTagMode(MegaTagMode.MEGATAG1);
     }
 
-    public void setTagWhitelist(int... ids) {
+    public void setTagWhitelist(int[] ids) {
         for (String name : names) {
             LimelightHelpers.SetFiducialIDFiltersOverride(name, ids);
         }
@@ -152,14 +152,30 @@ public class LimelightVision extends SubsystemBase{
                             : LimelightHelpers.getBotPoseEstimate_wpiRed_MegaTag2(limelightName);
                     }
                     
+                    boolean notNull = false;
+                    boolean withinAngularVelocityTolerance = false;
+                    boolean withinInvalidPositionTolerance = false;
+
                     // Adding to pose estimator
                     if (poseEstimate != null && poseEstimate.tagCount > 0) {
+                        notNull = true;
+
+                        if (poseEstimate.pose.getTranslation().getDistance(Settings.Vision.INVALID_POSITION) < Settings.Vision.INVALID_POSITION_TOLERANCE_M) {
+                            withinInvalidPositionTolerance = true;
+                        }
+
+                        if (CommandSwerveDrivetrain.getInstance().getChassisSpeeds().omegaRadiansPerSecond < Settings.Vision.MAX_ANGULAR_VELOCITY_RAD_SEC) {
+                            withinAngularVelocityTolerance = true;
+                        }
+
+                        Boolean isValidPose = notNull && withinAngularVelocityTolerance && withinInvalidPositionTolerance;
+
                         Pose2d robotPose = poseEstimate.pose;
                         double timestamp = poseEstimate.timestampSeconds;
 
-                        if (megaTagMode == MegaTagMode.MEGATAG1) {
+                        if (megaTagMode == MegaTagMode.MEGATAG1 && isValidPose) {
                             CommandSwerveDrivetrain.getInstance().addVisionMeasurement(robotPose, timestamp, Settings.Vision.MT1_STDEVS);
-                        } else {
+                        } else if (megaTagMode == MegaTagMode.MEGATAG2 && isValidPose){
                             CommandSwerveDrivetrain.getInstance().addVisionMeasurement(robotPose, timestamp, Settings.Vision.MT2_STDEVS);
                         }
                         
@@ -177,7 +193,7 @@ public class LimelightVision extends SubsystemBase{
                     SmartDashboard.putNumber("Vision/Limelight Robot Yaw", LimelightHelpers.getIMUData(limelightName).robotYaw);
                     // this is just the yaw of the internal imu 
                     SmartDashboard.putNumber("Vision/Limelight Yaw", LimelightHelpers.getIMUData(limelightName).Yaw);
-
+                    SmartDashboard.putBoolean("Vision/Has at least 2 tags", poseEstimate.tagCount >= 2);
                 }
             }
         }

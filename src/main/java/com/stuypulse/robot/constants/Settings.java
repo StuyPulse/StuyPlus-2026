@@ -18,6 +18,7 @@ import edu.wpi.first.math.VecBuilder;
 import edu.wpi.first.math.Vector;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.numbers.N3;
 import edu.wpi.first.math.util.Units;
 
@@ -45,6 +46,10 @@ public interface Settings {
         //TODO: These numbers are temporary, may need testing
         public final Vector<N3> MT1_STDEVS = VecBuilder.fill(0.5, 0.5, 1.0);
         public final Vector<N3> MT2_STDEVS = VecBuilder.fill(0.7, 0.7, 694694.0);
+
+        public final Translation2d INVALID_POSITION = new Translation2d(8.2705, 4.0345);
+        public final double INVALID_POSITION_TOLERANCE_M = 0.05;
+        public final double MAX_ANGULAR_VELOCITY_RAD_SEC = 2 * Math.PI;
 
     }
 

@@ -37,7 +37,6 @@ import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
 public class RobotContainer {
     // Gamepads
     public final CommandXboxController driver = new CommandXboxController(Ports.Gamepad.DRIVER);
-    //public final Gamepad driver = new AutoGamepad(Ports.Gamepad.DRIVER);
     
     // Subsystem
 
@@ -88,9 +87,9 @@ public class RobotContainer {
         driver.povUp()
             .onTrue(new IntakeSetIdle());
 
-        //Turn towards alliance Zone
-        // driver.a()
-        //     .whileTrue(new SwerveDriveRotate(driver, Rotation2d.k180deg));
+        // Turn towards alliance Zone
+        driver.a()
+            .whileTrue(new SwerveDriveRotate(driver, Rotation2d.k180deg));
         
         driver.x()
             .onTrue(new SwerveDriveXMode());

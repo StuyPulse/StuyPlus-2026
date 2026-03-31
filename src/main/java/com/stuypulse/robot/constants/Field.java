@@ -176,6 +176,8 @@ public interface Field {
     public final int[] BLUE_TOWER_TAG_IDS = {31, 32};
     public final int[] RED_HP_TAG_IDS = {13, 14};
     public final int[] BLUE_HP_TAG_IDS = {29, 30};
+    public final int[] ALL_TAGS = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32};
+
 
     public final Pose2d blueHubCenter = new Pose2d(Units.inchesToMeters(158.60), Units.inchesToMeters(158.84), new Rotation2d());
 
