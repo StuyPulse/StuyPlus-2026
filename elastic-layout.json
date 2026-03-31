@@ -452,22 +452,6 @@
             }
           },
           {
-            "title": "Match Time",
-            "x": 0.0,
-            "y": 420.0,
-            "width": 280.0,
-            "height": 140.0,
-            "type": "Match Time",
-            "properties": {
-              "topic": "/SmartDashboard/Robot/Match Time",
-              "period": 0.5,
-              "data_type": "double",
-              "time_display_mode": "Minutes and Seconds",
-              "red_start_time": 20,
-              "yellow_start_time": 30
-            }
-          },
-          {
             "title": "Intake State",
             "x": 840.0,
             "y": 0.0,
@@ -479,6 +463,22 @@
               "period": 0.06,
               "data_type": "string",
               "show_submit_button": false
+            }
+          },
+          {
+            "title": "Match Time",
+            "x": 0.0,
+            "y": 420.0,
+            "width": 280.0,
+            "height": 140.0,
+            "type": "Match Time",
+            "properties": {
+              "topic": "/SmartDashboard/Match Time",
+              "period": 0.06,
+              "data_type": "double",
+              "time_display_mode": "Minutes and Seconds",
+              "red_start_time": 20,
+              "yellow_start_time": 30
             }
           }
         ]
@@ -623,6 +623,13 @@
             }
           }
         ]
+      }
+    },
+    {
+      "name": "Tab 4",
+      "grid_layout": {
+        "layouts": [],
+        "containers": []
       }
     }
   ]

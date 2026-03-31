@@ -101,20 +101,20 @@ public class RobotContainer {
     public void configureAutons() {
         autonChooser.addOption("Do Nothing", new DoNothingAuton());
 
-        // AutonConfig LeftBumpFerry = new AutonConfig("Left Bump Ferry", LeftBumpFerry::new, 
-        // "Left Bump to Neutral", 
-        // "N to L.T.", 
-        // "L.T. Circle Hub", 
-        // "N to Depot", 
-        // "Depot to H.P.");
-        // LeftBumpFerry.register(autonChooser);
+        AutonConfig LeftBumpFerry = new AutonConfig("Left Bump Ferry", LeftBumpFerry::new, 
+        "Left Bump to Neutral", 
+        "N to L.T.", 
+        "L.T. Circle Hub", 
+        "N to Depot", 
+        "Depot to H.P.");
+        LeftBumpFerry.register(autonChooser);
 
-        // AutonConfig RightBumpFerry = new AutonConfig("Right Bump Ferry", RightBumpFerry::new, 
-        // "R.B. to R.N.", 
-        // "N to R.T.", 
-        // "R.T. Circle Hub", 
-        // "R.N. to H.P.");
-        // RightBumpFerry.register(autonChooser);
+        AutonConfig RightBumpFerry = new AutonConfig("Right Bump Ferry", RightBumpFerry::new, 
+        "R.B. to R.N.", 
+        "N to R.T.", 
+        "R.T. Circle Hub", 
+        "R.N. to H.P.");
+        RightBumpFerry.register(autonChooser);
 
         autonChooser.addOption("SysID Module Translation Dynamic Forwards", swerve.sysIdDynamic(Direction.kForward));
         autonChooser.addOption("SysID Module Translation Dynamic Backwards", swerve.sysIdDynamic(Direction.kReverse));

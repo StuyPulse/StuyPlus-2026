@@ -52,6 +52,7 @@ public class Robot extends TimedRobot {
         }
 
         SmartDashboard.putString("Bot/Alliance", alliance.name());
+        SmartDashboard.putNumber("Match Time", DriverStation.getMatchTime());
     }
 
     /*********************/
@@ -109,6 +110,15 @@ public class Robot extends TimedRobot {
         if (auto != null) {
             auto.cancel();
         }
+
+        //TODO: Finish later(log if we won auton)
+        // Boolean autonWon;
+
+        // if (DriverStation.getGameSpecificMessage().equals()) {
+
+        // }
+
+        // SmartDashboard.putBoolean("Bot/Won Auton", DriverStation.get)
     }
 
     @Override
