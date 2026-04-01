@@ -53,6 +53,7 @@ public interface Field {
     }
 
     // ZONE COORDINATES
+    public static final Pose2d outpost = new Pose2d(0, Units.inchesToMeters(26.22), new Rotation2d());
 
     public static final Pose2d allianceZone = new Pose2d(Units.inchesToMeters(182.11), WIDTH, new Rotation2d());
 
