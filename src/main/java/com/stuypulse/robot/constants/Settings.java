@@ -63,7 +63,7 @@ public interface Settings {
         double IDLE_DUTY_CYCLE = 0;
 
         Rotation2d INTAKE_ANGLE = Rotation2d.fromDegrees(150);
-        double INTAKE_DUTY_CYCLE = 0.8;
+        double INTAKE_DUTY_CYCLE = 1;
 
         Rotation2d OUTTAKE_ANGLE = Rotation2d.fromDegrees(150);
         double OUTTAKE_DUTY_CYCLE = -1;
