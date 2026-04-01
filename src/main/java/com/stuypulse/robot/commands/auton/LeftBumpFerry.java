@@ -28,7 +28,7 @@ public class LeftBumpFerry extends SequentialCommandGroup{
             CommandSwerveDrivetrain.getInstance().followPathCommand(paths[2])
                 .alongWith(new IntakeSetIntake()),
             
-            CommandSwerveDrivetrain.getInstance().followPathCommand(paths[3]),
+            CommandSwerveDrivetrain.getInstance().followPathCommand(paths[3])
         );
     }
     

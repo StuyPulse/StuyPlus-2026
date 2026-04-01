@@ -330,19 +330,11 @@
             }
           },
           {
-<<<<<<< Updated upstream
             "title": "Pivot At Target Angle",
             "x": 980.0,
             "y": 0.0,
             "width": 140.0,
             "height": 140.0,
-=======
-            "title": "Pivot At Tol?",
-            "x": 980.0,
-            "y": 70.0,
-            "width": 140.0,
-            "height": 70.0,
->>>>>>> Stashed changes
             "type": "Boolean Box",
             "properties": {
               "topic": "/SmartDashboard/Intake/Pivot At Tolerance?",
@@ -415,23 +407,6 @@
             }
           },
           {
-            "title": "Won Auto?",
-            "x": 420.0,
-            "y": 560.0,
-            "width": 140.0,
-            "height": 140.0,
-            "type": "Boolean Box",
-            "properties": {
-              "topic": "/SmartDashboard/FMSUtil/No Auto Winner Data",
-              "period": 0.06,
-              "data_type": "boolean",
-              "true_color": 4283215696,
-              "false_color": 4294198070,
-              "true_icon": "None",
-              "false_icon": "None"
-            }
-          },
-          {
             "title": "Intake Reverse",
             "x": 560.0,
             "y": 420.0,
@@ -446,31 +421,10 @@
             }
           },
           {
-<<<<<<< Updated upstream
             "title": "Pivot Angle (deg)",
             "x": 840.0,
             "y": 140.0,
             "width": 140.0,
-=======
-            "title": "Seed Hood Relative Encoder At Upper Hardstop",
-            "x": 0.0,
-            "y": 700.0,
-            "width": 280.0,
-            "height": 140.0,
-            "type": "Command",
-            "properties": {
-              "topic": "/SmartDashboard/Robot/Seed Hood Relative Encoder At Upper Hardstop",
-              "period": 0.5,
-              "show_type": true,
-              "maximize_button_space": false
-            }
-          },
-          {
-            "title": "Current Intake Angle (deg)",
-            "x": 770.0,
-            "y": 700.0,
-            "width": 210.0,
->>>>>>> Stashed changes
             "height": 140.0,
             "type": "Text Display",
             "properties": {
@@ -508,6 +462,23 @@
               "time_display_mode": "Minutes and Seconds",
               "red_start_time": 20,
               "yellow_start_time": 30
+            }
+          },
+          {
+            "title": "Auton Won",
+            "x": 420.0,
+            "y": 560.0,
+            "width": 140.0,
+            "height": 140.0,
+            "type": "Boolean Box",
+            "properties": {
+              "topic": "/SmartDashboard/Auton Won",
+              "period": 0.06,
+              "data_type": "boolean",
+              "true_color": 4283215696,
+              "false_color": 4294198070,
+              "true_icon": "None",
+              "false_icon": "None"
             }
           }
         ]

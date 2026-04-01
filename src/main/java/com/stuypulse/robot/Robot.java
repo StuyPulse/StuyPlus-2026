@@ -112,14 +112,9 @@ public class Robot extends TimedRobot {
             auto.cancel();
         }
 
-        //TODO: Finish later(log if we won auton)
-        // Boolean autonWon;
+        Boolean autonWon = DriverStation.getGameSpecificMessage().equals(String.valueOf(alliance.name().charAt(0)).toUpperCase());
 
-        // if (DriverStation.getGameSpecificMessage().equals()) {
-
-        // }
-
-        // SmartDashboard.putBoolean("Bot/Won Auton", DriverStation.get)
+        SmartDashboard.putBoolean("Auton Won", autonWon);
     }
 
     @Override

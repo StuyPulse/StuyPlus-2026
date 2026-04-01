@@ -106,12 +106,12 @@ public class RobotContainer {
     public void configureAutons() {
         autonChooser.addOption("Do Nothing", new DoNothingAuton());
 
-        // AutonConfig LeftBumpFerry = new AutonConfig("Left Bump Ferry", LeftBumpFerry::new, 
-        // "Left Bump to Neutral", 
-        // "N to L.T.", 
-        // "L.T. Circle Hub", 
-        // "N to Depot"=);
-        // LeftBumpFerry.register(autonChooser);
+        AutonConfig LeftBumpFerry = new AutonConfig("Left Bump Ferry", LeftBumpFerry::new, 
+        "Left Bump to Neutral", 
+        "N to L.T.", 
+        "L.T. Circle Hub", 
+        "N to Depot");
+        LeftBumpFerry.register(autonChooser);
 
         AutonConfig RightBumpFerry = new AutonConfig("Right Bump Ferry", RightBumpFerry::new, 
         "R.B. to R.N.", 
