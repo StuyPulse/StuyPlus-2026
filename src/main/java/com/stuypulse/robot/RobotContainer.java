@@ -27,6 +27,7 @@ import com.stuypulse.robot.subsystems.swerve.CommandSwerveDrivetrain;
 import com.stuypulse.stuylib.input.Gamepad;
 import com.stuypulse.stuylib.input.gamepads.AutoGamepad;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -73,12 +74,16 @@ public class RobotContainer {
     /***************/
 
     private void configureButtonBindings() {
-        driver.leftTrigger()
+        //Trigger buttons did not work for some reason so I had to do this
+        Trigger leftTrigger = new Trigger(() -> driver.getLeftTriggerAxis() > 0.5);
+        Trigger rightTrigger = new Trigger(() -> driver.getRightTriggerAxis() > 0.5);
+
+        leftTrigger
             .whileTrue(new IntakeSetOuttake());
-        driver.leftTrigger()
+        leftTrigger
             .onFalse(new IntakeSetIntake());
         
-        driver.rightTrigger()    
+        rightTrigger    
             .onTrue(new IntakeSetIntake());
 
         driver.rightBumper()

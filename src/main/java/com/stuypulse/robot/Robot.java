@@ -53,6 +53,7 @@ public class Robot extends TimedRobot {
 
         SmartDashboard.putString("Bot/Alliance", alliance.name());
         SmartDashboard.putNumber("Match Time", DriverStation.getMatchTime());
+        // SmartDashboard.putNumber("Right Trigger Axis", robot.driver.getRightTriggerAxis());
     }
 
     /*********************/

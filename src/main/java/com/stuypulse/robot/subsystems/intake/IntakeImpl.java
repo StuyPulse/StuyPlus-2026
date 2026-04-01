@@ -5,6 +5,7 @@ import java.util.Optional;
 import com.ctre.phoenix6.controls.Follower;
 import com.ctre.phoenix6.controls.DutyCycleOut;
 import com.ctre.phoenix6.controls.MotionMagicVoltage;
+import com.ctre.phoenix6.controls.VoltageOut;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.MotorAlignmentValue;
 import com.stuypulse.robot.constants.Motors;
@@ -70,12 +71,21 @@ public class IntakeImpl extends Intake {
 
     @Override
     public void periodic() {
+        Boolean pushingDown = false;
         super.periodic();
         if (EnabledSubsystems.INTAKE.get()) {
             if (pivotVoltageOverride.isPresent()) {
                 intakePivotMotor.setVoltage(pivotVoltageOverride.get());
             } else {
-                intakePivotMotor.setControl(pivotController.withPosition(getState().getTargetAngle().getRotations()));
+                if((getState() == IntakeState.INTAKE || getState() == IntakeState.OUTTAKE || getState() == IntakeState.DOWN) 
+                && intakePivotMotor.getPosition().getValueAsDouble() > Settings.Intake.PUSHDOWN_THRESHOLD.getRotations()) {
+                    intakePivotMotor.setControl(new VoltageOut(Settings.Intake.PUSHDOWN_VOLTAGE));
+                    pushingDown = true;
+                } else {
+                    intakePivotMotor.setControl(pivotController.withPosition(getState().getTargetAngle().getRotations()));
+                    pushingDown = false;
+                }
+
                 intakeRollerMotorLeft.setControl(rollerController.withOutput(getState().getTargetDutyCycle()));
             }
         } else {
@@ -85,6 +95,7 @@ public class IntakeImpl extends Intake {
 
         SmartDashboard.putNumber("Intake/Roller Current (amps)", intakeRollerMotorLeft.getStatorCurrent().getValueAsDouble());
         SmartDashboard.putNumber("Intake/Roller Voltage", intakeRollerMotorLeft.getMotorVoltage().getValueAsDouble());
+        SmartDashboard.putBoolean("Intake/Pushing Down", pushingDown);
 
         SmartDashboard.putNumber("Intake/Roller Duty Cycle", intakeRollerMotorLeft.getDutyCycle().getValueAsDouble());
 
