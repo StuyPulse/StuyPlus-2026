@@ -28,6 +28,7 @@ import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.math.numbers.N1;
 import edu.wpi.first.math.numbers.N3;
 import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.networktables.StructArrayPublisher;
 import edu.wpi.first.networktables.StructPublisher;
 import edu.wpi.first.wpilibj.Notifier;
 import edu.wpi.first.wpilibj.RobotController;
@@ -430,6 +431,19 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
             .withRotationalRate(robotSpeeds.omegaRadiansPerSecond));
     }
 
+    public void setXMode() {
+        SwerveModuleState[] states = new SwerveModuleState[] {
+            new SwerveModuleState(0, Rotation2d.fromDegrees(225)),
+            new SwerveModuleState(0, Rotation2d.fromDegrees(315)),
+            new SwerveModuleState(0, Rotation2d.fromDegrees(45)),
+            new SwerveModuleState(0, Rotation2d.fromDegrees(135))
+        };
+
+        for (int i = 0; i < getModules().length; i++) {
+            getModules()[i].apply(new SwerveModule.ModuleRequest().withState(states[i]));
+        }
+    }
+
     public void drive(Vector2D velocity, double rotation) {
         ChassisSpeeds speeds = ChassisSpeeds.fromFieldRelativeSpeeds(
             Robot.isBlue() ? velocity.y : -velocity.y, 
@@ -450,8 +464,12 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
         ));
     }
 
-    private final StructPublisher<Pose2d> publisher = NetworkTableInstance.getDefault()
+    private final StructPublisher<Pose2d> posePublisher = NetworkTableInstance.getDefault()
         .getStructTopic("AdvScope/DTPose", Pose2d.struct).publish();
+    private final StructPublisher<ChassisSpeeds> chassisPublisher = NetworkTableInstance.getDefault()
+        .getStructTopic("AdvScope/ChassisSpeeds", ChassisSpeeds.struct).publish();
+    private final StructArrayPublisher<SwerveModuleState> modulePublisher = NetworkTableInstance.getDefault()
+        .getStructArrayTopic("AdvScope/SwerveStates", SwerveModuleState.struct).publish();
 
 
     // public void onDisabled() {
@@ -471,7 +489,11 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
 
     @Override
     public void periodic() {
-        publisher.set(Robot.isBlue() ? getPose() : Field.transformToOppositeAlliance(getPose()));
+        if (Settings.DEBUG_MODE) {
+            posePublisher.set(Robot.isBlue() ? getPose() : Field.transformToOppositeAlliance(getPose()));
+            chassisPublisher.set(getChassisSpeeds());
+            modulePublisher.set(getModuleStates());
+        }
 
         SmartDashboard.putNumber("Swerve/Pose/X", getPose().getX());
         SmartDashboard.putNumber("Swerve/Pose/Y", getPose().getY());
