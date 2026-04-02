@@ -57,11 +57,14 @@ public interface Settings {
         double PIVOT_LENGTH = 1.0; // TODO: get actual values
         double ROLLER_MAX_ACCEL = 0;
         double ROLLER_MAX_VEL = 0;
-        Rotation2d PIVOT_INITIAL_ANGLE = Rotation2d.fromDegrees(30);
+        double PIVOT_STALL_VOLTAGE = 55; // TODO: set
+        double PIVOT_STALL_DEBOUNCE_SEC = 1;
+        Rotation2d PIVOT_INITIAL_ANGLE = Rotation2d.fromDegrees(0);
 
-        Rotation2d IDLE_ANGLE = Rotation2d.fromDegrees(30);
+        Rotation2d IDLE_ANGLE = Rotation2d.fromDegrees(0);
+        Rotation2d PIVOT_DOWN_ANGLE = Rotation2d.fromDegrees(122);
 
-        Rotation2d PIVOT_DOWN_ANGLE = Rotation2d.fromDegrees(150);
+        double HOMING_VOLTAGE = -3;
 
         double IDLE_DUTY_CYCLE = 0;
         double INTAKE_DUTY_CYCLE = 1;
@@ -78,8 +81,8 @@ public interface Settings {
 
         Rotation2d ANGLE_TOLERANCE = Rotation2d.fromDegrees(0.5); // degrees
 
-        Rotation2d PUSHDOWN_THRESHOLD = Rotation2d.fromDegrees(140); //TODO:Temporary, needs testing
-        double PUSHDOWN_VOLTAGE = 3;
+        Rotation2d PUSHDOWN_THRESHOLD = Rotation2d.fromDegrees(107); //TODO:Temporary, needs testing
+        double PUSHDOWN_VOLTAGE = 1;
     }
 
     // public interface Feeder {

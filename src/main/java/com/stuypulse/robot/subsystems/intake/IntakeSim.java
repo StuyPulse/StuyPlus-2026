@@ -49,9 +49,9 @@ public class IntakeSim extends Intake {
         );
 
         pivotController = new PIDController(
-            Gains.Intake.kP,
-            Gains.Intake.kI,
-            Gains.Intake.kD
+            Gains.Intake.kP.get(),
+            Gains.Intake.kI.get(),
+            Gains.Intake.kD.get()
         );
 
         rollerController = new DutyCycleOut(getState().getTargetDutyCycle());
@@ -87,6 +87,15 @@ public class IntakeSim extends Intake {
     @Override
     public double getRollerRPM() {
         return intakeRollerMotor.getAngularVelocityRPM();
+    }
+
+    @Override
+    public void setPivotZero() {
+        // TODO: make
+    }
+    
+    @Override
+    public void setPivotZeroAtBottom() {
     }
 
     public void setPivotVoltageOverride(Optional<Double> pivotVoltageOverride) {

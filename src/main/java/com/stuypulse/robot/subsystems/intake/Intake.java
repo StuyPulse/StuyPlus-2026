@@ -1,6 +1,8 @@
 package com.stuypulse.robot.subsystems.intake;
 
 import com.stuypulse.robot.Robot;
+import com.stuypulse.robot.commands.intake.IntakeSetZero;
+import com.stuypulse.robot.commands.intake.IntakeSetZeroAtBottom;
 import com.stuypulse.robot.constants.Settings;
 import com.stuypulse.robot.util.RobotVisualizer;
 
@@ -20,6 +22,9 @@ public abstract class Intake extends SubsystemBase {
          else {
             instance = new IntakeSim();
         }
+        
+        SmartDashboard.putData("Set Pivot 0", new IntakeSetZero());
+        SmartDashboard.putData("Set Pivot 0 at Bottom", new IntakeSetZeroAtBottom());
     }
     
     public static Intake getInstance() {
@@ -31,7 +36,8 @@ public abstract class Intake extends SubsystemBase {
         INTAKE(Settings.Intake.PIVOT_DOWN_ANGLE, Settings.Intake.INTAKE_DUTY_CYCLE), // (sucks in the balls) [pivot down, rollers running]
         OUTTAKE(Settings.Intake.PIVOT_DOWN_ANGLE, Settings.Intake.OUTTAKE_DUTY_CYCLE), // (trips the balls out) [pivot down, rollers running reverse]
         UP(Settings.Intake.IDLE_ANGLE, Settings.Intake.IDLE_DUTY_CYCLE),
-        DOWN(Settings.Intake.PIVOT_DOWN_ANGLE, Settings.Intake.IDLE_DUTY_CYCLE);
+        DOWN(Settings.Intake.PIVOT_DOWN_ANGLE, Settings.Intake.IDLE_DUTY_CYCLE),
+        HOMING(Settings.Intake.PIVOT_INITIAL_ANGLE, Settings.Intake.IDLE_DUTY_CYCLE);
 
         private double dutyCycle;
         private Rotation2d angle;
@@ -65,12 +71,15 @@ public abstract class Intake extends SubsystemBase {
     public abstract Rotation2d getRelativePosition();
     public abstract boolean atAngle();
     public abstract double getRollerRPM();
+    public abstract void setPivotZero();
+    public abstract void setPivotZeroAtBottom();
     public abstract SysIdRoutine getIntakeSysIdRoutine();
 
     @Override
     public void periodic() {
         SmartDashboard.putString("Intake/Intake State", getState().name());
         SmartDashboard.putNumber("Intake/Roller Target Duty Cycle", getState().getTargetDutyCycle());
+        SmartDashboard.putNumber("Intake/Target Angle", getState().getTargetAngle().getDegrees());
         
         if (Settings.DEBUG_MODE) {
             if (Settings.EnabledSubsystems.INTAKE.get()) {

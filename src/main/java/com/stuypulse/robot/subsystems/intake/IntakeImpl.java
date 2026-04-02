@@ -2,9 +2,12 @@ package com.stuypulse.robot.subsystems.intake;
 
 import java.util.Optional;
 
+import javax.swing.text.Position;
+
 import com.ctre.phoenix6.controls.Follower;
 import com.ctre.phoenix6.controls.DutyCycleOut;
 import com.ctre.phoenix6.controls.MotionMagicVoltage;
+import com.ctre.phoenix6.controls.PositionVoltage;
 import com.ctre.phoenix6.controls.VoltageOut;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.MotorAlignmentValue;
@@ -13,6 +16,8 @@ import com.stuypulse.robot.constants.Ports;
 import com.stuypulse.robot.constants.Settings;
 import com.stuypulse.robot.constants.Settings.EnabledSubsystems;
 import com.stuypulse.robot.util.SysId;
+import com.stuypulse.stuylib.streams.booleans.BStream;
+import com.stuypulse.stuylib.streams.booleans.filters.BDebounce;
 
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -25,8 +30,10 @@ public class IntakeImpl extends Intake {
     private final TalonFX intakeRollerMotorRight;
 
     private final DutyCycleOut rollerController;
-    private final MotionMagicVoltage pivotController;
+    private final PositionVoltage pivotController;
+    private final Follower followerController;
 
+    private final BStream pivotStalling;
     private Optional<Double> pivotVoltageOverride;
 
     public IntakeImpl() {
@@ -40,11 +47,16 @@ public class IntakeImpl extends Intake {
         Motors.Intake.LEFT_ROLLER_CONFIG.configure(intakeRollerMotorLeft);
         Motors.Intake.RIGHT_ROLLER_CONFIG.configure(intakeRollerMotorRight);
 
-        intakeRollerMotorRight.setControl(new Follower(Ports.Intake.MOTOR_INTAKE_ROLLER_LEFT, MotorAlignmentValue.Aligned));
-        
-        rollerController = new DutyCycleOut(getState().getTargetDutyCycle());
-        pivotController = new MotionMagicVoltage(getState().getTargetAngle().getRotations());
 
+        rollerController = new DutyCycleOut(getState().getTargetDutyCycle());
+        pivotController = new PositionVoltage(getState().getTargetAngle().getRotations());
+        followerController = new Follower(Ports.Intake.MOTOR_INTAKE_ROLLER_LEFT, MotorAlignmentValue.Opposed);
+
+        intakeRollerMotorRight.setControl(followerController);
+
+        pivotStalling = BStream.create(() -> intakePivotMotor.getSupplyCurrent().getValueAsDouble() > Settings.Intake.PIVOT_STALL_VOLTAGE)
+            .filtered(new BDebounce.Both(Settings.Intake.PIVOT_STALL_DEBOUNCE_SEC));
+        
         pivotVoltageOverride = Optional.empty();
     }
 
@@ -70,6 +82,20 @@ public class IntakeImpl extends Intake {
     }
 
     @Override
+    public void setPivotZero() {
+        intakePivotMotor.setPosition(0);
+    }
+
+    @Override
+    public void setPivotZeroAtBottom() {
+        intakePivotMotor.setPosition(122);
+    }
+
+    private boolean pivotIsStalling() {
+        return pivotStalling.get();
+    }
+
+    @Override
     public void periodic() {
         Boolean pushingDown = false;
         super.periodic();
@@ -77,16 +103,27 @@ public class IntakeImpl extends Intake {
             if (pivotVoltageOverride.isPresent()) {
                 intakePivotMotor.setVoltage(pivotVoltageOverride.get());
             } else {
+                Boolean pivotAboveThreshold = intakePivotMotor.getPosition().getValueAsDouble() > Settings.Intake.PUSHDOWN_THRESHOLD.getRotations();
+
                 if((getState() == IntakeState.INTAKE || getState() == IntakeState.OUTTAKE || getState() == IntakeState.DOWN) 
-                && intakePivotMotor.getPosition().getValueAsDouble() > Settings.Intake.PUSHDOWN_THRESHOLD.getRotations()) {
-                    intakePivotMotor.setControl(new VoltageOut(Settings.Intake.PUSHDOWN_VOLTAGE));
+                && pivotAboveThreshold) {
+                    intakePivotMotor.setControl(new VoltageOut(0));
+
                     pushingDown = true;
+                } else if (getState() == IntakeState.HOMING) {
+                    // intakePivotMotor.setControl(new VoltageOut(Settings.Intake.HOMING_VOLTAGE));
+                    intakePivotMotor.setPosition(122);
                 } else {
                     intakePivotMotor.setControl(pivotController.withPosition(getState().getTargetAngle().getRotations()));
                     pushingDown = false;
                 }
 
-                intakeRollerMotorLeft.setControl(rollerController.withOutput(getState().getTargetDutyCycle()));
+                if (pivotAboveThreshold) {
+                    intakeRollerMotorLeft.setControl(rollerController.withOutput(getState().getTargetDutyCycle()));
+                } else {
+                    intakeRollerMotorLeft.setControl(rollerController.withOutput(0));
+                }
+
             }
         } else {
             intakePivotMotor.stopMotor();

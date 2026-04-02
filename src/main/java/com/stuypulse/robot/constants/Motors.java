@@ -35,10 +35,10 @@ public interface Motors {
     /** Classes to store all of the values a motor needs */
     public interface Intake {
         TalonFXConfig PIVOT_CONFIG = new TalonFXConfig()
-            .withCurrentLimitAmps(50)
+            .withCurrentLimitAmps(15)
             .withInvertedValue(InvertedValue.CounterClockwise_Positive) // not necessarily true, get inverted val
             .withNeutralMode(NeutralModeValue.Brake)
-            .withPIDConstants(Gains.Intake.kP, Gains.Intake.kI, Gains.Intake.kD, 0)
+            .withPIDConstants(Gains.Intake.kP.get(), Gains.Intake.kI.get(), Gains.Intake.kD.get(), 0)
             .withSensorToMechanismRatio(Settings.Intake.PIVOT_GEAR_RATIO);
         
         TalonFXConfig LEFT_ROLLER_CONFIG = new TalonFXConfig() // TODO: apply later
