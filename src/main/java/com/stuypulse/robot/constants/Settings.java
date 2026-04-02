@@ -52,7 +52,7 @@ public interface Settings {
         double PIVOT_LENGTH = 1.0; // TODO: get actual values
         double ROLLER_MAX_ACCEL = 0;
         double ROLLER_MAX_VEL = 0;
-        double PIVOT_STALL_VOLTAGE = 55; // TODO: set
+        double PIVOT_STALL_CURRENT = 55; // TODO: set
         double PIVOT_STALL_DEBOUNCE_SEC = 1;
         Rotation2d PIVOT_INITIAL_ANGLE = Rotation2d.fromDegrees(0);
 
@@ -74,7 +74,7 @@ public interface Settings {
         double RAMP_RATE = 2;
         double STEP_VOLTAGE = 6; // volts
 
-        Rotation2d ANGLE_TOLERANCE = Rotation2d.fromDegrees(0.5); // degrees
+        Rotation2d ANGLE_TOLERANCE = Rotation2d.fromDegrees(0.5); 
 
         Rotation2d PUSHDOWN_THRESHOLD = Rotation2d.fromDegrees(107); //TODO:Temporary, needs testing
         double PUSHDOWN_VOLTAGE = 1;
@@ -86,7 +86,7 @@ public interface Settings {
     // }
 
     // public interface LED {
-    //     int LED_LENGTH = 60; // TODO: ask Plus-ME for LED Length
+    //     int LED_LENGTH = 60; 
  
     //     //shooter
     //     LEDPattern SHOOTING = LEDPattern.solid(Color.kOrange);

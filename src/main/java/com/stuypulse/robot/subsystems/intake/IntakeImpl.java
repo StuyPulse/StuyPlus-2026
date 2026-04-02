@@ -54,7 +54,7 @@ public class IntakeImpl extends Intake {
 
         intakeRollerMotorRight.setControl(followerController);
 
-        pivotStalling = BStream.create(() -> intakePivotMotor.getSupplyCurrent().getValueAsDouble() > Settings.Intake.PIVOT_STALL_VOLTAGE)
+        pivotStalling = BStream.create(() -> intakePivotMotor.getSupplyCurrent().getValueAsDouble() > Settings.Intake.PIVOT_STALL_CURRENT)
             .filtered(new BDebounce.Both(Settings.Intake.PIVOT_STALL_DEBOUNCE_SEC));
         
         pivotVoltageOverride = Optional.empty();
