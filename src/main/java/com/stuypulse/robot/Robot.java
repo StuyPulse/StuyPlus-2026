@@ -23,7 +23,6 @@ public class Robot extends TimedRobot {
     private RobotContainer robot;
     private Command auto;
     private static Alliance alliance;
-    private CommandSwerveDrivetrain swerve;
 
     public static boolean isBlue() {
         return alliance == Alliance.Blue;
@@ -36,24 +35,26 @@ public class Robot extends TimedRobot {
     @Override
     public void robotInit() {
         robot = new RobotContainer();
-        swerve = CommandSwerveDrivetrain.getInstance();
-
-        // SmartDashboard.putData(CommandScheduler.getInstance());
-    }
-
-    @Override
-    public void robotPeriodic() {
-        CommandScheduler.getInstance().run();
 
         if (DriverStation.getAlliance().isPresent()) {
             alliance = DriverStation.getAlliance().get();
         } else {
             alliance = Alliance.Blue;
         }
+        // SmartDashboard.putData(CommandScheduler.getInstance());
+    }
+
+    @Override
+    public void driverStationConnected() {
+        alliance = DriverStation.getAlliance().get();
+    }
+
+    @Override
+    public void robotPeriodic() {
+        CommandScheduler.getInstance().run();
 
         SmartDashboard.putString("Bot/Alliance", alliance.name());
         SmartDashboard.putNumber("Match Time", DriverStation.getMatchTime());
-        // SmartDashboard.putNumber("Right Trigger Axis", robot.driver.getRightTriggerAxis());
     }
 
     /*********************/
@@ -64,8 +65,6 @@ public class Robot extends TimedRobot {
     public void disabledInit() {
         CommandScheduler.getInstance().schedule(new SetIMUMode(1));
         CommandScheduler.getInstance().schedule(new SetMegaTagMode(MegaTagMode.MEGATAG1));
-
-        // swerve.onDisabled();
     }
 
     @Override
@@ -79,14 +78,12 @@ public class Robot extends TimedRobot {
     public void autonomousInit() {
         auto = robot.getAutonomousCommand();
 
-        CommandScheduler.getInstance().schedule(new SetIMUMode(4));
         CommandScheduler.getInstance().schedule(new SetMegaTagMode(MegaTagMode.MEGATAG2));
+        CommandScheduler.getInstance().schedule(new SetIMUMode(4));
         CommandScheduler.getInstance().schedule(new WhitelistAllTags());
 
-        // swerve.onEnabled();
-
         if (auto != null) {
-            auto.schedule();
+            CommandScheduler.getInstance().schedule(auto);
         }
     }
 
@@ -102,11 +99,9 @@ public class Robot extends TimedRobot {
 
     @Override
     public void teleopInit() {
-        CommandScheduler.getInstance().schedule(new SetIMUMode(4));
         CommandScheduler.getInstance().schedule(new SetMegaTagMode(MegaTagMode.MEGATAG2));
+        CommandScheduler.getInstance().schedule(new SetIMUMode(4));
         CommandScheduler.getInstance().schedule(new WhitelistAllTags());
-
-        // swerve.onEnabled();
 
         if (auto != null) {
             auto.cancel();

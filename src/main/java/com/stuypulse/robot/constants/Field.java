@@ -53,7 +53,8 @@ public interface Field {
     }
 
     // ZONE COORDINATES
-    public static final Pose2d outpost = new Pose2d(0, Units.inchesToMeters(26.22), new Rotation2d());
+    //TODO: Temporary, need to get actual distance from outpost when intake pivot is deployed
+    public static final Pose2d outpost = new Pose2d(Units.inchesToMeters(25), Units.inchesToMeters(26.22), Rotation2d.k180deg);
 
     public static final Pose2d allianceZone = new Pose2d(Units.inchesToMeters(182.11), WIDTH, new Rotation2d());
 

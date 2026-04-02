@@ -14,6 +14,7 @@ import com.stuypulse.robot.commands.swerve.SwerveDriveDrive;
 import com.stuypulse.robot.commands.swerve.SwerveDriveResetRotation;
 import com.stuypulse.robot.commands.swerve.SwerveDriveRotate;
 import com.stuypulse.robot.commands.swerve.SwerveDriveXMode;
+import com.stuypulse.robot.commands.swerve.PIDtoPose.SwerveDrivePIDToPose;
 import com.stuypulse.robot.commands.intake.IntakeAgitateOnce;
 import com.stuypulse.robot.commands.intake.IntakeSetDown;
 import com.stuypulse.robot.commands.intake.IntakeSetIdle;
@@ -82,6 +83,9 @@ public class RobotContainer {
             .whileTrue(new IntakeSetOuttake());
         leftTrigger
             .onFalse(new IntakeSetIntake());
+
+        driver.leftBumper()
+            .onTrue(new IntakeSetIdle());
         
         rightTrigger    
             .onTrue(new IntakeSetIntake());
@@ -89,13 +93,19 @@ public class RobotContainer {
         driver.rightBumper()
             .onTrue(new IntakeSetDown());
 
-        driver.povUp()
-            .onTrue(new IntakeSetIdle());
-
-        // Turn towards alliance Zone
+        //Rotate towards alliance Zone
+        //Top Left Paddle
         driver.a()
             .whileTrue(new SwerveDriveRotate(driver, Rotation2d.k180deg));
+
+        //Auto Drive to Outpost
+        //Top Right Paddle
+        driver.b()
+            .whileTrue(new SwerveDrivePIDToPose(Field.outpost).andThen(new IntakeSetOuttake()));
+        driver.b() 
+            .onFalse(new IntakeSetIntake());
         
+        //Bottom Left Paddle
         driver.x()
             .onTrue(new SwerveDriveXMode());
     }

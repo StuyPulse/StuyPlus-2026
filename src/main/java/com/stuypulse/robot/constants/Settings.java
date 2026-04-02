@@ -60,12 +60,11 @@ public interface Settings {
         Rotation2d PIVOT_INITIAL_ANGLE = Rotation2d.fromDegrees(30);
 
         Rotation2d IDLE_ANGLE = Rotation2d.fromDegrees(30);
+
+        Rotation2d PIVOT_DOWN_ANGLE = Rotation2d.fromDegrees(150);
+
         double IDLE_DUTY_CYCLE = 0;
-
-        Rotation2d INTAKE_ANGLE = Rotation2d.fromDegrees(150);
         double INTAKE_DUTY_CYCLE = 1;
-
-        Rotation2d OUTTAKE_ANGLE = Rotation2d.fromDegrees(150);
         double OUTTAKE_DUTY_CYCLE = -1;
 
         double J_KG_METERS_SQUARED = 0.1;
@@ -79,7 +78,6 @@ public interface Settings {
 
         Rotation2d ANGLE_TOLERANCE = Rotation2d.fromDegrees(0.5); // degrees
 
-        
         Rotation2d PUSHDOWN_THRESHOLD = Rotation2d.fromDegrees(140); //TODO:Temporary, needs testing
         double PUSHDOWN_VOLTAGE = -3;
     }
@@ -115,7 +113,7 @@ public interface Settings {
     //     double RAMP_RATE = 0.25;
     //     double STEP_VOLTAGE = 900;
 
-    //     double CORNER = 2700; // TODO: Test RPM
+    //     double CORNER = 2700; 
     //     double HUB = 2500;
     // }
 
