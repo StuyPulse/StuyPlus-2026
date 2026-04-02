@@ -5,11 +5,9 @@ import java.util.function.Supplier;
 
 import com.ctre.phoenix6.swerve.SwerveRequest;
 import com.stuypulse.robot.constants.Gains.Swerve.Alignment;
-import com.stuypulse.robot.constants.Settings;
 import com.stuypulse.robot.constants.Settings.Driver.Drive;
 import com.stuypulse.robot.constants.Settings.Swerve;
 import com.stuypulse.robot.subsystems.swerve.CommandSwerveDrivetrain;
-import com.stuypulse.stuylib.input.Gamepad;
 import com.stuypulse.stuylib.math.Vector2D;
 import com.stuypulse.stuylib.streams.vectors.VStream;
 import com.stuypulse.stuylib.streams.vectors.filters.VDeadZone;

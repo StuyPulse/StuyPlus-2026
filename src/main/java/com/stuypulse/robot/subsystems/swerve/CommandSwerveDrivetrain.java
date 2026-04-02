@@ -431,19 +431,6 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
             .withRotationalRate(robotSpeeds.omegaRadiansPerSecond));
     }
 
-    public void setXMode() {
-        SwerveModuleState[] states = new SwerveModuleState[] {
-            new SwerveModuleState(0, Rotation2d.fromDegrees(225)),
-            new SwerveModuleState(0, Rotation2d.fromDegrees(315)),
-            new SwerveModuleState(0, Rotation2d.fromDegrees(45)),
-            new SwerveModuleState(0, Rotation2d.fromDegrees(135))
-        };
-
-        for (int i = 0; i < getModules().length; i++) {
-            getModules()[i].apply(new SwerveModule.ModuleRequest().withState(states[i]));
-        }
-    }
-
     public void drive(Vector2D velocity, double rotation) {
         ChassisSpeeds speeds = ChassisSpeeds.fromFieldRelativeSpeeds(
             Robot.isBlue() ? velocity.y : -velocity.y, 

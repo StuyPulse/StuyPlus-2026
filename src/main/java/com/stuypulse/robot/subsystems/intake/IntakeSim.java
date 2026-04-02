@@ -2,12 +2,9 @@ package com.stuypulse.robot.subsystems.intake;
 
 import java.util.Optional;
 
-import com.ctre.phoenix6.controls.DutyCycleOut;
 import com.stuypulse.robot.constants.Gains;
 import com.stuypulse.robot.constants.Settings;
-import com.stuypulse.robot.subsystems.swerve.CommandSwerveDrivetrain;
 import com.stuypulse.robot.util.SysId;
-import com.stuypulse.stuylib.math.SLMath;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Pose3d;
@@ -26,7 +23,6 @@ import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 public class IntakeSim extends Intake {
     private final FlywheelSim intakeRollerMotor;
     private final PIDController pivotController;
-    private final DutyCycleOut rollerController;
     private final SingleJointedArmSim sim;
 
     private Optional<Double> pivotVoltageOverride;
@@ -53,8 +49,6 @@ public class IntakeSim extends Intake {
             Gains.Intake.kI,
             Gains.Intake.kD
         );
-
-        rollerController = new DutyCycleOut(getState().getTargetDutyCycle());
 
         sim = new SingleJointedArmSim(
             LinearSystemId.createDCMotorSystem(

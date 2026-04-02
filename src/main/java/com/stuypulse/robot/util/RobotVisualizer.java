@@ -64,7 +64,7 @@ public class RobotVisualizer {
         bumperRoot.append(bumper);
 
         // // Feeder
-        // feederRoot = canvas.getRoot("Feeder Root", 45, 15); // TODO: figure out positioning of each root
+        // feederRoot = canvas.getRoot("Feeder Root", 45, 15);
         // feederSpokes = createSpokes(numSpokes, feederRoot, "Feeder Spoke", 6.7, 2, spokeColor);
 
         // // Shooter
@@ -81,7 +81,7 @@ public class RobotVisualizer {
             4,
             new Color8Bit(Color.kGray)
         );
-        intakeRoot.append(intakePivot); // TODO: Find a better way to do all of this spoke/roller business
+        intakeRoot.append(intakePivot);
 
         MechanismLigament2d intakeTopRollers = new MechanismLigament2d("Intake Top Rollers", 4, -20, 4, new Color8Bit(Color.kGray));
         MechanismLigament2d intakeMiddleRollers = new MechanismLigament2d("Intake Middle Rollers", 4, 150, 4, new Color8Bit(Color.kGray));
