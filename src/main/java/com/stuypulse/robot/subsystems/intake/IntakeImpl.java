@@ -117,6 +117,8 @@ public class IntakeImpl extends Intake {
             Boolean pivotAboveThreshold = intakePivotMotor.getPosition()
                     .getValueAsDouble() > Settings.Intake.PUSHDOWN_THRESHOLD.getRotations();
 
+
+
             intakePivotMotor.setControl(switch (getState()) {
                 case INTAKE, OUTTAKE, DOWN -> {
                     pushingDown = true;
@@ -125,7 +127,7 @@ public class IntakeImpl extends Intake {
                 }
                 case HOMING -> {
                     if (pivotStalling()) {
-                        intakePivotMotor.setPosition(0);
+                        setPivotZero();
                         setState(IntakeState.IDLE);
                     }
                     yield new VoltageOut(Settings.Intake.HOMING_VOLTAGE);
