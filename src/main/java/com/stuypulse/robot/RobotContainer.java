@@ -5,17 +5,13 @@
 
 package com.stuypulse.robot;
 
-import static edu.wpi.first.units.Units.Rotation;
-
 import com.stuypulse.robot.commands.auton.DoNothingAuton;
-import com.stuypulse.robot.commands.auton.LeftBumpFerry;
-import com.stuypulse.robot.commands.auton.RightBumpFerry;
 import com.stuypulse.robot.commands.swerve.SwerveDriveDrive;
 import com.stuypulse.robot.commands.swerve.SwerveDriveResetRotation;
 import com.stuypulse.robot.commands.swerve.SwerveDriveRotate;
 import com.stuypulse.robot.commands.swerve.SwerveDriveXMode;
 import com.stuypulse.robot.commands.swerve.PIDtoPose.SwerveDrivePIDToPose;
-import com.stuypulse.robot.commands.intake.IntakeAgitateOnce;
+import com.stuypulse.robot.commands.intake.IntakeAgitateWhileOuttaking;
 import com.stuypulse.robot.commands.intake.IntakeSetDown;
 import com.stuypulse.robot.commands.intake.IntakeSetHoming;
 import com.stuypulse.robot.commands.intake.IntakeSetIdle;
@@ -24,13 +20,9 @@ import com.stuypulse.robot.commands.intake.IntakeSetOuttake;
 import com.stuypulse.robot.constants.Field;
 import com.stuypulse.robot.constants.Ports;
 import com.stuypulse.robot.subsystems.intake.Intake;
-import com.stuypulse.robot.util.PathUtil.AutonConfig;
 import com.stuypulse.robot.subsystems.swerve.CommandSwerveDrivetrain;
-import com.stuypulse.stuylib.input.Gamepad;
-import com.stuypulse.stuylib.input.gamepads.AutoGamepad;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
-import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -92,7 +84,7 @@ public class RobotContainer {
             .onTrue(new IntakeSetIntake());
 
         driver.povDown()
-            .whileTrue(new IntakeAgitateOnce());
+            .whileTrue(new IntakeAgitateWhileOuttaking()).onFalse(new IntakeSetIntake());
 
         driver.povUp()
             .onTrue(new SwerveDriveResetRotation());

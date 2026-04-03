@@ -54,6 +54,8 @@ public interface Settings {
         double ROLLER_MAX_VEL = 0;
         double PIVOT_STALL_CURRENT = 55; // TODO: set
         double PIVOT_STALL_DEBOUNCE_SEC = 1;
+        double ROLLER_STALL_CURRENT = 55; // TODO: set
+        double ROLLER_STALL_DEBOUNCE_SEC = 1;
         Rotation2d PIVOT_INITIAL_ANGLE = Rotation2d.fromDegrees(0);
 
         Rotation2d IDLE_ANGLE = Rotation2d.fromDegrees(0);

@@ -2,11 +2,8 @@ package com.stuypulse.robot.subsystems.intake;
 
 import java.util.Optional;
 
-import javax.swing.text.Position;
-
 import com.ctre.phoenix6.controls.Follower;
 import com.ctre.phoenix6.controls.DutyCycleOut;
-import com.ctre.phoenix6.controls.MotionMagicVoltage;
 import com.ctre.phoenix6.controls.PositionVoltage;
 import com.ctre.phoenix6.controls.VoltageOut;
 import com.ctre.phoenix6.hardware.TalonFX;
@@ -24,7 +21,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 
 public class IntakeImpl extends Intake {
-
     private final TalonFX intakePivotMotor;
     private final TalonFX intakeRollerMotorLeft;
     private final TalonFX intakeRollerMotorRight;
@@ -34,6 +30,7 @@ public class IntakeImpl extends Intake {
     private final Follower followerController;
 
     private final BStream pivotStalling;
+    private final BStream rollersStalling;
     private Optional<Double> pivotVoltageOverride;
 
     public IntakeImpl() {
@@ -41,12 +38,11 @@ public class IntakeImpl extends Intake {
         Motors.Intake.PIVOT_CONFIG.configure(intakePivotMotor);
         intakePivotMotor.setPosition(Settings.Intake.PIVOT_INITIAL_ANGLE.getRotations());
 
-        intakeRollerMotorLeft = new TalonFX(Ports.Intake.MOTOR_INTAKE_ROLLER_LEFT, Settings.CANIVORE);
+        intakeRollerMotorLeft = new TalonFX(Ports.Intake.MOTOR_INTAKE_ROLLER_LEFT, Settings.CANIVORE); // leader
         intakeRollerMotorRight = new TalonFX(Ports.Intake.MOTOR_INTAKE_ROLLER_RIGHT, Settings.CANIVORE);
 
         Motors.Intake.LEFT_ROLLER_CONFIG.configure(intakeRollerMotorLeft);
         Motors.Intake.RIGHT_ROLLER_CONFIG.configure(intakeRollerMotorRight);
-
 
         rollerController = new DutyCycleOut(getState().getTargetDutyCycle());
         pivotController = new PositionVoltage(getState().getTargetAngle().getRotations());
@@ -54,9 +50,14 @@ public class IntakeImpl extends Intake {
 
         intakeRollerMotorRight.setControl(followerController);
 
-        pivotStalling = BStream.create(() -> intakePivotMotor.getSupplyCurrent().getValueAsDouble() > Settings.Intake.PIVOT_STALL_CURRENT)
-            .filtered(new BDebounce.Both(Settings.Intake.PIVOT_STALL_DEBOUNCE_SEC));
-        
+        pivotStalling = BStream.create(
+                () -> intakePivotMotor.getSupplyCurrent().getValueAsDouble() > Settings.Intake.PIVOT_STALL_CURRENT)
+                .filtered(new BDebounce.Both(Settings.Intake.PIVOT_STALL_DEBOUNCE_SEC));
+        rollersStalling = BStream
+                .create(() -> intakeRollerMotorLeft.getSupplyCurrent()
+                        .getValueAsDouble() > Settings.Intake.ROLLER_STALL_CURRENT)
+                .filtered(new BDebounce.Both(Settings.Intake.ROLLER_STALL_DEBOUNCE_SEC));
+
         pivotVoltageOverride = Optional.empty();
     }
 
@@ -68,8 +69,8 @@ public class IntakeImpl extends Intake {
     @Override
     public boolean atAngle() {
         return Math.abs(
-                (getRelativePosition().getRotations()) - getState().getTargetAngle().getRotations())
-                < Settings.Intake.ANGLE_TOLERANCE.getRotations();
+                (getRelativePosition().getRotations())
+                        - getState().getTargetAngle().getRotations()) < Settings.Intake.ANGLE_TOLERANCE.getRotations();
     }
 
     public void setPivotVoltageOverride(Optional<Double> pivotVoltageOverride) {
@@ -91,46 +92,53 @@ public class IntakeImpl extends Intake {
         intakePivotMotor.setPosition(122);
     }
 
-    private boolean pivotIsStalling() {
+    private boolean pivotStalling() {
         return pivotStalling.get();
+    }
+
+    private boolean rollersStalling() {
+        return rollersStalling.get();
     }
 
     @Override
     public void periodic() {
         Boolean pushingDown = false;
         super.periodic();
-        if (EnabledSubsystems.INTAKE.get()) {
-            if (pivotVoltageOverride.isPresent()) {
-                intakePivotMotor.setVoltage(pivotVoltageOverride.get());
-            } else {
-                Boolean pivotAboveThreshold = intakePivotMotor.getPosition().getValueAsDouble() > Settings.Intake.PUSHDOWN_THRESHOLD.getRotations();
 
-                if((getState() == IntakeState.INTAKE || getState() == IntakeState.OUTTAKE || getState() == IntakeState.DOWN) 
-                && pivotAboveThreshold) {
-                    intakePivotMotor.setControl(new VoltageOut(0));
-
-                    pushingDown = true;
-                } else if (getState() == IntakeState.HOMING) {
-                    // intakePivotMotor.setControl(new VoltageOut(Settings.Intake.HOMING_VOLTAGE));
-                    intakePivotMotor.setPosition(122);
-                } else {
-                    intakePivotMotor.setControl(pivotController.withPosition(getState().getTargetAngle().getRotations()));
-                    pushingDown = false;
-                }
-
-                if (pivotAboveThreshold) {
-                    intakeRollerMotorLeft.setControl(rollerController.withOutput(getState().getTargetDutyCycle()));
-                } else {
-                    intakeRollerMotorLeft.setControl(rollerController.withOutput(0));
-                }
-
-            }
-        } else {
+        if (!EnabledSubsystems.INTAKE.get()) {
             intakePivotMotor.stopMotor();
             intakeRollerMotorLeft.stopMotor();
+            return;
         }
 
-        SmartDashboard.putNumber("Intake/Roller Current (amps)", intakeRollerMotorLeft.getStatorCurrent().getValueAsDouble());
+        if (pivotVoltageOverride.isPresent()) {
+            intakePivotMotor.setVoltage(pivotVoltageOverride.get());
+        } else {
+            Boolean pivotAboveThreshold = intakePivotMotor.getPosition()
+                    .getValueAsDouble() > Settings.Intake.PUSHDOWN_THRESHOLD.getRotations();
+
+            intakePivotMotor.setControl(switch (getState()) {
+                case INTAKE, OUTTAKE, DOWN -> {
+                    pushingDown = true;
+                    yield pivotAboveThreshold ? new VoltageOut(0) // wait until pivot reaches the bottom to apply pushdown
+                            : pivotController.withPosition(getState().getTargetAngle().getRotations());
+                }
+                case HOMING -> {
+                    if (pivotStalling()) {
+                        intakePivotMotor.setPosition(0);
+                        setState(IntakeState.IDLE);
+                    }
+                    yield new VoltageOut(Settings.Intake.HOMING_VOLTAGE);
+                }
+                default -> pivotController.withPosition(getState().getTargetAngle().getRotations());
+            });
+
+            intakeRollerMotorLeft
+                    .setControl(rollerController.withOutput(pivotAboveThreshold ? getState().getTargetDutyCycle() : 0));
+        }
+
+        SmartDashboard.putNumber("Intake/Roller Current (amps)",
+                intakeRollerMotorLeft.getStatorCurrent().getValueAsDouble());
         SmartDashboard.putNumber("Intake/Roller Voltage", intakeRollerMotorLeft.getMotorVoltage().getValueAsDouble());
         SmartDashboard.putBoolean("Intake/Pushing Down", pushingDown);
 
@@ -152,7 +160,6 @@ public class IntakeImpl extends Intake {
                 () -> intakePivotMotor.getPosition().getValueAsDouble(),
                 () -> intakePivotMotor.getVelocity().getValueAsDouble(),
                 () -> intakePivotMotor.getMotorVoltage().getValueAsDouble(),
-                getInstance()
-        );
+                getInstance());
     }
 }

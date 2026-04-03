@@ -35,7 +35,6 @@ public abstract class Intake extends SubsystemBase {
         IDLE(Settings.Intake.IDLE_ANGLE, Settings.Intake.IDLE_DUTY_CYCLE), // (rollers do not run)
         INTAKE(Settings.Intake.PIVOT_DOWN_ANGLE, Settings.Intake.INTAKE_DUTY_CYCLE), // (sucks in the balls) [pivot down, rollers running]
         OUTTAKE(Settings.Intake.PIVOT_DOWN_ANGLE, Settings.Intake.OUTTAKE_DUTY_CYCLE), // (trips the balls out) [pivot down, rollers running reverse]
-        UP(Settings.Intake.IDLE_ANGLE, Settings.Intake.IDLE_DUTY_CYCLE),
         DOWN(Settings.Intake.PIVOT_DOWN_ANGLE, Settings.Intake.IDLE_DUTY_CYCLE),
         HOMING(Settings.Intake.PIVOT_INITIAL_ANGLE, Settings.Intake.IDLE_DUTY_CYCLE);
 
@@ -80,12 +79,11 @@ public abstract class Intake extends SubsystemBase {
         SmartDashboard.putString("Intake/Intake State", getState().name());
         SmartDashboard.putNumber("Intake/Roller Target Duty Cycle", getState().getTargetDutyCycle());
         SmartDashboard.putNumber("Intake/Target Angle", getState().getTargetAngle().getDegrees());
-        
+
         if (Settings.DEBUG_MODE) {
             if (Settings.EnabledSubsystems.INTAKE.get()) {
                 RobotVisualizer.getInstance().updateIntake(getRelativePosition(), getRollerRPM());
-            }
-            else {
+            } else {
                 RobotVisualizer.getInstance().updateIntake(IntakeState.IDLE.getTargetAngle(), IntakeState.IDLE.getTargetDutyCycle());
             }
         }
