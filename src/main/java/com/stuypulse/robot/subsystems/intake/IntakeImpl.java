@@ -100,44 +100,70 @@ public class IntakeImpl extends Intake {
         return rollersStalling.get();
     }
 
+    private void stopMotors() {
+        intakePivotMotor.stopMotor();
+        intakeRollerMotorLeft.stopMotor();
+        intakeRollerMotorRight.stopMotor(); // possibly if cancoder issues arise, although rarely, the follower wouldn't
+                                            // stop, so we stop both just in case
+    }
+
     @Override
     public void periodic() {
-        Boolean pushingDown = false;
         super.periodic();
 
         if (!EnabledSubsystems.INTAKE.get()) {
-            intakePivotMotor.stopMotor();
-            intakeRollerMotorLeft.stopMotor();
+            stopMotors();
             return;
         }
+
+        // Input
+
+        double pivotPosition = intakePivotMotor.getPosition().getValueAsDouble();
+        boolean pivotAboveThreshold = pivotPosition > Settings.Intake.PUSHDOWN_THRESHOLD.getRotations();
+
+        boolean pivotStalling = pivotStalling();
+
+        IntakeState currentState = getState();
+
+        boolean pushingDown = currentState == IntakeState.INTAKE ||
+                currentState == IntakeState.OUTTAKE ||
+                currentState == IntakeState.DOWN &&
+                !pivotAboveThreshold;
+
+        // State
+
+        if (currentState == IntakeState.HOMING && pivotStalling) {
+            setPivotZero();
+            setState(IntakeState.IDLE);
+        }
+
+        // Output
+
+        var pivotControl = switch (currentState) {
+            case INTAKE, OUTTAKE, DOWN -> {
+                if (pivotAboveThreshold) {
+                    yield new VoltageOut(0); // wait until pivot reaches the bottom to apply pushdown
+                } else {
+                    yield pivotController.withPosition(currentState.getTargetAngle().getRotations());
+                }
+            }
+
+            case HOMING -> new VoltageOut(Settings.Intake.HOMING_VOLTAGE);
+            default -> pivotController.withPosition(currentState.getTargetAngle().getRotations());
+        };
+
+        var rollerControl = rollerController.withOutput(pivotAboveThreshold ? currentState.getTargetDutyCycle() : 0);
+
+        // Apply
 
         if (pivotVoltageOverride.isPresent()) {
             intakePivotMotor.setVoltage(pivotVoltageOverride.get());
         } else {
-            Boolean pivotAboveThreshold = intakePivotMotor.getPosition()
-                    .getValueAsDouble() > Settings.Intake.PUSHDOWN_THRESHOLD.getRotations();
-
-
-
-            intakePivotMotor.setControl(switch (getState()) {
-                case INTAKE, OUTTAKE, DOWN -> {
-                    pushingDown = true;
-                    yield pivotAboveThreshold ? new VoltageOut(0) // wait until pivot reaches the bottom to apply pushdown
-                            : pivotController.withPosition(getState().getTargetAngle().getRotations());
-                }
-                case HOMING -> {
-                    if (pivotStalling()) {
-                        setPivotZero();
-                        setState(IntakeState.IDLE);
-                    }
-                    yield new VoltageOut(Settings.Intake.HOMING_VOLTAGE);
-                }
-                default -> pivotController.withPosition(getState().getTargetAngle().getRotations());
-            });
-
-            intakeRollerMotorLeft
-                    .setControl(rollerController.withOutput(pivotAboveThreshold ? getState().getTargetDutyCycle() : 0));
+            intakePivotMotor.setControl(pivotControl);
         }
+        intakeRollerMotorLeft.setControl(rollerControl);
+
+        // Log
 
         SmartDashboard.putNumber("Intake/Roller Current (amps)",
                 intakeRollerMotorLeft.getStatorCurrent().getValueAsDouble());
