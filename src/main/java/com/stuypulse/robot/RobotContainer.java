@@ -151,18 +151,6 @@ public class RobotContainer {
         autonChooser.addOption("SysID Rotation Translation Quasi Forwards", swerve.sysidRotationQuasiStatic(Direction.kForward));
         autonChooser.addOption("SysID Rotation Translation Quasi Backwards", swerve.sysidRotationQuasiStatic(Direction.kReverse)); 
 
-        autonChooser.addOption("SysID Steer Dynamic Forwards", swerve.sysidSteerDynamic(Direction.kForward));
-        autonChooser.addOption("SysID Steer Dynamic Backwards", swerve.sysidSteerDynamic(Direction.kReverse));
-        autonChooser.addOption("SysID Steer Quasistatic Forwards", swerve.sysidSteerQuasistatic(Direction.kForward));
-        autonChooser.addOption("SysID Steer Quasistatic Backwards", swerve.sysidSteerQuasistatic(Direction.kReverse));
-
-
-        SysIdRoutine intakeSysId = intake.getIntakeSysIdRoutine();
-        autonChooser.addOption("Intake SysId Dynamic Forward", intakeSysId.dynamic(Direction.kForward));
-        autonChooser.addOption("Intake SysId Dynamic Backward", intakeSysId.dynamic(Direction.kReverse));
-        autonChooser.addOption("Intake SysId Quasistatic Forward", intakeSysId.quasistatic(Direction.kForward));
-        autonChooser.addOption("Intake SysId Quasistatic Backward", intakeSysId.quasistatic(Direction.kReverse));
-
         SmartDashboard.putData("Autonomous", autonChooser);
     }
 
