@@ -89,7 +89,7 @@ public class IntakeImpl extends Intake {
 
     @Override
     public void setPivotZeroAtBottom() {
-        intakePivotMotor.setPosition(122);
+        intakePivotMotor.setPosition(Rotation2d.fromDegrees(122).getRotations());
     }
 
     private boolean pivotStalling() {

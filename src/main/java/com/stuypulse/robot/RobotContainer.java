@@ -69,7 +69,7 @@ public class RobotContainer {
 
     private void configureButtonBindings() {
         //Trigger buttons did not work for some reason so I had to do this
-        Trigger leftTrigger = new Trigger(() -> driver.getLeftTriggerAxis() > 0.5);
+        Trigger leftTrigger = new Trigger(() -> driver.getLeftTriggerAxis() > 1.5);
         Trigger rightTrigger = new Trigger(() -> driver.getRightTriggerAxis() > 0.5);
 
         leftTrigger

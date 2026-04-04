@@ -267,13 +267,13 @@
             "children": [
               {
                 "title": "Intake",
-                "x": 0.0,
-                "y": 0.0,
-                "width": 166.0,
-                "height": 166.0,
+                "x": 980.0,
+                "y": 630.0,
+                "width": 140.0,
+                "height": 140.0,
                 "type": "Toggle Switch",
                 "properties": {
-                  "topic": "SmartDashboard/Enabled Subsystems/Intake Is Enabled",
+                  "topic": "SmartDashboard/Enabled Subsystems/Intake",
                   "period": 0.06,
                   "data_type": "boolean"
                 }
@@ -282,24 +282,24 @@
                 "title": "Swerve",
                 "x": 0.0,
                 "y": 0.0,
-                "width": 166.0,
-                "height": 166.0,
+                "width": 140.0,
+                "height": 140.0,
                 "type": "Toggle Switch",
                 "properties": {
-                  "topic": "SmartDashboard/Enabled Subsystems/Swerve Is Enabled",
+                  "topic": "SmartDashboard/Enabled Subsystems/Swerve",
                   "period": 0.06,
                   "data_type": "boolean"
                 }
               },
               {
-                "title": "vision",
+                "title": "Vision",
                 "x": 0.0,
                 "y": 0.0,
-                "width": 166.0,
-                "height": 166.0,
+                "width": 140.0,
+                "height": 140.0,
                 "type": "Toggle Switch",
                 "properties": {
-                  "topic": "SmartDashboard/Enabled Subsystems/Right Limelight Is Enabled",
+                  "topic": "SmartDashboard/Enabled Subsystems/Vision",
                   "period": 0.06,
                   "data_type": "boolean"
                 }
