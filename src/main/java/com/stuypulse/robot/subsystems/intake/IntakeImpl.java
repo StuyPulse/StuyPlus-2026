@@ -131,9 +131,14 @@ public class IntakeImpl extends Intake {
 
         // State
 
-        if (currentState == IntakeState.HOMING && pivotStalling) {
+        if (currentState == IntakeState.HOMING_UP && pivotStalling) {
             setPivotZero();
             setState(IntakeState.IDLE);
+        }
+
+        if (currentState == IntakeState.HOMING_DOWN && pivotStalling) {
+            setPivotZeroAtBottom();
+            setState(IntakeState.DOWN);
         }
 
         // if (rollersStalling()) {
@@ -153,7 +158,8 @@ public class IntakeImpl extends Intake {
                 }
             }
 
-            case HOMING -> new VoltageOut(Settings.Intake.HOMING_VOLTAGE);
+            case HOMING_UP -> new VoltageOut(Settings.Intake.HOMING_UP_VOLTAGE);
+            case HOMING_DOWN -> new VoltageOut(Settings.Intake.HOMING_DOWN_VOLTAGE);
             default -> pivotController.withPosition(currentState.getTargetAngle().getRotations());
         };
 

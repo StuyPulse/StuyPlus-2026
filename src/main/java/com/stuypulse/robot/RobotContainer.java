@@ -18,7 +18,8 @@ import com.stuypulse.robot.commands.swerve.SwerveDriveXMode;
 import com.stuypulse.robot.commands.swerve.PIDtoPose.SwerveDrivePIDToPose;
 import com.stuypulse.robot.commands.intake.IntakeAgitateWhileOuttaking;
 import com.stuypulse.robot.commands.intake.IntakeSetDown;
-import com.stuypulse.robot.commands.intake.IntakeSetHoming;
+import com.stuypulse.robot.commands.intake.IntakeSetHomingDown;
+import com.stuypulse.robot.commands.intake.IntakeSetHomingUp;
 import com.stuypulse.robot.commands.intake.IntakeSetIdle;
 import com.stuypulse.robot.commands.intake.IntakeSetIntake;
 import com.stuypulse.robot.commands.intake.IntakeSetOuttake;
@@ -85,7 +86,7 @@ public class RobotContainer {
         leftTrigger
             .whileTrue(new IntakeAgitateWhileOuttaking().repeatedly());
         leftTrigger
-            .onFalse(new IntakeSetIntake());
+            .onFalse(new IntakeSetHomingDown());
 
         driver.leftBumper()
             .onTrue(new IntakeSetIdle());
@@ -121,7 +122,7 @@ public class RobotContainer {
             .whileTrue(new SwerveDriveXMode());
 
         driver.y()  
-            .onTrue(new IntakeSetHoming());
+            .onTrue(new IntakeSetHomingUp());
     }
 
     /**************/
@@ -159,15 +160,15 @@ public class RobotContainer {
         "2 meter path");
         TwoMeterPath.register(autonChooser);
 
-        autonChooser.addOption("SysID Module Translation Dynamic Forwards", swerve.sysIdDynamic(Direction.kForward));
-        autonChooser.addOption("SysID Module Translation Dynamic Backwards", swerve.sysIdDynamic(Direction.kReverse));
-        autonChooser.addOption("SysID Module Translation Quasi Forwards", swerve.sysIdQuasistatic(Direction.kForward));
-        autonChooser.addOption("SysID Module Translation Quasi Backwards", swerve.sysIdQuasistatic(Direction.kReverse)); 
+        // autonChooser.addOption("SysID Module Translation Dynamic Forwards", swerve.sysIdDynamic(Direction.kForward));
+        // autonChooser.addOption("SysID Module Translation Dynamic Backwards", swerve.sysIdDynamic(Direction.kReverse));
+        // autonChooser.addOption("SysID Module Translation Quasi Forwards", swerve.sysIdQuasistatic(Direction.kForward));
+        // autonChooser.addOption("SysID Module Translation Quasi Backwards", swerve.sysIdQuasistatic(Direction.kReverse)); 
 
-        autonChooser.addOption("SysID Rotation Translation Dynamic Forwards", swerve.sysidRotationDynamic(Direction.kForward));
-        autonChooser.addOption("SysID Rotation Translation Dynamic Backwards", swerve.sysidRotationDynamic(Direction.kReverse));
-        autonChooser.addOption("SysID Rotation Translation Quasi Forwards", swerve.sysidRotationQuasiStatic(Direction.kForward));
-        autonChooser.addOption("SysID Rotation Translation Quasi Backwards", swerve.sysidRotationQuasiStatic(Direction.kReverse)); 
+        // autonChooser.addOption("SysID Rotation Translation Dynamic Forwards", swerve.sysidRotationDynamic(Direction.kForward));
+        // autonChooser.addOption("SysID Rotation Translation Dynamic Backwards", swerve.sysidRotationDynamic(Direction.kReverse));
+        // autonChooser.addOption("SysID Rotation Translation Quasi Forwards", swerve.sysidRotationQuasiStatic(Direction.kForward));
+        // autonChooser.addOption("SysID Rotation Translation Quasi Backwards", swerve.sysidRotationQuasiStatic(Direction.kReverse)); 
 
         SmartDashboard.putData("Autonomous", autonChooser);
     }

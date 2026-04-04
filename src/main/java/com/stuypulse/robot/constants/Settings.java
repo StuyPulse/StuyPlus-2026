@@ -61,7 +61,8 @@ public interface Settings {
         Rotation2d IDLE_ANGLE = Rotation2d.fromDegrees(0);
         Rotation2d PIVOT_DOWN_ANGLE = Rotation2d.fromDegrees(122);
 
-        double HOMING_VOLTAGE = -3;
+        double HOMING_UP_VOLTAGE = -3;
+        double HOMING_DOWN_VOLTAGE = 3;
 
         double IDLE_DUTY_CYCLE = 0;
         double INTAKE_DUTY_CYCLE = 1;
