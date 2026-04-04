@@ -83,8 +83,8 @@
           },
           {
             "title": "Is Active Shift?",
-            "x": 280.0,
-            "y": 420.0,
+            "x": 980.0,
+            "y": 140.0,
             "width": 140.0,
             "height": 140.0,
             "type": "Boolean Box",
@@ -100,8 +100,8 @@
           },
           {
             "title": "Time Left In Shift",
-            "x": 0.0,
-            "y": 560.0,
+            "x": 280.0,
+            "y": 420.0,
             "width": 280.0,
             "height": 140.0,
             "type": "Match Time",
@@ -116,8 +116,8 @@
           },
           {
             "title": "Set Megatag 2",
-            "x": 560.0,
-            "y": 560.0,
+            "x": 840.0,
+            "y": 420.0,
             "width": 280.0,
             "height": 140.0,
             "type": "Command",
@@ -125,7 +125,7 @@
               "topic": "/SmartDashboard/Robot/Set Megatag 2",
               "period": 0.5,
               "show_type": true,
-              "maximize_button_space": false
+              "maximize_button_space": true
             }
           },
           {
@@ -139,7 +139,7 @@
               "topic": "/SmartDashboard/Robot/Set Megatag 1",
               "period": 0.5,
               "show_type": true,
-              "maximize_button_space": false
+              "maximize_button_space": true
             }
           },
           {
@@ -160,8 +160,8 @@
           },
           {
             "title": "Autonomous",
-            "x": 280.0,
-            "y": 560.0,
+            "x": 1120.0,
+            "y": 280.0,
             "width": 280.0,
             "height": 140.0,
             "type": "ComboBox Chooser",
@@ -173,8 +173,8 @@
           },
           {
             "title": "Camera Is Enabled",
-            "x": 420.0,
-            "y": 420.0,
+            "x": 980.0,
+            "y": 280.0,
             "width": 140.0,
             "height": 140.0,
             "type": "Boolean Box",
@@ -238,7 +238,7 @@
             "x": 840.0,
             "y": 280.0,
             "width": 140.0,
-            "height": 70.0,
+            "height": 140.0,
             "type": "Text Display",
             "properties": {
               "topic": "/SmartDashboard/Intake/Pivot State",
@@ -351,7 +351,7 @@
             "x": 840.0,
             "y": 280.0,
             "width": 140.0,
-            "height": 70.0,
+            "height": 140.0,
             "type": "Text Display",
             "properties": {
               "topic": "/SmartDashboard/Intake/Pivot State",
@@ -362,8 +362,8 @@
           },
           {
             "title": "Shift",
-            "x": 0.0,
-            "y": 560.0,
+            "x": 840.0,
+            "y": 420.0,
             "width": 280.0,
             "height": 140.0,
             "type": "Large Text Display",
@@ -375,8 +375,8 @@
           },
           {
             "title": "Is Active Shift?",
-            "x": 280.0,
-            "y": 560.0,
+            "x": 980.0,
+            "y": 140.0,
             "width": 140.0,
             "height": 140.0,
             "type": "Boolean Box",
@@ -411,7 +411,7 @@
             "x": 560.0,
             "y": 420.0,
             "width": 280.0,
-            "height": 280.0,
+            "height": 140.0,
             "type": "Command",
             "properties": {
               "topic": "/SmartDashboard/Robot/Intake Reverse",
@@ -466,8 +466,8 @@
           },
           {
             "title": "Auton Won",
-            "x": 420.0,
-            "y": 560.0,
+            "x": 980.0,
+            "y": 280.0,
             "width": 140.0,
             "height": 140.0,
             "type": "Boolean Box",
@@ -641,7 +641,7 @@
             "x": 840.0,
             "y": 280.0,
             "width": 140.0,
-            "height": 70.0,
+            "height": 140.0,
             "type": "Text Display",
             "properties": {
               "topic": "/SmartDashboard/Intake/Roller Duty Cycle",
@@ -649,15 +649,22 @@
               "data_type": "double",
               "show_submit_button": false
             }
+          },
+          {
+            "title": "Run pre-match Tests",
+            "x": 1120.0,
+            "y": 280.0,
+            "width": 280.0,
+            "height": 210.0,
+            "type": "Command",
+            "properties": {
+              "topic": "/SmartDashboard/Run pre-match Tests",
+              "period": 0.06,
+              "show_type": true,
+              "maximize_button_space": true
+            }
           }
         ]
-      }
-    },
-    {
-      "name": "Tab 4",
-      "grid_layout": {
-        "layouts": [],
-        "containers": []
       }
     }
   ]
