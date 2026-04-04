@@ -3,6 +3,7 @@ package com.stuypulse.robot.subsystems.intake;
 import java.util.Optional;
 
 import com.ctre.phoenix6.controls.Follower;
+import com.ctre.phoenix6.controls.ControlRequest;
 import com.ctre.phoenix6.controls.DutyCycleOut;
 import com.ctre.phoenix6.controls.PositionVoltage;
 import com.ctre.phoenix6.controls.VoltageOut;
@@ -116,14 +117,14 @@ public class IntakeImpl extends Intake {
 
         // Input
 
-        double pivotPosition = intakePivotMotor.getPosition().getValueAsDouble();
-        boolean pivotAboveThreshold = pivotPosition > Settings.Intake.PUSHDOWN_THRESHOLD.getRotations();
+        final double pivotPosition = intakePivotMotor.getPosition().getValueAsDouble();
+        final boolean pivotAboveThreshold = pivotPosition > Settings.Intake.PUSHDOWN_THRESHOLD.getRotations();
 
-        boolean pivotStalling = pivotStalling();
+        final boolean pivotStalling = pivotStalling();
 
-        IntakeState currentState = getState();
+        final IntakeState currentState = getState();
 
-        boolean pushingDown = currentState == IntakeState.INTAKE ||
+        final boolean pushingDown = currentState == IntakeState.INTAKE ||
                 currentState == IntakeState.OUTTAKE ||
                 currentState == IntakeState.DOWN &&
                 !pivotAboveThreshold;
@@ -141,7 +142,7 @@ public class IntakeImpl extends Intake {
 
         // Output
 
-        var pivotControl = switch (currentState) {
+        final ControlRequest pivotControl = switch (currentState) {
             case INTAKE, OUTTAKE, DOWN -> {
                 if (pivotAboveThreshold) {
                     yield new VoltageOut(Settings.Intake.PUSHDOWN_VOLTAGE); // wait until pivot reaches the bottom to apply pushdown
@@ -154,7 +155,7 @@ public class IntakeImpl extends Intake {
             default -> pivotController.withPosition(currentState.getTargetAngle().getRotations());
         };
 
-        var rollerControl = rollerController.withOutput(pivotAboveThreshold ? currentState.getTargetDutyCycle() : 0);
+        final DutyCycleOut rollerControl = rollerController.withOutput(pivotAboveThreshold ? currentState.getTargetDutyCycle() : 0);
 
         // Apply
 
