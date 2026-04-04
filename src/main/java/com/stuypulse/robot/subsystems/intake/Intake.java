@@ -1,6 +1,7 @@
 package com.stuypulse.robot.subsystems.intake;
 
 import com.stuypulse.robot.Robot;
+import com.stuypulse.robot.commands.PreMatch;
 import com.stuypulse.robot.commands.intake.IntakeSetZero;
 import com.stuypulse.robot.commands.intake.IntakeSetZeroAtBottom;
 import com.stuypulse.robot.constants.Settings;
@@ -25,6 +26,7 @@ public abstract class Intake extends SubsystemBase {
         
         SmartDashboard.putData("Set Pivot 0", new IntakeSetZero());
         SmartDashboard.putData("Set Pivot 0 at Bottom", new IntakeSetZeroAtBottom());
+        SmartDashboard.putData("Run pre-match Tests", new PreMatch());
     }
     
     public static Intake getInstance() {
