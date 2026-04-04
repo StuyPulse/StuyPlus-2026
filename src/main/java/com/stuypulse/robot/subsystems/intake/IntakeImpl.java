@@ -138,7 +138,7 @@ public class IntakeImpl extends Intake {
 
         if (currentState == IntakeState.HOMING_DOWN && pivotStalling) {
             setPivotZeroAtBottom();
-            setState(IntakeState.DOWN);
+            setState(IntakeState.INTAKE);
         }
 
         // if (rollersStalling()) {
