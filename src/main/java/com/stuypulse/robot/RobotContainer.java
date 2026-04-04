@@ -73,7 +73,7 @@ public class RobotContainer {
         Trigger rightTrigger = new Trigger(() -> driver.getRightTriggerAxis() > 0.5);
 
         leftTrigger
-            .whileTrue(new IntakeSetOuttake());
+            .whileTrue(new IntakeAgitateWhileOuttaking().repeatedly());
         leftTrigger
             .onFalse(new IntakeSetIntake());
 
@@ -84,7 +84,9 @@ public class RobotContainer {
             .onTrue(new IntakeSetIntake());
 
         driver.povDown()
-            .whileTrue(new IntakeAgitateWhileOuttaking()).onFalse(new IntakeSetIntake());
+            .whileTrue(new IntakeSetOuttake());
+        driver.povDown()
+            .onFalse(new IntakeSetIntake());
 
         driver.povUp()
             .onTrue(new SwerveDriveResetRotation());
@@ -100,7 +102,7 @@ public class RobotContainer {
         //Auto Drive to Outpost
         //Top Right Paddle
         driver.b()
-            .whileTrue(new SwerveDrivePIDToPose(Field.outpost).andThen(new IntakeSetOuttake()));
+            .whileTrue(new SwerveDrivePIDToPose(Field.outpost).andThen(new IntakeAgitateWhileOuttaking().repeatedly()));
         driver.b() 
             .onFalse(new IntakeSetIntake());
         

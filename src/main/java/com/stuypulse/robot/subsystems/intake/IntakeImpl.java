@@ -142,7 +142,7 @@ public class IntakeImpl extends Intake {
         var pivotControl = switch (currentState) {
             case INTAKE, OUTTAKE, DOWN -> {
                 if (pivotAboveThreshold) {
-                    yield new VoltageOut(0); // wait until pivot reaches the bottom to apply pushdown
+                    yield new VoltageOut(Settings.Intake.PUSHDOWN_VOLTAGE); // wait until pivot reaches the bottom to apply pushdown
                 } else {
                     yield pivotController.withPosition(currentState.getTargetAngle().getRotations());
                 }
