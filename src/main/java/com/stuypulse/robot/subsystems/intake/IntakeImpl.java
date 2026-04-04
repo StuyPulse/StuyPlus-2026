@@ -135,18 +135,18 @@ public class IntakeImpl extends Intake {
             setState(IntakeState.IDLE);
         }
 
-        if (rollersStalling()) {
-            setState(IntakeState.DOWN);
-            setPivotZeroAtBottom();
-        }
+        // if (rollersStalling()) {
+        //     setState(IntakeState.DOWN);
+        //     setPivotZeroAtBottom();
+        // }
 
         // Output
 
         var pivotControl = switch (currentState) {
             case INTAKE, OUTTAKE, DOWN -> {
                 if (pivotAboveThreshold) {
-                    yield pivotController.withPosition(currentState.getTargetAngle().getRotations());
-                    // yield new VoltageOut(Settings.Intake.PUSHDOWN_VOLTAGE); // wait until pivot reaches the bottom to apply pushdown
+                    // yield pivotController.withPosition(currentState.getTargetAngle().getRotations());
+                    yield new VoltageOut(Settings.Intake.PUSHDOWN_VOLTAGE); // wait until pivot reaches the bottom to apply pushdown
                 } else {
                     yield pivotController.withPosition(currentState.getTargetAngle().getRotations());
                 }
@@ -169,8 +169,9 @@ public class IntakeImpl extends Intake {
 
         // Log
 
-        SmartDashboard.putNumber("Intake/Roller Current (amps)",
+        SmartDashboard.putNumber("Intake/Left Roller Current (amps)",
                 intakeRollerMotorLeft.getStatorCurrent().getValueAsDouble());
+        SmartDashboard.putNumber("Intake/Right Roller Current", intakeRollerMotorRight.getStatorCurrent().getValueAsDouble());
         SmartDashboard.putNumber("Intake/Roller Voltage", intakeRollerMotorLeft.getMotorVoltage().getValueAsDouble());
         SmartDashboard.putBoolean("Intake/Pushing Down", pushingDown);
 

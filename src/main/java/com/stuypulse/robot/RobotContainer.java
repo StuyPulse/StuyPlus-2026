@@ -10,6 +10,7 @@ import com.stuypulse.robot.commands.auton.LeftBumpFerry;
 import com.stuypulse.robot.commands.auton.LeftBumpMid;
 import com.stuypulse.robot.commands.auton.RightBumpFerry;
 import com.stuypulse.robot.commands.auton.RightBumpMid;
+import com.stuypulse.robot.commands.auton.TwoMeterPath;
 import com.stuypulse.robot.commands.swerve.SwerveDriveDrive;
 import com.stuypulse.robot.commands.swerve.SwerveDriveResetRotation;
 import com.stuypulse.robot.commands.swerve.SwerveDriveRotate;
@@ -78,7 +79,7 @@ public class RobotContainer {
 
     private void configureButtonBindings() {
         //Trigger buttons did not work for some reason so I had to do this
-        Trigger leftTrigger = new Trigger(() -> driver.getLeftTriggerAxis() > 1.5);
+        Trigger leftTrigger = new Trigger(() -> driver.getLeftTriggerAxis() > 0.5);
         Trigger rightTrigger = new Trigger(() -> driver.getRightTriggerAxis() > 0.5);
 
         leftTrigger
@@ -153,6 +154,10 @@ public class RobotContainer {
             "RB Return",
             "RB to Outpost");
         RightBumpMidAuto.register(autonChooser);
+
+        AutonConfig TwoMeterPath = new AutonConfig("2 Meter Path", TwoMeterPath::new, 
+        "2 meter path");
+        TwoMeterPath.register(autonChooser);
 
         autonChooser.addOption("SysID Module Translation Dynamic Forwards", swerve.sysIdDynamic(Direction.kForward));
         autonChooser.addOption("SysID Module Translation Dynamic Backwards", swerve.sysIdDynamic(Direction.kReverse));
