@@ -137,6 +137,7 @@ public class IntakeImpl extends Intake {
 
         if (rollersStalling()) {
             setState(IntakeState.DOWN);
+            setPivotZeroAtBottom();
         }
 
         // Output
@@ -144,7 +145,8 @@ public class IntakeImpl extends Intake {
         var pivotControl = switch (currentState) {
             case INTAKE, OUTTAKE, DOWN -> {
                 if (pivotAboveThreshold) {
-                    yield new VoltageOut(Settings.Intake.PUSHDOWN_VOLTAGE); // wait until pivot reaches the bottom to apply pushdown
+                    yield pivotController.withPosition(currentState.getTargetAngle().getRotations());
+                    // yield new VoltageOut(Settings.Intake.PUSHDOWN_VOLTAGE); // wait until pivot reaches the bottom to apply pushdown
                 } else {
                     yield pivotController.withPosition(currentState.getTargetAngle().getRotations());
                 }

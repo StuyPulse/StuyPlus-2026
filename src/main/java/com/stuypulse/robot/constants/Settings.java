@@ -71,7 +71,7 @@ public interface Settings {
         double PIVOT_MIN_ANGLE = 0.0;
         double PIVOT_MAX_ANGLE = 2 * Math.PI;
         double PIVOT_GEAR_RATIO = 60.0;
-        double ROLLER_GEAR_RATIO = 16/27;
+        double ROLLER_GEAR_RATIO = 16.0/27.0;
 
         double RAMP_RATE = 2;
         double STEP_VOLTAGE = 6; // volts

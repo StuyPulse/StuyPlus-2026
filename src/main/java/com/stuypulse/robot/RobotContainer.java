@@ -6,6 +6,10 @@
 package com.stuypulse.robot;
 
 import com.stuypulse.robot.commands.auton.DoNothingAuton;
+import com.stuypulse.robot.commands.auton.LeftBumpFerry;
+import com.stuypulse.robot.commands.auton.LeftBumpMid;
+import com.stuypulse.robot.commands.auton.RightBumpFerry;
+import com.stuypulse.robot.commands.auton.RightBumpMid;
 import com.stuypulse.robot.commands.swerve.SwerveDriveDrive;
 import com.stuypulse.robot.commands.swerve.SwerveDriveResetRotation;
 import com.stuypulse.robot.commands.swerve.SwerveDriveRotate;
@@ -22,6 +26,7 @@ import com.stuypulse.robot.constants.Ports;
 import com.stuypulse.robot.subsystems.intake.Intake;
 import com.stuypulse.robot.subsystems.swerve.CommandSwerveDrivetrain;
 import com.stuypulse.robot.subsystems.vision.LimelightVision;
+import com.stuypulse.robot.util.PathUtil.AutonConfig;
 
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
@@ -124,20 +129,30 @@ public class RobotContainer {
     public void configureAutons() {
         autonChooser.addOption("Do Nothing", new DoNothingAuton());
 
-        // AutonConfig LeftBumpFerry = new AutonConfig("Left Bump Ferry", LeftBumpFerry::new, 
-        // "Left Bump to Neutral", 
-        // "N to L.T.", 
-        // "L.T. Circle Hub", 
+        var LeftBumpFerryAuto = new AutonConfig("Left Bump Ferry", LeftBumpFerry::new, 
+            "Left Bump to Neutral", 
+            "N to L.T.", 
+            "L.T. Circle Hub", 
+            "N to Depot");
+        LeftBumpFerryAuto.register(autonChooser);
 
-        // "N to Depot");
-        // LeftBumpFerry.register(autonChooser);
+        AutonConfig RightBumpFerryAuto = new AutonConfig("Right Bump Ferry", RightBumpFerry::new, 
+            "R.B. to R.N.", 
+            "N to R.T.", 
+            "R.T. Circle Hub", 
+            "R.N. to H.P.");
+        RightBumpFerryAuto.register(autonChooser);
 
-        // AutonConfig RightBumpFerry = new AutonConfig("Right Bump Ferry", RightBumpFerry::new, 
-        // "R.B. to R.N.", 
-        // "N to R.T.", 
-        // "R.T. Circle Hub", 
-        // "R.N. to H.P.");
-        // RightBumpFerry.register(autonChooser);
+        AutonConfig LeftBumpMidAuto = new AutonConfig("Left Bump Mid", LeftBumpMid::new,
+            "LB to N",
+            "LB Return");
+        LeftBumpMidAuto.register(autonChooser);
+
+        AutonConfig RightBumpMidAuto = new AutonConfig("Right Bump Mid", RightBumpMid::new, 
+            "RB to N",
+            "RB Return",
+            "RB to Outpost");
+        RightBumpMidAuto.register(autonChooser);
 
         autonChooser.addOption("SysID Module Translation Dynamic Forwards", swerve.sysIdDynamic(Direction.kForward));
         autonChooser.addOption("SysID Module Translation Dynamic Backwards", swerve.sysIdDynamic(Direction.kReverse));
