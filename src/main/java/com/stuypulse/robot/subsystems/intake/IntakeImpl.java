@@ -44,8 +44,8 @@ public class IntakeImpl extends Intake {
         Motors.Intake.LEFT_ROLLER_CONFIG.configure(intakeRollerMotorLeft);
         Motors.Intake.RIGHT_ROLLER_CONFIG.configure(intakeRollerMotorRight);
 
-        rollerController = new DutyCycleOut(getState().getTargetDutyCycle());
-        pivotController = new PositionVoltage(getState().getTargetAngle().getRotations());
+        rollerController = new DutyCycleOut(getState().getTargetDutyCycle()).withEnableFOC(true);
+        pivotController = new PositionVoltage(getState().getTargetAngle().getRotations()).withEnableFOC(true);
         followerController = new Follower(Ports.Intake.MOTOR_INTAKE_ROLLER_LEFT, MotorAlignmentValue.Opposed);
 
         intakeRollerMotorRight.setControl(followerController);
