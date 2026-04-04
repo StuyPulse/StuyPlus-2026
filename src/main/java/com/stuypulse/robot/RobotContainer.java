@@ -21,6 +21,8 @@ import com.stuypulse.robot.constants.Field;
 import com.stuypulse.robot.constants.Ports;
 import com.stuypulse.robot.subsystems.intake.Intake;
 import com.stuypulse.robot.subsystems.swerve.CommandSwerveDrivetrain;
+import com.stuypulse.robot.subsystems.vision.LimelightVision;
+
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -41,6 +43,8 @@ public class RobotContainer {
     // @SuppressWarnings("unused")
     // @SuppressWarnings("unused")
     private final CommandSwerveDrivetrain swerve = CommandSwerveDrivetrain.getInstance();
+    private final LimelightVision vision = LimelightVision.getInstance();
+
     // Autons
     private static SendableChooser<Command> autonChooser = new SendableChooser<>();
 

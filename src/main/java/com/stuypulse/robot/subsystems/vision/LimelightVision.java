@@ -160,7 +160,7 @@ public class LimelightVision extends SubsystemBase{
                     if (poseEstimate != null && poseEstimate.tagCount > 0) {
                         notNull = true;
 
-                        if (poseEstimate.pose.getTranslation().getDistance(Settings.Vision.INVALID_POSITION) < Settings.Vision.INVALID_POSITION_TOLERANCE_M) {
+                        if (poseEstimate.pose.getTranslation().getDistance(Settings.Vision.INVALID_POSITION) > Settings.Vision.INVALID_POSITION_TOLERANCE_M) {
                             withinInvalidPositionTolerance = true;
                         }
 
@@ -170,6 +170,9 @@ public class LimelightVision extends SubsystemBase{
 
                         Boolean isValidPose = notNull && withinAngularVelocityTolerance && withinInvalidPositionTolerance;
 
+                        SmartDashboard.putBoolean("Vision/isValidPose", isValidPose);
+                        SmartDashboard.putBoolean("Vision/isWithinAngularVel", withinAngularVelocityTolerance);
+                            SmartDashboard.putBoolean("Vision/isWithinPos", withinInvalidPositionTolerance);
                         Pose2d robotPose = poseEstimate.pose;
                         double timestamp = poseEstimate.timestampSeconds;
 

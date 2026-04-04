@@ -9,9 +9,9 @@ import com.stuypulse.stuylib.network.SmartBoolean;
 
 public class Cameras {
     public static final Camera[] LimelightCameras = new Camera[] {
-        new Camera("Camera", 
+        new Camera("limelight", 
             new Pose3d(Units.inchesToMeters(-12.109), Units.inchesToMeters(-7.129), Units.inchesToMeters(8.375), 
-            new Rotation3d(180, Units.degreesToRadians(28), 180)), 
+            new Rotation3d(Units.degreesToRadians(180), Units.degreesToRadians(28), Units.degreesToRadians(180))), 
             new SmartBoolean("Enabled", true))}; // TODO: get actual camera info
 
     public static class Camera {
