@@ -51,7 +51,7 @@ public class SwerveDriveRotate extends Command{
             .withTargetDirection(rotation)
             .withVelocityX(speed.get().x)
             .withVelocityY(speed.get().y)
-            .withHeadingPID(Gains.Swerve.Turn.kP, Gains.Swerve.Turn.kI, Gains.Swerve.Turn.kD);
+            .withHeadingPID(Gains.Swerve.Alignment.akP, Gains.Swerve.Alignment.akI, Gains.Swerve.Alignment.akD);
 
         swerve.setControl(request);
 
