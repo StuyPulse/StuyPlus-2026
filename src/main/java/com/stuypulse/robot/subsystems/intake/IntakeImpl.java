@@ -137,6 +137,10 @@ public class IntakeImpl extends Intake {
             setState(IntakeState.IDLE);
         }
 
+        if (rollersStalling()) {
+            setState(IntakeState.DOWN);
+        }
+
         // Output
 
         var pivotControl = switch (currentState) {
