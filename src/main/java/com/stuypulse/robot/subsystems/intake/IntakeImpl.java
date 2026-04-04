@@ -103,8 +103,6 @@ public class IntakeImpl extends Intake {
     private void stopMotors() {
         intakePivotMotor.stopMotor();
         intakeRollerMotorLeft.stopMotor();
-        intakeRollerMotorRight.stopMotor(); // possibly if cancoder issues arise, although rarely, the follower wouldn't
-                                            // stop, so we stop both just in case
     }
 
     @Override
