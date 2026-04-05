@@ -40,7 +40,7 @@ public class Simulation {
     private final StructPublisher<Pose3d> intakePivot;
     private final StructPublisher<Pose3d> intakeRollers;
 
-    private final Notifier simUpdateNotifier;
+    // private final Notifier simUpdateNotifier;
 
     static {
         instance = new Simulation();
@@ -65,9 +65,6 @@ public class Simulation {
         fuel = table.getStructArrayTopic("AdvScope/FuelPoses", Pose3d.struct).publish();
         intakePivot = table.getStructTopic("AdvScope/IntakePose", Pose3d.struct).publish();
         intakeRollers = table.getStructTopic("AdvScope/IntakeRollerPose", Pose3d.struct).publish();
-
-        simUpdateNotifier = new Notifier(this::update);
-        simUpdateNotifier.startPeriodic(Settings.DT);
     }
 
     private void configureDrivetrain() {
