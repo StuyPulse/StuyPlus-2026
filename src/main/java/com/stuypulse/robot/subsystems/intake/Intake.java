@@ -7,6 +7,7 @@ import com.stuypulse.robot.util.RobotVisualizer;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 
 public abstract class Intake extends SubsystemBase {
     private static final Intake instance;
@@ -27,10 +28,11 @@ public abstract class Intake extends SubsystemBase {
 
     public enum IntakeState {
         IDLE(Settings.Intake.IDLE_ANGLE, Settings.Intake.IDLE_DUTY_CYCLE), // (rollers do not run)
-        INTAKE(Settings.Intake.INTAKE_ANGLE, Settings.Intake.INTAKE_DUTY_CYCLE), // (sucks in the balls) [pivot down, rollers running]
-        OUTTAKE(Settings.Intake.OUTTAKE_ANGLE, Settings.Intake.OUTTAKE_DUTY_CYCLE), // (trips the balls out) [pivot down, rollers running reverse]
-        UP(Settings.Intake.AGITATE_UP_ANGLE, Settings.Intake.IDLE_DUTY_CYCLE),
-        DOWN(Settings.Intake.AGITATE_DOWN_ANGLE, Settings.Intake.IDLE_DUTY_CYCLE);
+        INTAKE(Settings.Intake.PIVOT_DOWN_ANGLE, Settings.Intake.INTAKE_DUTY_CYCLE), // (sucks in the balls) [pivot down, rollers running]
+        OUTTAKE(Settings.Intake.PIVOT_DOWN_ANGLE, Settings.Intake.OUTTAKE_DUTY_CYCLE), // (trips the balls out) [pivot down, rollers running reverse]
+        DOWN(Settings.Intake.PIVOT_DOWN_ANGLE, Settings.Intake.IDLE_DUTY_CYCLE),
+        HOMING_UP(Settings.Intake.PIVOT_INITIAL_ANGLE, Settings.Intake.IDLE_DUTY_CYCLE),
+        HOMING_DOWN(Settings.Intake.PIVOT_DOWN_ANGLE, Settings.Intake.IDLE_DUTY_CYCLE);
 
         private double dutyCycle;
         private Rotation2d angle;
@@ -64,17 +66,20 @@ public abstract class Intake extends SubsystemBase {
     public abstract Rotation2d getRelativePosition();
     public abstract boolean atAngle();
     public abstract double getRollerRPM();
+    public abstract void setPivotZero();
+    public abstract void setPivotZeroAtBottom();
+    public abstract SysIdRoutine getIntakeSysIdRoutine();
 
     @Override
     public void periodic() {
-        SmartDashboard.putString("Intake/State", getState().name());
-        SmartDashboard.putString("States/Intake", getState().name());
-        
+        SmartDashboard.putString("Intake/Intake State", getState().name());
+        SmartDashboard.putNumber("Intake/Roller Target Duty Cycle", getState().getTargetDutyCycle());
+        SmartDashboard.putNumber("Intake/Target Angle", getState().getTargetAngle().getDegrees());
+
         if (Settings.DEBUG_MODE) {
-            if (Settings.EnabledSubsystems.FEEDER.get()) {
+            if (Settings.EnabledSubsystems.INTAKE.get()) {
                 RobotVisualizer.getInstance().updateIntake(getRelativePosition(), getRollerRPM());
-            }
-            else {
+            } else {
                 RobotVisualizer.getInstance().updateIntake(IntakeState.IDLE.getTargetAngle(), IntakeState.IDLE.getTargetDutyCycle());
             }
         }

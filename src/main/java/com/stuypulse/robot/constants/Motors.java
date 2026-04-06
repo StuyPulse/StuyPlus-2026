@@ -35,15 +35,24 @@ public interface Motors {
     /** Classes to store all of the values a motor needs */
     public interface Intake {
         TalonFXConfig PIVOT_CONFIG = new TalonFXConfig()
-            .withCurrentLimitAmps(50)
+            .withCurrentLimitAmps(15)
             .withInvertedValue(InvertedValue.CounterClockwise_Positive) // not necessarily true, get inverted val
             .withNeutralMode(NeutralModeValue.Brake)
-            .withPIDConstants(Gains.Intake.kP, Gains.Intake.kI, Gains.Intake.kD, 0);
+            .withPIDConstants(Gains.Intake.kP, Gains.Intake.kI, Gains.Intake.kD, 0)
+            .withSensorToMechanismRatio(Settings.Intake.PIVOT_GEAR_RATIO);
         
-        TalonFXConfig ROLLER_CONFIG = new TalonFXConfig() // TODO: apply later
+        TalonFXConfig LEFT_ROLLER_CONFIG = new TalonFXConfig() // TODO: apply later
+            .withCurrentLimitAmps(50)
+            .withInvertedValue(InvertedValue.CounterClockwise_Positive) // not necessarily true, get inverted val
+            .withNeutralMode(NeutralModeValue.Coast)
+            .withSensorToMechanismRatio(Settings.Intake.ROLLER_GEAR_RATIO);
+        
+        TalonFXConfig RIGHT_ROLLER_CONFIG = new TalonFXConfig() // TODO: apply later
             .withCurrentLimitAmps(50)
             .withInvertedValue(InvertedValue.Clockwise_Positive) // not necessarily true, get inverted val
-            .withNeutralMode(NeutralModeValue.Brake);
+            .withNeutralMode(NeutralModeValue.Coast)
+            .withSensorToMechanismRatio(Settings.Intake.ROLLER_GEAR_RATIO);
+
     }
 
     public interface Feeder {

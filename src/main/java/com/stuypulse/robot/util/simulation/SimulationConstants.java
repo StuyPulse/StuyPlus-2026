@@ -156,14 +156,14 @@ public interface SimulationConstants {
         double INTAKE_WIDTH = 0.5;
         double INTAKE_LENGTH = 0.15;
 
-        double PIVOT_ARM_LENGTH = 0.2639822;
-        double PIVOT_END_X = 0.1093388152;
+        double PIVOT_ARM_LENGTH = 0.1439822;
+        double PIVOT_END_X = 0;
 
         public Offsets PIVOT_OFFSETS = new Offsets(
             0.2393388152,
             0,
             0.19685, // CAD zero angle offset degrees
-            Degrees.of(-19.0),
+            Degrees.of(-40),
             Degrees.of(0),
             Degrees.of(90)
         );
@@ -174,7 +174,7 @@ public interface SimulationConstants {
     public interface Hopper {
         int FUEL_CAPACITY = 54;
 
-        public Offsets OFFSETS = new Offsets(-0.38, 0, 0, Degrees.of(90), Degrees.of(0), Degrees.of(90));
+        public Offsets OFFSETS = new Offsets(-0.06, 0, 0.25, Degrees.of(90), Degrees.of(0), Degrees.of(90));
     }
 
     public interface Drivetrain {

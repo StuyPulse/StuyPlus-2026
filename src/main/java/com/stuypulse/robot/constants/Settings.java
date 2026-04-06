@@ -8,14 +8,16 @@ package com.stuypulse.robot.constants;
 import com.ctre.phoenix6.CANBus;
 import com.pathplanner.lib.path.PathConstraints;
 import com.stuypulse.stuylib.network.SmartBoolean;
-import com.stuypulse.stuylib.network.SmartNumber;
 
-import edu.wpi.first.wpilibj.LEDPattern;
-import edu.wpi.first.wpilibj.util.Color;
-
+import edu.wpi.first.math.VecBuilder;
+import edu.wpi.first.math.Vector;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.numbers.N3;
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.wpilibj.LEDPattern;
+import edu.wpi.first.wpilibj.util.Color;
 
 /*-
  * File containing tunable settings for every subsystem on the robot.
@@ -26,45 +28,61 @@ import edu.wpi.first.math.util.Units;
 public interface Settings {
     double DT = 0.020;
     boolean DEBUG_MODE = true;
-    CANBus CANIVORE = new CANBus("swerve");
+    CANBus CANIVORE = new CANBus("rio");
 
     public interface EnabledSubsystems {
         SmartBoolean FEEDER = new SmartBoolean("Enabled Subsystems/Feeder", true);
         SmartBoolean INTAKE = new SmartBoolean("Enabled Subsystems/Intake", true);
         SmartBoolean LED = new SmartBoolean("Enabled Subsystems/LED", true);
         SmartBoolean SHOOTER = new SmartBoolean("Enabled Subsystems/Shooter", true);
-        SmartBoolean VISION = new SmartBoolean("Enabled Subsystems/Vision", true);
+        SmartBoolean VISION = new SmartBoolean("Enabled Subsystems/Vision", false);
         SmartBoolean SWERVE = new SmartBoolean("Enabled Subsystems/Swerve", true);
     }
 
+    public interface Vision {
+        //TODO: These numbers are temporary, may need testing
+        public final Vector<N3> MT1_STDEVS = VecBuilder.fill(0.5, 0.5, 1.0);
+        public final Vector<N3> MT2_STDEVS = VecBuilder.fill(0.7, 0.7, 694694.0);
+
+        public final Translation2d INVALID_POSITION = new Translation2d(8.2705, 4.0345);
+        public final double INVALID_POSITION_TOLERANCE_M = 0.05;
+        public final double MAX_ANGULAR_VELOCITY_RAD_SEC = 2 * Math.PI;
+
+    }
+
     public interface Intake {
-        double ARM_LENGTH = 1.0; // TODO: get actual values
+        double PIVOT_LENGTH = 1.0; // TODO: get actual values
         double ROLLER_MAX_ACCEL = 0;
         double ROLLER_MAX_VEL = 0;
-        double INITIAL_POSITION = 0;
+        double PIVOT_STALL_CURRENT = 55; // TODO: set
+        double PIVOT_STALL_DEBOUNCE_SEC = 1;
+        double ROLLER_STALL_CURRENT = 55; // TODO: set
+        double ROLLER_STALL_DEBOUNCE_SEC = 1;
+        Rotation2d PIVOT_INITIAL_ANGLE = Rotation2d.fromDegrees(0);
+
+        Rotation2d IDLE_ANGLE = Rotation2d.fromDegrees(0);
+        Rotation2d PIVOT_DOWN_ANGLE = Rotation2d.fromDegrees(122);
+
+        double HOMING_UP_VOLTAGE = -3;
+        double HOMING_DOWN_VOLTAGE = 3;
 
         double IDLE_DUTY_CYCLE = 0;
-
-        Rotation2d INTAKE_ANGLE = Rotation2d.fromDegrees(40);
-        double INTAKE_DUTY_CYCLE = 0.8;
-
-        Rotation2d OUTTAKE_ANGLE = Rotation2d.fromDegrees(67);
-        double OUTTAKE_DUTY_CYCLE = -0.8;
-
-        Rotation2d IDLE_ANGLE = Rotation2d.fromDegrees(140);
-
-        Rotation2d AGITATE_UP_ANGLE = Rotation2d.fromDegrees(115);
-        Rotation2d AGITATE_DOWN_ANGLE = Rotation2d.fromDegrees(67);
+        double INTAKE_DUTY_CYCLE = 1;
+        double OUTTAKE_DUTY_CYCLE = -1;
 
         double J_KG_METERS_SQUARED = 0.1;
         double PIVOT_MIN_ANGLE = 0.0;
         double PIVOT_MAX_ANGLE = 2 * Math.PI;
-        double GEAR_RATIO = 20.0;
+        double PIVOT_GEAR_RATIO = 60.0;
+        double ROLLER_GEAR_RATIO = 16.0/27.0;
 
-        double RAMP_RATE = 0.25;
-        double STEP_VOLTAGE = 900; // volts
+        double RAMP_RATE = 2;
+        double STEP_VOLTAGE = 6; // volts
 
-        Rotation2d ANGLE_TOLERANCE = Rotation2d.fromDegrees(0.5); // degrees
+        Rotation2d ANGLE_TOLERANCE = Rotation2d.fromDegrees(0.5); 
+
+        Rotation2d PUSHDOWN_THRESHOLD = Rotation2d.fromDegrees(107); //TODO:Temporary, needs testing
+        double PUSHDOWN_VOLTAGE = 0;
     }
 
     public interface Feeder {
@@ -73,7 +91,7 @@ public interface Settings {
     }
 
     public interface LED {
-        int LED_LENGTH = 60; // TODO: ask Plus-ME for LED Length
+        int LED_LENGTH = 60; 
  
         //shooter
         LEDPattern SHOOTING = LEDPattern.solid(Color.kOrange);
@@ -97,6 +115,9 @@ public interface Settings {
         double SHOOT_TIME_AUTO = 1.5;
         double RAMP_RATE = 0.25;
         double STEP_VOLTAGE = 900;
+
+        double CORNER = 2700; 
+        double HUB = 2500;
     }
 
     public interface Swerve {
@@ -141,7 +162,8 @@ public interface Settings {
             }
 
             public interface Targets {
-                
+                Rotation2d HUB_LEFT_CORNER = Rotation2d.fromDegrees(45); //TODO: Get actual angle
+                Rotation2d HUB_RIGHT_CORNER = Rotation2d.fromDegrees(-45);
             }
         }
     }
