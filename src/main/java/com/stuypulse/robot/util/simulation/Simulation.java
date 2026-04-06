@@ -1,5 +1,6 @@
 package com.stuypulse.robot.util.simulation;
 
+import com.stuypulse.robot.constants.Settings;
 import com.stuypulse.robot.subsystems.intake.Intake;
 import com.stuypulse.robot.subsystems.swerve.CommandSwerveDrivetrain;
 import com.stuypulse.stuylib.network.SmartBoolean;
@@ -87,9 +88,33 @@ public class Simulation {
             * Math.sin(intakeSim.getRelativePosition().getRadians() + SimulationConstants.Intake.PIVOT_OFFSETS.toRotation3d().getX());
     }
 
+    private void updateIntakeEnabled(boolean enabled) {
+        if (enabled) {
+            intakeMSim.startIntake();
+        } else {
+            intakeMSim.stopIntake();
+        }
+    }
+
+    private void updateIntake() {
+        boolean intakeEnabled = intakeSim.atAngle() 
+            && intakeSim.getRelativePosition().getDegrees() < Settings.Intake.PIVOT_DOWN_ANGLE.getDegrees() 
+            && Math.abs(intakeSim.getRollerRPM()) > 100;
+        
+        SmartDashboard.putBoolean("Intake/MapleSimIntakeEnabled", intakeEnabled);
+        // SmartDashboard.putNumber("Intake/IntakeRPM", Math.abs(intakeSim.getRollerRPM()));
+        // SmartDashboard.putBoolean("Intake/IntakeGreater100", Math.abs(intakeSim.getRollerRPM()) > 100);
+        // SmartDashboard.putNumber("Intake/Degrees", Math.toDegrees(intakeSim.getPivotAngleRad()));
+        // SmartDashboard.putBoolean("Intake/LessThanAgitateDownAngle", Math.toDegrees(intakeSim.getPivotAngleRad()) < Settings.Intake.AGITATE_DOWN_ANGLE.getDegrees());
+        // SmartDashboard.putBoolean("Intake/AtAngle", intakeSim.atAngle());
+        updateIntakeEnabled(intakeEnabled);
+    }
+
     public synchronized void update() {
         if (swerveMSim == null) return;
         fuel.set(ARENA.getGamePiecesArrayByType("Fuel"));
+
+        updateIntake();
 
         double armEndX = getIntakeArmEndX();
         SmartDashboard.putNumber("Intake/endX", armEndX);
