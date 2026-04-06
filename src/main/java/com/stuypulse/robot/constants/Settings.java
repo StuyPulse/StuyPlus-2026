@@ -49,7 +49,6 @@ public interface Settings {
     }
 
     public interface Intake {
-        double PIVOT_LENGTH = 1.0; // TODO: get actual values
         double ROLLER_MAX_ACCEL = 0;
         double ROLLER_MAX_VEL = 0;
         double PIVOT_STALL_CURRENT = 25; 

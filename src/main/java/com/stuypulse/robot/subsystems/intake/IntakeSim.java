@@ -2,33 +2,26 @@ package com.stuypulse.robot.subsystems.intake;
 
 import java.util.Optional;
 
-import java.util.Optional;
-
 import com.stuypulse.robot.constants.Gains;
 import com.stuypulse.robot.constants.Settings;
 import com.stuypulse.robot.util.SysId;
-import com.stuypulse.robot.util.SysId;
+import com.stuypulse.robot.util.simulation.SimulationConstants;
 
 import edu.wpi.first.math.controller.PIDController;
-import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.math.system.plant.LinearSystemId;
-import edu.wpi.first.networktables.NetworkTableInstance;
-import edu.wpi.first.networktables.StructPublisher;
 import edu.wpi.first.wpilibj.simulation.FlywheelSim;
 import edu.wpi.first.wpilibj.simulation.SingleJointedArmSim;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
-import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
-
 
 public class IntakeSim extends Intake {
     private final FlywheelSim intakeRollerMotor;
     private final PIDController pivotController;
     private final SingleJointedArmSim sim;
 
+    private Rotation2d zeroOffset;
     private Optional<Double> pivotVoltageOverride;
 
     public IntakeSim() {
@@ -56,18 +49,20 @@ public class IntakeSim extends Intake {
                 Settings.Intake.PIVOT_GEAR_RATIO),
             gearbox,
             Settings.Intake.PIVOT_GEAR_RATIO,
-            Settings.Intake.PIVOT_LENGTH,
+            SimulationConstants.Intake.PIVOT_ARM_LENGTH,
             Settings.Intake.PIVOT_MIN_ANGLE,
             Settings.Intake.PIVOT_MAX_ANGLE,
             true,
             Settings.Intake.PIVOT_INITIAL_ANGLE.getRadians()  
-            );
+        );
+        
+        zeroOffset = new Rotation2d();
         
         pivotVoltageOverride = Optional.empty();
     }
     @Override
     public Rotation2d getRelativePosition() {
-        return new Rotation2d(sim.getAngleRads());
+        return new Rotation2d(sim.getAngleRads() + zeroOffset.getRadians());
     }
 
     @Override
@@ -84,11 +79,12 @@ public class IntakeSim extends Intake {
 
     @Override
     public void setPivotZero() {
-        // TODO: make
+        zeroOffset = new Rotation2d(-sim.getAngleRads());
     }
     
     @Override
     public void setPivotZeroAtBottom() {
+        zeroOffset = new Rotation2d(-sim.getAngleRads()).plus(new Rotation2d(Math.toRadians(122)));
     }
 
     public void setPivotVoltageOverride(Optional<Double> pivotVoltageOverride) {
@@ -115,14 +111,14 @@ public class IntakeSim extends Intake {
         intakeRollerMotor.setInputVoltage(rollerVoltage); // TODO: stop doing ts the manual way
         intakeRollerMotor.update(Settings.DT);
 
-        double voltage = pivotController.calculate(sim.getAngleRads(), getState().getTargetAngle().getRadians());
+        double voltage = pivotController.calculate(getRelativePosition().getRadians(), getState().getTargetAngle().getRadians());
         sim.setInputVoltage(voltage);
         sim.update(Settings.DT);
 
         SmartDashboard.putNumber("Intake/rollerVoltage", rollerVoltage);
         SmartDashboard.putNumber("Intake/rollerRPM", getRollerRPM());
         SmartDashboard.putNumber("Intake/pivotVoltage", voltage);
-        SmartDashboard.putNumber("Intake/pivotAngle", Math.toDegrees(sim.getAngleRads()));
+        SmartDashboard.putNumber("Intake/pivotAngle", getRelativePosition().getDegrees());
         SmartDashboard.putNumber("Intake/pivotTarget", getState().getTargetAngle().getDegrees());
     }
 }
