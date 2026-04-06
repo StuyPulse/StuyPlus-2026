@@ -3,6 +3,7 @@ package com.stuypulse.robot.subsystems.intake;
 import java.util.Optional;
 
 import com.ctre.phoenix6.controls.Follower;
+import com.ctre.phoenix6.controls.ControlRequest;
 import com.ctre.phoenix6.controls.DutyCycleOut;
 import com.ctre.phoenix6.controls.PositionVoltage;
 import com.ctre.phoenix6.controls.VoltageOut;
@@ -44,8 +45,8 @@ public class IntakeImpl extends Intake {
         Motors.Intake.LEFT_ROLLER_CONFIG.configure(intakeRollerMotorLeft);
         Motors.Intake.RIGHT_ROLLER_CONFIG.configure(intakeRollerMotorRight);
 
-        rollerController = new DutyCycleOut(getState().getTargetDutyCycle());
-        pivotController = new PositionVoltage(getState().getTargetAngle().getRotations());
+        rollerController = new DutyCycleOut(getState().getTargetDutyCycle()).withEnableFOC(true);
+        pivotController = new PositionVoltage(getState().getTargetAngle().getRotations()).withEnableFOC(true);
         followerController = new Follower(Ports.Intake.MOTOR_INTAKE_ROLLER_LEFT, MotorAlignmentValue.Opposed);
 
         intakeRollerMotorRight.setControl(followerController);
@@ -89,7 +90,7 @@ public class IntakeImpl extends Intake {
 
     @Override
     public void setPivotZeroAtBottom() {
-        intakePivotMotor.setPosition(122);
+        intakePivotMotor.setPosition(Rotation2d.fromDegrees(122).getRotations());
     }
 
     private boolean pivotStalling() {
@@ -103,8 +104,6 @@ public class IntakeImpl extends Intake {
     private void stopMotors() {
         intakePivotMotor.stopMotor();
         intakeRollerMotorLeft.stopMotor();
-        intakeRollerMotorRight.stopMotor(); // possibly if cancoder issues arise, although rarely, the follower wouldn't
-                                            // stop, so we stop both just in case
     }
 
     @Override
@@ -118,41 +117,53 @@ public class IntakeImpl extends Intake {
 
         // Input
 
-        double pivotPosition = intakePivotMotor.getPosition().getValueAsDouble();
-        boolean pivotAboveThreshold = pivotPosition > Settings.Intake.PUSHDOWN_THRESHOLD.getRotations();
+        final double pivotPosition = intakePivotMotor.getPosition().getValueAsDouble();
+        final boolean pivotAboveThreshold = pivotPosition > Settings.Intake.PUSHDOWN_THRESHOLD.getRotations();
 
-        boolean pivotStalling = pivotStalling();
+        final boolean pivotStalling = pivotStalling();
 
-        IntakeState currentState = getState();
+        final IntakeState currentState = getState();
 
-        boolean pushingDown = currentState == IntakeState.INTAKE ||
+        final boolean pushingDown = currentState == IntakeState.INTAKE ||
                 currentState == IntakeState.OUTTAKE ||
                 currentState == IntakeState.DOWN &&
                 !pivotAboveThreshold;
 
         // State
 
-        if (currentState == IntakeState.HOMING && pivotStalling) {
+        if (currentState == IntakeState.HOMING_UP && pivotStalling) {
             setPivotZero();
             setState(IntakeState.IDLE);
         }
 
+        if (currentState == IntakeState.HOMING_DOWN && pivotStalling) {
+            setPivotZeroAtBottom();
+            setState(IntakeState.INTAKE);
+        }
+
+        // if (rollersStalling()) {
+        //     setState(IntakeState.DOWN);
+        //     setPivotZeroAtBottom();
+        // }
+
         // Output
 
-        var pivotControl = switch (currentState) {
+        final ControlRequest pivotControl = switch (currentState) {
             case INTAKE, OUTTAKE, DOWN -> {
                 if (pivotAboveThreshold) {
-                    yield new VoltageOut(0); // wait until pivot reaches the bottom to apply pushdown
+                    // yield pivotController.withPosition(currentState.getTargetAngle().getRotations());
+                    yield new VoltageOut(Settings.Intake.PUSHDOWN_VOLTAGE); // wait until pivot reaches the bottom to apply pushdown
                 } else {
                     yield pivotController.withPosition(currentState.getTargetAngle().getRotations());
                 }
             }
 
-            case HOMING -> new VoltageOut(Settings.Intake.HOMING_VOLTAGE);
+            case HOMING_UP -> new VoltageOut(Settings.Intake.HOMING_UP_VOLTAGE);
+            case HOMING_DOWN -> new VoltageOut(Settings.Intake.HOMING_DOWN_VOLTAGE);
             default -> pivotController.withPosition(currentState.getTargetAngle().getRotations());
         };
 
-        var rollerControl = rollerController.withOutput(pivotAboveThreshold ? currentState.getTargetDutyCycle() : 0);
+        final DutyCycleOut rollerControl = rollerController.withOutput(pivotAboveThreshold ? currentState.getTargetDutyCycle() : 0);
 
         // Apply
 
@@ -165,12 +176,15 @@ public class IntakeImpl extends Intake {
 
         // Log
 
-        SmartDashboard.putNumber("Intake/Roller Current (amps)",
+        SmartDashboard.putNumber("Intake/Left Roller Current (amps)",
                 intakeRollerMotorLeft.getStatorCurrent().getValueAsDouble());
-        SmartDashboard.putNumber("Intake/Roller Voltage", intakeRollerMotorLeft.getMotorVoltage().getValueAsDouble());
+        SmartDashboard.putNumber("Intake/Right Roller Current", intakeRollerMotorRight.getStatorCurrent().getValueAsDouble());
+        SmartDashboard.putNumber("Intake/Left Roller Voltage", intakeRollerMotorLeft.getMotorVoltage().getValueAsDouble());
+        SmartDashboard.putNumber("Intake/Right Roller Voltage", intakeRollerMotorRight.getMotorVoltage().getValueAsDouble());
         SmartDashboard.putBoolean("Intake/Pushing Down", pushingDown);
 
-        SmartDashboard.putNumber("Intake/Roller Duty Cycle", intakeRollerMotorLeft.getDutyCycle().getValueAsDouble());
+        SmartDashboard.putNumber("Intake/Left Roller Duty Cycle", intakeRollerMotorLeft.getDutyCycle().getValueAsDouble());
+        SmartDashboard.putNumber("Intake/Right Roller Duty Cycle", intakeRollerMotorRight.getDutyCycle().getValueAsDouble());
 
         SmartDashboard.putNumber("Intake/Pivot Current (amps)", intakePivotMotor.getStatorCurrent().getValueAsDouble());
         SmartDashboard.putNumber("Intake/Pivot Voltage", intakePivotMotor.getMotorVoltage().getValueAsDouble());

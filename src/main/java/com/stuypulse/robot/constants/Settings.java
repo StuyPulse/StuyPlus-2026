@@ -30,10 +30,10 @@ public interface Settings {
 
     public interface EnabledSubsystems {
         // SmartBoolean FEEDER = new SmartBoolean("Enabled Subsystems/Feeder", true);
-        SmartBoolean INTAKE = new SmartBoolean("Enabled Subsystems/Intake", false);
+        SmartBoolean INTAKE = new SmartBoolean("Enabled Subsystems/Intake", true);
         // SmartBoolean LED = new SmartBoolean("Enabled Subsystems/LED", true);
         // SmartBoolean SHOOTER = new SmartBoolean("Enabled Subsystems/Shooter", true);
-        SmartBoolean VISION = new SmartBoolean("Enabled Subsystems/Vision", false);
+        SmartBoolean VISION = new SmartBoolean("Enabled Subsystems/Vision", true);
         SmartBoolean SWERVE = new SmartBoolean("Enabled Subsystems/Swerve", true);
     }
 
@@ -61,7 +61,8 @@ public interface Settings {
         Rotation2d IDLE_ANGLE = Rotation2d.fromDegrees(0);
         Rotation2d PIVOT_DOWN_ANGLE = Rotation2d.fromDegrees(122);
 
-        double HOMING_VOLTAGE = -3;
+        double HOMING_UP_VOLTAGE = -3;
+        double HOMING_DOWN_VOLTAGE = 3;
 
         double IDLE_DUTY_CYCLE = 0;
         double INTAKE_DUTY_CYCLE = 1;
@@ -71,7 +72,7 @@ public interface Settings {
         double PIVOT_MIN_ANGLE = 0.0;
         double PIVOT_MAX_ANGLE = 2 * Math.PI;
         double PIVOT_GEAR_RATIO = 60.0;
-        double ROLLER_GEAR_RATIO = 1;
+        double ROLLER_GEAR_RATIO = 16.0/27.0;
 
         double RAMP_RATE = 2;
         double STEP_VOLTAGE = 6; // volts
@@ -79,7 +80,7 @@ public interface Settings {
         Rotation2d ANGLE_TOLERANCE = Rotation2d.fromDegrees(0.5); 
 
         Rotation2d PUSHDOWN_THRESHOLD = Rotation2d.fromDegrees(107); //TODO:Temporary, needs testing
-        double PUSHDOWN_VOLTAGE = 1;
+        double PUSHDOWN_VOLTAGE = 0;
     }
 
     // public interface Feeder {
@@ -88,7 +89,7 @@ public interface Settings {
     // }
 
     // public interface LED {
-    //     int LED_LENGTH = 60; 
+    //     int LED_LENGTH = 60; // TODO: ask Plus-ME for LED Length
  
     //     //shooter
     //     LEDPattern SHOOTING = LEDPattern.solid(Color.kOrange);
@@ -112,9 +113,6 @@ public interface Settings {
     //     double SHOOT_TIME_AUTO = 1.5;
     //     double RAMP_RATE = 0.25;
     //     double STEP_VOLTAGE = 900;
-
-    //     double CORNER = 2700; 
-    //     double HUB = 2500;
     // }
 
     public interface Swerve {

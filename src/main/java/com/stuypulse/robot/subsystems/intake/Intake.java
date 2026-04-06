@@ -1,6 +1,7 @@
 package com.stuypulse.robot.subsystems.intake;
 
 import com.stuypulse.robot.Robot;
+import com.stuypulse.robot.commands.PreMatch;
 import com.stuypulse.robot.commands.intake.IntakeSetZero;
 import com.stuypulse.robot.commands.intake.IntakeSetZeroAtBottom;
 import com.stuypulse.robot.constants.Settings;
@@ -25,6 +26,7 @@ public abstract class Intake extends SubsystemBase {
         
         SmartDashboard.putData("Set Pivot 0", new IntakeSetZero());
         SmartDashboard.putData("Set Pivot 0 at Bottom", new IntakeSetZeroAtBottom());
+        SmartDashboard.putData("Run pre-match Tests", new PreMatch());
     }
     
     public static Intake getInstance() {
@@ -36,7 +38,8 @@ public abstract class Intake extends SubsystemBase {
         INTAKE(Settings.Intake.PIVOT_DOWN_ANGLE, Settings.Intake.INTAKE_DUTY_CYCLE), // (sucks in the balls) [pivot down, rollers running]
         OUTTAKE(Settings.Intake.PIVOT_DOWN_ANGLE, Settings.Intake.OUTTAKE_DUTY_CYCLE), // (trips the balls out) [pivot down, rollers running reverse]
         DOWN(Settings.Intake.PIVOT_DOWN_ANGLE, Settings.Intake.IDLE_DUTY_CYCLE),
-        HOMING(Settings.Intake.PIVOT_INITIAL_ANGLE, Settings.Intake.IDLE_DUTY_CYCLE);
+        HOMING_UP(Settings.Intake.PIVOT_INITIAL_ANGLE, Settings.Intake.IDLE_DUTY_CYCLE),
+        HOMING_DOWN(Settings.Intake.PIVOT_DOWN_ANGLE, Settings.Intake.IDLE_DUTY_CYCLE);
 
         private double dutyCycle;
         private Rotation2d angle;

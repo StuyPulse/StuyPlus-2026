@@ -2,8 +2,11 @@ package com.stuypulse.robot.subsystems.intake;
 
 import java.util.Optional;
 
+import java.util.Optional;
+
 import com.stuypulse.robot.constants.Gains;
 import com.stuypulse.robot.constants.Settings;
+import com.stuypulse.robot.util.SysId;
 import com.stuypulse.robot.util.SysId;
 
 import edu.wpi.first.math.controller.PIDController;
@@ -17,6 +20,7 @@ import edu.wpi.first.networktables.StructPublisher;
 import edu.wpi.first.wpilibj.simulation.FlywheelSim;
 import edu.wpi.first.wpilibj.simulation.SingleJointedArmSim;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 
 
@@ -54,15 +58,15 @@ public class IntakeSim extends Intake {
             LinearSystemId.createDCMotorSystem(
                 DCMotor.getKrakenX60(1),
                 Settings.Intake.J_KG_METERS_SQUARED,
-                Settings.Intake.PIVOT_GEAR_RATIO
-            ),
+                Settings.Intake.PIVOT_GEAR_RATIO),
             gearbox,
             Settings.Intake.PIVOT_GEAR_RATIO,
             Settings.Intake.PIVOT_LENGTH,
             Settings.Intake.PIVOT_MIN_ANGLE,
             Settings.Intake.PIVOT_MAX_ANGLE,
             true,
-            Settings.Intake.PIVOT_INITIAL_ANGLE.getRadians());
+            Settings.Intake.PIVOT_INITIAL_ANGLE.getRadians()  
+            );
         
         pivotVoltageOverride = Optional.empty();
     }

@@ -13,7 +13,7 @@ import com.stuypulse.robot.commands.swerve.SwerveDriveXMode;
 import com.stuypulse.robot.commands.swerve.PIDtoPose.SwerveDrivePIDToPose;
 import com.stuypulse.robot.commands.intake.IntakeAgitateWhileOuttaking;
 import com.stuypulse.robot.commands.intake.IntakeSetDown;
-import com.stuypulse.robot.commands.intake.IntakeSetHoming;
+import com.stuypulse.robot.commands.intake.IntakeSetHomingDown;
 import com.stuypulse.robot.commands.intake.IntakeSetIdle;
 import com.stuypulse.robot.commands.intake.IntakeSetIntake;
 import com.stuypulse.robot.commands.intake.IntakeSetOuttake;
@@ -109,13 +109,13 @@ public class RobotContainer {
             .whileTrue(new SwerveDriveXMode());
 
         driver.y()  
-            .onTrue(new IntakeSetHoming());
+            .onTrue(new IntakeSetHomingDown());
     }
 
     /**************/
     /*** AUTONS ***/
     /**************/
-    public void configureAutons() {
+     public void configureAutons() {
         autonChooser.addOption("Do Nothing", new DoNothingAuton());
 
         // AutonConfig LeftBumpFerry = new AutonConfig("Left Bump Ferry", LeftBumpFerry::new, 

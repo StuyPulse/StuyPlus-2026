@@ -6,8 +6,9 @@
 
 package com.stuypulse.robot.subsystems.swerve;
 
-import static edu.wpi.first.units.Units.Second;
-import static edu.wpi.first.units.Units.Volts;
+import static edu.wpi.first.units.Units.*;
+
+import org.ironmaple.simulation.drivesims.SwerveDriveSimulation;
 
 import com.stuypulse.stuylib.math.Angle;
 import com.stuypulse.stuylib.math.Vector2D;
@@ -17,6 +18,8 @@ import com.stuypulse.robot.constants.Field;
 import com.stuypulse.robot.constants.Gains;
 import com.stuypulse.robot.constants.Settings;
 import com.stuypulse.robot.subsystems.swerve.TunerConstants.TunerSwerveDrivetrain;
+import com.stuypulse.robot.util.simulation.MapleSimSwerveDrivetrain;
+import com.stuypulse.robot.util.simulation.SimulationConstants;
 
 import edu.wpi.first.math.Matrix;
 import edu.wpi.first.math.geometry.Pose2d;
@@ -27,11 +30,14 @@ import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.math.numbers.N1;
 import edu.wpi.first.math.numbers.N3;
+import edu.wpi.first.math.system.plant.DCMotor;
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.networktables.StructArrayPublisher;
 import edu.wpi.first.networktables.StructPublisher;
 import edu.wpi.first.wpilibj.Notifier;
 import edu.wpi.first.wpilibj.RobotController;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Subsystem;
@@ -39,6 +45,11 @@ import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 
 import com.ctre.phoenix6.SignalLogger;
 import com.ctre.phoenix6.Utils;
+import com.ctre.phoenix6.configs.MotorOutputConfigs;
+import com.ctre.phoenix6.configs.TalonFXConfiguration;
+import com.ctre.phoenix6.hardware.CANcoder;
+import com.ctre.phoenix6.hardware.TalonFX;
+import com.ctre.phoenix6.signals.NeutralModeValue;
 import com.ctre.phoenix6.configs.MotorOutputConfigs;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.hardware.CANcoder;
@@ -202,7 +213,7 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
         SwerveDrivetrainConstants drivetrainConstants,
         SwerveModuleConstants<?, ?, ?>... modules
     ) {
-        super(drivetrainConstants, modules);
+        super(drivetrainConstants, MapleSimSwerveDrivetrain.regulateModuleConstantsForSimulation(modules));
         if (Utils.isSimulation()) {
             startSimThread();
         }
@@ -226,7 +237,7 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
         double odometryUpdateFrequency,
         SwerveModuleConstants<?, ?, ?>... modules
     ) {
-        super(drivetrainConstants, odometryUpdateFrequency, modules);
+        super(drivetrainConstants, odometryUpdateFrequency, MapleSimSwerveDrivetrain.regulateModuleConstantsForSimulation(modules));
         if (Utils.isSimulation()) {
             startSimThread();
         }
@@ -258,7 +269,7 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
         Matrix<N3, N1> visionStandardDeviation,
         SwerveModuleConstants<?, ?, ?>... modules
     ) {
-        super(drivetrainConstants, odometryUpdateFrequency, odometryStandardDeviation, visionStandardDeviation, modules);
+        super(drivetrainConstants, odometryUpdateFrequency, odometryStandardDeviation, visionStandardDeviation, MapleSimSwerveDrivetrain.regulateModuleConstantsForSimulation(modules));
         if (Utils.isSimulation()) {
             startSimThread();
         }
@@ -312,19 +323,30 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
         return m_sysIdRoutineSteer.quasistatic(direction);
     }
 
+    private MapleSimSwerveDrivetrain mapleSimSwerveDrivetrain = null;
+    @SuppressWarnings("unchecked")
     private void startSimThread() {
-        m_lastSimTime = Utils.getCurrentTimeSeconds();
-
-        /* Run simulation at a faster rate so PID gains behave more reasonably */
-        m_simNotifier = new Notifier(() -> {
-            final double currentTime = Utils.getCurrentTimeSeconds();
-            double deltaTime = currentTime - m_lastSimTime;
-            m_lastSimTime = currentTime;
-
-            /* use the measured time delta, get battery voltage from WPILib */
-            updateSimState(deltaTime, RobotController.getBatteryVoltage());
-        });
+        mapleSimSwerveDrivetrain = new MapleSimSwerveDrivetrain(
+                Seconds.of(kSimLoopPeriod),
+                SimulationConstants.Drivetrain.ROBOT_WEIGHT,
+                SimulationConstants.Drivetrain.LENGTH,
+                SimulationConstants.Drivetrain.WIDTH,
+                DCMotor.getKrakenX60(1),
+                DCMotor.getKrakenX60(1),
+                SimulationConstants.Drivetrain.WHEEL_COF,
+                getModuleLocations(),
+                getPigeon2(),
+                getModules(),
+                TunerConstants.FrontLeft,
+                TunerConstants.FrontRight,
+                TunerConstants.BackLeft,
+                TunerConstants.BackRight);
+        m_simNotifier = new Notifier(mapleSimSwerveDrivetrain::update);
         m_simNotifier.startPeriodic(kSimLoopPeriod);
+    }
+
+    public SwerveDriveSimulation getMapleSimDrive() {
+        return mapleSimSwerveDrivetrain.mapleSimDrive;
     }
 
     /**
@@ -365,8 +387,16 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
         return getState().Pose;
     }
     
-    public Pose2d getShooterPose() {
-        return getPose().plus(new Transform2d(0.0, -7.836, new Rotation2d())); // offset is negative because the shooter is behind the robot center
+    // public Pose2d getShooterPose() {
+    //     return SimulationConstants.Shooter.OFFSETS.applyToPose2d(mapleSimSwerveDrivetrain == null ? getPose() : getMapleSimDrive().getSimulatedDriveTrainPose()); // offset is negative because the shooter is behind the robot center
+    // }
+
+    @Override
+    public void resetPose(Pose2d pose) {
+        if (this.mapleSimSwerveDrivetrain != null)
+            mapleSimSwerveDrivetrain.mapleSimDrive.setSimulationWorldPose(pose);
+        Timer.delay(0.05); // Wait for simulation to update
+        super.resetPose(pose);
     }
 
     public void configureAutoBuilder(){
@@ -458,26 +488,11 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
     private final StructArrayPublisher<SwerveModuleState> modulePublisher = NetworkTableInstance.getDefault()
         .getStructArrayTopic("AdvScope/SwerveStates", SwerveModuleState.struct).publish();
 
-
-    // public void onDisabled() {
-    //     for(SwerveModule<TalonFX, TalonFX, CANcoder> module : getModules()) {
-    //         TalonFXConfiguration newDriveConfiguration  = new TalonFXConfiguration();
-    //         module.getDriveMotor().getConfigurator().refresh(newDriveConfiguration);
-    //         newDriveConfiguration.withMotorOutput(new MotorOutputConfigs().withNeutralMode(NeutralModeValue.Coast));
-    //         module.getDriveMotor().getConfigurator().apply(newDriveConfiguration);
-    //     }
-    // }
-
-    // public void onEnabled() {
-    //     for(SwerveModule<TalonFX, TalonFX, CANcoder> module : getModules()) {
-    //         module.getDriveMotor().getConfigurator().apply(new TalonFXConfiguration());
-    //     }
-    // }
-
     @Override
     public void periodic() {
-        if (Settings.DEBUG_MODE) {
-            posePublisher.set(Robot.isBlue() ? getPose() : Field.transformToOppositeAlliance(getPose()));
+        final Pose2d pose = mapleSimSwerveDrivetrain == null ? getPose() : mapleSimSwerveDrivetrain.mapleSimDrive.getSimulatedDriveTrainPose();
+        if (Settings.DEBUG_MODE) { // otherwise publishers in simulation.java are used
+            posePublisher.set(pose);
             chassisPublisher.set(getChassisSpeeds());
             modulePublisher.set(getModuleStates());
         }
@@ -493,7 +508,7 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
             SmartDashboard.putNumber("Swerve/Modules/Module " + i + "/Target Angle (deg)", getModule(i).getTargetState().angle.getDegrees() % 360);
         }
 
-        Field.FIELD2D.getRobotObject().setPose(Robot.isBlue() ? getPose() : Field.transformToOppositeAlliance(getPose()));
+        Field.FIELD2D.getRobotObject().setPose(Robot.isBlue() ? pose : Field.transformToOppositeAlliance(pose));
 
         if (Settings.DEBUG_MODE) {
             for (int i = 0; i < 4; i++) {

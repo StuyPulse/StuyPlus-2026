@@ -11,6 +11,11 @@ import com.stuypulse.robot.commands.vision.WhitelistAllTags;
 import com.stuypulse.robot.subsystems.swerve.CommandSwerveDrivetrain;
 import com.stuypulse.robot.subsystems.vision.LimelightVision.MegaTagMode;
 
+import com.stuypulse.robot.constants.Field;
+import com.stuypulse.robot.subsystems.swerve.CommandSwerveDrivetrain;
+import com.stuypulse.robot.util.simulation.Simulation;
+import com.stuypulse.robot.util.simulation.SimulationConstants;
+
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -56,6 +61,23 @@ public class Robot extends TimedRobot {
         SmartDashboard.putString("Bot/Alliance", alliance.name());
         SmartDashboard.putNumber("Match Time", DriverStation.getMatchTime());
     }
+
+    /******************/
+    /*** SIMULATION ***/
+    /******************/
+    @Override
+    public void simulationInit() {
+        CommandSwerveDrivetrain
+            .getInstance()
+            .getMapleSimDrive()
+            .setSimulationWorldPose(Robot.isBlue() ? SimulationConstants.ROBOTS_STARTING_POSITIONS[0] : Field.transformToOppositeAlliance(SimulationConstants.ROBOTS_STARTING_POSITIONS[0])); // start off in a convenient spot
+    }
+
+    @Override
+    public void simulationPeriodic() {
+        Simulation.getInstance().update();
+    }
+
 
     /*********************/
     /*** DISABLED MODE ***/
