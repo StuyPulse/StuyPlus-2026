@@ -94,9 +94,11 @@ public class RobotContainer {
         rightTrigger    
             .onTrue(new IntakeSetIntake());
 
-        driver.povDown()
+        //Outtake without agitating
+        //Bottom Right Paddle
+        driver.y()
             .whileTrue(new IntakeSetOuttake());
-        driver.povDown()
+        driver.y()
             .onFalse(new IntakeSetIntake());
 
         driver.povUp()
@@ -115,14 +117,11 @@ public class RobotContainer {
         driver.b()
             .whileTrue(new SwerveDrivePIDToPose(Field.outpost).andThen(new IntakeAgitateWhileOuttaking().repeatedly()));
         driver.b() 
-            .onFalse(new IntakeSetIntake());
+            .onFalse(new IntakeSetHomingDown());
         
         //Bottom Left Paddle
         driver.x()
             .whileTrue(new SwerveDriveXMode());
-
-        driver.y()  
-            .onTrue(new IntakeSetHomingUp());
     }
 
     /**************/
@@ -131,7 +130,7 @@ public class RobotContainer {
     public void configureAutons() {
         autonChooser.addOption("Do Nothing", new DoNothingAuton());
 
-        var LeftBumpFerryAuto = new AutonConfig("Left Bump Ferry", LeftBumpFerry::new, 
+        AutonConfig LeftBumpFerryAuto = new AutonConfig("Left Bump Ferry", LeftBumpFerry::new, 
             "Left Bump to Neutral", 
             "N to L.T.", 
             "L.T. Circle Hub", 

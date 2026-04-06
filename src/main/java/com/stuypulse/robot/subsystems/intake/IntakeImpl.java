@@ -179,10 +179,12 @@ public class IntakeImpl extends Intake {
         SmartDashboard.putNumber("Intake/Left Roller Current (amps)",
                 intakeRollerMotorLeft.getStatorCurrent().getValueAsDouble());
         SmartDashboard.putNumber("Intake/Right Roller Current", intakeRollerMotorRight.getStatorCurrent().getValueAsDouble());
-        SmartDashboard.putNumber("Intake/Roller Voltage", intakeRollerMotorLeft.getMotorVoltage().getValueAsDouble());
+        SmartDashboard.putNumber("Intake/Left Roller Voltage", intakeRollerMotorLeft.getMotorVoltage().getValueAsDouble());
+        SmartDashboard.putNumber("Intake/Right Roller Voltage", intakeRollerMotorRight.getMotorVoltage().getValueAsDouble());
         SmartDashboard.putBoolean("Intake/Pushing Down", pushingDown);
 
-        SmartDashboard.putNumber("Intake/Roller Duty Cycle", intakeRollerMotorLeft.getDutyCycle().getValueAsDouble());
+        SmartDashboard.putNumber("Intake/Left Roller Duty Cycle", intakeRollerMotorLeft.getDutyCycle().getValueAsDouble());
+        SmartDashboard.putNumber("Intake/Right Roller Duty Cycle", intakeRollerMotorRight.getDutyCycle().getValueAsDouble());
 
         SmartDashboard.putNumber("Intake/Pivot Current (amps)", intakePivotMotor.getStatorCurrent().getValueAsDouble());
         SmartDashboard.putNumber("Intake/Pivot Voltage", intakePivotMotor.getMotorVoltage().getValueAsDouble());
