@@ -155,9 +155,9 @@ public class RobotContainer {
             "RB to Outpost");
         RightBumpMidAuto.register(autonChooser);
 
-        AutonConfig TwoMeterPath = new AutonConfig("2 Meter Path", TwoMeterPath::new, 
+        AutonConfig TwoMeterPathAuto = new AutonConfig("2 Meter Path", TwoMeterPath::new,
         "2 meter path");
-        TwoMeterPath.register(autonChooser);
+        TwoMeterPathAuto.register(autonChooser);
 
         // autonChooser.addOption("SysID Module Translation Dynamic Forwards", swerve.sysIdDynamic(Direction.kForward));
         // autonChooser.addOption("SysID Module Translation Dynamic Backwards", swerve.sysIdDynamic(Direction.kReverse));
