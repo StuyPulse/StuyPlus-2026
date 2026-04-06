@@ -52,10 +52,10 @@ public class IntakeImpl extends Intake {
         intakeRollerMotorRight.setControl(followerController);
 
         pivotStalling = BStream.create(
-                () -> intakePivotMotor.getSupplyCurrent().getValueAsDouble() > Settings.Intake.PIVOT_STALL_CURRENT)
+                () -> intakePivotMotor.getStatorCurrent().getValueAsDouble() > Settings.Intake.PIVOT_STALL_CURRENT)
                 .filtered(new BDebounce.Both(Settings.Intake.PIVOT_STALL_DEBOUNCE_SEC));
         rollersStalling = BStream
-                .create(() -> intakeRollerMotorLeft.getSupplyCurrent()
+                .create(() -> intakeRollerMotorLeft.getStatorCurrent()
                         .getValueAsDouble() > Settings.Intake.ROLLER_STALL_CURRENT)
                 .filtered(new BDebounce.Both(Settings.Intake.ROLLER_STALL_DEBOUNCE_SEC));
 
@@ -138,7 +138,7 @@ public class IntakeImpl extends Intake {
 
         if (currentState == IntakeState.HOMING_DOWN && pivotStalling) {
             setPivotZeroAtBottom();
-            setState(IntakeState.INTAKE);
+            setState(IntakeState.DOWN);
         }
 
         if ((currentState == IntakeState.INTAKE || currentState == IntakeState.OUTTAKE || currentState == IntakeState.DOWN) && pivotStalling) {
@@ -190,7 +190,8 @@ public class IntakeImpl extends Intake {
         SmartDashboard.putNumber("Intake/Left Roller Duty Cycle", intakeRollerMotorLeft.getDutyCycle().getValueAsDouble());
         SmartDashboard.putNumber("Intake/Right Roller Duty Cycle", intakeRollerMotorRight.getDutyCycle().getValueAsDouble());
 
-        SmartDashboard.putNumber("Intake/Pivot Current (amps)", intakePivotMotor.getStatorCurrent().getValueAsDouble());
+        SmartDashboard.putNumber("Intake/Pivot Stator Current (amps)", intakePivotMotor.getStatorCurrent().getValueAsDouble());
+        SmartDashboard.putNumber("Intake/Pivot Supply Current (amps)", intakePivotMotor.getSupplyCurrent().getValueAsDouble());
         SmartDashboard.putNumber("Intake/Pivot Voltage", intakePivotMotor.getMotorVoltage().getValueAsDouble());
 
         SmartDashboard.putNumber("Intake/Pivot Angle (deg)", getRelativePosition().getDegrees());
