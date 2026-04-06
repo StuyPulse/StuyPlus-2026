@@ -95,10 +95,10 @@ public class RobotContainer {
             .onTrue(new IntakeSetIntake());
 
         //Outtake without agitating
-        //Bottom Right Paddle
-        driver.y()
+        //Top Left Paddle
+        driver.a()
             .whileTrue(new IntakeSetOuttake());
-        driver.y()
+        driver.a()
             .onFalse(new IntakeSetIntake());
 
         driver.povUp()
@@ -108,8 +108,8 @@ public class RobotContainer {
             .onTrue(new IntakeSetDown());
 
         //Rotate towards alliance Zone
-        //Top Left Paddle
-        driver.a()
+        //Bottom Right Paddle
+        driver.y()
             .whileTrue(new SwerveDriveRotate(driver, Rotation2d.k180deg));
 
         //Auto Drive to Outpost
