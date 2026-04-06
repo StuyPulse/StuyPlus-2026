@@ -321,7 +321,7 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
     @SuppressWarnings("unchecked")
     private void startSimThread() {
         mapleSimSwerveDrivetrain = new MapleSimSwerveDrivetrain(
-                Seconds.of(Settings.DT),
+                Seconds.of(kSimLoopPeriod),
                 SimulationConstants.Drivetrain.ROBOT_WEIGHT,
                 SimulationConstants.Drivetrain.LENGTH,
                 SimulationConstants.Drivetrain.WIDTH,
@@ -336,10 +336,10 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
                 TunerConstants.BackLeft,
                 TunerConstants.BackRight);
         m_simNotifier = new Notifier(mapleSimSwerveDrivetrain::update);
-        m_simNotifier.startPeriodic(Settings.DT);
+        m_simNotifier.startPeriodic(kSimLoopPeriod);
     }
 
-    public SwerveDriveSimulation getMapleSimDrivetrain() {
+    public SwerveDriveSimulation getMapleSimDrive() {
         return mapleSimSwerveDrivetrain.mapleSimDrive;
     }
 
@@ -484,9 +484,9 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
 
     @Override
     public void periodic() {
-        Pose2d pose = getPose();
-        if (Settings.DEBUG_MODE && mapleSimSwerveDrivetrain != null) { // otherwise publishers in simulation.java are used
-            posePublisher.set(Robot.isBlue() ? pose : Field.transformToOppositeAlliance(pose));
+        final Pose2d pose = mapleSimSwerveDrivetrain == null ? getPose() : mapleSimSwerveDrivetrain.mapleSimDrive.getSimulatedDriveTrainPose();
+        if (Settings.DEBUG_MODE) { // otherwise publishers in simulation.java are used
+            posePublisher.set(pose);
             chassisPublisher.set(getChassisSpeeds());
             modulePublisher.set(getModuleStates());
         }
@@ -497,16 +497,12 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
 
         for (int i = 0; i < 4; i++) {
             SmartDashboard.putNumber("Swerve/Modules/Module " + i + "/Speed (m per s)", getModule(i).getCurrentState().speedMetersPerSecond);
-              SmartDashboard.putNumber("Swerve/Modules/Module " + i + "/Target Speed (m per s)", getModule(i).getTargetState().speedMetersPerSecond);
+            SmartDashboard.putNumber("Swerve/Modules/Module " + i + "/Target Speed (m per s)", getModule(i).getTargetState().speedMetersPerSecond);
             SmartDashboard.putNumber("Swerve/Modules/Module " + i + "/Angle (deg)", getModule(i).getCurrentState().angle.getDegrees() % 360);
             SmartDashboard.putNumber("Swerve/Modules/Module " + i + "/Target Angle (deg)", getModule(i).getTargetState().angle.getDegrees() % 360);
         }
 
-        if (mapleSimSwerveDrivetrain == null) {
-            Field.FIELD2D.getRobotObject().setPose(Robot.isBlue() ? pose : Field.transformToOppositeAlliance(pose));
-        } else {
-            Field.FIELD2D.getRobotObject().setPose(Robot.isBlue() ? mapleSimSwerveDrivetrain.mapleSimDrive.getSimulatedDriveTrainPose() : Field.transformToOppositeAlliance(mapleSimSwerveDrivetrain.mapleSimDrive.getSimulatedDriveTrainPose()));
-        }
+        Field.FIELD2D.getRobotObject().setPose(Robot.isBlue() ? pose : Field.transformToOppositeAlliance(pose));
 
         if (Settings.DEBUG_MODE) {
             for (int i = 0; i < 4; i++) {

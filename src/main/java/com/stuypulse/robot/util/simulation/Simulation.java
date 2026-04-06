@@ -52,7 +52,7 @@ public class Simulation {
 
     private Simulation() {
         intakeSim = Intake.getInstance();
-        swerveMSim = CommandSwerveDrivetrain.getInstance().getMapleSimDrivetrain();
+        swerveMSim = CommandSwerveDrivetrain.getInstance().getMapleSimDrive();
         intakeMSim = createIntakeSimulation();
 
         ARENA = new Arena2026Rebuilt(false);
@@ -109,11 +109,11 @@ public class Simulation {
     public synchronized void update() {
         if (swerveMSim == null) return;
 
-        drivetrain.set(swerveMSim.getSimulatedDriveTrainPose());
-        swerve.set(Arrays.stream(swerveMSim.getModules())
-            .map(SwerveModuleSimulation::getCurrentState)
-            .toArray(SwerveModuleState[]::new));
-        chassis.set(swerveMSim.getDriveTrainSimulatedChassisSpeedsFieldRelative());
+        // drivetrain.set(swerveMSim.getSimulatedDriveTrainPose());
+        // swerve.set(Arrays.stream(swerveMSim.getModules())
+        //     .map(SwerveModuleSimulation::getCurrentState)
+        //     .toArray(SwerveModuleState[]::new));
+        // chassis.set(swerveMSim.getDriveTrainSimulatedChassisSpeedsFieldRelative());
 
         fuel.set(ARENA.getGamePiecesArrayByType("Fuel"));
 

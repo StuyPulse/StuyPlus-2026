@@ -56,7 +56,7 @@ public class Robot extends TimedRobot {
     public void simulationInit() {
         CommandSwerveDrivetrain
             .getInstance()
-            .getMapleSimDrivetrain()
+            .getMapleSimDrive()
             .setSimulationWorldPose(Robot.isBlue() ? SimulationConstants.ROBOTS_STARTING_POSITIONS[0] : Field.transformToOppositeAlliance(SimulationConstants.ROBOTS_STARTING_POSITIONS[0])); // start off in a convenient spot
     }
 
