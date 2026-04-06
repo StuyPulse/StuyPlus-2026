@@ -6,8 +6,10 @@ import com.stuypulse.robot.subsystems.intake.Intake.IntakeState;
 import com.stuypulse.robot.subsystems.swerve.CommandSwerveDrivetrain;
 import com.stuypulse.stuylib.network.SmartBoolean;
 
+import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Rotation3d;
+import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.networktables.StructArrayPublisher;
 import edu.wpi.first.networktables.StructPublisher;
@@ -33,6 +35,7 @@ public class Simulation {
     private final StructArrayPublisher<Pose3d> fuel;
     private final StructPublisher<Pose3d> intakePivot;
     private final StructPublisher<Pose3d> hopper;
+    private final StructPublisher<Pose3d> shooter;
 
     // private final Notifier simUpdateNotifier;
 
@@ -56,6 +59,7 @@ public class Simulation {
         fuel = table.getStructArrayTopic("AdvScope/FuelPoses", Pose3d.struct).publish();
         intakePivot = table.getStructTopic("AdvScope/IntakePose", Pose3d.struct).publish();
         hopper = table.getStructTopic("AdvScope/HopperPose", Pose3d.struct).publish();
+        shooter = table.getStructTopic("AdvScope/ShooterPose", Pose3d.struct).publish();
     }
 
     private void configureDrivetrain() {
@@ -114,5 +118,6 @@ public class Simulation {
         double armEndX = getIntakeArmEndX();
         intakePivot.set(getIntakePivotPose());
         hopper.set(SimulationConstants.Hopper.OFFSETS.applyToPose3d(new Pose3d(armEndX, 0, 0, new Rotation3d())));
+        shooter.set(SimulationConstants.Shooter.OFFSETS.applyToPose3dRobotRelative(new Pose3d(swerveMSim.getSimulatedDriveTrainPose())));
     }
 }

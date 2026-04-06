@@ -22,6 +22,7 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.geometry.Translation3d;
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.units.measure.Angle;
 import edu.wpi.first.units.measure.Distance;
 import edu.wpi.first.units.measure.Mass;
@@ -107,12 +108,30 @@ public interface SimulationConstants {
         }
 
         /**
+         * <h2>Applies this offset's translation and rotation onto an existing {@link Pose3d}</h2>
+         * <p>Translation is applied, but it is <b>robot robot relative</b>
+         * @param pose the base pose to offset
+         * @return a new pose with this offset applied to both translation and rotation
+         */
+        public Pose3d applyToPose3dRobotRelative(Pose3d pose) {
+            Translation3d rotatedOffset = toTranslation3d().rotateBy(pose.getRotation());
+            return new Pose3d(
+                pose.getTranslation().plus(rotatedOffset),
+                applyToRotation3d(pose.getRotation())
+            );
+        }
+
+        /**
          * <h2>Composes this offset's rotation onto an existing {@link Rotation3d}</h2>
          * @param rotation the base rotation to offset
          * @return a new rotation with this offset's rotation applied on top
          */
         public Rotation3d applyToRotation3d(Rotation3d rotation) {
-            return rotation.plus(toRotation3d());
+            return new Rotation3d(
+                rotation.getX() + roll.in(Radians),
+                rotation.getY() + pitch.in(Radians),
+                rotation.getZ() + yaw.in(Radians)
+            );
         }
 
         /**
@@ -142,13 +161,29 @@ public interface SimulationConstants {
         }
 
         /**
+         * <h2>Applies this offset's X/Y translation and yaw onto an existing {@link Pose2d}</h2>
+         * <p>Translation is applied, but it is <b>robot robot relative</b>
+         * @param pose the base 2D pose to offset
+         * @return a new pose with this offset applied
+         */
+        public Pose2d applyToPose2dRobotRelative(Pose2d pose) {
+            Translation2d rotatedOffset = new Translation2d(x, y).rotateBy(pose.getRotation());
+            return new Pose2d(
+                pose.getTranslation().plus(rotatedOffset),
+                applyToRotation2d(pose.getRotation())
+            );
+        }
+
+        /**
          * <h2>Applies this offset's yaw onto an existing {@link Rotation2d}</h2>
          * <p>Roll and pitch are ignored because they have no 2D equivalent
          * @param rotation the base 2D rotation to offset
          * @return a new rotation with this offset's yaw applied on top
          */
         public Rotation2d applyToRotation2d(Rotation2d rotation) {
-            return rotation.plus(new Rotation2d(yaw));
+            return new Rotation2d(
+                rotation.getRadians() + yaw.in(Radians)
+            );
         }
     }
 
@@ -175,6 +210,10 @@ public interface SimulationConstants {
         int FUEL_CAPACITY = 54;
 
         public Offsets OFFSETS = new Offsets(-0.06, 0, 0.25, Degrees.of(90), Degrees.of(0), Degrees.of(90));
+    }
+
+    public interface Shooter {
+        public Offsets OFFSETS = new Offsets(Units.inchesToMeters(-7.836), 0, 0.5);
     }
 
     public interface Drivetrain {

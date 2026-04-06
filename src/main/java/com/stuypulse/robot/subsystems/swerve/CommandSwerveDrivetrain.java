@@ -31,6 +31,7 @@ import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.math.numbers.N1;
 import edu.wpi.first.math.numbers.N3;
 import edu.wpi.first.math.system.plant.DCMotor;
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.networktables.StructArrayPublisher;
 import edu.wpi.first.networktables.StructPublisher;
@@ -382,7 +383,7 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
     }
     
     public Pose2d getShooterPose() {
-        return getPose().plus(new Transform2d(0.0, -7.836, new Rotation2d())); // offset is negative because the shooter is behind the robot center
+        return SimulationConstants.Shooter.OFFSETS.applyToPose2d(mapleSimSwerveDrivetrain == null ? getPose() : getMapleSimDrive().getSimulatedDriveTrainPose()); // offset is negative because the shooter is behind the robot center
     }
 
     @Override
