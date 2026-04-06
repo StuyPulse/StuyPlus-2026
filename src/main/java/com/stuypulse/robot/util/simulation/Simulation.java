@@ -1,19 +1,17 @@
 package com.stuypulse.robot.util.simulation;
 
-import com.stuypulse.robot.constants.Settings;
 import com.stuypulse.robot.subsystems.intake.Intake;
 import com.stuypulse.robot.subsystems.intake.Intake.IntakeState;
 import com.stuypulse.robot.subsystems.swerve.CommandSwerveDrivetrain;
-import com.stuypulse.stuylib.network.SmartBoolean;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.geometry.Transform3d;
+import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.networktables.StructArrayPublisher;
 import edu.wpi.first.networktables.StructPublisher;
-import edu.wpi.first.wpilibj.Notifier;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import static edu.wpi.first.units.Units.*;
@@ -22,6 +20,7 @@ import org.ironmaple.simulation.IntakeSimulation;
 import org.ironmaple.simulation.SimulatedArena;
 import org.ironmaple.simulation.drivesims.SwerveDriveSimulation;
 import org.ironmaple.simulation.seasonspecific.rebuilt2026.Arena2026Rebuilt;
+import org.ironmaple.simulation.seasonspecific.rebuilt2026.RebuiltFuelOnFly;
 
 public class Simulation {
     private final static Simulation instance;
@@ -37,11 +36,11 @@ public class Simulation {
     private final StructPublisher<Pose3d> hopper;
     private final StructPublisher<Pose3d> shooter;
 
-    // private final Notifier simUpdateNotifier;
+    private double outtakeLoopElapsedSeconds = 0;
 
     static {
         instance = new Simulation();
-   }
+    }
 
     public static Simulation getInstance() {
         return instance;
@@ -70,27 +69,26 @@ public class Simulation {
 
     private IntakeSimulation createIntakeSimulation() {
         return IntakeSimulation.OverTheBumperIntake(
-            "Fuel",
-            swerveMSim,
-            Meters.of(SimulationConstants.Intake.INTAKE_WIDTH),
-            Meters.of(SimulationConstants.Intake.INTAKE_LENGTH),
-            IntakeSimulation.IntakeSide.FRONT,
-            SimulationConstants.Hopper.FUEL_CAPACITY
-        );
+                "Fuel",
+                swerveMSim,
+                Meters.of(SimulationConstants.Intake.INTAKE_WIDTH),
+                Meters.of(SimulationConstants.Intake.INTAKE_LENGTH),
+                IntakeSimulation.IntakeSide.FRONT,
+                SimulationConstants.Hopper.FUEL_CAPACITY);
     }
 
     private Pose3d getIntakePivotPose() {
         return SimulationConstants.Intake.PIVOT_OFFSETS.withRotation(new Rotation3d(
-            0,
-            intakeSim.getRelativePosition().getRadians(), // inverts the angle
-            0
-        ));
+                0,
+                intakeSim.getRelativePosition().getRadians(), // inverts the angle
+                0));
     }
 
     private double getIntakeArmEndX() {
         return SimulationConstants.Intake.PIVOT_END_X
-            + SimulationConstants.Intake.PIVOT_ARM_LENGTH // sin works somehow??
-            * Math.sin(intakeSim.getRelativePosition().getRadians() + SimulationConstants.Intake.PIVOT_OFFSETS.toRotation3d().getX());
+                + SimulationConstants.Intake.PIVOT_ARM_LENGTH // sin works somehow??
+                        * Math.sin(intakeSim.getRelativePosition().getRadians()
+                                + SimulationConstants.Intake.PIVOT_OFFSETS.toRotation3d().getX());
     }
 
     private void updateIntakeEnabled(boolean enabled) {
@@ -109,11 +107,42 @@ public class Simulation {
         updateIntakeEnabled(intakeEnabled);
     }
 
+    private void summonFuelAtIntake() {
+        double intakeAngleRad = intakeSim.getRelativePosition().getRadians()
+                + SimulationConstants.Intake.PIVOT_OFFSETS.toRotation3d().getX();
+
+        ARENA.addGamePieceProjectile(
+                new RebuiltFuelOnFly(
+                        swerveMSim.getSimulatedDriveTrainPose().getTranslation(),
+                        new Translation2d(0, 0),
+                        swerveMSim.getDriveTrainSimulatedChassisSpeedsFieldRelative(),
+                        swerveMSim.getSimulatedDriveTrainPose().getRotation(),
+                        Meters.of(getIntakePivotPose().getTranslation().getZ()), // Distance
+                        MetersPerSecond.of(intakeSim.getRollerRPM() / 6000.0 * 2000), // LinearVelocity
+                        Radians.of(intakeAngleRad) // Angle
+                ));
+    }
+
+    private void updateOutake() {
+        // outtakeLoopElapsedSeconds += SimulationConstants.Drivetrain.SIMULATION_STEP_TIME.magnitude();
+
+        // if (outtakeLoopElapsedSeconds % SimulationConstants.Intake.OUTTAKE_RATE != 0)
+            // return; // only run this code every OUTTAKE_RATE seconds
+        if (intakeSim.getState() != IntakeState.OUTTAKE)
+            return;
+        if (!intakeMSim.obtainGamePieceFromIntake())
+            return;
+
+        summonFuelAtIntake();
+    }
+
     public synchronized void update() {
-        if (swerveMSim == null) return;
+        if (swerveMSim == null)
+            return;
         fuel.set(ARENA.getGamePiecesArrayByType("Fuel"));
 
         updateIntake();
+        updateOutake();
 
         double armEndX = getIntakeArmEndX();
         intakePivot.set(getIntakePivotPose());

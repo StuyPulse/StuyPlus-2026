@@ -191,6 +191,8 @@ public interface SimulationConstants {
         double INTAKE_WIDTH = 0.5;
         double INTAKE_LENGTH = 0.15;
 
+        double OUTTAKE_RATE = 0.125;
+
         double PIVOT_ARM_LENGTH = 0.1439822;
         double PIVOT_END_X = 0;
 
