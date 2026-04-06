@@ -2,6 +2,7 @@ package com.stuypulse.robot.util.simulation;
 
 import com.stuypulse.robot.constants.Settings;
 import com.stuypulse.robot.subsystems.intake.Intake;
+import com.stuypulse.robot.subsystems.intake.Intake.IntakeState;
 import com.stuypulse.robot.subsystems.swerve.CommandSwerveDrivetrain;
 import com.stuypulse.stuylib.network.SmartBoolean;
 
@@ -46,10 +47,10 @@ public class Simulation {
     private Simulation() {
         intakeSim = Intake.getInstance();
         swerveMSim = CommandSwerveDrivetrain.getInstance().getMapleSimDrive();
-        intakeMSim = createIntakeSimulation();
 
         ARENA = new Arena2026Rebuilt(false);
         configureDrivetrain(); // do this after creating arena
+        intakeMSim = createIntakeSimulation();
 
         NetworkTableInstance table = NetworkTableInstance.getDefault();
         fuel = table.getStructArrayTopic("AdvScope/FuelPoses", Pose3d.struct).publish();
@@ -97,16 +98,10 @@ public class Simulation {
     }
 
     private void updateIntake() {
-        boolean intakeEnabled = intakeSim.atAngle() 
-            && intakeSim.getRelativePosition().getDegrees() < Settings.Intake.PIVOT_DOWN_ANGLE.getDegrees() 
-            && Math.abs(intakeSim.getRollerRPM()) > 100;
-        
+        boolean intakeEnabled = intakeSim.atAngle() && (intakeSim.getState() == IntakeState.INTAKE);
+
         SmartDashboard.putBoolean("Intake/MapleSimIntakeEnabled", intakeEnabled);
-        // SmartDashboard.putNumber("Intake/IntakeRPM", Math.abs(intakeSim.getRollerRPM()));
-        // SmartDashboard.putBoolean("Intake/IntakeGreater100", Math.abs(intakeSim.getRollerRPM()) > 100);
-        // SmartDashboard.putNumber("Intake/Degrees", Math.toDegrees(intakeSim.getPivotAngleRad()));
-        // SmartDashboard.putBoolean("Intake/LessThanAgitateDownAngle", Math.toDegrees(intakeSim.getPivotAngleRad()) < Settings.Intake.AGITATE_DOWN_ANGLE.getDegrees());
-        // SmartDashboard.putBoolean("Intake/AtAngle", intakeSim.atAngle());
+        SmartDashboard.putNumber("Intake/MapleSimIntakeCurrentAmount", intakeMSim.getGamePiecesAmount());
         updateIntakeEnabled(intakeEnabled);
     }
 
@@ -117,7 +112,6 @@ public class Simulation {
         updateIntake();
 
         double armEndX = getIntakeArmEndX();
-        SmartDashboard.putNumber("Intake/endX", armEndX);
         intakePivot.set(getIntakePivotPose());
         hopper.set(SimulationConstants.Hopper.OFFSETS.applyToPose3d(new Pose3d(armEndX, 0, 0, new Rotation3d())));
     }
