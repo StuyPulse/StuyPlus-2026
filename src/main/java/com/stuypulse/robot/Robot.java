@@ -90,7 +90,10 @@ public class Robot extends TimedRobot {
     }
 
     @Override
-    public void disabledPeriodic() {}
+    public void disabledPeriodic() {
+        CommandScheduler.getInstance().schedule(new SetIMUMode(1));
+        CommandScheduler.getInstance().schedule(new SetMegaTagMode(MegaTagMode.MEGATAG1));
+    }
 
     /***********************/
     /*** AUTONOMOUS MODE ***/

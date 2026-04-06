@@ -6,6 +6,11 @@
 package com.stuypulse.robot;
 
 import com.stuypulse.robot.commands.auton.DoNothingAuton;
+import com.stuypulse.robot.commands.auton.LeftBumpFerry;
+import com.stuypulse.robot.commands.auton.LeftBumpMid;
+import com.stuypulse.robot.commands.auton.RightBumpFerry;
+import com.stuypulse.robot.commands.auton.RightBumpMid;
+import com.stuypulse.robot.commands.auton.TwoMeterPath;
 import com.stuypulse.robot.commands.swerve.SwerveDriveDrive;
 import com.stuypulse.robot.commands.swerve.SwerveDriveResetRotation;
 import com.stuypulse.robot.commands.swerve.SwerveDriveRotate;
@@ -14,6 +19,7 @@ import com.stuypulse.robot.commands.swerve.PIDtoPose.SwerveDrivePIDToPose;
 import com.stuypulse.robot.commands.intake.IntakeAgitateWhileOuttaking;
 import com.stuypulse.robot.commands.intake.IntakeSetDown;
 import com.stuypulse.robot.commands.intake.IntakeSetHomingDown;
+import com.stuypulse.robot.commands.intake.IntakeSetHomingUp;
 import com.stuypulse.robot.commands.intake.IntakeSetIdle;
 import com.stuypulse.robot.commands.intake.IntakeSetIntake;
 import com.stuypulse.robot.commands.intake.IntakeSetOuttake;
@@ -21,6 +27,9 @@ import com.stuypulse.robot.constants.Field;
 import com.stuypulse.robot.constants.Ports;
 import com.stuypulse.robot.subsystems.intake.Intake;
 import com.stuypulse.robot.subsystems.swerve.CommandSwerveDrivetrain;
+import com.stuypulse.robot.subsystems.vision.LimelightVision;
+import com.stuypulse.robot.util.PathUtil.AutonConfig;
+
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -41,6 +50,8 @@ public class RobotContainer {
     // @SuppressWarnings("unused")
     // @SuppressWarnings("unused")
     private final CommandSwerveDrivetrain swerve = CommandSwerveDrivetrain.getInstance();
+    private final LimelightVision vision = LimelightVision.getInstance();
+
     // Autons
     private static SendableChooser<Command> autonChooser = new SendableChooser<>();
 
@@ -73,9 +84,9 @@ public class RobotContainer {
         Trigger rightTrigger = new Trigger(() -> driver.getRightTriggerAxis() > 0.5);
 
         leftTrigger
-            .whileTrue(new IntakeSetOuttake());
+            .whileTrue(new IntakeAgitateWhileOuttaking().repeatedly());
         leftTrigger
-            .onFalse(new IntakeSetIntake());
+            .onFalse(new IntakeSetHomingDown());
 
         driver.leftBumper()
             .onTrue(new IntakeSetIdle());
@@ -83,8 +94,12 @@ public class RobotContainer {
         rightTrigger    
             .onTrue(new IntakeSetIntake());
 
-        driver.povDown()
-            .whileTrue(new IntakeAgitateWhileOuttaking()).onFalse(new IntakeSetIntake());
+        //Outtake without agitating
+        //Top Left Paddle
+        driver.a()
+            .whileTrue(new IntakeSetOuttake());
+        driver.a()
+            .onFalse(new IntakeSetIntake());
 
         driver.povUp()
             .onTrue(new SwerveDriveResetRotation());
@@ -93,23 +108,20 @@ public class RobotContainer {
             .onTrue(new IntakeSetDown());
 
         //Rotate towards alliance Zone
-        //Top Left Paddle
-        driver.a()
+        //Bottom Right Paddle
+        driver.y()
             .whileTrue(new SwerveDriveRotate(driver, Rotation2d.k180deg));
 
         //Auto Drive to Outpost
         //Top Right Paddle
         driver.b()
-            .whileTrue(new SwerveDrivePIDToPose(Field.outpost).andThen(new IntakeSetOuttake()));
+            .whileTrue(new SwerveDrivePIDToPose(Field.outpost).andThen(new IntakeAgitateWhileOuttaking().repeatedly()));
         driver.b() 
-            .onFalse(new IntakeSetIntake());
+            .onFalse(new IntakeSetHomingDown());
         
         //Bottom Left Paddle
         driver.x()
             .whileTrue(new SwerveDriveXMode());
-
-        driver.y()  
-            .onTrue(new IntakeSetHomingDown());
     }
 
     /**************/
@@ -118,30 +130,44 @@ public class RobotContainer {
      public void configureAutons() {
         autonChooser.addOption("Do Nothing", new DoNothingAuton());
 
-        // AutonConfig LeftBumpFerry = new AutonConfig("Left Bump Ferry", LeftBumpFerry::new, 
-        // "Left Bump to Neutral", 
-        // "N to L.T.", 
-        // "L.T. Circle Hub", 
+        AutonConfig LeftBumpFerryAuto = new AutonConfig("Left Bump Ferry", LeftBumpFerry::new, 
+            "Left Bump to Neutral", 
+            "N to L.T.", 
+            "L.T. Circle Hub", 
+            "N to Depot");
+        LeftBumpFerryAuto.register(autonChooser);
 
-        // "N to Depot");
-        // LeftBumpFerry.register(autonChooser);
+        AutonConfig RightBumpFerryAuto = new AutonConfig("Right Bump Ferry", RightBumpFerry::new, 
+            "R.B. to R.N.", 
+            "N to R.T.", 
+            "R.T. Circle Hub", 
+            "R.N. to H.P.");
+        RightBumpFerryAuto.register(autonChooser);
 
-        // AutonConfig RightBumpFerry = new AutonConfig("Right Bump Ferry", RightBumpFerry::new, 
-        // "R.B. to R.N.", 
-        // "N to R.T.", 
-        // "R.T. Circle Hub", 
-        // "R.N. to H.P.");
-        // RightBumpFerry.register(autonChooser);
+        AutonConfig LeftBumpMidAuto = new AutonConfig("Left Bump Mid", LeftBumpMid::new,
+            "LB to N",
+            "LB Return");
+        LeftBumpMidAuto.register(autonChooser);
 
-        autonChooser.addOption("SysID Module Translation Dynamic Forwards", swerve.sysIdDynamic(Direction.kForward));
-        autonChooser.addOption("SysID Module Translation Dynamic Backwards", swerve.sysIdDynamic(Direction.kReverse));
-        autonChooser.addOption("SysID Module Translation Quasi Forwards", swerve.sysIdQuasistatic(Direction.kForward));
-        autonChooser.addOption("SysID Module Translation Quasi Backwards", swerve.sysIdQuasistatic(Direction.kReverse)); 
+        AutonConfig RightBumpMidAuto = new AutonConfig("Right Bump Mid", RightBumpMid::new, 
+            "RB to N",
+            "RB Return",
+            "RB to Outpost");
+        RightBumpMidAuto.register(autonChooser);
 
-        autonChooser.addOption("SysID Rotation Translation Dynamic Forwards", swerve.sysidRotationDynamic(Direction.kForward));
-        autonChooser.addOption("SysID Rotation Translation Dynamic Backwards", swerve.sysidRotationDynamic(Direction.kReverse));
-        autonChooser.addOption("SysID Rotation Translation Quasi Forwards", swerve.sysidRotationQuasiStatic(Direction.kForward));
-        autonChooser.addOption("SysID Rotation Translation Quasi Backwards", swerve.sysidRotationQuasiStatic(Direction.kReverse)); 
+        AutonConfig TwoMeterPathAuto = new AutonConfig("2 Meter Path", TwoMeterPath::new,
+        "2 meter path");
+        TwoMeterPathAuto.register(autonChooser);
+
+        // autonChooser.addOption("SysID Module Translation Dynamic Forwards", swerve.sysIdDynamic(Direction.kForward));
+        // autonChooser.addOption("SysID Module Translation Dynamic Backwards", swerve.sysIdDynamic(Direction.kReverse));
+        // autonChooser.addOption("SysID Module Translation Quasi Forwards", swerve.sysIdQuasistatic(Direction.kForward));
+        // autonChooser.addOption("SysID Module Translation Quasi Backwards", swerve.sysIdQuasistatic(Direction.kReverse)); 
+
+        // autonChooser.addOption("SysID Rotation Translation Dynamic Forwards", swerve.sysidRotationDynamic(Direction.kForward));
+        // autonChooser.addOption("SysID Rotation Translation Dynamic Backwards", swerve.sysidRotationDynamic(Direction.kReverse));
+        // autonChooser.addOption("SysID Rotation Translation Quasi Forwards", swerve.sysidRotationQuasiStatic(Direction.kForward));
+        // autonChooser.addOption("SysID Rotation Translation Quasi Backwards", swerve.sysidRotationQuasiStatic(Direction.kReverse)); 
 
         SmartDashboard.putData("Autonomous", autonChooser);
     }
