@@ -31,7 +31,7 @@ public class Robot extends TimedRobot {
 
     public static boolean isBlue() {
         return alliance == Alliance.Blue;
-    } 
+    }
 
     /*************************/
     /*** ROBOT SCHEDULEING ***/
@@ -69,16 +69,15 @@ public class Robot extends TimedRobot {
     @Override
     public void simulationInit() {
         CommandSwerveDrivetrain
-            .getInstance()
-            .getMapleSimDrive()
-            .setSimulationWorldPose(Robot.isBlue() ? SimulationConstants.ROBOTS_STARTING_POSITIONS[0] : Field.transformToOppositeAlliance(SimulationConstants.ROBOTS_STARTING_POSITIONS[0])); // start off in a convenient spot
+                .getInstance()
+                .resetPose(Robot.isBlue() ? SimulationConstants.ROBOTS_STARTING_POSITIONS[0]
+                        : Field.transformToOppositeAlliance(SimulationConstants.ROBOTS_STARTING_POSITIONS[0])); // start off in a convenient spot
     }
 
     @Override
     public void simulationPeriodic() {
         Simulation.getInstance().update();
     }
-
 
     /*********************/
     /*** DISABLED MODE ***/
@@ -114,10 +113,12 @@ public class Robot extends TimedRobot {
     }
 
     @Override
-    public void autonomousPeriodic() {}
+    public void autonomousPeriodic() {
+    }
 
     @Override
-    public void autonomousExit() {}
+    public void autonomousExit() {
+    }
 
     /*******************/
     /*** TELEOP MODE ***/
@@ -133,16 +134,19 @@ public class Robot extends TimedRobot {
             auto.cancel();
         }
 
-        Boolean autonWon = DriverStation.getGameSpecificMessage().equals(String.valueOf(alliance.name().charAt(0)).toUpperCase());
+        Boolean autonWon = DriverStation.getGameSpecificMessage()
+                .equals(String.valueOf(alliance.name().charAt(0)).toUpperCase());
 
         SmartDashboard.putBoolean("Auton Won", autonWon);
     }
 
     @Override
-    public void teleopPeriodic() {}
+    public void teleopPeriodic() {
+    }
 
     @Override
-    public void teleopExit() {}
+    public void teleopExit() {
+    }
 
     /*****************/
     /*** TEST MODE ***/
@@ -155,8 +159,10 @@ public class Robot extends TimedRobot {
     }
 
     @Override
-    public void testPeriodic() {}
+    public void testPeriodic() {
+    }
 
     @Override
-    public void testExit() {}
+    public void testExit() {
+    }
 }
