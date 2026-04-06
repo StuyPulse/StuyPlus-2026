@@ -30,10 +30,10 @@ public interface Settings {
 
     public interface EnabledSubsystems {
         // SmartBoolean FEEDER = new SmartBoolean("Enabled Subsystems/Feeder", true);
-        SmartBoolean INTAKE = new SmartBoolean("Enabled Subsystems/Intake", true);
+        SmartBoolean INTAKE = new SmartBoolean("Enabled Subsystems/Intake", false);
         // SmartBoolean LED = new SmartBoolean("Enabled Subsystems/LED", true);
         // SmartBoolean SHOOTER = new SmartBoolean("Enabled Subsystems/Shooter", true);
-        SmartBoolean VISION = new SmartBoolean("Enabled Subsystems/Vision", true);
+        SmartBoolean VISION = new SmartBoolean("Enabled Subsystems/Vision", false);
         SmartBoolean SWERVE = new SmartBoolean("Enabled Subsystems/Swerve", true);
     }
 
@@ -89,7 +89,7 @@ public interface Settings {
     // }
 
     // public interface LED {
-    //     int LED_LENGTH = 60; // TODO: ask Plus-ME for LED Length
+    //     int LED_LENGTH = 60; 
  
     //     //shooter
     //     LEDPattern SHOOTING = LEDPattern.solid(Color.kOrange);
@@ -113,6 +113,9 @@ public interface Settings {
     //     double SHOOT_TIME_AUTO = 1.5;
     //     double RAMP_RATE = 0.25;
     //     double STEP_VOLTAGE = 900;
+
+    //     double CORNER = 2700; 
+    //     double HUB = 2500;
     // }
 
     public interface Swerve {
