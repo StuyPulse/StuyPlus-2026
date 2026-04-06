@@ -47,7 +47,8 @@ public class Simulation {
     // private final StructPublisher<Pose3d> shooter;
 
     static {
-        instance = new Simulation();
+        if (CommandSwerveDrivetrain.getInstance().getMapleSimDrive() != null) instance = new Simulation();
+        else instance = null; // extra safeguarding to ensure NO overlap between sim code and actual code
     }
 
     public static Simulation getInstance() {
@@ -189,10 +190,7 @@ public class Simulation {
     }
 
     private void updateShooting() {
-        if (!intakeMSim.obtainGamePieceFromIntake())
-            return;
-
-        if (intakeSim.getState() == IntakeState.OUTTAKE) {
+        if (intakeSim.getState() == IntakeState.OUTTAKE && intakeMSim.obtainGamePieceFromIntake()) {
             summonFuelAtIntake();
         }// else if (ShooterSim.getInstance().getState() == ShooterState.SHOOTING || ShooterSim.getInstance().getState() == ShooterState.FERRYING) {
         //     final Pose2d shooterPose = SimulationConstants.Shooter.OFFSETS.applyToPose2d(swerveMSim.getSimulatedDriveTrainPose());

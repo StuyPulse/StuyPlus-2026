@@ -491,7 +491,7 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
     @Override
     public void periodic() {
         final Pose2d pose = mapleSimSwerveDrivetrain == null ? getPose() : mapleSimSwerveDrivetrain.mapleSimDrive.getSimulatedDriveTrainPose();
-        if (Settings.DEBUG_MODE) { // otherwise publishers in simulation.java are used
+        if (Settings.DEBUG_MODE) { // under debug flag to avoid log clutter
             posePublisher.set(pose);
             chassisPublisher.set(getChassisSpeeds());
             modulePublisher.set(getModuleStates());

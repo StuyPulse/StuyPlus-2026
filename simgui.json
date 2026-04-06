@@ -1,32 +1,17 @@
 {
-  "HALProvider": {
-    "Other Devices": {
-      "window": {
-        "visible": false
-      }
-    }
-  },
   "NTProvider": {
     "types": {
       "/FMSInfo": "FMSInfo",
       "/SmartDashboard/Autonomous": "String Chooser",
       "/SmartDashboard/Field": "Field2d",
       "/SmartDashboard/PathPlanner": "Alerts",
+      "/SmartDashboard/Run pre-match Tests": "Command",
+      "/SmartDashboard/Set Pivot 0": "Command",
+      "/SmartDashboard/Set Pivot 0 at Bottom": "Command",
       "/SmartDashboard/Visualizers/Robot": "Mechanism2d"
     },
     "windows": {
-      "/SmartDashboard/Autonomous": {
-        "window": {
-          "visible": true
-        }
-      },
       "/SmartDashboard/Field": {
-        "bottom": 1914,
-        "height": 8.069275856018066,
-        "left": 245,
-        "right": 3942,
-        "top": 118,
-        "width": 16.54119300842285,
         "window": {
           "visible": true
         }
@@ -41,23 +26,17 @@
   "NetworkTables": {
     "transitory": {
       "SmartDashboard": {
-        "Enabled Subsystems": {
-          "open": true
-        },
         "Intake": {
           "open": true
         },
-        "Shooter": {
+        "MapleSim": {
           "open": true
         },
-        "Swerve": {
-          "open": true
+        "Shooter": {
+          "open": false
         },
         "open": true
       }
     }
-  },
-  "NetworkTables Info": {
-    "visible": true
   }
 }
