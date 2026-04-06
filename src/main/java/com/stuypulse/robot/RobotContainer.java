@@ -99,7 +99,7 @@ public class RobotContainer {
         driver.a()
             .whileTrue(new IntakeSetOuttake());
         driver.a()
-            .onFalse(new IntakeSetIntake());
+            .onFalse(new IntakeSetHomingDown());
 
         driver.povUp()
             .onTrue(new SwerveDriveResetRotation());
