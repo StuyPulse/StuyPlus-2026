@@ -214,17 +214,17 @@ public interface SimulationConstants {
         public Offsets OFFSETS = new Offsets(-0.06, 0, 0.25, Degrees.of(90), Degrees.of(0), Degrees.of(90));
     }
 
-    // public interface Shooter {
-    //     double BPS = 8;
+    public interface Shooter {
+        double BPS = 8;
 
-    //     double COMPRESSION_FACTOR = 0.85;
+        double COMPRESSION_FACTOR = 0.85;
 
-    //     public static double rpmToMps(double RPM) {
-    //         return ((Settings.Shooter.FLYWHEEL_RADIUS * RPM * Math.PI) / 60.0) * COMPRESSION_FACTOR;
-    //     }
+        // public static double rpmToMps(double RPM) {
+        //     return ((Settings.Shooter.FLYWHEEL_RADIUS * RPM * Math.PI) / 60.0) * COMPRESSION_FACTOR;
+        // }
 
-    //     public Offsets OFFSETS = new Offsets(Units.inchesToMeters(-7.836), 0, 0.7);
-    // }
+        public Offsets OFFSETS = new Offsets(Units.inchesToMeters(-7.836), 0, 0.7);
+    }
 
     public interface Drivetrain {
         PIDConstants XY = new PIDConstants(2.2, 0, 0.0); // alignment

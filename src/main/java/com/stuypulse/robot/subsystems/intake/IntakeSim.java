@@ -31,11 +31,6 @@ public class IntakeSim extends Intake {
 
     private Optional<Double> pivotVoltageOverride;
 
-    private final StructPublisher<Pose3d> pivotPublisher = NetworkTableInstance.getDefault()
-        .getStructTopic("AdvScope/IntakePose", Pose3d.struct).publish();
-    private final StructPublisher<Pose3d> hopperPublisher = NetworkTableInstance.getDefault()
-        .getStructTopic("AdvScope/HopperPose", Pose3d.struct).publish();
-    
     public IntakeSim() {
         DCMotor gearbox = DCMotor.getKrakenX60(1);
 
@@ -123,29 +118,6 @@ public class IntakeSim extends Intake {
         double voltage = pivotController.calculate(sim.getAngleRads(), getState().getTargetAngle().getRadians());
         sim.setInputVoltage(voltage);
         sim.update(Settings.DT);
-
-        pivotPublisher.set(
-            new Pose3d(
-                0.31,
-                0,
-                0.225,
-                new Rotation3d(
-                    sim.getAngleRads() - Math.toRadians(55), // 55 is roughly the offset from CAD zero angle and robot zero angle
-                    0,
-                    Math.toRadians(90) // turn it to face same direction as robot
-                )
-            )
-        );
-        hopperPublisher.set(
-            new Pose3d(
-                -0.310209692 * Math.cos(
-                    getRelativePosition().getRadians() + Math.toRadians(50)
-                ) - 0.15,
-                0,
-                0.275,
-                new Rotation3d(Math.toRadians(90), 0, Math.toRadians(90))
-            )
-        );
 
         SmartDashboard.putNumber("Intake/rollerVoltage", rollerVoltage);
         SmartDashboard.putNumber("Intake/rollerRPM", getRollerRPM());

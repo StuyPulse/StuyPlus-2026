@@ -35,7 +35,7 @@ public class Simulation {
     private final static Simulation instance;
 
     public final Arena2026Rebuilt ARENA;
-    // private final Notifier SHOOT_LOOP;
+    private final Notifier SHOOT_LOOP;
 
     private final SwerveDriveSimulation swerveMSim;
     private final IntakeSimulation intakeMSim;
@@ -63,8 +63,8 @@ public class Simulation {
         intakeMSim = createIntakeSimulation();
         intakeMSim.addGamePiecesToIntake(SimulationConstants.Hopper.FUEL_CAPACITY);
         
-        // SHOOT_LOOP = new Notifier(this::updateShooting);
-        // SHOOT_LOOP.startPeriodic(1.0 / SimulationConstants.Shooter.BPS); // multiply by 2 to account for the delaying in updateShooting
+        SHOOT_LOOP = new Notifier(this::updateShooting);
+        SHOOT_LOOP.startPeriodic(1.0 / SimulationConstants.Shooter.BPS);
 
         NetworkTableInstance table = NetworkTableInstance.getDefault();
         fuel = table.getStructArrayTopic("AdvScope/FuelPoses", Pose3d.struct).publish();
@@ -188,30 +188,30 @@ public class Simulation {
         );
     }
 
-    // private void updateShooting() {
-    //     if (!intakeMSim.obtainGamePieceFromIntake())
-    //         return;
+    private void updateShooting() {
+        if (!intakeMSim.obtainGamePieceFromIntake())
+            return;
 
-    //     if (intakeSim.getState() == IntakeState.OUTTAKE) {
-    //         summonFuelAtIntake();
-    //     } else if (ShooterSim.getInstance().getState() == ShooterState.SHOOTING || ShooterSim.getInstance().getState() == ShooterState.FERRYING) {
-    //         final Pose2d shooterPose = SimulationConstants.Shooter.OFFSETS.applyToPose2d(swerveMSim.getSimulatedDriveTrainPose());
-    //         final double launchAngle = 67.67; // ആറ് ഏഴ്
+        if (intakeSim.getState() == IntakeState.OUTTAKE) {
+            summonFuelAtIntake();
+        }// else if (ShooterSim.getInstance().getState() == ShooterState.SHOOTING || ShooterSim.getInstance().getState() == ShooterState.FERRYING) {
+        //     final Pose2d shooterPose = SimulationConstants.Shooter.OFFSETS.applyToPose2d(swerveMSim.getSimulatedDriveTrainPose());
+        //     final double launchAngle = 67.67; // ആറ് ഏഴ്
 
-    //         robotRelativeAddPieceWithVariance(
-    //             shooterPose.getTranslation(),
-    //             swerveMSim.getSimulatedDriveTrainPose().getRotation(),
-    //             Meters.of(SimulationConstants.Shooter.OFFSETS.toPose3d().getZ()),
-    //             MetersPerSecond.of(SimulationConstants.Shooter.rpmToMps(ShooterSim.getInstance().getShootSpeed())),
-    //             Degrees.of(launchAngle),
-    //             SimulationConstants.Intake.INTAKE_WIDTH,
-    //             0,
-    //             0,
-    //             0.5,
-    //             0
-    //         );
-    //     }
-    // }
+        //     robotRelativeAddPieceWithVariance(
+        //         shooterPose.getTranslation(),
+        //         swerveMSim.getSimulatedDriveTrainPose().getRotation(),
+        //         Meters.of(SimulationConstants.Shooter.OFFSETS.toPose3d().getZ()),
+        //         MetersPerSecond.of(SimulationConstants.Shooter.rpmToMps(ShooterSim.getInstance().getShootSpeed())),
+        //         Degrees.of(launchAngle),
+        //         SimulationConstants.Intake.INTAKE_WIDTH,
+        //         0,
+        //         0,
+        //         0.5,
+        //         0
+        //     );
+        // }
+    }
 
     public synchronized void update() {
         if (swerveMSim == null)
@@ -224,7 +224,7 @@ public class Simulation {
         intakePivot.set(getIntakePivotPose());
         hopper.set(SimulationConstants.Hopper.OFFSETS.applyToPose3d(new Pose3d(armEndX, 0, 0, new Rotation3d())));
 
-        // Translation2d tra = swerveMSim.getSimulatedDriveTrainPose().getTranslation().plus(
+        // Translation2d outtakeTranslationRobotRelative = swerveMSim.getSimulatedDriveTrainPose().getTranslation().plus(
         //         SimulationConstants.Intake.OUTTAKE_OFFSETS.applyToPose3dRobotRelative(
         //             new Pose3d(getIntakeArmEndX(), 0, 0, new Rotation3d(swerveMSim.getSimulatedDriveTrainPose().getRotation()))).getTranslation().toTranslation2d());
         // shooter.set(new Pose3d(tra.getX(), tra.getY(), 0, new Rotation3d()));
