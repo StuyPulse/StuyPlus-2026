@@ -2,16 +2,25 @@ package com.stuypulse.robot.util.simulation;
 
 import com.stuypulse.robot.subsystems.intake.Intake;
 import com.stuypulse.robot.subsystems.intake.Intake.IntakeState;
+import com.stuypulse.robot.subsystems.shooter.ShooterSim;
+import com.stuypulse.robot.subsystems.shooter.Shooter.ShooterState;
 import com.stuypulse.robot.subsystems.swerve.CommandSwerveDrivetrain;
+
+import static edu.wpi.first.units.Units.*;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Pose3d;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.networktables.StructArrayPublisher;
 import edu.wpi.first.networktables.StructPublisher;
+import edu.wpi.first.units.measure.Angle;
+import edu.wpi.first.units.measure.Distance;
+import edu.wpi.first.units.measure.LinearVelocity;
+import edu.wpi.first.wpilibj.Notifier;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import static edu.wpi.first.units.Units.*;
@@ -26,6 +35,7 @@ public class Simulation {
     private final static Simulation instance;
 
     public final Arena2026Rebuilt ARENA;
+    private final Notifier SHOOT_LOOP;
 
     private final SwerveDriveSimulation swerveMSim;
     private final IntakeSimulation intakeMSim;
@@ -35,8 +45,6 @@ public class Simulation {
     private final StructPublisher<Pose3d> intakePivot;
     private final StructPublisher<Pose3d> hopper;
     private final StructPublisher<Pose3d> shooter;
-
-    private double outtakeLoopElapsedSeconds = 0;
 
     static {
         instance = new Simulation();
@@ -53,6 +61,10 @@ public class Simulation {
         ARENA = new Arena2026Rebuilt(false);
         configureDrivetrain(); // do this after creating arena
         intakeMSim = createIntakeSimulation();
+        intakeMSim.addGamePiecesToIntake(SimulationConstants.Hopper.FUEL_CAPACITY);
+        
+        SHOOT_LOOP = new Notifier(this::updateShooting);
+        SHOOT_LOOP.startPeriodic(1.0 / SimulationConstants.Shooter.BPS); // multiply by 2 to account for the delaying in updateShooting
 
         NetworkTableInstance table = NetworkTableInstance.getDefault();
         fuel = table.getStructArrayTopic("AdvScope/FuelPoses", Pose3d.struct).publish();
@@ -107,33 +119,98 @@ public class Simulation {
         updateIntakeEnabled(intakeEnabled);
     }
 
+    /**
+     * <h2>Extension of {@link Arena2026Rebuilt#addPieceWithVariance} that uses chassis speeds</h2>
+     * <p>Adds a game piece too the arena with a certain random variance.
+     * Param docs taken from {@link Arena2026Rebuilt#addPieceWithVariance}
+     *
+     * @param info the info of the game piece
+     * @param robotPosition the position of the robot (not the shooter) at the time of launching the game piece
+     * @param shooterPositionOnRobot the translation from the shooter's position to the robot's center, in the robot's
+     *     frame of reference
+     * @param chassisSpeedsFieldRelative the field-relative velocity of the robot chassis when launching the game piece,
+     *     influencing the initial velocity of the game piece
+     * @param shooterFacing the direction in which the shooter is facing at launch
+     * @param initialHeight the initial height of the game piece when launched, i.e., the height of the shooter from the
+     *     ground
+     * @param launchingSpeed the speed at which the game piece is launch
+     * @param shooterAngle the pitch angle of the shooter when launching
+     * @param xVariance The max amount of variance that should be added too the x coordinate of the game piece.
+     * @param yVariance The max amount of variance that should be added too the y coordinate of the game piece.
+     * @param yawVariance The max amount of variance that should be added too the yaw of the game piece.
+     * @param speedVariance The max amount of variance that should be added too the speed of the game piece.
+     * @param pitchVariance The max amount of variance that should be added too the pitch of the game piece.
+     * @param target The target of the gamepiece
+     */
+    private void robotRelativeAddPieceWithVariance(
+        Translation2d piecePose,
+        Rotation2d yaw,
+        Distance height,
+        LinearVelocity speed,
+        Angle pitch,
+        double xVariance,
+        double yVariance,
+        double yawVariance,
+        double speedVariance,
+        double pitchVariance) {
+        ARENA.addGamePieceProjectile(
+            new RebuiltFuelOnFly(
+                piecePose.plus(new Translation2d(Arena2026Rebuilt.randomInRange(xVariance), Arena2026Rebuilt.randomInRange(yVariance))),
+                new Translation2d(),
+                swerveMSim.getDriveTrainSimulatedChassisSpeedsFieldRelative(),
+                yaw.plus(Rotation2d.fromDegrees(Arena2026Rebuilt.randomInRange(yawVariance))),
+                height,
+                speed.plus(MetersPerSecond.of(Arena2026Rebuilt.randomInRange(speedVariance))),
+                Degrees.of(pitch.in(Degrees) + Arena2026Rebuilt.randomInRange(pitchVariance))
+            )
+        );
+    }
+
     private void summonFuelAtIntake() {
         double intakeAngleRad = intakeSim.getRelativePosition().getRadians()
                 + SimulationConstants.Intake.PIVOT_OFFSETS.toRotation3d().getX();
 
-        ARENA.addGamePieceProjectile(
-                new RebuiltFuelOnFly(
-                        swerveMSim.getSimulatedDriveTrainPose().getTranslation(),
-                        new Translation2d(0, 0),
-                        swerveMSim.getDriveTrainSimulatedChassisSpeedsFieldRelative(),
-                        swerveMSim.getSimulatedDriveTrainPose().getRotation(),
-                        Meters.of(getIntakePivotPose().getTranslation().getZ()), // Distance
-                        MetersPerSecond.of(intakeSim.getRollerRPM() / 6000.0 * 2000), // LinearVelocity
-                        Radians.of(intakeAngleRad) // Angle
-                ));
+        robotRelativeAddPieceWithVariance(
+            swerveMSim.getSimulatedDriveTrainPose().getTranslation().plus(
+                SimulationConstants.Intake.OUTTAKE_OFFSETS.applyToPose3dRobotRelative(
+                    new Pose3d(getIntakeArmEndX(), 0, 0, 
+                    new Rotation3d(swerveMSim.getSimulatedDriveTrainPose().getRotation())
+                )).getTranslation().toTranslation2d()),
+            swerveMSim.getSimulatedDriveTrainPose().getRotation(),
+            Meters.of(0),
+            MetersPerSecond.of(2),
+            Radians.of(0),
+            SimulationConstants.Intake.INTAKE_WIDTH, // x
+            0.0,
+            0.0,
+            1.0, // speed
+            0.0
+        );
     }
 
-    private void updateOutake() {
-        // outtakeLoopElapsedSeconds += SimulationConstants.Drivetrain.SIMULATION_STEP_TIME.magnitude();
-
-        // if (outtakeLoopElapsedSeconds % SimulationConstants.Intake.OUTTAKE_RATE != 0)
-            // return; // only run this code every OUTTAKE_RATE seconds
-        if (intakeSim.getState() != IntakeState.OUTTAKE)
-            return;
+    private void updateShooting() {
         if (!intakeMSim.obtainGamePieceFromIntake())
             return;
 
-        summonFuelAtIntake();
+        if (intakeSim.getState() == IntakeState.OUTTAKE) {
+            summonFuelAtIntake();
+        } else if (ShooterSim.getInstance().getState() == ShooterState.SHOOTING || ShooterSim.getInstance().getState() == ShooterState.FERRYING) {
+            final Pose2d shooterPose = SimulationConstants.Shooter.OFFSETS.applyToPose2d(swerveMSim.getSimulatedDriveTrainPose());
+            final double launchAngle = 67.67; // ആറ് ഏഴ്
+
+            robotRelativeAddPieceWithVariance(
+                shooterPose.getTranslation(),
+                swerveMSim.getSimulatedDriveTrainPose().getRotation(),
+                Meters.of(SimulationConstants.Shooter.OFFSETS.toPose3d().getZ()),
+                MetersPerSecond.of(SimulationConstants.Shooter.rpmToMps(ShooterSim.getInstance().getShootSpeed())),
+                Degrees.of(launchAngle),
+                SimulationConstants.Intake.INTAKE_WIDTH,
+                0,
+                0,
+                0.5,
+                0
+            );
+        }
     }
 
     public synchronized void update() {
@@ -142,11 +219,15 @@ public class Simulation {
         fuel.set(ARENA.getGamePiecesArrayByType("Fuel"));
 
         updateIntake();
-        updateOutake();
 
         double armEndX = getIntakeArmEndX();
         intakePivot.set(getIntakePivotPose());
         hopper.set(SimulationConstants.Hopper.OFFSETS.applyToPose3d(new Pose3d(armEndX, 0, 0, new Rotation3d())));
-        shooter.set(SimulationConstants.Shooter.OFFSETS.applyToPose3dRobotRelative(new Pose3d(swerveMSim.getSimulatedDriveTrainPose())));
+
+        // Translation2d tra = swerveMSim.getSimulatedDriveTrainPose().getTranslation().plus(
+        //         SimulationConstants.Intake.OUTTAKE_OFFSETS.applyToPose3dRobotRelative(
+        //             new Pose3d(getIntakeArmEndX(), 0, 0, new Rotation3d(swerveMSim.getSimulatedDriveTrainPose().getRotation()))).getTranslation().toTranslation2d());
+        // shooter.set(new Pose3d(tra.getX(), tra.getY(), 0, new Rotation3d()));
+        // shooter.set(SimulationConstants.Shooter.OFFSETS.applyToPose3dRobotRelative(new Pose3d(swerveMSim.getSimulatedDriveTrainPose())));
     }
 }

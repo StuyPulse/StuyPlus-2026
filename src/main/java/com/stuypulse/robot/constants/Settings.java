@@ -118,6 +118,8 @@ public interface Settings {
 
         double CORNER = 2700; 
         double HUB = 2500;
+
+        double FLYWHEEL_RADIUS = Units.inchesToMeters(3.965 / 2);; // TODO: get
     }
 
     public interface Swerve {

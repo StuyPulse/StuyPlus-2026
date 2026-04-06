@@ -12,6 +12,7 @@ import com.ctre.phoenix6.configs.CANcoderConfiguration;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.swerve.SwerveModuleConstants;
 import com.pathplanner.lib.config.PIDConstants;
+import com.stuypulse.robot.constants.Settings;
 import com.stuypulse.robot.subsystems.swerve.TunerConstants;
 
 import static edu.wpi.first.units.Units.*;
@@ -191,8 +192,6 @@ public interface SimulationConstants {
         double INTAKE_WIDTH = 0.5;
         double INTAKE_LENGTH = 0.15;
 
-        double OUTTAKE_RATE = 0.125;
-
         double PIVOT_ARM_LENGTH = 0.1439822;
         double PIVOT_END_X = 0;
 
@@ -206,6 +205,7 @@ public interface SimulationConstants {
         );
 
         public Offsets ROLLER_OFFSETS = new Offsets(0.022, 0, 0.2152848, Degrees.of(90), Degrees.of(0), Degrees.of(90));
+        public Offsets OUTTAKE_OFFSETS = new Offsets(0.4, 0, 0);
     }
 
     public interface Hopper {
@@ -215,7 +215,15 @@ public interface SimulationConstants {
     }
 
     public interface Shooter {
-        public Offsets OFFSETS = new Offsets(Units.inchesToMeters(-7.836), 0, 0.5);
+        double BPS = 8;
+
+        double COMPRESSION_FACTOR = 0.85;
+
+        public static double rpmToMps(double RPM) {
+            return ((Settings.Shooter.FLYWHEEL_RADIUS * RPM * Math.PI) / 60.0) * COMPRESSION_FACTOR;
+        }
+
+        public Offsets OFFSETS = new Offsets(Units.inchesToMeters(-7.836), 0, 0.7);
     }
 
     public interface Drivetrain {
