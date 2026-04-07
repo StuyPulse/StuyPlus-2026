@@ -32,7 +32,8 @@ public class IntakeImpl extends Intake {
     private final Follower followerController;
 
     private final BooleanSupplier pivotStalling;
-    private final BStream rollersStalling;
+    private final BStream leftRollerStalling;
+    private final BStream rightRollerStalling;
     private Optional<Double> pivotVoltageOverride;
 
     public IntakeImpl() {
@@ -53,10 +54,13 @@ public class IntakeImpl extends Intake {
         intakeRollerMotorRight.setControl(followerController);
 
         pivotStalling = () -> intakePivotMotor.getStatorCurrent().getValueAsDouble() > Settings.Intake.PIVOT_STALL_CURRENT;
-        rollersStalling = BStream
+        leftRollerStalling = BStream
                 .create(() -> intakeRollerMotorLeft.getStatorCurrent()
                         .getValueAsDouble() > Settings.Intake.ROLLER_STALL_CURRENT)
                 .filtered(new BDebounce.Both(Settings.Intake.ROLLER_STALL_DEBOUNCE_SEC));
+        rightRollerStalling = BStream
+                .create(() -> intakeRollerMotorRight.getStatorCurrent().getValueAsDouble() > Settings.Intake.ROLLER_STALL_CURRENT)
+                    .filtered(new BDebounce.Both(Settings.Intake.ROLLER_STALL_DEBOUNCE_SEC));
 
         pivotVoltageOverride = Optional.empty();
     }
@@ -89,8 +93,12 @@ public class IntakeImpl extends Intake {
         return pivotStalling.getAsBoolean();
     }
 
-    private boolean rollersStalling() {
-        return rollersStalling.get();
+    private boolean leftRollerStalling() {
+        return leftRollerStalling.get();
+    }
+
+    private boolean rightRollerStalling() {
+        return rightRollerStalling.get();
     }
 
     private void stopMotors() {
@@ -109,7 +117,7 @@ public class IntakeImpl extends Intake {
 
         // Input
 
-        final boolean pivotAboveThreshold = atTargetAngle();
+        final boolean pivotAboveThreshold = getRelativePosition().getDegrees() > Settings.Intake.PUSHDOWN_THRESHOLD.getDegrees();
 
         final boolean pivotStalling = pivotStalling();
 
@@ -171,12 +179,16 @@ public class IntakeImpl extends Intake {
 
         // Log
 
+        SmartDashboard.putBoolean("Intake/Pivot Above Threshold", pivotAboveThreshold);
         SmartDashboard.putNumber("Intake/Left Roller Current (amps)",
                 intakeRollerMotorLeft.getStatorCurrent().getValueAsDouble());
         SmartDashboard.putNumber("Intake/Right Roller Current", intakeRollerMotorRight.getStatorCurrent().getValueAsDouble());
         SmartDashboard.putNumber("Intake/Left Roller Voltage", intakeRollerMotorLeft.getMotorVoltage().getValueAsDouble());
         SmartDashboard.putNumber("Intake/Right Roller Voltage", intakeRollerMotorRight.getMotorVoltage().getValueAsDouble());
         SmartDashboard.putBoolean("Intake/Pushing Down", pushingDown);
+
+        SmartDashboard.putBoolean("Intake/Left Roller Stalling", leftRollerStalling());
+        SmartDashboard.putBoolean("Intake/Right Roller Stalling", rightRollerStalling());
 
         SmartDashboard.putNumber("Intake/Left Roller Duty Cycle", intakeRollerMotorLeft.getDutyCycle().getValueAsDouble());
         SmartDashboard.putNumber("Intake/Right Roller Duty Cycle", intakeRollerMotorRight.getDutyCycle().getValueAsDouble());
