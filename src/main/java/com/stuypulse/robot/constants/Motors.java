@@ -35,7 +35,7 @@ public interface Motors {
     /** Classes to store all of the values a motor needs */
     public interface Intake {
         TalonFXConfig PIVOT_CONFIG = new TalonFXConfig()
-            .withCurrentLimitAmps(15)
+            .withSupplyCurrentLimitAmps(30)
             .withInvertedValue(InvertedValue.CounterClockwise_Positive) // not necessarily true, get inverted val
             .withNeutralMode(NeutralModeValue.Brake)
             .withPIDConstants(Gains.Intake.kP.get(), Gains.Intake.kI.get(), Gains.Intake.kD.get(), 0)

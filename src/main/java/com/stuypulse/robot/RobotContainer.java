@@ -84,7 +84,7 @@ public class RobotContainer {
         Trigger rightTrigger = new Trigger(() -> driver.getRightTriggerAxis() > 0.5);
 
         leftTrigger
-            .whileTrue(new IntakeAgitateWhileOuttaking().repeatedly());
+            .whileTrue(new IntakeSetOuttake());
         leftTrigger
             .onFalse(new IntakeSetHomingDown());
 
@@ -97,7 +97,7 @@ public class RobotContainer {
         //Outtake without agitating
         //Top Left Paddle
         driver.a()
-            .whileTrue(new IntakeSetOuttake());
+            .whileTrue(new IntakeAgitateWhileOuttaking().repeatedly());
         driver.a()
             .onFalse(new IntakeSetHomingDown());
 
