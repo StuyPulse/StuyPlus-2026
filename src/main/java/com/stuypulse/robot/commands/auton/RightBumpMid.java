@@ -5,6 +5,7 @@ import com.stuypulse.robot.commands.intake.IntakeAgitateWhileOuttaking;
 import com.stuypulse.robot.commands.intake.IntakeSetHomingDown;
 import com.stuypulse.robot.commands.intake.IntakeSetIntake;
 import com.stuypulse.robot.commands.intake.IntakeSetOuttake;
+import com.stuypulse.robot.commands.swerve.SwerveResetPose;
 import com.stuypulse.robot.subsystems.swerve.CommandSwerveDrivetrain;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
@@ -15,6 +16,7 @@ public class RightBumpMid extends SequentialCommandGroup{
     public RightBumpMid(PathPlannerPath...paths){
 
         addCommands(
+            new SwerveResetPose(paths[0].getStartingHolonomicPose().get()),
             CommandSwerveDrivetrain.getInstance().followPathCommand(paths[0])
                 .alongWith(new IntakeSetIntake()),
 
