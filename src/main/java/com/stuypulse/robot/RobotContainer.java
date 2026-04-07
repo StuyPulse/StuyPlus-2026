@@ -8,6 +8,7 @@ package com.stuypulse.robot;
 import com.stuypulse.robot.commands.auton.DoNothingAuton;
 import com.stuypulse.robot.commands.auton.LeftBumpFerry;
 import com.stuypulse.robot.commands.auton.LeftBumpMid;
+import com.stuypulse.robot.commands.auton.OutpostOnly;
 import com.stuypulse.robot.commands.auton.RightBumpFerry;
 import com.stuypulse.robot.commands.auton.RightBumpMid;
 import com.stuypulse.robot.commands.auton.TwoMeterPath;
@@ -158,6 +159,10 @@ public class RobotContainer {
         AutonConfig TwoMeterPathAuto = new AutonConfig("2 Meter Path", TwoMeterPath::new,
         "2 meter path");
         TwoMeterPathAuto.register(autonChooser);
+
+        AutonConfig OutpostOnlyAuto = new AutonConfig("Outpost Only", OutpostOnly::new, 
+        "Outpost Only");
+        OutpostOnlyAuto.register(autonChooser);
 
         // autonChooser.addOption("SysID Module Translation Dynamic Forwards", swerve.sysIdDynamic(Direction.kForward));
         // autonChooser.addOption("SysID Module Translation Dynamic Backwards", swerve.sysIdDynamic(Direction.kReverse));
