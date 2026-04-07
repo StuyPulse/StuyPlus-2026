@@ -94,7 +94,7 @@ public class RobotContainer {
         rightTrigger    
             .onTrue(new IntakeSetIntake());
 
-        //Outtake without agitating
+        //Outtake with agitation
         //Top Left Paddle
         driver.a()
             .whileTrue(new IntakeAgitateWhileOuttaking().repeatedly());
