@@ -8,9 +8,11 @@ package com.stuypulse.robot;
 import com.stuypulse.robot.commands.auton.DoNothingAuton;
 import com.stuypulse.robot.commands.auton.LeftBumpFerry;
 import com.stuypulse.robot.commands.auton.LeftBumpMid;
+import com.stuypulse.robot.commands.auton.LeftBumpMidStraight;
 import com.stuypulse.robot.commands.auton.OutpostOnly;
 import com.stuypulse.robot.commands.auton.RightBumpFerry;
 import com.stuypulse.robot.commands.auton.RightBumpMid;
+import com.stuypulse.robot.commands.auton.RightBumpMidStraight;
 import com.stuypulse.robot.commands.auton.TwoMeterPath;
 import com.stuypulse.robot.commands.swerve.SwerveDriveDrive;
 import com.stuypulse.robot.commands.swerve.SwerveDriveResetRotation;
@@ -106,7 +108,7 @@ public class RobotContainer {
             .onTrue(new SwerveDriveResetRotation());
 
         driver.rightBumper()
-            .onTrue(new IntakeSetDown());
+            .onTrue(new IntakeSetHomingDown());
 
         //Rotate towards alliance Zone
         //Bottom Right Paddle
@@ -149,6 +151,14 @@ public class RobotContainer {
             "LB to N",
             "LB Return");
         LeftBumpMidAuto.register(autonChooser);
+
+        AutonConfig LeftBumpMidStraightAuto = new AutonConfig("Left Bump Mid Straight", LeftBumpMidStraight::new,
+            "LB to N straight cycle");
+        LeftBumpMidStraightAuto.register(autonChooser);
+
+        AutonConfig rightBumpMidStraightAuto = new AutonConfig("Right Bump Mid Straight", RightBumpMidStraight::new,
+            "RB to N straight cycle");
+        rightBumpMidStraightAuto.register(autonChooser);
 
         AutonConfig RightBumpMidAuto = new AutonConfig("Right Bump Mid", RightBumpMid::new, 
             "RB to N",

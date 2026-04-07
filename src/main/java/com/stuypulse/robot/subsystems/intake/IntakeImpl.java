@@ -76,7 +76,7 @@ public class IntakeImpl extends Intake {
 
     @Override
     public double getRollerRPM() {
-        return intakeRollerMotorLeft.getVelocity().getValueAsDouble() * 60;
+        return intakeRollerMotorRight.getVelocity().getValueAsDouble() * 60;
     }
 
     @Override
@@ -166,7 +166,7 @@ public class IntakeImpl extends Intake {
             default -> pivotController.withPosition(currentState.getTargetAngle().getRotations());
         };
 
-        final DutyCycleOut rollerControl = rollerController.withOutput(pivotAboveThreshold ? currentState.getTargetDutyCycle() : 0);
+        final DutyCycleOut rollerControl = rollerController.withOutput(currentState.getTargetDutyCycle());
 
         // Apply
 
@@ -190,6 +190,8 @@ public class IntakeImpl extends Intake {
         SmartDashboard.putBoolean("Intake/pivotStalling", pivotStalling);
         SmartDashboard.putBoolean("Intake/Left Roller Stalling", leftRollerStalling());
         SmartDashboard.putBoolean("Intake/Right Roller Stalling", rightRollerStalling());
+
+        SmartDashboard.putNumber("Intake/Roller Target Duty Cycle", currentState.getTargetDutyCycle());
 
         SmartDashboard.putNumber("Intake/Left Roller Duty Cycle", intakeRollerMotorLeft.getDutyCycle().getValueAsDouble());
         SmartDashboard.putNumber("Intake/Right Roller Duty Cycle", intakeRollerMotorRight.getDutyCycle().getValueAsDouble());
