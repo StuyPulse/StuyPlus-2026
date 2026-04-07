@@ -1,6 +1,7 @@
 package com.stuypulse.robot.subsystems.vision;
 
 import com.stuypulse.robot.Robot;
+import com.stuypulse.robot.commands.vision.SetPipeline;
 import com.stuypulse.robot.constants.Cameras;
 import com.stuypulse.robot.constants.Settings;
 import com.stuypulse.robot.subsystems.swerve.CommandSwerveDrivetrain;
@@ -21,6 +22,9 @@ public class LimelightVision extends SubsystemBase{
 
     static {
         instance = new LimelightVision();
+
+        SmartDashboard.putData("Vision/Set Bright Pipeline", new SetPipeline(0));
+        SmartDashboard.putData("Vision/Set Dark Pipeline", new SetPipeline(1));
     }
 
     public static LimelightVision getInstance() {
@@ -193,6 +197,7 @@ public class LimelightVision extends SubsystemBase{
 
                     SmartDashboard.putString("Vision/MegaTag Mode", megaTagMode.toString());
                     // this yaw is seems to be the robot yaw passed into the LL
+                    SmartDashboard.putNumber("Vision/Pipeline", LimelightHelpers.getCurrentPipelineIndex(limelightName));
                     SmartDashboard.putNumber("Vision/Limelight Robot Yaw", LimelightHelpers.getIMUData(limelightName).robotYaw);
                     // this is just the yaw of the internal imu 
                     SmartDashboard.putNumber("Vision/Limelight Yaw", LimelightHelpers.getIMUData(limelightName).Yaw);

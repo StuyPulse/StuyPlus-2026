@@ -1,6 +1,7 @@
 package com.stuypulse.robot.subsystems.intake;
 
 import java.util.Optional;
+import java.util.function.BooleanSupplier;
 
 import com.ctre.phoenix6.controls.Follower;
 import com.ctre.phoenix6.controls.ControlRequest;
@@ -30,7 +31,7 @@ public class IntakeImpl extends Intake {
     private final PositionVoltage pivotController;
     private final Follower followerController;
 
-    private final BStream pivotStalling;
+    private final BooleanSupplier pivotStalling;
     private final BStream rollersStalling;
     private Optional<Double> pivotVoltageOverride;
 
@@ -51,9 +52,7 @@ public class IntakeImpl extends Intake {
 
         intakeRollerMotorRight.setControl(followerController);
 
-        pivotStalling = BStream.create(
-                () -> intakePivotMotor.getStatorCurrent().getValueAsDouble() > Settings.Intake.PIVOT_STALL_CURRENT)
-                .filtered(new BDebounce.Both(Settings.Intake.PIVOT_STALL_DEBOUNCE_SEC));
+        pivotStalling = () -> intakePivotMotor.getStatorCurrent().getValueAsDouble() > Settings.Intake.PIVOT_STALL_CURRENT;
         rollersStalling = BStream
                 .create(() -> intakeRollerMotorLeft.getStatorCurrent()
                         .getValueAsDouble() > Settings.Intake.ROLLER_STALL_CURRENT)
@@ -87,7 +86,7 @@ public class IntakeImpl extends Intake {
     }
 
     private boolean pivotStalling() {
-        return pivotStalling.get();
+        return pivotStalling.getAsBoolean();
     }
 
     private boolean rollersStalling() {
