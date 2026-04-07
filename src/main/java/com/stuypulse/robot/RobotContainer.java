@@ -6,12 +6,12 @@
 package com.stuypulse.robot;
 
 import com.stuypulse.robot.commands.auton.DoNothingAuton;
-import com.stuypulse.robot.commands.auton.LeftBumpFerry;
-import com.stuypulse.robot.commands.auton.LeftBumpMid;
-import com.stuypulse.robot.commands.auton.OutpostOnly;
-import com.stuypulse.robot.commands.auton.RightBumpFerry;
-import com.stuypulse.robot.commands.auton.RightBumpMid;
-import com.stuypulse.robot.commands.auton.TwoMeterPath;
+import com.stuypulse.robot.commands.auton.LeftBumpFerryAuto;
+import com.stuypulse.robot.commands.auton.LeftBumpMidAuto;
+import com.stuypulse.robot.commands.auton.OutpostOnlyAuto;
+import com.stuypulse.robot.commands.auton.RightBumpFerryAuto;
+import com.stuypulse.robot.commands.auton.RightBumpMidAuto;
+import com.stuypulse.robot.commands.auton.TwoMeterPathAuto;
 import com.stuypulse.robot.commands.swerve.SwerveDriveDrive;
 import com.stuypulse.robot.commands.swerve.SwerveDriveResetRotation;
 import com.stuypulse.robot.commands.swerve.SwerveDriveRotate;
@@ -131,36 +131,36 @@ public class RobotContainer {
      public void configureAutons() {
         autonChooser.addOption("Do Nothing", new DoNothingAuton());
 
-        AutonConfig LeftBumpFerryAuto = new AutonConfig("Left Bump Ferry", LeftBumpFerry::new, 
+        AutonConfig LeftBumpFerryAuto = new AutonConfig("Left Bump Ferry Auto", LeftBumpFerryAuto::new, 
             "Left Bump to Neutral", 
             "N to L.T.", 
             "L.T. Circle Hub", 
             "N to Depot");
         LeftBumpFerryAuto.register(autonChooser);
 
-        AutonConfig RightBumpFerryAuto = new AutonConfig("Right Bump Ferry", RightBumpFerry::new, 
+        AutonConfig RightBumpFerryAuto = new AutonConfig("Right Bump Ferry Auto", RightBumpFerryAuto::new, 
             "R.B. to R.N.", 
             "N to R.T.", 
             "R.T. Circle Hub", 
             "R.N. to H.P.");
         RightBumpFerryAuto.register(autonChooser);
 
-        AutonConfig LeftBumpMidAuto = new AutonConfig("Left Bump Mid", LeftBumpMid::new,
+        AutonConfig LeftBumpMidAuto = new AutonConfig("Left Bump Mid Auto", LeftBumpMidAuto::new,
             "LB to N",
             "LB Return");
         LeftBumpMidAuto.register(autonChooser);
 
-        AutonConfig RightBumpMidAuto = new AutonConfig("Right Bump Mid", RightBumpMid::new, 
+        AutonConfig RightBumpMidAuto = new AutonConfig("Right Bump Mid Auto", RightBumpMidAuto::new, 
             "RB to N",
             "RB Return",
             "RB to Outpost");
         RightBumpMidAuto.register(autonChooser);
 
-        AutonConfig TwoMeterPathAuto = new AutonConfig("2 Meter Path", TwoMeterPath::new,
+        AutonConfig TwoMeterPathAuto = new AutonConfig("Two Meter Path Auto", TwoMeterPathAuto::new,
         "2 meter path");
         TwoMeterPathAuto.register(autonChooser);
 
-        AutonConfig OutpostOnlyAuto = new AutonConfig("Outpost Only", OutpostOnly::new, 
+        AutonConfig OutpostOnlyAuto = new AutonConfig("Outpost Only Auto", OutpostOnlyAuto::new, 
         "Outpost");
         OutpostOnlyAuto.register(autonChooser);
 
