@@ -3,7 +3,6 @@ package com.stuypulse.robot.subsystems.intake;
 import java.util.Optional;
 
 import com.stuypulse.robot.Robot;
-import com.stuypulse.robot.commands.PreMatch;
 import com.stuypulse.robot.commands.intake.IntakeSetZero;
 import com.stuypulse.robot.commands.intake.IntakeSetZeroAtBottom;
 import com.stuypulse.robot.constants.Settings;
@@ -19,7 +18,6 @@ import edu.wpi.first.networktables.StructArrayPublisher;
 import edu.wpi.first.networktables.StructPublisher;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 
 public abstract class Intake extends SubsystemBase {
     private static final Intake instance;
@@ -33,9 +31,8 @@ public abstract class Intake extends SubsystemBase {
             instance = new IntakeSim();
         }
         
-        SmartDashboard.putData("Set Pivot 0", new IntakeSetZero());
-        SmartDashboard.putData("Set Pivot 0 at Bottom", new IntakeSetZeroAtBottom());
-        SmartDashboard.putData("Run pre-match Tests", new PreMatch());
+        SmartDashboard.putData("Intake/Set Pivot 0", new IntakeSetZero());
+        SmartDashboard.putData("Intake/Set Pivot 0 at Bottom", new IntakeSetZeroAtBottom());
     }
     
     public static Intake getInstance() {

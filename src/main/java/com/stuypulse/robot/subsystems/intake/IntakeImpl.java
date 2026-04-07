@@ -187,6 +187,7 @@ public class IntakeImpl extends Intake {
         SmartDashboard.putNumber("Intake/Right Roller Voltage", intakeRollerMotorRight.getMotorVoltage().getValueAsDouble());
         SmartDashboard.putBoolean("Intake/Pushing Down", pushingDown);
 
+        SmartDashboard.putBoolean("Intake/pivotStalling", pivotStalling);
         SmartDashboard.putBoolean("Intake/Left Roller Stalling", leftRollerStalling());
         SmartDashboard.putBoolean("Intake/Right Roller Stalling", rightRollerStalling());
 

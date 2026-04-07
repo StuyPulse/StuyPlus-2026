@@ -235,8 +235,8 @@
           },
           {
             "title": "Roller Duty Cycle",
-            "x": 840.0,
-            "y": 280.0,
+            "x": 980.0,
+            "y": 140.0,
             "width": 140.0,
             "height": 70.0,
             "type": "Text Display",
@@ -249,7 +249,7 @@
           },
           {
             "title": "Set Bright Pipeline",
-            "x": 1120.0,
+            "x": 840.0,
             "y": 280.0,
             "width": 280.0,
             "height": 140.0,
@@ -263,7 +263,7 @@
           },
           {
             "title": "Set Dark Pipeline",
-            "x": 1120.0,
+            "x": 840.0,
             "y": 420.0,
             "width": 280.0,
             "height": 140.0,
@@ -273,6 +273,19 @@
               "period": 0.06,
               "show_type": true,
               "maximize_button_space": true
+            }
+          },
+          {
+            "title": "Auton Chooser",
+            "x": 1120.0,
+            "y": 280.0,
+            "width": 280.0,
+            "height": 140.0,
+            "type": "ComboBox Chooser",
+            "properties": {
+              "topic": "/SmartDashboard/Autonomous",
+              "period": 0.06,
+              "sort_options": false
             }
           }
         ]
@@ -376,8 +389,8 @@
           },
           {
             "title": "Roller Duty Cycle",
-            "x": 840.0,
-            "y": 280.0,
+            "x": 980.0,
+            "y": 140.0,
             "width": 140.0,
             "height": 70.0,
             "type": "Text Display",
@@ -510,31 +523,108 @@
             }
           },
           {
-            "title": "Set Bright Pipeline",
+            "title": "Set Sunny Pipeline",
+            "x": 840.0,
+            "y": 280.0,
+            "width": 280.0,
+            "height": 140.0,
+            "type": "Command",
+            "properties": {
+              "topic": "/SmartDashboard/Vision/Set Sunny Pipeline",
+              "period": 0.06,
+              "show_type": false,
+              "maximize_button_space": false
+            }
+          },
+          {
+            "title": "Set Cloudy Pipeline",
+            "x": 840.0,
+            "y": 420.0,
+            "width": 280.0,
+            "height": 140.0,
+            "type": "Command",
+            "properties": {
+              "topic": "/SmartDashboard/Vision/Set Cloudy Pipeline",
+              "period": 0.06,
+              "show_type": false,
+              "maximize_button_space": false
+            }
+          },
+          {
+            "title": "Set Pivot 0",
             "x": 1120.0,
             "y": 280.0,
             "width": 280.0,
             "height": 140.0,
             "type": "Command",
             "properties": {
-              "topic": "/SmartDashboard/Vision/Set Bright Pipeline",
+              "topic": "/SmartDashboard/Intake/Set Pivot 0",
               "period": 0.06,
-              "show_type": true,
-              "maximize_button_space": true
+              "show_type": false,
+              "maximize_button_space": false
             }
           },
           {
-            "title": "Set Dark Pipeline",
+            "title": "Set Pivot 0 at Bottom",
             "x": 1120.0,
             "y": 420.0,
             "width": 280.0,
             "height": 140.0,
             "type": "Command",
             "properties": {
-              "topic": "/SmartDashboard/Vision/Set Dark Pipeline",
+              "topic": "/SmartDashboard/Intake/Set Pivot 0 at Bottom",
               "period": 0.06,
-              "show_type": true,
-              "maximize_button_space": true
+              "show_type": false,
+              "maximize_button_space": false
+            }
+          },
+          {
+            "title": "pivotStalling",
+            "x": 840.0,
+            "y": 560.0,
+            "width": 140.0,
+            "height": 140.0,
+            "type": "Boolean Box",
+            "properties": {
+              "topic": "SmartDashboard/Intake/pivotStalling",
+              "period": 0.06,
+              "data_type": "boolean",
+              "true_color": 4283215696,
+              "false_color": 4294198070,
+              "true_icon": "None",
+              "false_icon": "None"
+            }
+          },
+          {
+            "title": "Left Roller Stalling",
+            "x": 980.0,
+            "y": 560.0,
+            "width": 140.0,
+            "height": 140.0,
+            "type": "Boolean Box",
+            "properties": {
+              "topic": "SmartDashboard/Intake/Left Roller Stalling",
+              "period": 0.06,
+              "true_color": 4283215696,
+              "false_color": 4294198070,
+              "true_icon": "None",
+              "false_icon": "None"
+            }
+          },
+          {
+            "title": "Right Roller Stalling",
+            "x": 1120.0,
+            "y": 560.0,
+            "width": 140.0,
+            "height": 140.0,
+            "type": "Boolean Box",
+            "properties": {
+              "topic": "SmartDashboard/Intake/Right Roller Stalling",
+              "period": 0.06,
+              "true_color": 4283215696,
+              "false_color": 4294198070,
+              "true_icon": "None",
+              "false_icon": "None"
             }
           }
         ]
@@ -666,8 +756,8 @@
           },
           {
             "title": "Roller Duty Cycle",
-            "x": 840.0,
-            "y": 280.0,
+            "x": 980.0,
+            "y": 140.0,
             "width": 140.0,
             "height": 70.0,
             "type": "Text Display",
@@ -677,15 +767,36 @@
               "data_type": "double",
               "show_submit_button": false
             }
+          },
+          {
+            "title": "Set Bright Pipeline",
+            "x": 840.0,
+            "y": 280.0,
+            "width": 280.0,
+            "height": 140.0,
+            "type": "Command",
+            "properties": {
+              "topic": "/SmartDashboard/Vision/Set Bright Pipeline",
+              "period": 0.06,
+              "show_type": true,
+              "maximize_button_space": true
+            }
+          },
+          {
+            "title": "Set Dark Pipeline",
+            "x": 840.0,
+            "y": 420.0,
+            "width": 280.0,
+            "height": 140.0,
+            "type": "Command",
+            "properties": {
+              "topic": "/SmartDashboard/Vision/Set Dark Pipeline",
+              "period": 0.06,
+              "show_type": true,
+              "maximize_button_space": true
+            }
           }
         ]
-      }
-    },
-    {
-      "name": "Tab 4",
-      "grid_layout": {
-        "layouts": [],
-        "containers": []
       }
     }
   ]
