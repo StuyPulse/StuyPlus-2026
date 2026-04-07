@@ -161,7 +161,7 @@ public class RobotContainer {
         TwoMeterPathAuto.register(autonChooser);
 
         AutonConfig OutpostOnlyAuto = new AutonConfig("Outpost Only", OutpostOnly::new, 
-        "Outpost Only");
+        "Outpost");
         OutpostOnlyAuto.register(autonChooser);
 
         // autonChooser.addOption("SysID Module Translation Dynamic Forwards", swerve.sysIdDynamic(Direction.kForward));
