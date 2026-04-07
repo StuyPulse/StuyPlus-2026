@@ -116,8 +116,6 @@ public class Simulation {
     private void updateIntake() {
         boolean intakeEnabled = intakeSim.atTargetAngle() && (intakeSim.getState() == IntakeState.INTAKE) && Settings.EnabledSubsystems.INTAKE.get();
 
-        SmartDashboard.putBoolean("Intake/MapleSimIntakeEnabled", intakeEnabled);
-        SmartDashboard.putNumber("Intake/MapleSimIntakeCurrentAmount", intakeMSim.getGamePiecesAmount());
         updateIntakeEnabled(intakeEnabled);
     }
 
@@ -228,5 +226,9 @@ public class Simulation {
         //             new Pose3d(getIntakeArmEndX(), 0, 0, new Rotation3d(swerveMSim.getSimulatedDriveTrainPose().getRotation()))).getTranslation().toTranslation2d());
         // shooter.set(new Pose3d(tra.getX(), tra.getY(), 0, new Rotation3d()));
         // shooter.set(SimulationConstants.Shooter.OFFSETS.applyToPose3dRobotRelative(new Pose3d(swerveMSim.getSimulatedDriveTrainPose())));
+
+        SmartDashboard.putBoolean("MapleSim/Intake/Running", intakeMSim.isRunning());
+        SmartDashboard.putNumber("MapleSim/Hopper/Amount", intakeMSim.getGamePiecesAmount());
+        SmartDashboard.putNumber("MapleSim/Hopper/CapacityPercent", intakeMSim.getGamePiecesAmount() / SimulationConstants.Hopper.FUEL_CAPACITY);
     }
 }
