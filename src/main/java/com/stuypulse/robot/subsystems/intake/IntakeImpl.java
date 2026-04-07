@@ -67,13 +67,6 @@ public class IntakeImpl extends Intake {
         return Rotation2d.fromRotations(intakePivotMotor.getPosition().getValueAsDouble());
     }
 
-    @Override
-    public boolean atAngle() {
-        return Math.abs(
-                (getRelativePosition().getRotations())
-                        - getState().getTargetAngle().getRotations()) < Settings.Intake.ANGLE_TOLERANCE.getRotations();
-    }
-
     public void setPivotVoltageOverride(Optional<Double> pivotVoltageOverride) {
         this.pivotVoltageOverride = pivotVoltageOverride;
     }
@@ -117,8 +110,7 @@ public class IntakeImpl extends Intake {
 
         // Input
 
-        final double pivotPosition = intakePivotMotor.getPosition().getValueAsDouble();
-        final boolean pivotAboveThreshold = pivotPosition > Settings.Intake.PUSHDOWN_THRESHOLD.getRotations();
+        final boolean pivotAboveThreshold = atTargetAngle();
 
         final boolean pivotStalling = pivotStalling();
 
@@ -193,10 +185,6 @@ public class IntakeImpl extends Intake {
         SmartDashboard.putNumber("Intake/Pivot Stator Current (amps)", intakePivotMotor.getStatorCurrent().getValueAsDouble());
         SmartDashboard.putNumber("Intake/Pivot Supply Current (amps)", intakePivotMotor.getSupplyCurrent().getValueAsDouble());
         SmartDashboard.putNumber("Intake/Pivot Voltage", intakePivotMotor.getMotorVoltage().getValueAsDouble());
-
-        SmartDashboard.putNumber("Intake/Pivot Angle (deg)", getRelativePosition().getDegrees());
-
-        SmartDashboard.putBoolean("Intake/Pivot At Target Angle", atAngle());
     }
 
     public SysIdRoutine getIntakeSysIdRoutine() {

@@ -1,5 +1,7 @@
 package com.stuypulse.robot.subsystems.intake;
 
+import java.util.Optional;
+
 import com.stuypulse.robot.Robot;
 import com.stuypulse.robot.commands.PreMatch;
 import com.stuypulse.robot.commands.intake.IntakeSetZero;
@@ -7,7 +9,14 @@ import com.stuypulse.robot.commands.intake.IntakeSetZeroAtBottom;
 import com.stuypulse.robot.constants.Settings;
 import com.stuypulse.robot.util.RobotVisualizer;
 
+import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.kinematics.ChassisSpeeds;
+import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.networktables.BooleanPublisher;
+import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.networktables.StructArrayPublisher;
+import edu.wpi.first.networktables.StructPublisher;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
@@ -32,6 +41,13 @@ public abstract class Intake extends SubsystemBase {
     public static Intake getInstance() {
         return instance;
     }
+
+    private final BooleanPublisher atTolerance = NetworkTableInstance.getDefault()
+        .getBooleanTopic("SmartDashboard/Intake/pivotAtTolerance").publish();
+    private final BooleanPublisher pivotStalling = NetworkTableInstance.getDefault()
+        .getBooleanTopic("SmartDashboard/Intake/pivotStalling").publish();
+    private final BooleanPublisher rollersStalling = NetworkTableInstance.getDefault()
+        .getBooleanTopic("SmartDashboard/Intake/rollersStalling").publish();
 
     public enum IntakeState {
         IDLE(Settings.Intake.IDLE_ANGLE, Settings.Intake.IDLE_DUTY_CYCLE), // (rollers do not run)
@@ -71,17 +87,23 @@ public abstract class Intake extends SubsystemBase {
     }
 
     public abstract Rotation2d getRelativePosition();
-    public abstract boolean atAngle();
-    public abstract double getRollerRPM();
+    public boolean atTargetAngle() {
+        return Math.abs(
+                (getRelativePosition().getRotations())
+                        - getState().getTargetAngle().getRotations()) < Settings.Intake.ANGLE_TOLERANCE.getRotations();
+    };
     public abstract void setPivotZero();
     public abstract void setPivotZeroAtBottom();
-    public abstract SysIdRoutine getIntakeSysIdRoutine();
+    public abstract double getRollerRPM();
 
     @Override
     public void periodic() {
         SmartDashboard.putString("Intake/Intake State", getState().name());
         SmartDashboard.putNumber("Intake/Roller Target Duty Cycle", getState().getTargetDutyCycle());
+        SmartDashboard.putNumber("Intake/Roller RPM", getRollerRPM());
         SmartDashboard.putNumber("Intake/Target Angle", getState().getTargetAngle().getDegrees());
+        SmartDashboard.putNumber("Intake/Pivot Angle (deg)", getRelativePosition().getDegrees());
+        SmartDashboard.putBoolean("Intake/Pivot At Target Angle", atTargetAngle());
 
         if (Settings.DEBUG_MODE) {
             if (Settings.EnabledSubsystems.INTAKE.get()) {

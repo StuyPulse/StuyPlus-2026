@@ -68,10 +68,11 @@ public interface Settings {
         double OUTTAKE_DUTY_CYCLE = -1;
 
         double J_KG_METERS_SQUARED = 0.1;
+        double ROLLER_J_KG_METERS_SQUARED = 0.1;
         double PIVOT_MIN_ANGLE = 0.0;
         double PIVOT_MAX_ANGLE = 2 * Math.PI;
         double PIVOT_GEAR_RATIO = 60.0;
-        double ROLLER_GEAR_RATIO = 16.0/27.0;
+        double ROLLER_GEAR_RATIO = 16.0 / 27.0;
 
         double RAMP_RATE = 2;
         double STEP_VOLTAGE = 6; // volts

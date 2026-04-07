@@ -1,5 +1,6 @@
 package com.stuypulse.robot.util.simulation;
 
+import com.stuypulse.robot.constants.Settings;
 import com.stuypulse.robot.subsystems.intake.Intake;
 import com.stuypulse.robot.subsystems.intake.Intake.IntakeState;
 // import com.stuypulse.robot.subsystems.shooter.ShooterSim;
@@ -113,7 +114,7 @@ public class Simulation {
     }
 
     private void updateIntake() {
-        boolean intakeEnabled = intakeSim.atAngle() && (intakeSim.getState() == IntakeState.INTAKE);
+        boolean intakeEnabled = intakeSim.atTargetAngle() && (intakeSim.getState() == IntakeState.INTAKE) && Settings.EnabledSubsystems.INTAKE.get();
 
         SmartDashboard.putBoolean("Intake/MapleSimIntakeEnabled", intakeEnabled);
         SmartDashboard.putNumber("Intake/MapleSimIntakeCurrentAmount", intakeMSim.getGamePiecesAmount());
@@ -190,7 +191,7 @@ public class Simulation {
     }
 
     private void updateShooting() {
-        if (intakeSim.getState() == IntakeState.OUTTAKE && intakeMSim.obtainGamePieceFromIntake()) {
+        if (intakeSim.getState() == IntakeState.OUTTAKE && Settings.EnabledSubsystems.INTAKE.get() && intakeMSim.obtainGamePieceFromIntake()) {
             summonFuelAtIntake();
         }// else if (ShooterSim.getInstance().getState() == ShooterState.SHOOTING || ShooterSim.getInstance().getState() == ShooterState.FERRYING) {
         //     final Pose2d shooterPose = SimulationConstants.Shooter.OFFSETS.applyToPose2d(swerveMSim.getSimulatedDriveTrainPose());
