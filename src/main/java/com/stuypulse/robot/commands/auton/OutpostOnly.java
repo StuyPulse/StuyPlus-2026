@@ -15,8 +15,7 @@ public class OutpostOnly extends SequentialCommandGroup{
         addCommands(
             new SwerveResetPose(paths[0].getStartingHolonomicPose().get()),
             CommandSwerveDrivetrain.getInstance().followPathCommand(paths[0]),
-                new WaitCommand(2).deadlineFor(new IntakeAgitateWhileOuttaking().repeatedly())
+                new WaitCommand(20).deadlineFor(new IntakeSetOuttake())
             );
-    }
-    
+    }   
 }

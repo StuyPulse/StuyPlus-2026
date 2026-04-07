@@ -21,7 +21,6 @@ public class LeftBumpMid extends SequentialCommandGroup{
                 .alongWith(new IntakeSetIntake()),
 
             CommandSwerveDrivetrain.getInstance().followPathCommand(paths[1]),
-                new WaitCommand(2).deadlineFor(new IntakeAgitateWhileOuttaking().repeatedly()),
 
             new IntakeSetHomingDown()
         );
