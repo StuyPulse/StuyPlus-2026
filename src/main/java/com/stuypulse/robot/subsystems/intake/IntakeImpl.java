@@ -178,27 +178,24 @@ public class IntakeImpl extends Intake {
         intakeRollerMotorLeft.setControl(rollerControl);
 
         // Log
+        SmartDashboard.putBoolean("Intake/Pivot Above Threshold", pivotAboveThreshold);
+        SmartDashboard.putNumber("Intake/Left Roller Current (amps)",
+                intakeRollerMotorLeft.getStatorCurrent().getValueAsDouble());
+        SmartDashboard.putNumber("Intake/Right Roller Current", intakeRollerMotorRight.getStatorCurrent().getValueAsDouble());
+        SmartDashboard.putNumber("Intake/Left Roller Voltage", intakeRollerMotorLeft.getMotorVoltage().getValueAsDouble());
+        SmartDashboard.putNumber("Intake/Right Roller Voltage", intakeRollerMotorRight.getMotorVoltage().getValueAsDouble());
+        SmartDashboard.putBoolean("Intake/Pushing Down", pushingDown);
 
-        if (Settings.DEBUG_MODE) {
-            SmartDashboard.putBoolean("Intake/Pivot Above Threshold", pivotAboveThreshold);
-            SmartDashboard.putNumber("Intake/Left Roller Current (amps)",
-                    intakeRollerMotorLeft.getStatorCurrent().getValueAsDouble());
-            SmartDashboard.putNumber("Intake/Right Roller Current", intakeRollerMotorRight.getStatorCurrent().getValueAsDouble());
-            SmartDashboard.putNumber("Intake/Left Roller Voltage", intakeRollerMotorLeft.getMotorVoltage().getValueAsDouble());
-            SmartDashboard.putNumber("Intake/Right Roller Voltage", intakeRollerMotorRight.getMotorVoltage().getValueAsDouble());
-            SmartDashboard.putBoolean("Intake/Pushing Down", pushingDown);
-    
-            SmartDashboard.putBoolean("Intake/pivotStalling", pivotStalling);
-            SmartDashboard.putBoolean("Intake/Left Roller Stalling", leftRollerStalling());
-            SmartDashboard.putBoolean("Intake/Right Roller Stalling", rightRollerStalling());
-    
-            SmartDashboard.putNumber("Intake/Left Roller Duty Cycle", intakeRollerMotorLeft.getDutyCycle().getValueAsDouble());
-            SmartDashboard.putNumber("Intake/Right Roller Duty Cycle", intakeRollerMotorRight.getDutyCycle().getValueAsDouble());
-    
-            SmartDashboard.putNumber("Intake/Pivot Stator Current (amps)", intakePivotMotor.getStatorCurrent().getValueAsDouble());
-            SmartDashboard.putNumber("Intake/Pivot Supply Current (amps)", intakePivotMotor.getSupplyCurrent().getValueAsDouble());
-            SmartDashboard.putNumber("Intake/Pivot Voltage", intakePivotMotor.getMotorVoltage().getValueAsDouble());
-        }
+        SmartDashboard.putBoolean("Intake/pivotStalling", pivotStalling);
+        SmartDashboard.putBoolean("Intake/Left Roller Stalling", leftRollerStalling());
+        SmartDashboard.putBoolean("Intake/Right Roller Stalling", rightRollerStalling());
+
+        SmartDashboard.putNumber("Intake/Left Roller Duty Cycle", intakeRollerMotorLeft.getDutyCycle().getValueAsDouble());
+        SmartDashboard.putNumber("Intake/Right Roller Duty Cycle", intakeRollerMotorRight.getDutyCycle().getValueAsDouble());
+
+        SmartDashboard.putNumber("Intake/Pivot Stator Current (amps)", intakePivotMotor.getStatorCurrent().getValueAsDouble());
+        SmartDashboard.putNumber("Intake/Pivot Supply Current (amps)", intakePivotMotor.getSupplyCurrent().getValueAsDouble());
+        SmartDashboard.putNumber("Intake/Pivot Voltage", intakePivotMotor.getMotorVoltage().getValueAsDouble());
     }
 
     public SysIdRoutine getIntakeSysIdRoutine() {

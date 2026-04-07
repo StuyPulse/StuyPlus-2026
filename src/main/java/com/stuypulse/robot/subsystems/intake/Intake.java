@@ -100,20 +100,18 @@ public abstract class Intake extends SubsystemBase {
 
     @Override
     public void periodic() {
-        if (Settings.DEBUG_MODE) {
-            if (Settings.EnabledSubsystems.INTAKE.get()) {
-                RobotVisualizer.getInstance().updateIntake(getRelativePosition(), getRollerRPM());
-            } else {
-                RobotVisualizer.getInstance().updateIntake(IntakeState.IDLE.getTargetAngle(),
-                        IntakeState.IDLE.getTargetDutyCycle());
-            }
-
-            SmartDashboard.putString("Intake/Intake State", getState().name());
-            SmartDashboard.putNumber("Intake/Roller Target Duty Cycle", getState().getTargetDutyCycle());
-            SmartDashboard.putNumber("Intake/Roller RPM", getRollerRPM());
-            SmartDashboard.putNumber("Intake/Target Angle", getState().getTargetAngle().getDegrees());
-            SmartDashboard.putNumber("Intake/Pivot Angle (deg)", getRelativePosition().getDegrees());
-            SmartDashboard.putBoolean("Intake/Pivot At Target Angle", atTargetAngle());
+        if (Settings.EnabledSubsystems.INTAKE.get()) {
+            RobotVisualizer.getInstance().updateIntake(getRelativePosition(), getRollerRPM());
+        } else {
+            RobotVisualizer.getInstance().updateIntake(IntakeState.IDLE.getTargetAngle(),
+                    IntakeState.IDLE.getTargetDutyCycle());
         }
+
+        SmartDashboard.putString("Intake/Intake State", getState().name());
+        SmartDashboard.putNumber("Intake/Roller Target Duty Cycle", getState().getTargetDutyCycle());
+        SmartDashboard.putNumber("Intake/Roller RPM", getRollerRPM());
+        SmartDashboard.putNumber("Intake/Target Angle", getState().getTargetAngle().getDegrees());
+        SmartDashboard.putNumber("Intake/Pivot Angle (deg)", getRelativePosition().getDegrees());
+        SmartDashboard.putBoolean("Intake/Pivot At Target Angle", atTargetAngle());
     }
 }
