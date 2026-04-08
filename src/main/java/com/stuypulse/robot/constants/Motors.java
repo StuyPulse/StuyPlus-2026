@@ -49,7 +49,7 @@ public interface Motors {
         
         TalonFXConfig RIGHT_ROLLER_CONFIG = new TalonFXConfig() // TODO: apply later
             .withCurrentLimitAmps(50)
-            .withInvertedValue(InvertedValue.Clockwise_Positive) 
+            .withInvertedValue(InvertedValue.Clockwise_Positive) // not necessarily true, get inverted val
             .withNeutralMode(NeutralModeValue.Coast)
             .withSensorToMechanismRatio(Settings.Intake.ROLLER_GEAR_RATIO);
 

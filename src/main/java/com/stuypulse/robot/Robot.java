@@ -6,10 +6,8 @@
 package com.stuypulse.robot;
 
 import com.ctre.phoenix6.SignalLogger;
-import com.stuypulse.robot.commands.intake.IntakeSetHomingDown;
 import com.stuypulse.robot.commands.vision.SetIMUMode;
 import com.stuypulse.robot.commands.vision.SetMegaTagMode;
-import com.stuypulse.robot.commands.vision.SetVisionEnabled;
 import com.stuypulse.robot.commands.vision.WhitelistAllTags;
 import com.stuypulse.robot.subsystems.swerve.CommandSwerveDrivetrain;
 import com.stuypulse.robot.subsystems.vision.LimelightVision;
@@ -24,7 +22,6 @@ import com.stuypulse.stuylib.network.SmartBoolean;
 
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
-import edu.wpi.first.util.datalog.DataLog;
 import edu.wpi.first.wpilibj.DataLogManager;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
@@ -58,8 +55,6 @@ public class Robot extends TimedRobot {
         }
 
         DataLogManager.start();
-        DataLogManager.logNetworkTables(true);
-        System.out.println("]LOGGING DIRECTORY]: " + DataLogManager.getLogDir());
         SignalLogger.start();
         // SmartDashboard.putData(CommandScheduler.getInstance());
     }
@@ -151,8 +146,7 @@ public class Robot extends TimedRobot {
             auto.cancel();
         }
 
-        CommandScheduler.getInstance().schedule(new SetVisionEnabled());
-        CommandScheduler.getInstance().schedule(new IntakeSetHomingDown());
+        LimelightVision.getInstance().enable();
 
         Boolean autonWon = DriverStation.getGameSpecificMessage()
                 .equals(String.valueOf(alliance.name().charAt(0)).toUpperCase());

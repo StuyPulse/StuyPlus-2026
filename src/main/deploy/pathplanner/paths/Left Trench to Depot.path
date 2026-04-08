@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.55,
-        "y": 5.85
+        "x": 3.52151212553495,
+        "y": 5.503537803138374
       },
       "prevControl": null,
       "nextControl": {
-        "x": 4.434719227620089,
-        "y": 5.854787117903929
+        "x": 4.406231353155039,
+        "y": 5.508324921042304
       },
       "isLocked": false,
       "linkedName": "Left Bump Facing Depot"
@@ -20,7 +20,7 @@
         "y": 5.982268188302426
       },
       "prevControl": {
-        "x": 1.981811697574893,
+        "x": 1.9818116975748927,
         "y": 6.305734664764623
       },
       "nextControl": null,
@@ -48,7 +48,7 @@
   "folder": null,
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 180.0
+    "rotation": 178.93908830973578
   },
   "useDefaultConstraints": true
 }

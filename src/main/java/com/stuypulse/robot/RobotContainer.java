@@ -8,15 +8,9 @@ package com.stuypulse.robot;
 import com.stuypulse.robot.commands.auton.DoNothingAuton;
 import com.stuypulse.robot.commands.auton.LeftBumpFerryAuto;
 import com.stuypulse.robot.commands.auton.LeftBumpMidAuto;
-import com.stuypulse.robot.commands.auton.LeftBumpMidStraight;
-import com.stuypulse.robot.commands.auton.LeftBumpMidlineSweepRight;
-import com.stuypulse.robot.commands.auton.LeftBumpOuttakeAuto;
 import com.stuypulse.robot.commands.auton.OutpostOnlyAuto;
 import com.stuypulse.robot.commands.auton.RightBumpFerryAuto;
 import com.stuypulse.robot.commands.auton.RightBumpMidAuto;
-import com.stuypulse.robot.commands.auton.RightBumpMidStraight;
-import com.stuypulse.robot.commands.auton.RightBumpMidlineSweepLeft;
-import com.stuypulse.robot.commands.auton.RightBumpOuttakeAuto;
 import com.stuypulse.robot.commands.auton.TwoMeterPathAuto;
 import com.stuypulse.robot.commands.swerve.SwerveDriveDrive;
 import com.stuypulse.robot.commands.swerve.SwerveDriveResetRotation;
@@ -89,7 +83,7 @@ public class RobotContainer {
         //Trigger buttons did not work for some reason so I had to do this
         Trigger leftTrigger = new Trigger(() -> driver.getLeftTriggerAxis() > 0.5);
         Trigger rightTrigger = new Trigger(() -> driver.getRightTriggerAxis() > 0.5);
- 
+
         leftTrigger
             .whileTrue(new IntakeSetOuttake());
         leftTrigger
@@ -112,7 +106,7 @@ public class RobotContainer {
             .onTrue(new SwerveDriveResetRotation());
 
         driver.rightBumper()
-            .onTrue(new IntakeSetHomingDown());
+            .onTrue(new IntakeSetDown());
 
         //Rotate towards alliance Zone
         //Bottom Right Paddle
@@ -121,10 +115,10 @@ public class RobotContainer {
 
         //Auto Drive to Outpost
         //Top Right Paddle
-        // driver.b()
-        //     .whileTrue(new SwerveDrivePIDToPose(Field.outpost).andThen(new IntakeSetOuttake()));
-        // driver.b() 
-        //     .onFalse(new IntakeSetHomingDown());
+        driver.b()
+            .whileTrue(new SwerveDrivePIDToPose(Field.outpost).andThen(new IntakeAgitateWhileOuttaking().repeatedly()));
+        driver.b() 
+            .onFalse(new IntakeSetHomingDown());
         
         //Bottom Left Paddle
         driver.x()
@@ -156,17 +150,7 @@ public class RobotContainer {
             "LB Return");
         LeftBumpMidAuto.register(autonChooser);
 
-        AutonConfig LeftBumpMidStraightAuto = new AutonConfig("Left Bump Mid Straight", LeftBumpMidStraight::new,
-            "LB to N Straight",
-            "N to LB Straight");
-        LeftBumpMidStraightAuto.register(autonChooser);
-
-        AutonConfig rightBumpMidStraightAuto = new AutonConfig("Right Bump Mid Straight", RightBumpMidStraight::new,
-            "RB to N Straight",
-            "N to RB Straight");
-        rightBumpMidStraightAuto.register(autonChooser);
-
-        AutonConfig RightBumpMidAuto = new AutonConfig("Right Bump Mid", RightBumpMidAuto::new, 
+        AutonConfig RightBumpMidAuto = new AutonConfig("Right Bump Mid Auto", RightBumpMidAuto::new, 
             "RB to N",
             "RB Return",
             "RB to Outpost");
@@ -179,26 +163,6 @@ public class RobotContainer {
         AutonConfig OutpostOnlyAuto = new AutonConfig("Outpost Only Auto", OutpostOnlyAuto::new, 
         "Outpost");
         OutpostOnlyAuto.register(autonChooser);
-
-        AutonConfig RightBumpOuttakeAuto = new AutonConfig("Right Bump Outtake Auto", RightBumpOuttakeAuto::new, 
-        "RB to N Outtake",
-            "N to RB Outtake");
-        RightBumpOuttakeAuto.register(autonChooser);
-
-        AutonConfig LeftBumpOuttakeAuto = new AutonConfig("Left Bump Outtake Auto", LeftBumpOuttakeAuto::new, 
-        "LB to N Outtake",
-        "N to LB Outtake");
-        LeftBumpOuttakeAuto.register(autonChooser);
-
-        AutonConfig leftBumpMidlineSweepRight = new AutonConfig("Left Bump Across Midline Sweep Right", LeftBumpMidlineSweepRight::new,
-        "LB to LN Across Midline",
-        "LN Across Midline to RN Across Midline");
-        leftBumpMidlineSweepRight.register(autonChooser);
-
-        AutonConfig rightBumpMidlineSweepLeft = new AutonConfig("Right Bump Across Midline Sweep Left", RightBumpMidlineSweepLeft::new,
-        "RB to RN Across Midline",
-        "RN to Mid Neutral");
-        rightBumpMidlineSweepLeft.register(autonChooser);
 
         // autonChooser.addOption("SysID Module Translation Dynamic Forwards", swerve.sysIdDynamic(Direction.kForward));
         // autonChooser.addOption("SysID Module Translation Dynamic Backwards", swerve.sysIdDynamic(Direction.kReverse));
