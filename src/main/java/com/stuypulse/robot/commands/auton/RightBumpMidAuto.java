@@ -5,8 +5,11 @@ import com.stuypulse.robot.commands.intake.IntakeAgitateWhileOuttaking;
 import com.stuypulse.robot.commands.intake.IntakeSetHomingDown;
 import com.stuypulse.robot.commands.intake.IntakeSetIntake;
 import com.stuypulse.robot.commands.swerve.SwerveResetPose;
+import com.stuypulse.robot.commands.vision.SetVisionDisabled;
+import com.stuypulse.robot.commands.vision.SetVisionEnabled;
 import com.stuypulse.robot.subsystems.swerve.CommandSwerveDrivetrain;
 
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 
@@ -19,12 +22,12 @@ public class RightBumpMidAuto extends SequentialCommandGroup{
             CommandSwerveDrivetrain.getInstance().followPathCommand(paths[0])
                 .alongWith(new IntakeSetIntake()),
 
+            new SetVisionDisabled(),
+
             CommandSwerveDrivetrain.getInstance().followPathCommand(paths[1]),
 
-            CommandSwerveDrivetrain.getInstance().followPathCommand(paths[2]),
-                new WaitCommand(2).deadlineFor(new IntakeAgitateWhileOuttaking().repeatedly()),
-
-            new IntakeSetHomingDown()
+            new IntakeSetHomingDown(),
+            new SetVisionEnabled()
         );
     }
     

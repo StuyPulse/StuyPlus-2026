@@ -8,24 +8,24 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 4.434719227620089,
-        "y": 5.854787117903929
+        "x": 3.8,
+        "y": 5.85
       },
       "isLocked": false,
       "linkedName": "Left Bump Facing Depot"
     },
     {
       "anchor": {
-        "x": 0.8949643366619111,
-        "y": 5.982268188302426
+        "x": 8.25,
+        "y": 5.85
       },
       "prevControl": {
-        "x": 1.981811697574893,
-        "y": 6.305734664764623
+        "x": 8.0,
+        "y": 5.85
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "Left Neutral Across Midline"
     }
   ],
   "rotationTargets": [],
@@ -41,7 +41,7 @@
     "unlimited": false
   },
   "goalEndState": {
-    "velocity": 1.0,
+    "velocity": 0.0,
     "rotation": 180.0
   },
   "reversed": false,
