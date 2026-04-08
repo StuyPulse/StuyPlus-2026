@@ -1,24 +1,28 @@
 package com.stuypulse.robot.commands.auton;
 
 import com.pathplanner.lib.path.PathPlannerPath;
-import com.stuypulse.robot.commands.intake.IntakeAgitateWhileOuttaking;
+import com.stuypulse.robot.commands.intake.IntakeSetHomingDown;
 import com.stuypulse.robot.commands.intake.IntakeSetIntake;
 import com.stuypulse.robot.commands.swerve.SwerveResetPose;
+import com.stuypulse.robot.commands.vision.SetVisionDisabled;
 import com.stuypulse.robot.subsystems.swerve.CommandSwerveDrivetrain;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
 
-public class RightBumpOuttakeAuto extends SequentialCommandGroup{
-    public RightBumpOuttakeAuto(PathPlannerPath...paths){
+public class RBStraight extends SequentialCommandGroup{
+    public RBStraight(PathPlannerPath...paths){
         addCommands(
+            new SetVisionDisabled(),
+
             new SwerveResetPose(paths[0].getStartingHolonomicPose().get()),
-            CommandSwerveDrivetrain.getInstance().followPathCommand(paths[0])
-                .alongWith(new IntakeSetIntake()),
+
+            new IntakeSetIntake(),
+
+            CommandSwerveDrivetrain.getInstance().followPathCommand(paths[0]),
 
             CommandSwerveDrivetrain.getInstance().followPathCommand(paths[1]),
-                new WaitCommand(2).deadlineFor(new IntakeAgitateWhileOuttaking())
+            
+            new IntakeSetHomingDown()
         );
     }
-    
 }
