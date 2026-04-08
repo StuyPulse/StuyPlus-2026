@@ -9,10 +9,12 @@ import com.stuypulse.robot.commands.auton.DoNothingAuton;
 import com.stuypulse.robot.commands.auton.LeftBumpFerry;
 import com.stuypulse.robot.commands.auton.LeftBumpMid;
 import com.stuypulse.robot.commands.auton.LeftBumpMidStraight;
+import com.stuypulse.robot.commands.auton.LeftBumpOuttakeAuto;
 import com.stuypulse.robot.commands.auton.OutpostOnly;
 import com.stuypulse.robot.commands.auton.RightBumpFerry;
 import com.stuypulse.robot.commands.auton.RightBumpMid;
 import com.stuypulse.robot.commands.auton.RightBumpMidStraight;
+import com.stuypulse.robot.commands.auton.RightBumpOuttakeAuto;
 import com.stuypulse.robot.commands.auton.TwoMeterPath;
 import com.stuypulse.robot.commands.swerve.SwerveDriveDrive;
 import com.stuypulse.robot.commands.swerve.SwerveDriveResetRotation;
@@ -153,11 +155,13 @@ public class RobotContainer {
         LeftBumpMidAuto.register(autonChooser);
 
         AutonConfig LeftBumpMidStraightAuto = new AutonConfig("Left Bump Mid Straight", LeftBumpMidStraight::new,
-            "LB to N straight cycle");
+            "LB to N Straight",
+            "N to LB Straight");
         LeftBumpMidStraightAuto.register(autonChooser);
 
         AutonConfig rightBumpMidStraightAuto = new AutonConfig("Right Bump Mid Straight", RightBumpMidStraight::new,
-            "RB to N straight cycle");
+            "RB to N Straight",
+            "N to RB Straight");
         rightBumpMidStraightAuto.register(autonChooser);
 
         AutonConfig RightBumpMidAuto = new AutonConfig("Right Bump Mid", RightBumpMid::new, 
@@ -173,6 +177,16 @@ public class RobotContainer {
         AutonConfig OutpostOnlyAuto = new AutonConfig("Outpost Only", OutpostOnly::new, 
         "Outpost");
         OutpostOnlyAuto.register(autonChooser);
+
+        AutonConfig RightBumpOuttakeAuto = new AutonConfig("Right Bump Outtake Auto", RightBumpOuttakeAuto::new, 
+        "RB to N Outtake",
+            "N to RB Outtake");
+        RightBumpOuttakeAuto.register(autonChooser);
+
+        AutonConfig LeftBumpOuttakeAuto = new AutonConfig("Left Bump Outtake Auto", LeftBumpOuttakeAuto::new, 
+        "LB to N Outtake",
+        "N to LB Outtake");
+        LeftBumpOuttakeAuto.register(autonChooser);
 
         // autonChooser.addOption("SysID Module Translation Dynamic Forwards", swerve.sysIdDynamic(Direction.kForward));
         // autonChooser.addOption("SysID Module Translation Dynamic Backwards", swerve.sysIdDynamic(Direction.kReverse));
