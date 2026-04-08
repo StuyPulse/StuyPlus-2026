@@ -87,7 +87,7 @@ public class RobotContainer {
         //Trigger buttons did not work for some reason so I had to do this
         Trigger leftTrigger = new Trigger(() -> driver.getLeftTriggerAxis() > 0.5);
         Trigger rightTrigger = new Trigger(() -> driver.getRightTriggerAxis() > 0.5);
-
+ 
         leftTrigger
             .whileTrue(new IntakeSetOuttake());
         leftTrigger
@@ -119,10 +119,10 @@ public class RobotContainer {
 
         //Auto Drive to Outpost
         //Top Right Paddle
-        driver.b()
-            .whileTrue(new SwerveDrivePIDToPose(Field.outpost).andThen(new IntakeSetOuttake()));
-        driver.b() 
-            .onFalse(new IntakeSetHomingDown());
+        // driver.b()
+        //     .whileTrue(new SwerveDrivePIDToPose(Field.outpost).andThen(new IntakeSetOuttake()));
+        // driver.b() 
+        //     .onFalse(new IntakeSetHomingDown());
         
         //Bottom Left Paddle
         driver.x()
