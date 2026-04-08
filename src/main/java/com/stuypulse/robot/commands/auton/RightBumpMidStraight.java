@@ -13,8 +13,9 @@ public class RightBumpMidStraight extends SequentialCommandGroup{
     public RightBumpMidStraight(PathPlannerPath...paths){
         addCommands(
             new SwerveResetPose(paths[0].getStartingHolonomicPose().get()),
-            CommandSwerveDrivetrain.getInstance().followPathCommand(paths[0])
-                .alongWith(new IntakeSetIntake()),
+            new IntakeSetIntake(),
+            CommandSwerveDrivetrain.getInstance().followPathCommand(paths[0]),
+            CommandSwerveDrivetrain.getInstance().followPathCommand(paths[1]),
             new IntakeSetHomingDown()
         );
     }

@@ -14,8 +14,9 @@ public class LeftBumpMidStraight extends SequentialCommandGroup{
 
         addCommands(
             new SwerveResetPose(paths[0].getStartingHolonomicPose().get()),
-            CommandSwerveDrivetrain.getInstance().followPathCommand(paths[0])
-                .alongWith(new IntakeSetIntake()),
+            new IntakeSetIntake(),
+            CommandSwerveDrivetrain.getInstance().followPathCommand(paths[0]),
+            CommandSwerveDrivetrain.getInstance().followPathCommand(paths[1]),
             new IntakeSetHomingDown()
         );
 
