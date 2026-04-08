@@ -9,7 +9,7 @@ public class IntakeAgitateWhileOuttaking extends SequentialCommandGroup {
             new IntakeSetOuttake(),
             new WaitCommand(1.5),
             new IntakeSetIdle(),
-            new WaitCommand(0.25),
+            new WaitCommand(0.15),
             new IntakeSetOuttake()
         );
     }

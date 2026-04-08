@@ -16,7 +16,7 @@ public class LeftBumpOuttakeAuto extends SequentialCommandGroup{
             CommandSwerveDrivetrain.getInstance().followPathCommand(paths[0])
                 .alongWith(new IntakeSetIntake()),
 
-            CommandSwerveDrivetrain.getInstance().followPathCommand(paths[1])
+            CommandSwerveDrivetrain.getInstance().followPathCommand(paths[1]),
                 new WaitCommand(2).deadlineFor(new IntakeAgitateWhileOuttaking())
         );
     }
