@@ -118,7 +118,7 @@ public class RobotContainer {
         //Auto Drive to Outpost
         //Top Right Paddle
         driver.b()
-            .whileTrue(new SwerveDrivePIDToPose(Field.outpost).andThen(new IntakeAgitateWhileOuttaking().repeatedly()));
+            .whileTrue(new SwerveDrivePIDToPose(Field.outpost).andThen(new IntakeSetOuttake()));
         driver.b() 
             .onFalse(new IntakeSetHomingDown());
         
