@@ -178,7 +178,6 @@ public class IntakeImpl extends Intake {
         intakeRollerMotorLeft.setControl(rollerControl);
 
         // Log
-
         SmartDashboard.putBoolean("Intake/Pivot Above Threshold", pivotAboveThreshold);
         SmartDashboard.putNumber("Intake/Left Roller Current (amps)",
                 intakeRollerMotorLeft.getStatorCurrent().getValueAsDouble());
