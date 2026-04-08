@@ -9,6 +9,7 @@ import com.stuypulse.robot.commands.auton.DoNothingAuton;
 import com.stuypulse.robot.commands.auton.LeftBumpFerry;
 import com.stuypulse.robot.commands.auton.LeftBumpMid;
 import com.stuypulse.robot.commands.auton.LeftBumpMidStraight;
+import com.stuypulse.robot.commands.auton.LeftBumpMidlineSweepRight;
 import com.stuypulse.robot.commands.auton.LeftBumpOuttakeAuto;
 import com.stuypulse.robot.commands.auton.OutpostOnly;
 import com.stuypulse.robot.commands.auton.RightBumpFerry;
@@ -187,6 +188,11 @@ public class RobotContainer {
         "LB to N Outtake",
         "N to LB Outtake");
         LeftBumpOuttakeAuto.register(autonChooser);
+
+        AutonConfig leftBumpMidlineSweepRight = new AutonConfig("Left Bump Across Midline Sweep Right", LeftBumpMidlineSweepRight::new,
+        "LB to LN Across Midline",
+        "LN Across Midline to RN Across Midline");
+        leftBumpMidlineSweepRight.register(autonChooser);
 
         // autonChooser.addOption("SysID Module Translation Dynamic Forwards", swerve.sysIdDynamic(Direction.kForward));
         // autonChooser.addOption("SysID Module Translation Dynamic Backwards", swerve.sysIdDynamic(Direction.kReverse));

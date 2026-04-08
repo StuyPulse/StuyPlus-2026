@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.55,
+        "x": 8.25,
         "y": 5.85
       },
       "prevControl": null,
       "nextControl": {
-        "x": 4.434719227620089,
-        "y": 5.854787117903929
+        "x": 8.25,
+        "y": 5.6
       },
       "isLocked": false,
-      "linkedName": "Left Bump Facing Depot"
+      "linkedName": "Left Neutral Across Midline"
     },
     {
       "anchor": {
-        "x": 0.8949643366619111,
-        "y": 5.982268188302426
+        "x": 8.25,
+        "y": 4.5
       },
       "prevControl": {
-        "x": 1.981811697574893,
-        "y": 6.305734664764623
+        "x": 8.25,
+        "y": 4.75
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "Mid Neutral Across Midline"
     }
   ],
   "rotationTargets": [],
@@ -41,13 +41,13 @@
     "unlimited": false
   },
   "goalEndState": {
-    "velocity": 1.0,
+    "velocity": 0.0,
     "rotation": 180.0
   },
   "reversed": false,
   "folder": null,
   "idealStartingState": {
-    "velocity": 0,
+    "velocity": 0.0,
     "rotation": 180.0
   },
   "useDefaultConstraints": true

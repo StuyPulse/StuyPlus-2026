@@ -30,7 +30,7 @@ public interface Settings {
 
     public interface EnabledSubsystems {
         // SmartBoolean FEEDER = new SmartBoolean("Enabled Subsystems/Feeder", true);
-        SmartBoolean INTAKE = new SmartBoolean("Enabled Subsystems/Intake", true);
+        SmartBoolean INTAKE = new SmartBoolean("Enabled Subsystems/Intake", false);
         // SmartBoolean LED = new SmartBoolean("Enabled Subsystems/LED", true);
         // SmartBoolean SHOOTER = new SmartBoolean("Enabled Subsystems/Shooter", true);
         SmartBoolean VISION = new SmartBoolean("Enabled Subsystems/Vision", true);
