@@ -9,7 +9,7 @@
       "prevControl": null,
       "nextControl": {
         "x": 6.249999999999999,
-        "y": 1.0
+        "y": 1.0000000000000002
       },
       "isLocked": false,
       "linkedName": "RB Disrupt 1"
@@ -94,13 +94,13 @@
     "unlimited": false
   },
   "goalEndState": {
-    "velocity": 2.0,
+    "velocity": 3.0,
     "rotation": -35.0
   },
   "reversed": false,
   "folder": null,
   "idealStartingState": {
-    "velocity": 2.0,
+    "velocity": 4.0,
     "rotation": -35.0
   },
   "useDefaultConstraints": true
