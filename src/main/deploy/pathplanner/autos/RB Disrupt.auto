@@ -7,37 +7,31 @@
         {
           "type": "path",
           "data": {
-            "pathName": "RB to CF Disrupt"
+            "pathName": "RB to CN Disrupt"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "RB CIrcle 1 Disrupt"
+            "pathName": "RB Disrupt Circle"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "RB CIrcle 1 Disrupt"
+            "pathName": "RB Disrupt Circle"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "RB CIrcle 1 Disrupt"
+            "pathName": "RB Disrupt Circle"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "RB Last Circle Disrupt"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "RB Return Disrupt"
+            "pathName": "RB Disrupt Return"
           }
         }
       ]
