@@ -13,7 +13,7 @@
           ]
         },
         "tabs": {
-          "selected": 2,
+          "selected": 1,
           "tabs": [
             {
               "type": 0,
@@ -34,7 +34,7 @@
                     "logType": "Pose2d",
                     "visible": true,
                     "options": {
-                      "model": "Genghis-Khan"
+                      "model": "StuyPlus WCP CC"
                     }
                   },
                   {
@@ -50,6 +50,15 @@
                     "logType": "Pose3d",
                     "visible": true,
                     "options": {}
+                  },
+                  {
+                    "type": "gamePiece",
+                    "logKey": "NT:AdvScope/FuelPoses",
+                    "logType": "Pose3d[]",
+                    "visible": true,
+                    "options": {
+                      "variant": "Fuel"
+                    }
                   }
                 ],
                 "game": "FRC:2026 Field"
@@ -59,9 +68,9 @@
                 "cameraIndex": -2,
                 "orbitFov": 50,
                 "cameraPosition": [
-                  -1.4480732976951471,
-                  0.6536993407031351,
-                  -0.08551786250220264
+                  -0.4423963837713818,
+                  1.1134987556522398,
+                  -2.0402697257043214
                 ],
                 "cameraTarget": [
                   1.734154012444316,
