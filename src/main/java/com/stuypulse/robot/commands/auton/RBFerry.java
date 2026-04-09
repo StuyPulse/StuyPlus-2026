@@ -10,21 +10,24 @@ import com.stuypulse.robot.subsystems.swerve.CommandSwerveDrivetrain;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 
-public class RightBumpFerry extends SequentialCommandGroup{
-    public RightBumpFerry(PathPlannerPath...paths){
+public class RBFerry extends SequentialCommandGroup{
+    public RBFerry(PathPlannerPath...paths){
         addCommands(
             new SwerveResetPose(paths[0].getStartingHolonomicPose().get()),
+
             CommandSwerveDrivetrain.getInstance().followPathCommand(paths[0])
                 .alongWith(new IntakeSetIntake()),
 
             CommandSwerveDrivetrain.getInstance().followPathCommand(paths[1]),
-                new WaitCommand(2).deadlineFor(new IntakeAgitateWhileOuttaking().repeatedly()),
+
+            new WaitCommand(2).deadlineFor(new IntakeAgitateWhileOuttaking().repeatedly()),
             
             CommandSwerveDrivetrain.getInstance().followPathCommand(paths[2])
                 .alongWith(new IntakeSetHomingDown()),
             
             CommandSwerveDrivetrain.getInstance().followPathCommand(paths[3]),
-                new WaitCommand(2).deadlineFor(new IntakeAgitateWhileOuttaking().repeatedly()),
+
+            new WaitCommand(2).deadlineFor(new IntakeAgitateWhileOuttaking().repeatedly()),
 
             new IntakeSetHomingDown()
         );

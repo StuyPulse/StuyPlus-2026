@@ -6,27 +6,24 @@
 package com.stuypulse.robot;
 
 import com.stuypulse.robot.commands.auton.DoNothingAuton;
-import com.stuypulse.robot.commands.auton.LeftBumpFerry;
-import com.stuypulse.robot.commands.auton.LeftBumpMid;
-import com.stuypulse.robot.commands.auton.LeftBumpMidStraight;
-import com.stuypulse.robot.commands.auton.LeftBumpMidlineSweepRight;
-import com.stuypulse.robot.commands.auton.LeftBumpOuttakeAuto;
+import com.stuypulse.robot.commands.auton.LBFerry;
+import com.stuypulse.robot.commands.auton.LBMid;
+import com.stuypulse.robot.commands.auton.LBStraight;
+import com.stuypulse.robot.commands.auton.LBMidlineSweepRight;
+import com.stuypulse.robot.commands.auton.LBOuttake;
 import com.stuypulse.robot.commands.auton.OutpostOnly;
-import com.stuypulse.robot.commands.auton.RightBumpFerry;
-import com.stuypulse.robot.commands.auton.RightBumpMid;
-import com.stuypulse.robot.commands.auton.RightBumpMidStraight;
-import com.stuypulse.robot.commands.auton.RightBumpMidlineSweepLeft;
-import com.stuypulse.robot.commands.auton.RightBumpOuttakeAuto;
+import com.stuypulse.robot.commands.auton.RBFerry;
+import com.stuypulse.robot.commands.auton.RBMid;
+import com.stuypulse.robot.commands.auton.RBStraight;
+import com.stuypulse.robot.commands.auton.RBMidlineSweepLeft;
+import com.stuypulse.robot.commands.auton.RBOuttake;
 import com.stuypulse.robot.commands.auton.TwoMeterPath;
 import com.stuypulse.robot.commands.swerve.SwerveDriveDrive;
 import com.stuypulse.robot.commands.swerve.SwerveDriveResetRotation;
 import com.stuypulse.robot.commands.swerve.SwerveDriveRotate;
 import com.stuypulse.robot.commands.swerve.SwerveDriveXMode;
-import com.stuypulse.robot.commands.swerve.PIDtoPose.SwerveDrivePIDToPose;
 import com.stuypulse.robot.commands.intake.IntakeAgitateWhileOuttaking;
-import com.stuypulse.robot.commands.intake.IntakeSetDown;
 import com.stuypulse.robot.commands.intake.IntakeSetHomingDown;
-import com.stuypulse.robot.commands.intake.IntakeSetHomingUp;
 import com.stuypulse.robot.commands.intake.IntakeSetIdle;
 import com.stuypulse.robot.commands.intake.IntakeSetIntake;
 import com.stuypulse.robot.commands.intake.IntakeSetOuttake;
@@ -43,7 +40,6 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
 
 public class RobotContainer {
     // Gamepads
@@ -137,68 +133,68 @@ public class RobotContainer {
      public void configureAutons() {
         autonChooser.addOption("Do Nothing", new DoNothingAuton());
 
-        AutonConfig LeftBumpFerryAuto = new AutonConfig("Left Bump Ferry", LeftBumpFerry::new, 
+        AutonConfig LBFerry = new AutonConfig("LB Ferry", LBFerry::new, 
             "Left Bump to Neutral", 
             "N to L.T.", 
             "L.T. Circle Hub", 
             "N to Depot");
-        LeftBumpFerryAuto.register(autonChooser);
+        LBFerry.register(autonChooser);
 
-        AutonConfig RightBumpFerryAuto = new AutonConfig("Right Bump Ferry", RightBumpFerry::new, 
+        AutonConfig RBFerry = new AutonConfig("RB Ferry", RBFerry::new, 
             "R.B. to R.N.", 
             "N to R.T.", 
             "R.T. Circle Hub", 
             "R.N. to H.P.");
-        RightBumpFerryAuto.register(autonChooser);
+        RBFerry.register(autonChooser);
 
-        AutonConfig LeftBumpMidAuto = new AutonConfig("Left Bump Mid", LeftBumpMid::new,
+        AutonConfig LBMid = new AutonConfig("LB Mid", LBMid::new,
             "LB to N",
             "LB Return");
-        LeftBumpMidAuto.register(autonChooser);
+        LBMid.register(autonChooser);
 
-        AutonConfig LeftBumpMidStraightAuto = new AutonConfig("Left Bump Mid Straight", LeftBumpMidStraight::new,
+        AutonConfig LBStraight = new AutonConfig("LB Straight", LBStraight::new,
             "LB to N Straight",
             "N to LB Straight");
-        LeftBumpMidStraightAuto.register(autonChooser);
+        LBStraight.register(autonChooser);
 
-        AutonConfig rightBumpMidStraightAuto = new AutonConfig("Right Bump Mid Straight", RightBumpMidStraight::new,
+        AutonConfig RBStraight = new AutonConfig("RB Straight", RBStraight::new,
             "RB to N Straight",
             "N to RB Straight");
-        rightBumpMidStraightAuto.register(autonChooser);
+        RBStraight.register(autonChooser);
 
-        AutonConfig RightBumpMidAuto = new AutonConfig("Right Bump Mid", RightBumpMid::new, 
+        AutonConfig RBMid = new AutonConfig("RB Mid", RBMid::new, 
             "RB to N",
             "RB Return",
             "RB to Outpost");
-        RightBumpMidAuto.register(autonChooser);
+        RBMid.register(autonChooser);
 
-        AutonConfig TwoMeterPathAuto = new AutonConfig("2 Meter Path", TwoMeterPath::new,
+        AutonConfig TwoMeterPath = new AutonConfig("Two Meter Path", TwoMeterPath::new,
         "2 meter path");
-        TwoMeterPathAuto.register(autonChooser);
+        TwoMeterPath.register(autonChooser);
 
-        AutonConfig OutpostOnlyAuto = new AutonConfig("Outpost Only", OutpostOnly::new, 
+        AutonConfig OutpostOnly = new AutonConfig("Outpost Only", OutpostOnly::new, 
         "Outpost");
-        OutpostOnlyAuto.register(autonChooser);
+        OutpostOnly.register(autonChooser);
 
-        AutonConfig RightBumpOuttakeAuto = new AutonConfig("Right Bump Outtake Auto", RightBumpOuttakeAuto::new, 
+        AutonConfig RBOuttake = new AutonConfig("RB Outtake", RBOuttake::new, 
         "RB to N Outtake",
             "N to RB Outtake");
-        RightBumpOuttakeAuto.register(autonChooser);
+        RBOuttake.register(autonChooser);
 
-        AutonConfig LeftBumpOuttakeAuto = new AutonConfig("Left Bump Outtake Auto", LeftBumpOuttakeAuto::new, 
+        AutonConfig LBOuttake = new AutonConfig("LB Outtake", LBOuttake::new, 
         "LB to N Outtake",
         "N to LB Outtake");
-        LeftBumpOuttakeAuto.register(autonChooser);
+        LBOuttake.register(autonChooser);
 
-        AutonConfig leftBumpMidlineSweepRight = new AutonConfig("Left Bump Across Midline Sweep Right", LeftBumpMidlineSweepRight::new,
+        AutonConfig LBMidlineSweepRight = new AutonConfig("LB Midline Sweep Right", LBMidlineSweepRight::new,
         "LB to LN Across Midline",
         "LN Across Midline to RN Across Midline");
-        leftBumpMidlineSweepRight.register(autonChooser);
+        LBMidlineSweepRight.register(autonChooser);
 
-        AutonConfig rightBumpMidlineSweepLeft = new AutonConfig("Right Bump Across Midline Sweep Left", RightBumpMidlineSweepLeft::new,
+        AutonConfig RBMidlineSweepLeft = new AutonConfig("RB Midline Sweep Left", RBMidlineSweepLeft::new,
         "RB to RN Across Midline",
         "RN to Mid Neutral");
-        rightBumpMidlineSweepLeft.register(autonChooser);
+        RBMidlineSweepLeft.register(autonChooser);
 
         // autonChooser.addOption("SysID Module Translation Dynamic Forwards", swerve.sysIdDynamic(Direction.kForward));
         // autonChooser.addOption("SysID Module Translation Dynamic Backwards", swerve.sysIdDynamic(Direction.kReverse));

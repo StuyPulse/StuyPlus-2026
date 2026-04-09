@@ -7,12 +7,15 @@ import com.stuypulse.robot.subsystems.swerve.CommandSwerveDrivetrain;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
-public class LeftBumpMidlineSweepRight extends SequentialCommandGroup {
-    public LeftBumpMidlineSweepRight(PathPlannerPath... paths) {
+public class RBMidlineSweepLeft extends SequentialCommandGroup {
+    public RBMidlineSweepLeft(PathPlannerPath... paths) {
         addCommands(
             new SwerveResetPose(paths[0].getStartingHolonomicPose().get()),
+
             CommandSwerveDrivetrain.getInstance().followPathCommand(paths[0]),
+
             CommandSwerveDrivetrain.getInstance().followPathCommand(paths[1]),
+            
             new SwerveDriveXMode()
         );
     }
