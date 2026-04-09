@@ -35,8 +35,8 @@ import org.ironmaple.simulation.seasonspecific.rebuilt2026.RebuiltFuelOnFly;
 public class Simulation {
     private final static Simulation instance;
 
-    public final Arena2026Rebuilt ARENA;
-    private final Notifier SHOOT_LOOP;
+    public final Arena2026Rebuilt arenaInstance;
+    private final Notifier shotLoop;
 
     private final SwerveDriveSimulation swerveMSim;
     private final IntakeSimulation intakeMSim;
@@ -60,13 +60,13 @@ public class Simulation {
         intakeSim = Intake.getInstance();
         swerveMSim = CommandSwerveDrivetrain.getInstance().getMapleSimDrive();
 
-        ARENA = new Arena2026Rebuilt(false);
-        configureDrivetrain(); // do this after creating arena
+        arenaInstance = new Arena2026Rebuilt(false);
+        configureArena();
         intakeMSim = createIntakeSimulation();
         intakeMSim.addGamePiecesToIntake(SimulationConstants.Hopper.FUEL_CAPACITY);
         
-        SHOOT_LOOP = new Notifier(this::updateShooting);
-        SHOOT_LOOP.startPeriodic(1.0 / SimulationConstants.Shooter.BPS);
+        shotLoop = new Notifier(this::updateShooting);
+        shotLoop.startPeriodic(1.0 / SimulationConstants.Shooter.BPS);
 
         NetworkTableInstance table = NetworkTableInstance.getDefault();
         fuel = table.getStructArrayTopic("AdvScope/FuelPoses", Pose3d.struct).publish();
@@ -75,10 +75,11 @@ public class Simulation {
         // shooter = table.getStructTopic("AdvScope/ShooterPose", Pose3d.struct).publish();
     }
 
-    private void configureDrivetrain() {
-        ARENA.resetFieldForAuto();
-        ARENA.addDriveTrainSimulation(this.swerveMSim);
-        SimulatedArena.overrideInstance(ARENA);
+    private void configureArena() {
+        arenaInstance.resetFieldForAuto();
+        arenaInstance.addDriveTrainSimulation(this.swerveMSim);
+        arenaInstance.setEfficiencyMode(SimulationConstants.SPAWN_ALL_GAMEPIECES);
+        SimulatedArena.overrideInstance(arenaInstance);
     }
 
     private IntakeSimulation createIntakeSimulation() {
@@ -153,7 +154,7 @@ public class Simulation {
         double yawVariance,
         double speedVariance,
         double pitchVariance) {
-        ARENA.addGamePieceProjectile(
+        arenaInstance.addGamePieceProjectile(
             new RebuiltFuelOnFly(
                 piecePose.plus(new Translation2d(Arena2026Rebuilt.randomInRange(xVariance), Arena2026Rebuilt.randomInRange(yVariance))),
                 new Translation2d(),
@@ -213,7 +214,7 @@ public class Simulation {
     public synchronized void update() {
         if (swerveMSim == null)
             return;
-        fuel.set(ARENA.getGamePiecesArrayByType("Fuel"));
+        fuel.set(arenaInstance.getGamePiecesArrayByType("Fuel"));
 
         updateIntake();
 

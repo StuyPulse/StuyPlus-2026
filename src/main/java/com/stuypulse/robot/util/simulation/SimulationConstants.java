@@ -270,4 +270,6 @@ public interface SimulationConstants {
 			new Pose2d(1.6, 6, new Rotation2d()),
 			new Pose2d(1.6, 4, new Rotation2d())
 	};
+
+    public static final Boolean SPAWN_ALL_GAMEPIECES = false; // whether to spawn the full amount of gamepieces
 }
