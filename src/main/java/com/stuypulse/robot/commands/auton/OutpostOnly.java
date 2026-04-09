@@ -11,13 +11,15 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 
 public class OutpostOnly extends SequentialCommandGroup{
-
     public OutpostOnly(PathPlannerPath...paths){
         addCommands(
             new SetVisionDisabled(),
+
             new SwerveResetPose(paths[0].getStartingHolonomicPose().get()),
+
             CommandSwerveDrivetrain.getInstance().followPathCommand(paths[0]),
-                new WaitCommand(20).deadlineFor(new IntakeAgitateWhileOuttaking()),
+
+            new WaitCommand(20).deadlineFor(new IntakeAgitateWhileOuttaking()),
 
             new SetVisionEnabled()
             );

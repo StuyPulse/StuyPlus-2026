@@ -6,12 +6,14 @@
 package com.stuypulse.robot;
 
 import com.stuypulse.robot.commands.auton.DoNothingAuton;
+import com.stuypulse.robot.commands.auton.LBDisrupt;
 import com.stuypulse.robot.commands.auton.LBFerry;
 import com.stuypulse.robot.commands.auton.LBMid;
 import com.stuypulse.robot.commands.auton.LBStraight;
 import com.stuypulse.robot.commands.auton.LBMidlineSweepRight;
 import com.stuypulse.robot.commands.auton.LBOuttake;
 import com.stuypulse.robot.commands.auton.OutpostOnly;
+import com.stuypulse.robot.commands.auton.RBDisrupt;
 import com.stuypulse.robot.commands.auton.RBFerry;
 import com.stuypulse.robot.commands.auton.RBMid;
 import com.stuypulse.robot.commands.auton.RBStraight;
@@ -169,32 +171,50 @@ public class RobotContainer {
         RBMid.register(autonChooser);
 
         AutonConfig TwoMeterPath = new AutonConfig("Two Meter Path", TwoMeterPath::new,
-        "2 meter path");
+            "2 meter path");
         TwoMeterPath.register(autonChooser);
 
         AutonConfig OutpostOnly = new AutonConfig("Outpost Only", OutpostOnly::new, 
-        "Outpost");
+            "Outpost");
         OutpostOnly.register(autonChooser);
 
         AutonConfig RBOuttake = new AutonConfig("RB Outtake", RBOuttake::new, 
-        "RB to N Outtake",
+            "RB to N Outtake",
             "N to RB Outtake");
         RBOuttake.register(autonChooser);
 
         AutonConfig LBOuttake = new AutonConfig("LB Outtake", LBOuttake::new, 
-        "LB to N Outtake",
-        "N to LB Outtake");
+            "LB to N Outtake",
+            "N to LB Outtake");
         LBOuttake.register(autonChooser);
 
         AutonConfig LBMidlineSweepRight = new AutonConfig("LB Midline Sweep Right", LBMidlineSweepRight::new,
-        "LB to LN Across Midline",
-        "LN Across Midline to RN Across Midline");
+            "LB to LN Across Midline",
+            "LN Across Midline to RN Across Midline");
         LBMidlineSweepRight.register(autonChooser);
 
         AutonConfig RBMidlineSweepLeft = new AutonConfig("RB Midline Sweep Left", RBMidlineSweepLeft::new,
-        "RB to RN Across Midline",
-        "RN to Mid Neutral");
+            "RB to RN Across Midline",
+            "RN to Mid Neutral");
         RBMidlineSweepLeft.register(autonChooser);
+
+        AutonConfig LBDisrupt = new AutonConfig("LB Disrupt", LBDisrupt::new, 
+            "LB to CN Disrupt",
+            "LB Circle 1 Disrupt",
+            "LB Circle 1 Disrupt",
+            "LB Circle 1 Disrupt",
+            "LB Circle 1 Disrupt",
+            "LB Return Disrupt");
+        LBDisrupt.register(autonChooser);
+
+        AutonConfig RBDisrupt = new AutonConfig("RB Disrupt", RBDisrupt::new, 
+            "RB to CN Disrupt",
+            "RB Circle 1 Disrupt",
+            "RB Circle 1 Disrupt",
+            "RB Circle 1 Disrupt",
+            "RB Circle 1 Disrupt",
+            "RB Return Disrupt");
+        RBDisrupt.register(autonChooser);
 
         // autonChooser.addOption("SysID Module Translation Dynamic Forwards", swerve.sysIdDynamic(Direction.kForward));
         // autonChooser.addOption("SysID Module Translation Dynamic Backwards", swerve.sysIdDynamic(Direction.kReverse));

@@ -25,6 +25,7 @@ public class LBFerry extends SequentialCommandGroup {
             CommandSwerveDrivetrain.getInstance().followPathCommand(paths[2])
                     .alongWith(new IntakeSetHomingDown()),
                     
-            CommandSwerveDrivetrain.getInstance().followPathCommand(paths[3]));
+            CommandSwerveDrivetrain.getInstance().followPathCommand(paths[3])
+        );
     }
 }
