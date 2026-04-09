@@ -20,31 +20,31 @@
         "y": 5.4854967248908295
       },
       "prevControl": {
-        "x": 5.153882888004547,
-        "y": 5.610508811824901
+        "x": 5.604978402500387,
+        "y": 5.590300860457698
       },
       "nextControl": {
-        "x": 7.1245212215479015,
-        "y": 5.247191351594542
+        "x": 6.355402504472272,
+        "y": 5.2437924865831835
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 7.826264923251847,
-        "y": 4.164630471859011
+        "x": 7.351022959879913,
+        "y": 4.0872095046397385
       },
       "prevControl": {
-        "x": 7.178112563956793,
-        "y": 4.244403069926095
+        "x": 6.702870600584859,
+        "y": 4.166982102706823
       },
       "nextControl": {
-        "x": 8.838897006421233,
-        "y": 4.0399988308535475
+        "x": 8.363655043049299,
+        "y": 3.9625778636342748
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "LB Disrupt 3"
     },
     {
       "anchor": {
@@ -61,21 +61,7 @@
     }
   ],
   "rotationTargets": [],
-  "constraintZones": [
-    {
-      "name": "Constraints Zone",
-      "minWaypointRelativePos": 0.32177896594684374,
-      "maxWaypointRelativePos": 0.7854287790697676,
-      "constraints": {
-        "maxVelocity": 1.75,
-        "maxAcceleration": 3.0,
-        "maxAngularVelocity": 540.0,
-        "maxAngularAcceleration": 720.0,
-        "nominalVoltage": 12.0,
-        "unlimited": false
-      }
-    }
-  ],
+  "constraintZones": [],
   "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {

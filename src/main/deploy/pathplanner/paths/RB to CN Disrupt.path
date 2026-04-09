@@ -16,35 +16,35 @@
     },
     {
       "anchor": {
-        "x": 5.871554198508006,
-        "y": 2.6470848685407575
+        "x": 5.592808586762074,
+        "y": 2.50169946332737
       },
       "prevControl": {
-        "x": 5.2143754576116566,
-        "y": 2.4194230365583094
+        "x": 5.254444719964103,
+        "y": 2.215969975809084
       },
       "nextControl": {
-        "x": 7.118548546670306,
-        "y": 3.0790723935589526
+        "x": 6.322951699463328,
+        "y": 3.1182647584973164
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 7.881694925855168,
-        "y": 4.042828932405386
+        "x": 7.25,
+        "y": 4.0
       },
       "prevControl": {
-        "x": 7.113908595493268,
-        "y": 4.258377621287592
+        "x": 6.4822136696381,
+        "y": 4.2155486888822065
       },
       "nextControl": {
-        "x": 8.808351300946143,
-        "y": 3.7826789938136827
+        "x": 8.176656375090975,
+        "y": 3.739850061408297
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "RB Disrupt 3"
     },
     {
       "anchor": {
@@ -61,21 +61,7 @@
     }
   ],
   "rotationTargets": [],
-  "constraintZones": [
-    {
-      "name": "Constraints Zone",
-      "minWaypointRelativePos": 0.20297994031830235,
-      "maxWaypointRelativePos": 0.7278058687002651,
-      "constraints": {
-        "maxVelocity": 1.75,
-        "maxAcceleration": 3.0,
-        "maxAngularVelocity": 540.0,
-        "maxAngularAcceleration": 720.0,
-        "nominalVoltage": 12.0,
-        "unlimited": false
-      }
-    }
-  ],
+  "constraintZones": [],
   "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {
