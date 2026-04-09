@@ -78,7 +78,7 @@ public class Simulation {
     private void configureArena() {
         arenaInstance.resetFieldForAuto();
         arenaInstance.addDriveTrainSimulation(this.swerveMSim);
-        arenaInstance.setEfficiencyMode(SimulationConstants.SPAWN_ALL_GAMEPIECES);
+        arenaInstance.setEfficiencyMode(SimulationConstants.SPAWN_GAMEPIECES_SPARSELY);
         SimulatedArena.overrideInstance(arenaInstance);
     }
 
