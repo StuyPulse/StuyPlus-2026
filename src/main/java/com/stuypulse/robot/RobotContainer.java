@@ -198,23 +198,21 @@ public class RobotContainer {
             "RN to Mid Neutral");
         RBMidlineSweepLeft.register(autonChooser);
 
-        AutonConfig LBDisrupt = new AutonConfig("LB Disrupt", LBDisrupt::new, 
+        AutonConfig LB_Disrupt = new AutonConfig("LB Disrupt", LBDisrupt::new, 
             "LB to CN Disrupt",
-            "LB Circle 1 Disrupt",
-            "LB Circle 1 Disrupt",
-            "LB Circle 1 Disrupt",
-            "LB Circle 1 Disrupt",
-            "LB Return Disrupt");
-        LBDisrupt.register(autonChooser);
+            "LN Disrupt Circle",
+            "LN Disrupt Circle",
+            "LN Disrupt Circle",
+            "LB Disrupt Return");
+        LB_Disrupt.register(autonChooser);
 
-        AutonConfig RBDisrupt = new AutonConfig("RB Disrupt", RBDisrupt::new, 
+        AutonConfig RB_Disrupt = new AutonConfig("RB Disrupt", RBDisrupt::new, 
             "RB to CN Disrupt",
-            "RB Circle 1 Disrupt",
-            "RB Circle 1 Disrupt",
-            "RB Circle 1 Disrupt",
-            "RB Circle 1 Disrupt",
-            "RB Return Disrupt");
-        RBDisrupt.register(autonChooser);
+            "RN Disrupt Circle",
+            "RN Disrupt Circle",
+            "RN Disrupt Circle",
+            "RB Disrupt Return");
+        RB_Disrupt.register(autonChooser);
 
         // autonChooser.addOption("SysID Module Translation Dynamic Forwards", swerve.sysIdDynamic(Direction.kForward));
         // autonChooser.addOption("SysID Module Translation Dynamic Backwards", swerve.sysIdDynamic(Direction.kReverse));
