@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 5.9914951677089245,
-        "y": 5.470906765207506
+        "x": 7.351,
+        "y": 0.9584788937409019
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.9914951677089245,
-        "y": 5.470906765207506
+        "x": 7.146211988927752,
+        "y": 1.1018730028286634
       },
       "isLocked": false,
-      "linkedName": "Mid Neutral"
+      "linkedName": "RB Disrupt 1"
     },
     {
       "anchor": {
-        "x": 4.0,
-        "y": 6.0
+        "x": 5.69039170533115,
+        "y": 2.2673068481623
       },
       "prevControl": {
-        "x": 3.0,
-        "y": 6.0
+        "x": 5.895179716403398,
+        "y": 2.1239127390745387
       },
       "nextControl": null,
       "isLocked": false,
@@ -48,7 +48,7 @@
   "folder": null,
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 0.0
+    "rotation": -35.0
   },
   "useDefaultConstraints": true
 }
