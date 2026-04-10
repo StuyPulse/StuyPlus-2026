@@ -24,16 +24,16 @@ import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 
 public class IntakeImpl extends Intake {
     private final TalonFX intakePivotMotor;
-    private final TalonFX intakeRollerMotorLeft;
-    private final TalonFX intakeRollerMotorRight;
+    // private final TalonFX intakeRollerMotorLeft;
+    // private final TalonFX intakeRollerMotorRight;
 
-    private final DutyCycleOut rollerController;
+    // private final DutyCycleOut rollerController;
     private final PositionVoltage pivotController;
-    private final Follower followerController;
+    // private final Follower followerController;
 
     private final BooleanSupplier pivotStalling;
-    private final BStream leftRollerStalling;
-    private final BStream rightRollerStalling;
+    // private final BStream leftRollerStalling;
+    // private final BStream rightRollerStalling;
     private Optional<Double> pivotVoltageOverride;
 
     public IntakeImpl() {
@@ -41,26 +41,26 @@ public class IntakeImpl extends Intake {
         Motors.Intake.PIVOT_CONFIG.configure(intakePivotMotor);
         intakePivotMotor.setPosition(Settings.Intake.PIVOT_INITIAL_ANGLE.getRotations());
 
-        intakeRollerMotorLeft = new TalonFX(Ports.Intake.MOTOR_INTAKE_ROLLER_LEFT, Settings.CANIVORE); // leader
-        intakeRollerMotorRight = new TalonFX(Ports.Intake.MOTOR_INTAKE_ROLLER_RIGHT, Settings.CANIVORE);
+        // intakeRollerMotorLeft = new TalonFX(Ports.Intake.MOTOR_INTAKE_ROLLER_LEFT, Settings.CANIVORE); // leader
+        // intakeRollerMotorRight = new TalonFX(Ports.Intake.MOTOR_INTAKE_ROLLER_RIGHT, Settings.CANIVORE);
 
-        Motors.Intake.LEFT_ROLLER_CONFIG.configure(intakeRollerMotorLeft);
-        Motors.Intake.RIGHT_ROLLER_CONFIG.configure(intakeRollerMotorRight);
+        // Motors.Intake.LEFT_ROLLER_CONFIG.configure(intakeRollerMotorLeft);
+        // Motors.Intake.RIGHT_ROLLER_CONFIG.configure(intakeRollerMotorRight);
 
-        rollerController = new DutyCycleOut(getState().getTargetDutyCycle()).withEnableFOC(true);
+        // rollerController = new DutyCycleOut(getState().getTargetDutyCycle()).withEnableFOC(true);
         pivotController = new PositionVoltage(getState().getTargetAngle().getRotations()).withEnableFOC(true);
-        followerController = new Follower(Ports.Intake.MOTOR_INTAKE_ROLLER_LEFT, MotorAlignmentValue.Opposed);
+        // followerController = new Follower(Ports.Intake.MOTOR_INTAKE_ROLLER_LEFT, MotorAlignmentValue.Opposed);
 
-        intakeRollerMotorRight.setControl(followerController);
+        // intakeRollerMotorRight.setControl(followerController);
 
         pivotStalling = () -> intakePivotMotor.getStatorCurrent().getValueAsDouble() > Settings.Intake.PIVOT_STALL_CURRENT;
-        leftRollerStalling = BStream
-                .create(() -> intakeRollerMotorLeft.getStatorCurrent()
-                        .getValueAsDouble() > Settings.Intake.ROLLER_STALL_CURRENT)
-                .filtered(new BDebounce.Both(Settings.Intake.ROLLER_STALL_DEBOUNCE_SEC));
-        rightRollerStalling = BStream
-                .create(() -> intakeRollerMotorRight.getStatorCurrent().getValueAsDouble() > Settings.Intake.ROLLER_STALL_CURRENT)
-                    .filtered(new BDebounce.Both(Settings.Intake.ROLLER_STALL_DEBOUNCE_SEC));
+        // leftRollerStalling = BStream
+        //         .create(() -> intakeRollerMotorLeft.getStatorCurrent()
+        //                 .getValueAsDouble() > Settings.Intake.ROLLER_STALL_CURRENT)
+        //         .filtered(new BDebounce.Both(Settings.Intake.ROLLER_STALL_DEBOUNCE_SEC));
+        // rightRollerStalling = BStream
+        //         .create(() -> intakeRollerMotorRight.getStatorCurrent().getValueAsDouble() > Settings.Intake.ROLLER_STALL_CURRENT)
+        //             .filtered(new BDebounce.Both(Settings.Intake.ROLLER_STALL_DEBOUNCE_SEC));
 
         pivotVoltageOverride = Optional.empty();
     }
@@ -74,10 +74,10 @@ public class IntakeImpl extends Intake {
         this.pivotVoltageOverride = pivotVoltageOverride;
     }
 
-    @Override
-    public double getRollerRPM() {
-        return intakeRollerMotorRight.getVelocity().getValueAsDouble() * 60;
-    }
+    // @Override
+    // public double getRollerRPM() {
+    //     return intakeRollerMotorRight.getVelocity().getValueAsDouble() * 60;
+    // }
 
     @Override
     public void setPivotZero() {
@@ -93,17 +93,17 @@ public class IntakeImpl extends Intake {
         return pivotStalling.getAsBoolean();
     }
 
-    private boolean leftRollerStalling() {
-        return leftRollerStalling.get();
-    }
+    // private boolean leftRollerStalling() {
+    //     return leftRollerStalling.get();
+    // }
 
-    private boolean rightRollerStalling() {
-        return rightRollerStalling.get();
-    }
+    // private boolean rightRollerStalling() {
+    //     return rightRollerStalling.get();
+    // }
 
     private void stopMotors() {
         intakePivotMotor.stopMotor();
-        intakeRollerMotorLeft.stopMotor();
+        // intakeRollerMotorLeft.stopMotor();
     }
 
     @Override
@@ -123,24 +123,24 @@ public class IntakeImpl extends Intake {
 
         final IntakeState currentState = getState();
 
-        final boolean pushingDown = currentState == IntakeState.INTAKE ||
-                currentState == IntakeState.OUTTAKE ||
-                currentState == IntakeState.DOWN &&
-                !pivotAboveThreshold;
+        // final boolean pushingDown = currentState == IntakeState.INTAKE ||
+        //         currentState == IntakeState.OUTTAKE ||
+        //         currentState == IntakeState.DOWN &&
+        //         !pivotAboveThreshold;
 
         // State
 
-        if (currentState == IntakeState.HOMING_UP && pivotStalling) {
-            setPivotZero();
-            setState(IntakeState.IDLE);
-        }
+        // if (currentState == IntakeState.HOMING_UP && pivotStalling) {
+        //     setPivotZero();
+        //     setState(IntakeState.IDLE);
+        // }
 
         if (currentState == IntakeState.HOMING_DOWN && pivotStalling) {
             setPivotZeroAtBottom();
             setState(IntakeState.DOWN);
         }
 
-        if ((currentState == IntakeState.INTAKE || currentState == IntakeState.OUTTAKE || currentState == IntakeState.DOWN) && pivotStalling) {
+        if ((currentState == IntakeState.DOWN) && pivotStalling) {
             setPivotZeroAtBottom();
         }
 
@@ -152,7 +152,7 @@ public class IntakeImpl extends Intake {
         // Output
 
         final ControlRequest pivotControl = switch (currentState) {
-            case INTAKE, OUTTAKE, DOWN -> {
+            case /*INTAKE, OUTTAKE, */DOWN -> {
                 if (pivotAboveThreshold) {
                     // yield pivotController.withPosition(currentState.getTargetAngle().getRotations());
                     yield new VoltageOut(Settings.Intake.PUSHDOWN_VOLTAGE); // wait until pivot reaches the bottom to apply pushdown
@@ -161,12 +161,12 @@ public class IntakeImpl extends Intake {
                 }
             }
 
-            case HOMING_UP -> new VoltageOut(Settings.Intake.HOMING_UP_VOLTAGE);
+            // case HOMING_UP -> new VoltageOut(Settings.Intake.HOMING_UP_VOLTAGE);
             case HOMING_DOWN -> new VoltageOut(Settings.Intake.HOMING_DOWN_VOLTAGE);
             default -> pivotController.withPosition(currentState.getTargetAngle().getRotations());
         };
 
-        final DutyCycleOut rollerControl = rollerController.withOutput(currentState.getTargetDutyCycle());
+        // final DutyCycleOut rollerControl = rollerController.withOutput(currentState.getTargetDutyCycle());
 
         // Apply
 
@@ -175,25 +175,25 @@ public class IntakeImpl extends Intake {
         } else {
             intakePivotMotor.setControl(pivotControl);
         }
-        intakeRollerMotorLeft.setControl(rollerControl);
+        // intakeRollerMotorLeft.setControl(rollerControl);
 
         // Log
         SmartDashboard.putBoolean("Intake/Pivot Above Threshold", pivotAboveThreshold);
-        SmartDashboard.putNumber("Intake/Left Roller Current (amps)",
-                intakeRollerMotorLeft.getStatorCurrent().getValueAsDouble());
-        SmartDashboard.putNumber("Intake/Right Roller Current", intakeRollerMotorRight.getStatorCurrent().getValueAsDouble());
-        SmartDashboard.putNumber("Intake/Left Roller Voltage", intakeRollerMotorLeft.getMotorVoltage().getValueAsDouble());
-        SmartDashboard.putNumber("Intake/Right Roller Voltage", intakeRollerMotorRight.getMotorVoltage().getValueAsDouble());
-        SmartDashboard.putBoolean("Intake/Pushing Down", pushingDown);
+        // SmartDashboard.putNumber("Intake/Left Roller Current (amps)",
+        //         intakeRollerMotorLeft.getStatorCurrent().getValueAsDouble());
+        // SmartDashboard.putNumber("Intake/Right Roller Current", intakeRollerMotorRight.getStatorCurrent().getValueAsDouble());
+        // SmartDashboard.putNumber("Intake/Left Roller Voltage", intakeRollerMotorLeft.getMotorVoltage().getValueAsDouble());
+        // SmartDashboard.putNumber("Intake/Right Roller Voltage", intakeRollerMotorRight.getMotorVoltage().getValueAsDouble());
+        // SmartDashboard.putBoolean("Intake/Pushing Down", pushingDown);
 
         SmartDashboard.putBoolean("Intake/pivotStalling", pivotStalling);
-        SmartDashboard.putBoolean("Intake/Left Roller Stalling", leftRollerStalling());
-        SmartDashboard.putBoolean("Intake/Right Roller Stalling", rightRollerStalling());
+        // SmartDashboard.putBoolean("Intake/Left Roller Stalling", leftRollerStalling());
+        // SmartDashboard.putBoolean("Intake/Right Roller Stalling", rightRollerStalling());
 
-        SmartDashboard.putNumber("Intake/Roller Target Duty Cycle", currentState.getTargetDutyCycle());
+        // SmartDashboard.putNumber("Intake/Roller Target Duty Cycle", currentState.getTargetDutyCycle());
 
-        SmartDashboard.putNumber("Intake/Left Roller Duty Cycle", intakeRollerMotorLeft.getDutyCycle().getValueAsDouble());
-        SmartDashboard.putNumber("Intake/Right Roller Duty Cycle", intakeRollerMotorRight.getDutyCycle().getValueAsDouble());
+        // SmartDashboard.putNumber("Intake/Left Roller Duty Cycle", intakeRollerMotorLeft.getDutyCycle().getValueAsDouble());
+        // SmartDashboard.putNumber("Intake/Right Roller Duty Cycle", intakeRollerMotorRight.getDutyCycle().getValueAsDouble());
 
         SmartDashboard.putNumber("Intake/Pivot Stator Current (amps)", intakePivotMotor.getStatorCurrent().getValueAsDouble());
         SmartDashboard.putNumber("Intake/Pivot Supply Current (amps)", intakePivotMotor.getSupplyCurrent().getValueAsDouble());

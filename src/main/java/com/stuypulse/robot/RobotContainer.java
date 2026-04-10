@@ -25,6 +25,7 @@ import com.stuypulse.robot.commands.swerve.SwerveDriveResetRotation;
 import com.stuypulse.robot.commands.swerve.SwerveDriveRotate;
 import com.stuypulse.robot.commands.swerve.SwerveDriveXMode;
 import com.stuypulse.robot.commands.intake.IntakeAgitateWhileOuttaking;
+import com.stuypulse.robot.commands.intake.IntakeSetDown;
 import com.stuypulse.robot.commands.intake.IntakeSetHomingDown;
 import com.stuypulse.robot.commands.intake.IntakeSetIdle;
 import com.stuypulse.robot.commands.intake.IntakeSetIntake;
@@ -90,25 +91,27 @@ public class RobotContainer {
         Trigger leftTrigger = new Trigger(() -> driver.getLeftTriggerAxis() > 0.5);
         Trigger rightTrigger = new Trigger(() -> driver.getRightTriggerAxis() > 0.5);
  
-        leftTrigger
-            .whileTrue(new IntakeSetOuttake());
-        leftTrigger
-            .onFalse(new IntakeSetHomingDown());
+        // leftTrigger
+        //     .whileTrue(new IntakeSetOuttake());
+        // leftTrigger
+        //     .onFalse(new IntakeSetHomingDown());
+        leftTrigger.onTrue(new IntakeSetIdle());
 
-        driver.leftBumper()
-            .onTrue(new IntakeSetIdle());
+        // driver.leftBumper()
+        //     .onTrue(new IntakeSetIdle());
         
-        rightTrigger    
-            .onTrue(new IntakeSetHomingDown()
-                .andThen(new WaitUntilCommand(() -> intake.getState() == IntakeState.DOWN))
-                .andThen(new IntakeSetIntake()));
+        // rightTrigger    
+        //     .onTrue(new IntakeSetHomingDown()
+        //         .andThen(new WaitUntilCommand(() -> intake.getState() == IntakeState.DOWN))
+        //         .andThen(new IntakeSetIntake()));
+        rightTrigger.onTrue(new IntakeSetDown());
 
         //Outtake with agitation
         //Top Left Paddle
-        driver.a()
-            .whileTrue(new IntakeAgitateWhileOuttaking().repeatedly());
-        driver.a()
-            .onFalse(new IntakeSetHomingDown());
+        // driver.a()
+        //     .whileTrue(new IntakeAgitateWhileOuttaking().repeatedly());
+        // driver.a()
+        //     .onFalse(new IntakeSetHomingDown());
 
         driver.povUp()
             .onTrue(new SwerveDriveResetRotation());

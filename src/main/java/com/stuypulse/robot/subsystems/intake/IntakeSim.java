@@ -92,10 +92,10 @@ public class IntakeSim extends Intake {
         zeroOffset = new Rotation2d(-pivotSim.getAngleRads()).plus(new Rotation2d(Math.toRadians(122)));
     }
 
-    @Override
-    public double getRollerRPM() {
-        return rollerMotor.getVelocity().getValueAsDouble() * 60.0;
-    }
+    // @Override
+    // public double getRollerRPM() {
+    //     return rollerMotor.getVelocity().getValueAsDouble() * 60.0;
+    // }
 
     @Override
     public void periodic() {
@@ -106,7 +106,7 @@ public class IntakeSim extends Intake {
             return;
         }
 
-        rollerMotor.setControl(rollerController.withOutput(getState().getTargetDutyCycle()));
+        rollerMotor.setControl(rollerController.withOutput(1));
 
         final TalonFXSimState rollerState = rollerMotor.getSimState();
         rollerSim.setInputVoltage(rollerState.getMotorVoltage());

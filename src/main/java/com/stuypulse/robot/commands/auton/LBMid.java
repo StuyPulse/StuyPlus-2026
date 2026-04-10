@@ -2,7 +2,7 @@ package com.stuypulse.robot.commands.auton;
 
 import com.pathplanner.lib.path.PathPlannerPath;
 import com.stuypulse.robot.commands.intake.IntakeSetHomingDown;
-import com.stuypulse.robot.commands.intake.IntakeSetIntake;
+// import com.stuypulse.robot.commands.intake.IntakeSetIntake;
 import com.stuypulse.robot.commands.swerve.SwerveResetPose;
 import com.stuypulse.robot.commands.vision.SetVisionDisabled;
 import com.stuypulse.robot.commands.vision.SetVisionEnabled;
@@ -16,7 +16,7 @@ public class LBMid extends SequentialCommandGroup{
             new SwerveResetPose(paths[0].getStartingHolonomicPose().get()),
 
             CommandSwerveDrivetrain.getInstance().followPathCommand(paths[0])
-                .alongWith(new IntakeSetIntake()),
+                /* .alongWith(new IntakeSetIntake())*/,
 
             new SetVisionDisabled(),
 

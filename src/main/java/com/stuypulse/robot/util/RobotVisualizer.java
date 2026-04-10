@@ -135,9 +135,9 @@ public class RobotVisualizer {
     //     SmartDashboard.putNumber("Shooter/rot", rot);
     // }
 
-    public void updateIntake(Rotation2d pivotAngle, double RPM) {
+    public void updateIntake(Rotation2d pivotAngle) {
         intakePivot.setAngle(pivotAngle); // 180 degrees to make it face left
-        double rot = RPM * 6 * Settings.DT;
+        double rot = 2000 * 6 * Settings.DT;
         for (MechanismLigament2d spoke : intakeSpokes)
             spoke.setAngle(spoke.getAngle() + rot);
 

@@ -39,20 +39,20 @@ public abstract class Intake extends SubsystemBase {
     }
 
     public enum IntakeState {
-        IDLE(Settings.Intake.IDLE_ANGLE, Settings.Intake.IDLE_DUTY_CYCLE), // (rollers do not run)
-        INTAKE(Settings.Intake.PIVOT_DOWN_ANGLE, Settings.Intake.INTAKE_DUTY_CYCLE), // (sucks in the balls) [pivot
-                                                                                     // down, rollers running]
-        OUTTAKE(Settings.Intake.PIVOT_DOWN_ANGLE, Settings.Intake.OUTTAKE_DUTY_CYCLE), // (trips the balls out) [pivot
+        IDLE(Settings.Intake.IDLE_ANGLE), // (rollers do not run)
+        // INTAKE(Settings.Intake.PIVOT_DOWN_ANGLE, Settings.Intake.INTAKE_DUTY_CYCLE), // (sucks in the balls) [pivot
+        //                                                                              // down, rollers running]
+        // OUTTAKE(Settings.Intake.PIVOT_DOWN_ANGLE, Settings.Intake.OUTTAKE_DUTY_CYCLE), // (trips the balls out) [pivot
                                                                                        // down, rollers running reverse]
-        DOWN(Settings.Intake.PIVOT_DOWN_ANGLE, Settings.Intake.IDLE_DUTY_CYCLE),
-        HOMING_UP(Settings.Intake.PIVOT_INITIAL_ANGLE, Settings.Intake.IDLE_DUTY_CYCLE),
-        HOMING_DOWN(Settings.Intake.PIVOT_DOWN_ANGLE, Settings.Intake.IDLE_DUTY_CYCLE);
+        DOWN(Settings.Intake.PIVOT_DOWN_ANGLE),
+        // HOMING_UP(Settings.Intake.PIVOT_INITIAL_ANGLE),
+        HOMING_DOWN(Settings.Intake.PIVOT_DOWN_ANGLE);
 
-        private double dutyCycle;
+        // private double dutyCycle;
         private Rotation2d angle;
 
-        private IntakeState(Rotation2d angle, double dutyCycle) {
-            this.dutyCycle = dutyCycle;
+        private IntakeState(Rotation2d angle) {
+            // this.dutyCycle = dutyCycle;
             this.angle = angle;
         }
 
@@ -60,9 +60,9 @@ public abstract class Intake extends SubsystemBase {
             return angle;
         }
 
-        public double getTargetDutyCycle() {
-            return dutyCycle;
-        }
+        // public double getTargetDutyCycle() {
+        //     return dutyCycle;
+        // }
     }
 
     protected Intake() {
@@ -89,20 +89,19 @@ public abstract class Intake extends SubsystemBase {
 
     public abstract void setPivotZeroAtBottom();
 
-    public abstract double getRollerRPM();
+    // public abstract double getRollerRPM();
 
     @Override
     public void periodic() {
         if (Settings.EnabledSubsystems.INTAKE.get()) {
-            RobotVisualizer.getInstance().updateIntake(getRelativePosition(), getRollerRPM());
+            RobotVisualizer.getInstance().updateIntake(getRelativePosition());
         } else {
-            RobotVisualizer.getInstance().updateIntake(IntakeState.IDLE.getTargetAngle(),
-                    IntakeState.IDLE.getTargetDutyCycle());
+            RobotVisualizer.getInstance().updateIntake(IntakeState.IDLE.getTargetAngle());
         }
 
         SmartDashboard.putString("Intake/Intake State", getState().name());
-        SmartDashboard.putNumber("Intake/Roller Target Duty Cycle", getState().getTargetDutyCycle());
-        SmartDashboard.putNumber("Intake/Roller RPM", getRollerRPM());
+        // SmartDashboard.putNumber("Intake/Roller Target Duty Cycle", getState().getTargetDutyCycle());
+        // SmartDashboard.putNumber("Intake/Roller RPM", getRollerRPM());
         SmartDashboard.putNumber("Intake/Target Angle", getState().getTargetAngle().getDegrees());
         SmartDashboard.putNumber("Intake/Pivot Angle (deg)", getRelativePosition().getDegrees());
         SmartDashboard.putBoolean("Intake/Pivot At Target Angle", atTargetAngle());

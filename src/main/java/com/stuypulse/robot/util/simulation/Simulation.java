@@ -115,7 +115,7 @@ public class Simulation {
     }
 
     private void updateIntake() {
-        boolean intakeEnabled = intakeSim.atTargetAngle() && (intakeSim.getState() == IntakeState.INTAKE) && Settings.EnabledSubsystems.INTAKE.get();
+        boolean intakeEnabled = intakeSim.atTargetAngle() && (intakeSim.getState() == IntakeState.DOWN) && Settings.EnabledSubsystems.INTAKE.get();
 
         updateIntakeEnabled(intakeEnabled);
     }
@@ -190,9 +190,9 @@ public class Simulation {
     }
 
     private void updateShooting() {
-        if (intakeSim.getState() == IntakeState.OUTTAKE && Settings.EnabledSubsystems.INTAKE.get() && intakeMSim.obtainGamePieceFromIntake()) {
-            summonFuelAtIntake();
-        }// else if (ShooterSim.getInstance().getState() == ShooterState.SHOOTING || ShooterSim.getInstance().getState() == ShooterState.FERRYING) {
+        // if (intakeSim.getState() == IntakeState.OUTTAKE && Settings.EnabledSubsystems.INTAKE.get() && intakeMSim.obtainGamePieceFromIntake()) {
+        //     summonFuelAtIntake();
+        // }// else if (ShooterSim.getInstance().getState() == ShooterState.SHOOTING || ShooterSim.getInstance().getState() == ShooterState.FERRYING) {
         //     final Pose2d shooterPose = SimulationConstants.Shooter.OFFSETS.applyToPose2d(swerveMSim.getSimulatedDriveTrainPose());
         //     final double launchAngle = 67.67; // ആറ് ഏഴ്
 
