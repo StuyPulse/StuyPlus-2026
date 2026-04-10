@@ -13,25 +13,31 @@
         {
           "type": "path",
           "data": {
-            "pathName": "LB Disrupt Circle"
+            "pathName": "LB Circle Disrupt"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "LB Disrupt Circle"
+            "pathName": "LB Circle Disrupt"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "LB Disrupt Circle"
+            "pathName": "LB Circle Disrupt"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "LB Return Disrupt"
+            "pathName": "LB Circle Disrupt"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "LB Disrupt Return"
           }
         }
       ]
