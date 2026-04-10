@@ -36,22 +36,23 @@ public interface Motors {
     public interface Intake {
         TalonFXConfig PIVOT_CONFIG = new TalonFXConfig()
             .withSupplyCurrentLimitAmps(30)
+            .withCurrentLimitAmps(40)
             .withInvertedValue(InvertedValue.CounterClockwise_Positive) // not necessarily true, get inverted val
             .withNeutralMode(NeutralModeValue.Brake)
             .withPIDConstants(Gains.Intake.kP.get(), Gains.Intake.kI.get(), Gains.Intake.kD.get(), 0)
             .withSensorToMechanismRatio(Settings.Intake.PIVOT_GEAR_RATIO);
         
-        TalonFXConfig LEFT_ROLLER_CONFIG = new TalonFXConfig() // TODO: apply later
-            .withCurrentLimitAmps(50)
-            .withInvertedValue(InvertedValue.CounterClockwise_Positive) // not necessarily true, get inverted val
-            .withNeutralMode(NeutralModeValue.Coast)
-            .withSensorToMechanismRatio(Settings.Intake.ROLLER_GEAR_RATIO);
+        // TalonFXConfig LEFT_ROLLER_CONFIG = new TalonFXConfig() // TODO: apply later
+        //     .withCurrentLimitAmps(50)
+        //     .withInvertedValue(InvertedValue.CounterClockwise_Positive) // not necessarily true, get inverted val
+        //     .withNeutralMode(NeutralModeValue.Coast)
+        //     .withSensorToMechanismRatio(Settings.Intake.ROLLER_GEAR_RATIO);
         
-        TalonFXConfig RIGHT_ROLLER_CONFIG = new TalonFXConfig() // TODO: apply later
-            .withCurrentLimitAmps(50)
-            .withInvertedValue(InvertedValue.Clockwise_Positive) 
-            .withNeutralMode(NeutralModeValue.Coast)
-            .withSensorToMechanismRatio(Settings.Intake.ROLLER_GEAR_RATIO);
+        // TalonFXConfig RIGHT_ROLLER_CONFIG = new TalonFXConfig() // TODO: apply later
+        //     .withCurrentLimitAmps(50)
+        //     .withInvertedValue(InvertedValue.Clockwise_Positive) 
+        //     .withNeutralMode(NeutralModeValue.Coast)
+        //     .withSensorToMechanismRatio(Settings.Intake.ROLLER_GEAR_RATIO);
 
     }
 
