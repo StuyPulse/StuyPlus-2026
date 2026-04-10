@@ -1,0 +1,54 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 6.879491846342795,
+        "y": 7.315
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 6.736097737255033,
+        "y": 7.110211988927753
+      },
+      "isLocked": false,
+      "linkedName": "LT Disrupt 5"
+    },
+    {
+      "anchor": {
+        "x": 5.813759722980349,
+        "y": 5.9657044896288225
+      },
+      "prevControl": {
+        "x": 5.9571538320681094,
+        "y": 6.17049250070107
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": null
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 3.0,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 0.0
+  },
+  "reversed": false,
+  "folder": null,
+  "idealStartingState": {
+    "velocity": 2.0,
+    "rotation": 45.0
+  },
+  "useDefaultConstraints": true
+}

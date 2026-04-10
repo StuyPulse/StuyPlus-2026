@@ -7,31 +7,43 @@
         {
           "type": "path",
           "data": {
-            "pathName": "LB to CN Disrupt"
+            "pathName": "LT to N Disrupt"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "LB Disrupt Circle"
+            "pathName": "LT First Circle Disrupt"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "LB Disrupt Circle"
+            "pathName": "LT Circle Disrupt"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "LB Disrupt Circle"
+            "pathName": "LT Circle Disrupt"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "LB Return Disrupt"
+            "pathName": "LT Circle Disrupt"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "LT Circle Disrupt"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "LT Return Disrupt"
           }
         }
       ]
