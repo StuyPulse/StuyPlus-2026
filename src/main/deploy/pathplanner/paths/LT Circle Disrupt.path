@@ -3,12 +3,12 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 6.879491846342795,
+        "x": 7.15,
         "y": 7.315
       },
       "prevControl": null,
       "nextControl": {
-        "x": 7.8794918463428,
+        "x": 8.150000000000006,
         "y": 7.315
       },
       "isLocked": false,
@@ -16,59 +16,59 @@
     },
     {
       "anchor": {
-        "x": 7.895,
-        "y": 5.566478802765648
+        "x": 8.25,
+        "y": 5.75
       },
       "prevControl": {
-        "x": 7.895,
-        "y": 6.268478802765648
+        "x": 8.25,
+        "y": 6.5
       },
       "nextControl": {
-        "x": 7.895,
-        "y": 4.864478802765648
+        "x": 8.25,
+        "y": 5.25
       },
       "isLocked": false,
       "linkedName": "LT Disrupt 2"
     },
     {
       "anchor": {
-        "x": 6.879491846342795,
-        "y": 4.087
+        "x": 7.15,
+        "y": 4.75
       },
       "prevControl": {
-        "x": 7.750491846342794,
-        "y": 4.087
+        "x": 7.4,
+        "y": 4.75
       },
       "nextControl": {
-        "x": 6.008491846342794,
-        "y": 4.087
+        "x": 6.9,
+        "y": 4.75
       },
       "isLocked": false,
       "linkedName": "LT DIsrupt 3"
     },
     {
       "anchor": {
-        "x": 5.903,
-        "y": 5.566478802765648
+        "x": 6.0,
+        "y": 5.75
       },
       "prevControl": {
-        "x": 5.903,
-        "y": 4.8756906587172875
+        "x": 6.0,
+        "y": 5.25
       },
       "nextControl": {
-        "x": 5.903,
-        "y": 6.257266946814008
+        "x": 6.0,
+        "y": 6.5
       },
       "isLocked": false,
       "linkedName": "LT Disrupt 4"
     },
     {
       "anchor": {
-        "x": 6.879491846342795,
+        "x": 7.15,
         "y": 7.315
       },
       "prevControl": {
-        "x": 5.879491846342795,
+        "x": 6.15,
         "y": 7.315
       },
       "nextControl": null,
@@ -79,7 +79,11 @@
   "rotationTargets": [
     {
       "waypointRelativePos": 1.9968475877192973,
-      "rotationDegrees": 0.0
+      "rotationDegrees": 33.164551111141265
+    },
+    {
+      "waypointRelativePos": 3.2,
+      "rotationDegrees": 45.0
     }
   ],
   "constraintZones": [],

@@ -3,16 +3,16 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 6.829376705786026,
-        "y": 0.7417122111535661
+        "x": 7.25,
+        "y": 1.0
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.652600010489389,
-        "y": 0.9184889064502029
+        "x": 7.0732233047033635,
+        "y": 1.176776695296637
       },
       "isLocked": false,
-      "linkedName": "RT Disrupt 5"
+      "linkedName": "RB Disrupt 1"
     },
     {
       "anchor": {
@@ -29,7 +29,21 @@
     }
   ],
   "rotationTargets": [],
-  "constraintZones": [],
+  "constraintZones": [
+    {
+      "name": "Low speed to bump",
+      "minWaypointRelativePos": 0.47535449020931614,
+      "maxWaypointRelativePos": 1.0,
+      "constraints": {
+        "maxVelocity": 1.0,
+        "maxAcceleration": 3.0,
+        "maxAngularVelocity": 540.0,
+        "maxAngularAcceleration": 720.0,
+        "nominalVoltage": 12.0,
+        "unlimited": false
+      }
+    }
+  ],
   "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {
@@ -47,7 +61,7 @@
   "reversed": false,
   "folder": null,
   "idealStartingState": {
-    "velocity": 2.0,
+    "velocity": 0.0,
     "rotation": -35.0
   },
   "useDefaultConstraints": true

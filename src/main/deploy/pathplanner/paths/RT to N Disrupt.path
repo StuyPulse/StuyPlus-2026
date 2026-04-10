@@ -3,32 +3,37 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.9984945869723436,
-        "y": 0.7417122111535661
+        "x": 4.0,
+        "y": 0.7
       },
       "prevControl": null,
       "nextControl": {
-        "x": 4.998494586972344,
-        "y": 0.7417122111535676
+        "x": 6.639728958630526,
+        "y": 0.6127246790299581
       },
       "isLocked": false,
       "linkedName": "RT Disrupt 0"
     },
     {
       "anchor": {
-        "x": 6.829376705786026,
-        "y": 0.7417122111535661
+        "x": 7.25,
+        "y": 1.0
       },
       "prevControl": {
-        "x": 5.829376705786026,
-        "y": 0.7417122111535657
+        "x": 6.368017118402282,
+        "y": 0.6256633380884444
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "RT Disrupt 1"
+      "linkedName": "RB Disrupt 1"
     }
   ],
-  "rotationTargets": [],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0.5,
+      "rotationDegrees": 0.0
+    }
+  ],
   "constraintZones": [],
   "pointTowardsZones": [],
   "eventMarkers": [],
@@ -41,7 +46,7 @@
     "unlimited": false
   },
   "goalEndState": {
-    "velocity": 3.0,
+    "velocity": 1.0,
     "rotation": -35.0
   },
   "reversed": false,

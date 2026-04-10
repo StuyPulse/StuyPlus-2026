@@ -3,16 +3,16 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 6.879491846342795,
-        "y": 7.315
+        "x": 7.25,
+        "y": 7.3
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.736097737255033,
-        "y": 7.110211988927753
+        "x": 6.846747503566333,
+        "y": 7.146747503566334
       },
       "isLocked": false,
-      "linkedName": "LT Disrupt 5"
+      "linkedName": "LB Disrupt 1"
     },
     {
       "anchor": {
@@ -21,7 +21,7 @@
       },
       "prevControl": {
         "x": 5.9571538320681094,
-        "y": 6.17049250070107
+        "y": 6.170492500701071
       },
       "nextControl": null,
       "isLocked": false,
@@ -29,7 +29,21 @@
     }
   ],
   "rotationTargets": [],
-  "constraintZones": [],
+  "constraintZones": [
+    {
+      "name": "Low speed to bump",
+      "minWaypointRelativePos": 0.515867656988521,
+      "maxWaypointRelativePos": 1.0,
+      "constraints": {
+        "maxVelocity": 1.0,
+        "maxAcceleration": 3.0,
+        "maxAngularVelocity": 540.0,
+        "maxAngularAcceleration": 720.0,
+        "nominalVoltage": 12.0,
+        "unlimited": false
+      }
+    }
+  ],
   "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {
@@ -47,7 +61,7 @@
   "reversed": false,
   "folder": null,
   "idealStartingState": {
-    "velocity": 2.0,
+    "velocity": 0.0,
     "rotation": 45.0
   },
   "useDefaultConstraints": true

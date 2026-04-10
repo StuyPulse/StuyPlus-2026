@@ -33,15 +33,15 @@
     {
       "anchor": {
         "x": 7.25,
-        "y": 4.0
+        "y": 3.5
       },
       "prevControl": {
         "x": 6.379,
-        "y": 4.0
+        "y": 3.5
       },
       "nextControl": {
         "x": 8.121000000000002,
-        "y": 4.0
+        "y": 3.5
       },
       "isLocked": false,
       "linkedName": "RB Disrupt 3"

@@ -3,83 +3,83 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 6.829376705786026,
-        "y": 0.7417122111535661
+        "x": 7.25,
+        "y": 1.0
       },
       "prevControl": null,
       "nextControl": {
-        "x": 7.829376705786026,
-        "y": 0.7417122111535666
+        "x": 8.25,
+        "y": 1.0000000000000004
       },
       "isLocked": false,
-      "linkedName": "RT Disrupt 1"
+      "linkedName": "RB Disrupt 1"
     },
     {
       "anchor": {
-        "x": 7.895,
-        "y": 2.491
+        "x": 8.25,
+        "y": 2.25
       },
       "prevControl": {
-        "x": 7.895,
-        "y": 1.7890000000000001
+        "x": 8.25,
+        "y": 1.75
       },
       "nextControl": {
-        "x": 7.895,
-        "y": 3.193
+        "x": 8.25,
+        "y": 2.75
       },
       "isLocked": false,
       "linkedName": "RT Disrupt 2"
     },
     {
       "anchor": {
-        "x": 6.879491846342795,
-        "y": 4.087
+        "x": 7.15,
+        "y": 3.368659058487874
       },
       "prevControl": {
-        "x": 7.750491846342794,
-        "y": 4.087
+        "x": 8.021,
+        "y": 3.368659058487874
       },
       "nextControl": {
-        "x": 6.008491846342794,
-        "y": 4.087
+        "x": 6.279,
+        "y": 3.368659058487874
       },
       "isLocked": false,
       "linkedName": "RT Disrupt 3"
     },
     {
       "anchor": {
-        "x": 5.903,
-        "y": 2.491
+        "x": 6.0,
+        "y": 2.25
       },
       "prevControl": {
-        "x": 5.903,
-        "y": 3.3425787574415278
+        "x": 6.0,
+        "y": 2.75
       },
       "nextControl": {
-        "x": 5.903,
-        "y": 1.6394212425584707
+        "x": 6.0,
+        "y": 1.75
       },
       "isLocked": false,
       "linkedName": "RT Disrupt 4"
     },
     {
       "anchor": {
-        "x": 6.829376705786026,
-        "y": 0.7417122111535661
+        "x": 7.25,
+        "y": 1.0
       },
       "prevControl": {
-        "x": 5.829376705786026,
-        "y": 0.7417122111535663
+        "x": 6.25,
+        "y": 1.0
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "RT Disrupt 5"
+      "linkedName": "RB Disrupt 1"
     }
   ],
   "rotationTargets": [
     {
       "waypointRelativePos": 2.010827850877193,
-      "rotationDegrees": 0.0
+      "rotationDegrees": -6.5548520646952575
     }
   ],
   "constraintZones": [],

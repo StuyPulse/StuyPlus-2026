@@ -210,10 +210,8 @@ public class RobotContainer {
 
         AutonConfig LB_Disrupt = new AutonConfig("LB Disrupt", LBDisrupt::new, 
             "LB to CN Disrupt",
-            "LN Circle Disrupt",
-            "LN Circle Disrupt",
-            "LN Circle Disrupt",
-            "LN Circle Disrupt",
+            "LN Disrupt Circle",
+            "LN Disrupt Circle",
             "LB Disrupt Return");
         LB_Disrupt.register(autonChooser);
 
@@ -221,24 +219,20 @@ public class RobotContainer {
             "RB to CN Disrupt",
             "RN Circle Disrupt",
             "RN Circle Disrupt",
-            "RN Circle Disrupt",
-            "RN Circle Disrupt",
             "RB Disrupt Return");
         RB_Disrupt.register(autonChooser);
 
         AutonConfig LT_Disrupt = new AutonConfig("LT Disrupt", LTDisrupt::new, 
             "LT to N Disrupt",
-            "LT First Circle Disrupt",
-            "LT Circle Disrupt",
-            "LT Circle Disrupt",
+            "LN Disrupt Circle",
+            "LN Disrupt Circle",
             "LT Return Disrupt");
         LT_Disrupt.register(autonChooser);
 
         AutonConfig RT_Disrupt = new AutonConfig("RT Disrupt", RTDisrupt::new, 
             "RT to N Disrupt",
-            "RT First Circle Disrupt",
-            "RT Circle Disrupt",
-            "RT Circle Disrupt",
+            "RN Circle Disrupt",
+            "RN Circle Disrupt",
             "RT Return Disrupt");
         RT_Disrupt.register(autonChooser);
 
