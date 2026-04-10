@@ -202,21 +202,41 @@ public class RobotContainer {
             "RN to Mid Neutral");
         RBMidlineSweepLeft.register(autonChooser);
 
-        AutonConfig LB_Disrupt = new AutonConfig("LB Disrupt", LBDisrupt::new, 
+        AutonConfig LBDisrupt = new AutonConfig("LB Disrupt", LBDisrupt::new, 
             "LB to CN Disrupt",
             "LN Disrupt Circle",
             "LN Disrupt Circle",
             "LN Disrupt Circle",
             "LB Disrupt Return");
-        LB_Disrupt.register(autonChooser);
+        LBDisrupt.register(autonChooser);
 
-        AutonConfig RB_Disrupt = new AutonConfig("RB Disrupt", RBDisrupt::new, 
+        AutonConfig RBDisrupt = new AutonConfig("RB Disrupt", RBDisrupt::new, 
             "RB to CN Disrupt",
             "RN Disrupt Circle",
             "RN Disrupt Circle",
             "RN Disrupt Circle",
             "RB Disrupt Return");
-        RB_Disrupt.register(autonChooser);
+        RBDisrupt.register(autonChooser);
+
+        AutonConfig LTDisrupt = new AutonConfig("LT Disrupt", LBDisrupt::new, 
+            "LT to N Disrupt",
+            "LT First Circle Disrupt",
+            "LT Circle Disrupt",
+            "LT Circle Disrupt",
+            "LT Circle Disrupt",
+            "LT Circle Disrupt",
+            "LT Return Disrupt");
+        LTDisrupt.register(autonChooser);
+
+        AutonConfig RTDisrupt = new AutonConfig("RT Disrupt", RBDisrupt::new, 
+            "RT to N Disrupt",
+            "RT First Circle Disrupt",
+            "RT Circle Disrupt",
+            "RT Circle Disrupt",
+            "RT Circle Disrupt",
+            "RT Circle Disrupt",
+            "RT Return Disrupt");
+        RTDisrupt.register(autonChooser);
 
         // autonChooser.addOption("SysID Module Translation Dynamic Forwards", swerve.sysIdDynamic(Direction.kForward));
         // autonChooser.addOption("SysID Module Translation Dynamic Backwards", swerve.sysIdDynamic(Direction.kReverse));
