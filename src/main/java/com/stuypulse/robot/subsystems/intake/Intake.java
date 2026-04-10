@@ -38,13 +38,6 @@ public abstract class Intake extends SubsystemBase {
         return instance;
     }
 
-    private final BooleanPublisher atTolerance = NetworkTableInstance.getDefault()
-            .getBooleanTopic("SmartDashboard/Intake/pivotAtTolerance").publish();
-    private final BooleanPublisher pivotStalling = NetworkTableInstance.getDefault()
-            .getBooleanTopic("SmartDashboard/Intake/pivotStalling").publish();
-    private final BooleanPublisher rollersStalling = NetworkTableInstance.getDefault()
-            .getBooleanTopic("SmartDashboard/Intake/rollersStalling").publish();
-
     public enum IntakeState {
         IDLE(Settings.Intake.IDLE_ANGLE, Settings.Intake.IDLE_DUTY_CYCLE), // (rollers do not run)
         INTAKE(Settings.Intake.PIVOT_DOWN_ANGLE, Settings.Intake.INTAKE_DUTY_CYCLE), // (sucks in the balls) [pivot
