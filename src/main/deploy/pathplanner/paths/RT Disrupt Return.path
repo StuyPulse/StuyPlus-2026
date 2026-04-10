@@ -4,35 +4,40 @@
     {
       "anchor": {
         "x": 7.25,
-        "y": 7.3
+        "y": 1.0
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.846747503566333,
-        "y": 7.146747503566334
+        "x": 6.56984650369528,
+        "y": 0.6745793064241059
       },
       "isLocked": false,
-      "linkedName": "LB Disrupt 1"
+      "linkedName": "RB Disrupt 1"
     },
     {
       "anchor": {
-        "x": 5.813759722980349,
-        "y": 5.9657044896288225
+        "x": 4.0,
+        "y": 0.7
       },
       "prevControl": {
-        "x": 5.9571538320681094,
-        "y": 6.170492500701071
+        "x": 3.746734690095702,
+        "y": 0.7
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "RT Disrupt 0"
     }
   ],
-  "rotationTargets": [],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0.3327868852459013,
+      "rotationDegrees": 20.0
+    }
+  ],
   "constraintZones": [
     {
       "name": "Low speed to bump",
-      "minWaypointRelativePos": 0.515867656988521,
+      "minWaypointRelativePos": 0.47535449020931614,
       "maxWaypointRelativePos": 1.0,
       "constraints": {
         "maxVelocity": 1.0,
@@ -55,14 +60,14 @@
     "unlimited": false
   },
   "goalEndState": {
-    "velocity": 0,
+    "velocity": 0.0,
     "rotation": 0.0
   },
   "reversed": false,
   "folder": null,
   "idealStartingState": {
-    "velocity": 0.0,
-    "rotation": 45.0
+    "velocity": 2.0,
+    "rotation": -35.0
   },
   "useDefaultConstraints": true
 }

@@ -8,11 +8,59 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.639728958630526,
-        "y": 0.6127246790299581
+        "x": 4.25,
+        "y": 0.7
       },
       "isLocked": false,
       "linkedName": "RT Disrupt 0"
+    },
+    {
+      "anchor": {
+        "x": 6.101182490051165,
+        "y": 0.8440960773166579
+      },
+      "prevControl": {
+        "x": 5.78209209778283,
+        "y": 0.4950909607731683
+      },
+      "nextControl": {
+        "x": 6.747218870944617,
+        "y": 1.550698368918869
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 7.25,
+        "y": 3.5
+      },
+      "prevControl": {
+        "x": 6.289429107062972,
+        "y": 3.19806117151707
+      },
+      "nextControl": {
+        "x": 8.095497441728254,
+        "y": 3.7657674815235938
+      },
+      "isLocked": false,
+      "linkedName": "RB Disrupt 3"
+    },
+    {
+      "anchor": {
+        "x": 8.5,
+        "y": 2.5
+      },
+      "prevControl": {
+        "x": 8.493489439576287,
+        "y": 2.7499152108275284
+      },
+      "nextControl": {
+        "x": 8.514303581580442,
+        "y": 1.9509408754974427
+      },
+      "isLocked": false,
+      "linkedName": "RB Disrupt 4"
     },
     {
       "anchor": {
@@ -20,20 +68,15 @@
         "y": 1.0
       },
       "prevControl": {
-        "x": 6.368017118402282,
-        "y": 0.6256633380884444
+        "x": 8.055611142694712,
+        "y": 0.8440960773166579
       },
       "nextControl": null,
       "isLocked": false,
       "linkedName": "RB Disrupt 1"
     }
   ],
-  "rotationTargets": [
-    {
-      "waypointRelativePos": 0.5,
-      "rotationDegrees": 0.0
-    }
-  ],
+  "rotationTargets": [],
   "constraintZones": [],
   "pointTowardsZones": [],
   "eventMarkers": [],
@@ -46,7 +89,7 @@
     "unlimited": false
   },
   "goalEndState": {
-    "velocity": 1.0,
+    "velocity": 3.0,
     "rotation": -35.0
   },
   "reversed": false,

@@ -36,12 +36,12 @@
         "y": 3.5
       },
       "prevControl": {
-        "x": 6.4822136696381,
-        "y": 3.7155486888822065
+        "x": 6.455435112296959,
+        "y": 3.4320020176851593
       },
       "nextControl": {
-        "x": 8.176656375090975,
-        "y": 3.239850061408297
+        "x": 8.374701534963046,
+        "y": 3.5962507106310415
       },
       "isLocked": false,
       "linkedName": "RB Disrupt 3"
@@ -52,8 +52,8 @@
         "y": 1.0
       },
       "prevControl": {
-        "x": 8.592310873817322,
-        "y": 1.0659226028020383
+        "x": 9.072711768050027,
+        "y": 1.422447413303014
       },
       "nextControl": null,
       "isLocked": false,
@@ -61,7 +61,21 @@
     }
   ],
   "rotationTargets": [],
-  "constraintZones": [],
+  "constraintZones": [
+    {
+      "name": "Low speed over bump",
+      "minWaypointRelativePos": 0,
+      "maxWaypointRelativePos": 0.8700564971751407,
+      "constraints": {
+        "maxVelocity": 1.5,
+        "maxAcceleration": 3.0,
+        "maxAngularVelocity": 540.0,
+        "maxAngularAcceleration": 720.0,
+        "nominalVoltage": 12.0,
+        "unlimited": false
+      }
+    }
+  ],
   "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {

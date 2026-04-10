@@ -19,13 +19,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "RN Circle Disrupt"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "RT Return Disrupt"
+            "pathName": "RT Disrupt Return"
           }
         }
       ]

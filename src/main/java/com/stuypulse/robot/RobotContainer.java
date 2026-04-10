@@ -210,8 +210,8 @@ public class RobotContainer {
 
         AutonConfig LB_Disrupt = new AutonConfig("LB Disrupt", LBDisrupt::new, 
             "LB to CN Disrupt",
-            "LN Disrupt Circle",
-            "LN Disrupt Circle",
+            "LN Circle Disrupt",
+            "LN Circle Disrupt",
             "LB Disrupt Return");
         LB_Disrupt.register(autonChooser);
 
@@ -224,16 +224,14 @@ public class RobotContainer {
 
         AutonConfig LT_Disrupt = new AutonConfig("LT Disrupt", LTDisrupt::new, 
             "LT to N Disrupt",
-            "LN Disrupt Circle",
-            "LN Disrupt Circle",
-            "LT Return Disrupt");
+            "LN Circle Disrupt",
+            "LT Disrupt Return");
         LT_Disrupt.register(autonChooser);
 
         AutonConfig RT_Disrupt = new AutonConfig("RT Disrupt", RTDisrupt::new, 
             "RT to N Disrupt",
             "RN Circle Disrupt",
-            "RN Circle Disrupt",
-            "RT Return Disrupt");
+            "RT Disrupt Return");
         RT_Disrupt.register(autonChooser);
 
         // autonChooser.addOption("SysID Module Translation Dynamic Forwards", swerve.sysIdDynamic(Direction.kForward));

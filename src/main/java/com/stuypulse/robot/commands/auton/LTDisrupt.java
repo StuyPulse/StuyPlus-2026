@@ -15,9 +15,7 @@ public class LTDisrupt extends SequentialCommandGroup{
 
             CommandSwerveDrivetrain.getInstance().followPathCommand(paths[1]),
 
-            CommandSwerveDrivetrain.getInstance().followPathCommand(paths[2]),
-    
-            CommandSwerveDrivetrain.getInstance().followPathCommand(paths[3])
+            CommandSwerveDrivetrain.getInstance().followPathCommand(paths[2])
         );
     }
     
