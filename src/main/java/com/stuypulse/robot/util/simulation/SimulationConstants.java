@@ -8,10 +8,13 @@ package com.stuypulse.robot.util.simulation;
 
 import static edu.wpi.first.units.Units.*;
 
+import java.util.function.Supplier;
+
 import com.ctre.phoenix6.configs.CANcoderConfiguration;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.swerve.SwerveModuleConstants;
 import com.pathplanner.lib.config.PIDConstants;
+import com.stuypulse.robot.Robot;
 import com.stuypulse.robot.subsystems.swerve.TunerConstants;
 
 import edu.wpi.first.math.geometry.Pose2d;
@@ -236,7 +239,18 @@ public interface SimulationConstants {
         double WHEEL_COF = 1.2; // TODO: Get actual
 
         Time SIMULATION_STEP_TIME = Seconds.of(0.005);
-        Mass ROBOT_WEIGHT = Pounds.of(115); // TODO: get actual
+
+        Mass ROBOT_WEIGHT = Pounds.of(65);
+        Mass RED_BUMPER_WEIGHT = Pounds.of(16.8);
+        Mass BLUE_BUMPER_WEIGHT = Pounds.of(15.4);
+
+        Supplier<Mass> TOTAL_WEIGHT = () -> {
+            if (Robot.isBlue()) {
+                return ROBOT_WEIGHT.plus(BLUE_BUMPER_WEIGHT);
+            } else {
+                return ROBOT_WEIGHT.plus(RED_BUMPER_WEIGHT);
+            }
+        };
 
         int PIGEON_ID = 0; // TODO: get actual
 
@@ -272,5 +286,5 @@ public interface SimulationConstants {
 			new Pose2d(1.6, 4, new Rotation2d())
 	};
 
-    public static final Boolean SPAWN_GAMEPIECES_SPARSELY = true; // whether to spawn a decreased set of gamepieces to conserve processing power
+    public static final Boolean SPAWN_GAMEPIECES_SPARSELY = false; // whether to spawn a decreased set of gamepieces to conserve processing power
 }

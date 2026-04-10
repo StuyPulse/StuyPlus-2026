@@ -328,7 +328,7 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
     private void startSimThread() {
         mapleSimSwerveDrivetrain = new MapleSimSwerveDrivetrain(
                 Seconds.of(kSimLoopPeriod),
-                SimulationConstants.Drivetrain.ROBOT_WEIGHT,
+                SimulationConstants.Drivetrain.TOTAL_WEIGHT.get(),
                 SimulationConstants.Drivetrain.LENGTH,
                 SimulationConstants.Drivetrain.WIDTH,
                 DCMotor.getKrakenX60(1),
