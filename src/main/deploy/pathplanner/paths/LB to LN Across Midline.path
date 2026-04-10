@@ -4,12 +4,12 @@
     {
       "anchor": {
         "x": 3.55,
-        "y": 5.85
+        "y": 5.8
       },
       "prevControl": null,
       "nextControl": {
         "x": 3.8,
-        "y": 5.85
+        "y": 5.8
       },
       "isLocked": false,
       "linkedName": "Left Bump Facing Depot"
@@ -17,11 +17,11 @@
     {
       "anchor": {
         "x": 8.25,
-        "y": 5.85
+        "y": 5.8
       },
       "prevControl": {
         "x": 8.0,
-        "y": 5.85
+        "y": 5.8
       },
       "nextControl": null,
       "isLocked": false,
@@ -42,13 +42,13 @@
   },
   "goalEndState": {
     "velocity": 0.0,
-    "rotation": 180.0
+    "rotation": 0.0
   },
   "reversed": false,
   "folder": null,
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 180.0
+    "rotation": 0.0
   },
   "useDefaultConstraints": true
 }
