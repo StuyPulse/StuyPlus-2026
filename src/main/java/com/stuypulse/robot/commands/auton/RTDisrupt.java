@@ -19,11 +19,7 @@ public class RTDisrupt extends SequentialCommandGroup{
 
             CommandSwerveDrivetrain.getInstance().followPathCommand(paths[3]),
 
-            CommandSwerveDrivetrain.getInstance().followPathCommand(paths[4]),
-
-            CommandSwerveDrivetrain.getInstance().followPathCommand(paths[5]),
-
-            CommandSwerveDrivetrain.getInstance().followPathCommand(paths[6])
+            CommandSwerveDrivetrain.getInstance().followPathCommand(paths[4])
         );
     }
     

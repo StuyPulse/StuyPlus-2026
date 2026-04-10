@@ -10,6 +10,7 @@ import com.stuypulse.robot.commands.auton.LBDisrupt;
 import com.stuypulse.robot.commands.auton.LBFerry;
 import com.stuypulse.robot.commands.auton.LBMid;
 import com.stuypulse.robot.commands.auton.LBStraight;
+import com.stuypulse.robot.commands.auton.LTDisrupt;
 import com.stuypulse.robot.commands.auton.LBMidlineSweepRight;
 import com.stuypulse.robot.commands.auton.LBOuttake;
 import com.stuypulse.robot.commands.auton.OutpostOnly;
@@ -17,6 +18,7 @@ import com.stuypulse.robot.commands.auton.RBDisrupt;
 import com.stuypulse.robot.commands.auton.RBFerry;
 import com.stuypulse.robot.commands.auton.RBMid;
 import com.stuypulse.robot.commands.auton.RBStraight;
+import com.stuypulse.robot.commands.auton.RTDisrupt;
 import com.stuypulse.robot.commands.auton.RBMidlineSweepLeft;
 import com.stuypulse.robot.commands.auton.RBOuttake;
 import com.stuypulse.robot.commands.auton.TwoMeterPath;
@@ -205,43 +207,39 @@ public class RobotContainer {
             "RN to Mid Neutral");
         RBMidlineSweepLeft.register(autonChooser);
 
-        AutonConfig LBDisrupt = new AutonConfig("LB Disrupt", LBDisrupt::new, 
+        AutonConfig LB_Disrupt = new AutonConfig("LB Disrupt", LBDisrupt::new, 
             "LB to CN Disrupt",
             "LN Circle Disrupt",
             "LN Circle Disrupt",
             "LN Circle Disrupt",
             "LN Circle Disrupt",
             "LB Disrupt Return");
-        LBDisrupt.register(autonChooser);
+        LB_Disrupt.register(autonChooser);
 
-        AutonConfig RBDisrupt = new AutonConfig("RB Disrupt", RBDisrupt::new, 
+        AutonConfig RB_Disrupt = new AutonConfig("RB Disrupt", RBDisrupt::new, 
             "RB to CN Disrupt",
             "RN Circle Disrupt",
             "RN Circle Disrupt",
             "RN Circle Disrupt",
             "RN Circle Disrupt",
             "RB Disrupt Return");
-        RBDisrupt.register(autonChooser);
+        RB_Disrupt.register(autonChooser);
 
-        AutonConfig LTDisrupt = new AutonConfig("LT Disrupt", LBDisrupt::new, 
+        AutonConfig LT_Disrupt = new AutonConfig("LT Disrupt", LTDisrupt::new, 
             "LT to N Disrupt",
             "LT First Circle Disrupt",
             "LT Circle Disrupt",
             "LT Circle Disrupt",
-            "LT Circle Disrupt",
-            "LT Circle Disrupt",
             "LT Return Disrupt");
-        LTDisrupt.register(autonChooser);
+        LT_Disrupt.register(autonChooser);
 
-        AutonConfig RTDisrupt = new AutonConfig("RT Disrupt", RBDisrupt::new, 
+        AutonConfig RT_Disrupt = new AutonConfig("RT Disrupt", RTDisrupt::new, 
             "RT to N Disrupt",
             "RT First Circle Disrupt",
             "RT Circle Disrupt",
             "RT Circle Disrupt",
-            "RT Circle Disrupt",
-            "RT Circle Disrupt",
             "RT Return Disrupt");
-        RTDisrupt.register(autonChooser);
+        RT_Disrupt.register(autonChooser);
 
         // autonChooser.addOption("SysID Module Translation Dynamic Forwards", swerve.sysIdDynamic(Direction.kForward));
         // autonChooser.addOption("SysID Module Translation Dynamic Backwards", swerve.sysIdDynamic(Direction.kReverse));
