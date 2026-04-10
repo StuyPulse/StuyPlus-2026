@@ -30,7 +30,7 @@ public interface Settings {
 
     public interface EnabledSubsystems {
         // SmartBoolean FEEDER = new SmartBoolean("Enabled Subsystems/Feeder", true);
-        SmartBoolean INTAKE = new SmartBoolean("Enabled Subsystems/Intake", false);
+        SmartBoolean INTAKE = new SmartBoolean("Enabled Subsystems/Intake", true);
         // SmartBoolean LED = new SmartBoolean("Enabled Subsystems/LED", true);
         // SmartBoolean SHOOTER = new SmartBoolean("Enabled Subsystems/Shooter", true);
         SmartBoolean VISION = new SmartBoolean("Enabled Subsystems/Vision", true);
@@ -58,7 +58,7 @@ public interface Settings {
         Rotation2d PIVOT_INITIAL_ANGLE = Rotation2d.fromDegrees(0);
 
         Rotation2d IDLE_ANGLE = Rotation2d.fromDegrees(0);
-        Rotation2d PIVOT_DOWN_ANGLE = Rotation2d.fromDegrees(122);
+        Rotation2d PIVOT_DOWN_ANGLE = Rotation2d.fromDegrees(102);
 
         double HOMING_UP_VOLTAGE = -3;
         double HOMING_DOWN_VOLTAGE = 3;

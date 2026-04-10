@@ -89,7 +89,7 @@ public class IntakeSim extends Intake {
     
     @Override
     public void setPivotZeroAtBottom() {
-        zeroOffset = new Rotation2d(-pivotSim.getAngleRads()).plus(new Rotation2d(Math.toRadians(122)));
+        zeroOffset = new Rotation2d(-pivotSim.getAngleRads()).plus(Settings.Intake.PIVOT_DOWN_ANGLE);
     }
 
     // @Override
