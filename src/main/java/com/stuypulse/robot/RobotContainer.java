@@ -207,17 +207,19 @@ public class RobotContainer {
 
         AutonConfig LBDisrupt = new AutonConfig("LB Disrupt", LBDisrupt::new, 
             "LB to CN Disrupt",
-            "LN Disrupt Circle",
-            "LN Disrupt Circle",
-            "LN Disrupt Circle",
+            "LN Circle Disrupt",
+            "LN Circle Disrupt",
+            "LN Circle Disrupt",
+            "LN Circle Disrupt",
             "LB Disrupt Return");
         LBDisrupt.register(autonChooser);
 
         AutonConfig RBDisrupt = new AutonConfig("RB Disrupt", RBDisrupt::new, 
             "RB to CN Disrupt",
-            "RN Disrupt Circle",
-            "RN Disrupt Circle",
-            "RN Disrupt Circle",
+            "RN Circle Disrupt",
+            "RN Circle Disrupt",
+            "RN Circle Disrupt",
+            "RN Circle Disrupt",
             "RB Disrupt Return");
         RBDisrupt.register(autonChooser);
 
