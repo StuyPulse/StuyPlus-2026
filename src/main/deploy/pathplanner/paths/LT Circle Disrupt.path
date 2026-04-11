@@ -16,16 +16,16 @@
     },
     {
       "anchor": {
-        "x": 8.25,
+        "x": 8.109844690393519,
         "y": 5.75
       },
       "prevControl": {
-        "x": 8.25,
-        "y": 6.5
+        "x": 8.109844690393519,
+        "y": 6.452
       },
       "nextControl": {
-        "x": 8.25,
-        "y": 5.25
+        "x": 8.109844690393519,
+        "y": 5.048
       },
       "isLocked": false,
       "linkedName": "LT Disrupt 2"
@@ -33,31 +33,31 @@
     {
       "anchor": {
         "x": 7.15,
-        "y": 4.75
+        "y": 4.434961805555556
       },
       "prevControl": {
-        "x": 7.4,
-        "y": 4.75
+        "x": 8.021,
+        "y": 4.434961805555556
       },
       "nextControl": {
-        "x": 6.9,
-        "y": 4.75
+        "x": 6.279,
+        "y": 4.434961805555556
       },
       "isLocked": false,
       "linkedName": "LT DIsrupt 3"
     },
     {
       "anchor": {
-        "x": 6.0,
+        "x": 6.149008318865741,
         "y": 5.75
       },
       "prevControl": {
-        "x": 6.0,
-        "y": 5.25
+        "x": 6.149008318865741,
+        "y": 5.048
       },
       "nextControl": {
-        "x": 6.0,
-        "y": 6.5
+        "x": 6.149008318865741,
+        "y": 6.452
       },
       "isLocked": false,
       "linkedName": "LT Disrupt 4"
@@ -78,12 +78,16 @@
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 1.9968475877192973,
-      "rotationDegrees": 33.164551111141265
+      "waypointRelativePos": 0.9726973684210531,
+      "rotationDegrees": 35.0
     },
     {
-      "waypointRelativePos": 3.2,
-      "rotationDegrees": 45.0
+      "waypointRelativePos": 2.0284539473684218,
+      "rotationDegrees": 0.0
+    },
+    {
+      "waypointRelativePos": 2.98610197368421,
+      "rotationDegrees": 35.0
     }
   ],
   "constraintZones": [],

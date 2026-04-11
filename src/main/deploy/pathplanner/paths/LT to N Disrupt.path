@@ -16,16 +16,16 @@
     },
     {
       "anchor": {
-        "x": 7.25,
-        "y": 7.3
+        "x": 7.15,
+        "y": 7.315
       },
       "prevControl": {
-        "x": 6.25,
-        "y": 7.3
+        "x": 6.15,
+        "y": 7.315
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "LB Disrupt 1"
+      "linkedName": "LT Disrupt 1"
     }
   ],
   "rotationTargets": [
@@ -46,7 +46,7 @@
     "unlimited": false
   },
   "goalEndState": {
-    "velocity": 1.0,
+    "velocity": 3.0,
     "rotation": 45.0
   },
   "reversed": false,

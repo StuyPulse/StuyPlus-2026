@@ -3,45 +3,45 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 7.25,
-        "y": 1.0
+        "x": 7.15,
+        "y": 0.7417122111535661
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.249999999999999,
-        "y": 1.0000000000000002
+        "x": 8.15,
+        "y": 0.7417122111535661
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "RT Disrupt 1"
     },
     {
       "anchor": {
-        "x": 6.0,
-        "y": 2.5
+        "x": 8.25,
+        "y": 2.25
       },
       "prevControl": {
-        "x": 6.0,
-        "y": 1.798
+        "x": 8.25,
+        "y": 1.548
       },
       "nextControl": {
-        "x": 6.0,
-        "y": 3.202
+        "x": 8.25,
+        "y": 2.952
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "RT Disrupt 2"
     },
     {
       "anchor": {
         "x": 7.25,
-        "y": 3.5
+        "y": 3.5586817685589525
       },
       "prevControl": {
-        "x": 7.25,
-        "y": 3.75
+        "x": 7.5,
+        "y": 3.5586817685589525
       },
       "nextControl": {
-        "x": 7.25,
-        "y": 3.25
+        "x": 7.0,
+        "y": 3.5586817685589525
       },
       "isLocked": false,
       "linkedName": null
@@ -49,11 +49,11 @@
     {
       "anchor": {
         "x": 7.25,
-        "y": 1.3550118267831146
+        "y": 1.4538458651746726
       },
       "prevControl": {
-        "x": 7.25,
-        "y": 1.6215704960288018
+        "x": 7.209204591975983,
+        "y": 2.28577414192645
       },
       "nextControl": null,
       "isLocked": false,
@@ -64,6 +64,10 @@
     {
       "waypointRelativePos": 2.0,
       "rotationDegrees": 0.0
+    },
+    {
+      "waypointRelativePos": 2.6798930921052637,
+      "rotationDegrees": -35.0
     }
   ],
   "constraintZones": [],

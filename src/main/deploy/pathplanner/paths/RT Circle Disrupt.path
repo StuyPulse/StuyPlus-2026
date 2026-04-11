@@ -3,16 +3,16 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 7.25,
-        "y": 1.0
+        "x": 7.15,
+        "y": 0.7417122111535661
       },
       "prevControl": null,
       "nextControl": {
-        "x": 8.25,
-        "y": 1.0000000000000004
+        "x": 8.150000000000002,
+        "y": 0.7417122111535666
       },
       "isLocked": false,
-      "linkedName": "RB Disrupt 1"
+      "linkedName": "RT Disrupt 1"
     },
     {
       "anchor": {
@@ -21,27 +21,27 @@
       },
       "prevControl": {
         "x": 8.25,
-        "y": 1.75
+        "y": 1.548
       },
       "nextControl": {
         "x": 8.25,
-        "y": 2.75
+        "y": 2.952
       },
       "isLocked": false,
       "linkedName": "RT Disrupt 2"
     },
     {
       "anchor": {
-        "x": 7.15,
-        "y": 3.368659058487874
+        "x": 7.25,
+        "y": 3.7374562355324077
       },
       "prevControl": {
-        "x": 8.021,
-        "y": 3.368659058487874
+        "x": 8.120999999999999,
+        "y": 3.7374562355324077
       },
       "nextControl": {
-        "x": 6.279,
-        "y": 3.368659058487874
+        "x": 6.379,
+        "y": 3.7374562355324077
       },
       "isLocked": false,
       "linkedName": "RT Disrupt 3"
@@ -53,33 +53,41 @@
       },
       "prevControl": {
         "x": 6.0,
-        "y": 2.75
+        "y": 2.952
       },
       "nextControl": {
         "x": 6.0,
-        "y": 1.75
+        "y": 1.548
       },
       "isLocked": false,
       "linkedName": "RT Disrupt 4"
     },
     {
       "anchor": {
-        "x": 7.25,
-        "y": 1.0
+        "x": 7.15,
+        "y": 0.7417122111535661
       },
       "prevControl": {
-        "x": 6.25,
-        "y": 1.0000000000000002
+        "x": 6.15,
+        "y": 0.7417122111535663
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "RB Disrupt 1"
+      "linkedName": "RT Disrupt 1"
     }
   ],
   "rotationTargets": [
     {
+      "waypointRelativePos": 1.0158717105263155,
+      "rotationDegrees": -35.0
+    },
+    {
       "waypointRelativePos": 2.010827850877193,
-      "rotationDegrees": -6.5548520646952575
+      "rotationDegrees": 0.0
+    },
+    {
+      "waypointRelativePos": 2.9894736842105267,
+      "rotationDegrees": -35.0
     }
   ],
   "constraintZones": [],

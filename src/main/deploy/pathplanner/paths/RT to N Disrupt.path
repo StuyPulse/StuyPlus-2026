@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.935549215406562,
-        "y": 0.5868473609129818
+        "x": 3.965161747685186,
+        "y": 0.7013288483796294
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.575278174037088,
-        "y": 0.49957203994293997
+        "x": 4.965161747685186,
+        "y": 0.7013288483796294
       },
       "isLocked": false,
       "linkedName": "RT Disrupt 0"
     },
     {
       "anchor": {
-        "x": 7.25,
-        "y": 1.0
+        "x": 7.222396629050926,
+        "y": 0.7013288483796294
       },
       "prevControl": {
-        "x": 6.368017118402282,
-        "y": 0.6256633380884444
+        "x": 6.222396629050926,
+        "y": 0.7013288483796294
       },
       "nextControl": null,
       "isLocked": false,
@@ -46,7 +46,7 @@
     "unlimited": false
   },
   "goalEndState": {
-    "velocity": 1.0,
+    "velocity": 3.0,
     "rotation": -35.0
   },
   "reversed": false,
