@@ -231,6 +231,9 @@ public class RobotContainer {
         AutonConfig RT_Disrupt = new AutonConfig("RT Disrupt", RTDisrupt::new, 
             "RT to N Disrupt",
             "RN Circle Disrupt",
+            "RN Circle Disrupt",
+            "RT Side Push Disrupt",
+            "RT Around Disrupt",
             "RT Disrupt Return");
         RT_Disrupt.register(autonChooser);
 

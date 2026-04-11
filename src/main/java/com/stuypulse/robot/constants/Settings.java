@@ -79,7 +79,7 @@ public interface Settings {
 
         Rotation2d ANGLE_TOLERANCE = Rotation2d.fromDegrees(0.5); 
 
-        Rotation2d PUSHDOWN_THRESHOLD = Rotation2d.fromDegrees(92); //TODO:Temporary, needs testing
+        Rotation2d PUSHDOWN_THRESHOLD = Rotation2d.fromDegrees(85); //TODO:Temporary, needs testing
         double PUSHDOWN_VOLTAGE = 0;
     }
 
