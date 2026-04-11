@@ -4,6 +4,7 @@ import com.pathplanner.lib.path.PathPlannerPath;
 import com.stuypulse.robot.commands.swerve.SwerveResetPose;
 import com.stuypulse.robot.subsystems.swerve.CommandSwerveDrivetrain;
 
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
 public class RTDisrupt extends SequentialCommandGroup {
@@ -15,7 +16,13 @@ public class RTDisrupt extends SequentialCommandGroup {
 
             CommandSwerveDrivetrain.getInstance().followPathCommand(paths[1]),
 
-            CommandSwerveDrivetrain.getInstance().followPathCommand(paths[2])
+            CommandSwerveDrivetrain.getInstance().followPathCommand(paths[2]),
+
+            CommandSwerveDrivetrain.getInstance().followPathCommand(paths[3]),
+
+            CommandSwerveDrivetrain.getInstance().followPathCommand(paths[4]),
+
+            CommandSwerveDrivetrain.getInstance().followPathCommand(paths[5])
         );
     }
     
