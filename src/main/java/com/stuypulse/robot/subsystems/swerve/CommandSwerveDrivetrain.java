@@ -387,9 +387,9 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
         return getState().Pose;
     }
     
-    // public Pose2d getShooterPose() {
-    //     return SimulationConstants.Shooter.OFFSETS.applyToPose2d(mapleSimSwerveDrivetrain == null ? getPose() : getMapleSimDrive().getSimulatedDriveTrainPose()); // offset is negative because the shooter is behind the robot center
-    // }
+    public Pose2d getShooterPose() {
+        return SimulationConstants.Shooter.OFFSETS.applyToPose2d(mapleSimSwerveDrivetrain == null ? getPose() : getMapleSimDrive().getSimulatedDriveTrainPose()); // offset is negative because the shooter is behind the robot center
+    }
 
     @Override
     public void resetPose(Pose2d pose) {
