@@ -11,6 +11,11 @@ public class SetPipeline extends InstantCommand {
     }
 
     @Override
+    public boolean runsWhenDisabled() {
+        return true;
+    }
+
+    @Override
     public void initialize() {
         LimelightHelpers.setPipelineIndex("limelight", pipeline);
     }
