@@ -224,8 +224,8 @@ public class RobotContainer {
 
         AutonConfig LT_Disrupt = new AutonConfig("LT Disrupt", LTDisrupt::new, 
             "LT to N Disrupt",
-            "LN Circle Disrupt",
-            "LN Circle Disrupt",
+            "LT Circle Disrupt",
+            "LT Circle Disrupt",
             "LT Side Push Disrupt",
             "LT Around Disrupt",
             "LT Back Push Disrupt");
@@ -233,8 +233,8 @@ public class RobotContainer {
 
         AutonConfig RT_Disrupt = new AutonConfig("RT Disrupt", RTDisrupt::new, 
             "RT to N Disrupt",
-            "RN Circle Disrupt",
-            "RN Circle Disrupt",
+            "RT Circle Disrupt",
+            "RT Circle Disrupt",
             "RT Side Push Disrupt",
             "RT Around Disrupt",
             "RT Back Push Disrupt");
