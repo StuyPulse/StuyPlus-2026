@@ -19,13 +19,31 @@
         {
           "type": "path",
           "data": {
-            "pathName": "RT Disrupt Return"
+            "pathName": "RN Circle Disrupt"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "RT Side Push Disrupt"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "RT Around Disrupt"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "RT Back Push Disrupt"
           }
         }
       ]
     }
   },
   "resetOdom": true,
-  "folder": null,
+  "folder": "Disrupt",
   "choreoAuto": false
 }

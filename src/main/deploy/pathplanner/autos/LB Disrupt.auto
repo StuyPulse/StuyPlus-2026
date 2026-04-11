@@ -13,13 +13,13 @@
         {
           "type": "path",
           "data": {
-            "pathName": "LN Circle Disrupt"
+            "pathName": "LN Disrupt Circle"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "LN Circle Disrupt"
+            "pathName": "LN Disrupt Circle"
           }
         },
         {
@@ -32,6 +32,6 @@
     }
   },
   "resetOdom": true,
-  "folder": null,
+  "folder": "Disrupt",
   "choreoAuto": false
 }

@@ -69,7 +69,7 @@
       },
       "prevControl": {
         "x": 6.25,
-        "y": 1.0
+        "y": 1.0000000000000002
       },
       "nextControl": null,
       "isLocked": false,
@@ -98,7 +98,7 @@
     "rotation": -35.0
   },
   "reversed": false,
-  "folder": null,
+  "folder": "RT Disrupt",
   "idealStartingState": {
     "velocity": 4.0,
     "rotation": -35.0

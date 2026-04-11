@@ -3,34 +3,34 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 4.0,
-        "y": 0.7
+        "x": 8.84759569459607,
+        "y": 7.3
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.639728958630526,
-        "y": 0.6127246790299581
+        "x": 7.84759569459607,
+        "y": 7.3
       },
       "isLocked": false,
-      "linkedName": "RT Disrupt 0"
+      "linkedName": "LT Disrupt 6"
     },
     {
       "anchor": {
-        "x": 7.25,
-        "y": 1.0
+        "x": 4.026,
+        "y": 7.315
       },
       "prevControl": {
-        "x": 6.368017118402282,
-        "y": 0.6256633380884444
+        "x": 5.026,
+        "y": 7.315
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "RB Disrupt 1"
+      "linkedName": null
     }
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 0.5,
+      "waypointRelativePos": 0.3291872258771929,
       "rotationDegrees": 0.0
     }
   ],
@@ -46,14 +46,14 @@
     "unlimited": false
   },
   "goalEndState": {
-    "velocity": 1.0,
-    "rotation": -35.0
+    "velocity": 0.0,
+    "rotation": 0.0
   },
   "reversed": false,
-  "folder": "RT Disrupt",
+  "folder": "LT Disrupt",
   "idealStartingState": {
-    "velocity": 0,
-    "rotation": 0.0
+    "velocity": 1.0,
+    "rotation": 35.0
   },
   "useDefaultConstraints": true
 }

@@ -12,7 +12,7 @@
         "y": 1.0000000000000002
       },
       "isLocked": false,
-      "linkedName": "RB Disrupt 1"
+      "linkedName": null
     },
     {
       "anchor": {
@@ -28,7 +28,7 @@
         "y": 3.202
       },
       "isLocked": false,
-      "linkedName": "RB Disrupt 2"
+      "linkedName": null
     },
     {
       "anchor": {
@@ -36,49 +36,33 @@
         "y": 3.5
       },
       "prevControl": {
-        "x": 6.379,
-        "y": 3.5
+        "x": 7.25,
+        "y": 3.75
       },
       "nextControl": {
-        "x": 8.121000000000002,
-        "y": 3.5
+        "x": 7.25,
+        "y": 3.25
       },
       "isLocked": false,
-      "linkedName": "RB Disrupt 3"
-    },
-    {
-      "anchor": {
-        "x": 8.5,
-        "y": 2.5
-      },
-      "prevControl": {
-        "x": 8.5,
-        "y": 3.202
-      },
-      "nextControl": {
-        "x": 8.5,
-        "y": 1.798
-      },
-      "isLocked": false,
-      "linkedName": "RB Disrupt 4"
+      "linkedName": null
     },
     {
       "anchor": {
         "x": 7.25,
-        "y": 1.0
+        "y": 1.3550118267831146
       },
       "prevControl": {
-        "x": 8.25,
-        "y": 0.9999999999999999
+        "x": 7.25,
+        "y": 1.6215704960288018
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "RB Disrupt 1"
+      "linkedName": "RT Disrupt 5"
     }
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 2.0139117324561404,
+      "waypointRelativePos": 2.0,
       "rotationDegrees": 0.0
     }
   ],
@@ -94,11 +78,11 @@
     "unlimited": false
   },
   "goalEndState": {
-    "velocity": 3.0,
+    "velocity": 2.0,
     "rotation": -35.0
   },
   "reversed": false,
-  "folder": "RB Disrupt",
+  "folder": "RT Disrupt",
   "idealStartingState": {
     "velocity": 4.0,
     "rotation": -35.0

@@ -91,7 +91,7 @@
     "rotation": 45.0
   },
   "reversed": false,
-  "folder": null,
+  "folder": "LB Disrupt",
   "idealStartingState": {
     "velocity": 0,
     "rotation": 45.0

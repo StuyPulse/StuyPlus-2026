@@ -3,55 +3,39 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.368938716794032,
-        "y": 2.379804118904658
-      },
-      "prevControl": null,
-      "nextControl": {
-        "x": 4.368938716794029,
-        "y": 2.379804118904658
-      },
-      "isLocked": false,
-      "linkedName": "RB Disrupt 0"
-    },
-    {
-      "anchor": {
-        "x": 7.796773448871907,
-        "y": 2.379804118904658
-      },
-      "prevControl": {
-        "x": 6.796773448871907,
-        "y": 2.379804118904658
-      },
-      "nextControl": {
-        "x": 8.796773448871908,
-        "y": 2.379804118904658
-      },
-      "isLocked": false,
-      "linkedName": null
-    },
-    {
-      "anchor": {
         "x": 7.25,
         "y": 1.0
       },
+      "prevControl": null,
+      "nextControl": {
+        "x": 7.0732233047033635,
+        "y": 1.1767766952966372
+      },
+      "isLocked": false,
+      "linkedName": "RB Disrupt 1"
+    },
+    {
+      "anchor": {
+        "x": 5.718017364901747,
+        "y": 2.0801105917940323
+      },
       "prevControl": {
-        "x": 9.216431370542214,
-        "y": 1.041488355167395
+        "x": 5.897102982974388,
+        "y": 1.9010249737213907
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "RB Disrupt 1"
+      "linkedName": null
     }
   ],
   "rotationTargets": [],
   "constraintZones": [
     {
-      "name": "Constraints Zone",
-      "minWaypointRelativePos": 0.1390293435013263,
-      "maxWaypointRelativePos": 0.4216056034482758,
+      "name": "Low speed to bump",
+      "minWaypointRelativePos": 0.47535449020931614,
+      "maxWaypointRelativePos": 1.0,
       "constraints": {
-        "maxVelocity": 1.75,
+        "maxVelocity": 1.0,
         "maxAcceleration": 3.0,
         "maxAngularVelocity": 540.0,
         "maxAngularAcceleration": 720.0,
@@ -71,14 +55,14 @@
     "unlimited": false
   },
   "goalEndState": {
-    "velocity": 3.0,
-    "rotation": -35.0
+    "velocity": 0.0,
+    "rotation": 0.0
   },
   "reversed": false,
-  "folder": "RB Disrupt",
+  "folder": "RT Disrupt",
   "idealStartingState": {
-    "velocity": 0,
-    "rotation": -23.0
+    "velocity": 0.0,
+    "rotation": -35.0
   },
   "useDefaultConstraints": true
 }

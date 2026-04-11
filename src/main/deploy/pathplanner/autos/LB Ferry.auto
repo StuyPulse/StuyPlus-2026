@@ -32,6 +32,6 @@
     }
   },
   "resetOdom": true,
-  "folder": null,
+  "folder": "Ferry",
   "choreoAuto": false
 }

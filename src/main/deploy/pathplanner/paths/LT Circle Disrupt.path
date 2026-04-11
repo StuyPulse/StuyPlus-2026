@@ -102,7 +102,7 @@
     "rotation": 45.0
   },
   "reversed": false,
-  "folder": null,
+  "folder": "LT Disrupt",
   "idealStartingState": {
     "velocity": 4.0,
     "rotation": 45.0

@@ -16,60 +16,12 @@
     },
     {
       "anchor": {
-        "x": 6.250756111426946,
-        "y": 7.1062450255827185
-      },
-      "prevControl": {
-        "x": 5.763899943149515,
-        "y": 7.54564241046049
-      },
-      "nextControl": {
-        "x": 7.137131863750419,
-        "y": 6.306273261913773
-      },
-      "isLocked": false,
-      "linkedName": null
-    },
-    {
-      "anchor": {
-        "x": 7.25,
-        "y": 4.5
-      },
-      "prevControl": {
-        "x": 6.261436881883685,
-        "y": 4.8365486942004425
-      },
-      "nextControl": {
-        "x": 8.23509948834565,
-        "y": 4.164630471859011
-      },
-      "isLocked": false,
-      "linkedName": "LB Disrupt 3"
-    },
-    {
-      "anchor": {
-        "x": 8.4,
-        "y": 5.825
-      },
-      "prevControl": {
-        "x": 8.444502558271745,
-        "y": 5.520764638999433
-      },
-      "nextControl": {
-        "x": 8.306332312090705,
-        "y": 6.465345722849509
-      },
-      "isLocked": false,
-      "linkedName": "LB Disrupt 4"
-    },
-    {
-      "anchor": {
         "x": 7.25,
         "y": 7.3
       },
       "prevControl": {
-        "x": 8.085525866969869,
-        "y": 7.49513644115975
+        "x": 6.25,
+        "y": 7.3
       },
       "nextControl": null,
       "isLocked": false,
@@ -78,7 +30,7 @@
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 1.0,
+      "waypointRelativePos": 0.5,
       "rotationDegrees": 0.0
     }
   ],
@@ -86,7 +38,7 @@
   "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 4.0,
+    "maxVelocity": 3.0,
     "maxAcceleration": 3.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0,
@@ -94,14 +46,14 @@
     "unlimited": false
   },
   "goalEndState": {
-    "velocity": 5.0,
+    "velocity": 1.0,
     "rotation": 45.0
   },
   "reversed": false,
-  "folder": null,
+  "folder": "LT Disrupt",
   "idealStartingState": {
     "velocity": 0,
     "rotation": 0.0
   },
-  "useDefaultConstraints": false
+  "useDefaultConstraints": true
 }

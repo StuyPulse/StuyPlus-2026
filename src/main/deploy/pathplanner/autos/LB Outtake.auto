@@ -20,6 +20,6 @@
     }
   },
   "resetOdom": true,
-  "folder": null,
+  "folder": "Outtake",
   "choreoAuto": false
 }

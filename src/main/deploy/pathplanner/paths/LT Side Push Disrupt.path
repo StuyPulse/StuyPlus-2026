@@ -4,82 +4,86 @@
     {
       "anchor": {
         "x": 7.25,
-        "y": 1.0
+        "y": 7.3
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.249999999999999,
-        "y": 1.0000000000000002
+        "x": 6.25,
+        "y": 7.3
       },
       "isLocked": false,
-      "linkedName": "RB Disrupt 1"
+      "linkedName": "LB Disrupt 1"
     },
     {
       "anchor": {
-        "x": 6.0,
-        "y": 2.5
+        "x": 6.1,
+        "y": 5.825
       },
       "prevControl": {
-        "x": 6.0,
-        "y": 1.798
+        "x": 6.1,
+        "y": 6.527
       },
       "nextControl": {
-        "x": 6.0,
-        "y": 3.202
+        "x": 6.1,
+        "y": 5.123
       },
       "isLocked": false,
-      "linkedName": "RB Disrupt 2"
+      "linkedName": null
     },
     {
       "anchor": {
         "x": 7.25,
-        "y": 3.5
+        "y": 4.5
       },
       "prevControl": {
-        "x": 6.379,
-        "y": 3.5
+        "x": 7.25,
+        "y": 4.25
       },
       "nextControl": {
-        "x": 8.121000000000002,
-        "y": 3.5
+        "x": 7.25,
+        "y": 4.749999999999995
       },
       "isLocked": false,
-      "linkedName": "RB Disrupt 3"
-    },
-    {
-      "anchor": {
-        "x": 8.5,
-        "y": 2.5
-      },
-      "prevControl": {
-        "x": 8.5,
-        "y": 3.202
-      },
-      "nextControl": {
-        "x": 8.5,
-        "y": 1.798
-      },
-      "isLocked": false,
-      "linkedName": "RB Disrupt 4"
+      "linkedName": null
     },
     {
       "anchor": {
         "x": 7.25,
-        "y": 1.0
+        "y": 5.825
       },
       "prevControl": {
-        "x": 8.25,
-        "y": 0.9999999999999999
+        "x": 7.25,
+        "y": 5.123
+      },
+      "nextControl": {
+        "x": 7.25,
+        "y": 6.527
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 7.25,
+        "y": 6.668164176219069
+      },
+      "prevControl": {
+        "x": 7.25,
+        "y": 6.418164176219069
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "RB Disrupt 1"
+      "linkedName": "LT Disrupt 7"
     }
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 2.0139117324561404,
+      "waypointRelativePos": 1.9878015350877185,
       "rotationDegrees": 0.0
+    },
+    {
+      "waypointRelativePos": 3.0,
+      "rotationDegrees": 35.0
     }
   ],
   "constraintZones": [],
@@ -94,14 +98,14 @@
     "unlimited": false
   },
   "goalEndState": {
-    "velocity": 3.0,
-    "rotation": -35.0
+    "velocity": 2.0,
+    "rotation": 35.0
   },
   "reversed": false,
-  "folder": "RB Disrupt",
+  "folder": null,
   "idealStartingState": {
     "velocity": 4.0,
-    "rotation": -35.0
+    "rotation": 45.0
   },
   "useDefaultConstraints": true
 }

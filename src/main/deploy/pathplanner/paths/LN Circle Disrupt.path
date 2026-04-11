@@ -48,15 +48,15 @@
     },
     {
       "anchor": {
-        "x": 8.4,
+        "x": 8.070187693322417,
         "y": 5.825
       },
       "prevControl": {
-        "x": 8.4,
+        "x": 8.070187693322417,
         "y": 5.123
       },
       "nextControl": {
-        "x": 8.4,
+        "x": 8.070187693322417,
         "y": 6.527
       },
       "isLocked": false,
@@ -102,7 +102,7 @@
     "rotation": 45.0
   },
   "reversed": false,
-  "folder": null,
+  "folder": "LB Disrupt",
   "idealStartingState": {
     "velocity": 4.0,
     "rotation": 45.0

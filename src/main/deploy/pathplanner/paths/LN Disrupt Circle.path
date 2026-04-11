@@ -4,82 +4,86 @@
     {
       "anchor": {
         "x": 7.25,
-        "y": 1.0
+        "y": 7.3
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.249999999999999,
-        "y": 1.0000000000000002
+        "x": 6.250000000000001,
+        "y": 7.3
       },
       "isLocked": false,
-      "linkedName": "RB Disrupt 1"
+      "linkedName": "LB Disrupt 1"
     },
     {
       "anchor": {
-        "x": 6.0,
-        "y": 2.5
+        "x": 6.1,
+        "y": 5.825
       },
       "prevControl": {
-        "x": 6.0,
-        "y": 1.798
+        "x": 6.1,
+        "y": 6.527
       },
       "nextControl": {
-        "x": 6.0,
-        "y": 3.202
+        "x": 6.1,
+        "y": 5.123
       },
       "isLocked": false,
-      "linkedName": "RB Disrupt 2"
+      "linkedName": "LB Disrupt 2"
     },
     {
       "anchor": {
         "x": 7.25,
-        "y": 3.5
+        "y": 4.5
       },
       "prevControl": {
         "x": 6.379,
-        "y": 3.5
+        "y": 4.5
       },
       "nextControl": {
-        "x": 8.121000000000002,
-        "y": 3.5
+        "x": 8.121,
+        "y": 4.5
       },
       "isLocked": false,
-      "linkedName": "RB Disrupt 3"
+      "linkedName": "LB Disrupt 3"
     },
     {
       "anchor": {
-        "x": 8.5,
-        "y": 2.5
+        "x": 8.070187693322417,
+        "y": 5.825
       },
       "prevControl": {
-        "x": 8.5,
-        "y": 3.202
+        "x": 8.070187693322417,
+        "y": 5.123
       },
       "nextControl": {
-        "x": 8.5,
-        "y": 1.798
+        "x": 8.070187693322417,
+        "y": 6.527
       },
       "isLocked": false,
-      "linkedName": "RB Disrupt 4"
+      "linkedName": "LB Disrupt 4"
     },
     {
       "anchor": {
         "x": 7.25,
-        "y": 1.0
+        "y": 7.3
       },
       "prevControl": {
         "x": 8.25,
-        "y": 0.9999999999999999
+        "y": 7.3
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "RB Disrupt 1"
+      "linkedName": "LB Disrupt 1"
     }
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 2.0139117324561404,
+      "waypointRelativePos": 1.9878015350877185,
       "rotationDegrees": 0.0
+    },
+    {
+      "waypointRelativePos": 3.0,
+      "rotationDegrees": 35.0
     }
   ],
   "constraintZones": [],
@@ -95,13 +99,13 @@
   },
   "goalEndState": {
     "velocity": 3.0,
-    "rotation": -35.0
+    "rotation": 45.0
   },
   "reversed": false,
-  "folder": "RB Disrupt",
+  "folder": "LB Disrupt",
   "idealStartingState": {
     "velocity": 4.0,
-    "rotation": -35.0
+    "rotation": 45.0
   },
   "useDefaultConstraints": true
 }

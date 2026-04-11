@@ -98,7 +98,7 @@
     "rotation": -35.0
   },
   "reversed": false,
-  "folder": null,
+  "folder": "RT Disrupt",
   "idealStartingState": {
     "velocity": 4.0,
     "rotation": -35.0
