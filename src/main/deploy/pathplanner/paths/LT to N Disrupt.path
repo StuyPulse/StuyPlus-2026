@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 4.43068888888889,
-        "y": 7.3
+        "x": 4.459922222222222,
+        "y": 7.416322222222221
       },
       "prevControl": null,
       "nextControl": {
-        "x": 5.43068888888889,
-        "y": 7.3
+        "x": 5.459922222222222,
+        "y": 7.416322222222221
       },
       "isLocked": false,
       "linkedName": "LT Disrupt 0"
     },
     {
       "anchor": {
-        "x": 7.15,
-        "y": 7.315
+        "x": 7.149388888888889,
+        "y": 7.153222222222222
       },
       "prevControl": {
-        "x": 6.15,
-        "y": 7.315
+        "x": 6.028777777777779,
+        "y": 7.504022222222222
       },
       "nextControl": null,
       "isLocked": false,
@@ -46,13 +46,13 @@
     "unlimited": true
   },
   "goalEndState": {
-    "velocity": 5.0,
+    "velocity": 4.0,
     "rotation": 45.0
   },
   "reversed": false,
   "folder": "LT Disrupt",
   "idealStartingState": {
-    "velocity": 5.0,
+    "velocity": 4.0,
     "rotation": 0.0
   },
   "useDefaultConstraints": false

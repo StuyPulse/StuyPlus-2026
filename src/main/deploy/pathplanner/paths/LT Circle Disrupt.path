@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 7.15,
-        "y": 7.315
+        "x": 7.149388888888889,
+        "y": 7.153222222222222
       },
       "prevControl": null,
       "nextControl": {
-        "x": 8.150000000000006,
-        "y": 7.315
+        "x": 8.149388888888893,
+        "y": 7.153222222222222
       },
       "isLocked": false,
       "linkedName": "LT Disrupt 1"
@@ -64,16 +64,16 @@
     },
     {
       "anchor": {
-        "x": 7.15,
-        "y": 7.315
+        "x": 7.149388888888889,
+        "y": 7.153222222222222
       },
       "prevControl": {
-        "x": 6.15,
-        "y": 7.315
+        "x": 6.149388888888889,
+        "y": 7.153222222222222
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "LT Disrupt 5"
+      "linkedName": "LT Disrupt 1"
     }
   ],
   "rotationTargets": [
