@@ -286,5 +286,5 @@ public interface SimulationConstants {
 			new Pose2d(1.6, 4, new Rotation2d())
 	};
 
-    public static final Boolean SPAWN_GAMEPIECES_SPARSELY = false; // whether to spawn a decreased set of gamepieces to conserve processing power
+    public static final Boolean SPAWN_GAMEPIECES_SPARSELY = true; // whether to spawn a decreased set of gamepieces to conserve processing power
 }
