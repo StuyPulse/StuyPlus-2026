@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 8.153552068473608,
-        "y": 0.7162339514978624
+        "x": 8.166490727532096,
+        "y": 0.71623395149786
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.536219686162624,
-        "y": 0.599786019971471
+        "x": 6.5491583452211115,
+        "y": 0.5997860199714685
       },
       "isLocked": false,
       "linkedName": "RT Disrupt 6"
     },
     {
       "anchor": {
-        "x": 3.965161747685186,
-        "y": 0.7013288483796294
+        "x": 4.349586305278173,
+        "y": 0.71623395149786
       },
       "prevControl": {
-        "x": 4.92329625801372,
-        "y": 0.7013288483796293
+        "x": 5.307720815606707,
+        "y": 0.7162339514978598
       },
       "nextControl": null,
       "isLocked": false,
@@ -52,7 +52,7 @@
   "reversed": false,
   "folder": "RT Disrupt",
   "idealStartingState": {
-    "velocity": 1.0,
+    "velocity": 2.0,
     "rotation": -35.0
   },
   "useDefaultConstraints": true

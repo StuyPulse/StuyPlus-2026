@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 7.222396629050926,
-        "y": 0.7013288483796294
+        "x": 7.364293865905848,
+        "y": 0.6147000000000002
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.222396629050925,
-        "y": 0.7013288483796296
+        "x": 6.3642938659058474,
+        "y": 0.6147000000000005
       },
       "isLocked": false,
       "linkedName": "RB Disrupt 1"
@@ -64,12 +64,12 @@
     },
     {
       "anchor": {
-        "x": 7.222396629050926,
-        "y": 0.7013288483796294
+        "x": 7.364293865905848,
+        "y": 0.6147000000000002
       },
       "prevControl": {
-        "x": 8.222396629050927,
-        "y": 0.7013288483796293
+        "x": 8.364293865905848,
+        "y": 0.6147000000000001
       },
       "nextControl": null,
       "isLocked": false,
@@ -91,7 +91,7 @@
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0,
     "nominalVoltage": 12.0,
-    "unlimited": false
+    "unlimited": true
   },
   "goalEndState": {
     "velocity": 3.0,
@@ -103,5 +103,5 @@
     "velocity": 4.0,
     "rotation": -35.0
   },
-  "useDefaultConstraints": true
+  "useDefaultConstraints": false
 }

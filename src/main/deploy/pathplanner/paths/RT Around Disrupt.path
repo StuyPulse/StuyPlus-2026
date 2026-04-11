@@ -16,12 +16,12 @@
     },
     {
       "anchor": {
-        "x": 8.153552068473608,
-        "y": 0.7162339514978624
+        "x": 8.166490727532096,
+        "y": 0.71623395149786
       },
       "prevControl": {
-        "x": 8.166490727532095,
-        "y": 1.182025677603424
+        "x": 8.179429386590582,
+        "y": 1.1820256776034215
       },
       "nextControl": null,
       "isLocked": false,
@@ -41,13 +41,13 @@
     "unlimited": false
   },
   "goalEndState": {
-    "velocity": 2.0,
+    "velocity": 3.0,
     "rotation": -35.0
   },
   "reversed": false,
   "folder": "RT Disrupt",
   "idealStartingState": {
-    "velocity": 2.0,
+    "velocity": 3.0,
     "rotation": -35.0
   },
   "useDefaultConstraints": true

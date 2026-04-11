@@ -102,13 +102,13 @@
     "unlimited": false
   },
   "goalEndState": {
-    "velocity": 3.0,
+    "velocity": 5.0,
     "rotation": 45.0
   },
   "reversed": false,
   "folder": "LT Disrupt",
   "idealStartingState": {
-    "velocity": 4.0,
+    "velocity": 6.0,
     "rotation": 45.0
   },
   "useDefaultConstraints": true

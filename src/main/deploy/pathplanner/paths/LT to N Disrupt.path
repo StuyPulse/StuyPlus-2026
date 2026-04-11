@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 4.026,
-        "y": 7.315
+        "x": 4.43068888888889,
+        "y": 7.3
       },
       "prevControl": null,
       "nextControl": {
-        "x": 5.026,
-        "y": 7.315
+        "x": 5.43068888888889,
+        "y": 7.3
       },
       "isLocked": false,
       "linkedName": "LT Disrupt 0"
@@ -38,22 +38,22 @@
   "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 3.0,
+    "maxVelocity": 67.0,
     "maxAcceleration": 3.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0,
     "nominalVoltage": 12.0,
-    "unlimited": false
+    "unlimited": true
   },
   "goalEndState": {
-    "velocity": 3.0,
+    "velocity": 5.0,
     "rotation": 45.0
   },
   "reversed": false,
   "folder": "LT Disrupt",
   "idealStartingState": {
-    "velocity": 0,
+    "velocity": 5.0,
     "rotation": 0.0
   },
-  "useDefaultConstraints": true
+  "useDefaultConstraints": false
 }
