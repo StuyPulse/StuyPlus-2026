@@ -238,41 +238,13 @@
             "x": 980.0,
             "y": 140.0,
             "width": 140.0,
-            "height": 70.0,
+            "height": 140.0,
             "type": "Text Display",
             "properties": {
               "topic": "/SmartDashboard/Intake/Pivot State",
               "period": 0.06,
               "data_type": "string",
               "show_submit_button": false
-            }
-          },
-          {
-            "title": "Set Bright Pipeline",
-            "x": 840.0,
-            "y": 280.0,
-            "width": 280.0,
-            "height": 140.0,
-            "type": "Command",
-            "properties": {
-              "topic": "/SmartDashboard/Vision/Set Bright Pipeline",
-              "period": 0.06,
-              "show_type": true,
-              "maximize_button_space": true
-            }
-          },
-          {
-            "title": "Set Dark Pipeline",
-            "x": 840.0,
-            "y": 420.0,
-            "width": 280.0,
-            "height": 140.0,
-            "type": "Command",
-            "properties": {
-              "topic": "/SmartDashboard/Vision/Set Dark Pipeline",
-              "period": 0.06,
-              "show_type": true,
-              "maximize_button_space": true
             }
           },
           {
@@ -286,6 +258,34 @@
               "topic": "/SmartDashboard/Autonomous",
               "period": 0.06,
               "sort_options": false
+            }
+          },
+          {
+            "title": "Set Sunny Pipeline",
+            "x": 840.0,
+            "y": 280.0,
+            "width": 280.0,
+            "height": 140.0,
+            "type": "Command",
+            "properties": {
+              "topic": "/SmartDashboard/Vision/Set Sunny Pipeline",
+              "period": 0.06,
+              "show_type": false,
+              "maximize_button_space": false
+            }
+          },
+          {
+            "title": "Set Cloudy Pipeline",
+            "x": 840.0,
+            "y": 420.0,
+            "width": 280.0,
+            "height": 140.0,
+            "type": "Command",
+            "properties": {
+              "topic": "/SmartDashboard/Vision/Set Cloudy Pipeline",
+              "period": 0.06,
+              "show_type": false,
+              "maximize_button_space": false
             }
           }
         ]
@@ -392,7 +392,7 @@
             "x": 980.0,
             "y": 140.0,
             "width": 140.0,
-            "height": 70.0,
+            "height": 140.0,
             "type": "Text Display",
             "properties": {
               "topic": "/SmartDashboard/Intake/Pivot State",
@@ -769,31 +769,31 @@
             }
           },
           {
-            "title": "Set Bright Pipeline",
-            "x": 840.0,
-            "y": 280.0,
-            "width": 280.0,
-            "height": 140.0,
-            "type": "Command",
-            "properties": {
-              "topic": "/SmartDashboard/Vision/Set Bright Pipeline",
-              "period": 0.06,
-              "show_type": true,
-              "maximize_button_space": true
-            }
-          },
-          {
-            "title": "Set Dark Pipeline",
+            "title": "Set Cloudy Pipeline",
             "x": 840.0,
             "y": 420.0,
             "width": 280.0,
             "height": 140.0,
             "type": "Command",
             "properties": {
-              "topic": "/SmartDashboard/Vision/Set Dark Pipeline",
+              "topic": "/SmartDashboard/Vision/Set Cloudy Pipeline",
               "period": 0.06,
-              "show_type": true,
-              "maximize_button_space": true
+              "show_type": false,
+              "maximize_button_space": false
+            }
+          },
+          {
+            "title": "Set Sunny Pipeline",
+            "x": 840.0,
+            "y": 280.0,
+            "width": 280.0,
+            "height": 140.0,
+            "type": "Command",
+            "properties": {
+              "topic": "/SmartDashboard/Vision/Set Sunny Pipeline",
+              "period": 0.06,
+              "show_type": false,
+              "maximize_button_space": false
             }
           }
         ]
