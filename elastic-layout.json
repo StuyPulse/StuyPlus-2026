@@ -287,6 +287,20 @@
               "show_type": false,
               "maximize_button_space": false
             }
+          },
+          {
+            "title": "Pipeline",
+            "x": 1120.0,
+            "y": 420.0,
+            "width": 140.0,
+            "height": 140.0,
+            "type": "Text Display",
+            "properties": {
+              "topic": "/SmartDashboard/Vision/Pipeline",
+              "period": 0.06,
+              "data_type": "double",
+              "show_submit_button": false
+            }
           }
         ]
       }
@@ -625,6 +639,20 @@
               "false_color": 4294198070,
               "true_icon": "None",
               "false_icon": "None"
+            }
+          },
+          {
+            "title": "Pipeline",
+            "x": 1260.0,
+            "y": 560.0,
+            "width": 140.0,
+            "height": 140.0,
+            "type": "Text Display",
+            "properties": {
+              "topic": "/SmartDashboard/Vision/Pipeline",
+              "period": 0.06,
+              "data_type": "double",
+              "show_submit_button": false
             }
           }
         ]
