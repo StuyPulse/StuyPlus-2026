@@ -9,26 +9,36 @@ import com.stuypulse.robot.commands.auton.DoNothingAuton;
 import com.stuypulse.robot.commands.auton.LBDisrupt;
 import com.stuypulse.robot.commands.auton.LBFerry;
 import com.stuypulse.robot.commands.auton.LBMid;
-import com.stuypulse.robot.commands.auton.LBStraight;
 import com.stuypulse.robot.commands.auton.LBMidlineSweepRight;
 import com.stuypulse.robot.commands.auton.LBOuttake;
+import com.stuypulse.robot.commands.auton.LBStraight;
 import com.stuypulse.robot.commands.auton.OutpostOnly;
 import com.stuypulse.robot.commands.auton.RBDisrupt;
 import com.stuypulse.robot.commands.auton.RBFerry;
 import com.stuypulse.robot.commands.auton.RBMid;
-import com.stuypulse.robot.commands.auton.RBStraight;
 import com.stuypulse.robot.commands.auton.RBMidlineSweepLeft;
 import com.stuypulse.robot.commands.auton.RBOuttake;
+import com.stuypulse.robot.commands.auton.RBStraight;
 import com.stuypulse.robot.commands.auton.TwoMeterPath;
-import com.stuypulse.robot.commands.swerve.SwerveDriveDrive;
-import com.stuypulse.robot.commands.swerve.SwerveDriveResetRotation;
-import com.stuypulse.robot.commands.swerve.SwerveDriveRotate;
-import com.stuypulse.robot.commands.swerve.SwerveDriveXMode;
+import com.stuypulse.robot.commands.intake.IntakeAgitateOnce;
 import com.stuypulse.robot.commands.intake.IntakeAgitateWhileOuttaking;
 import com.stuypulse.robot.commands.intake.IntakeSetHomingDown;
 import com.stuypulse.robot.commands.intake.IntakeSetIdle;
 import com.stuypulse.robot.commands.intake.IntakeSetIntake;
 import com.stuypulse.robot.commands.intake.IntakeSetOuttake;
+import com.stuypulse.robot.commands.shooter.ShooterFOTM;
+import com.stuypulse.robot.commands.shooter.ShooterHub;
+import com.stuypulse.robot.commands.shooter.ShooterSOTM;
+import com.stuypulse.robot.commands.swerve.SwerveDriveDrive;
+import com.stuypulse.robot.commands.swerve.SwerveDriveLeftCorner;
+import com.stuypulse.robot.commands.swerve.SwerveDriveResetRotation;
+import com.stuypulse.robot.commands.swerve.SwerveDriveRightCorner;
+import com.stuypulse.robot.commands.swerve.SwerveDriveRotate;
+import com.stuypulse.robot.commands.swerve.SwerveDriveXMode;
+import com.stuypulse.robot.commands.swerve.driveAligned.SwerveDriveAlignedToAllianceZone;
+import com.stuypulse.robot.commands.swerve.driveAligned.SwerveDriveAlignedToHub;
+import com.stuypulse.robot.commands.swerve.driveAligned.SwerveFOTM;
+import com.stuypulse.robot.commands.swerve.driveAligned.SwerveSOTM;
 import com.stuypulse.robot.constants.Field;
 import com.stuypulse.robot.constants.Ports;
 import com.stuypulse.robot.subsystems.intake.Intake;
@@ -36,18 +46,21 @@ import com.stuypulse.robot.subsystems.intake.Intake.IntakeState;
 import com.stuypulse.robot.subsystems.swerve.CommandSwerveDrivetrain;
 import com.stuypulse.robot.subsystems.vision.LimelightVision;
 import com.stuypulse.robot.util.PathUtil.AutonConfig;
+import com.stuypulse.stuylib.input.Gamepad;
 
-import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
-import edu.wpi.first.wpilibj2.command.button.Trigger;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.ConditionalCommand;
 import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
+import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
 
 public class RobotContainer {
     // Gamepads
     public final CommandXboxController driver = new CommandXboxController(Ports.Gamepad.DRIVER);
+    public final CommandXboxController operator = new CommandXboxController(Ports.Gamepad.OPERATOR);
     
     // Subsystem
 
@@ -131,6 +144,34 @@ public class RobotContainer {
         //Bottom Left Paddle
         driver.x()
             .whileTrue(new SwerveDriveXMode());
+
+        // SOTM switches between SOTM and FOTM based on whether we're in the alliance zone or not
+        driver.start()
+        .whileTrue(
+            new ConditionalCommand(
+                new SwerveSOTM(driver).alongWith(new ShooterSOTM(), new IntakeAgitateOnce().repeatedly()),
+                new SwerveFOTM(driver).alongWith(new ShooterFOTM(), new IntakeAgitateOnce().repeatedly()),
+                () -> Field.inAllianceZone()))
+        .onFalse(new IntakeSetIntake());
+
+        //Manual Shooting
+        operator.b()
+            .whileTrue(new SwerveDriveRightCorner())
+            .onFalse(new IntakeSetIntake());
+        operator.x()
+            .whileTrue(new SwerveDriveLeftCorner())
+            .onFalse(new IntakeSetIntake());
+        operator.a()
+            .whileTrue(new ShooterHub().alongWith(new IntakeAgitateOnce().repeatedly()))
+            .onFalse(new IntakeSetIntake());
+
+        //Shoot or Ferry while stationary
+        operator.y()
+            .whileTrue(new ConditionalCommand(
+                new SwerveDriveAlignedToHub().andThen(new SwerveDriveXMode().alongWith(new IntakeAgitateOnce().repeatedly())),
+                new SwerveDriveAlignedToAllianceZone().andThen(new SwerveDriveXMode().alongWith(new IntakeAgitateOnce().repeatedly())),
+                () -> Field.inAllianceZone()))
+            .onFalse(new IntakeSetIntake());
     }
 
     /**************/

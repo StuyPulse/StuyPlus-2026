@@ -3,6 +3,8 @@ package com.stuypulse.robot.util.simulation;
 import com.stuypulse.robot.constants.Settings;
 import com.stuypulse.robot.subsystems.intake.Intake;
 import com.stuypulse.robot.subsystems.intake.Intake.IntakeState;
+import com.stuypulse.robot.subsystems.shooter.Shooter;
+import com.stuypulse.robot.subsystems.shooter.Shooter.ShooterState;
 // import com.stuypulse.robot.subsystems.shooter.ShooterSim;
 // import com.stuypulse.robot.subsystems.shooter.Shooter.ShooterState;
 import com.stuypulse.robot.subsystems.swerve.CommandSwerveDrivetrain;
@@ -41,12 +43,13 @@ public class Simulation {
     private final SwerveDriveSimulation swerveMSim;
     private final IntakeSimulation intakeMSim;
     private final Intake intakeSim;
+    private final Shooter shooterSim;
 
     private final StructArrayPublisher<Pose3d> fuel;
     private final StructPublisher<Pose3d> intakePivot;
     private final StructPublisher<Pose3d> hopper;
     private final StructArrayPublisher<Pose3d> fuelLayers;
-    // private final StructPublisher<Pose3d> shooter;
+    private final StructPublisher<Pose3d> shooter;
 
     static {
         if (CommandSwerveDrivetrain.getInstance().getMapleSimDrive() != null) instance = new Simulation();
@@ -60,6 +63,7 @@ public class Simulation {
     private Simulation() {
         intakeSim = Intake.getInstance();
         swerveMSim = CommandSwerveDrivetrain.getInstance().getMapleSimDrive();
+        shooterSim = Shooter.getInstance();
 
         arenaInstance = new Arena2026Rebuilt(false);
         configureArena();
@@ -74,7 +78,7 @@ public class Simulation {
         intakePivot = table.getStructTopic("AdvScope/IntakePose", Pose3d.struct).publish();
         hopper = table.getStructTopic("AdvScope/HopperPose", Pose3d.struct).publish();
         fuelLayers = table.getStructArrayTopic("AdvScope/FuelLayers", Pose3d.struct).publish();
-        // shooter = table.getStructTopic("AdvScope/ShooterPose", Pose3d.struct).publish();
+        shooter = table.getStructTopic("AdvScope/ShooterPose", Pose3d.struct).publish();
     }
 
     private void configureArena() {
@@ -211,23 +215,23 @@ public class Simulation {
     private void updateShooting() {
         if (intakeSim.getState() == IntakeState.OUTTAKE && Settings.EnabledSubsystems.INTAKE.get() && intakeMSim.obtainGamePieceFromIntake()) {
             summonFuelAtIntake();
-        }// else if (ShooterSim.getInstance().getState() == ShooterState.SHOOTING || ShooterSim.getInstance().getState() == ShooterState.FERRYING) {
-        //     final Pose2d shooterPose = SimulationConstants.Shooter.OFFSETS.applyToPose2d(swerveMSim.getSimulatedDriveTrainPose());
-        //     final double launchAngle = 67.67; // ആറ് ഏഴ്
+        } else if (shooterSim.getState() == ShooterState.SHOOTING || shooterSim.getState() == ShooterState.FERRYING) {
+            final Pose2d shooterPose = SimulationConstants.Shooter.OFFSETS.applyToPose2d(swerveMSim.getSimulatedDriveTrainPose());
+            final double launchAngle = 67.67; // ആറ് ഏഴ്
 
-        //     robotRelativeAddPieceWithVariance(
-        //         shooterPose.getTranslation(),
-        //         swerveMSim.getSimulatedDriveTrainPose().getRotation(),
-        //         Meters.of(SimulationConstants.Shooter.OFFSETS.toPose3d().getZ()),
-        //         MetersPerSecond.of(SimulationConstants.Shooter.rpmToMps(ShooterSim.getInstance().getShootSpeed())),
-        //         Degrees.of(launchAngle),
-        //         SimulationConstants.Intake.INTAKE_WIDTH,
-        //         0,
-        //         0,
-        //         0.5,
-        //         0
-        //     );
-        // }
+            robotRelativeAddPieceWithVariance(
+                shooterPose.getTranslation(),
+                swerveMSim.getSimulatedDriveTrainPose().getRotation(),
+                Meters.of(SimulationConstants.Shooter.OFFSETS.toPose3d().getZ()),
+                MetersPerSecond.of(SimulationConstants.Shooter.rpmToMps(shooterSim.getShootSpeed())),
+                Degrees.of(launchAngle),
+                SimulationConstants.Intake.INTAKE_WIDTH,
+                0,
+                0,
+                0.5,
+                0
+            );
+        }
     }
 
     public synchronized void update() {
