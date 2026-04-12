@@ -122,7 +122,7 @@ public class Robot extends TimedRobot {
         CommandScheduler.getInstance().schedule(new SetIMUMode(4));
         CommandScheduler.getInstance().schedule(new WhitelistAllTags());
 
-        // LimelightVision.getInstance().disable();
+        LimelightVision.getInstance().disable();
 
         if (auto != null) {
             CommandScheduler.getInstance().schedule(auto);
