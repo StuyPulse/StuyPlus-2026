@@ -145,6 +145,7 @@ public class RobotContainer {
      public void configureAutons() {
         autonChooser.addOption("Do Nothing", new DoNothingAuton());
 
+         
         AutonConfig LBFerry = new AutonConfig("LB Ferry", LBFerry::new, 
             "Left Bump to Neutral", 
             "N to L.T.", 
@@ -239,6 +240,7 @@ public class RobotContainer {
             "RT Around Disrupt",
             "RT Back Push Disrupt");
         RT_Disrupt.register(autonChooser);
+        
 
         // autonChooser.addOption("SysID Module Translation Dynamic Forwards", swerve.sysIdDynamic(Direction.kForward));
         // autonChooser.addOption("SysID Module Translation Dynamic Backwards", swerve.sysIdDynamic(Direction.kReverse));
