@@ -8,6 +8,7 @@ package com.stuypulse.robot.constants;
 import com.ctre.phoenix6.CANBus;
 import com.pathplanner.lib.path.PathConstraints;
 import com.stuypulse.stuylib.network.SmartBoolean;
+import com.stuypulse.stuylib.network.SmartNumber;
 
 import edu.wpi.first.math.VecBuilder;
 import edu.wpi.first.math.Vector;
@@ -49,38 +50,42 @@ public interface Settings {
     }
 
     public interface Intake {
-        double ROLLER_MAX_ACCEL = 0;
-        double ROLLER_MAX_VEL = 0;
-        double PIVOT_STALL_CURRENT = 25; 
-        double PIVOT_STALL_DEBOUNCE_SEC = 0.0;
-        double ROLLER_STALL_CURRENT = 50; // TODO: set
-        double ROLLER_STALL_DEBOUNCE_SEC = 0.1;
-        Rotation2d PIVOT_INITIAL_ANGLE = Rotation2d.fromDegrees(0);
+        public interface Pivot {
+            // state angles
+            Rotation2d INITIAL_ANGLE = Rotation2d.fromDegrees(0);
+            Rotation2d IDLE_ANGLE = Rotation2d.fromDegrees(0);
+            Rotation2d DOWN_ANGLE = Rotation2d.fromDegrees(102);
 
-        Rotation2d IDLE_ANGLE = Rotation2d.fromDegrees(0);
-        Rotation2d PIVOT_DOWN_ANGLE = Rotation2d.fromDegrees(102);
+            // misc
+            Rotation2d ANGLE_TOLERANCE = Rotation2d.fromDegrees(0.5);
+            Rotation2d PUSHDOWN_THRESHOLD = Rotation2d.fromDegrees(85);
+            SmartNumber PUSHDOWN_CURRENT = new SmartNumber("Intake/Pivot/Pushdown Voltage Tuning Amps", -75.0);
+            double STALL_CURRENT = 25; // amps
+            double STALL_DEBOUNCE_SEC = 0.0; // TODO: set this up?
+            double HOMING_DOWN_VOLTAGE = 3;
 
-        double HOMING_UP_VOLTAGE = -3;
-        double HOMING_DOWN_VOLTAGE = 3;
+            // sysid
+            double RAMP_RATE = 2;
+            double STEP_VOLTAGE = 6;
 
-        double IDLE_DUTY_CYCLE = 0;
-        double INTAKE_DUTY_CYCLE = 1;
-        double OUTTAKE_DUTY_CYCLE = -1;
+            // sim
+            double MIN_ANGLE = 0.0;
+            double MAX_ANGLE = 102.0; // deg
+            double GEAR_RATIO = 60.0;
+            double J_KG_METERS_SQUARED = 0.1;
+        }
 
-        double J_KG_METERS_SQUARED = 0.1;
-        double ROLLER_J_KG_METERS_SQUARED = 0.1;
-        double PIVOT_MIN_ANGLE = 0.0;
-        double PIVOT_MAX_ANGLE = 2 * Math.PI;
-        double PIVOT_GEAR_RATIO = 60.0;
-        double ROLLER_GEAR_RATIO = 16.0 / 27.0;
+        public interface Roller {
+            double STALL_CURRENT = 50;
+            double STALL_DEBOUNCE_SEC = 0.1;
 
-        double RAMP_RATE = 2;
-        double STEP_VOLTAGE = 6; // volts
+            double GEAR_RATIO = 16.0 / 27.0;
+            double J_KG_METERS_SQUARED = 0.1;
 
-        Rotation2d ANGLE_TOLERANCE = Rotation2d.fromDegrees(0.5); 
-
-        Rotation2d PUSHDOWN_THRESHOLD = Rotation2d.fromDegrees(85); //TODO:Temporary, needs testing
-        double PUSHDOWN_VOLTAGE = 0;
+            double IDLE_DUTY_CYCLE = 0;
+            double INTAKE_DUTY_CYCLE = 1;
+            double OUTTAKE_DUTY_CYCLE = -1;
+        }
     }
 
     // public interface Feeder {

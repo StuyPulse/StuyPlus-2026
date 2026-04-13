@@ -1,7 +1,5 @@
 package com.stuypulse.robot.subsystems.intake;
 
-import java.util.Optional;
-
 import com.ctre.phoenix6.controls.DutyCycleOut;
 import com.ctre.phoenix6.controls.Follower;
 import com.ctre.phoenix6.hardware.TalonFX;
@@ -9,8 +7,6 @@ import com.ctre.phoenix6.signals.MotorAlignmentValue;
 import com.ctre.phoenix6.sim.TalonFXSimState;
 import com.stuypulse.robot.constants.Gains;
 import com.stuypulse.robot.constants.Settings;
-import com.stuypulse.robot.util.RobotVisualizer;
-import com.stuypulse.robot.util.SysId;
 import com.stuypulse.robot.util.simulation.SimulationConstants;
 
 import edu.wpi.first.math.controller.PIDController;
@@ -21,7 +17,6 @@ import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.simulation.DCMotorSim;
 import edu.wpi.first.wpilibj.simulation.SingleJointedArmSim;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 
 public class IntakeSim extends Intake {
     private final SingleJointedArmSim pivotSim;
@@ -51,8 +46,8 @@ public class IntakeSim extends Intake {
         rollerSim = new DCMotorSim(
             LinearSystemId.createDCMotorSystem(
                 rollerGearbox,
-                Settings.Intake.ROLLER_J_KG_METERS_SQUARED,
-                Settings.Intake.ROLLER_GEAR_RATIO
+                Settings.Intake.Roller.J_KG_METERS_SQUARED,
+                Settings.Intake.Roller.GEAR_RATIO
             ),
             rollerGearbox
         );
@@ -63,15 +58,15 @@ public class IntakeSim extends Intake {
         pivotSim = new SingleJointedArmSim(
             LinearSystemId.createDCMotorSystem(
                 pivotGearbox,
-                Settings.Intake.J_KG_METERS_SQUARED,
-                Settings.Intake.PIVOT_GEAR_RATIO),
+                Settings.Intake.Pivot.J_KG_METERS_SQUARED,
+                Settings.Intake.Pivot.GEAR_RATIO),
             pivotGearbox,
-            Settings.Intake.PIVOT_GEAR_RATIO,
+            Settings.Intake.Pivot.GEAR_RATIO,
             SimulationConstants.Intake.PIVOT_ARM_LENGTH,
-            Settings.Intake.PIVOT_MIN_ANGLE,
-            Settings.Intake.PIVOT_MAX_ANGLE,
+            Math.toRadians(Settings.Intake.Pivot.MIN_ANGLE),
+            Math.toRadians(Settings.Intake.Pivot.MAX_ANGLE),
             true,
-            Settings.Intake.PIVOT_INITIAL_ANGLE.getRadians()  
+            Settings.Intake.Pivot.INITIAL_ANGLE.getRadians()  
         );
         
         zeroOffset = new Rotation2d();
@@ -89,19 +84,19 @@ public class IntakeSim extends Intake {
     
     @Override
     public void setPivotZeroAtBottom() {
-        zeroOffset = new Rotation2d(-pivotSim.getAngleRads()).plus(Settings.Intake.PIVOT_DOWN_ANGLE);
+        zeroOffset = new Rotation2d(-pivotSim.getAngleRads()).plus(Settings.Intake.Pivot.DOWN_ANGLE);
     }
 
-    // @Override
-    // public double getRollerRPM() {
-    //     return rollerMotor.getVelocity().getValueAsDouble() * 60.0;
-    // }
+    @Override
+    public double getRollerRPM() {
+         return rollerMotor.getVelocity().getValueAsDouble() * 60.0;
+    }
 
     @Override
     public void periodic() {
         super.periodic();
         if (!Settings.EnabledSubsystems.INTAKE.get()) {
-            pivotMotor.getSimState().setRawRotorPosition(Units.radiansToRotations(pivotSim.getAngleRads()) * Settings.Intake.PIVOT_GEAR_RATIO);
+            pivotMotor.getSimState().setRawRotorPosition(Units.radiansToRotations(pivotSim.getAngleRads()) * Settings.Intake.Pivot.GEAR_RATIO);
             rollerMotor.setControl(rollerController.withOutput(0));
             return;
         }
@@ -113,8 +108,8 @@ public class IntakeSim extends Intake {
         rollerSim.update(Settings.DT);
 
         TalonFXSimState followerState = rollerFollower.getSimState();
-        final double rotorPositionRotations = Units.radiansToRotations(rollerSim.getAngularPositionRad()) * Settings.Intake.ROLLER_GEAR_RATIO;
-        final double rollerRotorRPS = rollerSim.getAngularVelocityRPM() / 60.0 * Settings.Intake.ROLLER_GEAR_RATIO;
+        final double rotorPositionRotations = Units.radiansToRotations(rollerSim.getAngularPositionRad()) * Settings.Intake.Roller.GEAR_RATIO;
+        final double rollerRotorRPS = rollerSim.getAngularVelocityRPM() / 60.0 * Settings.Intake.Roller.GEAR_RATIO;
 
         followerState.setRawRotorPosition(rotorPositionRotations);
         followerState.setRotorVelocity(rollerRotorRPS);
@@ -126,7 +121,18 @@ public class IntakeSim extends Intake {
         pivotSim.update(Settings.DT);
 
         TalonFXSimState pivotState = pivotMotor.getSimState();
-        pivotState.setRawRotorPosition(Units.radiansToRotations(pivotSim.getAngleRads()) * Settings.Intake.PIVOT_GEAR_RATIO);
-        pivotState.setRotorVelocity(Units.radiansPerSecondToRotationsPerMinute(pivotSim.getVelocityRadPerSec()) / 60.0 * Settings.Intake.PIVOT_GEAR_RATIO);
+        pivotState.setRawRotorPosition(Units.radiansToRotations(pivotSim.getAngleRads()) * Settings.Intake.Pivot.GEAR_RATIO);
+        pivotState.setRotorVelocity(Units.radiansPerSecondToRotationsPerMinute(pivotSim.getVelocityRadPerSec()) / 60.0 * Settings.Intake.Pivot.GEAR_RATIO);
+
+        SmartDashboard.putNumber("Intake/Pivot/Stator Current", pivotMotor.getStatorCurrent().getValueAsDouble()); // all current measured in amps
+        SmartDashboard.putNumber("Intake/Pivot/Supply Current", pivotMotor.getSupplyCurrent().getValueAsDouble());
+        SmartDashboard.putNumber("Intake/Pivot/Voltage", pivotMotor.getMotorVoltage().getValueAsDouble());
+
+        SmartDashboard.putNumber("Intake/Rollers/Left Current", rollerMotor.getStatorCurrent().getValueAsDouble());
+        SmartDashboard.putNumber("Intake/Rollers/Right Current", rollerFollower.getStatorCurrent().getValueAsDouble());
+        SmartDashboard.putNumber("Intake/Rollers/Left Voltage", rollerMotor.getMotorVoltage().getValueAsDouble());
+        SmartDashboard.putNumber("Intake/Rollers/Right Voltage", rollerFollower.getMotorVoltage().getValueAsDouble());
+        SmartDashboard.putBoolean("Intake/Rollers/Left Stalling", false);
+        SmartDashboard.putBoolean("Intake/Rollers/Right Stalling", false); // TODO: implement
     }
 }
