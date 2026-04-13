@@ -23,7 +23,7 @@ public class SetPipeline extends InstantCommand {
 
         for  (int i = 0; i < limelights.length; i++) {
             Camera currentLimelight = limelights[i];
-            if (currentLimelight.isEnabled().get()) {
+            if (currentLimelight.isEnabled()) {
                 LimelightHelpers.setPipelineIndex(currentLimelight.getName(), pipeline);
             }
         }

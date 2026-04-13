@@ -33,8 +33,8 @@ public class Cameras {
             return location;
         }
 
-        public SmartBoolean isEnabled() {
-            return isActive;
+        public boolean isEnabled() {
+            return isActive.get();
         }
 
         public void setEnabled(boolean enabled) {
