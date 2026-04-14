@@ -7,6 +7,7 @@ import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.MotorAlignmentValue;
 import com.stuypulse.robot.constants.Motors;
 import com.stuypulse.robot.constants.Ports;
+import com.stuypulse.robot.constants.Settings;
 import com.stuypulse.robot.constants.Settings.EnabledSubsystems;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -17,8 +18,8 @@ public class FeederImpl extends Feeder {
     private final DutyCycleOut controller;
 
     public FeederImpl() {
-        feederMotor1 = new TalonFX(Ports.Feeder.FEEDER_MOTOR_1);
-        feederMotor2 = new TalonFX(Ports.Feeder.FEEDER_MOTOR_2);
+        feederMotor1 = new TalonFX(Ports.Feeder.FEEDER_MOTOR_1, Settings.CANIVORE);
+        feederMotor2 = new TalonFX(Ports.Feeder.FEEDER_MOTOR_2, Settings.CANIVORE);
 
         Motors.Feeder.MOTOR_CONFIG_1.configure(feederMotor1);
         Motors.Feeder.MOTOR_CONFIG_2.configure(feederMotor2);
