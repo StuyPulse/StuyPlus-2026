@@ -1,0 +1,31 @@
+{
+  "version": "2025.0",
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "RB to N"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "RB Return"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "RB to Outpost"
+          }
+        }
+      ]
+    }
+  },
+  "resetOdom": true,
+  "folder": "Mid(Line)",
+  "choreoAuto": false
+}

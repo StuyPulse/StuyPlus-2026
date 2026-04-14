@@ -1,0 +1,90 @@
+{
+  "hubs": [
+    {
+      "x": -8,
+      "y": -8,
+      "width": 1871,
+      "height": 1096,
+      "state": {
+        "sidebar": {
+          "width": 414,
+          "expanded": [
+            "/AdvScope"
+          ]
+        },
+        "tabs": {
+          "selected": 1,
+          "tabs": [
+            {
+              "type": 0,
+              "title": "",
+              "controller": null,
+              "controllerUUID": "ntadd0zmjif9s5u0q0p4tfvmrde8kikn",
+              "renderer": "",
+              "controlsHeight": 0
+            },
+            {
+              "type": 3,
+              "title": "3D Field",
+              "controller": {
+                "sources": [
+                  {
+                    "type": "robot",
+                    "logKey": "NT:AdvScope/DTPose",
+                    "logType": "Pose2d",
+                    "visible": true,
+                    "options": {
+                      "model": "StuyPlus WCP CC"
+                    }
+                  },
+                  {
+                    "type": "component",
+                    "logKey": "NT:AdvScope/IntakePose",
+                    "logType": "Pose3d",
+                    "visible": true,
+                    "options": {}
+                  },
+                  {
+                    "type": "component",
+                    "logKey": "NT:AdvScope/HopperPose",
+                    "logType": "Pose3d",
+                    "visible": true,
+                    "options": {}
+                  },
+                  {
+                    "type": "gamePiece",
+                    "logKey": "NT:AdvScope/FuelPoses",
+                    "logType": "Pose3d[]",
+                    "visible": true,
+                    "options": {
+                      "variant": "Fuel"
+                    }
+                  }
+                ],
+                "game": "FRC:2026 Field"
+              },
+              "controllerUUID": "39nv7qw39guqelsnb2bbsmc5xxa8t6iq",
+              "renderer": {
+                "cameraIndex": -2,
+                "orbitFov": 50,
+                "cameraPosition": [
+                  -0.4423963837713818,
+                  1.1134987556522398,
+                  -2.0402697257043214
+                ],
+                "cameraTarget": [
+                  1.734154012444316,
+                  0.2860736396995302,
+                  0.17504219428652165
+                ]
+              },
+              "controlsHeight": 200
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "satellites": [],
+  "version": "26.0.0"
+}

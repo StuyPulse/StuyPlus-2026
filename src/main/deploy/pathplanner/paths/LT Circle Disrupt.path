@@ -1,0 +1,115 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 7.792522222222221,
+        "y": 6.968077777777778
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 8.192044444444445,
+        "y": 6.734211111111112
+      },
+      "isLocked": false,
+      "linkedName": "LT Disrupt 1"
+    },
+    {
+      "anchor": {
+        "x": 8.542844444444444,
+        "y": 5.75
+      },
+      "prevControl": {
+        "x": 8.318722222222222,
+        "y": 6.588044444444445
+      },
+      "nextControl": {
+        "x": 8.724209897525967,
+        "y": 5.071832931772312
+      },
+      "isLocked": false,
+      "linkedName": "LT Disrupt 2"
+    },
+    {
+      "anchor": {
+        "x": 7.15,
+        "y": 4.434961805555556
+      },
+      "prevControl": {
+        "x": 8.260255555555556,
+        "y": 4.3858
+      },
+      "nextControl": {
+        "x": 6.279852628476301,
+        "y": 4.473491687860104
+      },
+      "isLocked": false,
+      "linkedName": "LT DIsrupt 3"
+    },
+    {
+      "anchor": {
+        "x": 6.149008318865741,
+        "y": 5.75
+      },
+      "prevControl": {
+        "x": 6.149008318865741,
+        "y": 5.048
+      },
+      "nextControl": {
+        "x": 6.149008318865741,
+        "y": 6.452
+      },
+      "isLocked": false,
+      "linkedName": "LT Disrupt 4"
+    },
+    {
+      "anchor": {
+        "x": 7.792522222222221,
+        "y": 6.968077777777778
+      },
+      "prevControl": {
+        "x": 6.399066666666664,
+        "y": 6.968077777777778
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "LT Disrupt 1"
+    }
+  ],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0.9726973684210531,
+      "rotationDegrees": 35.0
+    },
+    {
+      "waypointRelativePos": 2.0284539473684218,
+      "rotationDegrees": 0.0
+    },
+    {
+      "waypointRelativePos": 2.98610197368421,
+      "rotationDegrees": 35.0
+    }
+  ],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 3.0,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 5.0,
+    "rotation": 34.286876977208955
+  },
+  "reversed": false,
+  "folder": "LT Disrupt",
+  "idealStartingState": {
+    "velocity": 6.0,
+    "rotation": 34.286876977208955
+  },
+  "useDefaultConstraints": true
+}

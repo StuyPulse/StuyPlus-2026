@@ -1,0 +1,54 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 0.5521686226346434,
+        "y": 5.979417587791121
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 1.7531764578829503,
+        "y": 5.657380936139122
+      },
+      "isLocked": false,
+      "linkedName": "Depot"
+    },
+    {
+      "anchor": {
+        "x": 3.2886162624821687,
+        "y": 5.852881597717547
+      },
+      "prevControl": {
+        "x": 2.79863479869032,
+        "y": 6.017239312419149
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "Left Bump Aimed at Hub"
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 3.0,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0.0,
+    "rotation": -52.18441257441064
+  },
+  "reversed": false,
+  "folder": null,
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": -178.4088597288055
+  },
+  "useDefaultConstraints": true
+}

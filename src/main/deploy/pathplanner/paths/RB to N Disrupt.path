@@ -1,0 +1,84 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 3.368938716794032,
+        "y": 2.379804118904658
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 4.368938716794029,
+        "y": 2.379804118904658
+      },
+      "isLocked": false,
+      "linkedName": "RB Disrupt 0"
+    },
+    {
+      "anchor": {
+        "x": 7.796773448871907,
+        "y": 2.379804118904658
+      },
+      "prevControl": {
+        "x": 6.796773448871907,
+        "y": 2.379804118904658
+      },
+      "nextControl": {
+        "x": 8.796773448871908,
+        "y": 2.379804118904658
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 7.364293865905848,
+        "y": 0.6147000000000002
+      },
+      "prevControl": {
+        "x": 9.330725236448062,
+        "y": 0.6561883551673953
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "RB Disrupt 1"
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [
+    {
+      "name": "Constraints Zone",
+      "minWaypointRelativePos": 0.1390293435013263,
+      "maxWaypointRelativePos": 0.4216056034482758,
+      "constraints": {
+        "maxVelocity": 1.75,
+        "maxAcceleration": 3.0,
+        "maxAngularVelocity": 540.0,
+        "maxAngularAcceleration": 720.0,
+        "nominalVoltage": 12.0,
+        "unlimited": false
+      }
+    }
+  ],
+  "pointTowardsZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 3.0,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 3.0,
+    "rotation": -35.0
+  },
+  "reversed": false,
+  "folder": "RB Disrupt",
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": -23.0
+  },
+  "useDefaultConstraints": true
+}

@@ -1,0 +1,37 @@
+{
+  "version": "2025.0",
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "LB to CN Disrupt"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "LN Disrupt Circle"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "LN Disrupt Circle"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "LB Disrupt Return"
+          }
+        }
+      ]
+    }
+  },
+  "resetOdom": true,
+  "folder": "Disrupt",
+  "choreoAuto": false
+}

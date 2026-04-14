@@ -1,0 +1,25 @@
+{
+  "version": "2025.0",
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "RB to N Straight"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "N to RB Straight"
+          }
+        }
+      ]
+    }
+  },
+  "resetOdom": true,
+  "folder": "Straight",
+  "choreoAuto": false
+}

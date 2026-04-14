@@ -33,6 +33,52 @@ import com.ctre.phoenix6.signals.NeutralModeValue;
 public interface Motors {
 
     /** Classes to store all of the values a motor needs */
+    public interface Intake {
+        TalonFXConfig PIVOT_CONFIG = new TalonFXConfig()
+            .withSupplyCurrentLimitAmps(30)
+            .withCurrentLimitAmps(40)
+            .withInvertedValue(InvertedValue.CounterClockwise_Positive) // not necessarily true, get inverted val
+            .withNeutralMode(NeutralModeValue.Brake)
+            .withPIDConstants(Gains.Intake.kP.get(), Gains.Intake.kI.get(), Gains.Intake.kD.get(), 0)
+            .withSensorToMechanismRatio(Settings.Intake.PIVOT_GEAR_RATIO);
+        
+        // TalonFXConfig LEFT_ROLLER_CONFIG = new TalonFXConfig() // TODO: apply later
+        //     .withCurrentLimitAmps(50)
+        //     .withInvertedValue(InvertedValue.CounterClockwise_Positive) // not necessarily true, get inverted val
+        //     .withNeutralMode(NeutralModeValue.Coast)
+        //     .withSensorToMechanismRatio(Settings.Intake.ROLLER_GEAR_RATIO);
+        
+        // TalonFXConfig RIGHT_ROLLER_CONFIG = new TalonFXConfig() // TODO: apply later
+        //     .withCurrentLimitAmps(50)
+        //     .withInvertedValue(InvertedValue.Clockwise_Positive) 
+        //     .withNeutralMode(NeutralModeValue.Coast)
+        //     .withSensorToMechanismRatio(Settings.Intake.ROLLER_GEAR_RATIO);
+
+    }
+
+    // public interface Feeder {
+    //     // TODO: get values
+    //     TalonFXConfig MOTOR_CONFIG_1 = new TalonFXConfig()
+    //         .withCurrentLimitAmps(80)
+	// 		.withRampRate(0.25)
+	// 		.withNeutralMode(NeutralModeValue.Brake)
+	// 		.withInvertedValue(InvertedValue.CounterClockwise_Positive);
+    //     TalonFXConfig MOTOR_CONFIG_2 = new TalonFXConfig()
+    //         .withCurrentLimitAmps(80)
+	// 		.withRampRate(0.25)
+	// 		.withNeutralMode(NeutralModeValue.Brake)
+	// 		.withInvertedValue(InvertedValue.Clockwise_Positive);
+    // }
+
+    // public interface Shooter {
+    //     TalonFXConfig MOTOR_CONFIG = new TalonFXConfig()
+    //         .withPIDConstants(Gains.Shooter.kP, Gains.Shooter.kI, Gains.Shooter.kI, 0)
+    //         .withCurrentLimitAmps(80)
+	// 		.withRampRate(0.25)
+	// 		.withNeutralMode(NeutralModeValue.Brake)
+    //         .withFFConstants(Gains.Shooter.kS, Gains.Shooter.kV, Gains.Shooter.kA, Gains.Shooter.kG, 0)
+	// 		.withInvertedValue(InvertedValue.CounterClockwise_Positive);
+    // }
 
     public static class TalonFXConfig {
         private final TalonFXConfiguration configuration = new TalonFXConfiguration();

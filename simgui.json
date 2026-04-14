@@ -1,0 +1,42 @@
+{
+  "NTProvider": {
+    "types": {
+      "/FMSInfo": "FMSInfo",
+      "/SmartDashboard/Autonomous": "String Chooser",
+      "/SmartDashboard/Field": "Field2d",
+      "/SmartDashboard/PathPlanner": "Alerts",
+      "/SmartDashboard/Run pre-match Tests": "Command",
+      "/SmartDashboard/Set Pivot 0": "Command",
+      "/SmartDashboard/Set Pivot 0 at Bottom": "Command",
+      "/SmartDashboard/Visualizers/Robot": "Mechanism2d"
+    },
+    "windows": {
+      "/SmartDashboard/Field": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/SmartDashboard/Visualizers/Robot": {
+        "window": {
+          "visible": true
+        }
+      }
+    }
+  },
+  "NetworkTables": {
+    "transitory": {
+      "SmartDashboard": {
+        "Intake": {
+          "open": true
+        },
+        "MapleSim": {
+          "open": true
+        },
+        "Shooter": {
+          "open": false
+        },
+        "open": true
+      }
+    }
+  }
+}
