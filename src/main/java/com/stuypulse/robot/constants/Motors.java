@@ -78,7 +78,7 @@ public interface Motors {
             .withCurrentLimitAmps(80)
 			.withRampRate(0.25)
 			.withNeutralMode(NeutralModeValue.Coast)
-            .withFFConstants(Gains.Shooter.kS, Gains.Shooter.kV, Gains.Shooter.kA, Gains.Shooter.kG, 0)
+            .withFFConstants(Gains.Shooter.kS, Gains.Shooter.kV, Gains.Shooter.kA, 0)
 			.withInvertedValue(InvertedValue.CounterClockwise_Positive);
 
         TalonFXConfig BOTTOM_MOTOR_CONFIG = new TalonFXConfig()

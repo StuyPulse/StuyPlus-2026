@@ -18,12 +18,12 @@ public interface Ports {
     // }
 
     public interface ShooterPorts { // TODO: Get ports from phoenix tuner when mechanical passes to us
-        int SHOOTER_MOTOR_1 = 0;
-        int SHOOTER_MOTOR_2 = 1;
-        int SHOOTER_MOTOR_3 = 2;
+        int SHOOTER_MOTOR_LEFT = 0;
+        int SHOOTER_MOTOR_CENTER = 1;
+        int SHOOTER_MOTOR_RIGHT = 2;
 
-        int BOTTOM_MOTOR_1 = 8;
-        int BOTTOM_MOTOR_2 = 9;
+        int BOTTOM_MOTOR_LEFT = 8;
+        int BOTTOM_MOTOR_RIGHT = 9;
     }
 
 //TODO: Get ports from mech

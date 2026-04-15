@@ -14,39 +14,45 @@ import com.stuypulse.robot.constants.Settings;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class ShooterImpl extends Shooter {
-    private TalonFX shooterMotor1;
-    private TalonFX shooterMotor2;
-    private TalonFX shooterMotor3;
+    private TalonFX shooterMotorLeft;
+    private TalonFX shooterMotorCenter;
+    private TalonFX shooterMotorRight;
 
-    private TalonFX bottomMotor1;
-    private TalonFX bottomMotor2;
+    private TalonFX bottomMotorLeft;
+    private TalonFX bottomMotorRight;
 
     private Optional<Double> voltageOveride;
 
     public ShooterImpl() {
-        shooterMotor1 = new TalonFX(Ports.ShooterPorts.SHOOTER_MOTOR_1, Settings.CANIVORE);
-        shooterMotor2 = new TalonFX(Ports.ShooterPorts.SHOOTER_MOTOR_2, Settings.CANIVORE);
-        shooterMotor3 = new TalonFX(Ports.ShooterPorts.SHOOTER_MOTOR_3, Settings.CANIVORE);
+        shooterMotorLeft = new TalonFX(Ports.ShooterPorts.SHOOTER_MOTOR_LEFT, Settings.CANIVORE);
+        shooterMotorCenter = new TalonFX(Ports.ShooterPorts.SHOOTER_MOTOR_CENTER, Settings.CANIVORE);
+        shooterMotorRight = new TalonFX(Ports.ShooterPorts.SHOOTER_MOTOR_RIGHT, Settings.CANIVORE);
 
-        bottomMotor1 = new TalonFX(Ports.ShooterPorts.BOTTOM_MOTOR_1, Settings.CANIVORE);
-        bottomMotor2 = new TalonFX(Ports.ShooterPorts.BOTTOM_MOTOR_2, Settings.CANIVORE);
+        bottomMotorLeft = new TalonFX(Ports.ShooterPorts.BOTTOM_MOTOR_LEFT, Settings.CANIVORE);
+        bottomMotorRight = new TalonFX(Ports.ShooterPorts.BOTTOM_MOTOR_RIGHT, Settings.CANIVORE);
+
+        shooterMotorCenter = new TalonFX(Ports.ShooterPorts.SHOOTER_MOTOR_CENTER, Settings.CANIVORE);
+        shooterMotorRight = new TalonFX(Ports.ShooterPorts.SHOOTER_MOTOR_RIGHT, Settings.CANIVORE);
+
+        bottomMotorLeft = new TalonFX(Ports.ShooterPorts.BOTTOM_MOTOR_LEFT, Settings.CANIVORE);
+        bottomMotorRight = new TalonFX(Ports.ShooterPorts.BOTTOM_MOTOR_RIGHT, Settings.CANIVORE);
 
         // configure
-        Motors.Shooter.SHOOTER_MOTOR_CONFIG.configure(shooterMotor1);
-        Motors.Shooter.SHOOTER_MOTOR_CONFIG.configure(shooterMotor2);
-        Motors.Shooter.SHOOTER_MOTOR_CONFIG.configure(shooterMotor3);
-        Motors.Shooter.BOTTOM_MOTOR_CONFIG.configure(bottomMotor1);
-        Motors.Shooter.BOTTOM_MOTOR_CONFIG.configure(bottomMotor2);
+        Motors.Shooter.SHOOTER_MOTOR_CONFIG.configure(shooterMotorLeft);
+        Motors.Shooter.SHOOTER_MOTOR_CONFIG.configure(shooterMotorCenter);
+        Motors.Shooter.SHOOTER_MOTOR_CONFIG.configure(shooterMotorRight);
+        Motors.Shooter.BOTTOM_MOTOR_CONFIG.configure(bottomMotorLeft);
+        Motors.Shooter.BOTTOM_MOTOR_CONFIG.configure(bottomMotorRight);
 
         // Set shooter 2 and 3 motors to follow 1
-        Follower shooter_follower = new Follower(shooterMotor1.getDeviceID(), MotorAlignmentValue.Opposed);
-        Follower bottom_follower = new Follower(bottomMotor1.getDeviceID(), MotorAlignmentValue.Opposed);
-        
-        shooterMotor2.setControl(shooter_follower);
-        shooterMotor3.setControl(shooter_follower);
+        Follower shooter_follower = new Follower(shooterMotorLeft.getDeviceID(), MotorAlignmentValue.Opposed);
+        Follower bottom_follower = new Follower(bottomMotorLeft.getDeviceID(), MotorAlignmentValue.Opposed);
+
+        shooterMotorCenter.setControl(shooter_follower);
+        shooterMotorRight.setControl(shooter_follower);
 
         // bottom motors
-        bottomMotor2.setControl(bottom_follower);
+        bottomMotorRight.setControl(bottom_follower);
     }
 
     public void setVoltageOverride(double voltage) {
@@ -59,21 +65,29 @@ public class ShooterImpl extends Shooter {
 
     @Override
     public void periodic() {
-        super.periodic()
-        if (Settings.EnabledSubsystems.SHOOTER.get()) {
-            if (voltageOveride.isPresent()) {
-                shooterMotor1.setVoltage(voltageOveride.get());
-                return;
-            }
+        super.periodic();
 
-            double targetRPS = getState().getRPM() / 60;
-            VelocityVoltage control = new VelocityVoltage(targetRPS).withEnableFOC(true);
-            DutyCycleOut dutyCycle = new DutyCycleOut(getState().getBottomMotorDutyCycle()).withEnableFOC(true);
+        if (!Settings.EnabledSubsystems.SHOOTER.get())
+            return;
 
-            shooterMotor1.setControl(control);
-            bottomMotor1.setControl(dutyCycle);
+        if (voltageOveride.isPresent()) {
+            shooterMotorLeft.setVoltage(voltageOveride.get());
+            return;
         }
-        
+
+        double targetRPS = getState().getRPM() / 60;
+        VelocityVoltage control = new VelocityVoltage(targetRPS).withEnableFOC(true);
+        DutyCycleOut dutyCycle = new DutyCycleOut(getState().getBottomMotorDutyCycle()).withEnableFOC(true);
+
+        shooterMotorLeft.setControl(control);
+        bottomMotorLeft.setControl(dutyCycle);
+
         SmartDashboard.putString("Shooter/State", getState().name());
+        this.logMotor("ShooterLeft", shooterMotorLeft);
+        this.logMotor("ShooterCenter", shooterMotorCenter);
+        this.logMotor("ShooterRight", shooterMotorRight);
+
+        this.logMotor("BottomLeft", bottomMotorLeft);
+        this.logMotor("BottomRight", bottomMotorRight);
     }
 }

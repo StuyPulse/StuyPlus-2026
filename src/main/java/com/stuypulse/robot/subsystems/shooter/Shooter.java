@@ -3,9 +3,11 @@ package com.stuypulse.robot.subsystems.shooter;
 import java.util.function.DoubleSupplier;
 
 import com.ctre.phoenix6.controls.DutyCycleOut;
+import com.ctre.phoenix6.hardware.TalonFX;
 import com.stuypulse.robot.Robot;
 import com.stuypulse.robot.constants.Settings;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Shooter extends SubsystemBase {
@@ -34,6 +36,17 @@ public class Shooter extends SubsystemBase {
 
     public ShooterState getState() {
         return this.state;
+    }
+
+    public void logMotor(String motorName, TalonFX motor) {
+        String stem = "Shooter/Motors/%s/%s".formatted(motorName);
+        
+        SmartDashboard.putNumber(stem.formatted("MotorVoltage"), motor.getMotorVoltage().getValueAsDouble());
+        SmartDashboard.putNumber(stem.formatted("SupplyCurrent"), motor.getSupplyCurrent().getValueAsDouble());
+        SmartDashboard.putNumber(stem.formatted("StatorCurrent"), motor.getStatorCurrent().getValueAsDouble());
+
+        SmartDashboard.putNumber(stem.formatted("DutyCycle"), motor.getDutyCycle().getValueAsDouble());
+        SmartDashboard.putNumber(stem.formatted("RPM"), motor.getRotorVelocity().getValueAsDouble());
     }
 
     public enum ShooterState {
