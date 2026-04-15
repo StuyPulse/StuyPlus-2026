@@ -77,7 +77,7 @@ public interface Motors {
             .withPIDConstants(Gains.Shooter.kP, Gains.Shooter.kI, Gains.Shooter.kI, 0)
             .withCurrentLimitAmps(80)
 			.withRampRate(0.25)
-			.withNeutralMode(NeutralModeValue.Brake)
+			.withNeutralMode(NeutralModeValue.Coast)
             .withFFConstants(Gains.Shooter.kS, Gains.Shooter.kV, Gains.Shooter.kA, Gains.Shooter.kG, 0)
 			.withInvertedValue(InvertedValue.CounterClockwise_Positive);
 
