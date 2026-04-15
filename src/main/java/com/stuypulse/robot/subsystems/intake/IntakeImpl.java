@@ -4,6 +4,7 @@ import java.util.Optional;
 import java.util.function.BooleanSupplier;
 
 import com.ctre.phoenix6.controls.Follower;
+import com.ctre.phoenix6.controls.PositionTorqueCurrentFOC;
 import com.ctre.phoenix6.controls.ControlRequest;
 import com.ctre.phoenix6.controls.DutyCycleOut;
 import com.ctre.phoenix6.controls.PositionVoltage;
@@ -28,7 +29,7 @@ public class IntakeImpl extends Intake {
     private final TalonFX intakeRollerMotorLeft;
     private final TalonFX intakeRollerMotorRight;
 
-    private final PositionVoltage pivotController;
+    private final PositionTorqueCurrentFOC pivotController;
     private final TorqueCurrentFOC pushdownController;
     private final DutyCycleOut rollerController;
     private final Follower followerController;
@@ -50,7 +51,7 @@ public class IntakeImpl extends Intake {
         Motors.Intake.LEFT_ROLLER_CONFIG.configure(intakeRollerMotorLeft);
         Motors.Intake.RIGHT_ROLLER_CONFIG.configure(intakeRollerMotorRight);
 
-        pivotController = new PositionVoltage(getState().getTargetAngle().getRotations()).withEnableFOC(true);
+        pivotController = new PositionTorqueCurrentFOC(getState().getTargetAngle().getRotations());
         pushdownController = new TorqueCurrentFOC(0);
         rollerController = new DutyCycleOut(getState().getTargetDutyCycle()).withEnableFOC(true);
         followerController = new Follower(Ports.Intake.MOTOR_INTAKE_ROLLER_LEFT, MotorAlignmentValue.Opposed);
