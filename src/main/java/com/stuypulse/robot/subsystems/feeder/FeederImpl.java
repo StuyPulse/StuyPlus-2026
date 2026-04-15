@@ -2,7 +2,6 @@ package com.stuypulse.robot.subsystems.feeder;
 
 import com.ctre.phoenix6.controls.DutyCycleOut;
 import com.ctre.phoenix6.controls.Follower;
-import com.ctre.phoenix6.controls.VelocityVoltage;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.MotorAlignmentValue;
 import com.stuypulse.robot.constants.Motors;
@@ -13,30 +12,42 @@ import com.stuypulse.robot.constants.Settings.EnabledSubsystems;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class FeederImpl extends Feeder {
-    private final TalonFX feederMotor1;
-    private final TalonFX feederMotor2;
+    private final TalonFX feederLeader;
+    private final TalonFX feederFollower;
     private final DutyCycleOut controller;
 
     public FeederImpl() {
-        feederMotor1 = new TalonFX(Ports.Feeder.FEEDER_MOTOR_1, Settings.CANIVORE);
-        feederMotor2 = new TalonFX(Ports.Feeder.FEEDER_MOTOR_2, Settings.CANIVORE);
+        feederLeader = new TalonFX(Ports.Feeder.FEEDER_MOTOR_1, Settings.CANIVORE);
+        feederFollower = new TalonFX(Ports.Feeder.FEEDER_MOTOR_2, Settings.CANIVORE);
 
-        Motors.Feeder.MOTOR_CONFIG_1.configure(feederMotor1);
-        Motors.Feeder.MOTOR_CONFIG_2.configure(feederMotor2);
-        
+        Motors.Feeder.LEADER_CONFIG.configure(feederLeader);
+        Motors.Feeder.FOLLOWER_CONFIG.configure(feederFollower);
+
         controller = new DutyCycleOut(getState().getTargetDutyCycle()).withEnableFOC(true);
 
-        feederMotor2.setControl(new Follower(Ports.Feeder.FEEDER_MOTOR_1, MotorAlignmentValue.Opposed)); //TODO: figure out motor alignment
+        feederFollower.setControl(new Follower(Ports.Feeder.FEEDER_MOTOR_1, MotorAlignmentValue.Opposed)); // TODO: figure out motor alignment
+    }
+
+    @Override
+    public double getCurrentRPM() {
+         return feederLeader.getVelocity().getValueAsDouble() * 60.0;
     }
 
     @Override
     public void periodic() {
         if (EnabledSubsystems.FEEDER.get()) {
             super.periodic();
-            feederMotor1.setControl(controller.withOutput(getState().getTargetDutyCycle()));
-        
-            SmartDashboard.putNumber("Feeder/Target Duty Cycle", getState().getTargetDutyCycle());
-            SmartDashboard.putNumber("Feeder/Current RPM", feederMotor1.getVelocity().getValueAsDouble() * 60);
+
+            // Apply
+            feederLeader.setControl(controller.withOutput(getState().getTargetDutyCycle()));
+
+            // Logging
+            if (Settings.DEBUG_MODE) {
+                SmartDashboard.putNumber("Feeder/Leader Current", feederLeader.getStatorCurrent().getValueAsDouble());
+                SmartDashboard.putNumber("Feeder/Follower Current", feederFollower.getStatorCurrent().getValueAsDouble());
+                SmartDashboard.putNumber("Feeder/Leader Voltage", feederLeader.getMotorVoltage().getValueAsDouble());
+                SmartDashboard.putNumber("Feeder/Follower Voltage", feederFollower.getMotorVoltage().getValueAsDouble());
+            }
         }
     }
 }

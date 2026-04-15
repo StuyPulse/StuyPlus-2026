@@ -1,62 +1,86 @@
 package com.stuypulse.robot.subsystems.feeder;
 
-import com.stuypulse.robot.constants.Gains;
+import com.ctre.phoenix6.controls.DutyCycleOut;
+import com.ctre.phoenix6.controls.Follower;
+import com.ctre.phoenix6.hardware.TalonFX;
+import com.ctre.phoenix6.signals.MotorAlignmentValue;
+import com.ctre.phoenix6.sim.TalonFXSimState;
 import com.stuypulse.robot.constants.Settings;
 import com.stuypulse.robot.util.RobotVisualizer;
+import com.stuypulse.robot.constants.Motors;
 
-import edu.wpi.first.math.controller.PIDController;
-import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.math.system.plant.LinearSystemId;
-import edu.wpi.first.wpilibj.simulation.FlywheelSim;
+import edu.wpi.first.math.util.Units;
+import edu.wpi.first.wpilibj.simulation.DCMotorSim;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class FeederSim extends Feeder {
-    private final FlywheelSim feeder;
-    // private final SimpleMotorFeedforward feedForward;
-    // private final PIDController controller;
+    private final TalonFX feederLeader;
+    private final TalonFX feederFollower;
+    private final DCMotor feederGearbox;
+    private final DCMotorSim feederSim;
+    private final DutyCycleOut feederController;
 
     public FeederSim() {
-        super();
+        feederLeader = new TalonFX(1);
+        feederFollower = new TalonFX(2);
 
-        DCMotor motor = DCMotor.getKrakenX60(2);
-        feeder = new FlywheelSim(
-            LinearSystemId.createFlywheelSystem(
-                motor,
-                0.1,
-                3.0
+        Motors.Feeder.LEADER_CONFIG.configure(feederLeader);
+        Motors.Feeder.FOLLOWER_CONFIG.configure(feederFollower);
+
+        feederFollower.setControl(new Follower(feederLeader.getDeviceID(), MotorAlignmentValue.Opposed));
+        feederGearbox = DCMotor.getKrakenX60(2);
+        feederSim = new DCMotorSim(
+            LinearSystemId.createDCMotorSystem(
+                feederGearbox,
+                Settings.Feeder.J_KG_METERS_SQUARED,
+                Settings.Feeder.GEAR_RATIO
             ),
-            motor
+            feederGearbox
         );
 
-        // feedForward = new SimpleMotorFeedforward(Gains.Feeder.kS, Gains.Feeder.kV.getAsDouble(), Gains.Feeder.kA.getAsDouble());
-        // controller = new PIDController(Gains.Feeder.kP, Gains.Feeder.kI, Gains.Feeder.kD);
+        feederController = new DutyCycleOut(0)
+            .withEnableFOC(true);
     }
 
-    public double getFeederRPM() {
-        return feeder.getAngularVelocityRPM();
+    @Override
+    public double getCurrentRPM() {
+         return feederLeader.getVelocity().getValueAsDouble() * 60.0;
     }
 
     @Override
     public void periodic() {
         super.periodic();
 
-        feeder.setInputVoltage(getState().getTargetDutyCycle() * 12);
+        if (!Settings.EnabledSubsystems.INTAKE.get()) {
+            feederLeader.setControl(feederController.withOutput(0));
+            return;
+        }
 
-        // feedForward.setKv(Gains.Feeder.kV.getAsDouble());
-        // feedForward.setKa(Gains.Feeder.kA.getAsDouble());
+        feederLeader.setControl(feederController.withOutput(1)); // apply control to leader before grabbing state to update other motors
 
-        // double velocity = getState().getTargetRPM();
-        // double voltage = feedForward.calculate(velocity) + controller.calculate(getFeederRPM(), velocity);
+        // State
+        final TalonFXSimState feederState = feederLeader.getSimState();
+        final TalonFXSimState followerState = feederFollower.getSimState();
 
-        // feeder.setInputVoltage(voltage);
-        // feeder.update(Settings.DT);
+        // Apply
+        feederSim.setInputVoltage(feederState.getMotorVoltage());
+        feederSim.update(Settings.DT);
 
-        // SmartDashboard.putNumber("Feeder/TargetRPM", getState().getTargetRPM());
-        // SmartDashboard.putNumber("Feeder/RPM", getFeederRPM());
-        // SmartDashboard.putNumber("Feeder/CalculatedRadPerSec", velocity);
-        // SmartDashboard.putNumber("Feeder/CalculatedVoltage", voltage);
+        final double rotorPositionRotations = Units.radiansToRotations(feederSim.getAngularPositionRad()) * Settings.Feeder.GEAR_RATIO;
+        final double feederRotorRPS = feederSim.getAngularVelocityRPM() / 60.0 * Settings.Feeder.GEAR_RATIO;
 
-        RobotVisualizer.getInstance().updateFeeder(feeder.getAngularVelocityRPM());
+        followerState.setRawRotorPosition(rotorPositionRotations);
+        followerState.setRotorVelocity(feederRotorRPS);
+        feederState.setRawRotorPosition(rotorPositionRotations);
+        feederState.setRotorVelocity(feederRotorRPS);
+
+        SmartDashboard.putNumber("Feeder/Leader Current", feederLeader.getStatorCurrent().getValueAsDouble());
+        SmartDashboard.putNumber("Feeder/Follower Current", feederFollower.getStatorCurrent().getValueAsDouble());
+        SmartDashboard.putNumber("Feeder/Leader Voltage", feederLeader.getMotorVoltage().getValueAsDouble());
+        SmartDashboard.putNumber("Feeder/Follower Voltage", feederFollower.getMotorVoltage().getValueAsDouble());
+
+        RobotVisualizer.getInstance().updateFeeder(getCurrentRPM());
     }
 }

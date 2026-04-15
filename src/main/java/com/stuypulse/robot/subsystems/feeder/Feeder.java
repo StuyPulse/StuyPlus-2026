@@ -2,12 +2,11 @@ package com.stuypulse.robot.subsystems.feeder;
 
 import com.stuypulse.robot.Robot;
 import com.stuypulse.robot.constants.Settings;
-import com.stuypulse.robot.util.RobotVisualizer;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-public class Feeder extends SubsystemBase{
+public abstract class Feeder extends SubsystemBase{
     private static final Feeder instance;
     private FeederState state;
 
@@ -51,18 +50,17 @@ public class Feeder extends SubsystemBase{
         return state;
     }
 
+    public abstract double getCurrentRPM();
+
     @Override
     public void periodic() {
-        SmartDashboard.putString("Feeder/State", getState().name());
-        SmartDashboard.putString("States/Feeder", getState().name());
+        final FeederState currentState = getState();
 
-        // if (Settings.DEBUG_MODE) {
-        //     if (Settings.EnabledSubsystems.FEEDER.get()) {
-        //         RobotVisualizer.getInstance().updateFeeder(getState().getTargetRPM());
-        //     }
-        //     else {
-        //         RobotVisualizer.getInstance().updateFeeder(0);
-        //     }
-        // }
+        // Logging
+        SmartDashboard.putNumber("Feeder/Target Duty Cycle", currentState.getTargetDutyCycle());
+        SmartDashboard.putNumber("Feeder/Current RPM", getCurrentRPM());
+
+        SmartDashboard.putString("Feeder/State", currentState.name());
+        SmartDashboard.putString("States/Feeder", currentState.name());
     }
 }

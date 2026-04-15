@@ -58,12 +58,12 @@ public interface Motors {
 
     public interface Feeder {
         // TODO: get values
-        TalonFXConfig MOTOR_CONFIG_1 = new TalonFXConfig()
+        TalonFXConfig LEADER_CONFIG = new TalonFXConfig()
             .withCurrentLimitAmps(80)
 			.withRampRate(0.25)
 			.withNeutralMode(NeutralModeValue.Coast)
 			.withInvertedValue(InvertedValue.CounterClockwise_Positive);
-        TalonFXConfig MOTOR_CONFIG_2 = new TalonFXConfig()
+        TalonFXConfig FOLLOWER_CONFIG = new TalonFXConfig()
             .withCurrentLimitAmps(80)
 			.withRampRate(0.25)
 			.withNeutralMode(NeutralModeValue.Coast)
