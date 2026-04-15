@@ -11,7 +11,7 @@ import com.stuypulse.robot.commands.auton.LBFerry;
 import com.stuypulse.robot.commands.auton.LBMid;
 import com.stuypulse.robot.commands.auton.LBStraight;
 import com.stuypulse.robot.commands.auton.LTDisrupt;
-import com.stuypulse.robot.commands.auton.LBMidlineSweepRight;
+import com.stuypulse.robot.commands.auton.LBMidlineSweep;
 import com.stuypulse.robot.commands.auton.LBOuttake;
 import com.stuypulse.robot.commands.auton.OutpostOnly;
 import com.stuypulse.robot.commands.auton.RBDisrupt;
@@ -19,7 +19,7 @@ import com.stuypulse.robot.commands.auton.RBFerry;
 import com.stuypulse.robot.commands.auton.RBMid;
 import com.stuypulse.robot.commands.auton.RBStraight;
 import com.stuypulse.robot.commands.auton.RTDisrupt;
-import com.stuypulse.robot.commands.auton.RBMidlineSweepLeft;
+import com.stuypulse.robot.commands.auton.RBMidlineSweep;
 import com.stuypulse.robot.commands.auton.RBOuttake;
 import com.stuypulse.robot.commands.auton.TwoMeterPath;
 import com.stuypulse.robot.commands.swerve.SwerveDriveDrive;
@@ -199,15 +199,15 @@ public class RobotContainer {
             "N to LB Outtake");
         LBOuttake.register(autonChooser);
 
-        AutonConfig LBMidlineSweepRight = new AutonConfig("LB Midline Sweep Right", LBMidlineSweepRight::new,
+        AutonConfig LBMidlineSweep = new AutonConfig("LB Midline Sweep", LBMidlineSweep::new,
             "LB to N Midline",
             "LN Sweep Midline");
-        LBMidlineSweepRight.register(autonChooser);
+        LBMidlineSweep.register(autonChooser);
 
-        AutonConfig RBMidlineSweepLeft = new AutonConfig("RB Midline Sweep Left", RBMidlineSweepLeft::new,
+        AutonConfig RBMidlineSweep = new AutonConfig("RB Midline Sweep", RBMidlineSweep::new,
             "RB to N Midline",
             "RN Sweep Midline");
-        RBMidlineSweepLeft.register(autonChooser);
+        RBMidlineSweep.register(autonChooser);
 
         AutonConfig LB_Disrupt = new AutonConfig("LB Disrupt", LBDisrupt::new, 
             "LB to CN Disrupt",

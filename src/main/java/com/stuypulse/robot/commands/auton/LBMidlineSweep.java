@@ -7,8 +7,8 @@ import com.stuypulse.robot.subsystems.swerve.CommandSwerveDrivetrain;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
-public class LBMidlineSweepRight extends SequentialCommandGroup {
-    public LBMidlineSweepRight(PathPlannerPath... paths) {
+public class LBMidlineSweep extends SequentialCommandGroup {
+    public LBMidlineSweep(PathPlannerPath... paths) {
         addCommands(
             new SwerveResetPose(paths[0].getStartingHolonomicPose().get()),
 
