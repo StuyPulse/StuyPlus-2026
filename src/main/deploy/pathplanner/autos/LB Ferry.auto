@@ -7,25 +7,25 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Left Bump to Neutral"
+            "pathName": "LB to N Ferry"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "N to L.T."
+            "pathName": "N to LT Ferry"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "L.T. Circle Hub"
+            "pathName": "LT Hub Ferry"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "N to Depot"
+            "pathName": "N to Depot Ferry"
           }
         }
       ]

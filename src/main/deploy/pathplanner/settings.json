@@ -3,10 +3,12 @@
   "robotLength": 0.9,
   "holonomicMode": true,
   "pathFolders": [
-    "LB Disrupt",
-    "LT Disrupt",
-    "RB Disrupt",
-    "RT Disrupt"
+    "Disrupt",
+    "Ferry",
+    "Mid",
+    "Midline",
+    "Straight",
+    "Outtake"
   ],
   "autoFolders": [
     "Disrupt",

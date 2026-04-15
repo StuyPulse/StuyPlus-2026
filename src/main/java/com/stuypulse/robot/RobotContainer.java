@@ -147,22 +147,22 @@ public class RobotContainer {
 
          
         AutonConfig LBFerry = new AutonConfig("LB Ferry", LBFerry::new, 
-            "Left Bump to Neutral", 
-            "N to L.T.", 
-            "L.T. Circle Hub", 
-            "N to Depot");
+            "LB to N Ferry", 
+            "N to LT Ferry", 
+            "LT Hub Ferry", 
+            "N to Depot Ferry");
         LBFerry.register(autonChooser);
 
         AutonConfig RBFerry = new AutonConfig("RB Ferry", RBFerry::new, 
-            "R.B. to R.N.", 
-            "N to R.T.", 
-            "R.T. Circle Hub", 
-            "R.N. to H.P.");
+            "RB to N Ferry", 
+            "N to RT Ferry", 
+            "RT Hub Ferry", 
+            "N to Outpost Ferry");
         RBFerry.register(autonChooser);
 
         AutonConfig LBMid = new AutonConfig("LB Mid", LBMid::new,
-            "LB to N",
-            "LB Return");
+            "LB to N Mid",
+            "LB Return Mid");
         LBMid.register(autonChooser);
 
         AutonConfig LBStraight = new AutonConfig("LB Straight", LBStraight::new,
@@ -176,9 +176,9 @@ public class RobotContainer {
         RBStraight.register(autonChooser);
 
         AutonConfig RBMid = new AutonConfig("RB Mid", RBMid::new, 
-            "RB to N",
-            "RB Return",
-            "RB to Outpost");
+            "RB to N Mid",
+            "RB Return Mid",
+            "RB to Outpost Mid");
         RBMid.register(autonChooser);
 
         AutonConfig TwoMeterPath = new AutonConfig("Two Meter Path", TwoMeterPath::new,
@@ -200,13 +200,13 @@ public class RobotContainer {
         LBOuttake.register(autonChooser);
 
         AutonConfig LBMidlineSweepRight = new AutonConfig("LB Midline Sweep Right", LBMidlineSweepRight::new,
-            "LB to LN Across Midline",
-            "LN Across Midline to RN Across Midline");
+            "LB to N Midline",
+            "LN Sweep Midline");
         LBMidlineSweepRight.register(autonChooser);
 
         AutonConfig RBMidlineSweepLeft = new AutonConfig("RB Midline Sweep Left", RBMidlineSweepLeft::new,
-            "RB to RN Across Midline",
-            "RN to Mid Neutral");
+            "RB to N Midline",
+            "RN Sweep Midline");
         RBMidlineSweepLeft.register(autonChooser);
 
         AutonConfig LB_Disrupt = new AutonConfig("LB Disrupt", LBDisrupt::new, 
