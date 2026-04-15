@@ -56,19 +56,19 @@ public interface Motors {
 
     }
 
-    // public interface Feeder {
-    //     // TODO: get values
-    //     TalonFXConfig MOTOR_CONFIG_1 = new TalonFXConfig()
-    //         .withCurrentLimitAmps(80)
-	// 		.withRampRate(0.25)
-	// 		.withNeutralMode(NeutralModeValue.Brake)
-	// 		.withInvertedValue(InvertedValue.CounterClockwise_Positive);
-    //     TalonFXConfig MOTOR_CONFIG_2 = new TalonFXConfig()
-    //         .withCurrentLimitAmps(80)
-	// 		.withRampRate(0.25)
-	// 		.withNeutralMode(NeutralModeValue.Brake)
-	// 		.withInvertedValue(InvertedValue.Clockwise_Positive);
-    // }
+    public interface Feeder {
+        // TODO: get values
+        TalonFXConfig LEADER_CONFIG = new TalonFXConfig()
+            .withCurrentLimitAmps(80)
+			.withRampRate(0.25)
+			.withNeutralMode(NeutralModeValue.Coast)
+			.withInvertedValue(InvertedValue.CounterClockwise_Positive);
+        TalonFXConfig FOLLOWER_CONFIG = new TalonFXConfig()
+            .withCurrentLimitAmps(80)
+			.withRampRate(0.25)
+			.withNeutralMode(NeutralModeValue.Coast)
+			.withInvertedValue(InvertedValue.Clockwise_Positive);
+    }
 
     // public interface Shooter {
     //     TalonFXConfig MOTOR_CONFIG = new TalonFXConfig()

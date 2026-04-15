@@ -30,7 +30,7 @@ public interface Settings {
     CANBus CANIVORE = new CANBus("rio");
 
     public interface EnabledSubsystems {
-        // SmartBoolean FEEDER = new SmartBoolean("Enabled Subsystems/Feeder", true);
+        SmartBoolean FEEDER = new SmartBoolean("Enabled Subsystems/Feeder", true);
         SmartBoolean INTAKE = new SmartBoolean("Enabled Subsystems/Intake", true);
         // SmartBoolean LED = new SmartBoolean("Enabled Subsystems/LED", true);
         // SmartBoolean SHOOTER = new SmartBoolean("Enabled Subsystems/Shooter", true);
@@ -88,10 +88,13 @@ public interface Settings {
         }
     }
 
-    // public interface Feeder {
-    //     double FEEDER_REVERSE = -1900;
-    //     double FEEDER_FORWARD = 1900;
-    // }
+    public interface Feeder {
+        double FEEDER_REVERSE_DUTY_CYCLE = -1;
+        double FEEDER_FORWARD_DUTY_CYCLE = 1;
+
+        double GEAR_RATIO = 1; // TODO: get from mec
+        double J_KG_METERS_SQUARED = 0.1;
+    }
 
     // public interface LED {
     //     int LED_LENGTH = 60; 

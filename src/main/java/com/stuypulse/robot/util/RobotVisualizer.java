@@ -38,8 +38,8 @@ public class RobotVisualizer {
     private final MechanismLigament2d bumper;
 
     // //feeder:
-    // private final MechanismRoot2d feederRoot;
-    // private final MechanismLigament2d[] feederSpokes;
+    private final MechanismRoot2d feederRoot;
+    private final MechanismLigament2d[] feederSpokes;
 
     //intake:
     private final MechanismRoot2d intakeRoot;
@@ -64,8 +64,8 @@ public class RobotVisualizer {
         bumperRoot.append(bumper);
 
         // // Feeder
-        // feederRoot = canvas.getRoot("Feeder Root", 45, 15);
-        // feederSpokes = createSpokes(numSpokes, feederRoot, "Feeder Spoke", 6.7, 2, spokeColor);
+        feederRoot = canvas.getRoot("Feeder Root", 45, 15);
+        feederSpokes = createSpokes(numSpokes, feederRoot, "Feeder Spoke", 6.7, 2, spokeColor);
 
         // // Shooter
         // shooterRoot = canvas.getRoot("Shooter Root", 55, 45);
@@ -117,13 +117,13 @@ public class RobotVisualizer {
         return spokes;
     }
 
-    // public void updateFeeder(double RPM) {
-    //     double rot = RPM * 6 * Settings.DT;
-    //     for (MechanismLigament2d spoke : feederSpokes)
-    //         spoke.setAngle(spoke.getAngle() + rot);
+    public void updateFeeder(double RPM) {
+        double rot = RPM * 6 * Settings.DT;
+        for (MechanismLigament2d spoke : feederSpokes)
+            spoke.setAngle(spoke.getAngle() + rot);
 
-    //     SmartDashboard.putData("Visualizers/Robot", canvas);
-    // }
+        SmartDashboard.putData("Visualizers/Robot", canvas);
+    }
 
     // public void updateShooter(double RPM){
     //     double rot = RPM * 6 * Settings.DT;
