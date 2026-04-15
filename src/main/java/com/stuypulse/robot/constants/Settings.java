@@ -116,15 +116,20 @@ public interface Settings {
     //     LEDPattern DISABLED = LEDPattern.solid(Color.kGray);
     // }
 
-    // public interface Shooter {
-    //     double BOTTOM_MOTOR_RPM = 3000;
-    //     double SHOOT_TIME_AUTO = 1.5;
-    //     double RAMP_RATE = 0.25;
-    //     double STEP_VOLTAGE = 900;
+    public interface Shooter {
+        double SHOOT_TIME_AUTO = 1.5;
+        double RAMP_RATE = 0.25;
+        double STEP_VOLTAGE = 900;
 
-    //     double CORNER = 2700; 
-    //     double HUB = 2500;
-    // }
+        double CORNER = 2700; 
+        double HUB = 2500;
+
+        double SHOOT_DUTY = 1;
+        double FERRY_DUTY = 1;
+        double SOTM_DUTY = 0.8;
+        double FOTM_DUTY = 0.8;
+        double IDLE_DUTY = 0;
+    }
 
     public interface Swerve {
         double MODULE_VELOCITY_DEADBAND_M_PER_S = 0.1;
