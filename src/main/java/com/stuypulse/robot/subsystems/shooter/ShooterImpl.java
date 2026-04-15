@@ -35,8 +35,8 @@ public class ShooterImpl extends Shooter {
         Motors.Shooter.SHOOTER_MOTOR_CONFIG.configure(shooterMotor1);
         Motors.Shooter.SHOOTER_MOTOR_CONFIG.configure(shooterMotor2);
         Motors.Shooter.SHOOTER_MOTOR_CONFIG.configure(shooterMotor3);
-        Motors.Shooter.SHOOTER_MOTOR_CONFIG.configure(bottomMotor1);
-        Motors.Shooter.SHOOTER_MOTOR_CONFIG.configure(bottomMotor2);
+        Motors.Shooter.BOTTOM_MOTOR_CONFIG.configure(bottomMotor1);
+        Motors.Shooter.BOTTOM_MOTOR_CONFIG.configure(bottomMotor2);
 
         // Set shooter 2 and 3 motors to follow 1
         Follower shooter_follower = new Follower(shooterMotor1.getDeviceID(), MotorAlignmentValue.Opposed);
