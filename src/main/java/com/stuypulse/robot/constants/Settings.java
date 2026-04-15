@@ -33,7 +33,7 @@ public interface Settings {
         SmartBoolean FEEDER = new SmartBoolean("Enabled Subsystems/Feeder", true);
         SmartBoolean INTAKE = new SmartBoolean("Enabled Subsystems/Intake", true);
         // SmartBoolean LED = new SmartBoolean("Enabled Subsystems/LED", true);
-        // SmartBoolean SHOOTER = new SmartBoolean("Enabled Subsystems/Shooter", true);
+        SmartBoolean SHOOTER = new SmartBoolean("Enabled Subsystems/Shooter", true);
         SmartBoolean VISION = new SmartBoolean("Enabled Subsystems/Vision", true);
         SmartBoolean SWERVE = new SmartBoolean("Enabled Subsystems/Swerve", true);
     }
@@ -116,15 +116,20 @@ public interface Settings {
     //     LEDPattern DISABLED = LEDPattern.solid(Color.kGray);
     // }
 
-    // public interface Shooter {
-    //     double BOTTOM_MOTOR_RPM = 3000;
-    //     double SHOOT_TIME_AUTO = 1.5;
-    //     double RAMP_RATE = 0.25;
-    //     double STEP_VOLTAGE = 900;
+    public interface Shooter {
+        double SHOOT_TIME_AUTO = 1.5;
+        double RAMP_RATE = 0.25;
+        double STEP_VOLTAGE = 900;
 
-    //     double CORNER = 2700; 
-    //     double HUB = 2500;
-    // }
+        double CORNER_RPM = 2700; 
+        double HUB_RPM = 2500;
+
+        double SHOOT_DUTY = 1;
+        double FERRY_DUTY = 1;
+        double SOTM_DUTY = 0.8;
+        double FOTM_DUTY = 0.8;
+        double IDLE_DUTY = 0;
+    }
 
     public interface Swerve {
         double MODULE_VELOCITY_DEADBAND_M_PER_S = 0.1;
