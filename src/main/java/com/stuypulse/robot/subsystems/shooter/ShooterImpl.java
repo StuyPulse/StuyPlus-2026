@@ -25,7 +25,7 @@ public class ShooterImpl extends Shooter {
 
     public ShooterImpl() {
         shooterMotor1 = new TalonFX(Ports.ShooterPorts.SHOOTER_MOTOR_1, Settings.CANIVORE);
-        shooterMotor2 = new TalonFX(Ports.ShooterPorts.BOTTOM_MOTOR_2, Settings.CANIVORE);
+        shooterMotor2 = new TalonFX(Ports.ShooterPorts.SHOOTER_MOTOR_2, Settings.CANIVORE);
         shooterMotor3 = new TalonFX(Ports.ShooterPorts.SHOOTER_MOTOR_3, Settings.CANIVORE);
 
         bottomMotor1 = new TalonFX(Ports.ShooterPorts.BOTTOM_MOTOR_1, Settings.CANIVORE);
