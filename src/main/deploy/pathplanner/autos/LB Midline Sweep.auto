@@ -7,19 +7,13 @@
         {
           "type": "path",
           "data": {
-            "pathName": "RB to N Mid"
+            "pathName": "LB to N Midline"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "RB Return Mid"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "RB to Outpost Mid"
+            "pathName": "LN Sweep Midline"
           }
         }
       ]

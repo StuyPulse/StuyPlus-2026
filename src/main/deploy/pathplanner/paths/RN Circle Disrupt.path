@@ -9,7 +9,7 @@
       "prevControl": null,
       "nextControl": {
         "x": 6.3642938659058474,
-        "y": 0.6147000000000005
+        "y": 0.6147000000000004
       },
       "isLocked": false,
       "linkedName": "RB Disrupt 1"
@@ -98,7 +98,7 @@
     "rotation": -35.0
   },
   "reversed": false,
-  "folder": "RB Disrupt",
+  "folder": "Disrupt",
   "idealStartingState": {
     "velocity": 4.0,
     "rotation": -35.0

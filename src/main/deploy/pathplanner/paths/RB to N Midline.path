@@ -3,47 +3,33 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.482433303766376,
-        "y": 5.583732373544397
+        "x": 3.6,
+        "y": 2.25
       },
       "prevControl": null,
       "nextControl": {
-        "x": 4.482433303766374,
-        "y": 5.583732373544397
+        "x": 4.600000000000001,
+        "y": 2.25
       },
       "isLocked": false,
-      "linkedName": "LB Outtake 0"
+      "linkedName": null
     },
     {
       "anchor": {
-        "x": 7.608978802765646,
-        "y": 5.583732373544397
+        "x": 8.25,
+        "y": 2.25
       },
       "prevControl": {
-        "x": 6.608978802765646,
-        "y": 5.583732373544397
+        "x": 7.25,
+        "y": 2.25
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "LB Outtake 1"
+      "linkedName": "Right Neutral Across Midline"
     }
   ],
   "rotationTargets": [],
-  "constraintZones": [
-    {
-      "name": "Constraints Zone",
-      "minWaypointRelativePos": 0.11514630305039784,
-      "maxWaypointRelativePos": 0.4156270722811671,
-      "constraints": {
-        "maxVelocity": 1.2,
-        "maxAcceleration": 3.0,
-        "maxAngularVelocity": 540.0,
-        "maxAngularAcceleration": 720.0,
-        "nominalVoltage": 12.0,
-        "unlimited": false
-      }
-    }
-  ],
+  "constraintZones": [],
   "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {
@@ -59,7 +45,7 @@
     "rotation": 0.0
   },
   "reversed": false,
-  "folder": "Outtake",
+  "folder": "Midline",
   "idealStartingState": {
     "velocity": 0,
     "rotation": 0.0

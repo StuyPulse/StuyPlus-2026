@@ -11,7 +11,7 @@ import com.stuypulse.robot.commands.auton.LBFerry;
 import com.stuypulse.robot.commands.auton.LBMid;
 import com.stuypulse.robot.commands.auton.LBStraight;
 import com.stuypulse.robot.commands.auton.LTDisrupt;
-import com.stuypulse.robot.commands.auton.LBMidlineSweepRight;
+import com.stuypulse.robot.commands.auton.LBMidlineSweep;
 import com.stuypulse.robot.commands.auton.LBOuttake;
 import com.stuypulse.robot.commands.auton.OutpostOnly;
 import com.stuypulse.robot.commands.auton.RBDisrupt;
@@ -19,7 +19,7 @@ import com.stuypulse.robot.commands.auton.RBFerry;
 import com.stuypulse.robot.commands.auton.RBMid;
 import com.stuypulse.robot.commands.auton.RBStraight;
 import com.stuypulse.robot.commands.auton.RTDisrupt;
-import com.stuypulse.robot.commands.auton.RBMidlineSweepLeft;
+import com.stuypulse.robot.commands.auton.RBMidlineSweep;
 import com.stuypulse.robot.commands.auton.RBOuttake;
 import com.stuypulse.robot.commands.auton.TwoMeterPath;
 import com.stuypulse.robot.commands.swerve.SwerveDriveDrive;
@@ -147,22 +147,22 @@ public class RobotContainer {
 
          
         AutonConfig LBFerry = new AutonConfig("LB Ferry", LBFerry::new, 
-            "Left Bump to Neutral", 
-            "N to L.T.", 
-            "L.T. Circle Hub", 
-            "N to Depot");
+            "LB to N Ferry", 
+            "N to LT Ferry", 
+            "LT Hub Ferry", 
+            "N to Depot Ferry");
         LBFerry.register(autonChooser);
 
         AutonConfig RBFerry = new AutonConfig("RB Ferry", RBFerry::new, 
-            "R.B. to R.N.", 
-            "N to R.T.", 
-            "R.T. Circle Hub", 
-            "R.N. to H.P.");
+            "RB to N Ferry", 
+            "N to RT Ferry", 
+            "RT Hub Ferry", 
+            "N to Outpost Ferry");
         RBFerry.register(autonChooser);
 
         AutonConfig LBMid = new AutonConfig("LB Mid", LBMid::new,
-            "LB to N",
-            "LB Return");
+            "LB to N Mid",
+            "LB Return Mid");
         LBMid.register(autonChooser);
 
         AutonConfig LBStraight = new AutonConfig("LB Straight", LBStraight::new,
@@ -176,9 +176,9 @@ public class RobotContainer {
         RBStraight.register(autonChooser);
 
         AutonConfig RBMid = new AutonConfig("RB Mid", RBMid::new, 
-            "RB to N",
-            "RB Return",
-            "RB to Outpost");
+            "RB to N Mid",
+            "RB Return Mid",
+            "RB to Outpost Mid");
         RBMid.register(autonChooser);
 
         AutonConfig TwoMeterPath = new AutonConfig("Two Meter Path", TwoMeterPath::new,
@@ -199,29 +199,29 @@ public class RobotContainer {
             "N to LB Outtake");
         LBOuttake.register(autonChooser);
 
-        AutonConfig LBMidlineSweepRight = new AutonConfig("LB Midline Sweep Right", LBMidlineSweepRight::new,
-            "LB to LN Across Midline",
-            "LN Across Midline to RN Across Midline");
-        LBMidlineSweepRight.register(autonChooser);
+        AutonConfig LBMidlineSweep = new AutonConfig("LB Midline Sweep", LBMidlineSweep::new,
+            "LB to N Midline",
+            "LN Sweep Midline");
+        LBMidlineSweep.register(autonChooser);
 
-        AutonConfig RBMidlineSweepLeft = new AutonConfig("RB Midline Sweep Left", RBMidlineSweepLeft::new,
-            "RB to RN Across Midline",
-            "RN to Mid Neutral");
-        RBMidlineSweepLeft.register(autonChooser);
+        AutonConfig RBMidlineSweep = new AutonConfig("RB Midline Sweep", RBMidlineSweep::new,
+            "RB to N Midline",
+            "RN Sweep Midline");
+        RBMidlineSweep.register(autonChooser);
 
-        AutonConfig LB_Disrupt = new AutonConfig("LB Disrupt", LBDisrupt::new, 
+        AutonConfig LBDisrupt = new AutonConfig("LB Disrupt", LBDisrupt::new, 
             "LB to CN Disrupt",
             "LN Circle Disrupt",
             "LN Circle Disrupt",
             "LB Disrupt Return");
-        LB_Disrupt.register(autonChooser);
+        LBDisrupt.register(autonChooser);
 
-        AutonConfig RB_Disrupt = new AutonConfig("RB Disrupt", RBDisrupt::new, 
+        AutonConfig RBDisrupt = new AutonConfig("RB Disrupt", RBDisrupt::new, 
             "RB to CN Disrupt",
             "RN Circle Disrupt",
             "RN Circle Disrupt",
             "RB Disrupt Return");
-        RB_Disrupt.register(autonChooser);
+        RBDisrupt.register(autonChooser);
 
         AutonConfig LT_Disrupt = new AutonConfig("LT Disrupt", LTDisrupt::new, 
             "LT to N Disrupt",

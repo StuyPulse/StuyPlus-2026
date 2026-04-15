@@ -3,53 +3,62 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.368938716794032,
-        "y": 2.379804118904658
+        "x": 3.259283683911313,
+        "y": 2.2600596930073915
       },
       "prevControl": null,
       "nextControl": {
-        "x": 4.368938716794029,
-        "y": 2.379804118904658
+        "x": 6.13166599489562,
+        "y": 2.764667396288418
       },
       "isLocked": false,
-      "linkedName": "RB Disrupt 0"
+      "linkedName": "Right Bump Start"
     },
     {
       "anchor": {
-        "x": 7.796773448871907,
-        "y": 2.379804118904658
+        "x": 8.101797432239657,
+        "y": 1.6478174037089879
       },
       "prevControl": {
-        "x": 6.796773448871907,
-        "y": 2.379804118904658
+        "x": 8.08711692675179,
+        "y": 1.3982488104152389
       },
       "nextControl": {
-        "x": 8.796773448871908,
-        "y": 2.379804118904658
+        "x": 8.15067229076783,
+        "y": 2.4786899986879067
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 7.364293865905848,
-        "y": 0.6147000000000002
+        "x": 8.101797432239657,
+        "y": 4.183794579172611
       },
       "prevControl": {
-        "x": 9.330725236448062,
-        "y": 0.6561883551673953
+        "x": 8.19683702600819,
+        "y": 3.952564227323395
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "RB Disrupt 1"
+      "linkedName": "Neutral Left Facing"
     }
   ],
-  "rotationTargets": [],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0.2819672131147542,
+      "rotationDegrees": -113.779
+    },
+    {
+      "waypointRelativePos": 0.7999999999999992,
+      "rotationDegrees": 90.0
+    }
+  ],
   "constraintZones": [
     {
       "name": "Constraints Zone",
-      "minWaypointRelativePos": 0.1390293435013263,
-      "maxWaypointRelativePos": 0.4216056034482758,
+      "minWaypointRelativePos": 0.026898209549071628,
+      "maxWaypointRelativePos": 0.2485908488063661,
       "constraints": {
         "maxVelocity": 1.75,
         "maxAcceleration": 3.0,
@@ -71,14 +80,14 @@
     "unlimited": false
   },
   "goalEndState": {
-    "velocity": 3.0,
-    "rotation": -35.0
+    "velocity": 1.0,
+    "rotation": 90.0
   },
   "reversed": false,
-  "folder": "Disrupt",
+  "folder": "Ferry",
   "idealStartingState": {
-    "velocity": 0,
-    "rotation": -23.0
+    "velocity": 1.0,
+    "rotation": -113.779
   },
   "useDefaultConstraints": true
 }

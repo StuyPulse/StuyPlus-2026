@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 7.25,
-        "y": 6.668164176219069
+        "x": 8.101797432239657,
+        "y": 4.183794579172611
       },
       "prevControl": null,
       "nextControl": {
-        "x": 7.946533523537802,
-        "y": 6.357489300998574
+        "x": 7.793183110443959,
+        "y": 5.229884575145561
       },
       "isLocked": false,
-      "linkedName": "LT Disrupt 7"
+      "linkedName": "Neutral Right Facing"
     },
     {
       "anchor": {
-        "x": 8.114736091298145,
-        "y": 7.302011412268189
+        "x": 5.305776701237263,
+        "y": 7.410566377820234
       },
       "prevControl": {
-        "x": 8.295877318116975,
-        "y": 6.7844650499286745
+        "x": 6.286587347616448,
+        "y": 7.645534081604804
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "LT Disrupt 6"
+      "linkedName": "Left Trench Facing"
     }
   ],
   "rotationTargets": [],
@@ -41,14 +41,14 @@
     "unlimited": false
   },
   "goalEndState": {
-    "velocity": 2.0,
-    "rotation": 35.0
+    "velocity": 0,
+    "rotation": 179.09255146318995
   },
   "reversed": false,
-  "folder": "Disrupt",
+  "folder": "Ferry",
   "idealStartingState": {
-    "velocity": 2.0,
-    "rotation": 35.0
+    "velocity": 0,
+    "rotation": -90.0
   },
   "useDefaultConstraints": true
 }
