@@ -16,7 +16,7 @@ public class ShooterSetState extends InstantCommand {
         this.shooter = shooter;
         this.shooterState = shooterState;
 
-        //addRequirements(shooter);
+        addRequirements(shooter);
     }
     
     @Override
