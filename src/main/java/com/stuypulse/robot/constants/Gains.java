@@ -12,7 +12,6 @@ public class Gains {
         double kS = 0;
         double kV = 0;
         double kA = 0;
-        double kG = 0;
     }
 
     public interface Intake {
