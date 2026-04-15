@@ -209,19 +209,19 @@ public class RobotContainer {
             "RN Sweep Midline");
         RBMidlineSweep.register(autonChooser);
 
-        AutonConfig LB_Disrupt = new AutonConfig("LB Disrupt", LBDisrupt::new, 
+        AutonConfig LBDisrupt = new AutonConfig("LB Disrupt", LBDisrupt::new, 
             "LB to CN Disrupt",
             "LN Circle Disrupt",
             "LN Circle Disrupt",
             "LB Disrupt Return");
-        LB_Disrupt.register(autonChooser);
+        LBDisrupt.register(autonChooser);
 
-        AutonConfig RB_Disrupt = new AutonConfig("RB Disrupt", RBDisrupt::new, 
+        AutonConfig RBDisrupt = new AutonConfig("RB Disrupt", RBDisrupt::new, 
             "RB to CN Disrupt",
             "RN Circle Disrupt",
             "RN Circle Disrupt",
             "RB Disrupt Return");
-        RB_Disrupt.register(autonChooser);
+        RBDisrupt.register(autonChooser);
 
         AutonConfig LT_Disrupt = new AutonConfig("LT Disrupt", LTDisrupt::new, 
             "LT to N Disrupt",
