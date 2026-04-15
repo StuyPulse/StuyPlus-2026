@@ -34,6 +34,7 @@ import com.stuypulse.robot.commands.intake.IntakeSetIdle;
 // import com.stuypulse.robot.commands.intake.IntakeSetOuttake;
 import com.stuypulse.robot.constants.Field;
 import com.stuypulse.robot.constants.Ports;
+import com.stuypulse.robot.subsystems.feeder.Feeder;
 import com.stuypulse.robot.subsystems.intake.Intake;
 import com.stuypulse.robot.subsystems.intake.Intake.IntakeState;
 import com.stuypulse.robot.subsystems.swerve.CommandSwerveDrivetrain;
@@ -55,12 +56,12 @@ public class RobotContainer {
     
     // Subsystem
 
-    // @SuppressWarnings("unused")
+    @SuppressWarnings("unused")
+	private final Feeder feeder = Feeder.getInstance();
+    @SuppressWarnings("unused")
 	private final Intake intake = Intake.getInstance();
-    // @SuppressWarnings("unused")
-    // @SuppressWarnings("unused")
-    // @SuppressWarnings("unused")
     private final CommandSwerveDrivetrain swerve = CommandSwerveDrivetrain.getInstance();
+    @SuppressWarnings("unused")
     private final LimelightVision vision = LimelightVision.getInstance();
 
     // Autons

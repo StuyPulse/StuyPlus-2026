@@ -25,42 +25,39 @@ public class IntakeSim extends Intake {
 
     private final TalonFX rollerMotor;
     private final TalonFX rollerFollower;
-    private final DCMotor rollerGearbox;
     private final DCMotorSim rollerSim;
     private final DutyCycleOut rollerController;
 
     private Rotation2d zeroOffset;
 
     public IntakeSim() {
-        pivotMotor = new TalonFX(0);
+        pivotMotor = new TalonFX(20);
         pivotController = new PIDController(
             Gains.Intake.kP.get(),
             Gains.Intake.kI.get(),
             Gains.Intake.kD.get()
         );
 
-        rollerMotor = new TalonFX(1);
-        rollerFollower = new TalonFX(2);
+        rollerMotor = new TalonFX(21);
+        rollerFollower = new TalonFX(22);
         rollerFollower.setControl(new Follower(rollerMotor.getDeviceID(), MotorAlignmentValue.Opposed));
-        rollerGearbox = DCMotor.getKrakenX60(2);
         rollerSim = new DCMotorSim(
             LinearSystemId.createDCMotorSystem(
-                rollerGearbox,
+                DCMotor.getKrakenX60(2),
                 Settings.Intake.Roller.J_KG_METERS_SQUARED,
                 Settings.Intake.Roller.GEAR_RATIO
             ),
-            rollerGearbox
+            DCMotor.getKrakenX60(2)
         );
         rollerController = new DutyCycleOut(0)
             .withEnableFOC(true);
 
-        DCMotor pivotGearbox = DCMotor.getKrakenX60(1);
         pivotSim = new SingleJointedArmSim(
             LinearSystemId.createDCMotorSystem(
-                pivotGearbox,
+                DCMotor.getKrakenX60(1),
                 Settings.Intake.Pivot.J_KG_METERS_SQUARED,
                 Settings.Intake.Pivot.GEAR_RATIO),
-            pivotGearbox,
+            DCMotor.getKrakenX60(1),
             Settings.Intake.Pivot.GEAR_RATIO,
             SimulationConstants.Intake.PIVOT_ARM_LENGTH,
             Math.toRadians(Settings.Intake.Pivot.MIN_ANGLE),
@@ -101,7 +98,7 @@ public class IntakeSim extends Intake {
             return;
         }
 
-        rollerMotor.setControl(rollerController.withOutput(1));
+        rollerMotor.setControl(rollerController.withOutput(getState().getTargetDutyCycle()));
 
         final TalonFXSimState rollerState = rollerMotor.getSimState();
         rollerSim.setInputVoltage(rollerState.getMotorVoltage());

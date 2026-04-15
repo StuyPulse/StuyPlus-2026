@@ -72,7 +72,7 @@ public interface Settings {
             double MIN_ANGLE = 0.0;
             double MAX_ANGLE = 102.0; // deg
             double GEAR_RATIO = 60.0;
-            double J_KG_METERS_SQUARED = 0.1;
+            double J_KG_METERS_SQUARED = 0.001;
         }
 
         public interface Roller {
@@ -80,7 +80,7 @@ public interface Settings {
             double STALL_DEBOUNCE_SEC = 0.1;
 
             double GEAR_RATIO = 16.0 / 27.0;
-            double J_KG_METERS_SQUARED = 0.1;
+            double J_KG_METERS_SQUARED = 0.001;
 
             double IDLE_DUTY_CYCLE = 0;
             double INTAKE_DUTY_CYCLE = 1;
@@ -93,7 +93,7 @@ public interface Settings {
         double FEEDER_FORWARD_DUTY_CYCLE = 1;
 
         double GEAR_RATIO = 1; // TODO: get from mec
-        double J_KG_METERS_SQUARED = 0.1;
+        double J_KG_METERS_SQUARED = 0.001;
     }
 
     // public interface LED {

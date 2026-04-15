@@ -18,26 +18,24 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class FeederSim extends Feeder {
     private final TalonFX feederLeader;
     private final TalonFX feederFollower;
-    private final DCMotor feederGearbox;
     private final DCMotorSim feederSim;
     private final DutyCycleOut feederController;
 
     public FeederSim() {
-        feederLeader = new TalonFX(1);
-        feederFollower = new TalonFX(2);
+        feederLeader = new TalonFX(10);
+        feederFollower = new TalonFX(11);
 
         Motors.Feeder.LEADER_CONFIG.configure(feederLeader);
         Motors.Feeder.FOLLOWER_CONFIG.configure(feederFollower);
 
         feederFollower.setControl(new Follower(feederLeader.getDeviceID(), MotorAlignmentValue.Opposed));
-        feederGearbox = DCMotor.getKrakenX60(2);
         feederSim = new DCMotorSim(
             LinearSystemId.createDCMotorSystem(
-                feederGearbox,
+                DCMotor.getKrakenX60(2),
                 Settings.Feeder.J_KG_METERS_SQUARED,
                 Settings.Feeder.GEAR_RATIO
             ),
-            feederGearbox
+            DCMotor.getKrakenX60(2)
         );
 
         feederController = new DutyCycleOut(0)
@@ -58,7 +56,7 @@ public class FeederSim extends Feeder {
             return;
         }
 
-        feederLeader.setControl(feederController.withOutput(1)); // apply control to leader before grabbing state to update other motors
+        feederLeader.setControl(feederController.withOutput(getState().getTargetDutyCycle())); // apply control to leader before grabbing state to update other motors
 
         // State
         final TalonFXSimState feederState = feederLeader.getSimState();
