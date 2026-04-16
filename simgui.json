@@ -3,15 +3,26 @@
     "types": {
       "/FMSInfo": "FMSInfo",
       "/SmartDashboard/Autonomous": "String Chooser",
+      "/SmartDashboard/Command Scheduler": "Scheduler",
       "/SmartDashboard/Field": "Field2d",
+      "/SmartDashboard/Intake/Set Pivot 0": "Command",
+      "/SmartDashboard/Intake/Set Pivot 0 at Bottom": "Command",
       "/SmartDashboard/PathPlanner": "Alerts",
       "/SmartDashboard/Run pre-match Tests": "Command",
       "/SmartDashboard/Set Pivot 0": "Command",
       "/SmartDashboard/Set Pivot 0 at Bottom": "Command",
+      "/SmartDashboard/Vision/Set Cloudy Pipeline": "Command",
+      "/SmartDashboard/Vision/Set Sunny Pipeline": "Command",
       "/SmartDashboard/Visualizers/Robot": "Mechanism2d"
     },
     "windows": {
       "/SmartDashboard/Field": {
+        "bottom": 1914,
+        "height": 8.069275856018066,
+        "left": 245,
+        "right": 3942,
+        "top": 118,
+        "width": 16.54119300842285,
         "window": {
           "visible": true
         }
@@ -26,17 +37,26 @@
   "NetworkTables": {
     "transitory": {
       "SmartDashboard": {
-        "Intake": {
+        "Swerve": {
+          "Pose": {
+            "open": true
+          },
           "open": true
-        },
-        "MapleSim": {
-          "open": true
-        },
-        "Shooter": {
-          "open": false
         },
         "open": true
       }
     }
+  },
+  "NetworkTables Info": {
+    "Clients": {
+      "open": true
+    },
+    "Server": {
+      "Subscribers": {
+        "open": true
+      },
+      "open": true
+    },
+    "visible": true
   }
 }

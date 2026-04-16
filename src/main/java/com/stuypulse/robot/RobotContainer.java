@@ -30,6 +30,7 @@ import com.stuypulse.robot.commands.swerve.SwerveDriveXMode;
 import com.stuypulse.robot.commands.intake.IntakeSetDown;
 import com.stuypulse.robot.commands.intake.IntakeSetHomingDown;
 import com.stuypulse.robot.commands.intake.IntakeSetIdle;
+import com.stuypulse.robot.commands.shooter.ShooterSetShoot;
 // import com.stuypulse.robot.commands.intake.IntakeSetIntake;
 // import com.stuypulse.robot.commands.intake.IntakeSetOuttake;
 import com.stuypulse.robot.constants.Field;
@@ -114,8 +115,8 @@ public class RobotContainer {
         //Top Left Paddle
         // driver.a()
         //     .whileTrue(new IntakeAgitateWhileOuttaking().repeatedly());
-        // driver.a()
-        //     .onFalse(new IntakeSetHomingDown());
+        driver.a()
+            .onTrue(new ShooterSetShoot());
 
         driver.povUp()
             .onTrue(new SwerveDriveResetRotation());
