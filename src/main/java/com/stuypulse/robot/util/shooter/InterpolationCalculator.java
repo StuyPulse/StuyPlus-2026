@@ -23,6 +23,7 @@ public class InterpolationCalculator {
     public static InterpolatingDoubleTreeMap distanceRPMInterpolator;
     public static InterpolatingDoubleTreeMap distanceTOFInterpolator;
     public static InterpolatingDoubleTreeMap ferryingDistanceRPMInterpolator;
+    public static InterpolatingDoubleTreeMap ferryingDistanceTOFInterpolator;
 
     public record InterpolatedInfo(
         double targetRPM,
@@ -97,7 +98,7 @@ public class InterpolationCalculator {
         double distanceMeters = currentPose.getDistance(ferryPose);
 
         double targetRPM = ferryingDistanceRPMInterpolator.get(distanceMeters);
-        double flightTime = 2.1;
+        double flightTime = ferryingDistanceTOFInterpolator.get(distanceMeters);
         
         SmartDashboard.putNumber("Shooter/Interpolated Ferry RPM", targetRPM);
         SmartDashboard.putNumber("Shooter/Interpolated Ferry TOF", flightTime);
