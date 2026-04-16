@@ -44,7 +44,7 @@ public class FeederSim extends Feeder {
 
     @Override
     public double getCurrentRPM() {
-         return feederLeader.getVelocity().getValueAsDouble() * 60.0;
+        return feederLeader.getVelocity().getValueAsDouble() * 60.0;
     }
 
     @Override
