@@ -132,6 +132,11 @@ public interface Settings {
 
         public interface RPMInterpolation{
             double[][] distanceRPMInterpolationValues = {
+                {1.0, 1000.0},
+                {2.0, 1500.0},
+                {3.0, 2000.0},
+                {4.0, 2500.0},
+                {5.0, 3000.0}
             };
         }
 
