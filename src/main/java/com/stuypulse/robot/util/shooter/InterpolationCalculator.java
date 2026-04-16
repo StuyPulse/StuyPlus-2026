@@ -31,7 +31,7 @@ public class InterpolationCalculator {
     }
     
     static {
-        distanceRPMInterpolator = new InterpolatingDoubleTreeMap();
+        shootingDistanceRPMInterpolator = new InterpolatingDoubleTreeMap();
         for (double[] pair : RPMInterpolation.distanceRPMInterpolationValues) {
             distanceRPMInterpolator.put(pair[0], pair[1]);
         }
