@@ -74,4 +74,11 @@ public class Shooter extends SubsystemBase {
             return bottomMotorDutyCycle;
         }
     }
+
+    @Override
+    public void periodic() {
+        SmartDashboard.putString("Shooter/State", getState().name());
+        SmartDashboard.putNumber("Shooter/Top Target RPM", getState().getRPM());
+        SmartDashboard.putNumber("Shooter/Bottom Target Duty Cycle", getState().getBottomMotorDutyCycle());
+    }
 }

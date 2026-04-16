@@ -83,7 +83,6 @@ public class ShooterImpl extends Shooter {
         shooterMotorLeft.setControl(control);
         bottomMotorLeft.setControl(dutyCycle);
 
-        SmartDashboard.putString("Shooter/State", getState().name());
         this.logMotor("ShooterLeft", shooterMotorLeft);
         this.logMotor("ShooterCenter", shooterMotorCenter);
         this.logMotor("ShooterRight", shooterMotorRight);

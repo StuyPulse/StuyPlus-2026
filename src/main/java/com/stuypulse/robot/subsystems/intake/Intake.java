@@ -10,6 +10,9 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
+import static edu.wpi.first.units.Units.RPM;
+import static edu.wpi.first.units.Units.Radians;
+
 public abstract class Intake extends SubsystemBase {
     private static final Intake instance;
     private IntakeState state;
@@ -84,7 +87,7 @@ public abstract class Intake extends SubsystemBase {
 
     @Override
     public void periodic() {
-        RobotVisualizer.getInstance().updateIntake(Settings.EnabledSubsystems.INTAKE.get() ? getRelativePosition() : IntakeState.IDLE.getTargetAngle());
+        RobotVisualizer.getInstance().updateIntake(Radians.of(getRelativePosition().getRadians()), RPM.of(getRollerRPM()));
 
         final IntakeState currentState = getState();
         // Logging
