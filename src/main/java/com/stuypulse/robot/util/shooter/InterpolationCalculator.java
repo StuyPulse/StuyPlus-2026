@@ -77,17 +77,9 @@ public class InterpolationCalculator {
         Pose2d shooterPose = swerve.getPose();
         Pose2d ferryPose = Field.getFerryZonePose(swerve.getPose().getTranslation());
 
-        double distanceMeters = shooterPose.getTranslation().getDistance(ferryPose.getTranslation());
-
-        double targetRPM = distanceRPMInterpolator.get(distanceMeters);
-        double flightTime = distanceTOFInterpolator.get(distanceMeters);
-
-        SmartDashboard.putNumber("InterpolationTesting/Ferry Interpolated RPM", targetRPM);
-        SmartDashboard.putNumber("InterpolationTesting/Ferry Interpolated TOF", flightTime);
-        
         return interpolateFerryingInfo(
             shooterPose,
-            Field.getFerryZonePose(shooterPose.getTranslation())
+            ferryPose
         );
     }
 
