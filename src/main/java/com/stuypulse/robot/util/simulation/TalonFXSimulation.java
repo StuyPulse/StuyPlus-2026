@@ -12,18 +12,24 @@ import static edu.wpi.first.units.Units.*;
 import edu.wpi.first.wpilibj.simulation.DCMotorSim;
 
 public class TalonFXSimulation {
+    private static int id = 50; // avoid clashes with other ids?
     private final TalonFX motor;
     private final DCMotorSim simMotor;
 
-    public TalonFXSimulation(TalonFX motor, DCMotorSim simMotor) {
-        this.motor = motor;
+    public TalonFXSimulation(DCMotorSim simMotor) {
+        this.motor = new TalonFX(getID());
         this.simMotor = simMotor;
     }
 
-    public TalonFXSimulation(TalonFX motor, DCMotorSim simMotor, TalonFXConfig config) {
-        this.motor = motor;
+    public TalonFXSimulation(DCMotorSim simMotor, TalonFXConfig config) {
+        this.motor = new TalonFX(getID());
         this.simMotor = simMotor;
-        this.configure(config);
+        config.configure(this.motor);
+    }
+
+    public static int getID() {
+        id += 1;
+        return id;
     }
 
     public void configure(TalonFXConfig config) {
