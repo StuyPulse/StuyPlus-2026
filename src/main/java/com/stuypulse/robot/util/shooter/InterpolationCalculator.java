@@ -59,8 +59,8 @@ public class InterpolationCalculator {
 
         double distanceMeters = currentPose.getDistance(hubPose);
 
-        double targetRPM = distanceRPMInterpolator.get(distanceMeters);
-        double flightTime = distanceTOFInterpolator.get(distanceMeters);
+        double targetRPM = shootingDistanceRPMInterpolator.get(distanceMeters);
+        double flightTime = shootingDistanceTOFInterpolator.get(distanceMeters);
         
 
         SmartDashboard.putNumber("InterpolationTesting/Interpolated RPM", targetRPM);
