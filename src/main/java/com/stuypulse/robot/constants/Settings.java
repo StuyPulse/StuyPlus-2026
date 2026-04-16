@@ -129,6 +129,26 @@ public interface Settings {
         double SOTM_DUTY = 0.8;
         double FOTM_DUTY = 0.8;
         double IDLE_DUTY = 0;
+
+        public interface RPMInterpolation{
+            double[][] distanceRPMInterpolationValues = {
+            };
+        }
+
+        public interface TOFInterpolation{
+            double[][] distanceTOFInterpolationValues = {
+            };
+        }
+
+        public interface FerryRPMInterpolation {
+            double[][] ferryDistanceRPMInterpolation = {
+            };
+        }
+
+        public interface FerryTOFInterpolation {
+            double [][] FerryTOFInterpolationInterpolation = {
+            };
+        }
     }
 
     public interface Swerve {
