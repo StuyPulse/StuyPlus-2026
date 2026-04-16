@@ -4,6 +4,7 @@ import java.util.Optional;
 
 import com.ctre.phoenix6.controls.DutyCycleOut;
 import com.ctre.phoenix6.controls.Follower;
+import com.ctre.phoenix6.controls.VelocityTorqueCurrentFOC;
 import com.ctre.phoenix6.controls.VelocityVoltage;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.MotorAlignmentValue;
@@ -76,7 +77,7 @@ public class ShooterImpl extends Shooter {
         }
 
         double targetRPS = getState().getRPM() / 60;
-        VelocityVoltage control = new VelocityVoltage(targetRPS).withEnableFOC(true);
+        VelocityTorqueCurrentFOC control = new VelocityTorqueCurrentFOC(targetRPS);
         DutyCycleOut dutyCycle = new DutyCycleOut(getState().getBottomMotorDutyCycle()).withEnableFOC(true);
 
         shooterMotorLeft.setControl(control);
