@@ -33,7 +33,7 @@ public class InterpolationCalculator {
     static {
         shootingDistanceRPMInterpolator = new InterpolatingDoubleTreeMap();
         for (double[] pair : RPMInterpolation.distanceRPMInterpolationValues) {
-            distanceRPMInterpolator.put(pair[0], pair[1]);
+            shootingDistanceRPMInterpolator.put(pair[0], pair[1]);
         }
 
         distanceTOFInterpolator = new InterpolatingDoubleTreeMap();
