@@ -7,7 +7,11 @@
         {
           "type": "path",
           "data": {
+<<<<<<< Updated upstream:src/main/deploy/pathplanner/autos/LT Disrupt.auto
             "pathName": "LT to N Disrupt"
+=======
+            "pathName": "Right Bump to Left Neutral"
+>>>>>>> Stashed changes:src/main/deploy/pathplanner/autos/Right Bump Neutral 2X.auto
           }
         },
         {

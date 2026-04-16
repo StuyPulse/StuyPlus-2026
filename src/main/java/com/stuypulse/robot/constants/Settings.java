@@ -129,6 +129,46 @@ public interface Settings {
         double SOTM_DUTY = 0.8;
         double FOTM_DUTY = 0.8;
         double IDLE_DUTY = 0;
+
+        public interface RPMInterpolation{
+            double[][] distanceRPMInterpolationValues = {
+                {1.0, 1000.0},
+                {2.0, 1500.0},
+                {3.0, 2000.0},
+                {4.0, 2500.0},
+                {5.0, 3000.0}
+            };
+        }// These values are placeholders and should be replaced with actual data from testing
+
+        public interface TOFInterpolation{
+            double[][] distanceTOFInterpolationValues = {
+                {1.0, 0.5},
+                {2.0, 0.75},
+                {3.0, 1.0},
+                {4.0, 1.25},
+                {5.0, 1.5}
+            };
+        }// These values are placeholders and should be replaced with actual data from testing
+
+        public interface FerryRPMInterpolation {
+            double[][] ferryDistanceRPMInterpolation = {
+                {1.0, 1000.0},
+                {2.0, 1500.0},
+                {3.0, 2000.0},
+                {4.0, 2500.0},
+                {5.0, 3000.0}
+            };
+        }// These values are placeholders and should be replaced with actual data from testing
+
+        public interface FerryTOFInterpolation {
+            double [][] FerryTOFInterpolationInterpolation = {
+                {1.0, 0.5},
+                {2.0, 0.75},
+                {3.0, 1.0},
+                {4.0, 1.25},
+                {5.0, 1.5}
+            };
+        }// These values are placeholders and should be replaced with actual data from testing
     }
 
     public interface Swerve {

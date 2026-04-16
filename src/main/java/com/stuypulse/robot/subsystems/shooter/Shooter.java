@@ -6,6 +6,7 @@ import com.ctre.phoenix6.controls.DutyCycleOut;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.stuypulse.robot.Robot;
 import com.stuypulse.robot.constants.Settings;
+import com.stuypulse.robot.util.shooter.InterpolationCalculator;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -54,8 +55,8 @@ public class Shooter extends SubsystemBase {
         SOTM(() -> 0.0, Settings.Shooter.SOTM_DUTY), // TODO: Make actual suppliers
         FOTM(() -> 0.0, Settings.Shooter.FOTM_DUTY),
         IDLE(() -> 0.0, Settings.Shooter.IDLE_DUTY),
-        SHOOT(() -> 0.0, Settings.Shooter.SHOOT_DUTY),
-        FERRY(() -> 0.0, Settings.Shooter.FERRY_DUTY);
+        SHOOT(() -> InterpolationCalculator.interpolateShotInfo().targetRPM(), Settings.Shooter.SHOOT_DUTY),
+        FERRY(() -> InterpolationCalculator.interpolateFerryingInfo().targetRPM(), Settings.Shooter.FERRY_DUTY);
 
         private DoubleSupplier RPMSupplier;
         private double bottomMotorDutyCycle;
