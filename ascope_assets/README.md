@@ -1,7 +1,10 @@
-To use AdvantageScope visualization:
+# AdvantageScope Visualization Usage:
+<p align="center">
+<img src="https://github.com/Mechanical-Advantage/AdvantageScope/raw/main/docs/docs/img/banner.png"></img>
+</p>
 
-- Extract Robot_StuyPlus.zip here
-- Use AdvantageScope's "Use Custom Assets Folder" option and set it to this folder
-- In AdvantageScope, File > Import Layout, and select AdvantageScope-Layout.json from this directory
-- Simulate robot code
-- In AdvantageScope, use File > Connect to Simulator > NetworkTables 4 (NOT the AdvantageKit one)
+1. Extract `Robot_StuyPlus.zip`
+2. Go to the MenuBar and go to `App > Use Custom Assets Folder`, and select this directory `ascope_assets`,
+3. Go to the MenuBar and go to `File > Import Layout`, and select `AdvantageScope-Layout.json` from this directory
+4. Simulate Robot Code
+5. Go to the MenuBar and go to `File > Connect to Simulator > NetworkTables 4`. Do <b><u>NOT</u></b> select `NetworkTables 4 (Advantage Kit)` as we currently don't use AdvantageKit.

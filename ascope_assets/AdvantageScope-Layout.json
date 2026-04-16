@@ -1,13 +1,13 @@
 {
   "hubs": [
     {
-      "x": -8,
-      "y": -8,
-      "width": 1871,
-      "height": 1096,
+      "x": 257,
+      "y": 149,
+      "width": 1110,
+      "height": 659,
       "state": {
         "sidebar": {
-          "width": 414,
+          "width": 311,
           "expanded": [
             "/AdvScope"
           ]
@@ -52,6 +52,13 @@
                     "options": {}
                   },
                   {
+                    "type": "component",
+                    "logKey": "NT:AdvScope/FuelLayers",
+                    "logType": "Pose3d[]",
+                    "visible": true,
+                    "options": {}
+                  },
+                  {
                     "type": "gamePiece",
                     "logKey": "NT:AdvScope/FuelPoses",
                     "logType": "Pose3d[]",
@@ -68,14 +75,14 @@
                 "cameraIndex": -2,
                 "orbitFov": 50,
                 "cameraPosition": [
-                  -0.4423963837713818,
-                  1.1134987556522398,
-                  -2.0402697257043214
+                  -2.972062257856306,
+                  2.536358786930796,
+                  -3.778876989383026
                 ],
                 "cameraTarget": [
-                  1.734154012444316,
-                  0.2860736396995302,
-                  0.17504219428652165
+                  -2.6561798212157957,
+                  1.2242086216744101,
+                  0.17882720377469064
                 ]
               },
               "controlsHeight": 200
