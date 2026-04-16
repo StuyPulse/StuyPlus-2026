@@ -36,9 +36,9 @@ public class InterpolationCalculator {
             shootingDistanceRPMInterpolator.put(pair[0], pair[1]);
         }
 
-        distanceTOFInterpolator = new InterpolatingDoubleTreeMap();
+        shootingDistanceTOFInterpolator = new InterpolatingDoubleTreeMap();
         for (double[] pair : TOFInterpolation.distanceTOFInterpolationValues) {
-            distanceTOFInterpolator.put(pair[0], pair[1]);
+            shootingDistanceTOFInterpolator.put(pair[0], pair[1]);
         }
 
         ferryingDistanceRPMInterpolator = new InterpolatingDoubleTreeMap();
