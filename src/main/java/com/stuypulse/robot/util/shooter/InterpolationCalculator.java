@@ -20,20 +20,11 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class InterpolationCalculator {
 
-    public static InterpolatingDoubleTreeMap distanceAngleInterpolator;
     public static InterpolatingDoubleTreeMap distanceRPMInterpolator;
     public static InterpolatingDoubleTreeMap distanceTOFInterpolator;
-
     public static InterpolatingDoubleTreeMap ferryingDistanceRPMInterpolator;
 
-    public record InterpolatedShotInfo(
-        // Rotation2d targetHoodAngle,
-        double targetRPM,
-        double flightTimeSeconds) {
-    }
-
-    public record InterpolatedFerryInfo(
-        // Rotation2d targetHoodAngle,
+    public record InterpolatedInfo(
         double targetRPM,
         double flightTimeSeconds) {   
     }
@@ -55,13 +46,13 @@ public class InterpolationCalculator {
         }
     }
     
-    public static InterpolatedShotInfo interpolateShotInfo(){
+    public static InterpolatedInfo interpolateShotInfo(){
         CommandSwerveDrivetrain swerve = CommandSwerveDrivetrain.getInstance();
 
         return interpolateShotInfo(swerve.getPose(), Field.getHubPose());
     }
 
-    public static InterpolatedShotInfo interpolateShotInfo(Pose2d shooterPose, Pose2d targetPose) {
+    public static InterpolatedInfo interpolateShotInfo(Pose2d shooterPose, Pose2d targetPose) {
         Translation2d hubPose = targetPose.getTranslation();
         Translation2d currentPose = shooterPose.getTranslation();
 
@@ -74,13 +65,13 @@ public class InterpolationCalculator {
         SmartDashboard.putNumber("InterpolationTesting/Interpolated RPM", targetRPM);
         SmartDashboard.putNumber("InterpolationTesting/Interpolated TOF", flightTime);
 
-        return new InterpolatedShotInfo(
+        return new InterpolatedInfo(
             targetRPM, 
             flightTime
         );
     }
     
-    public static InterpolatedFerryInfo interpolateFerryingInfo() {
+    public static InterpolatedInfo interpolateFerryingInfo() {
         CommandSwerveDrivetrain swerve = CommandSwerveDrivetrain.getInstance();
         Pose2d shooterPose = swerve.getPose();
         Pose2d ferryPose = Field.getFerryZonePose(swerve.getPose().getTranslation());
@@ -99,7 +90,7 @@ public class InterpolationCalculator {
         );
     }
 
-    public static InterpolatedFerryInfo interpolateFerryingInfo(Pose2d shooterPose, Pose2d targetPose) {
+    public static InterpolatedInfo interpolateFerryingInfo(Pose2d shooterPose, Pose2d targetPose) {
         Translation2d currentPose = shooterPose.getTranslation();
         Translation2d ferryPose = targetPose.getTranslation();
 
@@ -108,10 +99,10 @@ public class InterpolationCalculator {
         double targetRPM = ferryingDistanceRPMInterpolator.get(distanceMeters);
         double flightTime = 2.1;
         
-        SmartDashboard.putNumber("Superstructure/Interpolated Ferry RPM", targetRPM);
-        SmartDashboard.putNumber("Superstructure/Interpolated Ferry TOF", flightTime);
+        SmartDashboard.putNumber("Shooter/Interpolated Ferry RPM", targetRPM);
+        SmartDashboard.putNumber("Shooter/Interpolated Ferry TOF", flightTime);
 
-        return new InterpolatedFerryInfo(
+        return new InterpolatedInfo(
             targetRPM, 
             flightTime
         );
