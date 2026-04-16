@@ -20,8 +20,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class InterpolationCalculator {
 
-    public static InterpolatingDoubleTreeMap distanceRPMInterpolator;
-    public static InterpolatingDoubleTreeMap distanceTOFInterpolator;
+    public static InterpolatingDoubleTreeMap shootingDistanceRPMInterpolator;
+    public static InterpolatingDoubleTreeMap shootingDistanceTOFInterpolator;
     public static InterpolatingDoubleTreeMap ferryingDistanceRPMInterpolator;
     public static InterpolatingDoubleTreeMap ferryingDistanceTOFInterpolator;
 
