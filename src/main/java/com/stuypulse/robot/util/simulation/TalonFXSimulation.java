@@ -5,26 +5,109 @@ import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.sim.TalonFXSimState;
 import com.stuypulse.robot.constants.Motors.TalonFXConfig;
 
+import edu.wpi.first.math.Num;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.units.measure.*;
 import static edu.wpi.first.units.Units.*;
 
 import edu.wpi.first.wpilibj.simulation.DCMotorSim;
+import edu.wpi.first.wpilibj.simulation.ElevatorSim;
+import edu.wpi.first.wpilibj.simulation.FlywheelSim;
+import edu.wpi.first.wpilibj.simulation.LinearSystemSim;
 
 public class TalonFXSimulation {
-    private static int id = 50; // avoid clashes with other ids?
-    private final TalonFX motor;
-    private final DCMotorSim simMotor;
+    private interface SystemSim { // idrk what to call this class
+        public void setInputVoltage(Voltage voltage);
 
-    public TalonFXSimulation(DCMotorSim simMotor) {
-        this.motor = new TalonFX(getID());
-        this.simMotor = simMotor;
+        public void update(double dtSeconds);
+
+        public Angle getAngularPosition();
+
+        public AngularVelocity getAngularVelocity();
+
+        public static SystemSim of(DCMotorSim sim) {
+            return new SystemSim() { // anonymous class ts tuff
+                @Override
+                public void setInputVoltage(Voltage voltage) {
+                    sim.setInputVoltage(voltage.in(Volts));
+                }
+                @Override
+                public void update(double dt) {
+                    sim.update(dt);
+                }
+                @Override
+                public Angle getAngularPosition() {
+                    return Radians.of(sim.getAngularPositionRad());
+                }
+                @Override
+                public AngularVelocity getAngularVelocity() {
+                    return RadiansPerSecond.of(sim.getAngularVelocityRadPerSec());
+                }
+            };
+        }
+
+        public static SystemSim of(FlywheelSim sim) {
+            return new SystemSim() {
+                @Override
+                public void setInputVoltage(Voltage voltage) {
+                    sim.setInputVoltage(voltage.in(Volts));
+                }
+                @Override
+                public void update(double dt) {
+                    sim.update(dt);
+                }
+                @Override
+                public Angle getAngularPosition() {
+                    return Radians.of(0); // flywheels dont track pos ig
+                }
+                @Override
+                public AngularVelocity getAngularVelocity() {
+                    return RadiansPerSecond.of(sim.getAngularVelocityRadPerSec());
+                }
+            };
+        }
+
+        public static SystemSim of(ElevatorSim sim, Distance drumRadius) {
+            return new SystemSim() {
+                @Override
+                public void setInputVoltage(Voltage voltage) {
+                    sim.setInputVoltage(voltage.in(Volts));
+                }
+                @Override
+                public void update(double dt) {
+                    sim.update(dt);
+                }
+                public Angle getAngularPosition() {
+                    return Radians.of(sim.getPositionMeters() / drumRadius.in(Meters));
+                }
+
+                public AngularVelocity getAngularVelocity() {
+                    return RadiansPerSecond.of(sim.getVelocityMetersPerSecond() / drumRadius.in(Meters));
+                }
+            };
+        }
     }
 
-    public TalonFXSimulation(DCMotorSim simMotor, TalonFXConfig config) {
+    private static int id = 50;
+
+    private final TalonFX motor;
+    private final SystemSim simMotor;
+
+    private TalonFXSimulation(SystemSim adapter) {
         this.motor = new TalonFX(getID());
-        this.simMotor = simMotor;
-        config.configure(this.motor);
+        this.simMotor = adapter;
+    }
+
+    public TalonFXSimulation(DCMotorSim sim) {
+        this(SystemSim.of(sim));
+    }
+
+    public TalonFXSimulation(FlywheelSim sim) {
+        this(SystemSim.of(sim));
+    }
+
+    public TalonFXSimulation(ElevatorSim sim, Distance drumRadius) {
+        this(SystemSim.of(sim, drumRadius));
     }
 
     public static int getID() {
@@ -32,8 +115,9 @@ public class TalonFXSimulation {
         return id;
     }
 
-    public void configure(TalonFXConfig config) {
+    public TalonFXSimulation configure(TalonFXConfig config) {
         config.configure(motor);
+        return this; // method chaining is peak
     }
 
     public void setControl(ControlRequest request) {
@@ -44,24 +128,17 @@ public class TalonFXSimulation {
         return motor;
     }
 
-    public DCMotorSim getSimMotor() {
-        return simMotor;
-    }
-
     public Rotation2d getVelocity() {
-        return Rotation2d.fromRadians(simMotor.getAngularVelocityRadPerSec());
+        return Rotation2d.fromRadians(simMotor.getAngularVelocity().in(RadiansPerSecond));
     }
 
     public void update(double dtSeconds) {
         final TalonFXSimState state = motor.getSimState();
 
-        simMotor.setInputVoltage(state.getMotorVoltage());
+        simMotor.setInputVoltage(Volts.of(state.getMotorVoltage()));
         simMotor.update(dtSeconds);
 
-        final Angle rotorPositionRotations = Rotations.of(simMotor.getAngularPositionRad());
-        final AngularVelocity feederRotorRPS = RPM.of(simMotor.getAngularVelocityRPM());
-
-        state.setRawRotorPosition(rotorPositionRotations);
-        state.setRotorVelocity(feederRotorRPS);
+        state.setRawRotorPosition(simMotor.getAngularPosition().in(Rotations));
+        state.setRotorVelocity(simMotor.getAngularVelocity().in(RotationsPerSecond));
     }
 }

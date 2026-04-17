@@ -29,8 +29,8 @@ public class FeederSim extends Feeder {
             DCMotor.getKrakenX60(2)
         );
 
-        feederLeader = new TalonFXSimulation(feederSim, Motors.Feeder.LEADER_CONFIG);
-        feederFollower = new TalonFXSimulation(feederSim, Motors.Feeder.FOLLOWER_CONFIG);
+        feederLeader = new TalonFXSimulation(feederSim).configure(Motors.Feeder.LEADER_CONFIG);
+        feederFollower = new TalonFXSimulation(feederSim).configure(Motors.Feeder.FOLLOWER_CONFIG);
 
         feederFollower.setControl(new Follower(feederLeader.getMotor().getDeviceID(), MotorAlignmentValue.Opposed));
 
