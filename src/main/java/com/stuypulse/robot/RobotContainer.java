@@ -13,7 +13,6 @@ import com.stuypulse.robot.commands.auton.LBStraight;
 import com.stuypulse.robot.commands.auton.LTDisrupt;
 import com.stuypulse.robot.commands.auton.LBMidlineSweep;
 import com.stuypulse.robot.commands.auton.LBOuttake;
-import com.stuypulse.robot.commands.auton.LBStraight;
 import com.stuypulse.robot.commands.auton.OutpostOnly;
 import com.stuypulse.robot.commands.auton.RBDisrupt;
 import com.stuypulse.robot.commands.auton.RBFerry;
@@ -22,7 +21,6 @@ import com.stuypulse.robot.commands.auton.RBStraight;
 import com.stuypulse.robot.commands.auton.RTDisrupt;
 import com.stuypulse.robot.commands.auton.RBMidlineSweep;
 import com.stuypulse.robot.commands.auton.RBOuttake;
-import com.stuypulse.robot.commands.auton.RBStraight;
 import com.stuypulse.robot.commands.auton.TwoMeterPath;
 import com.stuypulse.robot.commands.swerve.SwerveDriveDrive;
 import com.stuypulse.robot.commands.swerve.SwerveDriveResetRotation;
@@ -43,7 +41,6 @@ import com.stuypulse.robot.subsystems.intake.Intake.IntakeState;
 import com.stuypulse.robot.subsystems.swerve.CommandSwerveDrivetrain;
 import com.stuypulse.robot.subsystems.vision.LimelightVision;
 import com.stuypulse.robot.util.PathUtil.AutonConfig;
-import com.stuypulse.stuylib.input.Gamepad;
 
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
@@ -52,15 +49,11 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.ConditionalCommand;
 import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
-import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
-import edu.wpi.first.wpilibj2.command.button.Trigger;
 
 public class RobotContainer {
     // Gamepads
     public final CommandXboxController driver = new CommandXboxController(Ports.Gamepad.DRIVER);
-    public final CommandXboxController operator = new CommandXboxController(Ports.Gamepad.OPERATOR);
     
     // Subsystem
 
@@ -146,34 +139,6 @@ public class RobotContainer {
         //Bottom Left Paddle
         driver.x()
             .whileTrue(new SwerveDriveXMode());
-
-        // SOTM switches between SOTM and FOTM based on whether we're in the alliance zone or not
-        driver.start()
-        .whileTrue(
-            new ConditionalCommand(
-                new SwerveSOTM(driver).alongWith(new ShooterSOTM(), new IntakeAgitateOnce().repeatedly()),
-                new SwerveFOTM(driver).alongWith(new ShooterFOTM(), new IntakeAgitateOnce().repeatedly()),
-                () -> Field.inAllianceZone()))
-        .onFalse(new IntakeSetIntake());
-
-        //Manual Shooting
-        operator.b()
-            .whileTrue(new SwerveDriveRightCorner())
-            .onFalse(new IntakeSetIntake());
-        operator.x()
-            .whileTrue(new SwerveDriveLeftCorner())
-            .onFalse(new IntakeSetIntake());
-        operator.a()
-            .whileTrue(new ShooterHub().alongWith(new IntakeAgitateOnce().repeatedly()))
-            .onFalse(new IntakeSetIntake());
-
-        //Shoot or Ferry while stationary
-        operator.y()
-            .whileTrue(new ConditionalCommand(
-                new SwerveDriveAlignedToHub().andThen(new SwerveDriveXMode().alongWith(new IntakeAgitateOnce().repeatedly())),
-                new SwerveDriveAlignedToAllianceZone().andThen(new SwerveDriveXMode().alongWith(new IntakeAgitateOnce().repeatedly())),
-                () -> Field.inAllianceZone()))
-            .onFalse(new IntakeSetIntake());
     }
 
     /**************/

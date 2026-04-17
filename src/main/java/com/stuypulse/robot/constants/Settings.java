@@ -130,6 +130,8 @@ public interface Settings {
         double FOTM_DUTY = 0.8;
         double IDLE_DUTY = 0;
 
+        double FLYWHEEL_RADIUS = 3; // TODO: get
+
         public interface RPMInterpolation{
             double[][] distanceRPMInterpolationValues = {
                 {1.0, 1000.0},
