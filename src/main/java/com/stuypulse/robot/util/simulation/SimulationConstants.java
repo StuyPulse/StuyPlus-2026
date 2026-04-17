@@ -217,10 +217,10 @@ public interface SimulationConstants {
     public interface Shooter {
         double BPS = 8;
 
-        double COMPRESSION_FACTOR = 0.85;
+        double COMPRESSION_FACTOR = 0.766608799;
 
         // public static double rpmToMps(double RPM) {
-        //     return ((Settings.Shooter.FLYWHEEL_RADIUS * RPM * Math.PI) / 60.0) * COMPRESSION_FACTOR;
+        //     return ((Settings.Shooter.WHEEL_RADIUS * RPM * Math.PI) / 60.0) * COMPRESSION_FACTOR;
         // }
 
         public Offsets OFFSETS = new Offsets(Units.inchesToMeters(-7.836), 0, 0.7);
