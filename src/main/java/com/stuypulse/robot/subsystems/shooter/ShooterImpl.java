@@ -83,11 +83,39 @@ public class ShooterImpl extends Shooter {
         shooterMotorLeft.setControl(control);
         bottomMotorLeft.setControl(dutyCycle);
 
-        this.logMotor("ShooterLeft", shooterMotorLeft);
-        this.logMotor("ShooterCenter", shooterMotorCenter);
-        this.logMotor("ShooterRight", shooterMotorRight);
+        SmartDashboard.putNumber("Shooter/Motors/ShooterLeft/MotorVoltage", shooterMotorLeft.getMotorVoltage().getValueAsDouble());
+        SmartDashboard.putNumber("Shooter/Motors/ShooterLeft/SupplyCurrent", shooterMotorLeft.getSupplyCurrent().getValueAsDouble());
+        SmartDashboard.putNumber("Shooter/Motors/ShooterLeft/StatorCurrent", shooterMotorLeft.getStatorCurrent().getValueAsDouble());
 
-        this.logMotor("BottomLeft", bottomMotorLeft);
-        this.logMotor("BottomRight", bottomMotorRight);
+        SmartDashboard.putNumber("Shooter/Motors/ShooterLeft/DutyCycle", shooterMotorLeft.getDutyCycle().getValueAsDouble());
+        SmartDashboard.putNumber("Shooter/Motors/ShooterLeft/RPM", shooterMotorLeft.getVelocity().getValueAsDouble());
+
+        SmartDashboard.putNumber("Shooter/Motors/ShooterCenter/MotorVoltage", shooterMotorCenter.getMotorVoltage().getValueAsDouble());
+        SmartDashboard.putNumber("Shooter/Motors/ShooterCenter/SupplyCurrent", shooterMotorCenter.getSupplyCurrent().getValueAsDouble());
+        SmartDashboard.putNumber("Shooter/Motors/ShooterCenter/StatorCurrent", shooterMotorCenter.getStatorCurrent().getValueAsDouble());
+
+        SmartDashboard.putNumber("Shooter/Motors/ShooterCenter/DutyCycle", shooterMotorCenter.getDutyCycle().getValueAsDouble());
+        SmartDashboard.putNumber("Shooter/Motors/ShooterCenter/RPM", shooterMotorCenter.getVelocity().getValueAsDouble());
+
+        SmartDashboard.putNumber("Shooter/Motors/ShooterRight/MotorVoltage", shooterMotorRight.getMotorVoltage().getValueAsDouble());
+        SmartDashboard.putNumber("Shooter/Motors/ShooterRight/SupplyCurrent", shooterMotorRight.getSupplyCurrent().getValueAsDouble());
+        SmartDashboard.putNumber("Shooter/Motors/ShooterRight/StatorCurrent", shooterMotorRight.getStatorCurrent().getValueAsDouble());
+
+        SmartDashboard.putNumber("Shooter/Motors/ShooterRight/DutyCycle", shooterMotorRight.getDutyCycle().getValueAsDouble());
+        SmartDashboard.putNumber("Shooter/Motors/ShooterRight/RPM", shooterMotorRight.getVelocity().getValueAsDouble());
+
+        SmartDashboard.putNumber("Shooter/Motors/BottomLeft/MotorVoltage", bottomMotorLeft.getMotorVoltage().getValueAsDouble());
+        SmartDashboard.putNumber("Shooter/Motors/BottomLeft/SupplyCurrent", bottomMotorLeft.getSupplyCurrent().getValueAsDouble());
+        SmartDashboard.putNumber("Shooter/Motors/BottomLeft/StatorCurrent", bottomMotorLeft.getStatorCurrent().getValueAsDouble());
+
+        SmartDashboard.putNumber("Shooter/Motors/BottomLeft/DutyCycle", bottomMotorLeft.getDutyCycle().getValueAsDouble());
+        SmartDashboard.putNumber("Shooter/Motors/BottomLeft/RPM", bottomMotorLeft.getVelocity().getValueAsDouble());
+
+        SmartDashboard.putNumber("Shooter/Motors/BottomRight/MotorVoltage", bottomMotorRight.getMotorVoltage().getValueAsDouble());
+        SmartDashboard.putNumber("Shooter/Motors/BottomRight/SupplyCurrent", bottomMotorRight.getSupplyCurrent().getValueAsDouble());
+        SmartDashboard.putNumber("Shooter/Motors/BottomRight/StatorCurrent", bottomMotorRight.getStatorCurrent().getValueAsDouble());
+
+        SmartDashboard.putNumber("Shooter/Motors/BottomRight/DutyCycle", bottomMotorRight.getDutyCycle().getValueAsDouble());
+        SmartDashboard.putNumber("Shooter/Motors/BottomRight/RPM", bottomMotorRight.getVelocity().getValueAsDouble());
     }
 }

@@ -39,17 +39,6 @@ public class Shooter extends SubsystemBase {
         return this.state;
     }
 
-    public void logMotor(String motorName, TalonFX motor) {
-        String stem = "Shooter/Motors/%s/%s".formatted(motorName);
-        
-        SmartDashboard.putNumber(stem.formatted("MotorVoltage"), motor.getMotorVoltage().getValueAsDouble());
-        SmartDashboard.putNumber(stem.formatted("SupplyCurrent"), motor.getSupplyCurrent().getValueAsDouble());
-        SmartDashboard.putNumber(stem.formatted("StatorCurrent"), motor.getStatorCurrent().getValueAsDouble());
-
-        SmartDashboard.putNumber(stem.formatted("DutyCycle"), motor.getDutyCycle().getValueAsDouble());
-        SmartDashboard.putNumber(stem.formatted("RPM"), motor.getVelocity().getValueAsDouble());
-    }
-
     public enum ShooterState {
 
         SOTM(() -> 0.0, Settings.Shooter.SOTM_DUTY), // TODO: Make actual suppliers
