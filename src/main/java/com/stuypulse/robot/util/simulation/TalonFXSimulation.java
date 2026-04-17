@@ -67,7 +67,7 @@ public class TalonFXSimulation {
             };
         }
 
-        public static SystemSim of(ElevatorSim sim, Distance drumRadius) {
+        public static SystemSim of(ElevatorSim sim) {
             return new SystemSim() {
                 @Override
                 public void setInputVoltage(Voltage voltage) {
@@ -78,11 +78,11 @@ public class TalonFXSimulation {
                     sim.update(dt);
                 }
                 public Angle getAngularPosition() {
-                    return Radians.of(sim.getPositionMeters() / drumRadius.in(Meters));
+                    return Radians.of(sim.getPositionMeters());
                 }
 
                 public AngularVelocity getAngularVelocity() {
-                    return RadiansPerSecond.of(sim.getVelocityMetersPerSecond() / drumRadius.in(Meters));
+                    return RadiansPerSecond.of(sim.getVelocityMetersPerSecond());
                 }
             };
         }
@@ -106,8 +106,8 @@ public class TalonFXSimulation {
         this(SystemSim.of(sim));
     }
 
-    public TalonFXSimulation(ElevatorSim sim, Distance drumRadius) {
-        this(SystemSim.of(sim, drumRadius));
+    public TalonFXSimulation(ElevatorSim sim) {
+        this(SystemSim.of(sim));
     }
 
     public static int getID() {
