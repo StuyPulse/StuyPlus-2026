@@ -121,8 +121,7 @@ public interface Settings {
         double RAMP_RATE = 0.25;
         double STEP_VOLTAGE = 900;
 
-        double CORNER_RPM = 2700; 
-        double HUB_RPM = 2500;
+        double WHEEL_RADIUS_METRES = Units.inchesToMeters(4);
 
         double SHOOT_DUTY = 1;
         double FERRY_DUTY = 1;

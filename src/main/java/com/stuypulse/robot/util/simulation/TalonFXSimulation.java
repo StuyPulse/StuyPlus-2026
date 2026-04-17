@@ -5,7 +5,6 @@ import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.sim.TalonFXSimState;
 import com.stuypulse.robot.constants.Motors.TalonFXConfig;
 
-import edu.wpi.first.math.Num;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.units.measure.*;
 import static edu.wpi.first.units.Units.*;
@@ -13,7 +12,6 @@ import static edu.wpi.first.units.Units.*;
 import edu.wpi.first.wpilibj.simulation.DCMotorSim;
 import edu.wpi.first.wpilibj.simulation.ElevatorSim;
 import edu.wpi.first.wpilibj.simulation.FlywheelSim;
-import edu.wpi.first.wpilibj.simulation.LinearSystemSim;
 
 public class TalonFXSimulation {
     private interface SystemSim { // idrk what to call this class
@@ -67,7 +65,7 @@ public class TalonFXSimulation {
             };
         }
 
-        public static SystemSim of(ElevatorSim sim, Distance drumRadius) {
+        public static SystemSim of(ElevatorSim sim) {
             return new SystemSim() {
                 @Override
                 public void setInputVoltage(Voltage voltage) {
@@ -78,11 +76,11 @@ public class TalonFXSimulation {
                     sim.update(dt);
                 }
                 public Angle getAngularPosition() {
-                    return Radians.of(sim.getPositionMeters() / drumRadius.in(Meters));
+                    return Radians.of(sim.getPositionMeters());
                 }
 
                 public AngularVelocity getAngularVelocity() {
-                    return RadiansPerSecond.of(sim.getVelocityMetersPerSecond() / drumRadius.in(Meters));
+                    return RadiansPerSecond.of(sim.getVelocityMetersPerSecond());
                 }
             };
         }
@@ -106,8 +104,8 @@ public class TalonFXSimulation {
         this(SystemSim.of(sim));
     }
 
-    public TalonFXSimulation(ElevatorSim sim, Distance drumRadius) {
-        this(SystemSim.of(sim, drumRadius));
+    public TalonFXSimulation(ElevatorSim sim) {
+        this(SystemSim.of(sim));
     }
 
     public static int getID() {

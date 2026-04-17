@@ -102,7 +102,6 @@ public class IntakeSim extends Intake {
 
         rollerMotor.setControl(rollerController.withOutput(getState().getTargetDutyCycle()));
 
-        rollerSim.update(Settings.DT);
         rollerMotor.update(Settings.DT);
         rollerFollower.update(Settings.DT);
 

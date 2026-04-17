@@ -49,7 +49,7 @@ public interface SimulationConstants {
      * @param pitch Rotation about the Y axis
      * @param yaw Rotation about the Z axis
      */
-    public static record Offsets(double x, double y, double z,
+    public static record Offsets(Distance x, Distance y, Distance z,
         Angle roll, Angle pitch, Angle yaw) {
 
         /**
@@ -59,7 +59,17 @@ public interface SimulationConstants {
          * @param z Z translation from the robot origin (meters)
          */
         public Offsets(double x, double y, double z) {
-            this(x, y, z, Radians.of(0), Radians.of(0), Radians.of(0));
+            this(Meters.of(x), Meters.of(y), Meters.of(z), Radians.of(0), Radians.of(0), Radians.of(0));
+        }
+
+        /**
+         * <h2>Constructs an Offsets instance with no rotation, using your unit of choice</h2>
+         * @param x X translation from the robot origin
+         * @param y Y translation from the robot origin
+         * @param z Z translation from the robot origin
+         */
+        public Offsets(Distance x, Distance y, Distance z) {
+            this(x.in(Meters), y.in(Meters), z.in(Meters));
         }
 
         /**
@@ -69,7 +79,20 @@ public interface SimulationConstants {
          * @param yaw Rotation about the Z axis
          */
         public Offsets(Angle roll, Angle pitch, Angle yaw) {
-            this(0, 0, 0, roll, pitch, yaw);
+            this(Meters.of(0), Meters.of(0), Meters.of(0), roll, pitch, yaw);
+        }
+
+        /**
+         * <h2>Constructs an Offsets instance with no rotation</h2>
+         * @param x X translation from the robot origin (meters)
+         * @param y Y translation from the robot origin (meters)
+         * @param z Z translation from the robot origin (meters)
+         * @param roll Rotation about the X axis
+         * @param pitch Rotation about the Y axis
+         * @param yaw Rotation about the Z axis
+         */
+        public Offsets(double x, double y, double z, Angle roll, Angle pitch, Angle yaw) {
+            this(Meters.of(x), Meters.of(y), Meters.of(z), roll, pitch, yaw);
         }
 
         /**
@@ -77,7 +100,7 @@ public interface SimulationConstants {
          * @return translation from the robot origin
          */
         public Translation3d toTranslation3d() {
-            return new Translation3d(x, y, z);
+            return new Translation3d(x.in(Meters), y.in(Meters), z.in(Meters));
         }
 
         /**
@@ -104,7 +127,7 @@ public interface SimulationConstants {
          */
         public Pose3d applyToPose3d(Pose3d pose) {
             return new Pose3d(
-                pose.getX() + x, pose.getY() + y, pose.getZ() + z,
+                pose.getMeasureX().plus(x), pose.getMeasureY().plus(y), pose.getMeasureZ().plus(z),
                 applyToRotation3d(pose.getRotation())
             );
         }
@@ -158,7 +181,7 @@ public interface SimulationConstants {
          * @return a new pose of this offset's X, Y, and yaw
          */
         public Pose2d applyToPose2d(Pose2d pose) {
-            return new Pose2d(pose.getX() + x, pose.getY() + y,
+            return new Pose2d(pose.getMeasureX().plus(x), pose.getMeasureY().plus(y),
                 applyToRotation2d(pose.getRotation()));
         }
 
@@ -198,7 +221,7 @@ public interface SimulationConstants {
 
         public Offsets PIVOT_OFFSETS = new Offsets(
             0.2393388152,
-            0,
+            0.0,
             0.19685, // CAD zero angle offset degrees
             Degrees.of(-40),
             Degrees.of(0),
@@ -222,10 +245,10 @@ public interface SimulationConstants {
     public interface Shooter {
         double BPS = 8;
 
-        double COMPRESSION_FACTOR = 0.85;
+        double COMPRESSION_METRES = Units.inchesToMeters(1.379342);
 
         public static double rpmToMps(double RPM) {
-            return ((Settings.Shooter.FLYWHEEL_RADIUS * RPM * Math.PI) / 60.0) * COMPRESSION_FACTOR;
+            return ((Settings.Shooter.WHEEL_RADIUS_METRES * 2 - COMPRESSION_METRES) * RPM * Math.PI) / 60.0;
         }
 
         public Offsets OFFSETS = new Offsets(Units.inchesToMeters(-7.836), 0, 0.7);

@@ -47,7 +47,7 @@ public class Shooter extends SubsystemBase {
         SmartDashboard.putNumber(stem.formatted("StatorCurrent"), motor.getStatorCurrent().getValueAsDouble());
 
         SmartDashboard.putNumber(stem.formatted("DutyCycle"), motor.getDutyCycle().getValueAsDouble());
-        SmartDashboard.putNumber(stem.formatted("RPM"), motor.getRotorVelocity().getValueAsDouble());
+        SmartDashboard.putNumber(stem.formatted("RPM"), motor.getVelocity().getValueAsDouble());
     }
 
     public enum ShooterState {
