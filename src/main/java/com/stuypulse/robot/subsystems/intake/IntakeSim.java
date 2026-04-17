@@ -48,8 +48,8 @@ public class IntakeSim extends Intake {
             ),
             DCMotor.getKrakenX60(2)
         );
-        rollerMotor = new TalonFXSimulation(rollerSim, Motors.Intake.LEFT_ROLLER_CONFIG);
-        rollerFollower = new TalonFXSimulation(rollerSim, Motors.Intake.RIGHT_ROLLER_CONFIG);
+        rollerMotor = new TalonFXSimulation(rollerSim).configure(Motors.Intake.LEFT_ROLLER_CONFIG);
+        rollerFollower = new TalonFXSimulation(rollerSim).configure(Motors.Intake.RIGHT_ROLLER_CONFIG);
         rollerFollower.setControl(new Follower(rollerMotor.getMotor().getDeviceID(), MotorAlignmentValue.Opposed));
         rollerController = new DutyCycleOut(0)
             .withEnableFOC(true);
