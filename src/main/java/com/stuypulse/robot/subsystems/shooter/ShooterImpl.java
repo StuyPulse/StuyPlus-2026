@@ -88,6 +88,9 @@ public class ShooterImpl extends Shooter {
         this.logMotor("ShooterRight", shooterMotorRight);
 
         this.logMotor("BottomLeft", bottomMotorLeft);
+        SmartDashboard.putNumber("Shooter/Motors/BottomLeft/DutyCycle", bottomMotorLeft.getDutyCycle().getValueAsDouble());
+
         this.logMotor("BottomRight", bottomMotorRight);
+        SmartDashboard.putNumber("Shooter/Motors/BottomRight/DutyCycle", bottomMotorRight.getDutyCycle().getValueAsDouble());
     }
 }

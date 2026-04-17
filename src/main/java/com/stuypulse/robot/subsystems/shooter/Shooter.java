@@ -46,7 +46,6 @@ public class Shooter extends SubsystemBase {
         SmartDashboard.putNumber(stem + "SupplyCurrent", motor.getSupplyCurrent().getValueAsDouble());
         SmartDashboard.putNumber(stem + "StatorCurrent", motor.getStatorCurrent().getValueAsDouble());
 
-        SmartDashboard.putNumber(stem + "DutyCycle", motor.getDutyCycle().getValueAsDouble());
         SmartDashboard.putNumber(stem + "RPM", motor.getVelocity().getValueAsDouble());
     }
 
