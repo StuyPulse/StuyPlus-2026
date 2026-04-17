@@ -1,0 +1,25 @@
+{
+  "version": "2025.0",
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "LB to N Midline"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "LN Sweep Midline"
+          }
+        }
+      ]
+    }
+  },
+  "resetOdom": true,
+  "folder": "Mid(Line)",
+  "choreoAuto": false
+}

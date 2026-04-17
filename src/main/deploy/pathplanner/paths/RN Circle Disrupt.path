@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 7.25,
-        "y": 1.0
+        "x": 7.364293865905848,
+        "y": 0.6147000000000002
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.249999999999999,
-        "y": 1.0000000000000002
+        "x": 6.3642938659058474,
+        "y": 0.6147000000000004
       },
       "isLocked": false,
       "linkedName": "RB Disrupt 1"
@@ -33,15 +33,15 @@
     {
       "anchor": {
         "x": 7.25,
-        "y": 4.0
+        "y": 3.5
       },
       "prevControl": {
         "x": 6.379,
-        "y": 4.0
+        "y": 3.5
       },
       "nextControl": {
         "x": 8.121000000000002,
-        "y": 4.0
+        "y": 3.5
       },
       "isLocked": false,
       "linkedName": "RB Disrupt 3"
@@ -64,12 +64,12 @@
     },
     {
       "anchor": {
-        "x": 7.25,
-        "y": 1.0
+        "x": 7.364293865905848,
+        "y": 0.6147000000000002
       },
       "prevControl": {
-        "x": 8.25,
-        "y": 0.9999999999999999
+        "x": 8.364293865905848,
+        "y": 0.6147000000000001
       },
       "nextControl": null,
       "isLocked": false,
@@ -91,17 +91,17 @@
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0,
     "nominalVoltage": 12.0,
-    "unlimited": false
+    "unlimited": true
   },
   "goalEndState": {
     "velocity": 3.0,
     "rotation": -35.0
   },
   "reversed": false,
-  "folder": null,
+  "folder": "Disrupt",
   "idealStartingState": {
     "velocity": 4.0,
     "rotation": -35.0
   },
-  "useDefaultConstraints": true
+  "useDefaultConstraints": false
 }

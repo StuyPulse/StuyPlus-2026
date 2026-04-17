@@ -7,31 +7,31 @@
         {
           "type": "path",
           "data": {
-            "pathName": "R.B. to R.N."
+            "pathName": "RB to N Ferry"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "N to R.T."
+            "pathName": "N to RT Ferry"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "R.T. Circle Hub"
+            "pathName": "RT Hub Ferry"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "R.N. to H.P."
+            "pathName": "N to Outpost Ferry"
           }
         }
       ]
     }
   },
   "resetOdom": true,
-  "folder": null,
+  "folder": "Ferry",
   "choreoAuto": false
 }

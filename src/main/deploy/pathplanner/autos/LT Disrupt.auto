@@ -7,19 +7,11 @@
         {
           "type": "path",
           "data": {
+<<<<<<< Updated upstream:src/main/deploy/pathplanner/autos/LT Disrupt.auto
             "pathName": "LT to N Disrupt"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "LT First Circle Disrupt"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "LT Circle Disrupt"
+=======
+            "pathName": "Right Bump to Left Neutral"
+>>>>>>> Stashed changes:src/main/deploy/pathplanner/autos/Right Bump Neutral 2X.auto
           }
         },
         {
@@ -37,19 +29,25 @@
         {
           "type": "path",
           "data": {
-            "pathName": "LT Circle Disrupt"
+            "pathName": "LT Side Push Disrupt"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "LT Return Disrupt"
+            "pathName": "LT Around Disrupt"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "LT Back Push Disrupt"
           }
         }
       ]
     }
   },
   "resetOdom": true,
-  "folder": null,
+  "folder": "Disrupt",
   "choreoAuto": false
 }

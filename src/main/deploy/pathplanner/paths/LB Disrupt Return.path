@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 7.351,
-        "y": 7.1682185339337705
+        "x": 7.25,
+        "y": 7.3
       },
       "prevControl": null,
       "nextControl": {
-        "x": 7.146211988927751,
-        "y": 7.02482442484601
+        "x": 7.045211988927751,
+        "y": 7.156605890912239
       },
       "isLocked": false,
       "linkedName": "LB Disrupt 1"
@@ -59,9 +59,9 @@
     "rotation": 0.0
   },
   "reversed": false,
-  "folder": null,
+  "folder": "Disrupt",
   "idealStartingState": {
-    "velocity": 2.0,
+    "velocity": 0.0,
     "rotation": 45.0
   },
   "useDefaultConstraints": true

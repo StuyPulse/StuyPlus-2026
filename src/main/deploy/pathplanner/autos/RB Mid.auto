@@ -7,25 +7,25 @@
         {
           "type": "path",
           "data": {
-            "pathName": "RB to N"
+            "pathName": "RB to N Mid"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "RB Return"
+            "pathName": "RB Return Mid"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "RB to Outpost"
+            "pathName": "RB to Outpost Mid"
           }
         }
       ]
     }
   },
   "resetOdom": true,
-  "folder": null,
+  "folder": "Mid(Line)",
   "choreoAuto": false
 }

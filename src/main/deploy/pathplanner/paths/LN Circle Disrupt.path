@@ -3,82 +3,86 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 7.351,
-        "y": 7.168
+        "x": 7.25,
+        "y": 7.3
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.351000000000001,
-        "y": 7.168
+        "x": 6.250000000000001,
+        "y": 7.3
       },
       "isLocked": false,
       "linkedName": "LB Disrupt 1"
     },
     {
       "anchor": {
-        "x": 6.023,
-        "y": 5.5772498180494905
+        "x": 6.1,
+        "y": 5.825
       },
       "prevControl": {
-        "x": 6.023,
-        "y": 6.2792498180494905
+        "x": 6.1,
+        "y": 6.527
       },
       "nextControl": {
-        "x": 6.023,
-        "y": 4.8752498180494905
+        "x": 6.1,
+        "y": 5.123
       },
       "isLocked": false,
       "linkedName": "LB Disrupt 2"
     },
     {
       "anchor": {
-        "x": 7.351022959879913,
-        "y": 4.0872095046397385
+        "x": 7.25,
+        "y": 4.5
       },
       "prevControl": {
-        "x": 6.480022959879912,
-        "y": 4.0872095046397385
+        "x": 6.379,
+        "y": 4.5
       },
       "nextControl": {
-        "x": 8.222022959879913,
-        "y": 4.0872095046397385
+        "x": 8.121,
+        "y": 4.5
       },
       "isLocked": false,
       "linkedName": "LB Disrupt 3"
     },
     {
       "anchor": {
-        "x": 8.552,
-        "y": 5.5772498180494905
+        "x": 8.070187693322417,
+        "y": 5.825
       },
       "prevControl": {
-        "x": 8.552,
-        "y": 4.8752498180494905
+        "x": 8.070187693322417,
+        "y": 5.123
       },
       "nextControl": {
-        "x": 8.552,
-        "y": 6.2792498180494905
+        "x": 8.070187693322417,
+        "y": 6.527
       },
       "isLocked": false,
       "linkedName": "LB Disrupt 4"
     },
     {
       "anchor": {
-        "x": 7.351022959879913,
-        "y": 7.1682185339337705
+        "x": 7.25,
+        "y": 7.3
       },
       "prevControl": {
-        "x": 8.351022959879913,
-        "y": 7.1682185339337705
+        "x": 8.25,
+        "y": 7.3
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "LB Disrupt 5"
+      "linkedName": "LB Disrupt 1"
     }
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 1.9878015350877185,
+      "waypointRelativePos": 1.0,
+      "rotationDegrees": 46.071267542628334
+    },
+    {
+      "waypointRelativePos": 2.0,
       "rotationDegrees": 0.0
     }
   ],
@@ -98,7 +102,7 @@
     "rotation": 45.0
   },
   "reversed": false,
-  "folder": null,
+  "folder": "Disrupt",
   "idealStartingState": {
     "velocity": 4.0,
     "rotation": 45.0

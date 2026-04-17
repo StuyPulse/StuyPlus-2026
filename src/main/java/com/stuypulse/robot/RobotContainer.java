@@ -9,38 +9,35 @@ import com.stuypulse.robot.commands.auton.DoNothingAuton;
 import com.stuypulse.robot.commands.auton.LBDisrupt;
 import com.stuypulse.robot.commands.auton.LBFerry;
 import com.stuypulse.robot.commands.auton.LBMid;
-import com.stuypulse.robot.commands.auton.LBMidlineSweepRight;
+import com.stuypulse.robot.commands.auton.LBStraight;
+import com.stuypulse.robot.commands.auton.LTDisrupt;
+import com.stuypulse.robot.commands.auton.LBMidlineSweep;
 import com.stuypulse.robot.commands.auton.LBOuttake;
 import com.stuypulse.robot.commands.auton.LBStraight;
 import com.stuypulse.robot.commands.auton.OutpostOnly;
 import com.stuypulse.robot.commands.auton.RBDisrupt;
 import com.stuypulse.robot.commands.auton.RBFerry;
 import com.stuypulse.robot.commands.auton.RBMid;
-import com.stuypulse.robot.commands.auton.RBMidlineSweepLeft;
+import com.stuypulse.robot.commands.auton.RBStraight;
+import com.stuypulse.robot.commands.auton.RTDisrupt;
+import com.stuypulse.robot.commands.auton.RBMidlineSweep;
 import com.stuypulse.robot.commands.auton.RBOuttake;
 import com.stuypulse.robot.commands.auton.RBStraight;
 import com.stuypulse.robot.commands.auton.TwoMeterPath;
-import com.stuypulse.robot.commands.intake.IntakeAgitateOnce;
-import com.stuypulse.robot.commands.intake.IntakeAgitateWhileOuttaking;
-import com.stuypulse.robot.commands.intake.IntakeSetHomingDown;
-import com.stuypulse.robot.commands.intake.IntakeSetIdle;
-import com.stuypulse.robot.commands.intake.IntakeSetIntake;
-import com.stuypulse.robot.commands.intake.IntakeSetOuttake;
-import com.stuypulse.robot.commands.shooter.ShooterFOTM;
-import com.stuypulse.robot.commands.shooter.ShooterHub;
-import com.stuypulse.robot.commands.shooter.ShooterSOTM;
 import com.stuypulse.robot.commands.swerve.SwerveDriveDrive;
-import com.stuypulse.robot.commands.swerve.SwerveDriveLeftCorner;
 import com.stuypulse.robot.commands.swerve.SwerveDriveResetRotation;
-import com.stuypulse.robot.commands.swerve.SwerveDriveRightCorner;
 import com.stuypulse.robot.commands.swerve.SwerveDriveRotate;
 import com.stuypulse.robot.commands.swerve.SwerveDriveXMode;
-import com.stuypulse.robot.commands.swerve.driveAligned.SwerveDriveAlignedToAllianceZone;
-import com.stuypulse.robot.commands.swerve.driveAligned.SwerveDriveAlignedToHub;
-import com.stuypulse.robot.commands.swerve.driveAligned.SwerveFOTM;
-import com.stuypulse.robot.commands.swerve.driveAligned.SwerveSOTM;
+// import com.stuypulse.robot.commands.intake.IntakeAgitateWhileOuttaking;
+import com.stuypulse.robot.commands.intake.IntakeSetDown;
+import com.stuypulse.robot.commands.intake.IntakeSetHomingDown;
+import com.stuypulse.robot.commands.intake.IntakeSetIdle;
+import com.stuypulse.robot.commands.shooter.ShooterSetShoot;
+// import com.stuypulse.robot.commands.intake.IntakeSetIntake;
+// import com.stuypulse.robot.commands.intake.IntakeSetOuttake;
 import com.stuypulse.robot.constants.Field;
 import com.stuypulse.robot.constants.Ports;
+import com.stuypulse.robot.subsystems.feeder.Feeder;
 import com.stuypulse.robot.subsystems.intake.Intake;
 import com.stuypulse.robot.subsystems.intake.Intake.IntakeState;
 import com.stuypulse.robot.subsystems.swerve.CommandSwerveDrivetrain;
@@ -48,6 +45,9 @@ import com.stuypulse.robot.subsystems.vision.LimelightVision;
 import com.stuypulse.robot.util.PathUtil.AutonConfig;
 import com.stuypulse.stuylib.input.Gamepad;
 
+import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
+import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -64,12 +64,12 @@ public class RobotContainer {
     
     // Subsystem
 
-    // @SuppressWarnings("unused")
+    @SuppressWarnings("unused")
+	private final Feeder feeder = Feeder.getInstance();
+    @SuppressWarnings("unused")
 	private final Intake intake = Intake.getInstance();
-    // @SuppressWarnings("unused")
-    // @SuppressWarnings("unused")
-    // @SuppressWarnings("unused")
     private final CommandSwerveDrivetrain swerve = CommandSwerveDrivetrain.getInstance();
+    @SuppressWarnings("unused")
     private final LimelightVision vision = LimelightVision.getInstance();
 
     // Autons
@@ -103,25 +103,27 @@ public class RobotContainer {
         Trigger leftTrigger = new Trigger(() -> driver.getLeftTriggerAxis() > 0.5);
         Trigger rightTrigger = new Trigger(() -> driver.getRightTriggerAxis() > 0.5);
  
-        leftTrigger
-            .whileTrue(new IntakeSetOuttake());
-        leftTrigger
-            .onFalse(new IntakeSetHomingDown());
+        // leftTrigger
+        //     .whileTrue(new IntakeSetOuttake());
+        // leftTrigger
+        //     .onFalse(new IntakeSetHomingDown());
+        leftTrigger.onTrue(new IntakeSetIdle());
 
-        driver.leftBumper()
-            .onTrue(new IntakeSetIdle());
+        // driver.leftBumper()
+        //     .onTrue(new IntakeSetIdle());
         
-        rightTrigger    
-            .onTrue(new IntakeSetHomingDown()
-                .andThen(new WaitUntilCommand(() -> intake.getState() == IntakeState.DOWN))
-                .andThen(new IntakeSetIntake()));
+        // rightTrigger    
+        //     .onTrue(new IntakeSetHomingDown()
+        //         .andThen(new WaitUntilCommand(() -> intake.getState() == IntakeState.DOWN))
+        //         .andThen(new IntakeSetIntake()));
+        rightTrigger.onTrue(new IntakeSetDown());
 
         //Outtake with agitation
         //Top Left Paddle
+        // driver.a()
+        //     .whileTrue(new IntakeAgitateWhileOuttaking().repeatedly());
         driver.a()
-            .whileTrue(new IntakeAgitateWhileOuttaking().repeatedly());
-        driver.a()
-            .onFalse(new IntakeSetHomingDown());
+            .onTrue(new ShooterSetShoot());
 
         driver.povUp()
             .onTrue(new SwerveDriveResetRotation());
@@ -180,23 +182,24 @@ public class RobotContainer {
      public void configureAutons() {
         autonChooser.addOption("Do Nothing", new DoNothingAuton());
 
+         
         AutonConfig LBFerry = new AutonConfig("LB Ferry", LBFerry::new, 
-            "Left Bump to Neutral", 
-            "N to L.T.", 
-            "L.T. Circle Hub", 
-            "N to Depot");
+            "LB to N Ferry", 
+            "N to LT Ferry", 
+            "LT Hub Ferry", 
+            "N to Depot Ferry");
         LBFerry.register(autonChooser);
 
         AutonConfig RBFerry = new AutonConfig("RB Ferry", RBFerry::new, 
-            "R.B. to R.N.", 
-            "N to R.T.", 
-            "R.T. Circle Hub", 
-            "R.N. to H.P.");
+            "RB to N Ferry", 
+            "N to RT Ferry", 
+            "RT Hub Ferry", 
+            "N to Outpost Ferry");
         RBFerry.register(autonChooser);
 
         AutonConfig LBMid = new AutonConfig("LB Mid", LBMid::new,
-            "LB to N",
-            "LB Return");
+            "LB to N Mid",
+            "LB Return Mid");
         LBMid.register(autonChooser);
 
         AutonConfig LBStraight = new AutonConfig("LB Straight", LBStraight::new,
@@ -210,9 +213,9 @@ public class RobotContainer {
         RBStraight.register(autonChooser);
 
         AutonConfig RBMid = new AutonConfig("RB Mid", RBMid::new, 
-            "RB to N",
-            "RB Return",
-            "RB to Outpost");
+            "RB to N Mid",
+            "RB Return Mid",
+            "RB to Outpost Mid");
         RBMid.register(autonChooser);
 
         AutonConfig TwoMeterPath = new AutonConfig("Two Meter Path", TwoMeterPath::new,
@@ -233,20 +236,18 @@ public class RobotContainer {
             "N to LB Outtake");
         LBOuttake.register(autonChooser);
 
-        AutonConfig LBMidlineSweepRight = new AutonConfig("LB Midline Sweep Right", LBMidlineSweepRight::new,
-            "LB to LN Across Midline",
-            "LN Across Midline to RN Across Midline");
-        LBMidlineSweepRight.register(autonChooser);
+        AutonConfig LBMidlineSweep = new AutonConfig("LB Midline Sweep", LBMidlineSweep::new,
+            "LB to N Midline",
+            "LN Sweep Midline");
+        LBMidlineSweep.register(autonChooser);
 
-        AutonConfig RBMidlineSweepLeft = new AutonConfig("RB Midline Sweep Left", RBMidlineSweepLeft::new,
-            "RB to RN Across Midline",
-            "RN to Mid Neutral");
-        RBMidlineSweepLeft.register(autonChooser);
+        AutonConfig RBMidlineSweep = new AutonConfig("RB Midline Sweep", RBMidlineSweep::new,
+            "RB to N Midline",
+            "RN Sweep Midline");
+        RBMidlineSweep.register(autonChooser);
 
         AutonConfig LBDisrupt = new AutonConfig("LB Disrupt", LBDisrupt::new, 
             "LB to CN Disrupt",
-            "LN Circle Disrupt",
-            "LN Circle Disrupt",
             "LN Circle Disrupt",
             "LN Circle Disrupt",
             "LB Disrupt Return");
@@ -256,30 +257,27 @@ public class RobotContainer {
             "RB to CN Disrupt",
             "RN Circle Disrupt",
             "RN Circle Disrupt",
-            "RN Circle Disrupt",
-            "RN Circle Disrupt",
             "RB Disrupt Return");
         RBDisrupt.register(autonChooser);
 
-        AutonConfig LTDisrupt = new AutonConfig("LT Disrupt", LBDisrupt::new, 
+        AutonConfig LT_Disrupt = new AutonConfig("LT Disrupt", LTDisrupt::new, 
             "LT to N Disrupt",
-            "LT First Circle Disrupt",
             "LT Circle Disrupt",
             "LT Circle Disrupt",
-            "LT Circle Disrupt",
-            "LT Circle Disrupt",
-            "LT Return Disrupt");
-        LTDisrupt.register(autonChooser);
+            "LT Side Push Disrupt",
+            "LT Around Disrupt",
+            "LT Back Push Disrupt");
+        LT_Disrupt.register(autonChooser);
 
-        AutonConfig RTDisrupt = new AutonConfig("RT Disrupt", RBDisrupt::new, 
+        AutonConfig RT_Disrupt = new AutonConfig("RT Disrupt", RTDisrupt::new, 
             "RT to N Disrupt",
-            "RT First Circle Disrupt",
             "RT Circle Disrupt",
             "RT Circle Disrupt",
-            "RT Circle Disrupt",
-            "RT Circle Disrupt",
-            "RT Return Disrupt");
-        RTDisrupt.register(autonChooser);
+            "RT Side Push Disrupt",
+            "RT Around Disrupt",
+            "RT Back Push Disrupt");
+        RT_Disrupt.register(autonChooser);
+        
 
         // autonChooser.addOption("SysID Module Translation Dynamic Forwards", swerve.sysIdDynamic(Direction.kForward));
         // autonChooser.addOption("SysID Module Translation Dynamic Backwards", swerve.sysIdDynamic(Direction.kReverse));

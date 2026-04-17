@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
 public class RBDisrupt extends SequentialCommandGroup{
     public RBDisrupt(PathPlannerPath...paths){
+        //Get correct paths
         addCommands(
             new SwerveResetPose(paths[0].getStartingHolonomicPose().get()),
 
@@ -17,9 +18,7 @@ public class RBDisrupt extends SequentialCommandGroup{
 
             CommandSwerveDrivetrain.getInstance().followPathCommand(paths[2]),
 
-            CommandSwerveDrivetrain.getInstance().followPathCommand(paths[3]),
-
-            CommandSwerveDrivetrain.getInstance().followPathCommand(paths[4])
+            CommandSwerveDrivetrain.getInstance().followPathCommand(paths[3])
         );
     }
     

@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 4.026,
-        "y": 7.315
+        "x": 4.459922222222222,
+        "y": 7.416322222222221
       },
       "prevControl": null,
       "nextControl": {
-        "x": 5.026,
-        "y": 7.315
+        "x": 5.83388888888889,
+        "y": 7.494277777777777
       },
       "isLocked": false,
       "linkedName": "LT Disrupt 0"
     },
     {
       "anchor": {
-        "x": 6.879491846342795,
-        "y": 7.315
+        "x": 7.792522222222221,
+        "y": 6.968077777777778
       },
       "prevControl": {
-        "x": 5.879491846342795,
-        "y": 7.315
+        "x": 6.964244444444444,
+        "y": 7.591722222222222
       },
       "nextControl": null,
       "isLocked": false,
@@ -38,22 +38,22 @@
   "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 3.0,
+    "maxVelocity": 67.0,
     "maxAcceleration": 3.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0,
     "nominalVoltage": 12.0,
-    "unlimited": false
+    "unlimited": true
   },
   "goalEndState": {
-    "velocity": 3.0,
-    "rotation": 45.0
+    "velocity": 4.0,
+    "rotation": 34.286876977208955
   },
   "reversed": false,
-  "folder": null,
+  "folder": "Disrupt",
   "idealStartingState": {
-    "velocity": 0,
+    "velocity": 4.0,
     "rotation": 0.0
   },
-  "useDefaultConstraints": true
+  "useDefaultConstraints": false
 }

@@ -8,6 +8,7 @@ package com.stuypulse.robot.constants;
 import com.ctre.phoenix6.CANBus;
 import com.pathplanner.lib.path.PathConstraints;
 import com.stuypulse.stuylib.network.SmartBoolean;
+import com.stuypulse.stuylib.network.SmartNumber;
 
 import edu.wpi.first.math.VecBuilder;
 import edu.wpi.first.math.Vector;
@@ -29,8 +30,8 @@ public interface Settings {
     CANBus CANIVORE = new CANBus("rio");
 
     public interface EnabledSubsystems {
-        // SmartBoolean FEEDER = new SmartBoolean("Enabled Subsystems/Feeder", true);
-        SmartBoolean INTAKE = new SmartBoolean("Enabled Subsystems/Intake", false);
+        SmartBoolean FEEDER = new SmartBoolean("Enabled Subsystems/Feeder", true);
+        SmartBoolean INTAKE = new SmartBoolean("Enabled Subsystems/Intake", true);
         // SmartBoolean LED = new SmartBoolean("Enabled Subsystems/LED", true);
         SmartBoolean SHOOTER = new SmartBoolean("Enabled Subsystems/Shooter", true);
         SmartBoolean VISION = new SmartBoolean("Enabled Subsystems/Vision", true);
@@ -49,44 +50,51 @@ public interface Settings {
     }
 
     public interface Intake {
-        double ROLLER_MAX_ACCEL = 0;
-        double ROLLER_MAX_VEL = 0;
-        double PIVOT_STALL_CURRENT = 25; 
-        double PIVOT_STALL_DEBOUNCE_SEC = 0.0;
-        double ROLLER_STALL_CURRENT = 50; // TODO: set
-        double ROLLER_STALL_DEBOUNCE_SEC = 0.1;
-        Rotation2d PIVOT_INITIAL_ANGLE = Rotation2d.fromDegrees(0);
+        public interface Pivot {
+            // state angles
+            Rotation2d INITIAL_ANGLE = Rotation2d.fromDegrees(0);
+            Rotation2d IDLE_ANGLE = Rotation2d.fromDegrees(0);
+            Rotation2d DOWN_ANGLE = Rotation2d.fromDegrees(102);
 
-        Rotation2d IDLE_ANGLE = Rotation2d.fromDegrees(0);
-        Rotation2d PIVOT_DOWN_ANGLE = Rotation2d.fromDegrees(122);
+            // misc
+            Rotation2d ANGLE_TOLERANCE = Rotation2d.fromDegrees(0.5);
+            Rotation2d PUSHDOWN_THRESHOLD = Rotation2d.fromDegrees(85);
+            SmartNumber PUSHDOWN_CURRENT = new SmartNumber("Intake/Pivot/Pushdown Voltage Tuning Amps", -75.0);
+            double STALL_CURRENT = 25; // amps
+            double STALL_DEBOUNCE_SEC = 0.0; // TODO: set this up?
+            double HOMING_DOWN_VOLTAGE = 3;
 
-        double HOMING_UP_VOLTAGE = -3;
-        double HOMING_DOWN_VOLTAGE = 3;
+            // sysid
+            double RAMP_RATE = 2;
+            double STEP_VOLTAGE = 6;
 
-        double IDLE_DUTY_CYCLE = 0;
-        double INTAKE_DUTY_CYCLE = 1;
-        double OUTTAKE_DUTY_CYCLE = -1;
+            // sim
+            double MIN_ANGLE = 0.0;
+            double MAX_ANGLE = 102.0; // deg
+            double GEAR_RATIO = 60.0;
+            double J_KG_METERS_SQUARED = 0.001;
+        }
 
-        double J_KG_METERS_SQUARED = 0.1;
-        double ROLLER_J_KG_METERS_SQUARED = 0.1;
-        double PIVOT_MIN_ANGLE = 0.0;
-        double PIVOT_MAX_ANGLE = 2 * Math.PI;
-        double PIVOT_GEAR_RATIO = 60.0;
-        double ROLLER_GEAR_RATIO = 16.0 / 27.0;
+        public interface Roller {
+            double STALL_CURRENT = 50;
+            double STALL_DEBOUNCE_SEC = 0.1;
 
-        double RAMP_RATE = 2;
-        double STEP_VOLTAGE = 6; // volts
+            double GEAR_RATIO = 16.0 / 27.0;
+            double J_KG_METERS_SQUARED = 0.001;
 
-        Rotation2d ANGLE_TOLERANCE = Rotation2d.fromDegrees(0.5); 
-
-        Rotation2d PUSHDOWN_THRESHOLD = Rotation2d.fromDegrees(107); //TODO:Temporary, needs testing
-        double PUSHDOWN_VOLTAGE = 0;
+            double IDLE_DUTY_CYCLE = 0;
+            double INTAKE_DUTY_CYCLE = 1;
+            double OUTTAKE_DUTY_CYCLE = -1;
+        }
     }
 
-    // public interface Feeder {
-    //     double FEEDER_REVERSE = -1900;
-    //     double FEEDER_FORWARD = 1900;
-    // }
+    public interface Feeder {
+        double FEEDER_REVERSE_DUTY_CYCLE = -1;
+        double FEEDER_FORWARD_DUTY_CYCLE = 1;
+
+        double GEAR_RATIO = 1; // TODO: get from mec
+        double J_KG_METERS_SQUARED = 0.001;
+    }
 
     // public interface LED {
     //     int LED_LENGTH = 60; 
@@ -109,14 +117,58 @@ public interface Settings {
     // }
 
     public interface Shooter {
-        double BOTTOM_MOTOR_RPM = 3000;
         double SHOOT_TIME_AUTO = 1.5;
         double RAMP_RATE = 0.25;
         double STEP_VOLTAGE = 900;
 
-        double CORNER = 2700; 
-        double HUB = 2500;
-        double FLYWHEEL_RADIUS = Units.inchesToMeters(3.0); // Temporary
+        double CORNER_RPM = 2700; 
+        double HUB_RPM = 2500;
+
+        double SHOOT_DUTY = 1;
+        double FERRY_DUTY = 1;
+        double SOTM_DUTY = 0.8;
+        double FOTM_DUTY = 0.8;
+        double IDLE_DUTY = 0;
+
+        public interface RPMInterpolation{
+            double[][] distanceRPMInterpolationValues = {
+                {1.0, 1000.0},
+                {2.0, 1500.0},
+                {3.0, 2000.0},
+                {4.0, 2500.0},
+                {5.0, 3000.0}
+            };
+        }// These values are placeholders and should be replaced with actual data from testing
+
+        public interface TOFInterpolation{
+            double[][] distanceTOFInterpolationValues = {
+                {1.0, 0.5},
+                {2.0, 0.75},
+                {3.0, 1.0},
+                {4.0, 1.25},
+                {5.0, 1.5}
+            };
+        }// These values are placeholders and should be replaced with actual data from testing
+
+        public interface FerryRPMInterpolation {
+            double[][] ferryDistanceRPMInterpolation = {
+                {1.0, 1000.0},
+                {2.0, 1500.0},
+                {3.0, 2000.0},
+                {4.0, 2500.0},
+                {5.0, 3000.0}
+            };
+        }// These values are placeholders and should be replaced with actual data from testing
+
+        public interface FerryTOFInterpolation {
+            double [][] FerryTOFInterpolationInterpolation = {
+                {1.0, 0.5},
+                {2.0, 0.75},
+                {3.0, 1.0},
+                {4.0, 1.25},
+                {5.0, 1.5}
+            };
+        }// These values are placeholders and should be replaced with actual data from testing
     }
 
     public interface Swerve {

@@ -27,9 +27,9 @@ public class Gains {
     // }
 
     public interface Intake {
-        SmartNumber kP = new SmartNumber("Intake/Pivot kP", 15); 
-        SmartNumber kI = new SmartNumber("Intake/Pivot kI", 0); 
-        SmartNumber kD = new SmartNumber("Intake/Pivot kD", 0); 
+        SmartNumber kP = new SmartNumber("Intake/Pivot kP", 15);
+        SmartNumber kI = new SmartNumber("Intake/Pivot kI", 0);
+        SmartNumber kD = new SmartNumber("Intake/Pivot kD", 0);
 
         SmartNumber kV = new SmartNumber("Intake/Pivot kV", 0);
     }

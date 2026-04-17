@@ -121,7 +121,7 @@ public class Simulation {
     }
 
     private void updateIntake() {
-        boolean intakeEnabled = intakeSim.atTargetAngle() && (intakeSim.getState() == IntakeState.INTAKE) && Settings.EnabledSubsystems.INTAKE.get();
+        boolean intakeEnabled = intakeSim.atTargetAngle() && (intakeSim.getState() == IntakeState.DOWN) && Settings.EnabledSubsystems.INTAKE.get();
 
         updateIntakeEnabled(intakeEnabled);
     }

@@ -7,19 +7,19 @@
         {
           "type": "path",
           "data": {
-            "pathName": "LB to N"
+            "pathName": "LB to N Mid"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "LB Return"
+            "pathName": "LB Return Mid"
           }
         }
       ]
     }
   },
   "resetOdom": true,
-  "folder": null,
+  "folder": "Mid(Line)",
   "choreoAuto": false
 }

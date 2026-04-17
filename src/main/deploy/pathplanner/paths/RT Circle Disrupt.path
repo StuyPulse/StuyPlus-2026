@@ -3,83 +3,91 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 6.829376705786026,
-        "y": 0.7417122111535661
+        "x": 7.938688888888889,
+        "y": 0.916777777777777
       },
       "prevControl": null,
       "nextControl": {
-        "x": 7.829376705786026,
-        "y": 0.7417122111535666
+        "x": 8.737733333333333,
+        "y": 1.0921777777777766
       },
       "isLocked": false,
       "linkedName": "RT Disrupt 1"
     },
     {
       "anchor": {
-        "x": 7.895,
-        "y": 2.491
+        "x": 8.455144444444445,
+        "y": 2.4661444444444443
       },
       "prevControl": {
-        "x": 7.895,
-        "y": 1.7890000000000001
+        "x": 8.484377777777778,
+        "y": 1.5014444444444437
       },
       "nextControl": {
-        "x": 7.895,
-        "y": 3.193
+        "x": 8.427693841459105,
+        "y": 3.372014342960626
       },
       "isLocked": false,
       "linkedName": "RT Disrupt 2"
     },
     {
       "anchor": {
-        "x": 6.879491846342795,
-        "y": 4.087
+        "x": 7.25,
+        "y": 3.7374562355324077
       },
       "prevControl": {
-        "x": 7.750491846342794,
-        "y": 4.087
+        "x": 8.455144444444445,
+        "y": 3.8206222222222213
       },
       "nextControl": {
-        "x": 6.008491846342794,
-        "y": 4.087
+        "x": 6.381066586792307,
+        "y": 3.6774918843624707
       },
       "isLocked": false,
       "linkedName": "RT Disrupt 3"
     },
     {
       "anchor": {
-        "x": 5.903,
-        "y": 2.491
+        "x": 6.0,
+        "y": 2.25
       },
       "prevControl": {
-        "x": 5.903,
-        "y": 3.3425787574415278
+        "x": 6.0,
+        "y": 2.952
       },
       "nextControl": {
-        "x": 5.903,
-        "y": 1.6394212425584707
+        "x": 6.0,
+        "y": 1.548
       },
       "isLocked": false,
       "linkedName": "RT Disrupt 4"
     },
     {
       "anchor": {
-        "x": 6.829376705786026,
-        "y": 0.7417122111535661
+        "x": 7.938688888888889,
+        "y": 0.916777777777777
       },
       "prevControl": {
-        "x": 5.829376705786026,
-        "y": 0.7417122111535663
+        "x": 6.662166666666667,
+        "y": 0.9362666666666667
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "RT Disrupt 5"
+      "linkedName": "RT Disrupt 1"
     }
   ],
   "rotationTargets": [
     {
+      "waypointRelativePos": 1.0158717105263155,
+      "rotationDegrees": -35.0
+    },
+    {
       "waypointRelativePos": 2.010827850877193,
       "rotationDegrees": 0.0
+    },
+    {
+      "waypointRelativePos": 2.9894736842105267,
+      "rotationDegrees": -35.0
     }
   ],
   "constraintZones": [],
@@ -91,17 +99,17 @@
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0,
     "nominalVoltage": 12.0,
-    "unlimited": false
+    "unlimited": true
   },
   "goalEndState": {
-    "velocity": 3.0,
+    "velocity": 5.0,
     "rotation": -35.0
   },
   "reversed": false,
-  "folder": null,
+  "folder": "Disrupt",
   "idealStartingState": {
-    "velocity": 4.0,
+    "velocity": 6.0,
     "rotation": -35.0
   },
-  "useDefaultConstraints": true
+  "useDefaultConstraints": false
 }

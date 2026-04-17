@@ -151,7 +151,6 @@ public class Robot extends TimedRobot {
         }
 
         CommandScheduler.getInstance().schedule(new SetVisionEnabled());
-        CommandScheduler.getInstance().schedule(new IntakeSetHomingDown());
 
         Boolean autonWon = DriverStation.getGameSpecificMessage()
                 .equals(String.valueOf(alliance.name().charAt(0)).toUpperCase());

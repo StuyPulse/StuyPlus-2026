@@ -1,0 +1,54 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 7.25,
+        "y": 1.4538458651746726
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 8.03710413694722,
+        "y": 1.720774123983571
+      },
+      "isLocked": false,
+      "linkedName": "RT Disrupt 5"
+    },
+    {
+      "anchor": {
+        "x": 8.166490727532096,
+        "y": 0.71623395149786
+      },
+      "prevControl": {
+        "x": 8.179429386590582,
+        "y": 1.1820256776034215
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "RT Disrupt 6"
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 3.0,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 3.0,
+    "rotation": -35.0
+  },
+  "reversed": false,
+  "folder": "Disrupt",
+  "idealStartingState": {
+    "velocity": 3.0,
+    "rotation": -35.0
+  },
+  "useDefaultConstraints": true
+}

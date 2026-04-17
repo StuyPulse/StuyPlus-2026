@@ -25,18 +25,6 @@
         {
           "type": "path",
           "data": {
-            "pathName": "RN Circle Disrupt"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "RN Circle Disrupt"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
             "pathName": "RB Disrupt Return"
           }
         }
@@ -44,6 +32,6 @@
     }
   },
   "resetOdom": true,
-  "folder": null,
+  "folder": "Disrupt",
   "choreoAuto": false
 }

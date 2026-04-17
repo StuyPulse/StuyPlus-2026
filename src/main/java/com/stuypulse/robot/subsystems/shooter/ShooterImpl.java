@@ -1,105 +1,93 @@
 package com.stuypulse.robot.subsystems.shooter;
 
+import java.util.Optional;
+
+import com.ctre.phoenix6.controls.DutyCycleOut;
 import com.ctre.phoenix6.controls.Follower;
+import com.ctre.phoenix6.controls.VelocityTorqueCurrentFOC;
 import com.ctre.phoenix6.controls.VelocityVoltage;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.MotorAlignmentValue;
-import com.stuypulse.robot.constants.Field;
 import com.stuypulse.robot.constants.Motors;
-import com.stuypulse.robot.constants.Ports.ShooterPorts;
-import com.stuypulse.robot.subsystems.swerve.CommandSwerveDrivetrain;
-
-import java.util.Optional;
-
+import com.stuypulse.robot.constants.Ports;
 import com.stuypulse.robot.constants.Settings;
-import com.stuypulse.robot.util.SysId;
-import com.stuypulse.robot.util.shooter.Interpolation;
-import com.stuypulse.robot.util.shooter.InterpolationCalculator;
 
-import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 
 public class ShooterImpl extends Shooter {
+    private TalonFX shooterMotorLeft;
+    private TalonFX shooterMotorCenter;
+    private TalonFX shooterMotorRight;
 
-    private final TalonFX shooterMotor1;
-    private final TalonFX shooterMotor2;
-    private final TalonFX shooterMotor3;
-    private final TalonFX bottomMotor1;
-    private final TalonFX bottomMotor2;
-    private final CommandSwerveDrivetrain drivetrain;
-    private Optional<Double> voltageOverride;
+    private TalonFX bottomMotorLeft;
+    private TalonFX bottomMotorRight;
+
+    private Optional<Double> voltageOveride;
 
     public ShooterImpl() {
-        shooterMotor1 = new TalonFX(ShooterPorts.SHOOTER_MOTOR_1);
-        shooterMotor2 = new TalonFX(ShooterPorts.SHOOTER_MOTOR_2);
-        shooterMotor3 = new TalonFX(ShooterPorts.SHOOTER_MOTOR_3);
+        shooterMotorLeft = new TalonFX(Ports.ShooterPorts.SHOOTER_MOTOR_LEFT, Settings.CANIVORE);
+        shooterMotorCenter = new TalonFX(Ports.ShooterPorts.SHOOTER_MOTOR_CENTER, Settings.CANIVORE);
+        shooterMotorRight = new TalonFX(Ports.ShooterPorts.SHOOTER_MOTOR_RIGHT, Settings.CANIVORE);
 
-        bottomMotor1 = new TalonFX(ShooterPorts.BOTTOM_MOTOR_1);
-        bottomMotor2 = new TalonFX(ShooterPorts.BOTTOM_MOTOR_2);
+        bottomMotorLeft = new TalonFX(Ports.ShooterPorts.BOTTOM_MOTOR_LEFT, Settings.CANIVORE);
+        bottomMotorRight = new TalonFX(Ports.ShooterPorts.BOTTOM_MOTOR_RIGHT, Settings.CANIVORE);
 
-        Motors.Shooter.MOTOR_CONFIG.configure(shooterMotor1);
-        Motors.Shooter.MOTOR_CONFIG.configure(shooterMotor2);
-        Motors.Shooter.MOTOR_CONFIG.configure(shooterMotor3);
-        Motors.Shooter.MOTOR_CONFIG.configure(bottomMotor1);
-        Motors.Shooter.MOTOR_CONFIG.configure(bottomMotor2);
+        shooterMotorCenter = new TalonFX(Ports.ShooterPorts.SHOOTER_MOTOR_CENTER, Settings.CANIVORE);
+        shooterMotorRight = new TalonFX(Ports.ShooterPorts.SHOOTER_MOTOR_RIGHT, Settings.CANIVORE);
 
-        shooterMotor2.setControl(new Follower(ShooterPorts.SHOOTER_MOTOR_1, MotorAlignmentValue.Opposed));
-        shooterMotor3.setControl(new Follower(ShooterPorts.SHOOTER_MOTOR_1, MotorAlignmentValue.Opposed));
+        bottomMotorLeft = new TalonFX(Ports.ShooterPorts.BOTTOM_MOTOR_LEFT, Settings.CANIVORE);
+        bottomMotorRight = new TalonFX(Ports.ShooterPorts.BOTTOM_MOTOR_RIGHT, Settings.CANIVORE);
 
-        bottomMotor2.setControl(new Follower(ShooterPorts.BOTTOM_MOTOR_1, MotorAlignmentValue.Opposed));
+        // configure
+        Motors.Shooter.SHOOTER_MOTOR_CONFIG.configure(shooterMotorLeft);
+        Motors.Shooter.SHOOTER_MOTOR_CONFIG.configure(shooterMotorCenter);
+        Motors.Shooter.SHOOTER_MOTOR_CONFIG.configure(shooterMotorRight);
+        Motors.Shooter.BOTTOM_MOTOR_CONFIG.configure(bottomMotorLeft);
+        Motors.Shooter.BOTTOM_MOTOR_CONFIG.configure(bottomMotorRight);
 
-        drivetrain = CommandSwerveDrivetrain.getInstance();
-        voltageOverride = Optional.empty();
+        // Set shooter 2 and 3 motors to follow 1
+        Follower shooter_follower = new Follower(shooterMotorLeft.getDeviceID(), MotorAlignmentValue.Opposed);
+        Follower bottom_follower = new Follower(bottomMotorLeft.getDeviceID(), MotorAlignmentValue.Opposed);
+
+        shooterMotorCenter.setControl(shooter_follower);
+        shooterMotorRight.setControl(shooter_follower);
+
+        // bottom motors
+        bottomMotorRight.setControl(bottom_follower);
     }
 
-    @Override
-    public double getShootSpeed() {
-        return InterpolationCalculator.interpolateShotInfo().targetRPM();
+    public void setVoltageOverride(double voltage) {
+        this.voltageOveride = Optional.of(voltage);
     }
 
-    @Override
-    public double getFerrySpeed() {
-        return InterpolationCalculator.interpolateFerryingRPM().get().targetRPM();
-    }
-
-    public void setVoltagesBasedOnState() {
-        double targetRPS = getState().getTargetRPM() / 60;
-
-        shooterMotor1.setControl(new VelocityVoltage(targetRPS)); // TODO: periodic stuff
-
-        bottomMotor1.setControl(new VelocityVoltage(targetRPS));
-    }
-
-    public void setVoltageOverride(Optional<Double> voltageOverride) {
-        this.voltageOverride = voltageOverride;
+    public Optional<Double> getVoltageOverride() {
+        return voltageOveride;
     }
 
     @Override
     public void periodic() {
         super.periodic();
-        if (Settings.EnabledSubsystems.SHOOTER.get()) {
-            if (voltageOverride.isPresent()) {
-                shooterMotor1.setVoltage(voltageOverride.get());
-            } else {
-                setVoltagesBasedOnState();
-            }
+
+        if (!Settings.EnabledSubsystems.SHOOTER.get())
+            return;
+
+        if (voltageOveride.isPresent()) {
+            shooterMotorLeft.setVoltage(voltageOveride.get());
+            return;
         }
 
-        SmartDashboard.putNumber("Shooter/Target RPM", getState().getTargetRPM());
-        SmartDashboard.putNumber("Shooter/Current RPM", shooterMotor1.getVelocity().getValueAsDouble() * 60);
-    }
+        double targetRPS = getState().getRPM() / 60;
+        VelocityTorqueCurrentFOC control = new VelocityTorqueCurrentFOC(targetRPS);
+        DutyCycleOut dutyCycle = new DutyCycleOut(getState().getBottomMotorDutyCycle()).withEnableFOC(true);
 
-    public SysIdRoutine getShooterSysIdRoutine() {
-        return SysId.getRoutine(
-                Settings.Shooter.RAMP_RATE,
-                Settings.Shooter.STEP_VOLTAGE,
-                "Shooter",
-                voltage -> setVoltageOverride(Optional.of(voltage)),
-                () -> shooterMotor1.getPosition().getValueAsDouble(),
-                () -> shooterMotor1.getVelocity().getValueAsDouble(),
-                () -> shooterMotor1.getMotorVoltage().getValueAsDouble(),
-                getInstance()
-        );
+        shooterMotorLeft.setControl(control);
+        bottomMotorLeft.setControl(dutyCycle);
+
+        this.logMotor("ShooterLeft", shooterMotorLeft);
+        this.logMotor("ShooterCenter", shooterMotorCenter);
+        this.logMotor("ShooterRight", shooterMotorRight);
+
+        this.logMotor("BottomLeft", bottomMotorLeft);
+        this.logMotor("BottomRight", bottomMotorRight);
     }
 }
