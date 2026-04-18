@@ -47,7 +47,7 @@ public class ShooterSim extends Shooter {
             DCMotor.getKrakenX60(1)
         );
         handoffmotor = new TalonFXSimulation(handoffsim).configure(Motors.Shooter.HANDOFF_MOTOR_CONFIG);
-        handoffcontroller = new DutyCycleOut(0);
+        handoffcontroller = new DutyCycleOut(getState().getHandoffMotorDutyCycle);
         handoffmotor.setControl(handoffcontroller);
     }
     @Override
