@@ -27,7 +27,7 @@ public class ShooterSim extends Shooter {
             DCMotor.getKrakenX60(3),
             Settings.Shooter.J_KG_METERS_SQUARED,
             Settings.Shooter.GEAR_RATIO),
-            DCMotor.getKrakenX60(4)
+            DCMotor.getKrakenX60(3)
         );
         shooterleader = new TalonFXSimulation(shootersim).configure(Motors.Shooter.SHOOTER_MOTOR_CONFIG);
         shooterfollower = new TalonFXSimulation(shootersim).configure(Motors.Shooter.SHOOTER_MOTOR_CONFIG);
