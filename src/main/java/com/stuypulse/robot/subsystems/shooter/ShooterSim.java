@@ -53,7 +53,7 @@ public class ShooterSim extends Shooter {
         shooterleader.update(Settings.DT);
         shooterfollower1.update(Settings.DT);
         shooterfollower2.update(Settings.DT);
-        handoffmotor.setControl(handoffcontroller.withOutput(getState().getHandoffMotorDutyCycle));
+        handoffmotor.setControl(handoffcontroller.withOutput(getState().getHandoffMotorDutyCycle()));
         handoffmotor.update(Settings.DT);
         super.periodic();
     }
