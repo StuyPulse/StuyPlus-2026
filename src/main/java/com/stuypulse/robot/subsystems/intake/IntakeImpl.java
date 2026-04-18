@@ -52,8 +52,8 @@ public class IntakeImpl extends Intake {
         Motors.Intake.RIGHT_ROLLER_CONFIG.configure(intakeRollerMotorRight);
 
         pivotController = new PositionTorqueCurrentFOC(getState().getTargetAngle().getRotations());
-        homingController = new VoltageOut(0).withEnableFOC(true);
-        pushdownController = new TorqueCurrentFOC(0);
+        homingController = new VoltageOut(Settings.Intake.Pivot.HOMING_DOWN_VOLTAGE).withEnableFOC(true);
+        pushdownController = new TorqueCurrentFOC(Settings.Intake.Pivot.PUSHDOWN_CURRENT.getAsDouble());
         rollerController = new DutyCycleOut(getState().getTargetDutyCycle()).withEnableFOC(true);
         followerController = new Follower(Ports.Intake.MOTOR_INTAKE_ROLLER_LEFT, MotorAlignmentValue.Opposed);
 
@@ -153,12 +153,12 @@ public class IntakeImpl extends Intake {
             case INTAKE, OUTTAKE, DOWN -> {
                 if (pivotAboveThreshold) {
                     // wait until pivot reaches the bottom to apply pushdown
-                    yield pushdownController.withOutput(Settings.Intake.Pivot.PUSHDOWN_CURRENT.getAsDouble());
+                    yield pushdownController;
                 } else {
                     yield pivotController.withPosition(currentState.getTargetAngle().getRotations());
                 }
             }
-            case HOMING_DOWN -> homingController.withOutput(Settings.Intake.Pivot.HOMING_DOWN_VOLTAGE);
+            case HOMING_DOWN -> homingController;
             default -> pivotController.withPosition(currentState.getTargetAngle().getRotations());
         };
 
