@@ -2,7 +2,6 @@ package com.stuypulse.robot.subsystems.shooter;
 
 import java.util.function.DoubleSupplier;
 
-import com.ctre.phoenix6.controls.DutyCycleOut;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.stuypulse.robot.Robot;
 import com.stuypulse.robot.constants.Settings;
@@ -11,7 +10,7 @@ import com.stuypulse.robot.util.shooter.InterpolationCalculator;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-public class Shooter extends SubsystemBase {
+public abstract class Shooter extends SubsystemBase {
     private final static Shooter instance;
     private ShooterState state;
 
@@ -28,7 +27,7 @@ public class Shooter extends SubsystemBase {
     }
 
     protected Shooter() {
-        setState(ShooterState.IDLE);
+        setState(ShooterState.SHOOT);
     }
 
     public void setState(ShooterState state) {
@@ -40,14 +39,13 @@ public class Shooter extends SubsystemBase {
     }
 
     public void logMotor(String motorName, TalonFX motor) {
-        String stem = "Shooter/Motors/%s/%s".formatted(motorName);
+        String stem = "Shooter/Motors/" + motorName + "/";
         
-        SmartDashboard.putNumber(stem.formatted("MotorVoltage"), motor.getMotorVoltage().getValueAsDouble());
-        SmartDashboard.putNumber(stem.formatted("SupplyCurrent"), motor.getSupplyCurrent().getValueAsDouble());
-        SmartDashboard.putNumber(stem.formatted("StatorCurrent"), motor.getStatorCurrent().getValueAsDouble());
+        SmartDashboard.putNumber(stem + "MotorVoltage", motor.getMotorVoltage().getValueAsDouble());
+        SmartDashboard.putNumber(stem + "SupplyCurrent", motor.getSupplyCurrent().getValueAsDouble());
+        SmartDashboard.putNumber(stem + "StatorCurrent", motor.getStatorCurrent().getValueAsDouble());
 
-        SmartDashboard.putNumber(stem.formatted("DutyCycle"), motor.getDutyCycle().getValueAsDouble());
-        SmartDashboard.putNumber(stem.formatted("RPM"), motor.getVelocity().getValueAsDouble());
+        SmartDashboard.putNumber(stem + "RPM", motor.getVelocity().getValueAsDouble());
     }
 
     public enum ShooterState {
@@ -59,26 +57,31 @@ public class Shooter extends SubsystemBase {
         FERRY(() -> InterpolationCalculator.interpolateFerryingInfo().targetRPM(), Settings.Shooter.FERRY_DUTY);
 
         private DoubleSupplier RPMSupplier;
-        private double bottomMotorDutyCycle;
+        private double handoffMotorDutyCycle;
 
-        private ShooterState(DoubleSupplier RPMSupplier, double bottomMotorDutyCycle) {
+        private ShooterState(DoubleSupplier RPMSupplier, double handoffMotorDutyCycle) {
             this.RPMSupplier = RPMSupplier;
-            this.bottomMotorDutyCycle = bottomMotorDutyCycle;
+            this.handoffMotorDutyCycle = handoffMotorDutyCycle;
         }
 
         public double getRPM() {
             return RPMSupplier.getAsDouble();
         }
 
-        public double getBottomMotorDutyCycle() {
-            return bottomMotorDutyCycle;
+        public double getHandoffMotorDutyCycle() {
+            return handoffMotorDutyCycle;
         }
     }
 
+    public abstract double getCurrentRPM();
+
     @Override
     public void periodic() {
-        SmartDashboard.putString("Shooter/State", getState().name());
         SmartDashboard.putNumber("Shooter/Top Target RPM", getState().getRPM());
-        SmartDashboard.putNumber("Shooter/Bottom Target Duty Cycle", getState().getBottomMotorDutyCycle());
+        SmartDashboard.putNumber("Shooter/Handoff Target Duty Cycle", getState().getHandoffMotorDutyCycle());
+
+        SmartDashboard.putString("Shooter/State", getState().name());
+        SmartDashboard.putString("States/Shooter", getState().name());
     }
 }
+

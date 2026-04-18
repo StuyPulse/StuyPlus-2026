@@ -1,17 +1,131 @@
-# Phil
+<div align="center">
+    <img src="/images/logos/StuyPlusLogo.png" width="200" /> <img src="/images/logos/StuyPulseLogo.png" width="180" />
+    <h1>Ron 2026</h1>
+    <p>FRC Team StuyPlus <b>516</b> - First In-season Rookie Robot</p>
+</div>
 
-A template repo for a command style robot. 
+---
 
-## To Use
+## Based on the [WCP 2026 Competitive Concept](https://wcproducts.com/pages/wcp-competitive-concepts) for Rebuilt
 
-- Click `Use this template` in GitHub and create your new repository using the `Phil` template. 
-- Ensure that the `GradleRIO`, `StuyLib`, and `venderdeps` versions are up-to-date in your new repository.
-- Now go Phil up your repository. Godspeed. 
+[![WCP 2026 Rebuilt Competitive Concept Video](https://www.video-thumbnail.com/youtube/wO9aJNpCE8Q)](https://www.youtube.com/watch?v=wO9aJNpCE8Q)
 
-## To Update | Maintain
-Do *not* use the automatic import project tool. Instead,
-- Change the 'frcYear' to the current year in `settings.gradle`.
-- Check that the `GradleRIO` version is up to date in `./build.gradle`. 
-- Check the latest version of [StuyLib here](https://github.com/StuyPulse/StuyLib/releases) and update the version in `./build.gradle`.
-- Manually update the files ('frcYear', 'version', URLS) in `./venderdeps` with their latest version, checking their respective websites, or import new versions using WPILib vendor dependencies.
+## Subsystems and Features
+- [Drivetrain](#drivetrain)
+- [Intake](#intake)
+- [Feeder](#feeder)
+- [Shooter](#shooter)
+- [Vision](#vision)
+- [MapleSim w/ AdvantageScope](#maplesim-w-advantagescope)
 
+## Drivetrain
+Files: 
+- [`src/main/java/com/stuypulse/robot/subsystems/swerve`](https://github.com/StuyPulse/StuyPlus-2026/tree/main/src/main/java/com/stuypulse/robot/subsystems/swerve)
+- [`src/main/java/com/stuypulse/robot/util/HolonomicController.java`](https://github.com/StuyPulse/StuyPlus-2026/tree/main/src/main/java/com/stuypulse/robot/util/HolonomicController.java)
+
+Our drivetrain uses the swerve terrain-type with CTRE Phoenix 6 hardware and four swerve modules, letting us independently rotate the wheels. This allows for higher manueverability.
+
+For our [MapleSim w/ AdvantageScope](#maplesim-w-advantagescope), we create a MapleSimSwerveDrivetrain for simulation purposes and publish drivetrain pose, module states, and chassis speeds via `NetworkTables`.
+
+The robot is driven `Field-Centric`.
+
+We use both [Vision](#vision) and odometry to get estimate the pose. Check the vision section for details. 
+
+`HolonomicController.java`, made by the main team 694, is essentially the PID Controller but for the drivetrain.
+
+## Intake
+File: [`src/main/java/com/stuypulse/robot/subsystems/intake`](https://github.com/StuyPulse/StuyPlus-2026/tree/main/src/main/java/com/stuypulse/robot/subsystems/intake)
+
+Our intake is made up of 3 sets of rollers, all connected by belts, which are stowed and deployed with a pivot attached to the roller plate.
+
+It contains the following states:
+- `IDLE`: Intake brought up, rollers do not run
+- `INTAKE`: Intake brought down, rollers run forward on a duty cycle
+- `OUTTAKE`: Intake brought down, rollers run backward on a duty cycle
+- `DOWN`: Intake brought down, rollers do not run
+- `HOMING_DOWN`: Intake pushed down, rollers do not run
+
+Based on an angle and a duty cycle, in the `periodic` method, we use PID to control our pivot and a duty cycle to control the percentage of power given to the rollers.
+
+In order to stop the fuel from pushing the intake up, we apply something called "pushdown current". This keeps pushing the intake downwards in order to resist the force of the fuel and keep it downwards at the angle we want.
+
+Due to encoder issues when the chain skips, it's quite difficult to detect when the pivot is within tolerance. In order to detect this, we detect stalling to know when to stop. This works in combination with homing down, in which we apply a constant current in order to force the pivot downwards.
+
+## Feeder
+File: [`src/main/java/com/stuypulse/robot/subsystems/feeder`](https://github.com/StuyPulse/StuyPlus-2026/tree/main/src/main/java/com/stuypulse/robot/subsystems/feeder)
+
+Our feeder is of indexer type, having three lanes for  the [shooter](#shooter)'s three slots. It uses two motors (follower-leader) to guide the fuel from the hopper to the shooter.
+
+It contains the following states:
+- `STOP`: Feeder is stopped
+- `FORWARD`: Motors run forward on a duty cycle to feed fuel to the shooter
+- `REVERSE`: Motors run backward on a duty cycle to work with the intake to outtake fuel from the robot
+
+In the `periodic` method, we use `DutyCycleOut` to control the percentage of power given to both feeder motors. The feeder is set to only run when aligned to the hub if in `SHOOT` state. For SOTM/FOTM, it still feeds while moving if needed.
+
+## Shooter
+File: [`src/main/java/com/stuypulse/robot/subsystems/shooter`](https://github.com/StuyPulse/StuyPlus-2026/tree/main/src/main/java/com/stuypulse/robot/subsystems/shooter)
+
+Our shooter is made up of 3 shooter motors (`Left`, `Center`, `Right`) and 1 handoff motor. 
+
+The `Center` and `Right` motors follow the `Left` motor.
+
+The handoff motor assists the feeder.
+
+> [!IMPORTANT]
+> SOTM (Shoot on the move) and FOTM (Ferry on the move) are low priority.
+
+It contains the following states:
+- `IDLE`: Shooter doesn't run. Handoff doesn't run.
+- `SHOOT`: Shooter wheels spin at it's target RPM, interpolated based on distance to hub. Handoff motors run at max duty cycle.
+- `SOTM`: Shoot on the move. Shooter RPM is interpolated based on distance to hub. Handoff runs at 80% duty cycle.
+- `FOTM`: Ferry on the move. Shooter RPM is interpolated based on distance to hub. Handoff runs at 80% duty cycle.
+- `FERRY`: Shooter wheels spin at it's target RPM, interpolated based on distance to ferry zone. Handoff motors run at max duty cycle.
+
+In the `periodic` method, the shooter RPM is controlled via `VelocityTorqueCurrentFOC` control request. Uses `DutyCycleOut` for controlling the handoff motors.
+
+## Vision
+Files: 
+- [`src/main/java/com/stuypulse/robot/subsystems/vision`](https://github.com/StuyPulse/StuyPlus-2026/tree/main/src/main/java/com/stuypulse/robot/subsystems/vision), 
+- [`src/main/java/com/stuypulse/robot/util/vision`](https://github.com/StuyPulse/StuyPlus-2026/tree/main/src/main/java/com/stuypulse/robot/util/vision)
+
+This uses Limelights from [Limelight Vision](https://limelightvision.io/) to use the AprilTags to estimate the pose of the robot. It works in combination with odometry to estimate the pose using gyros and encoders when using megatag 2.
+
+All of the math and code is mostly done within the Limelight itself via LimelightOS. You mainly just need to connect it to your robot and determine the protocol  it sends to.
+
+`LimelightHelpers.java` is a wrapper class for the vision `NetworkTables` from the Limelight that abstracts many functions for you such as setting pipelines and the pose estimation.
+
+Features:
+- The robot currently only has one Limelight
+- Uses [MegaTag](https://docs.limelightvision.io/docs/docs-limelight/pipeline-apriltag/apriltag-robot-localization) localization algorithm
+- Commands for switching the Limelight pipeline based on `Sunny` and `Cloudy` conditions to increase efficiency.
+
+## MapleSim w/ AdvantageScope
+How to use our MapleSim implementation on **your** computer: [`MapleSim Usage Guide`](https://github.com/StuyPulse/StuyPlus-2026/blob/main/ascope_assets/README.md)
+
+Files:
+- [`Simulation.java`](https://github.com/StuyPulse/StuyPlus-2026/blob/main/src/main/java/com/stuypulse/robot/util/simulation/Simulation.java)
+- [`SimulationConstants.java`](https://github.com/StuyPulse/StuyPlus-2026/blob/main/src/main/java/com/stuypulse/robot/util/simulation/SimulationConstants.java)
+- [`MapleSimSwerveDrivetrain.java`](https://github.com/StuyPulse/StuyPlus-2026/blob/main/src/main/java/com/stuypulse/robot/util/simulation/MapleSimSwerveDrivetrain.java)
+
+Additionally, we modified our [`CommandSwerveDrivetrain.java`](https://github.com/StuyPulse/StuyPlus-2026/blob/main/src/main/java/com/stuypulse/robot/subsystems/swerve/CommandSwerveDrivetrain.java) in order to: 
+- Replace the normal simulation instance with a `MapleSimSwerveDrivetrain` instance
+- Update the simulation instance with Maplesim's periodic method (`MapleSimSwerveDrivetrain::update`)
+- Publish our simulated swerve module states, chassis speeds, and drivetrain pose to `NetworkTables`
+
+---
+[MapleSim](https://shenzhen-robotics-alliance.github.io/maple-sim/) is a physics simulation tool created in Java for FRC, made by the [Shenzhen Robotics Alliance](https://github.com/shenzhen-robotics-alliance). 
+
+It uses the [dyn4j physics engine](https://github.com/dyn4j/dyn4j), simulating your Drivetrain as closely as your real code does, the field, and collisions between parts of the world. 
+
+It works with AdvantageScope simply for rendering the Poses for all elements in the sim.
+
+We use this for:
+- Overall testing our archetype before our Mechanical Engineering department finishes the physical robot
+- Visualizing and testing our code logic
+- Testing how autons might look on the field
+- Helping members understand how the robot will operate
+- Visualize match logs in 3d
+
+## License
+This project is under the [MIT License](/LICENSE)

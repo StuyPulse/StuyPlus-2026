@@ -62,8 +62,8 @@ public class Simulation {
 
     private Simulation() {
         intakeSim = Intake.getInstance();
-        swerveMSim = CommandSwerveDrivetrain.getInstance().getMapleSimDrive();
         shooterSim = Shooter.getInstance();
+        swerveMSim = CommandSwerveDrivetrain.getInstance().getMapleSimDrive();
 
         arenaInstance = new Arena2026Rebuilt(false);
         configureArena();
@@ -223,7 +223,7 @@ public class Simulation {
                 shooterPose.getTranslation(),
                 swerveMSim.getSimulatedDriveTrainPose().getRotation(),
                 Meters.of(SimulationConstants.Shooter.OFFSETS.toPose3d().getZ()),
-                MetersPerSecond.of(SimulationConstants.Shooter.rpmToMps(shooterSim.getShootSpeed())),
+                MetersPerSecond.of(SimulationConstants.Shooter.rpmToMps(shooterSim.getCurrentRPM())),
                 Degrees.of(launchAngle),
                 SimulationConstants.Intake.INTAKE_WIDTH,
                 0,

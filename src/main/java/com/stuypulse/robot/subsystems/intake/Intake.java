@@ -92,6 +92,7 @@ public abstract class Intake extends SubsystemBase {
         final IntakeState currentState = getState();
         // Logging
         SmartDashboard.putString("Intake/State", currentState.name());
+        SmartDashboard.putString("States/Intake", currentState.name());
 
         SmartDashboard.putNumber("Intake/Pivot/Target Angle", currentState.getTargetAngle().getDegrees());
         SmartDashboard.putNumber("Intake/Pivot/Current Angle", getRelativePosition().getDegrees());

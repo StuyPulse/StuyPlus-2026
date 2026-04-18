@@ -386,6 +386,13 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
     public Pose2d getPose() {
         return getState().Pose;
     }
+
+    public boolean isAlignedToTarget(Pose2d target) {
+        Pose2d currentPose = getPose();
+        Rotation2d targetAngle = new Rotation2d(Math.atan2(target.getY() - currentPose.getY(), target.getX() - currentPose.getX()));
+
+        return currentPose.getRotation().minus(targetAngle).getDegrees() < Settings.Swerve.Alignment.Tolerances.THETA_TOLERANCE.getDegrees();
+    }
     
     public Pose2d getShooterPose() {
         return SimulationConstants.Shooter.OFFSETS.applyToPose2d(mapleSimSwerveDrivetrain == null ? getPose() : getMapleSimDrive().getSimulatedDriveTrainPose()); // offset is negative because the shooter is behind the robot center
