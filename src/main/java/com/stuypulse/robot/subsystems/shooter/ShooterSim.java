@@ -23,7 +23,7 @@ public class ShooterSim extends Shooter {
     public ShooterSim() {
         
         shootersim = new DCMotorSim(LinearSystemId.createDCMotorSystem(
-            DCMotor.getKrakenX60(4),
+            DCMotor.getKrakenX60(3),
             Settings.Shooter.J_KG_METERS_SQUARED,
             Settings.Shooter.GEAR_RATIO),
             DCMotor.getKrakenX60(4)
