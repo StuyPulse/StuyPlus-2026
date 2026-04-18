@@ -2,7 +2,6 @@ package com.stuypulse.robot.subsystems.shooter;
 
 import java.util.function.DoubleSupplier;
 
-import com.ctre.phoenix6.controls.DutyCycleOut;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.stuypulse.robot.Robot;
 import com.stuypulse.robot.constants.Settings;
@@ -58,19 +57,19 @@ public class Shooter extends SubsystemBase {
         FERRY(() -> InterpolationCalculator.interpolateFerryingInfo().targetRPM(), Settings.Shooter.FERRY_DUTY);
 
         private DoubleSupplier RPMSupplier;
-        private double bottomMotorDutyCycle;
+        private double handoffMotorDutyCycle;
 
-        private ShooterState(DoubleSupplier RPMSupplier, double bottomMotorDutyCycle) {
+        private ShooterState(DoubleSupplier RPMSupplier, double handoffMotorDutyCycle) {
             this.RPMSupplier = RPMSupplier;
-            this.bottomMotorDutyCycle = bottomMotorDutyCycle;
+            this.handoffMotorDutyCycle = handoffMotorDutyCycle;
         }
 
         public double getRPM() {
             return RPMSupplier.getAsDouble();
         }
 
-        public double getBottomMotorDutyCycle() {
-            return bottomMotorDutyCycle;
+        public double getHandoffMotorDutyCycle() {
+            return handoffMotorDutyCycle;
         }
     }
 
@@ -78,6 +77,7 @@ public class Shooter extends SubsystemBase {
     public void periodic() {
         SmartDashboard.putString("Shooter/State", getState().name());
         SmartDashboard.putNumber("Shooter/Top Target RPM", getState().getRPM());
-        SmartDashboard.putNumber("Shooter/Bottom Target Duty Cycle", getState().getBottomMotorDutyCycle());
+        SmartDashboard.putNumber("Shooter/Handoff Target Duty Cycle", getState().getHandoffMotorDutyCycle());
     }
 }
+

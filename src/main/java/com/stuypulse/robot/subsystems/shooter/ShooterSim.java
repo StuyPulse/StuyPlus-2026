@@ -14,13 +14,14 @@ import edu.wpi.first.wpilibj.simulation.DCMotorSim;
 public class ShooterSim extends Shooter {
     private final DCMotorSim handoffsim;
     private final DCMotorSim shootersim;
-    private final TalonFXSimulation handoffleader;
+    private final TalonFXSimulation handoffmotor;
     private final TalonFXSimulation shooterleader;
     private final TalonFXSimulation shooterfollower;
     private final VelocityVoltage shootercontroller;
     private final DutyCycleOut handoffcontroller;
 
     public ShooterSim() {
+        
         shootersim = new DCMotorSim(LinearSystemId.createDCMotorSystem(
             DCMotor.getKrakenX60(4),
             Settings.Shooter.J_KG_METERS_SQUARED,
@@ -33,8 +34,6 @@ public class ShooterSim extends Shooter {
         shooterfollower.setControl(new Follower(shooterleader.getMotor().getDeviceID(), MotorAlignmentValue.Aligned));
         shootercontroller = new VelocityVoltage(0);
         shooterleader.setControl(shootercontroller);
-        shooterleader.update(Settings.DT);
-        shooterfollower.update(Settings.DT);
        
         handoffsim= new DCMotorSim(LinearSystemId.createDCMotorSystem(
             DCMotor.getKrakenX60(1),
@@ -42,9 +41,15 @@ public class ShooterSim extends Shooter {
             Settings.Shooter.GEAR_RATIO),
             DCMotor.getKrakenX60(1)
         );
-        handoffleader = new TalonFXSimulation(handoffsim).configure(Motors.Shooter.BOTTOM_MOTOR_CONFIG);
+        handoffmotor = new TalonFXSimulation(handoffsim).configure(Motors.Shooter.HANDOFF_MOTOR_CONFIG);
         handoffcontroller = new DutyCycleOut(0);
-        handoffleader.setControl(handoffcontroller);
-        handoffleader.update(Settings.DT);
+        handoffmotor.setControl(handoffcontroller);
+    }
+    @Override
+    public void periodic() {
+        shooterleader.update(Settings.DT);
+        shooterfollower.update(Settings.DT);
+        handoffmotor.update(Settings.DT);
+        super.periodic();
     }
 }

@@ -22,8 +22,7 @@ public interface Ports {
         int SHOOTER_MOTOR_CENTER = 1;
         int SHOOTER_MOTOR_RIGHT = 2;
 
-        int BOTTOM_MOTOR_LEFT = 8;
-        int BOTTOM_MOTOR_RIGHT = 9;
+        int HANDOFF_MOTOR = 8;
     }
 
 //TODO: Get ports from mech
