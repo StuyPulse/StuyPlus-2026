@@ -32,7 +32,11 @@ public class ShooterSim extends Shooter {
         shooterleader = new TalonFXSimulation(shootersim).configure(Motors.Shooter.SHOOTER_MOTOR_CONFIG);
         shooterfollower = new TalonFXSimulation(shootersim).configure(Motors.Shooter.SHOOTER_MOTOR_CONFIG);
 
-        shooterfollower.setControl(new Follower(shooterleader.getMotor().getDeviceID(), MotorAlignmentValue.Aligned));
+        shooterfollower1 = new TalonFXSimulation(shootersim).configure(Motors.Shooter.SHOOTER_MOTOR_CONFIG);
+        shooterfollower2 = new TalonFXSimulation(shootersim).configure(Motors.Shooter.SHOOTER_MOTOR_CONFIG);
+
+        shooterfollower1.setControl(new Follower(shooterleader.getMotor().getDeviceID(), MotorAlignmentValue.Opposed));
+        shooterfollower2.setControl(new Follower(shooterleader.getMotor().getDeviceID(), MotorAlignmentValue.Opposed));
         shootercontroller = new VelocityVoltage(0);
         shooterleader.setControl(shootercontroller);
        
