@@ -49,7 +49,7 @@ public class ShooterSim extends Shooter {
     }
     @Override
     public void periodic() {
-        shooterleader.setControl(shootercontroller);
+        shooterleader.setControl(shootercontroller.withVelocity(getState().getRPM() / 60));
         shooterleader.update(Settings.DT);
         shooterfollower1.update(Settings.DT);
         shooterfollower2.update(Settings.DT);
