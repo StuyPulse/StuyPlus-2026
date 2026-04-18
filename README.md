@@ -73,7 +73,16 @@ Files:
 - [`src/main/java/com/stuypulse/robot/subsystems/vision`](https://github.com/StuyPulse/StuyPlus-2026/tree/main/src/main/java/com/stuypulse/robot/subsystems/vision), 
 - [`src/main/java/com/stuypulse/robot/util/vision`](https://github.com/StuyPulse/StuyPlus-2026/tree/main/src/main/java/com/stuypulse/robot/util/vision)
 
-To be filled
+This uses Limelights from [Limelight Vision](https://limelightvision.io/) to use the AprilTags to estimate the pose of the robot. It works with odometry to estimate the pose using gyros and encoders when AprilTags are not available.
+
+All of the math and code is mostly done within the Limelight itself via LimelightOS. You mainly just need to connect it to your robot and determine the protocol  it sends to.
+
+`LimelightHelpers.java` is a wrapper class for the vision `NetworkTables` from the Limelight that abstracts many functions for you such as setting pipelines and the pose estimation.
+
+Features:
+- The robot currently only has one Limelight
+- Uses [MegaTag](https://docs.limelightvision.io/docs/docs-limelight/pipeline-apriltag/apriltag-robot-localization) localization algorithm
+- Commands for switching the Limelight pipeline based on `Sunny` and `Cloudy` conditions to increase efficiency.
 
 ## MapleSim w/ AdvantageScope
 How to use our MapleSim implementation on **your** computer: [`MapleSim Usage Guide`](https://github.com/StuyPulse/StuyPlus-2026/blob/main/ascope_assets/README.md)
