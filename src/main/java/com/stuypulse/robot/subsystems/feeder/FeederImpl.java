@@ -4,10 +4,14 @@ import com.ctre.phoenix6.controls.DutyCycleOut;
 import com.ctre.phoenix6.controls.Follower;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.MotorAlignmentValue;
+import com.stuypulse.robot.constants.Field;
 import com.stuypulse.robot.constants.Motors;
 import com.stuypulse.robot.constants.Ports;
 import com.stuypulse.robot.constants.Settings;
 import com.stuypulse.robot.constants.Settings.EnabledSubsystems;
+import com.stuypulse.robot.subsystems.shooter.Shooter;
+import com.stuypulse.robot.subsystems.shooter.Shooter.ShooterState;
+import com.stuypulse.robot.subsystems.swerve.CommandSwerveDrivetrain;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -37,6 +41,18 @@ public class FeederImpl extends Feeder {
     public void periodic() {
         if (EnabledSubsystems.FEEDER.get()) {
             super.periodic();
+
+            //Stop shooting if not aligned  
+            CommandSwerveDrivetrain swerve = CommandSwerveDrivetrain.getInstance();
+            Shooter shooter = Shooter.getInstance();
+
+            if (!(swerve.isAlignedToTarget(Field.getHubPose())) && shooter.getState() == ShooterState.SHOOT) {
+                setState(FeederState.STOP);
+            }
+
+            if (!(swerve.isAlignedToTarget(Field.getFerryZonePose(swerve.getPose().getTranslation()))) && shooter.getState() == ShooterState.FERRY) {
+                setState(FeederState.STOP);
+            }
 
             // Apply
             feederLeader.setControl(controller.withOutput(getState().getTargetDutyCycle()));

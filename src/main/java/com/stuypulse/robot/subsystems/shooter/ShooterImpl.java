@@ -29,10 +29,6 @@ public class ShooterImpl extends Shooter {
 
         handoffMotor = new TalonFX(Ports.ShooterPorts.HANDOFF_MOTOR, Settings.CANIVORE);
 
-        shooterMotorCenter = new TalonFX(Ports.ShooterPorts.SHOOTER_MOTOR_CENTER, Settings.CANIVORE);
-        shooterMotorRight = new TalonFX(Ports.ShooterPorts.SHOOTER_MOTOR_RIGHT, Settings.CANIVORE);
-
-
         // configure
         Motors.Shooter.SHOOTER_MOTOR_CONFIG.configure(shooterMotorLeft);
         Motors.Shooter.SHOOTER_MOTOR_CONFIG.configure(shooterMotorCenter);
