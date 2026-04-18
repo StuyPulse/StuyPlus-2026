@@ -18,7 +18,7 @@ public class ShooterSim extends Shooter {
     private final TalonFXSimulation shooterleader;
     private final TalonFXSimulation shooterfollower1;
     private final TalonFXSimulation shooterfollower2
-    private final VelocityVoltage shootercontroller;
+    private final VelocityTorqueCurrentFOC shootercontroller;
     private final DutyCycleOut handoffcontroller;
 
     public ShooterSim() {
