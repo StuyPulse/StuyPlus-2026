@@ -8,7 +8,7 @@
 
 ## Based on the [WCP 2026 Competitive Concept](https://wcproducts.com/pages/wcp-competitive-concepts) for Rebuilt
 
-[![WCP 2026 Rebuilt Competitive Concept Video](https://img.youtube.com/vi/wO9aJNpCE8Q/0.jpg)](https://www.youtube.com/watch?v=wO9aJNpCE8Q)
+[![WCP 2026 Rebuilt Competitive Concept Video](https://www.video-thumbnail.com/youtube/wO9aJNpCE8Q)](https://www.youtube.com/watch?v=wO9aJNpCE8Q)
 
 ## Subsystems and Features
 - [Drivetrain](#drivetrain)
