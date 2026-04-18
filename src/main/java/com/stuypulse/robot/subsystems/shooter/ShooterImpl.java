@@ -65,7 +65,7 @@ public class ShooterImpl extends Shooter {
 
         double targetRPS = getState().getRPM() / 60;
         VelocityTorqueCurrentFOC control = new VelocityTorqueCurrentFOC(targetRPS);
-        DutyCycleOut dutyCycle = new DutyCycleOut(getState().getBottomMotorDutyCycle()).withEnableFOC(true);
+        DutyCycleOut dutyCycle = new DutyCycleOut(getState().getHandoffMotorDutyCycle()).withEnableFOC(true);
 
         shooterMotorLeft.setControl(control);
         handoffMotor.setControl(dutyCycle);
