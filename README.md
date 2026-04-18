@@ -54,7 +54,14 @@ Due to encoder issues when the chain skips, it's quite difficult to detect when 
 ## Feeder
 File: [`src/main/java/com/stuypulse/robot/subsystems/feeder`](https://github.com/StuyPulse/StuyPlus-2026/tree/main/src/main/java/com/stuypulse/robot/subsystems/feeder)
 
-To be filled
+Our feeder is of indexer type, having three lanes for  the [shooter](#shooter)'s three slots. It uses two motors (follower-leader) to guide the fuel from the hopper to the shooter.
+
+It contains the following states:
+- `STOP`: Feeder is stopped
+- `FORWARD`: Motors run forward on a duty cycle to feed fuel to the shooter
+- `REVERSE`: Motors run backward on a duty cycle to work with the intake to outtake fuel from the robot
+
+In the `periodic` method, we use `DutyCycleOut` to control the percentage of power given to both feeder motors. The feeder is set to only run when aligned to the hub if in `Shooter` state. For SOTM/FOTM, it still feeds while moving if needed.
 
 ## Shooter
 File: [`src/main/java/com/stuypulse/robot/subsystems/shooter`](https://github.com/StuyPulse/StuyPlus-2026/tree/main/src/main/java/com/stuypulse/robot/subsystems/shooter)
