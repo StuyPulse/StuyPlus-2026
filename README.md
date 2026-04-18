@@ -61,7 +61,7 @@ It contains the following states:
 - `FORWARD`: Motors run forward on a duty cycle to feed fuel to the shooter
 - `REVERSE`: Motors run backward on a duty cycle to work with the intake to outtake fuel from the robot
 
-In the `periodic` method, we use `DutyCycleOut` to control the percentage of power given to both feeder motors. The feeder is set to only run when aligned to the hub if in `Shooter` state. For SOTM/FOTM, it still feeds while moving if needed.
+In the `periodic` method, we use `DutyCycleOut` to control the percentage of power given to both feeder motors. The feeder is set to only run when aligned to the hub if in `SHOOT` state. For SOTM/FOTM, it still feeds while moving if needed.
 
 ## Shooter
 File: [`src/main/java/com/stuypulse/robot/subsystems/shooter`](https://github.com/StuyPulse/StuyPlus-2026/tree/main/src/main/java/com/stuypulse/robot/subsystems/shooter)
