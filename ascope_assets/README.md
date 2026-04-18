@@ -1,7 +1,12 @@
-# AdvantageScope Visualization Usage:
+# MapleSim w/ AdvantageScope Visualization Usage:
 <p align="center">
-<img src="https://github.com/Mechanical-Advantage/AdvantageScope/raw/main/docs/docs/img/banner.png"></img>
+    <img src="../images/logos/MapleSimLogo.png" />
 </p>
+<p align="center"><b>×</b></p>
+<p align="center">
+    <img src="../images/logos/AdvantageScopeLogo.png" />
+</p>
+
 
 1. Extract `Robot_StuyPlus.zip`
 2. Go to the MenuBar and go to `App > Use Custom Assets Folder`, and select this directory `ascope_assets`,
