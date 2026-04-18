@@ -29,7 +29,7 @@ For our [MapleSim w/ AdvantageScope](#maplesim-w-advantagescope), we create a Ma
 
 The robot is driven `Field-Centric`.
 
-We use both [Vision](#vision) and odometry to get estimate the pose. Check the vision section for details. Odometry is used when no April Tags are available and uses the gyro and encoders to predict your pose.
+We use both [Vision](#vision) and odometry to get estimate the pose. Check the vision section for details. 
 
 `HolonomicController.java`, made by the main team 694, is essentially the PID Controller but for the drivetrain.
 
@@ -43,13 +43,13 @@ It contains the following states:
 - `INTAKE`: Intake brought down, rollers run forward on a duty cycle
 - `OUTTAKE`: Intake brought down, rollers run backward on a duty cycle
 - `DOWN`: Intake brought down, rollers do not run
-- `HOMING_DOWN`: Intake brought down, rollers do not run
+- `HOMING_DOWN`: Intake pushed down, rollers do not run
 
 Based on an angle and a duty cycle, in the `periodic` method, we use PID to control our pivot and a duty cycle to control the percentage of power given to the rollers.
 
 In order to stop the fuel from pushing the intake up, we apply something called "pushdown current". This keeps pushing the intake downwards in order to resist the force of the fuel and keep it downwards at the angle we want.
 
-Due to encoder issues when the chain skips, it's quite difficult to detect when the pivot is within tolerance. In order to detect this, we detect stalling to know when to stop.
+Due to encoder issues when the chain skips, it's quite difficult to detect when the pivot is within tolerance. In order to detect this, we detect stalling to know when to stop. This works in combination with homing down, in which we apply a constant current in order to force the pivot downwards.
 
 ## Feeder
 File: [`src/main/java/com/stuypulse/robot/subsystems/feeder`](https://github.com/StuyPulse/StuyPlus-2026/tree/main/src/main/java/com/stuypulse/robot/subsystems/feeder)
@@ -80,7 +80,7 @@ It contains the following states:
 - `SHOOT`: Shooter wheels spin at it's target RPM, interpolated based on distance to hub. Handoff motors run at max duty cycle.
 - `SOTM`: Shoot on the move. Shooter RPM is interpolated based on distance to hub. Handoff runs at 80% duty cycle.
 - `FOTM`: Ferry on the move. Shooter RPM is interpolated based on distance to hub. Handoff runs at 80% duty cycle.
-- `FERRY`: Shooter wheels spin at it's target RPM, interpolated based on distance to hub. Handoff motors run at max duty cycle.
+- `FERRY`: Shooter wheels spin at it's target RPM, interpolated based on distance to ferry zone. Handoff motors run at max duty cycle.
 
 In the `periodic` method, the shooter RPM is controlled via `VelocityTorqueCurrentFOC` control request. Uses `DutyCycleOut` for controlling the handoff motors.
 
@@ -89,7 +89,7 @@ Files:
 - [`src/main/java/com/stuypulse/robot/subsystems/vision`](https://github.com/StuyPulse/StuyPlus-2026/tree/main/src/main/java/com/stuypulse/robot/subsystems/vision), 
 - [`src/main/java/com/stuypulse/robot/util/vision`](https://github.com/StuyPulse/StuyPlus-2026/tree/main/src/main/java/com/stuypulse/robot/util/vision)
 
-This uses Limelights from [Limelight Vision](https://limelightvision.io/) to use the AprilTags to estimate the pose of the robot. It works with odometry to estimate the pose using gyros and encoders when AprilTags are not available.
+This uses Limelights from [Limelight Vision](https://limelightvision.io/) to use the AprilTags to estimate the pose of the robot. It works in combination with odometry to estimate the pose using gyros and encoders when using megatag 2.
 
 All of the math and code is mostly done within the Limelight itself via LimelightOS. You mainly just need to connect it to your robot and determine the protocol  it sends to.
 
