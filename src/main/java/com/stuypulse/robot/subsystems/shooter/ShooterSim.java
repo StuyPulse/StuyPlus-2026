@@ -48,7 +48,6 @@ public class ShooterSim extends Shooter {
         );
         handoffmotor = new TalonFXSimulation(handoffsim).configure(Motors.Shooter.HANDOFF_MOTOR_CONFIG);
         handoffcontroller = new DutyCycleOut(getState().getHandoffMotorDutyCycle);
-        handoffmotor.setControl(handoffcontroller);
     }
     @Override
     public void periodic() {
