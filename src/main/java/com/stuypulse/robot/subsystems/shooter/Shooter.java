@@ -10,7 +10,7 @@ import com.stuypulse.robot.util.shooter.InterpolationCalculator;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-public class Shooter extends SubsystemBase {
+public abstract class Shooter extends SubsystemBase {
     private final static Shooter instance;
     private ShooterState state;
 
@@ -73,11 +73,15 @@ public class Shooter extends SubsystemBase {
         }
     }
 
+    public abstract double getCurrentRPM();
+
     @Override
     public void periodic() {
-        SmartDashboard.putString("Shooter/State", getState().name());
         SmartDashboard.putNumber("Shooter/Top Target RPM", getState().getRPM());
         SmartDashboard.putNumber("Shooter/Handoff Target Duty Cycle", getState().getHandoffMotorDutyCycle());
+
+        SmartDashboard.putString("Shooter/State", getState().name());
+        SmartDashboard.putString("States/Shooter", getState().name());
     }
 }
 

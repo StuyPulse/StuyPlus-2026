@@ -1,5 +1,7 @@
 package com.stuypulse.robot.subsystems.shooter;
 
+import static edu.wpi.first.units.Units.RPM;
+
 import java.util.Optional;
 
 import com.ctre.phoenix6.controls.DutyCycleOut;
@@ -23,7 +25,7 @@ public class ShooterImpl extends Shooter {
     private Optional<Double> voltageOveride;
 
     public ShooterImpl() {
-        shooterMotorLeft = new TalonFX(Ports.ShooterPorts.SHOOTER_MOTOR_LEFT, Settings.CANIVORE);
+        shooterMotorLeft = new TalonFX(Ports.ShooterPorts.SHOOTER_MOTOR_LEFT, Settings.CANIVORE); // leader
         shooterMotorCenter = new TalonFX(Ports.ShooterPorts.SHOOTER_MOTOR_CENTER, Settings.CANIVORE);
         shooterMotorRight = new TalonFX(Ports.ShooterPorts.SHOOTER_MOTOR_RIGHT, Settings.CANIVORE);
 
@@ -48,6 +50,11 @@ public class ShooterImpl extends Shooter {
 
     public Optional<Double> getVoltageOverride() {
         return voltageOveride;
+    }
+
+    @Override
+    public double getCurrentRPM() {
+        return shooterMotorLeft.getVelocity().getValue().in(RPM);
     }
 
     @Override
