@@ -1,7 +1,7 @@
 package com.stuypulse.robot.subsystems.shooter;
 import com.ctre.phoenix6.controls.DutyCycleOut;
 import com.ctre.phoenix6.controls.Follower;
-import com.ctre.phoenix6.controls.VelocityVoltage;
+import com.ctre.phoenix6.controls.VelocityTorqueCurrentFOC;
 import com.ctre.phoenix6.signals.MotorAlignmentValue;
 import com.stuypulse.robot.constants.Motors;
 import com.stuypulse.robot.constants.Settings;
@@ -17,7 +17,7 @@ public class ShooterSim extends Shooter {
     private final TalonFXSimulation handoffmotor;
     private final TalonFXSimulation shooterleader;
     private final TalonFXSimulation shooterfollower1;
-    private final TalonFXSimulation shooterfollower2
+    private final TalonFXSimulation shooterfollower2;
     private final VelocityTorqueCurrentFOC shootercontroller;
     private final DutyCycleOut handoffcontroller;
 
@@ -30,29 +30,30 @@ public class ShooterSim extends Shooter {
             DCMotor.getKrakenX60(3)
         );
         shooterleader = new TalonFXSimulation(shootersim).configure(Motors.Shooter.SHOOTER_MOTOR_CONFIG);
-        shooterfollower = new TalonFXSimulation(shootersim).configure(Motors.Shooter.SHOOTER_MOTOR_CONFIG);
-
         shooterfollower1 = new TalonFXSimulation(shootersim).configure(Motors.Shooter.SHOOTER_MOTOR_CONFIG);
         shooterfollower2 = new TalonFXSimulation(shootersim).configure(Motors.Shooter.SHOOTER_MOTOR_CONFIG);
 
         shooterfollower1.setControl(new Follower(shooterleader.getMotor().getDeviceID(), MotorAlignmentValue.Opposed));
         shooterfollower2.setControl(new Follower(shooterleader.getMotor().getDeviceID(), MotorAlignmentValue.Opposed));
-        shootercontroller = new VelocityVoltage(0);
-        shooterleader.setControl(shootercontroller);
+        shootercontroller = new VelocityTorqueCurrentFOC(getState().getRPM());
+
        
-        handoffsim= new DCMotorSim(LinearSystemId.createDCMotorSystem(
+        handoffsim = new DCMotorSim(LinearSystemId.createDCMotorSystem(
             DCMotor.getKrakenX60(1),
             Settings.Shooter.J_KG_METERS_SQUARED,
             Settings.Shooter.GEAR_RATIO),
             DCMotor.getKrakenX60(1)
         );
         handoffmotor = new TalonFXSimulation(handoffsim).configure(Motors.Shooter.HANDOFF_MOTOR_CONFIG);
-        handoffcontroller = new DutyCycleOut(getState().getHandoffMotorDutyCycle);
+        handoffcontroller = new DutyCycleOut(getState().getHandoffMotorDutyCycle());
     }
     @Override
     public void periodic() {
+        shooterleader.setControl(shootercontroller);
         shooterleader.update(Settings.DT);
-        shooterfollower.update(Settings.DT);
+        shooterfollower1.update(Settings.DT);
+        shooterfollower2.update(Settings.DT);
+        handoffmotor.setControl(handoffcontroller);
         handoffmotor.update(Settings.DT);
         super.periodic();
     }
