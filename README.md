@@ -66,7 +66,23 @@ In the `periodic` method, we use `DutyCycleOut` to control the percentage of pow
 ## Shooter
 File: [`src/main/java/com/stuypulse/robot/subsystems/shooter`](https://github.com/StuyPulse/StuyPlus-2026/tree/main/src/main/java/com/stuypulse/robot/subsystems/shooter)
 
-To be filled
+Our shooter is made up of 3 shooter motors (`Left`, `Center`, `Right`) and 1 handoff motor. 
+
+The `Center` and `Right` motors follow the `Left` motor.
+
+The handoff motor assists the feeder.
+
+> [!IMPORTANT]
+> SOTM (Shoot on the move) and FOTM (Ferry on the move) are low priority.
+
+It contains the following states:
+- `IDLE`: Shooter doesn't run. Handoff doesn't run.
+- `SHOOT`: Shooter wheels spin at it's target RPM, interpolated based on distance to hub. Handoff motors run at max duty cycle.
+- `SOTM`: Shoot on the move. Shooter RPM is interpolated based on distance to hub. Handoff runs at 80% duty cycle.
+- `FOTM`: Ferry on the move. Shooter RPM is interpolated based on distance to hub. Handoff runs at 80% duty cycle.
+- `FERRY`: Shooter wheels spin at it's target RPM, interpolated based on distance to hub. Handoff motors run at max duty cycle.
+
+In the `periodic` method, the shooter RPM is controlled via `VelocityTorqueCurrentFOC` control request. Uses `DutyCycleOut` for controlling the handoff motors.
 
 ## Vision
 Files: 
