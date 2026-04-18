@@ -128,6 +128,9 @@ public interface Settings {
         double SOTM_DUTY = 0.8;
         double FOTM_DUTY = 0.8;
         double IDLE_DUTY = 0;
+        // Sim
+        double J_KG_METERS_SQUARED = 0.1;
+        double GEAR_RATIO = 0.1;
 
         public interface RPMInterpolation{
             double[][] distanceRPMInterpolationValues = {

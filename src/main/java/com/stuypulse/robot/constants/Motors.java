@@ -21,8 +21,6 @@ import com.ctre.phoenix6.signals.GravityTypeValue;
 import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 
-import com.stuypulse.robot.constants.Gains;
-
 /*-
  * File containing all of the configurations that different motors require.
  *

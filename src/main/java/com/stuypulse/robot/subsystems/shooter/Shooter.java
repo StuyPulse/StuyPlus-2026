@@ -2,7 +2,6 @@ package com.stuypulse.robot.subsystems.shooter;
 
 import java.util.function.DoubleSupplier;
 
-import com.ctre.phoenix6.controls.DutyCycleOut;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.stuypulse.robot.Robot;
 import com.stuypulse.robot.constants.Settings;
@@ -81,3 +80,4 @@ public class Shooter extends SubsystemBase {
         SmartDashboard.putNumber("Shooter/Handoff Target Duty Cycle", getState().getHandoffMotorDutyCycle());
     }
 }
+
