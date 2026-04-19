@@ -5,6 +5,7 @@ import com.ctre.phoenix6.controls.VelocityTorqueCurrentFOC;
 import com.ctre.phoenix6.signals.MotorAlignmentValue;
 import com.stuypulse.robot.constants.Motors;
 import com.stuypulse.robot.constants.Settings;
+import com.stuypulse.robot.util.RobotVisualizer;
 import com.stuypulse.robot.util.simulation.TalonFXSimulation;
 
 import static edu.wpi.first.units.Units.RPM;
@@ -63,6 +64,8 @@ public class ShooterSim extends Shooter {
         shooterFollower2.update(Settings.DT);
         handoffMotor.setControl(handoffController.withOutput(getState().getHandoffMotorDutyCycle()));
         handoffMotor.update(Settings.DT);
+
+        RobotVisualizer.getInstance().updateShooter(getCurrentRPM());
 
         super.periodic();
     }

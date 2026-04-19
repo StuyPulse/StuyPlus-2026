@@ -19,8 +19,6 @@ import java.util.stream.Collectors;
 import com.stuypulse.robot.constants.Settings;
 import com.stuypulse.robot.subsystems.intake.Intake.IntakeState;
 
-import edu.wpi.first.math.geometry.Rotation2d;
-
 public class RobotVisualizer {
     public static RobotVisualizer instance;
 
@@ -50,9 +48,9 @@ public class RobotVisualizer {
     private final MechanismLigament2d intakePivot;
     private final List<MechanismLigament2d> intakeSpokes;
 
-    // //shooter:
-    // private final MechanismRoot2d shooterRoot;
-    // private final MechanismLigament2d[] shooterSpokes;
+    // shooter:
+    private final MechanismRoot2d shooterRoot;
+    private final MechanismLigament2d[] shooterSpokes;
 
     private RobotVisualizer() {
         width = 67;
@@ -71,12 +69,14 @@ public class RobotVisualizer {
         feederRoot = canvas.getRoot("Feeder Root", 45, 15);
         feederSpokes = createSpokes(numSpokes, feederRoot, "Feeder Spoke", 6.7, 2, spokeColor);
 
-        // // Shooter
-        // shooterRoot = canvas.getRoot("Shooter Root", 55, 45);
-        // shooterSpokes = createSpokes(numSpokes, shooterRoot, "Shooter Spoke", 6.7, 2, spokeColor);
+        // Shooter
+        shooterRoot = canvas.getRoot("Shooter Root", 55, 45);
+        shooterSpokes = createSpokes(numSpokes, shooterRoot, "Shooter Spoke", 6.7, 2, spokeColor);
 
         // Intake :D
         intakeRoot = canvas.getRoot("Intake Root", 15, 10);
+
+        
 
         intakePivot = new MechanismLigament2d(
             "Intake Arm",
@@ -128,15 +128,12 @@ public class RobotVisualizer {
             spoke.setAngle(spoke.getAngle() + rot);
     }
 
-    // public void updateShooter(double RPM){
-    //     double rot = RPM * 6 * Settings.DT;
-    //     // ആറ് ഏഴ്
-    //     for (MechanismLigament2d spoke : shooterSpokes)
-    //         spoke.setAngle(spoke.getAngle() + rot);
-
-    //     SmartDashboard.putData("Visualizers/Robot", canvas);
-    //     SmartDashboard.putNumber("Shooter/rot", rot);
-    // }
+    public void updateShooter(double RPM){
+        double rot = RPM * 6 * Settings.DT;
+        // ആറ് ഏഴ്
+        for (MechanismLigament2d spoke : shooterSpokes)
+            spoke.setAngle(spoke.getAngle() + rot);
+    }
 
     public void updateIntake(Angle pivotAngle, AngularVelocity velocity) {
         intakePivot.setAngle(pivotAngle.in(Degrees)); // 180 degrees to make it face left
@@ -149,5 +146,9 @@ public class RobotVisualizer {
 
     public double getIntakeAngle() {
         return intakePivot.getAngle();
+    }
+
+    public void update() {
+        SmartDashboard.putData("Visualizers/Robot", canvas);
     }
 }
