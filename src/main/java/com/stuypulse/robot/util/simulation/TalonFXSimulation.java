@@ -139,4 +139,8 @@ public class TalonFXSimulation {
         state.setRawRotorPosition(simMotor.getAngularPosition().in(Rotations));
         state.setRotorVelocity(simMotor.getAngularVelocity().in(RotationsPerSecond));
     }
+
+    public void update(Time dtSeconds) {
+        this.update(dtSeconds.in(Seconds));
+    }
 }
