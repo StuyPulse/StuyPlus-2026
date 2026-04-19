@@ -12,10 +12,11 @@ import static edu.wpi.first.units.Units.RPM;
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.math.system.plant.LinearSystemId;
 import edu.wpi.first.wpilibj.simulation.DCMotorSim;
+import edu.wpi.first.wpilibj.simulation.FlywheelSim;
 
 public class ShooterSim extends Shooter {
     private final DCMotorSim handoffSim;
-    private final DCMotorSim shooterSim;
+    private final FlywheelSim shooterSim;
     private final TalonFXSimulation handoffMotor;
     private final TalonFXSimulation shooterLeader;
     private final TalonFXSimulation shooterFollower1;
@@ -24,7 +25,7 @@ public class ShooterSim extends Shooter {
     private final DutyCycleOut handoffController;
 
     public ShooterSim() {
-        shooterSim = new DCMotorSim(LinearSystemId.createDCMotorSystem(
+        shooterSim = new FlywheelSim(LinearSystemId.createFlywheelSystem(
             DCMotor.getKrakenX60(3),
             Settings.Shooter.J_KG_METERS_SQUARED,
             Settings.Shooter.GEAR_RATIO),
