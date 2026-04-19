@@ -1,5 +1,7 @@
 package com.stuypulse.robot.subsystems.vision;
 
+import static edu.wpi.first.units.Units.*;
+
 import com.stuypulse.robot.Robot;
 import com.stuypulse.robot.commands.vision.SetPipeline;
 import com.stuypulse.robot.constants.Cameras;
@@ -164,7 +166,7 @@ public class LimelightVision extends SubsystemBase{
                     if (poseEstimate != null && poseEstimate.tagCount > 0) {
                         notNull = true;
 
-                        if (poseEstimate.pose.getTranslation().getDistance(Settings.Vision.INVALID_POSITION) > Settings.Vision.INVALID_POSITION_TOLERANCE_M) {
+                        if (poseEstimate.pose.getTranslation().getDistance(Settings.Vision.INVALID_POSITION) > Settings.Vision.INVALID_POSITION_TOLERANCE.in(Meters)) {
                             withinInvalidPositionTolerance = true;
                         }
 

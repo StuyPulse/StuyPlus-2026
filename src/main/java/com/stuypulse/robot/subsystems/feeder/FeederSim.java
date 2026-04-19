@@ -1,5 +1,8 @@
 package com.stuypulse.robot.subsystems.feeder;
 
+import edu.wpi.first.units.measure.*;
+import static edu.wpi.first.units.Units.*;
+
 import com.ctre.phoenix6.controls.DutyCycleOut;
 import com.ctre.phoenix6.controls.Follower;
 import com.ctre.phoenix6.signals.MotorAlignmentValue;
@@ -23,7 +26,7 @@ public class FeederSim extends Feeder {
         feederSim = new DCMotorSim(
             LinearSystemId.createDCMotorSystem(
                 DCMotor.getKrakenX60(2),
-                Settings.Feeder.J_KG_METERS_SQUARED,
+                Settings.Feeder.J.in(KilogramSquareMeters),
                 Settings.Feeder.GEAR_RATIO
             ),
             DCMotor.getKrakenX60(2)
@@ -39,8 +42,8 @@ public class FeederSim extends Feeder {
     }
 
     @Override
-    public double getCurrentRPM() {
-        return feederLeader.getMotor().getVelocity().getValueAsDouble() * 60.0;
+    public AngularVelocity getCurrentAngularVelocity() {
+        return feederLeader.getMotor().getVelocity().getValue();
     }
 
     @Override
@@ -52,15 +55,15 @@ public class FeederSim extends Feeder {
 
         feederLeader.setControl(feederController.withOutput(getState().getTargetDutyCycle())); // apply control to leader before grabbing state to update other motors
 
-        feederLeader.update(Settings.DT);
-        feederFollower.update(Settings.DT);
+        feederLeader.update(Settings.DT.in(Seconds));
+        feederFollower.update(Settings.DT.in(Seconds));
 
         SmartDashboard.putNumber("Feeder/Leader Current", feederLeader.getMotor().getStatorCurrent().getValueAsDouble());
         SmartDashboard.putNumber("Feeder/Follower Current", feederFollower.getMotor().getStatorCurrent().getValueAsDouble());
         SmartDashboard.putNumber("Feeder/Leader Voltage", feederLeader.getMotor().getMotorVoltage().getValueAsDouble());
         SmartDashboard.putNumber("Feeder/Follower Voltage", feederFollower.getMotor().getMotorVoltage().getValueAsDouble());
 
-        RobotVisualizer.getInstance().updateFeeder(getCurrentRPM());
+        RobotVisualizer.getInstance().updateFeeder(getCurrentAngularVelocity());
 
         super.periodic();
     }

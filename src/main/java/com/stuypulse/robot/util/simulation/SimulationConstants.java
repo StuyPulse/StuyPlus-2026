@@ -6,6 +6,7 @@
 
 package com.stuypulse.robot.util.simulation;
 
+import edu.wpi.first.math.util.Units;
 import static edu.wpi.first.units.Units.*;
 
 import com.ctre.phoenix6.configs.CANcoderConfiguration;
@@ -15,16 +16,14 @@ import com.pathplanner.lib.config.PIDConstants;
 import com.stuypulse.robot.constants.Settings;
 import com.stuypulse.robot.subsystems.swerve.TunerConstants;
 
-import static edu.wpi.first.units.Units.*;
-
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.geometry.Translation3d;
-import edu.wpi.first.math.util.Units;
 import edu.wpi.first.units.measure.Angle;
+import edu.wpi.first.units.measure.AngularVelocity;
 import edu.wpi.first.units.measure.Distance;
 import edu.wpi.first.units.measure.Mass;
 import edu.wpi.first.units.measure.Time;
@@ -242,8 +241,8 @@ public interface SimulationConstants {
 
         double COMPRESSION_METRES = Units.inchesToMeters(1.379342);
 
-        public static double rpmToMps(double RPM) {
-            return ((Settings.Shooter.WHEEL_RADIUS_METRES * 2 - COMPRESSION_METRES) * RPM * Math.PI) / 60.0;
+        public static double angularVelocityToMps(AngularVelocity angularVelocity) {
+            return ((Settings.Shooter.WHEEL_RADIUS.in(Meters) * 2 - COMPRESSION_METRES) * (angularVelocity.in(RPM)) * Math.PI) / 60.0;
         }
 
         public Offsets OFFSETS = new Offsets(Units.inchesToMeters(-7.836), 0, 0.7);

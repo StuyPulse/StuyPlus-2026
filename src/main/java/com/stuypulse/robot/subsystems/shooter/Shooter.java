@@ -1,5 +1,8 @@
 package com.stuypulse.robot.subsystems.shooter;
 
+import edu.wpi.first.units.measure.AngularVelocity;
+import static edu.wpi.first.units.Units.RPM;
+
 import java.util.function.DoubleSupplier;
 
 import com.ctre.phoenix6.hardware.TalonFX;
@@ -64,8 +67,8 @@ public abstract class Shooter extends SubsystemBase {
             this.handoffMotorDutyCycle = handoffMotorDutyCycle;
         }
 
-        public double getRPM() {
-            return RPMSupplier.getAsDouble();
+        public AngularVelocity getTargetAngularVelocity() {
+            return RPM.of(RPMSupplier.getAsDouble());
         }
 
         public double getHandoffMotorDutyCycle() {
@@ -73,13 +76,13 @@ public abstract class Shooter extends SubsystemBase {
         }
     }
 
-    public abstract double getCurrentRPM();
+    public abstract AngularVelocity getCurrentAngularVelocity();
 
     @Override
     public void periodic() {
         final ShooterState currentState = getState();
 
-        SmartDashboard.putNumber("Shooter/Top Target RPM", currentState.getRPM());
+        SmartDashboard.putNumber("Shooter/Top Target RPM", currentState.getTargetAngularVelocity().in(RPM));
         SmartDashboard.putNumber("Shooter/Handoff Target Duty Cycle", currentState.getHandoffMotorDutyCycle());
 
         SmartDashboard.putString("Shooter/State", currentState.name());

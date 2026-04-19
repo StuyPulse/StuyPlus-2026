@@ -15,7 +15,6 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Rotation3d;
-import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.networktables.StructArrayPublisher;
@@ -24,9 +23,6 @@ import edu.wpi.first.units.measure.Angle;
 import edu.wpi.first.units.measure.Distance;
 import edu.wpi.first.units.measure.LinearVelocity;
 import edu.wpi.first.wpilibj.Notifier;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
-import static edu.wpi.first.units.Units.*;
 
 import org.ironmaple.simulation.IntakeSimulation;
 import org.ironmaple.simulation.SimulatedArena;
@@ -205,7 +201,7 @@ public class Simulation {
                 shooterPose.getTranslation(),
                 swerveMSim.getSimulatedDriveTrainPose().getRotation(),
                 Meters.of(SimulationConstants.Shooter.OFFSETS.toPose3d().getZ()),
-                MetersPerSecond.of(SimulationConstants.Shooter.rpmToMps(shooterSim.getCurrentRPM())),
+                MetersPerSecond.of(SimulationConstants.Shooter.angularVelocityToMps(shooterSim.getCurrentAngularVelocity())),
                 Degrees.of(launchAngle),
                 SimulationConstants.Intake.INTAKE_WIDTH,
                 0,

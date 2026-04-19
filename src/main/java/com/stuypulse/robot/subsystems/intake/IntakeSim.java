@@ -1,5 +1,8 @@
 package com.stuypulse.robot.subsystems.intake;
 
+import edu.wpi.first.math.util.Units;
+import static edu.wpi.first.units.Units.*;
+
 import com.ctre.phoenix6.controls.DutyCycleOut;
 import com.ctre.phoenix6.controls.Follower;
 import com.ctre.phoenix6.hardware.TalonFX;
@@ -15,7 +18,6 @@ import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.math.system.plant.LinearSystemId;
-import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.simulation.DCMotorSim;
 import edu.wpi.first.wpilibj.simulation.SingleJointedArmSim;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -43,7 +45,7 @@ public class IntakeSim extends Intake {
         rollerSim = new DCMotorSim(
             LinearSystemId.createDCMotorSystem(
                 DCMotor.getKrakenX60(2),
-                Settings.Intake.Roller.J_KG_METERS_SQUARED,
+                Settings.Intake.Roller.J.in(KilogramSquareMeters),
                 Settings.Intake.Roller.GEAR_RATIO
             ),
             DCMotor.getKrakenX60(2)
@@ -57,15 +59,15 @@ public class IntakeSim extends Intake {
         pivotSim = new SingleJointedArmSim(
             LinearSystemId.createDCMotorSystem(
                 DCMotor.getKrakenX60(1),
-                Settings.Intake.Pivot.J_KG_METERS_SQUARED,
+                Settings.Intake.Pivot.J.in(KilogramSquareMeters),
                 Settings.Intake.Pivot.GEAR_RATIO),
             DCMotor.getKrakenX60(1),
             Settings.Intake.Pivot.GEAR_RATIO,
             SimulationConstants.Intake.PIVOT_ARM_LENGTH,
-            Math.toRadians(Settings.Intake.Pivot.MIN_ANGLE),
-            Math.toRadians(Settings.Intake.Pivot.MAX_ANGLE),
+            Settings.Intake.Pivot.MIN_ANGLE.getRadians(),
+            Settings.Intake.Pivot.MAX_ANGLE.getRadians(),
             true,
-            Settings.Intake.Pivot.INITIAL_ANGLE.getRadians()  
+            Settings.Intake.Pivot.INITIAL_ANGLE.getRadians()
         );
         
         zeroOffset = new Rotation2d();
@@ -101,12 +103,12 @@ public class IntakeSim extends Intake {
 
         rollerMotor.setControl(rollerController.withOutput(getState().getTargetDutyCycle()));
 
-        rollerMotor.update(Settings.DT);
-        rollerFollower.update(Settings.DT);
+        rollerMotor.update(Settings.DT.in(Seconds));
+        rollerFollower.update(Settings.DT.in(Seconds));
 
         double voltage = pivotController.calculate(getRelativePosition().getRadians(), getState().getTargetAngle().getRadians());
         pivotSim.setInputVoltage(voltage);
-        pivotSim.update(Settings.DT);
+        pivotSim.update(Settings.DT.in(Seconds));
 
         TalonFXSimState pivotState = pivotMotor.getSimState();
         pivotState.setRawRotorPosition(Units.radiansToRotations(pivotSim.getAngleRads()));
