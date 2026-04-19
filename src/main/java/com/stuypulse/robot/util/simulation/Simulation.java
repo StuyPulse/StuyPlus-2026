@@ -215,7 +215,7 @@ public class Simulation {
     private void updateShooting() {
         if (intakeSim.getState() == IntakeState.OUTTAKE && Settings.EnabledSubsystems.INTAKE.get() && intakeMSim.obtainGamePieceFromIntake()) {
             summonFuelAtIntake();
-        } else if (shooterSim.getState() == ShooterState.SHOOT || shooterSim.getState() == ShooterState.FERRY) {
+        } else if ((shooterSim.getState() == ShooterState.SHOOT || shooterSim.getState() == ShooterState.FERRY) && Settings.EnabledSubsystems.SHOOTER.get()) {
             final Pose2d shooterPose = SimulationConstants.Shooter.OFFSETS.applyToPose2d(swerveMSim.getSimulatedDriveTrainPose());
             final double launchAngle = 67.67; // ആറ് ഏഴ്
 
