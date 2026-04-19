@@ -103,8 +103,8 @@ public class IntakeSim extends Intake {
 
         rollerMotor.setControl(rollerController.withOutput(getState().getTargetDutyCycle()));
 
-        rollerMotor.update(Settings.DT.in(Seconds));
-        rollerFollower.update(Settings.DT.in(Seconds));
+        rollerMotor.update(Settings.DT);
+        rollerFollower.update(Settings.DT);
 
         double voltage = pivotController.calculate(getRelativePosition().getRadians(), getState().getTargetAngle().getRadians());
         pivotSim.setInputVoltage(voltage);

@@ -63,11 +63,11 @@ public class ShooterSim extends Shooter {
     @Override
     public void periodic() {
         shooterLeader.setControl(shooterController.withVelocity(getState().getTargetAngularVelocity().in(RotationsPerSecond)));
-        shooterLeader.update(Settings.DT.in(Seconds));
-        shooterFollower1.update(Settings.DT.in(Seconds));
-        shooterFollower2.update(Settings.DT.in(Seconds));
+        shooterLeader.update(Settings.DT);
+        shooterFollower1.update(Settings.DT);
+        shooterFollower2.update(Settings.DT);
         handoffMotor.setControl(handoffController.withOutput(getState().getHandoffMotorDutyCycle()));
-        handoffMotor.update(Settings.DT.in(Seconds));
+        handoffMotor.update(Settings.DT);
 
         RobotVisualizer.getInstance().updateShooter(getCurrentAngularVelocity());
 

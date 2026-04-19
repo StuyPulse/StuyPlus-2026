@@ -55,8 +55,8 @@ public class FeederSim extends Feeder {
 
         feederLeader.setControl(feederController.withOutput(getState().getTargetDutyCycle())); // apply control to leader before grabbing state to update other motors
 
-        feederLeader.update(Settings.DT.in(Seconds));
-        feederFollower.update(Settings.DT.in(Seconds));
+        feederLeader.update(Settings.DT);
+        feederFollower.update(Settings.DT);
 
         SmartDashboard.putNumber("Feeder/Leader Current", feederLeader.getMotor().getStatorCurrent().getValueAsDouble());
         SmartDashboard.putNumber("Feeder/Follower Current", feederFollower.getMotor().getStatorCurrent().getValueAsDouble());
