@@ -45,8 +45,6 @@ public class FeederSim extends Feeder {
 
     @Override
     public void periodic() {
-        super.periodic();
-
         if (!Settings.EnabledSubsystems.INTAKE.get()) {
             feederLeader.setControl(feederController.withOutput(0));
             return;
@@ -63,5 +61,7 @@ public class FeederSim extends Feeder {
         SmartDashboard.putNumber("Feeder/Follower Voltage", feederFollower.getMotor().getMotorVoltage().getValueAsDouble());
 
         RobotVisualizer.getInstance().updateFeeder(getCurrentRPM());
+
+        super.periodic();
     }
 }

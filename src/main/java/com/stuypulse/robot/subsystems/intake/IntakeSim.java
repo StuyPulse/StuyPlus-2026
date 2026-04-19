@@ -93,7 +93,6 @@ public class IntakeSim extends Intake {
 
     @Override
     public void periodic() {
-        super.periodic();
         if (!Settings.EnabledSubsystems.INTAKE.get()) {
             pivotMotor.getSimState().setRawRotorPosition(Units.radiansToRotations(pivotSim.getAngleRads()) * Settings.Intake.Pivot.GEAR_RATIO);
             rollerMotor.setControl(rollerController.withOutput(0));
@@ -125,5 +124,7 @@ public class IntakeSim extends Intake {
         SmartDashboard.putNumber("Intake/Rollers/Right Voltage", rollerRealFollower.getMotorVoltage().getValueAsDouble());
         SmartDashboard.putBoolean("Intake/Rollers/Left Stalling", false);
         SmartDashboard.putBoolean("Intake/Rollers/Right Stalling", false); // TODO: implement
+
+        super.periodic();
     }
 }

@@ -45,8 +45,6 @@ public class FeederImpl extends Feeder {
 
     @Override
     public void periodic() {
-        super.periodic();
-
         if (!EnabledSubsystems.FEEDER.get()) {
             stopMotors();
             return;
@@ -73,5 +71,7 @@ public class FeederImpl extends Feeder {
             SmartDashboard.putNumber("Feeder/Leader Voltage", feederLeader.getMotorVoltage().getValueAsDouble());
             SmartDashboard.putNumber("Feeder/Follower Voltage", feederFollower.getMotorVoltage().getValueAsDouble());
         }
+
+        super.periodic();
     }
 }

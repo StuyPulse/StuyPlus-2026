@@ -122,8 +122,6 @@ public class IntakeImpl extends Intake {
 
     @Override
     public void periodic() {
-        super.periodic();
-
         if (!EnabledSubsystems.INTAKE.get()) {
             stopMotors();
             return;
@@ -186,6 +184,8 @@ public class IntakeImpl extends Intake {
         SmartDashboard.putNumber("Intake/Rollers/Right Voltage", intakeRollerMotorRight.getMotorVoltage().getValueAsDouble());
         SmartDashboard.putBoolean("Intake/Rollers/Left Stalling", leftRollerStalling());
         SmartDashboard.putBoolean("Intake/Rollers/Right Stalling", rightRollerStalling());
+
+        super.periodic();
     }
 
     public SysIdRoutine getIntakeSysIdRoutine() {

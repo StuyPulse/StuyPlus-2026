@@ -77,8 +77,6 @@ public class ShooterImpl extends Shooter {
 
     @Override
     public void periodic() {
-        super.periodic();
-
         if (!Settings.EnabledSubsystems.SHOOTER.get()) {
             stopMotors();
             return;
@@ -102,5 +100,7 @@ public class ShooterImpl extends Shooter {
 
         this.logMotor("Handoff", handoffMotor);
         SmartDashboard.putNumber("Shooter/Motors/Handoff/DutyCycle", handoffMotor.getDutyCycle().getValueAsDouble());
+
+        super.periodic();
     }
 }

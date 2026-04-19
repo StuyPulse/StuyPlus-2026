@@ -56,13 +56,13 @@ public class ShooterSim extends Shooter {
 
     @Override
     public void periodic() {
-        super.periodic();
-
         shooterLeader.setControl(shooterController.withVelocity(getState().getRPM() / 60));
         shooterLeader.update(Settings.DT);
         shooterFollower1.update(Settings.DT);
         shooterFollower2.update(Settings.DT);
         handoffMotor.setControl(handoffController.withOutput(getState().getHandoffMotorDutyCycle()));
         handoffMotor.update(Settings.DT);
+
+        super.periodic();
     }
 }
