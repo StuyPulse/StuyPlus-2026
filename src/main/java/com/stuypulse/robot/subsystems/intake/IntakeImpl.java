@@ -116,7 +116,8 @@ public class IntakeImpl extends Intake {
     private void stopMotors() {
         intakePivotMotor.stopMotor();
         intakeRollerMotorLeft.stopMotor();
-        intakeRollerMotorLeft.setControl(followerController); // re-add the follow control after stopMotor removes it
+        intakeRollerMotorRight.stopMotor();
+        intakeRollerMotorRight.setControl(followerController); // re-add the follow control after stopMotor removes it
     }
 
     @Override
