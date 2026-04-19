@@ -77,11 +77,13 @@ public abstract class Shooter extends SubsystemBase {
 
     @Override
     public void periodic() {
-        SmartDashboard.putNumber("Shooter/Top Target RPM", getState().getRPM());
-        SmartDashboard.putNumber("Shooter/Handoff Target Duty Cycle", getState().getHandoffMotorDutyCycle());
+        final ShooterState currentState = getState();
 
-        SmartDashboard.putString("Shooter/State", getState().name());
-        SmartDashboard.putString("States/Shooter", getState().name());
+        SmartDashboard.putNumber("Shooter/Top Target RPM", currentState.getRPM());
+        SmartDashboard.putNumber("Shooter/Handoff Target Duty Cycle", currentState.getHandoffMotorDutyCycle());
+
+        SmartDashboard.putString("Shooter/State", currentState.name());
+        SmartDashboard.putString("States/Shooter", currentState.name());
     }
 }
 

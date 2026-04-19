@@ -20,6 +20,7 @@ public class ShooterImpl extends Shooter {
     private final TalonFX shooterMotorCenter;
     private final TalonFX shooterMotorRight;
     private final VelocityTorqueCurrentFOC shooterController;
+    private final Follower shooterFollowerController;
 
     private final TalonFX handoffMotor;
     private final DutyCycleOut handoffController;
@@ -42,10 +43,10 @@ public class ShooterImpl extends Shooter {
         Motors.Shooter.HANDOFF_MOTOR_CONFIG.configure(handoffMotor);
 
         // Set shooter 2 and 3 motors to follow 1
-        final Follower shooterFollower = new Follower(shooterMotorLeft.getDeviceID(), MotorAlignmentValue.Opposed);
+        shooterFollowerController = new Follower(shooterMotorLeft.getDeviceID(), MotorAlignmentValue.Opposed);
 
-        shooterMotorCenter.setControl(shooterFollower);
-        shooterMotorRight.setControl(shooterFollower);
+        shooterMotorCenter.setControl(shooterFollowerController);
+        shooterMotorRight.setControl(shooterFollowerController);
 
         voltageOveride = Optional.empty();
     }
@@ -63,12 +64,25 @@ public class ShooterImpl extends Shooter {
         return shooterMotorLeft.getVelocity().getValue().in(RPM);
     }
 
+    private void stopMotors() {
+        shooterMotorLeft.stopMotor();
+        shooterMotorCenter.stopMotor();
+        shooterMotorRight.stopMotor();
+
+        shooterMotorCenter.setControl(shooterFollowerController);
+        shooterMotorRight.setControl(shooterFollowerController);
+
+        handoffMotor.stopMotor();
+    }
+
     @Override
     public void periodic() {
         super.periodic();
 
-        if (!Settings.EnabledSubsystems.SHOOTER.get())
+        if (!Settings.EnabledSubsystems.SHOOTER.get()) {
+            stopMotors();
             return;
+        }
 
         if (voltageOveride.isPresent()) {
             shooterMotorLeft.setVoltage(voltageOveride.get());
