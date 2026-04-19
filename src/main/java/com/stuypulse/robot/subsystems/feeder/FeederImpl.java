@@ -13,6 +13,8 @@ import com.stuypulse.robot.subsystems.shooter.Shooter;
 import com.stuypulse.robot.subsystems.shooter.Shooter.ShooterState;
 import com.stuypulse.robot.subsystems.swerve.CommandSwerveDrivetrain;
 
+import edu.wpi.first.units.measure.*;
+
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class FeederImpl extends Feeder {
@@ -33,8 +35,8 @@ public class FeederImpl extends Feeder {
     }
 
     @Override
-    public double getCurrentRPM() {
-         return feederLeader.getVelocity().getValueAsDouble() * 60.0;
+    public AngularVelocity getCurrentAngularVelocity() {
+        return feederLeader.getVelocity().getValue();
     }
 
     private void stopMotors() {

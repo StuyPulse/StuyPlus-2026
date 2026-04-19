@@ -1,5 +1,7 @@
 package com.stuypulse.robot.commands.swerve.driveAligned;
 
+import static edu.wpi.first.units.Units.*;
+
 import com.stuypulse.robot.constants.Gains.Swerve.Alignment;
 import com.stuypulse.robot.constants.Settings;
 import com.stuypulse.robot.subsystems.swerve.CommandSwerveDrivetrain;
@@ -19,7 +21,7 @@ public class SwerveDriveSetAlignment extends Command {
     
     protected SwerveDriveSetAlignment(Pose2d pose) {
         this.isAligned = BStream.create(this::isAligned)
-            .filtered(new BDebounceRC.Both(Settings.Swerve.Alignment.Tolerances.ALIGNMENT_DEBOUNCE));
+            .filtered(new BDebounceRC.Both(Settings.Swerve.Alignment.Tolerances.ALIGNMENT_DEBOUNCE.in(Seconds)));
         this.pose = pose;
 
         addRequirements(swerve);

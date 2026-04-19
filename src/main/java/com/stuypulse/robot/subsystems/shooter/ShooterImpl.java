@@ -1,6 +1,6 @@
 package com.stuypulse.robot.subsystems.shooter;
 
-import static edu.wpi.first.units.Units.RPM;
+import static edu.wpi.first.units.Units.Volts;
 
 import java.util.Optional;
 
@@ -14,6 +14,8 @@ import com.stuypulse.robot.constants.Ports;
 import com.stuypulse.robot.constants.Settings;
 import com.stuypulse.robot.util.SysId;
 
+import edu.wpi.first.units.measure.AngularVelocity;
+import edu.wpi.first.units.measure.Voltage;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 
@@ -27,13 +29,13 @@ public class ShooterImpl extends Shooter {
     private final TalonFX handoffMotor;
     private final DutyCycleOut handoffController;
 
-    private Optional<Double> voltageOveride;
+    private Optional<Voltage> voltageOverride;
 
     public ShooterImpl() {
         shooterMotorLeft = new TalonFX(Ports.ShooterPorts.SHOOTER_MOTOR_LEFT, Settings.CANIVORE); // leader
         shooterMotorCenter = new TalonFX(Ports.ShooterPorts.SHOOTER_MOTOR_CENTER, Settings.CANIVORE);
         shooterMotorRight = new TalonFX(Ports.ShooterPorts.SHOOTER_MOTOR_RIGHT, Settings.CANIVORE);
-        shooterController = new VelocityTorqueCurrentFOC(getState().getRPM() / 60);
+        shooterController = new VelocityTorqueCurrentFOC(getState().getTargetAngularVelocity());
 
         handoffMotor = new TalonFX(Ports.ShooterPorts.HANDOFF_MOTOR, Settings.CANIVORE);
         handoffController = new DutyCycleOut(getState().getHandoffMotorDutyCycle()).withEnableFOC(true);
@@ -50,20 +52,20 @@ public class ShooterImpl extends Shooter {
         shooterMotorCenter.setControl(shooterFollowerController);
         shooterMotorRight.setControl(shooterFollowerController);
 
-        voltageOveride = Optional.empty();
+        voltageOverride = Optional.empty();
     }
 
-    public void setVoltageOverride(double voltage) {
-        this.voltageOveride = Optional.of(voltage);
+    public void setVoltageOverride(Voltage voltage) {
+        this.voltageOverride = Optional.of(voltage);
     }
 
-    public Optional<Double> getVoltageOverride() {
-        return voltageOveride;
+    public Optional<Voltage> getVoltageOverride() {
+        return voltageOverride;
     }
 
     @Override
-    public double getCurrentRPM() {
-        return shooterMotorLeft.getVelocity().getValue().in(RPM);
+    public AngularVelocity getCurrentAngularVelocity() {
+        return shooterMotorLeft.getVelocity().getValue();
     }
 
     private void stopMotors() {
@@ -84,13 +86,13 @@ public class ShooterImpl extends Shooter {
             return;
         }
 
-        if (voltageOveride.isPresent()) {
-            shooterMotorLeft.setVoltage(voltageOveride.get());
+        if (voltageOverride.isPresent()) {
+            shooterMotorLeft.setVoltage(voltageOverride.get().in(Volts));
             return;
         }
 
-        final double targetRPS = getState().getRPM() / 60;
-        final VelocityTorqueCurrentFOC shooterControl = shooterController.withVelocity(targetRPS);
+        final AngularVelocity targetAngularVelocity = getState().getTargetAngularVelocity();
+        final VelocityTorqueCurrentFOC shooterControl = shooterController.withVelocity(targetAngularVelocity);
         final DutyCycleOut handoffControl = handoffController.withOutput(getState().getHandoffMotorDutyCycle());
 
         shooterMotorLeft.setControl(shooterControl);
@@ -108,9 +110,9 @@ public class ShooterImpl extends Shooter {
 
     public SysIdRoutine getShooterSysIdRoutine() {
         return SysId.getRoutine(Settings.Shooter.RAMP_RATE,
-                Settings.Shooter.STEP_VOLTAGE,
-                "Shooter",
-                voltage -> setVoltageOverride(voltage),
+                Settings.Shooter.STEP_VOLTAGE.in(Volts),
+                "Intake",
+                voltage -> setVoltageOverride(Volts.of(voltage)),
                 () -> shooterMotorLeft.getPosition().getValueAsDouble(),
                 () -> shooterMotorLeft.getVelocity().getValueAsDouble(),
                 () -> shooterMotorLeft.getMotorVoltage().getValueAsDouble(),

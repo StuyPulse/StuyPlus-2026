@@ -3,6 +3,9 @@ package com.stuypulse.robot.subsystems.feeder;
 import com.stuypulse.robot.Robot;
 import com.stuypulse.robot.constants.Settings;
 
+import edu.wpi.first.units.measure.*;
+import static edu.wpi.first.units.Units.*;
+
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -50,7 +53,7 @@ public abstract class Feeder extends SubsystemBase{
         return state;
     }
 
-    public abstract double getCurrentRPM();
+    public abstract AngularVelocity getCurrentAngularVelocity();
 
     @Override
     public void periodic() {
@@ -58,7 +61,7 @@ public abstract class Feeder extends SubsystemBase{
 
         // Logging
         SmartDashboard.putNumber("Feeder/Target Duty Cycle", currentState.getTargetDutyCycle());
-        SmartDashboard.putNumber("Feeder/Current RPM", getCurrentRPM());
+        SmartDashboard.putNumber("Feeder/Current Angular Velocity", getCurrentAngularVelocity().in(RPM));
 
         SmartDashboard.putString("Feeder/State", currentState.name());
         SmartDashboard.putString("States/Feeder", currentState.name());
