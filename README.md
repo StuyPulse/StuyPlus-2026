@@ -127,5 +127,9 @@ We use this for:
 - Helping members understand how the robot will operate
 - Visualize match logs in 3d
 
+<img src="/images/references/maplesim/1.png" alt="Image of the robot a the starting position" />
+<img src="/images/references/maplesim/2.png" alt="Image of the field right after the robot collided with the fuel in the neutral zone" />
+<img src="/images/references/maplesim/3.png" alt="Image of the side of the robot with the intake out">
+
 ## License
 This project is under the [MIT License](/LICENSE)
