@@ -12,8 +12,10 @@ import com.ctre.phoenix6.signals.MotorAlignmentValue;
 import com.stuypulse.robot.constants.Motors;
 import com.stuypulse.robot.constants.Ports;
 import com.stuypulse.robot.constants.Settings;
+import com.stuypulse.robot.util.SysId;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 
 public class ShooterImpl extends Shooter {
     private final TalonFX shooterMotorLeft;
@@ -102,5 +104,16 @@ public class ShooterImpl extends Shooter {
         SmartDashboard.putNumber("Shooter/Motors/Handoff/DutyCycle", handoffMotor.getDutyCycle().getValueAsDouble());
 
         super.periodic();
+    }
+
+    public SysIdRoutine getShooterSysIdRoutine() {
+        return SysId.getRoutine(Settings.Shooter.RAMP_RATE,
+                Settings.Shooter.STEP_VOLTAGE,
+                "Intake",
+                voltage -> setVoltageOverride(voltage),
+                () -> shooterMotorLeft.getPosition().getValueAsDouble(),
+                () -> shooterMotorLeft.getVelocity().getValueAsDouble(),
+                () -> shooterMotorLeft.getMotorVoltage().getValueAsDouble(),
+                getInstance());
     }
 }
