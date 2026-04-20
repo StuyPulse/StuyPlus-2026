@@ -163,7 +163,7 @@ public class IntakeImpl extends Intake {
             case INTAKE, OUTTAKE, DOWN -> {
                 if (pivotAboveThreshold) {
                     // wait until pivot reaches the bottom to apply pushdown
-                    yield pushdownController;
+                    yield pushdownController.withOutput(Settings.Intake.Pivot.PUSHDOWN_CURRENT.getAsDouble());
                 } else {
                     yield pivotController.withPosition(currentState.getTargetAngle().getRotations());
                 }
