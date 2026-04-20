@@ -133,6 +133,11 @@ public class IntakeImpl extends Intake {
             return;
         }
 
+        if (pivotVoltageOverride.isPresent()) {
+            intakePivotMotor.setVoltage(pivotVoltageOverride.get().in(Volts));
+            return;
+        }
+
         // Input
 
         final boolean pivotAboveThreshold = isPivotAboveThreshold();
@@ -171,12 +176,8 @@ public class IntakeImpl extends Intake {
 
         // Apply
 
-        if (pivotVoltageOverride.isPresent()) {
-            intakePivotMotor.setVoltage(pivotVoltageOverride.get().in(Volts));
-        } else {
-            intakePivotMotor.setControl(pivotControl);
-        }
-
+        
+        intakePivotMotor.setControl(pivotControl);
         intakeRollerMotorLeft.setControl(rollerControl);
 
         // Logging
