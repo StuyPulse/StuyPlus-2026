@@ -92,18 +92,18 @@ public class ShooterImpl extends Shooter {
             return;
         }
 
-        final AngularVelocity targetAngularVelocity = getState().getTargetAngularVelocity();
-        final VelocityTorqueCurrentFOC shooterControl = shooterController.withVelocity(targetAngularVelocity);
-        final DutyCycleOut handoffControl = handoffController.withOutput(getState().getHandoffMotorDutyCycle());
+        AngularVelocity targetAngularVelocity = getState().getTargetAngularVelocity();
+        VelocityTorqueCurrentFOC shooterControl = shooterController.withVelocity(targetAngularVelocity);
+        DutyCycleOut handoffControl = handoffController.withOutput(getState().getHandoffMotorDutyCycle());
 
         shooterMotorLeft.setControl(shooterControl);
         handoffMotor.setControl(handoffControl);
 
-        this.logMotor("ShooterLeft", shooterMotorLeft);
-        this.logMotor("ShooterCenter", shooterMotorCenter);
-        this.logMotor("ShooterRight", shooterMotorRight);
+        logMotor("ShooterLeft", shooterMotorLeft);
+        logMotor("ShooterCenter", shooterMotorCenter);
+        logMotor("ShooterRight", shooterMotorRight);
 
-        this.logMotor("Handoff", handoffMotor);
+        logMotor("Handoff", handoffMotor);
         SmartDashboard.putNumber("Shooter/Motors/Handoff/DutyCycle", handoffMotor.getDutyCycle().getValueAsDouble());
 
         super.periodic();
