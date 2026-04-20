@@ -38,7 +38,6 @@ public abstract class Handoff extends SubsystemBase {
         SmartDashboard.putNumber(stem + "MotorVoltage", motor.getMotorVoltage().getValueAsDouble());
         SmartDashboard.putNumber(stem + "SupplyCurrent", motor.getSupplyCurrent().getValueAsDouble());
         SmartDashboard.putNumber(stem + "StatorCurrent", motor.getStatorCurrent().getValueAsDouble());
-
         SmartDashboard.putNumber(stem + "RPM", motor.getVelocity().getValue().in(RPM));
     }
 
