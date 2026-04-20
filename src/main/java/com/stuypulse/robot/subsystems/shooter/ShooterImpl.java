@@ -26,9 +26,6 @@ public class ShooterImpl extends Shooter {
     private final VelocityTorqueCurrentFOC shooterController;
     private final Follower shooterFollowerController;
 
-    private final TalonFX handoffMotor;
-    private final DutyCycleOut handoffController;
-
     private Optional<Voltage> voltageOverride;
 
     public ShooterImpl() {
@@ -37,14 +34,10 @@ public class ShooterImpl extends Shooter {
         shooterMotorRight = new TalonFX(Ports.ShooterPorts.SHOOTER_MOTOR_RIGHT, Settings.CANIVORE);
         shooterController = new VelocityTorqueCurrentFOC(getState().getTargetAngularVelocity());
 
-        handoffMotor = new TalonFX(Ports.ShooterPorts.HANDOFF_MOTOR, Settings.CANIVORE);
-        handoffController = new DutyCycleOut(getState().getHandoffMotorDutyCycle()).withEnableFOC(true);
-
         // configure
         Motors.Shooter.SHOOTER_MOTOR_CONFIG.configure(shooterMotorLeft);
         Motors.Shooter.SHOOTER_MOTOR_CONFIG.configure(shooterMotorCenter);
         Motors.Shooter.SHOOTER_MOTOR_CONFIG.configure(shooterMotorRight);
-        Motors.Shooter.HANDOFF_MOTOR_CONFIG.configure(handoffMotor);
 
         // Set shooter 2 and 3 motors to follow 1
         shooterFollowerController = new Follower(shooterMotorLeft.getDeviceID(), MotorAlignmentValue.Opposed);
@@ -77,7 +70,6 @@ public class ShooterImpl extends Shooter {
         shooterMotorCenter.setControl(shooterFollowerController);
         shooterMotorRight.setControl(shooterFollowerController);
 
-        handoffMotor.stopMotor();
     }
 
     @Override
@@ -94,17 +86,13 @@ public class ShooterImpl extends Shooter {
 
         final AngularVelocity targetAngularVelocity = getState().getTargetAngularVelocity();
         final VelocityTorqueCurrentFOC shooterControl = shooterController.withVelocity(targetAngularVelocity);
-        final DutyCycleOut handoffControl = handoffController.withOutput(getState().getHandoffMotorDutyCycle());
 
         shooterMotorLeft.setControl(shooterControl);
-        handoffMotor.setControl(handoffControl);
 
         this.logMotor("ShooterLeft", shooterMotorLeft);
         this.logMotor("ShooterCenter", shooterMotorCenter);
         this.logMotor("ShooterRight", shooterMotorRight);
 
-        this.logMotor("Handoff", handoffMotor);
-        SmartDashboard.putNumber("Shooter/Motors/Handoff/DutyCycle", handoffMotor.getDutyCycle().getValueAsDouble());
 
         super.periodic();
     }
