@@ -136,6 +136,8 @@ public interface Settings {
         MomentOfInertia J = KilogramSquareMeters.of(0.1);
         double GEAR_RATIO = 0.1;
 
+        Distance FLYWHEEL_RADIUS = Inches.of(3); // TODO: get
+
         public interface RPMInterpolation{
             double[][] distanceRPMInterpolationValues = {
                 {1.0, 1000.0},

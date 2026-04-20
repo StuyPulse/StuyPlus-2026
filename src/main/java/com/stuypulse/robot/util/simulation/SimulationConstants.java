@@ -9,10 +9,13 @@ package com.stuypulse.robot.util.simulation;
 import edu.wpi.first.math.util.Units;
 import static edu.wpi.first.units.Units.*;
 
+import java.util.function.Supplier;
+
 import com.ctre.phoenix6.configs.CANcoderConfiguration;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.swerve.SwerveModuleConstants;
 import com.pathplanner.lib.config.PIDConstants;
+import com.stuypulse.robot.Robot;
 import com.stuypulse.robot.constants.Settings;
 import com.stuypulse.robot.subsystems.swerve.TunerConstants;
 
@@ -234,6 +237,10 @@ public interface SimulationConstants {
         int FUEL_CAPACITY = 54;
 
         public Offsets OFFSETS = new Offsets(-0.06, 0, 0.25, Degrees.of(90), Degrees.of(0), Degrees.of(90));
+
+        int FUEL_LAYERS = 4;
+        Pose3d VISIBLE_POSE = new Pose3d(0, 0, 0, new Rotation3d(1.55, 0, 1.5));
+        Pose3d HIDDEN_POSE = new Pose3d(1000, 1000, 1000, new Rotation3d());
     }
 
     public interface Shooter {
@@ -257,7 +264,18 @@ public interface SimulationConstants {
         double WHEEL_COF = 1.2; // TODO: Get actual
 
         Time SIMULATION_STEP_TIME = Seconds.of(0.005);
-        Mass ROBOT_WEIGHT = Pounds.of(115); // TODO: get actual
+
+        Mass ROBOT_WEIGHT = Pounds.of(65);
+        Mass RED_BUMPER_WEIGHT = Pounds.of(16.8);
+        Mass BLUE_BUMPER_WEIGHT = Pounds.of(15.4);
+
+        Supplier<Mass> TOTAL_WEIGHT = () -> {
+            if (Robot.isBlue()) {
+                return ROBOT_WEIGHT.plus(BLUE_BUMPER_WEIGHT);
+            } else {
+                return ROBOT_WEIGHT.plus(RED_BUMPER_WEIGHT);
+            }
+        };
 
         int PIGEON_ID = 0; // TODO: get actual
 
