@@ -31,8 +31,8 @@ public abstract class Handoff extends SubsystemBase {
 
     public enum HandoffState {
         IDLE(Settings.Handoff.IDLE_DUTY),
-        FOWARD(Settings.Handoff.SHOOT_DUTY),
-        REVERSE(Settings.Handoff.FERRY_DUTY);
+        FORWARD(Settings.Handoff.FORWARD_DUTY),
+        REVERSE(Settings.Handoff.REVERSE_DUTY);
         
         private double handoffMotorDutyCycle;
         
