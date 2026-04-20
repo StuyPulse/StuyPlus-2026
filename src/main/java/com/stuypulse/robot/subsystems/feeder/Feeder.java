@@ -54,6 +54,7 @@ public abstract class Feeder extends SubsystemBase{
     }
 
     public abstract AngularVelocity getCurrentAngularVelocity();
+    protected abstract void stopMotors();
 
     @Override
     public void periodic() {

@@ -118,7 +118,8 @@ public class IntakeImpl extends Intake {
         return rightRollerStalling.get();
     }
 
-    private void stopMotors() {
+    @Override
+    protected void stopMotors() {
         intakePivotMotor.stopMotor();
         intakeRollerMotorLeft.stopMotor();
         intakeRollerMotorRight.stopMotor();

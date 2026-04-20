@@ -10,6 +10,7 @@ import com.stuypulse.robot.constants.Settings;
 import com.stuypulse.robot.util.RobotVisualizer;
 import com.stuypulse.robot.util.simulation.TalonFXSimulation;
 import com.stuypulse.robot.constants.Motors;
+import com.stuypulse.robot.constants.Ports;
 
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.math.system.plant.LinearSystemId;
@@ -21,6 +22,7 @@ public class FeederSim extends Feeder {
     private final TalonFXSimulation feederFollower;
     private final DCMotorSim feederSim;
     private final DutyCycleOut feederController;
+    private final Follower feederFollowerController;
 
     public FeederSim() {
         feederSim = new DCMotorSim(
@@ -35,10 +37,11 @@ public class FeederSim extends Feeder {
         feederLeader = new TalonFXSimulation(feederSim).configure(Motors.Feeder.LEADER_CONFIG);
         feederFollower = new TalonFXSimulation(feederSim).configure(Motors.Feeder.FOLLOWER_CONFIG);
 
-        feederFollower.setControl(new Follower(feederLeader.getMotor().getDeviceID(), MotorAlignmentValue.Opposed));
-
         feederController = new DutyCycleOut(0)
             .withEnableFOC(true);
+        feederFollowerController = new Follower(Ports.Feeder.FEEDER_MOTOR_1, MotorAlignmentValue.Opposed);
+
+        feederFollower.setControl(feederFollowerController);
     }
 
     @Override
@@ -47,9 +50,16 @@ public class FeederSim extends Feeder {
     }
 
     @Override
+    protected void stopMotors() {
+        feederLeader.stopMotor();
+        feederFollower.stopMotor();
+        feederFollower.setControl(feederFollowerController);
+    }
+
+    @Override
     public void periodic() {
         if (!Settings.EnabledSubsystems.INTAKE.get()) {
-            feederLeader.setControl(feederController.withOutput(0));
+            stopMotors();
             return;
         }
 

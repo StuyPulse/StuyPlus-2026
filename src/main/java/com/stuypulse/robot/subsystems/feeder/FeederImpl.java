@@ -20,7 +20,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class FeederImpl extends Feeder {
     private final TalonFX feederLeader;
     private final TalonFX feederFollower;
-    private final DutyCycleOut controller;
+    private final DutyCycleOut feederController;
+    private final Follower feederFollowerController;
 
     public FeederImpl() {
         feederLeader = new TalonFX(Ports.Feeder.FEEDER_MOTOR_1, Settings.CANIVORE);
@@ -29,9 +30,10 @@ public class FeederImpl extends Feeder {
         Motors.Feeder.LEADER_CONFIG.configure(feederLeader);
         Motors.Feeder.FOLLOWER_CONFIG.configure(feederFollower);
 
-        controller = new DutyCycleOut(getState().getTargetDutyCycle()).withEnableFOC(true);
+        feederController = new DutyCycleOut(getState().getTargetDutyCycle()).withEnableFOC(true);
+        feederFollowerController = new Follower(Ports.Feeder.FEEDER_MOTOR_1, MotorAlignmentValue.Opposed);
 
-        feederFollower.setControl(new Follower(Ports.Feeder.FEEDER_MOTOR_1, MotorAlignmentValue.Opposed)); // TODO: figure out motor alignment
+        feederFollower.setControl(feederFollowerController); // TODO: figure out motor alignment
     }
 
     @Override
@@ -39,10 +41,11 @@ public class FeederImpl extends Feeder {
         return feederLeader.getVelocity().getValue();
     }
 
-    private void stopMotors() {
+    @Override
+    protected void stopMotors() {
         feederLeader.stopMotor();
         feederFollower.stopMotor();
-        feederFollower.setControl(new Follower(Ports.Feeder.FEEDER_MOTOR_1, MotorAlignmentValue.Opposed)); // make sure this matches follower control in constructor
+        feederFollower.setControl(feederFollowerController);
     }
 
     @Override
@@ -64,7 +67,7 @@ public class FeederImpl extends Feeder {
         }
 
         // Apply
-        feederLeader.setControl(controller.withOutput(getState().getTargetDutyCycle()));
+        feederLeader.setControl(feederController.withOutput(getState().getTargetDutyCycle()));
 
         // Logging
         if (Settings.DEBUG_MODE) {

@@ -168,9 +168,6 @@ public class Simulation {
     }
 
     private void summonFuelAtIntake() {
-        double intakeAngleRad = intakeSim.getRelativePosition().getRadians()
-                + SimulationConstants.Intake.PIVOT_OFFSETS.toRotation3d().getX();
-
         robotRelativeAddPieceWithVariance(
             swerveMSim.getSimulatedDriveTrainPose().getTranslation().plus(
                 SimulationConstants.Intake.OUTTAKE_OFFSETS.applyToPose3dRobotRelative(

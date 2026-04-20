@@ -5,7 +5,6 @@ import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.sim.TalonFXSimState;
 import com.stuypulse.robot.constants.Motors.TalonFXConfig;
 
-import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.units.measure.*;
 import static edu.wpi.first.units.Units.*;
 
@@ -126,8 +125,8 @@ public class TalonFXSimulation {
         return motor;
     }
 
-    public Rotation2d getVelocity() {
-        return Rotation2d.fromRadians(simMotor.getAngularVelocity().in(RadiansPerSecond));
+    public void stopMotor() {
+        motor.stopMotor();
     }
 
     public void update(double dtSeconds) {

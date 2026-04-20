@@ -11,8 +11,6 @@ import com.stuypulse.robot.constants.Settings;
 import com.stuypulse.robot.util.RobotVisualizer;
 import com.stuypulse.robot.util.simulation.TalonFXSimulation;
 
-import static edu.wpi.first.units.Units.RotationsPerSecond;
-
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.math.system.plant.LinearSystemId;
 import edu.wpi.first.units.measure.AngularVelocity;
@@ -20,13 +18,15 @@ import edu.wpi.first.wpilibj.simulation.DCMotorSim;
 import edu.wpi.first.wpilibj.simulation.FlywheelSim;
 
 public class ShooterSim extends Shooter {
-    private final DCMotorSim handoffSim;
     private final FlywheelSim shooterSim;
-    private final TalonFXSimulation handoffMotor;
     private final TalonFXSimulation shooterLeader;
     private final TalonFXSimulation shooterFollower1;
     private final TalonFXSimulation shooterFollower2;
     private final VelocityTorqueCurrentFOC shooterController;
+    private final Follower shooterFollowerController;
+    
+    private final DCMotorSim handoffSim;
+    private final TalonFXSimulation handoffMotor;
     private final DutyCycleOut handoffController;
 
     public ShooterSim() {
@@ -40,8 +40,9 @@ public class ShooterSim extends Shooter {
         shooterFollower1 = new TalonFXSimulation(shooterSim).configure(Motors.Shooter.SHOOTER_MOTOR_CONFIG);
         shooterFollower2 = new TalonFXSimulation(shooterSim).configure(Motors.Shooter.SHOOTER_MOTOR_CONFIG);
 
-        shooterFollower1.setControl(new Follower(shooterLeader.getMotor().getDeviceID(), MotorAlignmentValue.Opposed));
-        shooterFollower2.setControl(new Follower(shooterLeader.getMotor().getDeviceID(), MotorAlignmentValue.Opposed));
+        shooterFollowerController = new Follower(shooterLeader.getMotor().getDeviceID(), MotorAlignmentValue.Opposed);
+        shooterFollower1.setControl(shooterFollowerController);
+        shooterFollower2.setControl(shooterFollowerController);
         shooterController = new VelocityTorqueCurrentFOC(getState().getTargetAngularVelocity());
 
        
@@ -61,7 +62,24 @@ public class ShooterSim extends Shooter {
     }
 
     @Override
+    protected void stopMotors() {
+        shooterLeader.stopMotor();
+        shooterFollower1.stopMotor();
+        shooterFollower2.stopMotor();
+
+        shooterFollower1.setControl(shooterFollowerController);
+        shooterFollower2.setControl(shooterFollowerController);
+
+        handoffMotor.stopMotor();
+    }
+
+    @Override
     public void periodic() {
+        if (!Settings.EnabledSubsystems.SHOOTER.get()) {
+            stopMotors();
+            return;
+        }
+
         shooterLeader.setControl(shooterController.withVelocity(getState().getTargetAngularVelocity().in(RotationsPerSecond)));
         shooterLeader.update(Settings.DT);
         shooterFollower1.update(Settings.DT);

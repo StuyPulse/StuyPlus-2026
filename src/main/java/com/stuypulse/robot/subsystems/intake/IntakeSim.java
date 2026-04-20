@@ -31,6 +31,7 @@ public class IntakeSim extends Intake {
     private final TalonFXSimulation rollerFollower;
     private final DCMotorSim rollerSim;
     private final DutyCycleOut rollerController;
+    private final Follower rollerFollowerController;
 
     private Rotation2d zeroOffset;
 
@@ -52,9 +53,10 @@ public class IntakeSim extends Intake {
         );
         rollerMotor = new TalonFXSimulation(rollerSim).configure(Motors.Intake.LEFT_ROLLER_CONFIG);
         rollerFollower = new TalonFXSimulation(rollerSim).configure(Motors.Intake.RIGHT_ROLLER_CONFIG);
-        rollerFollower.setControl(new Follower(rollerMotor.getMotor().getDeviceID(), MotorAlignmentValue.Opposed));
         rollerController = new DutyCycleOut(0)
             .withEnableFOC(true);
+        rollerFollowerController = new Follower(rollerMotor.getMotor().getDeviceID(), MotorAlignmentValue.Opposed);
+        rollerFollower.setControl(rollerFollowerController);
 
         pivotSim = new SingleJointedArmSim(
             LinearSystemId.createDCMotorSystem(
@@ -94,10 +96,17 @@ public class IntakeSim extends Intake {
     }
 
     @Override
+    protected void stopMotors() {
+        pivotMotor.stopMotor();
+        rollerMotor.stopMotor();
+        rollerFollower.stopMotor();
+        rollerFollower.setControl(rollerFollowerController); // re-add the follow control after stopMotor removes it
+    }
+
+    @Override
     public void periodic() {
         if (!Settings.EnabledSubsystems.INTAKE.get()) {
-            pivotMotor.getSimState().setRawRotorPosition(Units.radiansToRotations(pivotSim.getAngleRads()) * Settings.Intake.Pivot.GEAR_RATIO);
-            rollerMotor.setControl(rollerController.withOutput(0));
+            stopMotors();
             return;
         }
 
