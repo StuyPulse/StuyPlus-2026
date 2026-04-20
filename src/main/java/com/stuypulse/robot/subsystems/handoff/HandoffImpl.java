@@ -35,7 +35,7 @@ public class HandoffImpl extends Handoff{
         final CommandSwerveDrivetrain swerve = CommandSwerveDrivetrain.getInstance();
         final Shooter shooter = Shooter.getInstance();
 
-        if(!(swerve.isAlignedToTarget(Field.getFerryZonePose((swerve.getPose().getTranslation())))) && shooter.getState() == ShooterState.SHOOT) {
+        if(!(swerve.isAlignedToTarget(Field.getFerryZonePose((swerve.getPose().getTranslation())))) && shooter.getState() == ShooterState.FERRY) {
             setState(HandoffState.IDLE);
         }
 
