@@ -77,6 +77,7 @@ public abstract class Shooter extends SubsystemBase {
     }
 
     public abstract AngularVelocity getCurrentAngularVelocity();
+    protected abstract void stopMotors();
 
     @Override
     public void periodic() {

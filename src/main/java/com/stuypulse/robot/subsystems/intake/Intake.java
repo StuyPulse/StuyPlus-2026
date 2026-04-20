@@ -85,6 +85,8 @@ public abstract class Intake extends SubsystemBase {
     // Roller Commands
     public abstract double getRollerRPM();
 
+    protected abstract void stopMotors();
+
     @Override
     public void periodic() {
         RobotVisualizer.getInstance().updateIntake(Radians.of(getRelativePosition().getRadians()), RPM.of(getRollerRPM()));

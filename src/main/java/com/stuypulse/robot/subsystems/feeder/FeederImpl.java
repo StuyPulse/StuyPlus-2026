@@ -41,7 +41,8 @@ public class FeederImpl extends Feeder {
         return feederLeader.getVelocity().getValue();
     }
 
-    private void stopMotors() {
+    @Override
+    protected void stopMotors() {
         feederLeader.stopMotor();
         feederFollower.stopMotor();
         feederFollower.setControl(followerController); 

@@ -68,7 +68,8 @@ public class ShooterImpl extends Shooter {
         return shooterMotorLeft.getVelocity().getValue();
     }
 
-    private void stopMotors() {
+    @Override
+    protected void stopMotors() {
         shooterMotorLeft.stopMotor();
         shooterMotorCenter.stopMotor();
         shooterMotorRight.stopMotor();
