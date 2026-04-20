@@ -195,12 +195,12 @@ public class IntakeImpl extends Intake {
 
     public SysIdRoutine getIntakeSysIdRoutine() {
         return SysId.getRoutine(Settings.Intake.Pivot.RAMP_RATE,
-                Settings.Intake.Pivot.STEP_VOLTAGE.in(Volts),
+                Settings.Intake.Pivot.STEP_VOLTAGE,
                 "Intake",
-                voltage -> setPivotVoltageOverride(Volts.of(voltage)),
-                () -> intakePivotMotor.getPosition().getValueAsDouble(),
-                () -> intakePivotMotor.getVelocity().getValueAsDouble(),
-                () -> intakePivotMotor.getMotorVoltage().getValueAsDouble(),
+                voltage -> setPivotVoltageOverride(voltage),
+                () -> intakePivotMotor.getPosition().getValue(),
+                () -> intakePivotMotor.getVelocity().getValue(),
+                () -> intakePivotMotor.getMotorVoltage().getValue(),
                 getInstance());
     }
 }
