@@ -121,8 +121,8 @@ public interface Settings {
     // }
 
     public interface Handoff{
-        double SHOOT_DUTY = 1;
-        double FERRY_DUTY = -1;
+        double FORWARD_DUTY= 1;
+        double REVERSE_DUTY= -1;
         double IDLE_DUTY = 0;
     }
     
