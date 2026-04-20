@@ -4,6 +4,6 @@ import com.stuypulse.robot.subsystems.intake.Intake.IntakeState;
 
 public class IntakeSetIdle extends IntakeSetState{
     public IntakeSetIdle() {
-        super(IntakeState.DOWN);
+        super(IntakeState.IDLE);
     }
 }
