@@ -23,6 +23,7 @@ import edu.wpi.first.units.measure.Angle;
 import edu.wpi.first.units.measure.Distance;
 import edu.wpi.first.units.measure.LinearVelocity;
 import edu.wpi.first.wpilibj.Notifier;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.ironmaple.simulation.IntakeSimulation;
 import org.ironmaple.simulation.SimulatedArena;
@@ -44,7 +45,8 @@ public class Simulation {
     private final StructArrayPublisher<Pose3d> fuel;
     private final StructPublisher<Pose3d> intakePivot;
     private final StructPublisher<Pose3d> hopper;
-    // private final StructPublisher<Pose3d> shooter;
+    private final StructArrayPublisher<Pose3d> fuelLayers;
+    private final StructPublisher<Pose3d> shooter;
 
     static {
         if (CommandSwerveDrivetrain.getInstance().getMapleSimDrive() != null) instance = new Simulation();
@@ -72,7 +74,8 @@ public class Simulation {
         fuel = table.getStructArrayTopic("AdvScope/FuelPoses", Pose3d.struct).publish();
         intakePivot = table.getStructTopic("AdvScope/IntakePose", Pose3d.struct).publish();
         hopper = table.getStructTopic("AdvScope/HopperPose", Pose3d.struct).publish();
-        // shooter = table.getStructTopic("AdvScope/ShooterPose", Pose3d.struct).publish();
+        fuelLayers = table.getStructArrayTopic("AdvScope/FuelLayers", Pose3d.struct).publish();
+        shooter = table.getStructTopic("AdvScope/ShooterPose", Pose3d.struct).publish();
     }
 
     private void configureArena() {
@@ -118,6 +121,23 @@ public class Simulation {
         boolean intakeEnabled = intakeSim.atTargetAngle() && (intakeSim.getState() == IntakeState.DOWN) && Settings.EnabledSubsystems.INTAKE.get();
 
         updateIntakeEnabled(intakeEnabled);
+    }
+
+    private void updateHopperFuel() {
+        final double hopperPercentage = (double) intakeMSim.getGamePiecesAmount()
+                / (double) SimulationConstants.Hopper.FUEL_CAPACITY;
+
+        final int layers = SimulationConstants.Hopper.FUEL_LAYERS;
+        final Pose3d visiblePose = SimulationConstants.Hopper.VISIBLE_POSE;
+        final Pose3d hiddenPose = SimulationConstants.Hopper.HIDDEN_POSE;
+
+        final Pose3d[] poses = new Pose3d[layers];
+        for (int i = 0; i < layers; i++) {
+            poses[i] = hopperPercentage >= (1 / (double) layers) * (i + 1) ? visiblePose : hiddenPose;
+        }
+        fuelLayers.set(poses);
+
+        SmartDashboard.putNumber("Intake/hopperpercentage", hopperPercentage);
     }
 
     /**
@@ -189,8 +209,7 @@ public class Simulation {
     private void updateShooting() {
         if (intakeSim.getState() == IntakeState.OUTTAKE && Settings.EnabledSubsystems.INTAKE.get() && intakeMSim.obtainGamePieceFromIntake()) {
             summonFuelAtIntake();
-        }
-        if (shooterSim.getState() == ShooterState.SHOOT || shooterSim.getState() == ShooterState.FERRY) {
+        } else if ((shooterSim.getState() == ShooterState.SHOOT || shooterSim.getState() == ShooterState.FERRY) && Settings.EnabledSubsystems.SHOOTER.get()) {
             final Pose2d shooterPose = SimulationConstants.Shooter.OFFSETS.applyToPose2d(swerveMSim.getSimulatedDriveTrainPose());
             final double launchAngle = 67.67; // ആറ് ഏഴ്
 
@@ -215,6 +234,7 @@ public class Simulation {
         fuel.set(arenaInstance.getGamePiecesArrayByType("Fuel"));
 
         updateIntake();
+        updateHopperFuel();
 
         double armEndX = getIntakeArmEndX();
         intakePivot.set(getIntakePivotPose());

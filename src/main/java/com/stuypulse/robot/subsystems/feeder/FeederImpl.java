@@ -44,9 +44,9 @@ public class FeederImpl extends Feeder {
             stopMotors();
             return;
         }
-        // Stop feeding if not aligned  
-        final CommandSwerveDrivetrain swerve = CommandSwerveDrivetrain.getInstance();
-        final Shooter shooter = Shooter.getInstance();
+        // Stop shooting if not aligned  
+        CommandSwerveDrivetrain swerve = CommandSwerveDrivetrain.getInstance();
+        Shooter shooter = Shooter.getInstance();
 
         if (!(swerve.isAlignedToTarget(Field.getHubPose())) && shooter.getState() == ShooterState.SHOOT) {
             setState(FeederState.STOP);
