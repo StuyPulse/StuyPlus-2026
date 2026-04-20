@@ -6,6 +6,7 @@
 package com.stuypulse.robot.constants;
 
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.units.VoltageUnit;
 import edu.wpi.first.units.measure.*;
 import static edu.wpi.first.units.Units.*;
 
@@ -68,7 +69,7 @@ public interface Settings {
             Voltage HOMING_DOWN_VOLTAGE = Volts.of(3);
 
             // sysid
-            double RAMP_RATE = 2;
+            Velocity<VoltageUnit> RAMP_RATE = Volts.of(2).per(Second);
             Voltage STEP_VOLTAGE = Volts.of(6);
 
             // sim
@@ -121,7 +122,7 @@ public interface Settings {
 
     public interface Shooter {
         Time SHOOT_TIME_AUTO = Seconds.of(1.5);
-        double RAMP_RATE = 0.25;
+        Velocity<VoltageUnit> RAMP_RATE = Volts.of(0.25).per(Second);
         Voltage STEP_VOLTAGE = Volts.of(900);
 
         Distance WHEEL_RADIUS = Inches.of(4);

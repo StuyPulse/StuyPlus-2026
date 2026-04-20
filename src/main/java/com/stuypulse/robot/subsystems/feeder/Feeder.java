@@ -62,7 +62,7 @@ public abstract class Feeder extends SubsystemBase{
 
         // Logging
         SmartDashboard.putNumber("Feeder/Target Duty Cycle", currentState.getTargetDutyCycle());
-        SmartDashboard.putNumber("Feeder/Current Angular Velocity", getCurrentAngularVelocity().in(RPM));
+        SmartDashboard.putNumber("Feeder/Current RPM", getCurrentAngularVelocity().in(RPM));
 
         SmartDashboard.putString("Feeder/State", currentState.name());
         SmartDashboard.putString("States/Feeder", currentState.name());

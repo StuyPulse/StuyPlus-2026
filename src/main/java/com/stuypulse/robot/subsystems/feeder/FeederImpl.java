@@ -20,8 +20,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class FeederImpl extends Feeder {
     private final TalonFX feederLeader;
     private final TalonFX feederFollower;
-    private final DutyCycleOut feederController;
-    private final Follower feederFollowerController;
+    private final DutyCycleOut controller;
+    private final Follower followerController;
 
     public FeederImpl() {
         feederLeader = new TalonFX(Ports.Feeder.FEEDER_MOTOR_1, Settings.CANIVORE);
@@ -30,10 +30,10 @@ public class FeederImpl extends Feeder {
         Motors.Feeder.LEADER_CONFIG.configure(feederLeader);
         Motors.Feeder.FOLLOWER_CONFIG.configure(feederFollower);
 
-        feederController = new DutyCycleOut(getState().getTargetDutyCycle()).withEnableFOC(true);
-        feederFollowerController = new Follower(Ports.Feeder.FEEDER_MOTOR_1, MotorAlignmentValue.Opposed);
+        controller = new DutyCycleOut(getState().getTargetDutyCycle()).withEnableFOC(true);
+        followerController = new Follower(feederLeader.getDeviceID(), MotorAlignmentValue.Opposed);
 
-        feederFollower.setControl(feederFollowerController); // TODO: figure out motor alignment
+        feederFollower.setControl(followerController); // TODO: figure out motor alignment
     }
 
     @Override
@@ -45,7 +45,7 @@ public class FeederImpl extends Feeder {
     protected void stopMotors() {
         feederLeader.stopMotor();
         feederFollower.stopMotor();
-        feederFollower.setControl(feederFollowerController);
+        feederFollower.setControl(followerController); 
     }
 
     @Override
@@ -67,7 +67,7 @@ public class FeederImpl extends Feeder {
         }
 
         // Apply
-        feederLeader.setControl(feederController.withOutput(getState().getTargetDutyCycle()));
+        feederLeader.setControl(controller.withOutput(getState().getTargetDutyCycle()));
 
         // Logging
         if (Settings.DEBUG_MODE) {
