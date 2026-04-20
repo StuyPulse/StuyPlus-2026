@@ -120,6 +120,12 @@ public interface Settings {
     //     LEDPattern DISABLED = LEDPattern.solid(Color.kGray);
     // }
 
+    public interface Handoff {
+        double IDLE_DUTY = 0;
+        double TOHAND_DUTY = 1;
+        //double NOTTOHAND_DUTY = -1;
+    }
+
     public interface Shooter {
         Time SHOOT_TIME_AUTO = Seconds.of(1.5);
         Velocity<VoltageUnit> RAMP_RATE = Volts.of(0.25).per(Second);

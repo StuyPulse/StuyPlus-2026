@@ -6,8 +6,8 @@ import com.stuypulse.robot.subsystems.intake.Intake.IntakeState;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 
 public class IntakeSetState extends InstantCommand{
-    private Intake intake;
-    private IntakeState intakeState;
+    private final Intake intake;
+    private final IntakeState intakeState;
 
     public IntakeSetState(IntakeState state) {
         this.intake = Intake.getInstance();
@@ -20,5 +20,4 @@ public class IntakeSetState extends InstantCommand{
     public void initialize() {
         intake.setState(intakeState);
     }
-
 }
