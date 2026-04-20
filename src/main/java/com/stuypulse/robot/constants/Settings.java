@@ -40,7 +40,7 @@ public interface Settings {
         SmartBoolean SHOOTER = new SmartBoolean("Enabled Subsystems/Shooter", true);
         SmartBoolean VISION = new SmartBoolean("Enabled Subsystems/Vision", true);
         SmartBoolean SWERVE = new SmartBoolean("Enabled Subsystems/Swerve", true);
-        SmartBoolean HANDOFF = new SmartBoolean("Enableed Subsystems/Handoff", true);
+        SmartBoolean HANDOFF = new SmartBoolean("Enabled Subsystems/Handoff", true);
     }
 
     public interface Vision {

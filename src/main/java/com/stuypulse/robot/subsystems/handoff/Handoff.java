@@ -68,10 +68,9 @@ public abstract class Handoff extends SubsystemBase {
 
     @Override
     public void periodic() {
-        super.periodic();
         HandoffState currentState = getState();
 
-        SmartDashboard.putNumber("Shooter/Handoff Target Duty Cycle", currentState.getHandoffMotorDutyCycle());
+        SmartDashboard.putNumber("Handoff/Target Duty Cycle", currentState.getHandoffMotorDutyCycle());
 
         SmartDashboard.putString("Handoff/State", currentState.name());
         SmartDashboard.putString("States/Handoff", currentState.name());
