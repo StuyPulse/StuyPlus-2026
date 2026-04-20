@@ -17,12 +17,14 @@ public interface Ports {
     //     int PORT = 2;
     // }
 
+    public interface HandoffPorts {
+        int HANDOFF_MOTOR = 8;
+    }
+    
     public interface ShooterPorts { // TODO: Get ports from phoenix tuner when mechanical passes to us
         int SHOOTER_MOTOR_LEFT = 0;
         int SHOOTER_MOTOR_CENTER = 1;
         int SHOOTER_MOTOR_RIGHT = 2;
-
-        int HANDOFF_MOTOR = 8;
     }
 
 //TODO: Get ports from mech

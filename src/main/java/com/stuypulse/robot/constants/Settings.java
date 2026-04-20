@@ -5,11 +5,6 @@
 
 package com.stuypulse.robot.constants;
 
-import edu.wpi.first.math.util.Units;
-import edu.wpi.first.units.VoltageUnit;
-import edu.wpi.first.units.measure.*;
-import static edu.wpi.first.units.Units.*;
-
 import com.ctre.phoenix6.CANBus;
 import com.pathplanner.lib.path.PathConstraints;
 import com.stuypulse.stuylib.network.SmartBoolean;
@@ -21,6 +16,23 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.numbers.N3;
+import edu.wpi.first.math.util.Units;
+import static edu.wpi.first.units.Units.Amps;
+import static edu.wpi.first.units.Units.Inches;
+import static edu.wpi.first.units.Units.KilogramSquareMeters;
+import static edu.wpi.first.units.Units.Meters;
+import static edu.wpi.first.units.Units.MetersPerSecond;
+import static edu.wpi.first.units.Units.Second;
+import static edu.wpi.first.units.Units.Seconds;
+import static edu.wpi.first.units.Units.Volts;
+import edu.wpi.first.units.VoltageUnit;
+import edu.wpi.first.units.measure.Current;
+import edu.wpi.first.units.measure.Distance;
+import edu.wpi.first.units.measure.LinearVelocity;
+import edu.wpi.first.units.measure.MomentOfInertia;
+import edu.wpi.first.units.measure.Time;
+import edu.wpi.first.units.measure.Velocity;
+import edu.wpi.first.units.measure.Voltage;
 
 /*-
  * File containing tunable settings for every subsystem on the robot.
@@ -38,6 +50,7 @@ public interface Settings {
         SmartBoolean INTAKE = new SmartBoolean("Enabled Subsystems/Intake", true);
         // SmartBoolean LED = new SmartBoolean("Enabled Subsystems/LED", true);
         SmartBoolean SHOOTER = new SmartBoolean("Enabled Subsystems/Shooter", true);
+        SmartBoolean HANDOFF = new SmartBoolean("Enabled Subsystems/Handoff", true);
         SmartBoolean VISION = new SmartBoolean("Enabled Subsystems/Vision", true);
         SmartBoolean SWERVE = new SmartBoolean("Enabled Subsystems/Swerve", true);
     }
@@ -120,6 +133,12 @@ public interface Settings {
     //     LEDPattern DISABLED = LEDPattern.solid(Color.kGray);
     // }
 
+    public interface Handoff{
+        double SHOOT_DUTY = 1;
+        double FERRY_DUTY = -1;
+        double IDLE_DUTY = 0;
+    }
+    
     public interface Shooter {
         Time SHOOT_TIME_AUTO = Seconds.of(1.5);
         Velocity<VoltageUnit> RAMP_RATE = Volts.of(0.25).per(Second);
@@ -127,11 +146,6 @@ public interface Settings {
 
         Distance WHEEL_RADIUS = Inches.of(4);
 
-        double SHOOT_DUTY = 1;
-        double FERRY_DUTY = 1;
-        double SOTM_DUTY = 0.8;
-        double FOTM_DUTY = 0.8;
-        double IDLE_DUTY = 0;
         // Sim
         MomentOfInertia J = KilogramSquareMeters.of(0.1);
         double GEAR_RATIO = 0.1;
