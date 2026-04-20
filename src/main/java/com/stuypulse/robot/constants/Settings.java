@@ -40,6 +40,7 @@ public interface Settings {
         SmartBoolean SHOOTER = new SmartBoolean("Enabled Subsystems/Shooter", true);
         SmartBoolean VISION = new SmartBoolean("Enabled Subsystems/Vision", true);
         SmartBoolean SWERVE = new SmartBoolean("Enabled Subsystems/Swerve", true);
+        SmartBoolean HANDOFF = new SmartBoolean("Enableed Subsystems/Handoff", true);
     }
 
     public interface Vision {
@@ -119,6 +120,12 @@ public interface Settings {
     //     //states
     //     LEDPattern DISABLED = LEDPattern.solid(Color.kGray);
     // }
+
+    public interface Handoff {
+        double IDLE_DUTY = 0;
+        double FORWARD = 1;
+        double BACKWARD = -1;
+    }
 
     public interface Shooter {
         Time SHOOT_TIME_AUTO = Seconds.of(1.5);
