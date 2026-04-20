@@ -23,13 +23,13 @@ Files:
 - [`src/main/java/com/stuypulse/robot/subsystems/swerve`](https://github.com/StuyPulse/StuyPlus-2026/tree/main/src/main/java/com/stuypulse/robot/subsystems/swerve)
 - [`src/main/java/com/stuypulse/robot/util/HolonomicController.java`](https://github.com/StuyPulse/StuyPlus-2026/tree/main/src/main/java/com/stuypulse/robot/util/HolonomicController.java)
 
-Our drivetrain uses the swerve terrain-type with CTRE Phoenix 6 hardware and four swerve modules, letting us independently rotate the wheels. This allows for higher manueverability.
+We utilize a raised swerve drivetrain with CTRE Phoenix 6 hardware and four swerve modules, letting us independently rotate the wheels. This allows for higher manueverability.
 
 For our [MapleSim w/ AdvantageScope](#maplesim-w-advantagescope), we create a MapleSimSwerveDrivetrain for simulation purposes and publish drivetrain pose, module states, and chassis speeds via `NetworkTables`.
 
 The robot is driven `Field-Centric`.
 
-We use both [Vision](#vision) and odometry to get estimate the pose. Check the vision section for details. 
+We use both [Vision](#vision) and odometry for pose estimation. Check the vision section for details. 
 
 `HolonomicController.java`, made by the main team 694, is essentially the PID Controller but for the drivetrain.
 
