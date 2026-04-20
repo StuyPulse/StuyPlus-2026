@@ -22,9 +22,13 @@ public interface Ports {
         int SHOOTER_MOTOR_CENTER = 1;
         int SHOOTER_MOTOR_RIGHT = 2;
 
-        int HANDOFF_MOTOR = 8;
+        int HANDOFF_MOTOR = 8; //TODO: DELETE
     }
 
+    public interface HandoffPorts {
+        int HANDOFF_MOTOR_LEFT = 8;
+        int HANDOFF_MOTOR_RIGHT = 9;
+    }
 //TODO: Get ports from mech
     public interface Feeder {
         int FEEDER_MOTOR_1 = 3;

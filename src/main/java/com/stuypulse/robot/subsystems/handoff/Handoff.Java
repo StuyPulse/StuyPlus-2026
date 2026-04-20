@@ -22,9 +22,9 @@ public abstract class Handoff extends SubsystemBase {
         return instance;
     }
 
-    // protected Handoff() {
-    //     setState(???);
-    // }
+    protected Handoff() {
+        setState(HandoffState.IDLE);
+    }
 
     public void setState(Handoff state) {
         this.state = state;
@@ -50,8 +50,8 @@ public abstract class Handoff extends SubsystemBase {
         }
     }
 
-    // public abstract AngularVelocity getCurrentAngularVelocity();
-    // protected abstract void stopMotors();
+    public abstract AngularVelocity getCurrentAngularVelocity();
+    protected abstract void stopMotors();
 
     @Override
     public void periodic() {

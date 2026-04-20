@@ -20,6 +20,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 
 public class ShooterImpl extends Shooter {
+    //TODO: DELETE HANDOFF
     private final TalonFX shooterMotorLeft;
     private final TalonFX shooterMotorCenter;
     private final TalonFX shooterMotorRight;
@@ -32,6 +33,7 @@ public class ShooterImpl extends Shooter {
     private Optional<Voltage> voltageOverride;
 
     public ShooterImpl() {
+        //TODO: DELETE HANDOFF STUFF
         shooterMotorLeft = new TalonFX(Ports.ShooterPorts.SHOOTER_MOTOR_LEFT, Settings.CANIVORE); // leader
         shooterMotorCenter = new TalonFX(Ports.ShooterPorts.SHOOTER_MOTOR_CENTER, Settings.CANIVORE);
         shooterMotorRight = new TalonFX(Ports.ShooterPorts.SHOOTER_MOTOR_RIGHT, Settings.CANIVORE);
@@ -70,6 +72,7 @@ public class ShooterImpl extends Shooter {
 
     @Override
     protected void stopMotors() {
+        //TODO: DELETE HANDOFF MOTORS
         shooterMotorLeft.stopMotor();
         shooterMotorCenter.stopMotor();
         shooterMotorRight.stopMotor();
@@ -82,6 +85,7 @@ public class ShooterImpl extends Shooter {
 
     @Override
     public void periodic() {
+        //TODO: DELETE HANDOFF DATA
         if (!Settings.EnabledSubsystems.SHOOTER.get()) {
             stopMotors();
             return;

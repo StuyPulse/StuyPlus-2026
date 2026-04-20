@@ -52,7 +52,7 @@ public abstract class Shooter extends SubsystemBase {
     }
 
     public enum ShooterState {
-
+        //TODO: DELETE HANDOFF MENTIONS
         SOTM(() -> 0.0, Settings.Shooter.SOTM_DUTY), // TODO: Make actual suppliers
         FOTM(() -> 0.0, Settings.Shooter.FOTM_DUTY),
         IDLE(() -> 0.0, Settings.Shooter.IDLE_DUTY),
@@ -81,6 +81,7 @@ public abstract class Shooter extends SubsystemBase {
 
     @Override
     public void periodic() {
+        //TODO: DELETE HANDOFF DATA
         final ShooterState currentState = getState();
 
         SmartDashboard.putNumber("Shooter/Top Target RPM", currentState.getTargetAngularVelocity().in(RPM));
