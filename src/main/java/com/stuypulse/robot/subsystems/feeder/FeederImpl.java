@@ -1,9 +1,7 @@
 package com.stuypulse.robot.subsystems.feeder;
 
-import com.ctre.phoenix6.controls.DutyCycleOut;
-import com.ctre.phoenix6.controls.Follower;
+import com.ctre.phoenix6.controls.DutyCycleOut; 
 import com.ctre.phoenix6.hardware.TalonFX;
-import com.ctre.phoenix6.signals.MotorAlignmentValue;
 import com.stuypulse.robot.constants.Field;
 import com.stuypulse.robot.constants.Motors;
 import com.stuypulse.robot.constants.Ports;
@@ -19,21 +17,15 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class FeederImpl extends Feeder {
     private final TalonFX feederLeader;
-    private final TalonFX feederFollower;
     private final DutyCycleOut controller;
-    private final Follower followerController;
 
     public FeederImpl() {
         feederLeader = new TalonFX(Ports.Feeder.FEEDER_MOTOR_1, Settings.CANIVORE);
-        feederFollower = new TalonFX(Ports.Feeder.FEEDER_MOTOR_2, Settings.CANIVORE);
 
         Motors.Feeder.LEADER_CONFIG.configure(feederLeader);
-        Motors.Feeder.FOLLOWER_CONFIG.configure(feederFollower);
 
         controller = new DutyCycleOut(getState().getTargetDutyCycle()).withEnableFOC(true);
-        followerController = new Follower(feederLeader.getDeviceID(), MotorAlignmentValue.Opposed);
 
-        feederFollower.setControl(followerController); // TODO: figure out motor alignment
     }
 
     @Override
@@ -44,8 +36,6 @@ public class FeederImpl extends Feeder {
     @Override
     protected void stopMotors() {
         feederLeader.stopMotor();
-        feederFollower.stopMotor();
-        feederFollower.setControl(followerController); 
     }
 
     @Override
@@ -54,7 +44,7 @@ public class FeederImpl extends Feeder {
             stopMotors();
             return;
         }
-        // Stop shooting if not aligned  
+        // Stop feeding if not aligned  
         final CommandSwerveDrivetrain swerve = CommandSwerveDrivetrain.getInstance();
         final Shooter shooter = Shooter.getInstance();
 
@@ -72,9 +62,7 @@ public class FeederImpl extends Feeder {
         // Logging
         if (Settings.DEBUG_MODE) {
             SmartDashboard.putNumber("Feeder/Leader Current", feederLeader.getStatorCurrent().getValueAsDouble());
-            SmartDashboard.putNumber("Feeder/Follower Current", feederFollower.getStatorCurrent().getValueAsDouble());
             SmartDashboard.putNumber("Feeder/Leader Voltage", feederLeader.getMotorVoltage().getValueAsDouble());
-            SmartDashboard.putNumber("Feeder/Follower Voltage", feederFollower.getMotorVoltage().getValueAsDouble());
         }
 
         super.periodic();

@@ -40,6 +40,7 @@ public interface Settings {
         SmartBoolean SHOOTER = new SmartBoolean("Enabled Subsystems/Shooter", true);
         SmartBoolean VISION = new SmartBoolean("Enabled Subsystems/Vision", true);
         SmartBoolean SWERVE = new SmartBoolean("Enabled Subsystems/Swerve", true);
+        SmartBoolean HANDOFF = new SmartBoolean("Enabled Subsystems/Handoff", true);
     }
 
     public interface Vision {
@@ -99,6 +100,16 @@ public interface Settings {
         double GEAR_RATIO = 1; // TODO: get from mec
         MomentOfInertia J = KilogramSquareMeters.of(0.001);
     }
+
+    public interface Handoff {
+        double HANDOFF_REVERSE_DUTY_CYCLE = -1;
+        double HANDOFF_FORWARD_DUTY_CYCLE = 1;
+
+        // double GEAR_RATIO = 1; // TODO; get from mec
+        MomentOfInertia J = KilogramSquareMeters.of(0.001);
+    }
+
+
 
     // public interface LED {
     //     int LED_LENGTH = 60; 
