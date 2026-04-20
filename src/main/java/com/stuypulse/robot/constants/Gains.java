@@ -14,6 +14,17 @@ public class Gains {
         double kA = 0;
     }
 
+    // public interface Feeder {
+    //     double kP = 0.1;
+    //     double kI = 0.01;
+    //     double kD = 0;
+
+    //     double kS = 0.0;
+    //     SmartNumber kV = new SmartNumber("Feeder/kV", 5.0);
+    //     SmartNumber kA = new SmartNumber("Feeder/kA", 0.5);
+    //     double kG = 0.0;
+    // }
+
     public interface Intake {
         SmartNumber kP = new SmartNumber("Intake/Pivot kP", 15);
         SmartNumber kI = new SmartNumber("Intake/Pivot kI", 0);

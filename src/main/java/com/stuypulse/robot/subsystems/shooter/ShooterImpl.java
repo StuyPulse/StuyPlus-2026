@@ -87,15 +87,15 @@ public class ShooterImpl extends Shooter {
             return;
         }
 
-        final AngularVelocity targetAngularVelocity = getState().getTargetAngularVelocity();
-        final VelocityTorqueCurrentFOC shooterControl = shooterController.withVelocity(targetAngularVelocity);
-        
+        AngularVelocity targetAngularVelocity = getState().getTargetAngularVelocity();
+        VelocityTorqueCurrentFOC shooterControl = shooterController.withVelocity(targetAngularVelocity);
+
         shooterMotorLeft.setControl(shooterControl);
         
 
-        this.logMotor("ShooterLeft", shooterMotorLeft);
-        this.logMotor("ShooterCenter", shooterMotorCenter);
-        this.logMotor("ShooterRight", shooterMotorRight);
+        logMotor("ShooterLeft", shooterMotorLeft);
+        logMotor("ShooterCenter", shooterMotorCenter);
+        logMotor("ShooterRight", shooterMotorRight);
 
         
         
@@ -105,7 +105,7 @@ public class ShooterImpl extends Shooter {
     public SysIdRoutine getShooterSysIdRoutine() {
         return SysId.getRoutine(Settings.Shooter.RAMP_RATE,
                 Settings.Shooter.STEP_VOLTAGE,
-                "Intake",
+                "Shooter",
                 voltage -> setVoltageOverride(voltage),
                 () -> shooterMotorLeft.getPosition().getValue(),
                 () -> shooterMotorLeft.getVelocity().getValue(),
