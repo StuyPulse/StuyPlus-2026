@@ -2,12 +2,11 @@ package com.stuypulse.robot.subsystems.handoff;
 
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.stuypulse.robot.constants.Settings;
-import static edu.wpi.first.units.Units.RPM;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-public abstract class Handoff extends SubsystemBase{
+public abstract class Handoff extends SubsystemBase {
     private static final Handoff instance;
     private HandoffState state;
 
@@ -31,7 +30,7 @@ public abstract class Handoff extends SubsystemBase{
     }
 
     public void logMotor(String motorName, TalonFX motor) {
-        String stem = "Shooter/Motors/" + motorName + "/";
+        String stem = "Shooter/Motors/" + motorName + "/"; // why is this shooter
         
         SmartDashboard.putNumber(stem + "MotorVoltage", motor.getMotorVoltage().getValueAsDouble());
         SmartDashboard.putNumber(stem + "SupplyCurrent", motor.getSupplyCurrent().getValueAsDouble());
@@ -39,10 +38,11 @@ public abstract class Handoff extends SubsystemBase{
 
         SmartDashboard.putNumber(stem + "DutyCycle", motor.getDutyCycle().getValueAsDouble());
     }
+
     public enum HandoffState {
-        IDLE(Settings.Handoff.IDLE_DUTYCYCLE),
-        FORWARD(Settings.Handoff.FORWARD_DUTYCYCLE),
-        REVERSE(Settings.Handoff.REVERSE_DUTYCYCLE);
+        IDLE(Settings.Handoff.IDLE_DUTY_CYCLE),
+        FORWARD(Settings.Handoff.FORWARD_DUTY_CYCLE),
+        REVERSE(Settings.Handoff.REVERSE_DUTY_CYCLE);
 
         private double handoffMotorDutyCycle;
 
@@ -54,7 +54,9 @@ public abstract class Handoff extends SubsystemBase{
             return handoffMotorDutyCycle;
         }
     }
+
     protected abstract void stopMotors();
+
     @Override
     public void periodic(){
         final HandoffState currentState = getState();

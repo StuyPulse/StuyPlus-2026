@@ -22,10 +22,12 @@ public class HandoffImpl extends Handoff {
         
         Motors.Handoff.HANDOFF_MOTOR_CONFIG.configure(handoffMotor);
     }
+
     @Override
     protected void stopMotors() {
         handoffMotor.stopMotor();
     }
+
     @Override
     public void periodic() {
         final DutyCycleOut handoffControl = handoffController.withOutput(getState().getHandoffMotorDutyCycle());
