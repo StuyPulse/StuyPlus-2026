@@ -83,15 +83,26 @@ public class ShooterImpl extends Shooter {
             return;
         }
 
+<<<<<<< HEAD
         final AngularVelocity targetAngularVelocity = getState().getTargetAngularVelocity();
         final VelocityTorqueCurrentFOC shooterControl = shooterController.withVelocity(targetAngularVelocity);
+=======
+        AngularVelocity targetAngularVelocity = getState().getTargetAngularVelocity();
+        VelocityTorqueCurrentFOC shooterControl = shooterController.withVelocity(targetAngularVelocity);
+        DutyCycleOut handoffControl = handoffController.withOutput(getState().getHandoffMotorDutyCycle());
+>>>>>>> caeb95cd587f2860ef3c5fb05c3e05115bfdc9dd
 
         shooterMotorLeft.setControl(shooterControl);
 
-        this.logMotor("ShooterLeft", shooterMotorLeft);
-        this.logMotor("ShooterCenter", shooterMotorCenter);
-        this.logMotor("ShooterRight", shooterMotorRight);
+        logMotor("ShooterLeft", shooterMotorLeft);
+        logMotor("ShooterCenter", shooterMotorCenter);
+        logMotor("ShooterRight", shooterMotorRight);
 
+<<<<<<< HEAD
+=======
+        logMotor("Handoff", handoffMotor);
+        SmartDashboard.putNumber("Shooter/Motors/Handoff/DutyCycle", handoffMotor.getDutyCycle().getValueAsDouble());
+>>>>>>> caeb95cd587f2860ef3c5fb05c3e05115bfdc9dd
 
         super.periodic();
     }
@@ -99,7 +110,7 @@ public class ShooterImpl extends Shooter {
     public SysIdRoutine getShooterSysIdRoutine() {
         return SysId.getRoutine(Settings.Shooter.RAMP_RATE,
                 Settings.Shooter.STEP_VOLTAGE,
-                "Intake",
+                "Shooter",
                 voltage -> setVoltageOverride(voltage),
                 () -> shooterMotorLeft.getPosition().getValue(),
                 () -> shooterMotorLeft.getVelocity().getValue(),

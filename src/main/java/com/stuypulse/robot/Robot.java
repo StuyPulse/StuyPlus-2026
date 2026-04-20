@@ -86,8 +86,7 @@ public class Robot extends TimedRobot {
     public void simulationInit() {
         CommandSwerveDrivetrain
                 .getInstance()
-                .resetPose(Robot.isBlue() ? SimulationConstants.ROBOTS_STARTING_POSITIONS[0]
-                        : Field.transformToOppositeAlliance(SimulationConstants.ROBOTS_STARTING_POSITIONS[0])); // start off in a convenient spot
+                .resetPose(SimulationConstants.ROBOTS_STARTING_POSITIONS[0]); // start off in a convenient spot
     }
 
     @Override
