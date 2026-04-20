@@ -78,7 +78,8 @@ public interface Motors {
 			.withNeutralMode(NeutralModeValue.Coast)
             .withFFConstants(Gains.Shooter.kS, Gains.Shooter.kV, Gains.Shooter.kA, 0)
 			.withInvertedValue(InvertedValue.CounterClockwise_Positive);
-
+    }
+    public interface Handoff {
         TalonFXConfig HANDOFF_MOTOR_CONFIG = new TalonFXConfig()
             .withCurrentLimitAmps(80)
             .withRampRate(0.25)

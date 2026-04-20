@@ -25,9 +25,6 @@ public class ShooterSim extends Shooter {
     private final VelocityTorqueCurrentFOC shooterController;
     private final Follower shooterFollowerController;
     
-    private final DCMotorSim handoffSim;
-    private final TalonFXSimulation handoffMotor;
-    private final DutyCycleOut handoffController;
 
     public ShooterSim() {
         shooterSim = new FlywheelSim(LinearSystemId.createFlywheelSystem(
@@ -46,14 +43,7 @@ public class ShooterSim extends Shooter {
         shooterController = new VelocityTorqueCurrentFOC(getState().getTargetAngularVelocity());
 
        
-        handoffSim = new DCMotorSim(LinearSystemId.createDCMotorSystem(
-            DCMotor.getKrakenX60(1),
-            Settings.Shooter.J.in(KilogramSquareMeters),
-            Settings.Shooter.GEAR_RATIO),
-            DCMotor.getKrakenX60(1)
-        );
-        handoffMotor = new TalonFXSimulation(handoffSim).configure(Motors.Shooter.HANDOFF_MOTOR_CONFIG);
-        handoffController = new DutyCycleOut(getState().getHandoffMotorDutyCycle()).withEnableFOC(true);
+
     }
 
     @Override
@@ -69,8 +59,6 @@ public class ShooterSim extends Shooter {
 
         shooterFollower1.setControl(shooterFollowerController);
         shooterFollower2.setControl(shooterFollowerController);
-
-        handoffMotor.stopMotor();
     }
 
     @Override
@@ -84,8 +72,6 @@ public class ShooterSim extends Shooter {
         shooterLeader.update(Settings.DT);
         shooterFollower1.update(Settings.DT);
         shooterFollower2.update(Settings.DT);
-        handoffMotor.setControl(handoffController.withOutput(getState().getHandoffMotorDutyCycle()));
-        handoffMotor.update(Settings.DT);
 
         RobotVisualizer.getInstance().updateShooter(getCurrentAngularVelocity());
 
