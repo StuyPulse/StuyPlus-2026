@@ -123,6 +123,7 @@ public interface Settings {
 
     public interface Handoff {
         double IDLE_DUTY = 0;
+        double STOP_DUTY = 0;
         double TOHAND_DUTY = 1;
         //double NOTTOHAND_DUTY = -1;
     }

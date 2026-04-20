@@ -36,6 +36,7 @@ public abstract class Handoff extends SubsystemBase {
 
     public enum HandoffState {
         IDLE(Settings.Handoff.IDLE_DUTY),
+        STOP(Settings.Handoff.STOP_DUTY),
         TOHAND(Settings.Handoff.TOHAND_DUTY);
         //NOTTOHAND();
 
