@@ -48,7 +48,7 @@ public abstract class Shooter extends SubsystemBase {
         SmartDashboard.putNumber(stem + "SupplyCurrent", motor.getSupplyCurrent().getValueAsDouble());
         SmartDashboard.putNumber(stem + "StatorCurrent", motor.getStatorCurrent().getValueAsDouble());
 
-        SmartDashboard.putNumber(stem + "RPM", motor.getVelocity().getValueAsDouble());
+        SmartDashboard.putNumber(stem + "RPM", motor.getVelocity().getValue().in(RPM));
     }
 
     public enum ShooterState {

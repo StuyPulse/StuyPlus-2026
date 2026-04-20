@@ -107,7 +107,7 @@ public class IntakeImpl extends Intake {
     /***********************/
     @Override
     public double getRollerRPM() {
-        return intakeRollerMotorRight.getVelocity().getValueAsDouble() * 60;
+        return intakeRollerMotorRight.getVelocity().getValue().in(RPM);
     }
 
     private boolean leftRollerStalling() {
