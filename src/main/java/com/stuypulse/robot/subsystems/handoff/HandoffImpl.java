@@ -10,12 +10,13 @@ import com.stuypulse.robot.subsystems.shooter.Shooter;
 import com.stuypulse.robot.subsystems.shooter.Shooter.ShooterState;
 import com.stuypulse.robot.subsystems.swerve.CommandSwerveDrivetrain;
 
+
 public class HandoffImpl extends Handoff {
     private final TalonFX handoffMotor;
     private final DutyCycleOut handoffController;
 
     public HandoffImpl(){
-        handoffMotor = new TalonFX(Ports.ShooterPorts.HANDOFF_MOTOR, Settings.CANIVORE);
+        handoffMotor = new TalonFX(Ports.HandoffPorts.HANDOFF_MOTOR, Settings.CANIVORE);
         handoffController = new DutyCycleOut(getState().getHandoffMotorDutyCycle()).withEnableFOC(true);
         Motors.Shooter.HANDOFF_MOTOR_CONFIG.configure(handoffMotor);
     }
@@ -39,10 +40,13 @@ public class HandoffImpl extends Handoff {
             setState(HandoffState.IDLE);
         }
 
+        if (!(swerve.isAlignedToTarget(Field.getFerryZonePose(swerve.getPose().getTranslation()))) && shooter.getState() == ShooterState.FERRY) {
+            setState(HandoffState.IDLE);
+
          DutyCycleOut handoffControl = handoffController.withOutput(getState().getHandoffMotorDutyCycle());
 
         handoffMotor.setControl(handoffControl);
         this.logMotor(handoffMotor);
     }   
 }
-
+}

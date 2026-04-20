@@ -123,8 +123,8 @@ public interface Settings {
 
     public interface Handoff {
         double IDLE_DUTY = 0;
-        double FORWARD = 1;
-        double BACKWARD = -1;
+        double FORWARD_DUTY = 1;
+        double BACKWARD_DUTY = -1;
     }
 
     public interface Shooter {

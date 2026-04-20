@@ -21,7 +21,9 @@ public interface Ports {
         int SHOOTER_MOTOR_LEFT = 0;
         int SHOOTER_MOTOR_CENTER = 1;
         int SHOOTER_MOTOR_RIGHT = 2;
+    }
 
+    public interface HandoffPorts {
         int HANDOFF_MOTOR = 8;
     }
 
