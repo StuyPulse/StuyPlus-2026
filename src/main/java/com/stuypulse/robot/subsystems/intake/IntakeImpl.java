@@ -189,8 +189,7 @@ public class IntakeImpl extends Intake {
         SmartDashboard.putNumber("Intake/Rollers/Right Current", intakeRollerMotorRight.getStatorCurrent().getValueAsDouble());
         SmartDashboard.putNumber("Intake/Rollers/Left Voltage", intakeRollerMotorLeft.getMotorVoltage().getValueAsDouble());
         SmartDashboard.putNumber("Intake/Rollers/Right Voltage", intakeRollerMotorRight.getMotorVoltage().getValueAsDouble());
-        SmartDashboard.putBoolean("Intake/Rollers/Left Stalling", leftRollerStalling());
-        SmartDashboard.putBoolean("Intake/Rollers/Right Stalling", rightRollerStalling());
+        SmartDashboard.putBoolean("Intake/Rollers/Stalling", leftRollerStalling() || rightRollerStalling());
 
         super.periodic();
     }
