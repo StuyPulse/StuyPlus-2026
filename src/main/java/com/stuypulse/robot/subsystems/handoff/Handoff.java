@@ -40,9 +40,9 @@ public abstract class Handoff extends SubsystemBase{
         SmartDashboard.putNumber(stem + "RPM", motor.getVelocity().getValue().in(RPM));
     }
     public enum HandoffState {
-        IDLE(Settings.Handoff.IDLE_RPM),
-        FORWARD(Settings.Handoff.FORWARD_RPM),
-        REVERSE(Settings.Handoff.REVERSE_RPM);
+        IDLE(Settings.Handoff.IDLE_DUTYCYCLE),
+        FORWARD(Settings.Handoff.FORWARD_DUTYCYCLE),
+        REVERSE(Settings.Handoff.REVERSE_DUTYCYCLE);
 
         private double handoffMotorDutyCycle;
 

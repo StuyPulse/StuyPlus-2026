@@ -177,9 +177,9 @@ public interface Settings {
         }// These values are placeholders and should be replaced with actual data from testing
     }
     public interface Handoff {
-        double IDLE_RPM = 0;
-        double FORWARD_RPM = 1;
-        double REVERSE_RPM = -1;
+        double IDLE_DUTYCYCLE = 0;
+        double FORWARD_DUTYCYCLE = 1;
+        double REVERSE_DUTYCYCLE = -1;
     }
     public interface Swerve {
         double MODULE_VELOCITY_DEADBAND_M_PER_S = 0.1;
