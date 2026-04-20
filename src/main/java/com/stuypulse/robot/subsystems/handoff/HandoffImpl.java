@@ -44,6 +44,7 @@ public class HandoffImpl extends Handoff {
         handoffMotor.setControl(handoffControl);
         this.logMotor(handoffMotor);
         super.periodic();
+        super.periodic();
     }   
 }
 
