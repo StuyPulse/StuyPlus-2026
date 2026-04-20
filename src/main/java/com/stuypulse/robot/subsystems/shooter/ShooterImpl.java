@@ -112,7 +112,7 @@ public class ShooterImpl extends Shooter {
     public SysIdRoutine getShooterSysIdRoutine() {
         return SysId.getRoutine(Settings.Shooter.RAMP_RATE,
                 Settings.Shooter.STEP_VOLTAGE,
-                "Intake",
+                "Shooter",
                 voltage -> setVoltageOverride(voltage),
                 () -> shooterMotorLeft.getPosition().getValue(),
                 () -> shooterMotorLeft.getVelocity().getValue(),
