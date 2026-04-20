@@ -2,7 +2,6 @@ package com.stuypulse.robot.subsystems.shooter;
 
 import static edu.wpi.first.units.Units.*;
 
-import com.ctre.phoenix6.controls.DutyCycleOut;
 import com.ctre.phoenix6.controls.Follower;
 import com.ctre.phoenix6.controls.VelocityTorqueCurrentFOC;
 import com.ctre.phoenix6.signals.MotorAlignmentValue;
@@ -14,7 +13,6 @@ import com.stuypulse.robot.util.simulation.TalonFXSimulation;
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.math.system.plant.LinearSystemId;
 import edu.wpi.first.units.measure.AngularVelocity;
-import edu.wpi.first.wpilibj.simulation.DCMotorSim;
 import edu.wpi.first.wpilibj.simulation.FlywheelSim;
 
 public class ShooterSim extends Shooter {
@@ -24,10 +22,6 @@ public class ShooterSim extends Shooter {
     private final TalonFXSimulation shooterFollower2;
     private final VelocityTorqueCurrentFOC shooterController;
     private final Follower shooterFollowerController;
-    
-    private final DCMotorSim handoffSim;
-    private final TalonFXSimulation handoffMotor;
-    private final DutyCycleOut handoffController;
 
     public ShooterSim() {
         shooterSim = new FlywheelSim(LinearSystemId.createFlywheelSystem(
@@ -44,16 +38,6 @@ public class ShooterSim extends Shooter {
         shooterFollower1.setControl(shooterFollowerController);
         shooterFollower2.setControl(shooterFollowerController);
         shooterController = new VelocityTorqueCurrentFOC(getState().getTargetAngularVelocity());
-
-       
-        handoffSim = new DCMotorSim(LinearSystemId.createDCMotorSystem(
-            DCMotor.getKrakenX60(1),
-            Settings.Shooter.J.in(KilogramSquareMeters),
-            Settings.Shooter.GEAR_RATIO),
-            DCMotor.getKrakenX60(1)
-        );
-        handoffMotor = new TalonFXSimulation(handoffSim).configure(Motors.Shooter.HANDOFF_MOTOR_CONFIG);
-        handoffController = new DutyCycleOut(getState().getHandoffMotorDutyCycle()).withEnableFOC(true);
     }
 
     @Override
@@ -69,8 +53,6 @@ public class ShooterSim extends Shooter {
 
         shooterFollower1.setControl(shooterFollowerController);
         shooterFollower2.setControl(shooterFollowerController);
-
-        handoffMotor.stopMotor();
     }
 
     @Override
@@ -84,8 +66,6 @@ public class ShooterSim extends Shooter {
         shooterLeader.update(Settings.DT);
         shooterFollower1.update(Settings.DT);
         shooterFollower2.update(Settings.DT);
-        handoffMotor.setControl(handoffController.withOutput(getState().getHandoffMotorDutyCycle()));
-        handoffMotor.update(Settings.DT);
 
         RobotVisualizer.getInstance().updateShooter(getCurrentAngularVelocity());
 

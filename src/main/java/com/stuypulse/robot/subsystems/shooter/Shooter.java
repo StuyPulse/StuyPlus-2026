@@ -7,7 +7,6 @@ import java.util.function.DoubleSupplier;
 
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.stuypulse.robot.Robot;
-import com.stuypulse.robot.constants.Settings;
 import com.stuypulse.robot.util.shooter.InterpolationCalculator;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -52,27 +51,20 @@ public abstract class Shooter extends SubsystemBase {
     }
 
     public enum ShooterState {
-        //TODO: DELETE HANDOFF MENTIONS
-        SOTM(() -> 0.0, Settings.Shooter.SOTM_DUTY), // TODO: Make actual suppliers
-        FOTM(() -> 0.0, Settings.Shooter.FOTM_DUTY),
-        IDLE(() -> 0.0, Settings.Shooter.IDLE_DUTY),
-        SHOOT(() -> InterpolationCalculator.interpolateShotInfo().targetRPM(), Settings.Shooter.SHOOT_DUTY),
-        FERRY(() -> InterpolationCalculator.interpolateFerryingInfo().targetRPM(), Settings.Shooter.FERRY_DUTY);
+        SOTM(() -> 0.0), // TODO: Make actual suppliers
+        FOTM(() -> 0.0),
+        IDLE(() -> 0.0),
+        SHOOT(() -> InterpolationCalculator.interpolateShotInfo().targetRPM()),
+        FERRY(() -> InterpolationCalculator.interpolateFerryingInfo().targetRPM());
 
         private DoubleSupplier RPMSupplier;
-        private double handoffMotorDutyCycle;
 
-        private ShooterState(DoubleSupplier RPMSupplier, double handoffMotorDutyCycle) {
+        private ShooterState(DoubleSupplier RPMSupplier) {
             this.RPMSupplier = RPMSupplier;
-            this.handoffMotorDutyCycle = handoffMotorDutyCycle;
         }
 
         public AngularVelocity getTargetAngularVelocity() {
             return RPM.of(RPMSupplier.getAsDouble());
-        }
-
-        public double getHandoffMotorDutyCycle() {
-            return handoffMotorDutyCycle;
         }
     }
 
@@ -81,11 +73,9 @@ public abstract class Shooter extends SubsystemBase {
 
     @Override
     public void periodic() {
-        //TODO: DELETE HANDOFF DATA
         final ShooterState currentState = getState();
 
         SmartDashboard.putNumber("Shooter/Top Target RPM", currentState.getTargetAngularVelocity().in(RPM));
-        SmartDashboard.putNumber("Shooter/Handoff Target Duty Cycle", currentState.getHandoffMotorDutyCycle());
 
         SmartDashboard.putString("Shooter/State", currentState.name());
         SmartDashboard.putString("States/Shooter", currentState.name());
