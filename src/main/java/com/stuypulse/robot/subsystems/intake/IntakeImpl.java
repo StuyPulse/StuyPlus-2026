@@ -140,11 +140,11 @@ public class IntakeImpl extends Intake {
 
         // Input
 
-        final boolean pivotAboveThreshold = isPivotAboveThreshold();
+        boolean pivotAboveThreshold = isPivotAboveThreshold();
 
-        final boolean pivotStalling = pivotStalling();
+        boolean pivotStalling = pivotStalling();
 
-        final IntakeState currentState = getState();
+        IntakeState currentState = getState();
 
         // State
 
@@ -159,7 +159,7 @@ public class IntakeImpl extends Intake {
 
         // Output
 
-        final ControlRequest pivotControl = switch (currentState) {
+        ControlRequest pivotControl = switch (currentState) {
             case INTAKE, OUTTAKE, DOWN -> {
                 if (pivotAboveThreshold) {
                     // wait until pivot reaches the bottom to apply pushdown
@@ -172,7 +172,7 @@ public class IntakeImpl extends Intake {
             default -> pivotController.withPosition(currentState.getTargetAngle().getRotations());
         };
 
-        final DutyCycleOut rollerControl = rollerController.withOutput(currentState.getTargetDutyCycle());
+        DutyCycleOut rollerControl = rollerController.withOutput(currentState.getTargetDutyCycle());
 
         // Apply
 
