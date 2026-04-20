@@ -31,7 +31,6 @@ import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.math.numbers.N1;
 import edu.wpi.first.math.numbers.N3;
 import edu.wpi.first.math.system.plant.DCMotor;
-import edu.wpi.first.math.util.Units;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.networktables.StructArrayPublisher;
 import edu.wpi.first.networktables.StructPublisher;
@@ -476,15 +475,20 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
             getPose().getRotation());
 
         Pose2d robotVel = new Pose2d(
-            Settings.DT * speeds.vxMetersPerSecond,
-            Settings.DT * speeds.vyMetersPerSecond,
-            Rotation2d.fromRadians(Settings.DT * speeds.omegaRadiansPerSecond));
+            Settings.DT.in(Seconds) * speeds.vxMetersPerSecond,
+            Settings.DT.in(Seconds)
+ * speeds.vyMetersPerSecond,
+            Rotation2d.fromRadians(Settings.DT.in(Seconds)
+ * speeds.omegaRadiansPerSecond));
         Twist2d twistVel = new Pose2d().log(robotVel);
 
         setChassisSpeeds(new ChassisSpeeds(
-            twistVel.dx / Settings.DT,
-            twistVel.dy / Settings.DT,
-            twistVel.dtheta / Settings.DT
+            twistVel.dx / Settings.DT.in(Seconds)
+,
+            twistVel.dy / Settings.DT.in(Seconds)
+,
+            twistVel.dtheta / Settings.DT.in(Seconds)
+
         ));
     }
 

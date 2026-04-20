@@ -5,6 +5,11 @@
 
 package com.stuypulse.robot.constants;
 
+import edu.wpi.first.math.util.Units;
+import edu.wpi.first.units.VoltageUnit;
+import edu.wpi.first.units.measure.*;
+import static edu.wpi.first.units.Units.*;
+
 import com.ctre.phoenix6.CANBus;
 import com.pathplanner.lib.path.PathConstraints;
 import com.stuypulse.stuylib.network.SmartBoolean;
@@ -16,7 +21,6 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.numbers.N3;
-import edu.wpi.first.math.util.Units;
 
 /*-
  * File containing tunable settings for every subsystem on the robot.
@@ -25,7 +29,7 @@ import edu.wpi.first.math.util.Units;
  * values that we can edit on Shuffleboard.
  */
 public interface Settings {
-    double DT = 0.020;
+    Time DT = Seconds.of(0.020);
     boolean DEBUG_MODE = true;
     CANBus CANIVORE = new CANBus("rio");
 
@@ -44,7 +48,7 @@ public interface Settings {
         public final Vector<N3> MT2_STDEVS = VecBuilder.fill(0.7, 0.7, 694694.0);
 
         public final Translation2d INVALID_POSITION = new Translation2d(8.2705, 4.0345);
-        public final double INVALID_POSITION_TOLERANCE_M = 0.05;
+        public final Distance INVALID_POSITION_TOLERANCE = Meters.of(0.05);
         public final double MAX_ANGULAR_VELOCITY_RAD_SEC = 2 * Math.PI;
 
     }
@@ -60,27 +64,27 @@ public interface Settings {
             Rotation2d ANGLE_TOLERANCE = Rotation2d.fromDegrees(0.5);
             Rotation2d PUSHDOWN_THRESHOLD = Rotation2d.fromDegrees(85);
             SmartNumber PUSHDOWN_CURRENT = new SmartNumber("Intake/Pivot/Pushdown Voltage Tuning Amps", -75.0);
-            double STALL_CURRENT = 25; // amps
-            double STALL_DEBOUNCE_SEC = 0.0; // TODO: set this up?
-            double HOMING_DOWN_VOLTAGE = 3;
+            Current STALL_CURRENT = Amps.of(25); // amps
+            Time STALL_DEBOUNCE_SEC = Seconds.of(0.0); // TODO: set this up?
+            Voltage HOMING_DOWN_VOLTAGE = Volts.of(3);
 
             // sysid
-            double RAMP_RATE = 2;
-            double STEP_VOLTAGE = 6;
+            Velocity<VoltageUnit> RAMP_RATE = Volts.of(2).per(Second);
+            Voltage STEP_VOLTAGE = Volts.of(6);
 
             // sim
-            double MIN_ANGLE = 0.0;
-            double MAX_ANGLE = 102.0; // deg
+            Rotation2d MIN_ANGLE = Rotation2d.fromDegrees(0);
+            Rotation2d MAX_ANGLE = Rotation2d.fromDegrees(102.0);
             double GEAR_RATIO = 60.0;
-            double J_KG_METERS_SQUARED = 0.001;
+            MomentOfInertia J = KilogramSquareMeters.of(0.001);
         }
 
         public interface Roller {
-            double STALL_CURRENT = 50;
-            double STALL_DEBOUNCE_SEC = 0.1;
+            Current STALL_CURRENT = Amps.of(50);
+            Time STALL_DEBOUNCE_SEC = Seconds.of(0.1);
 
             double GEAR_RATIO = 16.0 / 27.0;
-            double J_KG_METERS_SQUARED = 0.001;
+            MomentOfInertia J = KilogramSquareMeters.of(0.001);
 
             double IDLE_DUTY_CYCLE = 0;
             double INTAKE_DUTY_CYCLE = 1;
@@ -93,7 +97,7 @@ public interface Settings {
         double FEEDER_FORWARD_DUTY_CYCLE = 1;
 
         double GEAR_RATIO = 1; // TODO: get from mec
-        double J_KG_METERS_SQUARED = 0.001;
+        MomentOfInertia J = KilogramSquareMeters.of(0.001);
     }
 
     // public interface LED {
@@ -117,11 +121,11 @@ public interface Settings {
     // }
 
     public interface Shooter {
-        double SHOOT_TIME_AUTO = 1.5;
-        double RAMP_RATE = 0.25;
-        double STEP_VOLTAGE = 900;
+        Time SHOOT_TIME_AUTO = Seconds.of(1.5);
+        Velocity<VoltageUnit> RAMP_RATE = Volts.of(0.25).per(Second);
+        Voltage STEP_VOLTAGE = Volts.of(900);
 
-        double WHEEL_RADIUS_METRES = Units.inchesToMeters(4);
+        Distance WHEEL_RADIUS = Inches.of(4);
 
         double SHOOT_DUTY = 1;
         double FERRY_DUTY = 1;
@@ -129,7 +133,7 @@ public interface Settings {
         double FOTM_DUTY = 0.8;
         double IDLE_DUTY = 0;
         // Sim
-        double J_KG_METERS_SQUARED = 0.1;
+        MomentOfInertia J = KilogramSquareMeters.of(0.1);
         double GEAR_RATIO = 0.1;
 
         double FLYWHEEL_RADIUS = 3; // TODO: get
@@ -202,18 +206,18 @@ public interface Settings {
             }
 
             public interface Tolerances {
-                double X_TOLERANCE = Units.inchesToMeters(2.0); 
-                double Y_TOLERANCE = Units.inchesToMeters(2.0);
+                Distance X_TOLERANCE = Inches.of(2.0);; 
+                Distance Y_TOLERANCE = Inches.of(2.0);
                 Rotation2d THETA_TOLERANCE = Rotation2d.fromDegrees(1);
 
                 Pose2d POSE_TOLERANCE = new Pose2d(
-                    Units.inchesToMeters(2.0), 
-                    Units.inchesToMeters(2.0), 
-                    Rotation2d.fromDegrees(2.0));
+                    X_TOLERANCE.in(Meters), 
+                    Y_TOLERANCE.in(Meters), 
+                    THETA_TOLERANCE);
 
-                double MAX_VELOCITY_WHEN_ALIGNED = 0.15;
+                LinearVelocity MAX_VELOCITY_WHEN_ALIGNED = MetersPerSecond.of(0.15);
 
-                double ALIGNMENT_DEBOUNCE = 0.15;
+                Time ALIGNMENT_DEBOUNCE = Seconds.of(0.15);
             }
 
             public interface Targets {

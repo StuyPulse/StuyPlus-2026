@@ -1,5 +1,7 @@
 package com.stuypulse.robot.subsystems.vision;
 
+import static edu.wpi.first.units.Units.*;
+
 import com.stuypulse.robot.Robot;
 import com.stuypulse.robot.commands.vision.SetPipeline;
 import com.stuypulse.robot.constants.Cameras;
@@ -51,9 +53,12 @@ public class LimelightVision extends SubsystemBase{
                 robotRelativePose.getX(), 
                 robotRelativePose.getY(), 
                 robotRelativePose.getZ(), 
-                Rotation2d.fromRadians(robotRelativePose.getRotation().getX()).getDegrees(), 
-                Rotation2d.fromRadians(robotRelativePose.getRotation().getY()).getDegrees(), 
-                Rotation2d.fromRadians(robotRelativePose.getRotation().getZ()).getDegrees()
+                robotRelativePose.getRotation().getMeasureX().in(Degrees),
+                robotRelativePose.getRotation().getMeasureY().in(Degrees),
+                robotRelativePose.getRotation().getMeasureZ().in(Degrees)
+                // Rotation2d.fromRadians(robotRelativePose.getRotation().getX()).getDegrees(), 
+                // Rotation2d.fromRadians(robotRelativePose.getRotation().getY()).getDegrees(), 
+                // Rotation2d.fromRadians(robotRelativePose.getRotation().getZ()).getDegrees()
             );
         }
 
@@ -164,7 +169,7 @@ public class LimelightVision extends SubsystemBase{
                     if (poseEstimate != null && poseEstimate.tagCount > 0) {
                         notNull = true;
 
-                        if (poseEstimate.pose.getTranslation().getDistance(Settings.Vision.INVALID_POSITION) > Settings.Vision.INVALID_POSITION_TOLERANCE_M) {
+                        if (poseEstimate.pose.getTranslation().getDistance(Settings.Vision.INVALID_POSITION) > Settings.Vision.INVALID_POSITION_TOLERANCE.in(Meters)) {
                             withinInvalidPositionTolerance = true;
                         }
 

@@ -1,5 +1,8 @@
 package com.stuypulse.robot.subsystems.shooter;
 
+import edu.wpi.first.units.measure.AngularVelocity;
+import static edu.wpi.first.units.Units.RPM;
+
 import java.util.function.DoubleSupplier;
 
 import com.ctre.phoenix6.hardware.TalonFX;
@@ -45,7 +48,7 @@ public abstract class Shooter extends SubsystemBase {
         SmartDashboard.putNumber(stem + "SupplyCurrent", motor.getSupplyCurrent().getValueAsDouble());
         SmartDashboard.putNumber(stem + "StatorCurrent", motor.getStatorCurrent().getValueAsDouble());
 
-        SmartDashboard.putNumber(stem + "RPM", motor.getVelocity().getValueAsDouble());
+        SmartDashboard.putNumber(stem + "RPM", motor.getVelocity().getValue().in(RPM));
     }
 
     public enum ShooterState {
@@ -64,8 +67,8 @@ public abstract class Shooter extends SubsystemBase {
             this.handoffMotorDutyCycle = handoffMotorDutyCycle;
         }
 
-        public double getRPM() {
-            return RPMSupplier.getAsDouble();
+        public AngularVelocity getTargetAngularVelocity() {
+            return RPM.of(RPMSupplier.getAsDouble());
         }
 
         public double getHandoffMotorDutyCycle() {
@@ -73,15 +76,18 @@ public abstract class Shooter extends SubsystemBase {
         }
     }
 
-    public abstract double getCurrentRPM();
+    public abstract AngularVelocity getCurrentAngularVelocity();
+    protected abstract void stopMotors();
 
     @Override
     public void periodic() {
-        SmartDashboard.putNumber("Shooter/Top Target RPM", getState().getRPM());
-        SmartDashboard.putNumber("Shooter/Handoff Target Duty Cycle", getState().getHandoffMotorDutyCycle());
+        final ShooterState currentState = getState();
 
-        SmartDashboard.putString("Shooter/State", getState().name());
-        SmartDashboard.putString("States/Shooter", getState().name());
+        SmartDashboard.putNumber("Shooter/Top Target RPM", currentState.getTargetAngularVelocity().in(RPM));
+        SmartDashboard.putNumber("Shooter/Handoff Target Duty Cycle", currentState.getHandoffMotorDutyCycle());
+
+        SmartDashboard.putString("Shooter/State", currentState.name());
+        SmartDashboard.putString("States/Shooter", currentState.name());
     }
 }
 

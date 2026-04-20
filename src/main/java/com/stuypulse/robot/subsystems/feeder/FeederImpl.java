@@ -13,12 +13,15 @@ import com.stuypulse.robot.subsystems.shooter.Shooter;
 import com.stuypulse.robot.subsystems.shooter.Shooter.ShooterState;
 import com.stuypulse.robot.subsystems.swerve.CommandSwerveDrivetrain;
 
+import edu.wpi.first.units.measure.*;
+
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class FeederImpl extends Feeder {
     private final TalonFX feederLeader;
     private final TalonFX feederFollower;
     private final DutyCycleOut controller;
+    private final Follower followerController;
 
     public FeederImpl() {
         feederLeader = new TalonFX(Ports.Feeder.FEEDER_MOTOR_1, Settings.CANIVORE);
@@ -28,42 +31,52 @@ public class FeederImpl extends Feeder {
         Motors.Feeder.FOLLOWER_CONFIG.configure(feederFollower);
 
         controller = new DutyCycleOut(getState().getTargetDutyCycle()).withEnableFOC(true);
+        followerController = new Follower(feederLeader.getDeviceID(), MotorAlignmentValue.Opposed);
 
-        feederFollower.setControl(new Follower(Ports.Feeder.FEEDER_MOTOR_1, MotorAlignmentValue.Opposed)); // TODO: figure out motor alignment
+        feederFollower.setControl(followerController); // TODO: figure out motor alignment
     }
 
     @Override
-    public double getCurrentRPM() {
-         return feederLeader.getVelocity().getValueAsDouble() * 60.0;
+    public AngularVelocity getCurrentAngularVelocity() {
+        return feederLeader.getVelocity().getValue();
+    }
+
+    @Override
+    protected void stopMotors() {
+        feederLeader.stopMotor();
+        feederFollower.stopMotor();
+        feederFollower.setControl(followerController); 
     }
 
     @Override
     public void periodic() {
-        if (EnabledSubsystems.FEEDER.get()) {
-            super.periodic();
-
-            //Stop shooting if not aligned  
-            CommandSwerveDrivetrain swerve = CommandSwerveDrivetrain.getInstance();
-            Shooter shooter = Shooter.getInstance();
-
-            if (!(swerve.isAlignedToTarget(Field.getHubPose())) && shooter.getState() == ShooterState.SHOOT) {
-                setState(FeederState.STOP);
-            }
-
-            if (!(swerve.isAlignedToTarget(Field.getFerryZonePose(swerve.getPose().getTranslation()))) && shooter.getState() == ShooterState.FERRY) {
-                setState(FeederState.STOP);
-            }
-
-            // Apply
-            feederLeader.setControl(controller.withOutput(getState().getTargetDutyCycle()));
-
-            // Logging
-            if (Settings.DEBUG_MODE) {
-                SmartDashboard.putNumber("Feeder/Leader Current", feederLeader.getStatorCurrent().getValueAsDouble());
-                SmartDashboard.putNumber("Feeder/Follower Current", feederFollower.getStatorCurrent().getValueAsDouble());
-                SmartDashboard.putNumber("Feeder/Leader Voltage", feederLeader.getMotorVoltage().getValueAsDouble());
-                SmartDashboard.putNumber("Feeder/Follower Voltage", feederFollower.getMotorVoltage().getValueAsDouble());
-            }
+        if (!EnabledSubsystems.FEEDER.get()) {
+            stopMotors();
+            return;
         }
+        // Stop shooting if not aligned  
+        final CommandSwerveDrivetrain swerve = CommandSwerveDrivetrain.getInstance();
+        final Shooter shooter = Shooter.getInstance();
+
+        if (!(swerve.isAlignedToTarget(Field.getHubPose())) && shooter.getState() == ShooterState.SHOOT) {
+            setState(FeederState.STOP);
+        }
+
+        if (!(swerve.isAlignedToTarget(Field.getFerryZonePose(swerve.getPose().getTranslation()))) && shooter.getState() == ShooterState.FERRY) {
+            setState(FeederState.STOP);
+        }
+
+        // Apply
+        feederLeader.setControl(controller.withOutput(getState().getTargetDutyCycle()));
+
+        // Logging
+        if (Settings.DEBUG_MODE) {
+            SmartDashboard.putNumber("Feeder/Leader Current", feederLeader.getStatorCurrent().getValueAsDouble());
+            SmartDashboard.putNumber("Feeder/Follower Current", feederFollower.getStatorCurrent().getValueAsDouble());
+            SmartDashboard.putNumber("Feeder/Leader Voltage", feederLeader.getMotorVoltage().getValueAsDouble());
+            SmartDashboard.putNumber("Feeder/Follower Voltage", feederFollower.getMotorVoltage().getValueAsDouble());
+        }
+
+        super.periodic();
     }
 }

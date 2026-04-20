@@ -18,6 +18,7 @@ import com.stuypulse.robot.subsystems.vision.LimelightVision.MegaTagMode;
 import com.stuypulse.robot.constants.Field;
 import com.stuypulse.robot.constants.Settings;
 import com.stuypulse.robot.subsystems.swerve.CommandSwerveDrivetrain;
+import com.stuypulse.robot.util.RobotVisualizer;
 import com.stuypulse.robot.util.simulation.Simulation;
 import com.stuypulse.robot.util.simulation.SimulationConstants;
 import com.stuypulse.stuylib.network.SmartBoolean;
@@ -91,6 +92,7 @@ public class Robot extends TimedRobot {
     @Override
     public void simulationPeriodic() {
         Simulation.getInstance().update();
+        RobotVisualizer.getInstance().update();
     }
 
     /*********************/

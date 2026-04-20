@@ -1,5 +1,8 @@
 package com.stuypulse.robot.subsystems.intake;
 
+import edu.wpi.first.math.util.Units;
+import static edu.wpi.first.units.Units.*;
+
 import com.ctre.phoenix6.controls.DutyCycleOut;
 import com.ctre.phoenix6.controls.Follower;
 import com.ctre.phoenix6.hardware.TalonFX;
@@ -15,7 +18,6 @@ import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.math.system.plant.LinearSystemId;
-import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.simulation.DCMotorSim;
 import edu.wpi.first.wpilibj.simulation.SingleJointedArmSim;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -29,6 +31,7 @@ public class IntakeSim extends Intake {
     private final TalonFXSimulation rollerFollower;
     private final DCMotorSim rollerSim;
     private final DutyCycleOut rollerController;
+    private final Follower rollerFollowerController;
 
     private Rotation2d zeroOffset;
 
@@ -43,29 +46,30 @@ public class IntakeSim extends Intake {
         rollerSim = new DCMotorSim(
             LinearSystemId.createDCMotorSystem(
                 DCMotor.getKrakenX60(2),
-                Settings.Intake.Roller.J_KG_METERS_SQUARED,
+                Settings.Intake.Roller.J.in(KilogramSquareMeters),
                 Settings.Intake.Roller.GEAR_RATIO
             ),
             DCMotor.getKrakenX60(2)
         );
         rollerMotor = new TalonFXSimulation(rollerSim).configure(Motors.Intake.LEFT_ROLLER_CONFIG);
         rollerFollower = new TalonFXSimulation(rollerSim).configure(Motors.Intake.RIGHT_ROLLER_CONFIG);
-        rollerFollower.setControl(new Follower(rollerMotor.getMotor().getDeviceID(), MotorAlignmentValue.Opposed));
         rollerController = new DutyCycleOut(0)
             .withEnableFOC(true);
+        rollerFollowerController = new Follower(rollerMotor.getMotor().getDeviceID(), MotorAlignmentValue.Opposed);
+        rollerFollower.setControl(rollerFollowerController);
 
         pivotSim = new SingleJointedArmSim(
             LinearSystemId.createDCMotorSystem(
                 DCMotor.getKrakenX60(1),
-                Settings.Intake.Pivot.J_KG_METERS_SQUARED,
+                Settings.Intake.Pivot.J.in(KilogramSquareMeters),
                 Settings.Intake.Pivot.GEAR_RATIO),
             DCMotor.getKrakenX60(1),
             Settings.Intake.Pivot.GEAR_RATIO,
             SimulationConstants.Intake.PIVOT_ARM_LENGTH,
-            Math.toRadians(Settings.Intake.Pivot.MIN_ANGLE),
-            Math.toRadians(Settings.Intake.Pivot.MAX_ANGLE),
+            Settings.Intake.Pivot.MIN_ANGLE.getRadians(),
+            Settings.Intake.Pivot.MAX_ANGLE.getRadians(),
             true,
-            Settings.Intake.Pivot.INITIAL_ANGLE.getRadians()  
+            Settings.Intake.Pivot.INITIAL_ANGLE.getRadians()
         );
         
         zeroOffset = new Rotation2d();
@@ -92,11 +96,17 @@ public class IntakeSim extends Intake {
     }
 
     @Override
+    protected void stopMotors() {
+        pivotMotor.stopMotor();
+        rollerMotor.stopMotor();
+        rollerFollower.stopMotor();
+        rollerFollower.setControl(rollerFollowerController); // re-add the follow control after stopMotor removes it
+    }
+
+    @Override
     public void periodic() {
-        super.periodic();
         if (!Settings.EnabledSubsystems.INTAKE.get()) {
-            pivotMotor.getSimState().setRawRotorPosition(Units.radiansToRotations(pivotSim.getAngleRads()) * Settings.Intake.Pivot.GEAR_RATIO);
-            rollerMotor.setControl(rollerController.withOutput(0));
+            stopMotors();
             return;
         }
 
@@ -107,7 +117,7 @@ public class IntakeSim extends Intake {
 
         double voltage = pivotController.calculate(getRelativePosition().getRadians(), getState().getTargetAngle().getRadians());
         pivotSim.setInputVoltage(voltage);
-        pivotSim.update(Settings.DT);
+        pivotSim.update(Settings.DT.in(Seconds));
 
         TalonFXSimState pivotState = pivotMotor.getSimState();
         pivotState.setRawRotorPosition(Units.radiansToRotations(pivotSim.getAngleRads()));
@@ -125,5 +135,7 @@ public class IntakeSim extends Intake {
         SmartDashboard.putNumber("Intake/Rollers/Right Voltage", rollerRealFollower.getMotorVoltage().getValueAsDouble());
         SmartDashboard.putBoolean("Intake/Rollers/Left Stalling", false);
         SmartDashboard.putBoolean("Intake/Rollers/Right Stalling", false); // TODO: implement
+
+        super.periodic();
     }
 }

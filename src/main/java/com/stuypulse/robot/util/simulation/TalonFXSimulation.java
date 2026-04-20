@@ -5,7 +5,6 @@ import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.sim.TalonFXSimState;
 import com.stuypulse.robot.constants.Motors.TalonFXConfig;
 
-import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.units.measure.*;
 import static edu.wpi.first.units.Units.*;
 
@@ -14,7 +13,7 @@ import edu.wpi.first.wpilibj.simulation.ElevatorSim;
 import edu.wpi.first.wpilibj.simulation.FlywheelSim;
 
 public class TalonFXSimulation {
-    private interface SystemSim { // idrk what to call this class
+    private interface SystemSim {
         public void setInputVoltage(Voltage voltage);
 
         public void update(double dtSeconds);
@@ -24,7 +23,7 @@ public class TalonFXSimulation {
         public AngularVelocity getAngularVelocity();
 
         public static SystemSim of(DCMotorSim sim) {
-            return new SystemSim() { // anonymous class ts tuff
+            return new SystemSim() {
                 @Override
                 public void setInputVoltage(Voltage voltage) {
                     sim.setInputVoltage(voltage.in(Volts));
@@ -56,7 +55,7 @@ public class TalonFXSimulation {
                 }
                 @Override
                 public Angle getAngularPosition() {
-                    return Radians.of(0); // flywheels dont track pos ig
+                    return Radians.of(0); // flywheels don't track position
                 }
                 @Override
                 public AngularVelocity getAngularVelocity() {
@@ -115,7 +114,7 @@ public class TalonFXSimulation {
 
     public TalonFXSimulation configure(TalonFXConfig config) {
         config.configure(motor);
-        return this; // method chaining is peak
+        return this;
     }
 
     public void setControl(ControlRequest request) {
@@ -126,8 +125,8 @@ public class TalonFXSimulation {
         return motor;
     }
 
-    public Rotation2d getVelocity() {
-        return Rotation2d.fromRadians(simMotor.getAngularVelocity().in(RadiansPerSecond));
+    public void stopMotor() {
+        motor.stopMotor();
     }
 
     public void update(double dtSeconds) {
@@ -138,5 +137,9 @@ public class TalonFXSimulation {
 
         state.setRawRotorPosition(simMotor.getAngularPosition().in(Rotations));
         state.setRotorVelocity(simMotor.getAngularVelocity().in(RotationsPerSecond));
+    }
+
+    public void update(Time dtSeconds) {
+        this.update(dtSeconds.in(Seconds));
     }
 }

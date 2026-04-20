@@ -1,32 +1,38 @@
 package com.stuypulse.robot.subsystems.shooter;
+
+import static edu.wpi.first.units.Units.*;
+
 import com.ctre.phoenix6.controls.DutyCycleOut;
 import com.ctre.phoenix6.controls.Follower;
 import com.ctre.phoenix6.controls.VelocityTorqueCurrentFOC;
 import com.ctre.phoenix6.signals.MotorAlignmentValue;
 import com.stuypulse.robot.constants.Motors;
 import com.stuypulse.robot.constants.Settings;
+import com.stuypulse.robot.util.RobotVisualizer;
 import com.stuypulse.robot.util.simulation.TalonFXSimulation;
-
-import static edu.wpi.first.units.Units.RPM;
 
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.math.system.plant.LinearSystemId;
+import edu.wpi.first.units.measure.AngularVelocity;
 import edu.wpi.first.wpilibj.simulation.DCMotorSim;
+import edu.wpi.first.wpilibj.simulation.FlywheelSim;
 
 public class ShooterSim extends Shooter {
-    private final DCMotorSim handoffSim;
-    private final DCMotorSim shooterSim;
-    private final TalonFXSimulation handoffMotor;
+    private final FlywheelSim shooterSim;
     private final TalonFXSimulation shooterLeader;
     private final TalonFXSimulation shooterFollower1;
     private final TalonFXSimulation shooterFollower2;
     private final VelocityTorqueCurrentFOC shooterController;
+    private final Follower shooterFollowerController;
+    
+    private final DCMotorSim handoffSim;
+    private final TalonFXSimulation handoffMotor;
     private final DutyCycleOut handoffController;
 
     public ShooterSim() {
-        shooterSim = new DCMotorSim(LinearSystemId.createDCMotorSystem(
+        shooterSim = new FlywheelSim(LinearSystemId.createFlywheelSystem(
             DCMotor.getKrakenX60(3),
-            Settings.Shooter.J_KG_METERS_SQUARED,
+            Settings.Shooter.J.in(KilogramSquareMeters),
             Settings.Shooter.GEAR_RATIO),
             DCMotor.getKrakenX60(3)
         );
@@ -34,14 +40,15 @@ public class ShooterSim extends Shooter {
         shooterFollower1 = new TalonFXSimulation(shooterSim).configure(Motors.Shooter.SHOOTER_MOTOR_CONFIG);
         shooterFollower2 = new TalonFXSimulation(shooterSim).configure(Motors.Shooter.SHOOTER_MOTOR_CONFIG);
 
-        shooterFollower1.setControl(new Follower(shooterLeader.getMotor().getDeviceID(), MotorAlignmentValue.Opposed));
-        shooterFollower2.setControl(new Follower(shooterLeader.getMotor().getDeviceID(), MotorAlignmentValue.Opposed));
-        shooterController = new VelocityTorqueCurrentFOC(getState().getRPM());
+        shooterFollowerController = new Follower(shooterLeader.getMotor().getDeviceID(), MotorAlignmentValue.Opposed);
+        shooterFollower1.setControl(shooterFollowerController);
+        shooterFollower2.setControl(shooterFollowerController);
+        shooterController = new VelocityTorqueCurrentFOC(getState().getTargetAngularVelocity());
 
        
         handoffSim = new DCMotorSim(LinearSystemId.createDCMotorSystem(
             DCMotor.getKrakenX60(1),
-            Settings.Shooter.J_KG_METERS_SQUARED,
+            Settings.Shooter.J.in(KilogramSquareMeters),
             Settings.Shooter.GEAR_RATIO),
             DCMotor.getKrakenX60(1)
         );
@@ -50,19 +57,38 @@ public class ShooterSim extends Shooter {
     }
 
     @Override
-    public double getCurrentRPM() {
-        return shooterLeader.getMotor().getVelocity().getValue().in(RPM);
+    public AngularVelocity getCurrentAngularVelocity() {
+        return shooterLeader.getMotor().getVelocity().getValue();
+    }
+
+    @Override
+    protected void stopMotors() {
+        shooterLeader.stopMotor();
+        shooterFollower1.stopMotor();
+        shooterFollower2.stopMotor();
+
+        shooterFollower1.setControl(shooterFollowerController);
+        shooterFollower2.setControl(shooterFollowerController);
+
+        handoffMotor.stopMotor();
     }
 
     @Override
     public void periodic() {
-        super.periodic();
+        if (!Settings.EnabledSubsystems.SHOOTER.get()) {
+            stopMotors();
+            return;
+        }
 
-        shooterLeader.setControl(shooterController.withVelocity(getState().getRPM() / 60));
+        shooterLeader.setControl(shooterController.withVelocity(getState().getTargetAngularVelocity().in(RotationsPerSecond)));
         shooterLeader.update(Settings.DT);
         shooterFollower1.update(Settings.DT);
         shooterFollower2.update(Settings.DT);
         handoffMotor.setControl(handoffController.withOutput(getState().getHandoffMotorDutyCycle()));
         handoffMotor.update(Settings.DT);
+
+        RobotVisualizer.getInstance().updateShooter(getCurrentAngularVelocity());
+
+        super.periodic();
     }
 }

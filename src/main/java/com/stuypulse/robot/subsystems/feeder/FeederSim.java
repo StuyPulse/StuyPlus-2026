@@ -1,5 +1,8 @@
 package com.stuypulse.robot.subsystems.feeder;
 
+import edu.wpi.first.units.measure.*;
+import static edu.wpi.first.units.Units.*;
+
 import com.ctre.phoenix6.controls.DutyCycleOut;
 import com.ctre.phoenix6.controls.Follower;
 import com.ctre.phoenix6.signals.MotorAlignmentValue;
@@ -7,6 +10,7 @@ import com.stuypulse.robot.constants.Settings;
 import com.stuypulse.robot.util.RobotVisualizer;
 import com.stuypulse.robot.util.simulation.TalonFXSimulation;
 import com.stuypulse.robot.constants.Motors;
+import com.stuypulse.robot.constants.Ports;
 
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.math.system.plant.LinearSystemId;
@@ -18,12 +22,13 @@ public class FeederSim extends Feeder {
     private final TalonFXSimulation feederFollower;
     private final DCMotorSim feederSim;
     private final DutyCycleOut feederController;
+    private final Follower feederFollowerController;
 
     public FeederSim() {
         feederSim = new DCMotorSim(
             LinearSystemId.createDCMotorSystem(
                 DCMotor.getKrakenX60(2),
-                Settings.Feeder.J_KG_METERS_SQUARED,
+                Settings.Feeder.J.in(KilogramSquareMeters),
                 Settings.Feeder.GEAR_RATIO
             ),
             DCMotor.getKrakenX60(2)
@@ -32,23 +37,29 @@ public class FeederSim extends Feeder {
         feederLeader = new TalonFXSimulation(feederSim).configure(Motors.Feeder.LEADER_CONFIG);
         feederFollower = new TalonFXSimulation(feederSim).configure(Motors.Feeder.FOLLOWER_CONFIG);
 
-        feederFollower.setControl(new Follower(feederLeader.getMotor().getDeviceID(), MotorAlignmentValue.Opposed));
-
         feederController = new DutyCycleOut(0)
             .withEnableFOC(true);
+        feederFollowerController = new Follower(Ports.Feeder.FEEDER_MOTOR_1, MotorAlignmentValue.Opposed);
+
+        feederFollower.setControl(feederFollowerController);
     }
 
     @Override
-    public double getCurrentRPM() {
-        return feederLeader.getMotor().getVelocity().getValueAsDouble() * 60.0;
+    public AngularVelocity getCurrentAngularVelocity() {
+        return feederLeader.getMotor().getVelocity().getValue();
+    }
+
+    @Override
+    protected void stopMotors() {
+        feederLeader.stopMotor();
+        feederFollower.stopMotor();
+        feederFollower.setControl(feederFollowerController);
     }
 
     @Override
     public void periodic() {
-        super.periodic();
-
         if (!Settings.EnabledSubsystems.INTAKE.get()) {
-            feederLeader.setControl(feederController.withOutput(0));
+            stopMotors();
             return;
         }
 
@@ -62,6 +73,8 @@ public class FeederSim extends Feeder {
         SmartDashboard.putNumber("Feeder/Leader Voltage", feederLeader.getMotor().getMotorVoltage().getValueAsDouble());
         SmartDashboard.putNumber("Feeder/Follower Voltage", feederFollower.getMotor().getMotorVoltage().getValueAsDouble());
 
-        RobotVisualizer.getInstance().updateFeeder(getCurrentRPM());
+        RobotVisualizer.getInstance().updateFeeder(getCurrentAngularVelocity());
+
+        super.periodic();
     }
 }

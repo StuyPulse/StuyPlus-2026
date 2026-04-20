@@ -1,5 +1,10 @@
 package com.stuypulse.robot.subsystems.intake;
 
+import edu.wpi.first.units.measure.*;
+import static edu.wpi.first.units.Units.*;
+
+import static edu.wpi.first.units.Units.Volts;
+
 import java.util.Optional;
 import java.util.function.BooleanSupplier;
 
@@ -35,7 +40,7 @@ public class IntakeImpl extends Intake {
     private final Follower followerController;
 
     private final BooleanSupplier pivotStalling;
-    private Optional<Double> pivotVoltageOverride;
+    private Optional<Voltage> pivotVoltageOverride;
 
     private final BStream leftRollerStalling;
     private final BStream rightRollerStalling;
@@ -59,20 +64,20 @@ public class IntakeImpl extends Intake {
 
         intakeRollerMotorRight.setControl(followerController);
 
-        pivotStalling = () -> intakePivotMotor.getStatorCurrent().getValueAsDouble() > Settings.Intake.Pivot.STALL_CURRENT;
+        pivotStalling = () -> intakePivotMotor.getStatorCurrent().getValueAsDouble() > Settings.Intake.Pivot.STALL_CURRENT.in(Amps);
         leftRollerStalling = BStream
                 .create(() -> intakeRollerMotorLeft.getStatorCurrent()
-                        .getValueAsDouble() > Settings.Intake.Roller.STALL_CURRENT)
-                .filtered(new BDebounce.Both(Settings.Intake.Roller.STALL_DEBOUNCE_SEC));
+                        .getValueAsDouble() > Settings.Intake.Roller.STALL_CURRENT.in(Amps))
+                .filtered(new BDebounce.Both(Settings.Intake.Roller.STALL_DEBOUNCE_SEC.in(Seconds)));
         rightRollerStalling = BStream
-                .create(() -> intakeRollerMotorRight.getStatorCurrent().getValueAsDouble() > Settings.Intake.Roller.STALL_CURRENT)
-                    .filtered(new BDebounce.Both(Settings.Intake.Roller.STALL_DEBOUNCE_SEC));
+                .create(() -> intakeRollerMotorRight.getStatorCurrent().getValueAsDouble() > Settings.Intake.Roller.STALL_CURRENT.in(Amps))
+                    .filtered(new BDebounce.Both(Settings.Intake.Roller.STALL_DEBOUNCE_SEC.in(Seconds)));
 
         pivotVoltageOverride = Optional.empty();
     }
 
-    public void setPivotVoltageOverride(Optional<Double> pivotVoltageOverride) {
-        this.pivotVoltageOverride = pivotVoltageOverride;
+    public void setPivotVoltageOverride(Voltage voltage) {
+        this.pivotVoltageOverride = Optional.of(voltage);
     }
 
     /**********************/
@@ -102,7 +107,7 @@ public class IntakeImpl extends Intake {
     /***********************/
     @Override
     public double getRollerRPM() {
-        return intakeRollerMotorRight.getVelocity().getValueAsDouble() * 60;
+        return intakeRollerMotorRight.getVelocity().getValue().in(RPM);
     }
 
     private boolean leftRollerStalling() {
@@ -113,18 +118,23 @@ public class IntakeImpl extends Intake {
         return rightRollerStalling.get();
     }
 
-    private void stopMotors() {
+    @Override
+    protected void stopMotors() {
         intakePivotMotor.stopMotor();
         intakeRollerMotorLeft.stopMotor();
-        intakeRollerMotorLeft.setControl(followerController); // re-add the follow control after stopMotor removes it
+        intakeRollerMotorRight.stopMotor();
+        intakeRollerMotorRight.setControl(followerController); // re-add the follow control after stopMotor removes it
     }
 
     @Override
     public void periodic() {
-        super.periodic();
-
         if (!EnabledSubsystems.INTAKE.get()) {
             stopMotors();
+            return;
+        }
+
+        if (pivotVoltageOverride.isPresent()) {
+            intakePivotMotor.setVoltage(pivotVoltageOverride.get().in(Volts));
             return;
         }
 
@@ -153,7 +163,7 @@ public class IntakeImpl extends Intake {
             case INTAKE, OUTTAKE, DOWN -> {
                 if (pivotAboveThreshold) {
                     // wait until pivot reaches the bottom to apply pushdown
-                    yield pushdownController;
+                    yield pushdownController.withOutput(Settings.Intake.Pivot.PUSHDOWN_CURRENT.getAsDouble());
                 } else {
                     yield pivotController.withPosition(currentState.getTargetAngle().getRotations());
                 }
@@ -166,12 +176,8 @@ public class IntakeImpl extends Intake {
 
         // Apply
 
-        if (pivotVoltageOverride.isPresent()) {
-            intakePivotMotor.setVoltage(pivotVoltageOverride.get());
-        } else {
-            intakePivotMotor.setControl(pivotControl);
-        }
-
+        
+        intakePivotMotor.setControl(pivotControl);
         intakeRollerMotorLeft.setControl(rollerControl);
 
         // Logging
@@ -185,16 +191,18 @@ public class IntakeImpl extends Intake {
         SmartDashboard.putNumber("Intake/Rollers/Right Voltage", intakeRollerMotorRight.getMotorVoltage().getValueAsDouble());
         SmartDashboard.putBoolean("Intake/Rollers/Left Stalling", leftRollerStalling());
         SmartDashboard.putBoolean("Intake/Rollers/Right Stalling", rightRollerStalling());
+
+        super.periodic();
     }
 
     public SysIdRoutine getIntakeSysIdRoutine() {
         return SysId.getRoutine(Settings.Intake.Pivot.RAMP_RATE,
                 Settings.Intake.Pivot.STEP_VOLTAGE,
                 "Intake",
-                voltage -> setPivotVoltageOverride(Optional.of(voltage)),
-                () -> intakePivotMotor.getPosition().getValueAsDouble(),
-                () -> intakePivotMotor.getVelocity().getValueAsDouble(),
-                () -> intakePivotMotor.getMotorVoltage().getValueAsDouble(),
+                voltage -> setPivotVoltageOverride(voltage),
+                () -> intakePivotMotor.getPosition().getValue(),
+                () -> intakePivotMotor.getVelocity().getValue(),
+                () -> intakePivotMotor.getMotorVoltage().getValue(),
                 getInstance());
     }
 }

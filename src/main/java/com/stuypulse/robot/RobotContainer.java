@@ -35,10 +35,6 @@ import com.stuypulse.robot.commands.shooter.ShooterSetShoot;
 // import com.stuypulse.robot.commands.intake.IntakeSetOuttake;
 import com.stuypulse.robot.constants.Field;
 import com.stuypulse.robot.constants.Ports;
-import com.stuypulse.robot.subsystems.feeder.Feeder;
-import com.stuypulse.robot.subsystems.intake.Intake;
-import com.stuypulse.robot.subsystems.intake.Intake.IntakeState;
-import com.stuypulse.robot.subsystems.swerve.CommandSwerveDrivetrain;
 import com.stuypulse.robot.subsystems.vision.LimelightVision;
 import com.stuypulse.robot.util.PathUtil.AutonConfig;
 
@@ -51,18 +47,22 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
 
+import com.stuypulse.robot.subsystems.intake.Intake;
+import com.stuypulse.robot.subsystems.intake.Intake.IntakeState;
+import com.stuypulse.robot.subsystems.feeder.Feeder;
+import com.stuypulse.robot.subsystems.swerve.CommandSwerveDrivetrain;
+import com.stuypulse.robot.subsystems.shooter.Shooter;
+
 public class RobotContainer {
     // Gamepads
     public final CommandXboxController driver = new CommandXboxController(Ports.Gamepad.DRIVER);
     
     // Subsystem
 
-    @SuppressWarnings("unused")
 	private final Feeder feeder = Feeder.getInstance();
-    @SuppressWarnings("unused")
 	private final Intake intake = Intake.getInstance();
+    private final Shooter shooter = Shooter.getInstance();
     private final CommandSwerveDrivetrain swerve = CommandSwerveDrivetrain.getInstance();
-    @SuppressWarnings("unused")
     private final LimelightVision vision = LimelightVision.getInstance();
 
     // Autons

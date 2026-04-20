@@ -1,5 +1,7 @@
 package com.stuypulse.robot.commands.swerve.PIDtoPose;
 
+import static edu.wpi.first.units.Units.*;
+
 import com.stuypulse.stuylib.control.angle.feedback.AnglePIDController;
 import com.stuypulse.stuylib.control.feedback.PIDController;
 import com.stuypulse.stuylib.math.Vector2D;
@@ -78,16 +80,16 @@ public class SwerveDrivePIDToPose extends Command {
             targetPose2d = Field.FIELD2D.getObject("Target Pose");
 
             isAligned = BStream.create(this::isAligned)
-            .filtered(new BDebounceRC.Both(Settings.Swerve.Alignment.Tolerances.ALIGNMENT_DEBOUNCE));
+            .filtered(new BDebounceRC.Both(Settings.Swerve.Alignment.Tolerances.ALIGNMENT_DEBOUNCE.in(Seconds)));
 
             velocityError = IStream.create(() -> new Translation2d(controller.getError().vxMetersPerSecond, controller.getError().vyMetersPerSecond).getNorm())
             .filtered(new LowPassFilter(0.05))
             .filtered(x -> Math.abs(x));
 
-            xTolerance = Settings.Swerve.Alignment.Tolerances.X_TOLERANCE;
-            yTolerance = Settings.Swerve.Alignment.Tolerances.Y_TOLERANCE;
+            xTolerance = Settings.Swerve.Alignment.Tolerances.X_TOLERANCE.in(Meters);
+            yTolerance = Settings.Swerve.Alignment.Tolerances.Y_TOLERANCE.in(Meters);
             thetaTolerance = Settings.Swerve.Alignment.Tolerances.THETA_TOLERANCE.getRadians();
-            maxVelocityWhenAligned = Settings.Swerve.Alignment.Tolerances.MAX_VELOCITY_WHEN_ALIGNED;
+            maxVelocityWhenAligned = Settings.Swerve.Alignment.Tolerances.MAX_VELOCITY_WHEN_ALIGNED.in(MetersPerSecond);
 
             canEnd = () -> true;
 
