@@ -18,7 +18,7 @@ public class HandoffImpl extends Handoff{
     public HandoffImpl(){
         handoffMotor = new TalonFX(Ports.HandoffPorts.HANDOFF_MOTOR, Settings.CANIVORE);
         handoffController = new DutyCycleOut(getState().getHandoffMotorDutyCycle()).withEnableFOC(true);
-        Motors.Shooter.HANDOFF_MOTOR_CONFIG.configure(handoffMotor);
+        Motors.Handoff.HANDOFF_MOTOR_CONFIG.configure(handoffMotor);
         
     }
     @Override
@@ -46,6 +46,8 @@ public class HandoffImpl extends Handoff{
         final DutyCycleOut handoffControl = handoffController.withOutput(getState().getHandoffMotorDutyCycle());
         
         handoffMotor.setControl(handoffControl);
+        
+        logMotor("HandoffMotor", handoffMotor);
         
         SmartDashboard.putNumber("Shooter/Motors/Handoff/DutyCycle", handoffMotor.getDutyCycle().getValueAsDouble());
         super.periodic();

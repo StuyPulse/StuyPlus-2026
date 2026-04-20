@@ -70,6 +70,13 @@ public interface Motors {
 			.withInvertedValue(InvertedValue.Clockwise_Positive);
     }
 
+    public interface Handoff {
+        TalonFXConfig HANDOFF_MOTOR_CONFIG = new TalonFXConfig()
+            .withCurrentLimitAmps(80)
+            .withRampRate(0.25)
+            .withNeutralMode(NeutralModeValue.Coast)
+            .withInvertedValue(InvertedValue.Clockwise_Positive);
+    }
     public interface Shooter {
         TalonFXConfig SHOOTER_MOTOR_CONFIG = new TalonFXConfig()
             .withPIDConstants(Gains.Shooter.kP, Gains.Shooter.kI, Gains.Shooter.kD, 0)
@@ -79,11 +86,6 @@ public interface Motors {
             .withFFConstants(Gains.Shooter.kS, Gains.Shooter.kV, Gains.Shooter.kA, 0)
 			.withInvertedValue(InvertedValue.CounterClockwise_Positive);
 
-        TalonFXConfig HANDOFF_MOTOR_CONFIG = new TalonFXConfig()
-            .withCurrentLimitAmps(80)
-            .withRampRate(0.25)
-            .withNeutralMode(NeutralModeValue.Coast)
-            .withInvertedValue(InvertedValue.Clockwise_Positive);
     }
 
     public static class TalonFXConfig {

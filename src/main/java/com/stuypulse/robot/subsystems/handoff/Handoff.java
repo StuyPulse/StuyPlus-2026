@@ -1,9 +1,13 @@
 package com.stuypulse.robot.subsystems.handoff;
 
+import com.ctre.phoenix6.hardware.TalonFX;
 import com.stuypulse.robot.constants.Settings;
 
+import static edu.wpi.first.units.Units.RPM;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+
+
 
 public abstract class Handoff extends SubsystemBase {
     private final static Handoff instance;
@@ -27,6 +31,15 @@ public abstract class Handoff extends SubsystemBase {
    
     public HandoffState getState(){
         return this.state;
+    }
+    public void logMotor(String motorName, TalonFX motor) {
+        String stem = "Hanoff/Motor/" + motorName + "/";
+        
+        SmartDashboard.putNumber(stem + "MotorVoltage", motor.getMotorVoltage().getValueAsDouble());
+        SmartDashboard.putNumber(stem + "SupplyCurrent", motor.getSupplyCurrent().getValueAsDouble());
+        SmartDashboard.putNumber(stem + "StatorCurrent", motor.getStatorCurrent().getValueAsDouble());
+
+        SmartDashboard.putNumber(stem + "RPM", motor.getVelocity().getValue().in(RPM));
     }
 
     public enum HandoffState {
