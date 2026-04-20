@@ -52,7 +52,6 @@ public abstract class Handoff extends SubsystemBase {
         final HandoffState currentState = getState();
         SmartDashboard.putNumber("Handoff/Target Duty Cycle", currentState.getHandoffMotorDutyCycle());
         SmartDashboard.putString("Handoff/State", currentState.name());
-        SmartDashboard.putString("Handoff/States", currentState.name());
     }
 
 }
