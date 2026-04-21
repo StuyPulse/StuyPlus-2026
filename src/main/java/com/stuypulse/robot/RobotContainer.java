@@ -254,12 +254,15 @@ public class RobotContainer {
         // autonChooser.addOption("SysID Rotation Translation Quasi Forwards", swerve.sysidRotationQuasiStatic(Direction.kForward));
         // autonChooser.addOption("SysID Rotation Translation Quasi Backwards", swerve.sysidRotationQuasiStatic(Direction.kReverse)); 
 
-        autonChooser.addOption("SysID Intake Pivot Quasi Forwards", intake.getIntakeSysIdRoutine().quasistatic(Direction.kForward));
-        autonChooser.addOption("SysID Intake Pivot Quasi Reverse", intake.getIntakeSysIdRoutine().quasistatic(Direction.kReverse));
-        autonChooser.addOption("SysID Intake Pivot Dynamic Forwards", intake.getIntakeSysIdRoutine().dynamic(Direction.kForward));
-        autonChooser.addOption("SysID Intake Pivot Dynamic Reverse", intake.getIntakeSysIdRoutine().dynamic(Direction.kReverse));
+        autonChooser.addOption("Intake Pivot SysID  Quasi Forwards", intake.getIntakeSysIdRoutine().quasistatic(Direction.kForward));
+        autonChooser.addOption("Intake Pivot SysID  Quasi Reverse", intake.getIntakeSysIdRoutine().quasistatic(Direction.kReverse));
+        autonChooser.addOption("Intake Pivot SysID  Dynamic Forwards", intake.getIntakeSysIdRoutine().dynamic(Direction.kForward));
+        autonChooser.addOption("Intake Pivot SysID  Dynamic Reverse", intake.getIntakeSysIdRoutine().dynamic(Direction.kReverse));
 
-
+        autonChooser.addOption("Shooter SysID Quasi Forwards ", shooter.getShooterSysIdRoutine().quasistatic(Direction.kForward));
+        autonChooser.addOption("Shooter SysID Quasi Reverse ", shooter.getShooterSysIdRoutine().quasistatic(Direction.kReverse));
+        autonChooser.addOption("Shooter SysID Dynamic Forward ", shooter.getShooterSysIdRoutine().dynamic(Direction.kForward));
+        autonChooser.addOption("Shooter SysID Dynamic Reverse ", shooter.getShooterSysIdRoutine().dynamic(Direction.kReverse));
 
         SmartDashboard.putData("Autonomous", autonChooser);
     }
