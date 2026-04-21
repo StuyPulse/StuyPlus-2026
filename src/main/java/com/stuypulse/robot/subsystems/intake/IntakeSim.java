@@ -1,7 +1,11 @@
 package com.stuypulse.robot.subsystems.intake;
 
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.units.measure.Voltage;
+
 import static edu.wpi.first.units.Units.*;
+
+import java.util.Optional;
 
 import com.ctre.phoenix6.controls.DutyCycleOut;
 import com.ctre.phoenix6.controls.Follower;
@@ -11,6 +15,7 @@ import com.ctre.phoenix6.sim.TalonFXSimState;
 import com.stuypulse.robot.constants.Gains;
 import com.stuypulse.robot.constants.Motors;
 import com.stuypulse.robot.constants.Settings;
+import com.stuypulse.robot.util.SysId;
 import com.stuypulse.robot.util.simulation.SimulationConstants;
 import com.stuypulse.robot.util.simulation.TalonFXSimulation;
 
@@ -21,6 +26,7 @@ import edu.wpi.first.math.system.plant.LinearSystemId;
 import edu.wpi.first.wpilibj.simulation.DCMotorSim;
 import edu.wpi.first.wpilibj.simulation.SingleJointedArmSim;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 
 public class IntakeSim extends Intake {
     private final SingleJointedArmSim pivotSim;
@@ -32,6 +38,8 @@ public class IntakeSim extends Intake {
     private final DCMotorSim rollerSim;
     private final DutyCycleOut rollerController;
     private final Follower rollerFollowerController;
+    private Optional<Voltage> pivotVoltageOverride;
+
 
     private Rotation2d zeroOffset;
 
@@ -71,6 +79,8 @@ public class IntakeSim extends Intake {
             true,
             Settings.Intake.Pivot.INITIAL_ANGLE.getRadians()
         );
+
+        pivotVoltageOverride = Optional.empty();
         
         zeroOffset = new Rotation2d();
     }
@@ -104,9 +114,25 @@ public class IntakeSim extends Intake {
     }
 
     @Override
+    public void setPivotVoltageOverride(Voltage voltage) {
+        this.pivotVoltageOverride = Optional.of(voltage);
+    }
+
+    @Override
     public void periodic() {
         if (!Settings.EnabledSubsystems.INTAKE.get()) {
             stopMotors();
+            return;
+        }
+
+        if (pivotVoltageOverride.isPresent()) {
+            pivotSim.setInputVoltage(pivotVoltageOverride.get().in(Volts));
+            pivotSim.update(Settings.DT.in(Seconds));
+
+            TalonFXSimState pivotState = pivotMotor.getSimState();
+            pivotState.setRawRotorPosition(Units.radiansToRotations(pivotSim.getAngleRads()));
+            pivotState.setRotorVelocity(Units.radiansPerSecondToRotationsPerMinute(pivotSim.getVelocityRadPerSec()) / 60);
+            
             return;
         }
 
@@ -137,5 +163,18 @@ public class IntakeSim extends Intake {
         SmartDashboard.putBoolean("Intake/Rollers/Right Stalling", false); // TODO: implement
 
         super.periodic();
+    }
+
+    
+    @Override
+    public SysIdRoutine getIntakeSysIdRoutine() {
+        return SysId.getRoutine(Settings.Intake.Pivot.RAMP_RATE,
+                Settings.Intake.Pivot.STEP_VOLTAGE,
+                "Intake",
+                voltage -> setPivotVoltageOverride(voltage),
+                () -> Radians.of(pivotSim.getAngleRads()),
+                () -> RadiansPerSecond.of(pivotSim.getVelocityRadPerSec()),
+                () -> Volts.of(pivotSim.getInput(0)),
+                getInstance());
     }
 }

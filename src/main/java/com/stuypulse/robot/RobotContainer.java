@@ -148,100 +148,100 @@ public class RobotContainer {
         autonChooser.addOption("Do Nothing", new DoNothingAuton());
 
          
-        AutonConfig LBFerry = new AutonConfig("LB Ferry", LBFerry::new, 
-            "LB to N Ferry", 
-            "N to LT Ferry", 
-            "LT Hub Ferry", 
-            "N to Depot Ferry");
-        LBFerry.register(autonChooser);
+        // AutonConfig LBFerry = new AutonConfig("LB Ferry", LBFerry::new, 
+        //     "LB to N Ferry", 
+        //     "N to LT Ferry", 
+        //     "LT Hub Ferry", 
+        //     "N to Depot Ferry");
+        // LBFerry.register(autonChooser);
 
-        AutonConfig RBFerry = new AutonConfig("RB Ferry", RBFerry::new, 
-            "RB to N Ferry", 
-            "N to RT Ferry", 
-            "RT Hub Ferry", 
-            "N to Outpost Ferry");
-        RBFerry.register(autonChooser);
+        // AutonConfig RBFerry = new AutonConfig("RB Ferry", RBFerry::new, 
+        //     "RB to N Ferry", 
+        //     "N to RT Ferry", 
+        //     "RT Hub Ferry", 
+        //     "N to Outpost Ferry");
+        // RBFerry.register(autonChooser);
 
-        AutonConfig LBMid = new AutonConfig("LB Mid", LBMid::new,
-            "LB to N Mid",
-            "LB Return Mid");
-        LBMid.register(autonChooser);
+        // AutonConfig LBMid = new AutonConfig("LB Mid", LBMid::new,
+        //     "LB to N Mid",
+        //     "LB Return Mid");
+        // LBMid.register(autonChooser);
 
-        AutonConfig LBStraight = new AutonConfig("LB Straight", LBStraight::new,
-            "LB to N Straight",
-            "N to LB Straight");
-        LBStraight.register(autonChooser);
+        // AutonConfig LBStraight = new AutonConfig("LB Straight", LBStraight::new,
+        //     "LB to N Straight",
+        //     "N to LB Straight");
+        // LBStraight.register(autonChooser);
 
-        AutonConfig RBStraight = new AutonConfig("RB Straight", RBStraight::new,
-            "RB to N Straight",
-            "N to RB Straight");
-        RBStraight.register(autonChooser);
+        // AutonConfig RBStraight = new AutonConfig("RB Straight", RBStraight::new,
+        //     "RB to N Straight",
+        //     "N to RB Straight");
+        // RBStraight.register(autonChooser);
 
-        AutonConfig RBMid = new AutonConfig("RB Mid", RBMid::new, 
-            "RB to N Mid",
-            "RB Return Mid",
-            "RB to Outpost Mid");
-        RBMid.register(autonChooser);
+        // AutonConfig RBMid = new AutonConfig("RB Mid", RBMid::new, 
+        //     "RB to N Mid",
+        //     "RB Return Mid",
+        //     "RB to Outpost Mid");
+        // RBMid.register(autonChooser);
 
-        AutonConfig TwoMeterPath = new AutonConfig("Two Meter Path", TwoMeterPath::new,
-            "2 meter path");
-        TwoMeterPath.register(autonChooser);
+        // AutonConfig TwoMeterPath = new AutonConfig("Two Meter Path", TwoMeterPath::new,
+        //     "2 meter path");
+        // TwoMeterPath.register(autonChooser);
 
-        AutonConfig OutpostOnly = new AutonConfig("Outpost Only", OutpostOnly::new, 
-            "Outpost");
-        OutpostOnly.register(autonChooser);
+        // AutonConfig OutpostOnly = new AutonConfig("Outpost Only", OutpostOnly::new, 
+        //     "Outpost");
+        // OutpostOnly.register(autonChooser);
 
-        AutonConfig RBOuttake = new AutonConfig("RB Outtake", RBOuttake::new, 
-            "RB to N Outtake",
-            "N to RB Outtake");
-        RBOuttake.register(autonChooser);
+        // AutonConfig RBOuttake = new AutonConfig("RB Outtake", RBOuttake::new, 
+        //     "RB to N Outtake",
+        //     "N to RB Outtake");
+        // RBOuttake.register(autonChooser);
 
-        AutonConfig LBOuttake = new AutonConfig("LB Outtake", LBOuttake::new, 
-            "LB to N Outtake",
-            "N to LB Outtake");
-        LBOuttake.register(autonChooser);
+        // AutonConfig LBOuttake = new AutonConfig("LB Outtake", LBOuttake::new, 
+        //     "LB to N Outtake",
+        //     "N to LB Outtake");
+        // LBOuttake.register(autonChooser);
 
-        AutonConfig LBMidlineSweep = new AutonConfig("LB Midline Sweep", LBMidlineSweep::new,
-            "LB to N Midline",
-            "LN Sweep Midline");
-        LBMidlineSweep.register(autonChooser);
+        // AutonConfig LBMidlineSweep = new AutonConfig("LB Midline Sweep", LBMidlineSweep::new,
+        //     "LB to N Midline",
+        //     "LN Sweep Midline");
+        // LBMidlineSweep.register(autonChooser);
 
-        AutonConfig RBMidlineSweep = new AutonConfig("RB Midline Sweep", RBMidlineSweep::new,
-            "RB to N Midline",
-            "RN Sweep Midline");
-        RBMidlineSweep.register(autonChooser);
+        // AutonConfig RBMidlineSweep = new AutonConfig("RB Midline Sweep", RBMidlineSweep::new,
+        //     "RB to N Midline",
+        //     "RN Sweep Midline");
+        // RBMidlineSweep.register(autonChooser);
 
-        AutonConfig LBDisrupt = new AutonConfig("LB Disrupt", LBDisrupt::new, 
-            "LB to CN Disrupt",
-            "LN Circle Disrupt",
-            "LN Circle Disrupt",
-            "LB Disrupt Return");
-        LBDisrupt.register(autonChooser);
+        // AutonConfig LBDisrupt = new AutonConfig("LB Disrupt", LBDisrupt::new, 
+        //     "LB to CN Disrupt",
+        //     "LN Circle Disrupt",
+        //     "LN Circle Disrupt",
+        //     "LB Disrupt Return");
+        // LBDisrupt.register(autonChooser);
 
-        AutonConfig RBDisrupt = new AutonConfig("RB Disrupt", RBDisrupt::new, 
-            "RB to CN Disrupt",
-            "RN Circle Disrupt",
-            "RN Circle Disrupt",
-            "RB Disrupt Return");
-        RBDisrupt.register(autonChooser);
+        // AutonConfig RBDisrupt = new AutonConfig("RB Disrupt", RBDisrupt::new, 
+        //     "RB to CN Disrupt",
+        //     "RN Circle Disrupt",
+        //     "RN Circle Disrupt",
+        //     "RB Disrupt Return");
+        // RBDisrupt.register(autonChooser);
 
-        AutonConfig LT_Disrupt = new AutonConfig("LT Disrupt", LTDisrupt::new, 
-            "LT to N Disrupt",
-            "LT Circle Disrupt",
-            "LT Circle Disrupt",
-            "LT Side Push Disrupt",
-            "LT Around Disrupt",
-            "LT Back Push Disrupt");
-        LT_Disrupt.register(autonChooser);
+        // AutonConfig LT_Disrupt = new AutonConfig("LT Disrupt", LTDisrupt::new, 
+        //     "LT to N Disrupt",
+        //     "LT Circle Disrupt",
+        //     "LT Circle Disrupt",
+        //     "LT Side Push Disrupt",
+        //     "LT Around Disrupt",
+        //     "LT Back Push Disrupt");
+        // LT_Disrupt.register(autonChooser);
 
-        AutonConfig RT_Disrupt = new AutonConfig("RT Disrupt", RTDisrupt::new, 
-            "RT to N Disrupt",
-            "RT Circle Disrupt",
-            "RT Circle Disrupt",
-            "RT Side Push Disrupt",
-            "RT Around Disrupt",
-            "RT Back Push Disrupt");
-        RT_Disrupt.register(autonChooser);
+        // AutonConfig RT_Disrupt = new AutonConfig("RT Disrupt", RTDisrupt::new, 
+        //     "RT to N Disrupt",
+        //     "RT Circle Disrupt",
+        //     "RT Circle Disrupt",
+        //     "RT Side Push Disrupt",
+        //     "RT Around Disrupt",
+        //     "RT Back Push Disrupt");
+        // RT_Disrupt.register(autonChooser);
         
 
         // autonChooser.addOption("SysID Module Translation Dynamic Forwards", swerve.sysIdDynamic(Direction.kForward));
@@ -253,6 +253,13 @@ public class RobotContainer {
         // autonChooser.addOption("SysID Rotation Translation Dynamic Backwards", swerve.sysidRotationDynamic(Direction.kReverse));
         // autonChooser.addOption("SysID Rotation Translation Quasi Forwards", swerve.sysidRotationQuasiStatic(Direction.kForward));
         // autonChooser.addOption("SysID Rotation Translation Quasi Backwards", swerve.sysidRotationQuasiStatic(Direction.kReverse)); 
+
+        autonChooser.addOption("SysID Intake Pivot Quasi Forwards", intake.getIntakeSysIdRoutine().quasistatic(Direction.kForward));
+        autonChooser.addOption("SysID Intake Pivot Quasi Reverse", intake.getIntakeSysIdRoutine().quasistatic(Direction.kReverse));
+        autonChooser.addOption("SysID Intake Pivot Dynamic Forwards", intake.getIntakeSysIdRoutine().dynamic(Direction.kForward));
+        autonChooser.addOption("SysID Intake Pivot Dynamic Reverse", intake.getIntakeSysIdRoutine().dynamic(Direction.kReverse));
+
+
 
         SmartDashboard.putData("Autonomous", autonChooser);
     }

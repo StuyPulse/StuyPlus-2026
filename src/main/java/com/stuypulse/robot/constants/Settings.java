@@ -122,8 +122,8 @@ public interface Settings {
 
     public interface Shooter {
         Time SHOOT_TIME_AUTO = Seconds.of(1.5);
-        Velocity<VoltageUnit> RAMP_RATE = Volts.of(0.25).per(Second);
-        Voltage STEP_VOLTAGE = Volts.of(900);
+        Velocity<VoltageUnit> RAMP_RATE = Volts.of(1).per(Second);
+        Voltage STEP_VOLTAGE = Volts.of(7);
 
         Distance WHEEL_RADIUS = Inches.of(4);
 
