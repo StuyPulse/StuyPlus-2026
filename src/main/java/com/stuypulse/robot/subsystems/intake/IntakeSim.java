@@ -132,7 +132,7 @@ public class IntakeSim extends Intake {
         rollerMotor.update(Settings.DT);
         rollerFollower.update(Settings.DT);
 
-        pivotController.withPosition(getState().getTargetAngle().getRotations());
+        pivotMotor.setControl(pivotController.withPosition(getState().getTargetAngle().getRotations()));
         pivotMotor.update(Settings.DT);
 
         TalonFX pivotRealMotor= pivotMotor.getMotor();
@@ -152,7 +152,6 @@ public class IntakeSim extends Intake {
 
         super.periodic();
     }
-
     
     @Override
     public SysIdRoutine getIntakeSysIdRoutine() {
