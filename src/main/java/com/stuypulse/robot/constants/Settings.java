@@ -126,7 +126,6 @@ public interface Settings {
         double STOP_DUTY = 0;
         double REVERSE_DUTY = -1;
         double FORWARD_DUTY = 1;
-        //double NOTTOHAND_DUTY = -1;
     }
 
     public interface Shooter {
