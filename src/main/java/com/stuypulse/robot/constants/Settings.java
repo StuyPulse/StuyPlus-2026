@@ -69,8 +69,8 @@ public interface Settings {
             Voltage HOMING_DOWN_VOLTAGE = Volts.of(3);
 
             // sysid
-            Velocity<VoltageUnit> RAMP_RATE = Volts.of(2).per(Second);
-            Voltage STEP_VOLTAGE = Volts.of(6);
+            Velocity<VoltageUnit> RAMP_RATE = Volts.of(1).per(Second);
+            Voltage STEP_VOLTAGE = Volts.of(4);
 
             // sim
             Rotation2d MIN_ANGLE = Rotation2d.fromDegrees(0);
