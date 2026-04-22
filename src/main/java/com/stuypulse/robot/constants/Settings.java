@@ -121,7 +121,7 @@ public interface Settings {
     // }
     public interface Handoff {
         double IDLE_DUTY_CYCLE = 0.0;
-        double ACTIVE_DUTY_CYCLE = 1.0;
+        double FORWARD_DUTY_CYCLE = 1.0;
         double REVERSE_DUTY_CYCLE = -1.0;
     }
     public interface Shooter {
