@@ -48,14 +48,6 @@ public class ShooterSim extends Shooter {
         shooterFollower2.setControl(shooterFollowerController);
         shooterController = new VelocityTorqueCurrentFOC(getState().getTargetAngularVelocity());
 
-       
-        handoffSim = new DCMotorSim(LinearSystemId.createDCMotorSystem(
-            DCMotor.getKrakenX60(1),
-            Settings.Shooter.J.in(KilogramSquareMeters),
-            Settings.Shooter.GEAR_RATIO),
-            DCMotor.getKrakenX60(1)
-        );
-
         voltageOverride = Optional.empty();
     }
 
