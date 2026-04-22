@@ -12,12 +12,7 @@ public abstract class Handoff extends SubsystemBase {
     private HandoffState state;
 
     static {
-        if (Robot.isReal()) {
-            instance = new HandoffImpl();
-        } else {
-            //instance = new HandoffSim();
-            instance = new HandoffImpl();
-        }
+        instance = new HandoffImpl();
     }
 
     public static Handoff getInstance() {
