@@ -5,15 +5,15 @@
 
 package com.stuypulse.robot.constants;
 
-import edu.wpi.first.math.util.Units;
-import edu.wpi.first.units.VoltageUnit;
-import edu.wpi.first.units.measure.*;
-import static edu.wpi.first.units.Units.*;
-
 import com.ctre.phoenix6.CANBus;
 import com.pathplanner.lib.path.PathConstraints;
 import com.stuypulse.stuylib.network.SmartBoolean;
 import com.stuypulse.stuylib.network.SmartNumber;
+
+import edu.wpi.first.math.util.Units;
+import static edu.wpi.first.units.Units.*;
+import edu.wpi.first.units.*;
+import edu.wpi.first.units.measure.*;
 
 import edu.wpi.first.math.VecBuilder;
 import edu.wpi.first.math.Vector;
@@ -37,6 +37,7 @@ public interface Settings {
         SmartBoolean FEEDER = new SmartBoolean("Enabled Subsystems/Feeder", true);
         SmartBoolean INTAKE = new SmartBoolean("Enabled Subsystems/Intake", true);
         // SmartBoolean LED = new SmartBoolean("Enabled Subsystems/LED", true);
+        SmartBoolean HANDOFF = new SmartBoolean("Enabled Subsystems/Handoff", true);
         SmartBoolean SHOOTER = new SmartBoolean("Enabled Subsystems/Shooter", true);
         SmartBoolean VISION = new SmartBoolean("Enabled Subsystems/Vision", true);
         SmartBoolean SWERVE = new SmartBoolean("Enabled Subsystems/Swerve", true);
@@ -123,6 +124,9 @@ public interface Settings {
         double IDLE_DUTY_CYCLE = 0.0;
         double FORWARD_DUTY_CYCLE = 1.0;
         double REVERSE_DUTY_CYCLE = -1.0;
+        
+        double J_KG_METERS_SQUARED = 1; 
+        double SIM_GEAR_RATIO = 1; 
     }
     public interface Shooter {
         Time SHOOT_TIME_AUTO = Seconds.of(1.5);
