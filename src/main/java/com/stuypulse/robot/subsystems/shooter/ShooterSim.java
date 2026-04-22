@@ -2,6 +2,8 @@ package com.stuypulse.robot.subsystems.shooter;
 
 import static edu.wpi.first.units.Units.*;
 
+import java.util.Optional;
+
 import com.ctre.phoenix6.controls.DutyCycleOut;
 import com.ctre.phoenix6.controls.Follower;
 import com.ctre.phoenix6.controls.VelocityTorqueCurrentFOC;
@@ -9,13 +11,16 @@ import com.ctre.phoenix6.signals.MotorAlignmentValue;
 import com.stuypulse.robot.constants.Motors;
 import com.stuypulse.robot.constants.Settings;
 import com.stuypulse.robot.util.RobotVisualizer;
+import com.stuypulse.robot.util.SysId;
 import com.stuypulse.robot.util.simulation.TalonFXSimulation;
 
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.math.system.plant.LinearSystemId;
 import edu.wpi.first.units.measure.AngularVelocity;
+import edu.wpi.first.units.measure.Voltage;
 import edu.wpi.first.wpilibj.simulation.DCMotorSim;
 import edu.wpi.first.wpilibj.simulation.FlywheelSim;
+import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 
 public class ShooterSim extends Shooter {
     private final FlywheelSim shooterSim;
@@ -24,10 +29,8 @@ public class ShooterSim extends Shooter {
     private final TalonFXSimulation shooterFollower2;
     private final VelocityTorqueCurrentFOC shooterController;
     private final Follower shooterFollowerController;
-    
-    private final DCMotorSim handoffSim;
- //   private final TalonFXSimulation handoffMotor;
- //   private final DutyCycleOut handoffController;
+
+    private Optional<Voltage> voltageOverride;
 
     public ShooterSim() {
         shooterSim = new FlywheelSim(LinearSystemId.createFlywheelSystem(
@@ -52,8 +55,8 @@ public class ShooterSim extends Shooter {
             Settings.Shooter.GEAR_RATIO),
             DCMotor.getKrakenX60(1)
         );
-    //    handoffMotor = new TalonFXSimulation(handoffSim).configure(Motors.Shooter.HANDOFF_MOTOR_CONFIG);
-    //    handoffController = new DutyCycleOut(getState().getHandoffMotorDutyCycle()).withEnableFOC(true);
+
+        voltageOverride = Optional.empty();
     }
 
     @Override
@@ -69,8 +72,11 @@ public class ShooterSim extends Shooter {
 
         shooterFollower1.setControl(shooterFollowerController);
         shooterFollower2.setControl(shooterFollowerController);
+    }
 
-    //    handoffMotor.stopMotor();
+    @Override
+    public void setVoltageOverride(Voltage voltage) {
+        this.voltageOverride = Optional.of(voltage);
     }
 
     @Override
@@ -84,11 +90,21 @@ public class ShooterSim extends Shooter {
         shooterLeader.update(Settings.DT);
         shooterFollower1.update(Settings.DT);
         shooterFollower2.update(Settings.DT);
-   //     handoffMotor.setControl(handoffController.withOutput(getState().getHandoffMotorDutyCycle()));
-   //     handoffMotor.update(Settings.DT);
 
         RobotVisualizer.getInstance().updateShooter(getCurrentAngularVelocity());
 
         super.periodic();
+    }
+
+    
+    public SysIdRoutine getShooterSysIdRoutine() {
+        return SysId.getRoutine(Settings.Shooter.RAMP_RATE,
+                Settings.Shooter.STEP_VOLTAGE,
+                "Shooter",
+                voltage -> setVoltageOverride(voltage),
+                () -> shooterLeader.getMotor().getPosition().getValue(),
+                () -> shooterLeader.getMotor().getVelocity().getValue(),
+                () -> shooterLeader.getMotor().getMotorVoltage().getValue(),
+                getInstance());
     }
 }

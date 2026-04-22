@@ -1,16 +1,23 @@
 package com.stuypulse.robot.subsystems.intake;
 
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.units.measure.Voltage;
+
 import static edu.wpi.first.units.Units.*;
+
+import java.util.Optional;
 
 import com.ctre.phoenix6.controls.DutyCycleOut;
 import com.ctre.phoenix6.controls.Follower;
+import com.ctre.phoenix6.controls.PositionTorqueCurrentFOC;
+import com.ctre.phoenix6.controls.VoltageOut;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.MotorAlignmentValue;
 import com.ctre.phoenix6.sim.TalonFXSimState;
 import com.stuypulse.robot.constants.Gains;
 import com.stuypulse.robot.constants.Motors;
 import com.stuypulse.robot.constants.Settings;
+import com.stuypulse.robot.util.SysId;
 import com.stuypulse.robot.util.simulation.SimulationConstants;
 import com.stuypulse.robot.util.simulation.TalonFXSimulation;
 
@@ -21,27 +28,39 @@ import edu.wpi.first.math.system.plant.LinearSystemId;
 import edu.wpi.first.wpilibj.simulation.DCMotorSim;
 import edu.wpi.first.wpilibj.simulation.SingleJointedArmSim;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 
 public class IntakeSim extends Intake {
     private final SingleJointedArmSim pivotSim;
-    private final TalonFX pivotMotor;
-    private final PIDController pivotController;
+    private final TalonFXSimulation pivotMotor;
+    private final PositionTorqueCurrentFOC pivotController;
 
     private final TalonFXSimulation rollerMotor;
     private final TalonFXSimulation rollerFollower;
     private final DCMotorSim rollerSim;
     private final DutyCycleOut rollerController;
     private final Follower rollerFollowerController;
+    private Optional<Voltage> pivotVoltageOverride;
+
 
     private Rotation2d zeroOffset;
 
     public IntakeSim() {
-        pivotMotor = new TalonFX(TalonFXSimulation.getID());
-        pivotController = new PIDController(
-            Gains.Intake.kP.get(),
-            Gains.Intake.kI.get(),
-            Gains.Intake.kD.get()
+        pivotSim = new SingleJointedArmSim(
+            LinearSystemId.createDCMotorSystem(
+                DCMotor.getKrakenX60(1),
+                Settings.Intake.Pivot.J.in(KilogramSquareMeters),
+                Settings.Intake.Pivot.GEAR_RATIO),
+            DCMotor.getKrakenX60(1),
+            Settings.Intake.Pivot.GEAR_RATIO,
+            SimulationConstants.Intake.PIVOT_ARM_LENGTH,
+            Settings.Intake.Pivot.MIN_ANGLE.getRadians(),
+            Settings.Intake.Pivot.MAX_ANGLE.getRadians(),
+            true,
+            Settings.Intake.Pivot.INITIAL_ANGLE.getRadians()
         );
+        pivotMotor = new TalonFXSimulation(pivotSim).configure(Motors.Intake.PIVOT_CONFIG);
+        pivotController = new PositionTorqueCurrentFOC(getState().getTargetAngle().getRotations());
 
         rollerSim = new DCMotorSim(
             LinearSystemId.createDCMotorSystem(
@@ -57,20 +76,7 @@ public class IntakeSim extends Intake {
             .withEnableFOC(true);
         rollerFollowerController = new Follower(rollerMotor.getMotor().getDeviceID(), MotorAlignmentValue.Opposed);
         rollerFollower.setControl(rollerFollowerController);
-
-        pivotSim = new SingleJointedArmSim(
-            LinearSystemId.createDCMotorSystem(
-                DCMotor.getKrakenX60(1),
-                Settings.Intake.Pivot.J.in(KilogramSquareMeters),
-                Settings.Intake.Pivot.GEAR_RATIO),
-            DCMotor.getKrakenX60(1),
-            Settings.Intake.Pivot.GEAR_RATIO,
-            SimulationConstants.Intake.PIVOT_ARM_LENGTH,
-            Settings.Intake.Pivot.MIN_ANGLE.getRadians(),
-            Settings.Intake.Pivot.MAX_ANGLE.getRadians(),
-            true,
-            Settings.Intake.Pivot.INITIAL_ANGLE.getRadians()
-        );
+        pivotVoltageOverride = Optional.empty();
         
         zeroOffset = new Rotation2d();
     }
@@ -104,9 +110,20 @@ public class IntakeSim extends Intake {
     }
 
     @Override
+    public void setPivotVoltageOverride(Voltage voltage) {
+        this.pivotVoltageOverride = Optional.of(voltage);
+    }
+
+    @Override
     public void periodic() {
         if (!Settings.EnabledSubsystems.INTAKE.get()) {
             stopMotors();
+            return;
+        }
+
+        if (pivotVoltageOverride.isPresent()) {
+            pivotMotor.setControl(new VoltageOut(pivotVoltageOverride.get()));
+            pivotMotor.update(Settings.DT);
             return;
         }
 
@@ -115,17 +132,14 @@ public class IntakeSim extends Intake {
         rollerMotor.update(Settings.DT);
         rollerFollower.update(Settings.DT);
 
-        double voltage = pivotController.calculate(getRelativePosition().getRadians(), getState().getTargetAngle().getRadians());
-        pivotSim.setInputVoltage(voltage);
-        pivotSim.update(Settings.DT.in(Seconds));
+        pivotMotor.setControl(pivotController.withPosition(getState().getTargetAngle().getRotations()));
+        pivotMotor.update(Settings.DT);
 
-        TalonFXSimState pivotState = pivotMotor.getSimState();
-        pivotState.setRawRotorPosition(Units.radiansToRotations(pivotSim.getAngleRads()));
-        pivotState.setRotorVelocity(Units.radiansPerSecondToRotationsPerMinute(pivotSim.getVelocityRadPerSec()) / 60);
+        TalonFX pivotRealMotor= pivotMotor.getMotor();
 
-        SmartDashboard.putNumber("Intake/Pivot/Stator Current", pivotMotor.getStatorCurrent().getValueAsDouble()); // all current measured in amps
-        SmartDashboard.putNumber("Intake/Pivot/Supply Current", pivotMotor.getSupplyCurrent().getValueAsDouble());
-        SmartDashboard.putNumber("Intake/Pivot/Voltage", pivotMotor.getMotorVoltage().getValueAsDouble());
+        SmartDashboard.putNumber("Intake/Pivot/Stator Current", pivotRealMotor.getStatorCurrent().getValueAsDouble()); // all current measured in amps
+        SmartDashboard.putNumber("Intake/Pivot/Supply Current", pivotRealMotor.getSupplyCurrent().getValueAsDouble());
+        SmartDashboard.putNumber("Intake/Pivot/Voltage", pivotRealMotor.getMotorVoltage().getValueAsDouble());
 
         final TalonFX rollerRealLeader = rollerMotor.getMotor();
         final TalonFX rollerRealFollower = rollerFollower.getMotor();
@@ -137,5 +151,17 @@ public class IntakeSim extends Intake {
         SmartDashboard.putBoolean("Intake/Rollers/Right Stalling", false); // TODO: implement
 
         super.periodic();
+    }
+    
+    @Override
+    public SysIdRoutine getIntakeSysIdRoutine() {
+        return SysId.getRoutine(Settings.Intake.Pivot.RAMP_RATE,
+                Settings.Intake.Pivot.STEP_VOLTAGE,
+                "Intake",
+                voltage -> setPivotVoltageOverride(voltage),
+                () -> Radians.of(pivotSim.getAngleRads()),
+                () -> RadiansPerSecond.of(pivotSim.getVelocityRadPerSec()),
+                () -> Volts.of(pivotSim.getInput(0)),
+                getInstance());
     }
 }

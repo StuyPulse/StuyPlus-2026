@@ -4,7 +4,6 @@ import static edu.wpi.first.units.Units.Volts;
 
 import java.util.Optional;
 
-import com.ctre.phoenix6.controls.DutyCycleOut;
 import com.ctre.phoenix6.controls.Follower;
 import com.ctre.phoenix6.controls.VelocityTorqueCurrentFOC;
 import com.ctre.phoenix6.hardware.TalonFX;
@@ -16,7 +15,6 @@ import com.stuypulse.robot.util.SysId;
 
 import edu.wpi.first.units.measure.AngularVelocity;
 import edu.wpi.first.units.measure.Voltage;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 
 public class ShooterImpl extends Shooter {
@@ -48,6 +46,7 @@ public class ShooterImpl extends Shooter {
         voltageOverride = Optional.empty();
     }
 
+    @Override
     public void setVoltageOverride(Voltage voltage) {
         this.voltageOverride = Optional.of(voltage);
     }
@@ -89,18 +88,18 @@ public class ShooterImpl extends Shooter {
 
         shooterMotorLeft.setControl(shooterControl);
 
-        this.logMotor("ShooterLeft", shooterMotorLeft);
-        this.logMotor("ShooterCenter", shooterMotorCenter);
-        this.logMotor("ShooterRight", shooterMotorRight);
-
+        logMotor("ShooterLeft", shooterMotorLeft);
+        logMotor("ShooterCenter", shooterMotorCenter);
+        logMotor("ShooterRight", shooterMotorRight);
 
         super.periodic();
     }
 
+    @Override
     public SysIdRoutine getShooterSysIdRoutine() {
         return SysId.getRoutine(Settings.Shooter.RAMP_RATE,
                 Settings.Shooter.STEP_VOLTAGE,
-                "Intake",
+                "Shooter",
                 voltage -> setVoltageOverride(voltage),
                 () -> shooterMotorLeft.getPosition().getValue(),
                 () -> shooterMotorLeft.getVelocity().getValue(),

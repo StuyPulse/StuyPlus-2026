@@ -11,6 +11,7 @@ import static edu.wpi.first.units.Units.*;
 import edu.wpi.first.wpilibj.simulation.DCMotorSim;
 import edu.wpi.first.wpilibj.simulation.ElevatorSim;
 import edu.wpi.first.wpilibj.simulation.FlywheelSim;
+import edu.wpi.first.wpilibj.simulation.SingleJointedArmSim;
 
 public class TalonFXSimulation {
     private interface SystemSim {
@@ -74,12 +75,33 @@ public class TalonFXSimulation {
                 public void update(double dt) {
                     sim.update(dt);
                 }
+                @Override
                 public Angle getAngularPosition() {
                     return Radians.of(sim.getPositionMeters());
                 }
-
+                @Override
                 public AngularVelocity getAngularVelocity() {
                     return RadiansPerSecond.of(sim.getVelocityMetersPerSecond());
+                }
+            };
+        }
+
+        public static SystemSim of(SingleJointedArmSim sim) {
+            return new SystemSim() {
+                @Override
+                public void setInputVoltage(Voltage voltage) {
+                    sim.setInputVoltage(voltage.in(Volts));
+                }
+                @Override
+                public void update(double dt) {
+                    sim.update(dt);
+                }
+                public Angle getAngularPosition() {
+                    return Radians.of(sim.getAngleRads());
+                }
+                @Override
+                public AngularVelocity getAngularVelocity() {
+                    return RadiansPerSecond.of(sim.getVelocityRadPerSec());
                 }
             };
         }
@@ -104,6 +126,10 @@ public class TalonFXSimulation {
     }
 
     public TalonFXSimulation(ElevatorSim sim) {
+        this(SystemSim.of(sim));
+    }
+
+    public TalonFXSimulation(SingleJointedArmSim sim) {
         this(SystemSim.of(sim));
     }
 

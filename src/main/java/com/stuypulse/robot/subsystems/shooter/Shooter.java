@@ -1,6 +1,8 @@
 package com.stuypulse.robot.subsystems.shooter;
 
 import edu.wpi.first.units.measure.AngularVelocity;
+import edu.wpi.first.units.measure.Voltage;
+
 import static edu.wpi.first.units.Units.RPM;
 
 import java.util.function.DoubleSupplier;
@@ -12,6 +14,7 @@ import com.stuypulse.robot.util.shooter.InterpolationCalculator;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 
 public abstract class Shooter extends SubsystemBase {
     private final static Shooter instance;
@@ -73,6 +76,9 @@ public abstract class Shooter extends SubsystemBase {
 
     public abstract AngularVelocity getCurrentAngularVelocity();
     protected abstract void stopMotors();
+
+    public abstract SysIdRoutine getShooterSysIdRoutine();
+    public abstract void setVoltageOverride(Voltage voltage);
 
     @Override
     public void periodic() {

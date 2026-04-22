@@ -7,8 +7,10 @@ import com.stuypulse.robot.constants.Settings;
 import com.stuypulse.robot.util.RobotVisualizer;
 
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.units.measure.Voltage;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 
 import static edu.wpi.first.units.Units.RPM;
 import static edu.wpi.first.units.Units.Radians;
@@ -86,6 +88,10 @@ public abstract class Intake extends SubsystemBase {
     public abstract double getRollerRPM();
 
     protected abstract void stopMotors();
+
+    //Sysid
+    public abstract SysIdRoutine getIntakeSysIdRoutine();
+    public abstract void setPivotVoltageOverride(Voltage voltage);
 
     @Override
     public void periodic() {

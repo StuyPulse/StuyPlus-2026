@@ -76,6 +76,7 @@ public class IntakeImpl extends Intake {
         pivotVoltageOverride = Optional.empty();
     }
 
+    @Override //For sysid 
     public void setPivotVoltageOverride(Voltage voltage) {
         this.pivotVoltageOverride = Optional.of(voltage);
     }
@@ -140,11 +141,11 @@ public class IntakeImpl extends Intake {
 
         // Input
 
-        final boolean pivotAboveThreshold = isPivotAboveThreshold();
+        boolean pivotAboveThreshold = isPivotAboveThreshold();
 
-        final boolean pivotStalling = pivotStalling();
+        boolean pivotStalling = pivotStalling();
 
-        final IntakeState currentState = getState();
+        IntakeState currentState = getState();
 
         // State
 
@@ -159,7 +160,7 @@ public class IntakeImpl extends Intake {
 
         // Output
 
-        final ControlRequest pivotControl = switch (currentState) {
+        ControlRequest pivotControl = switch (currentState) {
             case INTAKE, OUTTAKE, DOWN -> {
                 if (pivotAboveThreshold) {
                     // wait until pivot reaches the bottom to apply pushdown
@@ -172,7 +173,7 @@ public class IntakeImpl extends Intake {
             default -> pivotController.withPosition(currentState.getTargetAngle().getRotations());
         };
 
-        final DutyCycleOut rollerControl = rollerController.withOutput(currentState.getTargetDutyCycle());
+        DutyCycleOut rollerControl = rollerController.withOutput(currentState.getTargetDutyCycle());
 
         // Apply
 
@@ -189,12 +190,12 @@ public class IntakeImpl extends Intake {
         SmartDashboard.putNumber("Intake/Rollers/Right Current", intakeRollerMotorRight.getStatorCurrent().getValueAsDouble());
         SmartDashboard.putNumber("Intake/Rollers/Left Voltage", intakeRollerMotorLeft.getMotorVoltage().getValueAsDouble());
         SmartDashboard.putNumber("Intake/Rollers/Right Voltage", intakeRollerMotorRight.getMotorVoltage().getValueAsDouble());
-        SmartDashboard.putBoolean("Intake/Rollers/Left Stalling", leftRollerStalling());
-        SmartDashboard.putBoolean("Intake/Rollers/Right Stalling", rightRollerStalling());
+        SmartDashboard.putBoolean("Intake/Rollers/Stalling", leftRollerStalling() || rightRollerStalling());
 
         super.periodic();
     }
 
+    @Override
     public SysIdRoutine getIntakeSysIdRoutine() {
         return SysId.getRoutine(Settings.Intake.Pivot.RAMP_RATE,
                 Settings.Intake.Pivot.STEP_VOLTAGE,
