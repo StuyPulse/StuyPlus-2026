@@ -22,14 +22,25 @@ import com.stuypulse.robot.commands.auton.RTDisrupt;
 import com.stuypulse.robot.commands.auton.RBMidlineSweep;
 import com.stuypulse.robot.commands.auton.RBOuttake;
 import com.stuypulse.robot.commands.auton.TwoMeterPath;
+import com.stuypulse.robot.commands.feeder.FeederSetForward;
+import com.stuypulse.robot.commands.feeder.FeederSetState;
+import com.stuypulse.robot.commands.feeder.FeederSetStop;
+import com.stuypulse.robot.commands.handoff.HandoffSetForward;
+import com.stuypulse.robot.commands.handoff.HandoffSetIdle;
 import com.stuypulse.robot.commands.swerve.SwerveDriveDrive;
 import com.stuypulse.robot.commands.swerve.SwerveDriveResetRotation;
 import com.stuypulse.robot.commands.swerve.SwerveDriveRotate;
 import com.stuypulse.robot.commands.swerve.SwerveDriveXMode;
+import com.stuypulse.robot.commands.swerve.driveAligned.SwerveDriveAlignToFerryZone;
+import com.stuypulse.robot.commands.swerve.driveAligned.SwerveDriveAlignToHub;
+import com.stuypulse.robot.commands.intake.IntakeAgitateOnce;
 // import com.stuypulse.robot.commands.intake.IntakeAgitateWhileOuttaking;
 import com.stuypulse.robot.commands.intake.IntakeSetDown;
 import com.stuypulse.robot.commands.intake.IntakeSetHomingDown;
 import com.stuypulse.robot.commands.intake.IntakeSetIdle;
+import com.stuypulse.robot.commands.intake.IntakeSetIntake;
+import com.stuypulse.robot.commands.intake.IntakeSetOuttake;
+import com.stuypulse.robot.commands.shooter.ShooterSetFerry;
 import com.stuypulse.robot.commands.shooter.ShooterSetShoot;
 // import com.stuypulse.robot.commands.intake.IntakeSetIntake;
 // import com.stuypulse.robot.commands.intake.IntakeSetOuttake;
@@ -100,41 +111,46 @@ public class RobotContainer {
         //     .whileTrue(new IntakeSetOuttake());
         // leftTrigger
         //     .onFalse(new IntakeSetHomingDown());
-        leftTrigger.onTrue(new IntakeSetIdle());
+        leftTrigger.onTrue(new IntakeSetIntake());
 
-        // driver.leftBumper()
-        //     .onTrue(new IntakeSetIdle());
+        driver.leftBumper()
+            .whileTrue(new IntakeSetOuttake());
+        driver.leftBumper()
+            .onFalse(new IntakeSetIntake());
         
         // rightTrigger    
         //     .onTrue(new IntakeSetHomingDown()
         //         .andThen(new WaitUntilCommand(() -> intake.getState() == IntakeState.DOWN))
         //         .andThen(new IntakeSetIntake()));
-        rightTrigger.onTrue(new IntakeSetDown());
+        rightTrigger
+            .onTrue(new SwerveDriveAlignToHub()
+                    .andThen(new SwerveDriveXMode())
+                    .andThen(new ShooterSetShoot())
+                    .andThen(new HandoffSetForward()).alongWith(new FeederSetForward(), new IntakeAgitateOnce().repeatedly()));
 
-        //Outtake with agitation
         //Top Left Paddle
-        // driver.a()
-        //     .whileTrue(new IntakeAgitateWhileOuttaking().repeatedly());
         driver.a()
-            .onTrue(new ShooterSetShoot());
+            .onTrue(new IntakeSetIdle());
 
         driver.povUp()
             .onTrue(new SwerveDriveResetRotation());
 
         driver.rightBumper()
-            .onTrue(new IntakeSetHomingDown());
+            .onTrue(new SwerveDriveAlignToFerryZone()
+                    .andThen(new SwerveDriveXMode())
+                    .andThen(new ShooterSetFerry())
+                    .andThen(new HandoffSetForward())
+                        .alongWith(new FeederSetForward(), new IntakeAgitateOnce().repeatedly()));
 
-        //Rotate towards alliance Zone
         //Bottom Right Paddle
-        driver.y()
-            .whileTrue(new SwerveDriveRotate(driver, Rotation2d.k180deg));
+        //Manual shooting tba
+        // driver.y()
+        //     .whileTrue(new SwerveDriveRotate(driver, Rotation2d.k180deg));
 
-        //Auto Drive to Outpost
         //Top Right Paddle
-        // driver.b()
-        //     .whileTrue(new SwerveDrivePIDToPose(Field.outpost).andThen(new IntakeSetOuttake()));
-        // driver.b() 
-        //     .onFalse(new IntakeSetHomingDown());
+        driver.b()
+            .onTrue(new HandoffSetIdle()
+                    .alongWith(new FeederSetStop(), new IntakeSetIntake()));
         
         //Bottom Left Paddle
         driver.x()
