@@ -24,8 +24,7 @@ public interface Ports {
     }
 
     public interface HandoffPorts {
-        int HANDOFF_MOTOR_LEFT = 8;
-        int HANDOFF_MOTOR_RIGHT = 9;
+        int HANDOFF_MOTOR = 8;
     }
 //TODO: Get ports from mech
     public interface Feeder {

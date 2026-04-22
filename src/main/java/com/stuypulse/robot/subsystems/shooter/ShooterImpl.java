@@ -84,7 +84,6 @@ public class ShooterImpl extends Shooter {
 
         AngularVelocity targetAngularVelocity = getState().getTargetAngularVelocity();
         VelocityTorqueCurrentFOC shooterControl = shooterController.withVelocity(targetAngularVelocity);
-        DutyCycleOut handoffControl = handoffController.withOutput(getState().getHandoffMotorDutyCycle());
 
         shooterMotorLeft.setControl(shooterControl);
 

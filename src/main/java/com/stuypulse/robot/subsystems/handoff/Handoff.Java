@@ -1,7 +1,6 @@
 package com.stuypulse.robot.subsystems.handoff;
 
 import com.ctre.phoenix6.hardware.TalonFX;
-import com.stuypulse.robot.Robot;
 import com.stuypulse.robot.constants.Settings;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -44,8 +43,8 @@ public abstract class Handoff extends SubsystemBase {
     public enum HandoffState {
         IDLE(Settings.Handoff.IDLE_DUTY),
         STOP(Settings.Handoff.STOP_DUTY),
-        THOTM(Settings.Handoff.THOTM_DUTY),
-        TOHAND(Settings.Handoff.TOHAND_DUTY);
+        REVERSE(Settings.Handoff.REVERSE_DUTY),
+        FORWARD(Settings.Handoff.FORWARD_DUTY);
 
         private double handoffMotorDutyCycle;
 
