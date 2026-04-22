@@ -5,11 +5,6 @@
 
 package com.stuypulse.robot.constants;
 
-import edu.wpi.first.math.util.Units;
-import edu.wpi.first.units.VoltageUnit;
-import edu.wpi.first.units.measure.*;
-import static edu.wpi.first.units.Units.*;
-
 import com.ctre.phoenix6.CANBus;
 import com.pathplanner.lib.path.PathConstraints;
 import com.stuypulse.stuylib.network.SmartBoolean;
@@ -21,6 +16,23 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.numbers.N3;
+import edu.wpi.first.math.util.Units;
+import static edu.wpi.first.units.Units.Amps;
+import static edu.wpi.first.units.Units.Inches;
+import static edu.wpi.first.units.Units.KilogramSquareMeters;
+import static edu.wpi.first.units.Units.Meters;
+import static edu.wpi.first.units.Units.MetersPerSecond;
+import static edu.wpi.first.units.Units.Second;
+import static edu.wpi.first.units.Units.Seconds;
+import static edu.wpi.first.units.Units.Volts;
+import edu.wpi.first.units.VoltageUnit;
+import edu.wpi.first.units.measure.Current;
+import edu.wpi.first.units.measure.Distance;
+import edu.wpi.first.units.measure.LinearVelocity;
+import edu.wpi.first.units.measure.MomentOfInertia;
+import edu.wpi.first.units.measure.Time;
+import edu.wpi.first.units.measure.Velocity;
+import edu.wpi.first.units.measure.Voltage;
 
 /*-
  * File containing tunable settings for every subsystem on the robot.
@@ -37,6 +49,7 @@ public interface Settings {
         SmartBoolean FEEDER = new SmartBoolean("Enabled Subsystems/Feeder", true);
         SmartBoolean INTAKE = new SmartBoolean("Enabled Subsystems/Intake", true);
         // SmartBoolean LED = new SmartBoolean("Enabled Subsystems/LED", true);
+        SmartBoolean HANDOFF = new SmartBoolean("Enabled Subsystems/Feeder", true);
         SmartBoolean SHOOTER = new SmartBoolean("Enabled Subsystems/Shooter", true);
         SmartBoolean VISION = new SmartBoolean("Enabled Subsystems/Vision", true);
         SmartBoolean SWERVE = new SmartBoolean("Enabled Subsystems/Swerve", true);
@@ -123,6 +136,9 @@ public interface Settings {
         double IDLE_DUTY_CYCLE = 0.0;
         double FORWARD_DUTY_CYCLE = 1.0;
         double REVERSE_DUTY_CYCLE = -1.0;
+        
+        double J_KG_METERS_SQUARED = 1; //placeholder
+        double GEAR_RATIO = 1; //placeholder
     }
     public interface Shooter {
         Time SHOOT_TIME_AUTO = Seconds.of(1.5);

@@ -1,17 +1,22 @@
 package com.stuypulse.robot.subsystems.handoff;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.stuypulse.robot.Robot;
 import com.stuypulse.robot.constants.Settings;
+
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public abstract class Handoff extends SubsystemBase {// handoff is feeder ---> shooter btw
     private static final Handoff instance;
     private HandoffState state;
 
     static {
-        instance = new HandoffImpl();
+        if(Robot.isReal()){
+            instance = new HandoffImpl();
+        } else {
+            instance = new HandoffSim();
+        }
     }
 
     public static Handoff getInstance() {
@@ -45,13 +50,13 @@ public abstract class Handoff extends SubsystemBase {// handoff is feeder ---> s
         FORWARD(Settings.Handoff.FORWARD_DUTY_CYCLE),
         REVERSE(Settings.Handoff.REVERSE_DUTY_CYCLE);
 
-        public double handoffMotorDutyCycle;
+        private double handoffMotorDutyCycle;
 
         private HandoffState(double handoffMotorDutyCycle) {
             this.handoffMotorDutyCycle = handoffMotorDutyCycle;
         }
 
-        public double getDutyCycle() {
+        public double getHandoffDutyCycle() {
             return handoffMotorDutyCycle;
         }
     }
@@ -61,6 +66,6 @@ public abstract class Handoff extends SubsystemBase {// handoff is feeder ---> s
     @Override
     public void periodic() {
         final HandoffState currentState = getState();
-        SmartDashboard.putNumber("Shooter/Handoff Target Duty Cycle", currentState.getDutyCycle());
+        SmartDashboard.putNumber("Shooter/Handoff Target Duty Cycle", currentState.getHandoffDutyCycle());
     }
 }
