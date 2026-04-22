@@ -1,9 +1,9 @@
-package com.stuypulse.robot.commands.shooter;
+// package com.stuypulse.robot.commands.shooter;
 
-import com.stuypulse.robot.subsystems.shooter.Shooter.ShooterState;
+// import com.stuypulse.robot.subsystems.shooter.Shooter.ShooterState;
 
-public class ShooterSetSOTM extends ShooterSetState {
-    public ShooterSetSOTM(){
-        super(ShooterState.SOTM);
-    }
-}
+// public class ShooterSetSOTM extends ShooterSetState {
+//     public ShooterSetSOTM(){
+//         super(ShooterState.SOTM);
+//     }
+// }
