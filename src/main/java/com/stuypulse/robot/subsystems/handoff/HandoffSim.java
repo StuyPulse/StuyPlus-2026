@@ -25,7 +25,7 @@ public class HandoffSim extends Handoff{
             
             DCMotor.getKrakenX60(1),
             Settings.Handoff.J_KG_METERS_SQUARED,
-            Settings.Handoff.GEAR_RATIO),
+            Settings.Handoff.SIM_GEAR_RATIO),
             DCMotor.getKrakenX60(1)
 
         
@@ -43,13 +43,13 @@ public class HandoffSim extends Handoff{
  
     @Override
     public void periodic(){
-        if (!Settings.EnabledSubsystems.HANDOFF.get()){
+        if (!Settings.EnabledSubsystems.HANDOFF.get()) {
             stopMotors();
             return;
         }
        
-        final Shooter shooter = Shooter.getInstance();
-        final CommandSwerveDrivetrain swerve = CommandSwerveDrivetrain.getInstance();
+        Shooter shooter = Shooter.getInstance();
+        CommandSwerveDrivetrain swerve = CommandSwerveDrivetrain.getInstance();
 
         if (!(swerve.isAlignedToTarget(Field.getHubPose())) && shooter.getState() == ShooterState.SHOOT) {
             setState(HandoffState.IDLE);

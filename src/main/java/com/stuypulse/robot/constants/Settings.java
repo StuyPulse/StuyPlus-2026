@@ -137,8 +137,8 @@ public interface Settings {
         double FORWARD_DUTY_CYCLE = 1.0;
         double REVERSE_DUTY_CYCLE = -1.0;
         
-        double J_KG_METERS_SQUARED = 1; //placeholder
-        double GEAR_RATIO = 1; //placeholder
+        double J_KG_METERS_SQUARED = 1; 
+        double SIM_GEAR_RATIO = 1; 
     }
     public interface Shooter {
         Time SHOOT_TIME_AUTO = Seconds.of(1.5);

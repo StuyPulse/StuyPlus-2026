@@ -12,7 +12,7 @@ public abstract class Handoff extends SubsystemBase {// handoff is feeder ---> s
     private HandoffState state;
 
     static {
-        if(Robot.isReal()){
+        if (Robot.isReal()) {
             instance = new HandoffImpl();
         } else {
             instance = new HandoffSim();
