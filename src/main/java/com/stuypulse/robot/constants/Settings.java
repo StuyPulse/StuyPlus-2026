@@ -49,7 +49,7 @@ public interface Settings {
         SmartBoolean FEEDER = new SmartBoolean("Enabled Subsystems/Feeder", true);
         SmartBoolean INTAKE = new SmartBoolean("Enabled Subsystems/Intake", true);
         // SmartBoolean LED = new SmartBoolean("Enabled Subsystems/LED", true);
-        SmartBoolean HANDOFF = new SmartBoolean("Enabled Subsystems/Feeder", true);
+        SmartBoolean HANDOFF = new SmartBoolean("Enabled Subsystems/Handoff", true);
         SmartBoolean SHOOTER = new SmartBoolean("Enabled Subsystems/Shooter", true);
         SmartBoolean VISION = new SmartBoolean("Enabled Subsystems/Vision", true);
         SmartBoolean SWERVE = new SmartBoolean("Enabled Subsystems/Swerve", true);
