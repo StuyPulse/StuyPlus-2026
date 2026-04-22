@@ -56,16 +56,16 @@ public abstract class Shooter extends SubsystemBase {
 
     public enum ShooterState {
 
-        SOTM(() -> 0.0, Settings.Shooter.SOTM_DUTY), // TODO: Make actual suppliers
-        FOTM(() -> 0.0, Settings.Shooter.FOTM_DUTY),
-        IDLE(() -> 0.0, Settings.Shooter.IDLE_DUTY),
-        SHOOT(() -> InterpolationCalculator.interpolateShotInfo().targetRPM(), Settings.Shooter.SHOOT_DUTY),
-        FERRY(() -> InterpolationCalculator.interpolateFerryingInfo().targetRPM(), Settings.Shooter.FERRY_DUTY),
-        MANUAL_HUB(() -> Settings.Shooter.MANUAL_HUB_RPM.in(RPM), 0);
+        SOTM(() -> 0.0), // TODO: Make actual suppliers
+        FOTM(() -> 0.0),
+        IDLE(() -> 0.0),
+        SHOOT(() -> InterpolationCalculator.interpolateShotInfo().targetRPM()),
+        FERRY(() -> InterpolationCalculator.interpolateFerryingInfo().targetRPM()),
+        MANUAL_HUB(() -> Settings.Shooter.MANUAL_HUB_RPM.in(RPM));
 
         private DoubleSupplier RPMSupplier;
 
-        private ShooterState(DoubleSupplier RPMSupplier, double handoffMotorDutyCycle) {
+        private ShooterState(DoubleSupplier RPMSupplier) {
             this.RPMSupplier = RPMSupplier;
         }
 
