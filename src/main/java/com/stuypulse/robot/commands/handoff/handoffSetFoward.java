@@ -2,8 +2,8 @@ package com.stuypulse.robot.commands.handoff;
 
 import com.stuypulse.robot.subsystems.handoff.Handoff.HandoffState;
 
-public class handoffSetFoward extends handoffSetState{
-    public handoffSetFoward() {
+public class HandoffSetFoward extends HandoffSetState{
+    public HandoffSetFoward() {
         super(HandoffState.FORWARD);
     }
 }

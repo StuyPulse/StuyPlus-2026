@@ -5,11 +5,11 @@ import com.stuypulse.robot.subsystems.handoff.Handoff.HandoffState;
 
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 
-public class handoffSetState extends InstantCommand{
+public class HandoffSetState extends InstantCommand{
     private final Handoff handoff;
     private final HandoffState handoffState;
 
-    public handoffSetState(HandoffState handoffState) {
+    public HandoffSetState(HandoffState handoffState) {
         this.handoff = Handoff.getInstance();
         this.handoffState = handoffState;
         

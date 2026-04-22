@@ -30,7 +30,7 @@ public abstract class Handoff extends SubsystemBase {
     }
 
     public void logMotor(String motorName, TalonFX motor) {
-        String stem = "Handoff/Motors/" + motorName + "/"; // why is this shooter
+        String stem = "Handoff/Motors/" + motorName + "/";
         
         SmartDashboard.putNumber(stem + "MotorVoltage", motor.getMotorVoltage().getValueAsDouble());
         SmartDashboard.putNumber(stem + "SupplyCurrent", motor.getSupplyCurrent().getValueAsDouble());
