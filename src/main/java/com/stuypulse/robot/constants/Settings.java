@@ -142,6 +142,8 @@ public interface Settings {
 
         Distance FLYWHEEL_RADIUS = Inches.of(3); // TODO: get
 
+        AngularVelocity MANUAL_HUB_RPM = RPM.of(3000); //TODO: Test for manual shooting RPM
+
         public interface RPMInterpolation{
             double[][] distanceRPMInterpolationValues = {
                 {1.0, 1000.0},

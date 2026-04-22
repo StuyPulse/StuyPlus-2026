@@ -60,7 +60,8 @@ public abstract class Shooter extends SubsystemBase {
         FOTM(() -> 0.0, Settings.Shooter.FOTM_DUTY),
         IDLE(() -> 0.0, Settings.Shooter.IDLE_DUTY),
         SHOOT(() -> InterpolationCalculator.interpolateShotInfo().targetRPM(), Settings.Shooter.SHOOT_DUTY),
-        FERRY(() -> InterpolationCalculator.interpolateFerryingInfo().targetRPM(), Settings.Shooter.FERRY_DUTY);
+        FERRY(() -> InterpolationCalculator.interpolateFerryingInfo().targetRPM(), Settings.Shooter.FERRY_DUTY),
+        MANUAL_HUB(() -> Settings.Shooter.MANUAL_HUB_RPM.in(RPM), 0);
 
         private DoubleSupplier RPMSupplier;
 
