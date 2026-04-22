@@ -134,17 +134,14 @@ public interface Settings {
         Voltage STEP_VOLTAGE = Volts.of(7);
 
         Distance WHEEL_RADIUS = Inches.of(4);
-
-        double SHOOT_DUTY = 1;
-        double FERRY_DUTY = 1;
-        double SOTM_DUTY = 0.8;
-        double FOTM_DUTY = 0.8;
-        double IDLE_DUTY = 0;
+        
         // Sim
         MomentOfInertia J = KilogramSquareMeters.of(0.1);
         double GEAR_RATIO = 0.1;
 
         Distance FLYWHEEL_RADIUS = Inches.of(3); // TODO: get
+
+        AngularVelocity MANUAL_HUB_RPM = RPM.of(3000); //TODO: Test for manual shooting RPM
 
         public interface RPMInterpolation{
             double[][] distanceRPMInterpolationValues = {
