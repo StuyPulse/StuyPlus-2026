@@ -42,7 +42,7 @@ public abstract class Handoff extends SubsystemBase {// handoff is feeder ---> s
 
     public enum HandoffState {
         IDLE(Settings.Handoff.IDLE_DUTY_CYCLE),
-        ACTIVE(Settings.Handoff.ACTIVE_DUTY_CYCLE),
+        FORWARD(Settings.Handoff.FORWARD_DUTY_CYCLE),
         REVERSE(Settings.Handoff.REVERSE_DUTY_CYCLE);
 
         public double handoffMotorDutyCycle;
@@ -51,7 +51,7 @@ public abstract class Handoff extends SubsystemBase {// handoff is feeder ---> s
             this.handoffMotorDutyCycle = handoffMotorDutyCycle;
         }
 
-        public double getHandoffMotorDutyCycle() {
+        public double getDutyCycle() {
             return handoffMotorDutyCycle;
         }
     }
@@ -61,6 +61,6 @@ public abstract class Handoff extends SubsystemBase {// handoff is feeder ---> s
     @Override
     public void periodic() {
         final HandoffState currentState = getState();
-        SmartDashboard.putNumber("Shooter/Handoff Target Duty Cycle", currentState.getHandoffMotorDutyCycle());
+        SmartDashboard.putNumber("Shooter/Handoff Target Duty Cycle", currentState.getDutyCycle());
     }
 }
