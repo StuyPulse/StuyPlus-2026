@@ -63,7 +63,7 @@ public interface Settings {
             // misc
             Rotation2d ANGLE_TOLERANCE = Rotation2d.fromDegrees(0.5);
             Rotation2d PUSHDOWN_THRESHOLD = Rotation2d.fromDegrees(85);
-            SmartNumber PUSHDOWN_CURRENT = new SmartNumber("Intake/Pivot/Pushdown Voltage Tuning Amps", -75.0);
+            SmartNumber PUSHDOWN_CURRENT = new SmartNumber("Intake/Pivot/Pushdown Current Tuning Amps", 30.0);
             Current STALL_CURRENT = Amps.of(25); // amps
             Time STALL_DEBOUNCE_SEC = Seconds.of(0.0); // TODO: set this up?
             Voltage HOMING_DOWN_VOLTAGE = Volts.of(3);
