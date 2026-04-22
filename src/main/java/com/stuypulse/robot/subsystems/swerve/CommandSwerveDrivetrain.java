@@ -327,7 +327,7 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
     private void startSimThread() {
         mapleSimSwerveDrivetrain = new MapleSimSwerveDrivetrain(
                 Seconds.of(kSimLoopPeriod),
-                SimulationConstants.Drivetrain.ROBOT_WEIGHT,
+                SimulationConstants.Drivetrain.TOTAL_WEIGHT.get(),
                 SimulationConstants.Drivetrain.LENGTH,
                 SimulationConstants.Drivetrain.WIDTH,
                 DCMotor.getKrakenX60(1),
@@ -393,9 +393,9 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
         return currentPose.getRotation().minus(targetAngle).getDegrees() < Settings.Swerve.Alignment.Tolerances.THETA_TOLERANCE.getDegrees();
     }
     
-    // public Pose2d getShooterPose() {
-    //     return SimulationConstants.Shooter.OFFSETS.applyToPose2d(mapleSimSwerveDrivetrain == null ? getPose() : getMapleSimDrive().getSimulatedDriveTrainPose()); // offset is negative because the shooter is behind the robot center
-    // }
+    public Pose2d getShooterPose() {
+        return SimulationConstants.Shooter.OFFSETS.applyToPose2d(mapleSimSwerveDrivetrain == null ? getPose() : getMapleSimDrive().getSimulatedDriveTrainPose()); // offset is negative because the shooter is behind the robot center
+    }
 
     @Override
     public void resetPose(Pose2d pose) {
