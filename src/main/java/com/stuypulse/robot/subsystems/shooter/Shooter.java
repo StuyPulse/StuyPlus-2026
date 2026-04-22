@@ -63,20 +63,15 @@ public abstract class Shooter extends SubsystemBase {
         FERRY(() -> InterpolationCalculator.interpolateFerryingInfo().targetRPM(), Settings.Shooter.FERRY_DUTY);
 
         private DoubleSupplier RPMSupplier;
-        private double handoffMotorDutyCycle;
 
         private ShooterState(DoubleSupplier RPMSupplier, double handoffMotorDutyCycle) {
             this.RPMSupplier = RPMSupplier;
-            this.handoffMotorDutyCycle = handoffMotorDutyCycle;
         }
 
         public AngularVelocity getTargetAngularVelocity() {
             return RPM.of(RPMSupplier.getAsDouble());
         }
 
-        public double getHandoffMotorDutyCycle() {
-            return handoffMotorDutyCycle;
-        }
     }
 
     public abstract AngularVelocity getCurrentAngularVelocity();
@@ -90,8 +85,6 @@ public abstract class Shooter extends SubsystemBase {
         final ShooterState currentState = getState();
 
         SmartDashboard.putNumber("Shooter/Top Target RPM", currentState.getTargetAngularVelocity().in(RPM));
-        SmartDashboard.putNumber("Shooter/Handoff Target Duty Cycle", currentState.getHandoffMotorDutyCycle());
-
         SmartDashboard.putString("Shooter/State", currentState.name());
         SmartDashboard.putString("States/Shooter", currentState.name());
     }
