@@ -127,7 +127,8 @@ public class RobotContainer {
             .onTrue(new SwerveDriveAlignToHub()
                     .andThen(new SwerveDriveXMode())
                     .andThen(new ShooterSetShoot())
-                    .andThen(new HandoffSetForward()).alongWith(new FeederSetForward(), new IntakeAgitateOnce().repeatedly()));
+                    .andThen(new HandoffSetForward())
+                        .alongWith(new FeederSetForward(), new IntakeAgitateOnce().repeatedly()));
 
         //Top Left Paddle
         driver.a()
