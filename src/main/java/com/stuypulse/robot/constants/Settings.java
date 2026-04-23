@@ -120,14 +120,19 @@ public interface Settings {
     //     //states
     //     LEDPattern DISABLED = LEDPattern.solid(Color.kGray);
     // }
+
     public interface Handoff {
         double IDLE_DUTY_CYCLE = 0.0;
         double FORWARD_DUTY_CYCLE = 1.0;
         double REVERSE_DUTY_CYCLE = -1.0;
-        
+
+        double STALL_CURRENT = 67;
+        double STALL_DEBOUNCE = 67; // TODO: get and maybe convert to wpilib units
+
         double J_KG_METERS_SQUARED = 1; 
         double SIM_GEAR_RATIO = 1; 
     }
+
     public interface Shooter {
         Time SHOOT_TIME_AUTO = Seconds.of(1.5);
         Velocity<VoltageUnit> RAMP_RATE = Volts.of(1).per(Second);
