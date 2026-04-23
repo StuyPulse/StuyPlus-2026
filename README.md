@@ -1,7 +1,7 @@
 <div align="center">
     <img src="/images/logos/StuyPlusLogo.png" width="200" /> <img src="/images/logos/StuyPulseLogo.png" width="180" />
     <h1>Ron 2026</h1>
-    <p>FRC Team StuyPlus <b>516</b> - First In-season Rookie Robot</p>
+    <p>FRC Team StuyPlus <b>516</b> - First regular season Rookie Robot</p>
 </div>
 
 ---
