@@ -50,7 +50,7 @@ public class HandoffImpl extends Handoff {
         }
 
         // Control
-        final double dutyCycle = double dutyCycle = handoffStalling.get()
+        final double dutyCycle = handoffStalling.get()
             ? Handoff.HandoffState.REVERSE.getHandoffDutyCycle()
             : getState().getHandoffDutyCycle();
         final DutyCycleOut handoffControl = handoffController.withOutput(dutyCycle);
