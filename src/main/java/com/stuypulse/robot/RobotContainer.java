@@ -41,6 +41,7 @@ import com.stuypulse.robot.commands.intake.IntakeSetIdle;
 import com.stuypulse.robot.commands.intake.IntakeSetIntake;
 import com.stuypulse.robot.commands.intake.IntakeSetOuttake;
 import com.stuypulse.robot.commands.shooter.ShooterSetFerry;
+import com.stuypulse.robot.commands.shooter.ShooterSetManual;
 import com.stuypulse.robot.commands.shooter.ShooterSetShoot;
 // import com.stuypulse.robot.commands.intake.IntakeSetIntake;
 // import com.stuypulse.robot.commands.intake.IntakeSetOuttake;
@@ -143,9 +144,12 @@ public class RobotContainer {
                         .alongWith(new FeederSetForward(), new IntakeAgitateOnce().repeatedly()));
 
         //Bottom Right Paddle
-        //Manual shooting tba
-        // driver.y()
-        //     .whileTrue(new SwerveDriveRotate(driver, Rotation2d.k180deg));
+        //Manual shooting possibly from in front of the hub
+        driver.y()
+            .onTrue(new SwerveDriveXMode()
+                    .andThen(new ShooterSetManual())
+                    .andThen(new HandoffSetForward())
+                        .alongWith(new FeederSetForward(), new IntakeAgitateOnce().repeatedly()));
 
         //Top Right Paddle
         driver.b()
