@@ -2,6 +2,8 @@ package com.stuypulse.robot.commands.swerve.driveAligned;
 
 import static edu.wpi.first.units.Units.*;
 
+import java.util.function.Supplier;
+
 import com.stuypulse.robot.constants.Gains.Swerve.Alignment;
 import com.stuypulse.robot.constants.Settings;
 import com.stuypulse.robot.subsystems.swerve.CommandSwerveDrivetrain;
@@ -17,9 +19,9 @@ import com.ctre.phoenix6.swerve.SwerveRequest;
 public class SwerveDriveSetAlignment extends Command {
     protected static final CommandSwerveDrivetrain swerve;
     protected final BStream isAligned;
-    private Pose2d pose;
+    private Supplier<Pose2d> pose;
     
-    protected SwerveDriveSetAlignment(Pose2d pose) {
+    protected SwerveDriveSetAlignment(Supplier<Pose2d> pose) {
         this.isAligned = BStream.create(this::isAligned)
             .filtered(new BDebounceRC.Both(Settings.Swerve.Alignment.Tolerances.ALIGNMENT_DEBOUNCE.in(Seconds)));
         this.pose = pose;
@@ -33,7 +35,7 @@ public class SwerveDriveSetAlignment extends Command {
     
     public Rotation2d getTargetAngle() {
         Pose2d currentPose = swerve.getPose();
-        double atan = Math.atan2(pose.getY() - currentPose.getY(), pose.getX() - currentPose.getX());
+        double atan = Math.atan2(pose.get().getY() - currentPose.getY(), pose.get().getX() - currentPose.getX());
         return new Rotation2d((atan));
     };
 

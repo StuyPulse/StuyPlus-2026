@@ -4,6 +4,6 @@ import com.stuypulse.robot.constants.Field;
 
 public class SwerveDriveAlignToHub extends SwerveDriveSetAlignment{
     public SwerveDriveAlignToHub() {
-        super(Field.getHubPose());
+        super(() -> Field.getHubPose());
     }
 }
