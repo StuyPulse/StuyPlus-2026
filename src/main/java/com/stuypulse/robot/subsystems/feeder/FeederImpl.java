@@ -42,6 +42,16 @@ public class FeederImpl extends Feeder {
     }
 
     @Override
+    protected TalonFX getLeaderMotor() {
+        return this.feederLeader;
+    }
+
+    @Override
+    protected TalonFX getFollowerMotor() {
+        return this.feederFollower;
+    }
+
+    @Override
     protected void stopMotors() {
         feederLeader.stopMotor();
         feederFollower.stopMotor();
@@ -70,13 +80,6 @@ public class FeederImpl extends Feeder {
         feederLeader.setControl(controller.withOutput(getState().getTargetDutyCycle()));
 
         // Logging
-        if (Settings.DEBUG_MODE) {
-            SmartDashboard.putNumber("Feeder/Leader Current", feederLeader.getStatorCurrent().getValueAsDouble());
-            SmartDashboard.putNumber("Feeder/Follower Current", feederFollower.getStatorCurrent().getValueAsDouble());
-            SmartDashboard.putNumber("Feeder/Leader Voltage", feederLeader.getMotorVoltage().getValueAsDouble());
-            SmartDashboard.putNumber("Feeder/Follower Voltage", feederFollower.getMotorVoltage().getValueAsDouble());
-        }
-
         super.periodic();
     }
 }

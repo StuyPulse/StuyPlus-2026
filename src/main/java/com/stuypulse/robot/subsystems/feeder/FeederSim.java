@@ -5,6 +5,7 @@ import static edu.wpi.first.units.Units.*;
 
 import com.ctre.phoenix6.controls.DutyCycleOut;
 import com.ctre.phoenix6.controls.Follower;
+import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.MotorAlignmentValue;
 import com.stuypulse.robot.constants.Settings;
 import com.stuypulse.robot.util.RobotVisualizer;
@@ -50,6 +51,16 @@ public class FeederSim extends Feeder {
     }
 
     @Override
+    protected TalonFX getLeaderMotor() {
+        return this.feederLeader.getMotor();
+    }
+
+    @Override
+    protected TalonFX getFollowerMotor() {
+        return this.feederFollower.getMotor();
+    }
+
+    @Override
     protected void stopMotors() {
         feederLeader.stopMotor();
         feederFollower.stopMotor();
@@ -68,13 +79,9 @@ public class FeederSim extends Feeder {
         feederLeader.update(Settings.DT);
         feederFollower.update(Settings.DT);
 
-        SmartDashboard.putNumber("Feeder/Leader Current", feederLeader.getMotor().getStatorCurrent().getValueAsDouble());
-        SmartDashboard.putNumber("Feeder/Follower Current", feederFollower.getMotor().getStatorCurrent().getValueAsDouble());
-        SmartDashboard.putNumber("Feeder/Leader Voltage", feederLeader.getMotor().getMotorVoltage().getValueAsDouble());
-        SmartDashboard.putNumber("Feeder/Follower Voltage", feederFollower.getMotor().getMotorVoltage().getValueAsDouble());
-
         RobotVisualizer.getInstance().updateFeeder(getCurrentAngularVelocity());
 
+        // Logging
         super.periodic();
     }
 }

@@ -8,8 +8,12 @@ import com.ctre.phoenix6.BaseStatusSignal;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
+/**
+ * <h2>A container and handler for Phoenix's StatusSignals</h2>
+ * 
+ * <p>Allows for compartmentalization of signals, usually by subsystem, and easy handling and logging.
+ */
 public class LoggedSignals {
-
     /**
      * <h2>The CAN bus network that a group of signals is from</h2>
      *
@@ -84,6 +88,7 @@ public class LoggedSignals {
      *
      * <p>The logging path defaults to an empty string. Use {@link #withLoggingPath(String)} and {@link #withSignalLocation(SignalLocation)}
      * to change it.
+     * It also registers the signals for you, so you don't have to call {@link #register()}
      *
      * @param statusSignals the signals to manage, duplicates allowed but filtered out
      */
