@@ -4,9 +4,7 @@ import edu.wpi.first.units.measure.*;
 import static edu.wpi.first.units.Units.*;
 
 import com.ctre.phoenix6.controls.DutyCycleOut;
-import com.ctre.phoenix6.controls.Follower;
 import com.ctre.phoenix6.hardware.TalonFX;
-import com.ctre.phoenix6.signals.MotorAlignmentValue;
 import com.stuypulse.robot.constants.Settings;
 import com.stuypulse.robot.util.RobotVisualizer;
 import com.stuypulse.robot.util.simulation.TalonFXSimulation;
@@ -16,7 +14,6 @@ import com.stuypulse.robot.constants.Ports;
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.math.system.plant.LinearSystemId;
 import edu.wpi.first.wpilibj.simulation.DCMotorSim;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class FeederSim extends Feeder {
     private final TalonFXSimulation feederMotor;
@@ -33,20 +30,22 @@ public class FeederSim extends Feeder {
             DCMotor.getKrakenX60(2)
         );
 
-        feederMotor = new TalonFXSimulation(feederSim).configure(Motors.Feeder.LEADER_CONFIG);
+        feederMotor = new TalonFXSimulation(Ports.Feeder.FEEDER_MOTOR, feederSim);
+        feederMotor.configure(Motors.Feeder.LEADER_CONFIG);
 
         feederController = new DutyCycleOut(0)
             .withEnableFOC(true);
+        setupSignals();
     }
 
     @Override
     public AngularVelocity getCurrentAngularVelocity() {
-        return feederMotor.getMotor().getVelocity().getValue();
+        return feederMotor.getVelocity().getValue();
     }
 
     @Override
     protected TalonFX getMotor() {
-        return this.feederMotor.getMotor();
+        return this.feederMotor;
     }
 
     @Override

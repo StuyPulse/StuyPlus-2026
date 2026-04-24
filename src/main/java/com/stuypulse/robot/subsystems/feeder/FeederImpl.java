@@ -1,9 +1,7 @@
 package com.stuypulse.robot.subsystems.feeder;
 
 import com.ctre.phoenix6.controls.DutyCycleOut;
-import com.ctre.phoenix6.controls.Follower;
 import com.ctre.phoenix6.hardware.TalonFX;
-import com.ctre.phoenix6.signals.MotorAlignmentValue;
 import com.stuypulse.robot.constants.Field;
 import com.stuypulse.robot.constants.Motors;
 import com.stuypulse.robot.constants.Ports;
@@ -27,6 +25,7 @@ public class FeederImpl extends Feeder {
         Motors.Feeder.LEADER_CONFIG.configure(feederLeader);
 
         controller = new DutyCycleOut(getState().getTargetDutyCycle()).withEnableFOC(true);
+        setupSignals();
     }
 
     @Override

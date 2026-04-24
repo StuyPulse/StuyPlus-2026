@@ -4,11 +4,11 @@ import static edu.wpi.first.units.Units.*;
 
 import java.util.Optional;
 
-import com.ctre.phoenix6.controls.DutyCycleOut;
 import com.ctre.phoenix6.controls.Follower;
 import com.ctre.phoenix6.controls.VelocityTorqueCurrentFOC;
 import com.ctre.phoenix6.signals.MotorAlignmentValue;
 import com.stuypulse.robot.constants.Motors;
+import com.stuypulse.robot.constants.Ports;
 import com.stuypulse.robot.constants.Settings;
 import com.stuypulse.robot.util.RobotVisualizer;
 import com.stuypulse.robot.util.SysId;
@@ -18,7 +18,6 @@ import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.math.system.plant.LinearSystemId;
 import edu.wpi.first.units.measure.AngularVelocity;
 import edu.wpi.first.units.measure.Voltage;
-import edu.wpi.first.wpilibj.simulation.DCMotorSim;
 import edu.wpi.first.wpilibj.simulation.FlywheelSim;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 
@@ -39,11 +38,14 @@ public class ShooterSim extends Shooter {
             Settings.Shooter.GEAR_RATIO),
             DCMotor.getKrakenX60(3)
         );
-        shooterLeader = new TalonFXSimulation(shooterSim).configure(Motors.Shooter.SHOOTER_MOTOR_CONFIG);
-        shooterFollower1 = new TalonFXSimulation(shooterSim).configure(Motors.Shooter.SHOOTER_MOTOR_CONFIG);
-        shooterFollower2 = new TalonFXSimulation(shooterSim).configure(Motors.Shooter.SHOOTER_MOTOR_CONFIG);
+        shooterLeader = new TalonFXSimulation(Ports.Shooter.SHOOTER_MOTOR_LEFT, shooterSim);
+        shooterFollower1 = new TalonFXSimulation(Ports.Shooter.SHOOTER_MOTOR_CENTER, shooterSim);
+        shooterFollower2 = new TalonFXSimulation(Ports.Shooter.SHOOTER_MOTOR_RIGHT, shooterSim);
+        shooterLeader.configure(Motors.Shooter.SHOOTER_MOTOR_CONFIG);
+        shooterFollower1.configure(Motors.Shooter.SHOOTER_MOTOR_CONFIG);
+        shooterFollower2.configure(Motors.Shooter.SHOOTER_MOTOR_CONFIG);
 
-        shooterFollowerController = new Follower(shooterLeader.getMotor().getDeviceID(), MotorAlignmentValue.Opposed);
+        shooterFollowerController = new Follower(shooterLeader.getDeviceID(), MotorAlignmentValue.Opposed);
         shooterFollower1.setControl(shooterFollowerController);
         shooterFollower2.setControl(shooterFollowerController);
         shooterController = new VelocityTorqueCurrentFOC(getState().getTargetAngularVelocity());
@@ -53,7 +55,7 @@ public class ShooterSim extends Shooter {
 
     @Override
     public AngularVelocity getCurrentAngularVelocity() {
-        return shooterLeader.getMotor().getVelocity().getValue();
+        return shooterLeader.getVelocity().getValue();
     }
 
     @Override
@@ -94,9 +96,9 @@ public class ShooterSim extends Shooter {
                 Settings.Shooter.STEP_VOLTAGE,
                 "Shooter",
                 voltage -> setVoltageOverride(voltage),
-                () -> shooterLeader.getMotor().getPosition().getValue(),
-                () -> shooterLeader.getMotor().getVelocity().getValue(),
-                () -> shooterLeader.getMotor().getMotorVoltage().getValue(),
+                () -> shooterLeader.getPosition().getValue(),
+                () -> shooterLeader.getVelocity().getValue(),
+                () -> shooterLeader.getMotorVoltage().getValue(),
                 getInstance());
     }
 }

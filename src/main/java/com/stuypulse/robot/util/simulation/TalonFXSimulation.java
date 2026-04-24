@@ -1,6 +1,5 @@
 package com.stuypulse.robot.util.simulation;
 
-import com.ctre.phoenix6.controls.ControlRequest;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.sim.TalonFXSimState;
 import com.stuypulse.robot.constants.Motors.TalonFXConfig;
@@ -13,7 +12,7 @@ import edu.wpi.first.wpilibj.simulation.ElevatorSim;
 import edu.wpi.first.wpilibj.simulation.FlywheelSim;
 import edu.wpi.first.wpilibj.simulation.SingleJointedArmSim;
 
-public class TalonFXSimulation {
+public class TalonFXSimulation extends TalonFX {
     private interface SystemSim {
         public void setInputVoltage(Voltage voltage);
 
@@ -96,6 +95,7 @@ public class TalonFXSimulation {
                 public void update(double dt) {
                     sim.update(dt);
                 }
+                @Override
                 public Angle getAngularPosition() {
                     return Radians.of(sim.getAngleRads());
                 }
@@ -109,28 +109,27 @@ public class TalonFXSimulation {
 
     private static int id = 50;
 
-    private final TalonFX motor;
     private final SystemSim simMotor;
 
-    private TalonFXSimulation(SystemSim adapter) {
-        this.motor = new TalonFX(getID());
+    private TalonFXSimulation(int port, SystemSim adapter) {
+        super(port);
         this.simMotor = adapter;
     }
 
-    public TalonFXSimulation(DCMotorSim sim) {
-        this(SystemSim.of(sim));
+    public TalonFXSimulation(int port, DCMotorSim sim) {
+        this(port, SystemSim.of(sim));
     }
 
-    public TalonFXSimulation(FlywheelSim sim) {
-        this(SystemSim.of(sim));
+    public TalonFXSimulation(int port, FlywheelSim sim) {
+        this(port, SystemSim.of(sim));
     }
 
-    public TalonFXSimulation(ElevatorSim sim) {
-        this(SystemSim.of(sim));
+    public TalonFXSimulation(int port, ElevatorSim sim) {
+        this(port, SystemSim.of(sim));
     }
 
-    public TalonFXSimulation(SingleJointedArmSim sim) {
-        this(SystemSim.of(sim));
+    public TalonFXSimulation(int port, SingleJointedArmSim sim) {
+        this(port, SystemSim.of(sim));
     }
 
     public static int getID() {
@@ -138,25 +137,12 @@ public class TalonFXSimulation {
         return id;
     }
 
-    public TalonFXSimulation configure(TalonFXConfig config) {
-        config.configure(motor);
-        return this;
-    }
-
-    public void setControl(ControlRequest request) {
-        motor.setControl(request);
-    }
-
-    public TalonFX getMotor() {
-        return motor;
-    }
-
-    public void stopMotor() {
-        motor.stopMotor();
+    public void configure(TalonFXConfig config) {
+        config.configure(this);
     }
 
     public void update(double dtSeconds) {
-        final TalonFXSimState state = motor.getSimState();
+        final TalonFXSimState state = this.getSimState();
 
         simMotor.setInputVoltage(Volts.of(state.getMotorVoltage()));
         simMotor.update(dtSeconds);

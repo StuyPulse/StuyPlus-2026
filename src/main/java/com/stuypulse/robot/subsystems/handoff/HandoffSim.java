@@ -3,6 +3,7 @@ package com.stuypulse.robot.subsystems.handoff;
 import com.ctre.phoenix6.controls.DutyCycleOut;
 import com.stuypulse.robot.constants.Field;
 import com.stuypulse.robot.constants.Motors;
+import com.stuypulse.robot.constants.Ports;
 import com.stuypulse.robot.constants.Settings;
 import com.stuypulse.robot.subsystems.shooter.Shooter;
 import com.stuypulse.robot.subsystems.shooter.Shooter.ShooterState;
@@ -20,9 +21,7 @@ public class HandoffSim extends Handoff{
     private final DutyCycleOut handoffMotorController;
 
     public HandoffSim() {
-        
         handoffSim = new DCMotorSim(LinearSystemId.createDCMotorSystem(
-            
             DCMotor.getKrakenX60(1),
             Settings.Handoff.J_KG_METERS_SQUARED,
             Settings.Handoff.SIM_GEAR_RATIO),
@@ -30,7 +29,8 @@ public class HandoffSim extends Handoff{
 
         
     );
-    handoffMotor = new TalonFXSimulation(handoffSim).configure(Motors.Handoff.HANDOFF_MOTOR_CONFIG);
+    handoffMotor = new TalonFXSimulation(Ports.Handoff.HANDOFF_MOTOR, handoffSim);
+    handoffMotor.configure(Motors.Handoff.HANDOFF_MOTOR_CONFIG);
     handoffMotorController = new DutyCycleOut(getState().getHandoffDutyCycle())
         .withEnableFOC(true);
     
@@ -54,8 +54,9 @@ public class HandoffSim extends Handoff{
         if (!(swerve.isAlignedToTarget(Field.getHubPose())) && shooter.getState() == ShooterState.SHOOT) {
             setState(HandoffState.IDLE);
         }
+
         if (!(swerve.isAlignedToTarget(Field.getFerryZonePose(swerve.getPose().getTranslation()))) && 
-        shooter.getState() == ShooterState.FERRY) {
+                shooter.getState() == ShooterState.FERRY) {
             setState(HandoffState.IDLE);
         }
         

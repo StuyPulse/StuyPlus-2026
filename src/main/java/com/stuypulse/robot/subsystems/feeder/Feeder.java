@@ -14,7 +14,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 public abstract class Feeder extends SubsystemBase{
     private static final Feeder instance;
     private FeederState state;
-    private final LoggedSignals signals;
+    private LoggedSignals signals;
 
     static {
         if (Robot.isReal()) {
@@ -46,6 +46,9 @@ public abstract class Feeder extends SubsystemBase{
     
     protected Feeder() {
         this.state = FeederState.STOP;
+    }
+
+    protected void setupSignals() {
         final TalonFX motor = getMotor();
         this.signals = new LoggedSignals(
             motor.getSupplyCurrent(),
