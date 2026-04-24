@@ -35,7 +35,6 @@ public class FeederSim extends Feeder {
 
         feederController = new DutyCycleOut(0)
             .withEnableFOC(true);
-        setupSignals();
     }
 
     @Override

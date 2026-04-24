@@ -46,6 +46,8 @@ public abstract class Feeder extends SubsystemBase{
     
     protected Feeder() {
         this.state = FeederState.STOP;
+
+        setupSignals();
     }
 
     protected void setupSignals() {

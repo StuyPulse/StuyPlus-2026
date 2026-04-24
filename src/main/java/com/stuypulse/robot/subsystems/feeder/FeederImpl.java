@@ -25,7 +25,6 @@ public class FeederImpl extends Feeder {
         Motors.Feeder.LEADER_CONFIG.configure(feederLeader);
 
         controller = new DutyCycleOut(getState().getTargetDutyCycle()).withEnableFOC(true);
-        setupSignals();
     }
 
     @Override
