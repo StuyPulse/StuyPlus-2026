@@ -63,11 +63,6 @@ public interface Motors {
 			.withRampRate(0.25)
 			.withNeutralMode(NeutralModeValue.Coast)
 			.withInvertedValue(InvertedValue.CounterClockwise_Positive);
-        TalonFXConfig FOLLOWER_CONFIG = new TalonFXConfig()
-            .withCurrentLimitAmps(80)
-			.withRampRate(0.25)
-			.withNeutralMode(NeutralModeValue.Coast)
-			.withInvertedValue(InvertedValue.Clockwise_Positive);
     }
 
     public interface Shooter {

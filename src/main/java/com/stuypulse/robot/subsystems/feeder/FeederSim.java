@@ -19,10 +19,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class FeederSim extends Feeder {
     private final TalonFXSimulation feederLeader;
-    private final TalonFXSimulation feederFollower;
     private final DCMotorSim feederSim;
     private final DutyCycleOut feederController;
-    private final Follower feederFollowerController;
 
     public FeederSim() {
         feederSim = new DCMotorSim(
@@ -35,13 +33,9 @@ public class FeederSim extends Feeder {
         );
 
         feederLeader = new TalonFXSimulation(feederSim).configure(Motors.Feeder.LEADER_CONFIG);
-        feederFollower = new TalonFXSimulation(feederSim).configure(Motors.Feeder.FOLLOWER_CONFIG);
 
         feederController = new DutyCycleOut(0)
             .withEnableFOC(true);
-        feederFollowerController = new Follower(Ports.Feeder.FEEDER_MOTOR, MotorAlignmentValue.Opposed);
-
-        feederFollower.setControl(feederFollowerController);
     }
 
     @Override
@@ -52,8 +46,6 @@ public class FeederSim extends Feeder {
     @Override
     protected void stopMotors() {
         feederLeader.stopMotor();
-        feederFollower.stopMotor();
-        feederFollower.setControl(feederFollowerController);
     }
 
     @Override
@@ -66,12 +58,9 @@ public class FeederSim extends Feeder {
         feederLeader.setControl(feederController.withOutput(getState().getTargetDutyCycle())); // apply control to leader before grabbing state to update other motors
 
         feederLeader.update(Settings.DT);
-        feederFollower.update(Settings.DT);
 
         SmartDashboard.putNumber("Feeder/Leader Current", feederLeader.getMotor().getStatorCurrent().getValueAsDouble());
-        SmartDashboard.putNumber("Feeder/Follower Current", feederFollower.getMotor().getStatorCurrent().getValueAsDouble());
         SmartDashboard.putNumber("Feeder/Leader Voltage", feederLeader.getMotor().getMotorVoltage().getValueAsDouble());
-        SmartDashboard.putNumber("Feeder/Follower Voltage", feederFollower.getMotor().getMotorVoltage().getValueAsDouble());
 
         RobotVisualizer.getInstance().updateFeeder(getCurrentAngularVelocity());
 
