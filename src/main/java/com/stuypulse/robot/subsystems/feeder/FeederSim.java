@@ -19,11 +19,9 @@ import edu.wpi.first.wpilibj.simulation.DCMotorSim;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class FeederSim extends Feeder {
-    private final TalonFXSimulation feederLeader;
-    private final TalonFXSimulation feederFollower;
+    private final TalonFXSimulation feederMotor;
     private final DCMotorSim feederSim;
     private final DutyCycleOut feederController;
-    private final Follower feederFollowerController;
 
     public FeederSim() {
         feederSim = new DCMotorSim(
@@ -35,36 +33,25 @@ public class FeederSim extends Feeder {
             DCMotor.getKrakenX60(2)
         );
 
-        feederLeader = new TalonFXSimulation(feederSim).configure(Motors.Feeder.LEADER_CONFIG);
-        feederFollower = new TalonFXSimulation(feederSim).configure(Motors.Feeder.FOLLOWER_CONFIG);
+        feederMotor = new TalonFXSimulation(feederSim).configure(Motors.Feeder.LEADER_CONFIG);
 
         feederController = new DutyCycleOut(0)
             .withEnableFOC(true);
-        feederFollowerController = new Follower(Ports.Feeder.FEEDER_MOTOR_1, MotorAlignmentValue.Opposed);
-
-        feederFollower.setControl(feederFollowerController);
     }
 
     @Override
     public AngularVelocity getCurrentAngularVelocity() {
-        return feederLeader.getMotor().getVelocity().getValue();
+        return feederMotor.getMotor().getVelocity().getValue();
     }
 
     @Override
-    protected TalonFX getLeaderMotor() {
-        return this.feederLeader.getMotor();
-    }
-
-    @Override
-    protected TalonFX getFollowerMotor() {
-        return this.feederFollower.getMotor();
+    protected TalonFX getMotor() {
+        return this.feederMotor.getMotor();
     }
 
     @Override
     protected void stopMotors() {
-        feederLeader.stopMotor();
-        feederFollower.stopMotor();
-        feederFollower.setControl(feederFollowerController);
+        feederMotor.stopMotor();
     }
 
     @Override
@@ -74,11 +61,9 @@ public class FeederSim extends Feeder {
             return;
         }
 
-        feederLeader.setControl(feederController.withOutput(getState().getTargetDutyCycle())); // apply control to leader before grabbing state to update other motors
+        feederMotor.setControl(feederController.withOutput(getState().getTargetDutyCycle())); // apply control to leader before grabbing state to update other motors
 
-        feederLeader.update(Settings.DT);
-        feederFollower.update(Settings.DT);
-
+        feederMotor.update(Settings.DT);
         RobotVisualizer.getInstance().updateFeeder(getCurrentAngularVelocity());
 
         // Logging

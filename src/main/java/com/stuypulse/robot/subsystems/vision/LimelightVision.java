@@ -18,6 +18,8 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
+import com.stuypulse.robot.constants.Settings.EnabledSubsystems;
+
 public class LimelightVision extends SubsystemBase{
 
     private static final LimelightVision instance;
@@ -70,7 +72,6 @@ public class LimelightVision extends SubsystemBase{
             SmartDashboard.putBoolean("Vision/" + names[i] + " Has Data", false);
         }
 
-        enabled = new SmartBoolean("Vision/Is Enabled", true);
         setMegaTagMode(MegaTagMode.MEGATAG1);
     }
 
@@ -81,11 +82,11 @@ public class LimelightVision extends SubsystemBase{
     }
 
     public void enable() {
-        enabled.set(true);
+        EnabledSubsystems.VISION.set(true);
     }
 
     public void disable() {
-        enabled.set(false);
+        EnabledSubsystems.VISION.set(false);
     }
 
     public void setCameraEnabled(String name, boolean enabled) {
@@ -132,7 +133,7 @@ public class LimelightVision extends SubsystemBase{
 
     @Override
     public void periodic() {
-        if (enabled.get()) {
+        if (EnabledSubsystems.VISION.get()) {
             for (int i = 0; i < names.length; i++) {
                 if (camerasEnabled[i].get()) {
                     String limelightName = names[i];

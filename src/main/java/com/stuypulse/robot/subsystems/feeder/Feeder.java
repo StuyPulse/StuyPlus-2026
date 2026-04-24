@@ -46,15 +46,11 @@ public abstract class Feeder extends SubsystemBase{
     
     protected Feeder() {
         this.state = FeederState.STOP;
-        final TalonFX leader = getLeaderMotor();
-        final TalonFX follower = getFollowerMotor();
+        final TalonFX motor = getMotor();
         this.signals = new LoggedSignals(
-            leader.getSupplyCurrent(),
-            leader.getStatorCurrent(),
-            leader.getVelocity(),
-            follower.getSupplyCurrent(),
-            follower.getStatorCurrent(),
-            follower.getVelocity()
+            motor.getSupplyCurrent(),
+            motor.getStatorCurrent(),
+            motor.getVelocity()
         ).withLoggingPath("Feeder/").withSignalLocation(LoggedSignals.SignalLocation.RIO);
     }
 
@@ -67,8 +63,7 @@ public abstract class Feeder extends SubsystemBase{
     }
 
     public abstract AngularVelocity getCurrentAngularVelocity();
-    protected abstract TalonFX getLeaderMotor();
-    protected abstract TalonFX getFollowerMotor();
+    protected abstract TalonFX getMotor();
     protected abstract void stopMotors();
 
     @Override

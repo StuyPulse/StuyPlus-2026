@@ -66,23 +66,31 @@ In the `periodic` method, we use `DutyCycleOut` to control the percentage of pow
 ## Shooter
 File: [`src/main/java/com/stuypulse/robot/subsystems/shooter`](https://github.com/StuyPulse/StuyPlus-2026/tree/main/src/main/java/com/stuypulse/robot/subsystems/shooter)
 
-Our shooter is made up of 3 shooter motors (`Left`, `Center`, `Right`) and 1 handoff motor. 
+Our shooter is made up of 3 shooter motors (`Left`, `Center`, `Right`).
 
 The `Center` and `Right` motors follow the `Left` motor.
-
-The handoff motor assists the feeder.
 
 > [!IMPORTANT]
 > SOTM (Shoot on the move) and FOTM (Ferry on the move) are low priority.
 
 It contains the following states:
-- `IDLE`: Shooter doesn't run. Handoff doesn't run.
-- `SHOOT`: Shooter wheels spin at it's target RPM, interpolated based on distance to hub. Handoff motors run at max duty cycle.
-- `SOTM`: Shoot on the move. Shooter RPM is interpolated based on distance to hub. Handoff runs at 80% duty cycle.
-- `FOTM`: Ferry on the move. Shooter RPM is interpolated based on distance to hub. Handoff runs at 80% duty cycle.
-- `FERRY`: Shooter wheels spin at it's target RPM, interpolated based on distance to ferry zone. Handoff motors run at max duty cycle.
+- `IDLE`: Shooter doesn't run.
+- `SHOOT`: Shooter wheels spin at it's target RPM, interpolated based on distance to hub.
+- `SOTM`: Shoot on the move. Shooter RPM is interpolated based on distance to hub.
+- `FOTM`: Ferry on the move. Shooter RPM is interpolated based on distance to hub.
+- `FERRY`: Shooter wheels spin at it's target RPM, interpolated based on distance to ferry zone.
 
-In the `periodic` method, the shooter RPM is controlled via `VelocityTorqueCurrentFOC` control request. Uses `DutyCycleOut` for controlling the handoff motors.
+In the `periodic` method, the shooter RPM is controlled via `VelocityTorqueCurrentFOC` control request.
+
+## Handoff
+The handoff is a singular motor that helps the feeder by "handing off" the fuel from the hopper to the feeder indexer lanes.
+
+It contains the following states:
+- `IDLE`: Handoff doesn't run.
+- `FORWARD`: The handoff runs forward
+- `REVERSE`: The handoff runs backward
+
+In the `periodic` method, the handoff motors use DutyCycleOut to control the handoff.
 
 ## Vision
 Files: 
