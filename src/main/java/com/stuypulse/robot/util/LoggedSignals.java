@@ -32,14 +32,14 @@ public class LoggedSignals {
         }
 
         /**
-         * <h2>Converts and stores the set of signals as a list</h2>
+         * <h4>Converts and stores the set of signals as a list</h4>
          */
         private void cache() {
             this.signalList = List.copyOf(this.signals);
         }
 
         /**
-         * <h2>Gets the set of signals registered to this location</h2>
+         * <h4>Gets the set of signals registered to this location</h4>
          *
          * @return the set of registered {@link BaseStatusSignal}s
          */
@@ -48,7 +48,7 @@ public class LoggedSignals {
         }
 
         /**
-         * <h2>Gets the cached list of signals used for refreshAll calls</h2>
+         * <h4>Gets the cached list of signals used for refreshAll calls</h4>
          *
          * <p>Exists because {@link BaseStatusSignal#refreshAll} doesn't accept sets
          * @return an immutable cache of the registered signals
@@ -58,7 +58,7 @@ public class LoggedSignals {
         }
 
         /**
-         * <h2>Adds signals to this location</h2>
+         * <h4>Adds signals to this location</h4>
          *
          * @param signals signals to register
          */
@@ -68,7 +68,7 @@ public class LoggedSignals {
         }
 
         /**
-         * <h2>Removes signals from this location</h2>
+         * <h4>Removes signals from this location</h4>
          *
          * @param signals signals to deregister
          */
@@ -84,7 +84,7 @@ public class LoggedSignals {
     private SignalLocation signalLocation;
 
     /**
-     * <h2>Creates a new {@code LoggedSignals} instance and defaults to registering signals to {@link SignalLocation#RIO}</h2>
+     * <h4>Creates a new {@code LoggedSignals} instance and defaults to registering signals to {@link SignalLocation#RIO}</h4>
      *
      * <p>The logging path defaults to an empty string. Use {@link #withLoggingPath(String)} and {@link #withSignalLocation(SignalLocation)}
      * to change it.
@@ -100,21 +100,21 @@ public class LoggedSignals {
     }
 
     /**
-     * <h2>Registers all signals in this instance in the current {@link SignalLocation}</h2>
+     * <h4>Registers all signals in this instance in the current {@link SignalLocation}</h4>
      */
     public void register() {
         this.signalLocation.register(this.statusSignals);
     }
 
     /**
-     * <h2>Deregisters all signals in this instance from the current {@link SignalLocation}</h2>
+     * <h4>Deregisters all signals in this instance from the current {@link SignalLocation}</h4>
      */
     public void deregister() {
         this.signalLocation.deregister(this.statusSignals);
     }
 
     /**
-     * <h2>Moves all signals to a different {@link SignalLocation}</h2>
+     * <h4>Moves all signals to a different {@link SignalLocation}</h4>
      *
      * @param location the target signal location
      * @return this instance for chaining
@@ -128,7 +128,7 @@ public class LoggedSignals {
     }
 
     /**
-     * <h2>Sets the SmartDashboard section to log values to</h2>
+     * <h4>Sets the SmartDashboard section to log values to</h4>
      *
      * <p>For example, the path {@code "Shooter/"} will log values like
      * {@code "Shooter/PositionRotations"}.
@@ -142,7 +142,7 @@ public class LoggedSignals {
     }
 
     /**
-     * <h2>Publishes the current value of each signal to SmartDashboard with the specified log path</h2>
+     * <h4>Publishes the current value of each signal to SmartDashboard with the specified log path</h4>
      *
      * <p>Should be called after {@link #refreshAll()}. Uses the units and name of the signal to determine the log key.
      */
@@ -153,7 +153,7 @@ public class LoggedSignals {
     }
 
     /**
-     * <h2>Performs a batch refresh of all registered signals</h2>
+     * <h4>Performs a batch refresh of all registered signals</h4>
      *
      * <p>Should be called once per robot periodic loop before reading any signal values or calling {@link #logAll()}.
      */
