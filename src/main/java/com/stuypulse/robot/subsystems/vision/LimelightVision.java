@@ -170,7 +170,7 @@ public class LimelightVision extends SubsystemBase{
                     if (poseEstimate != null && poseEstimate.tagCount > 0) {
                         notNull = true;
 
-                        if (poseEstimate.pose.getTranslation().getDistance(Settings.Vision.INVALID_POSITION) > Settings.Vision.INVALID_POSITION_TOLERANCE.in(Meters)) {
+                        if (poseEstimate.pose.equals(Settings.Vision.INVALID_POSITION)) {
                             withinInvalidPositionTolerance = true;
                         }
 
