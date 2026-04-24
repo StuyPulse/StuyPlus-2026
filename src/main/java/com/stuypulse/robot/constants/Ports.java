@@ -17,18 +17,19 @@ public interface Ports {
     //     int PORT = 2;
     // }
 
-    public interface ShooterPorts { // TODO: Get ports from phoenix tuner when mechanical passes to us
-        int SHOOTER_MOTOR_LEFT = 0;
-        int SHOOTER_MOTOR_CENTER = 1;
+    public interface Shooter {
+        int SHOOTER_MOTOR_LEFT = 22;
+        int SHOOTER_MOTOR_CENTER = 1; // TODO: get after champs
         int SHOOTER_MOTOR_RIGHT = 2;
+    }
 
-        int HANDOFF_MOTOR = 8;
+    public interface Handoff {
+        int HANDOFF_MOTOR = 50;
     }
 
 //TODO: Get ports from mech
     public interface Feeder {
-        int FEEDER_MOTOR_1 = 3;
-        int FEEDER_MOTOR_2 = 4;
+        int FEEDER_MOTOR = 15;
     }
 
     public interface Intake {

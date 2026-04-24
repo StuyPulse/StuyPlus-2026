@@ -39,7 +39,7 @@ public class FeederSim extends Feeder {
 
         feederController = new DutyCycleOut(0)
             .withEnableFOC(true);
-        feederFollowerController = new Follower(Ports.Feeder.FEEDER_MOTOR_1, MotorAlignmentValue.Opposed);
+        feederFollowerController = new Follower(Ports.Feeder.FEEDER_MOTOR, MotorAlignmentValue.Opposed);
 
         feederFollower.setControl(feederFollowerController);
     }
