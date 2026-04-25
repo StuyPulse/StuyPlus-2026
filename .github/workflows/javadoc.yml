@@ -23,10 +23,10 @@ jobs:
         run: ./gradlew javadoc
       - name: Commit and Push
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          mkdir -p docs/
+          git fetch origin docs
+          git checkout docs
+          git rm -rf .
           cp -r build/docs/javadoc/. docs/
           git add docs/
-          git commit -m "DOCS: Automated documentation update from main" || echo "No changes to commit"
-          git push --force origin docs
+          git commit -m "DOCS: Automated documentation update from main"
+          git push origin docs
