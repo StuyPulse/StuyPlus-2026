@@ -138,5 +138,5 @@ tasks.withType(JavaCompile) {
 }
 
 tasks.javadoc {
-    options.header = '<link rel="icon" href="/favicon.ico" type="image/x-icon">'
+    options.header = '<link rel="icon" href="/StuyPlus-2026/favicon.ico" type="image/x-icon">'
 }
