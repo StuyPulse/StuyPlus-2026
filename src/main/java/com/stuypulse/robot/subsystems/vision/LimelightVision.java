@@ -133,82 +133,85 @@ public class LimelightVision extends SubsystemBase{
 
     @Override
     public void periodic() {
-        if (EnabledSubsystems.VISION.get()) {
-            for (int i = 0; i < names.length; i++) {
-                if (camerasEnabled[i].get()) {
-                    String limelightName = names[i];
+        if (!EnabledSubsystems.VISION.get()) {
+            return;
+        }
 
-                    // Seed robot heading (used by MT2)
-                    LimelightHelpers.SetRobotOrientation(
-                        limelightName, 
-                        (CommandSwerveDrivetrain.getInstance().getPose().getRotation().getDegrees() + (Robot.isBlue() ? 0 : 180)) % 360, 
-                        0, 
-                        0, 
-                        0, 
-                        0, 
-                        0
-                    );
+        for (int i = 0; i < names.length; i++) {
+            if (!camerasEnabled[i].get()) {
+                SmartDashboard.putBoolean("Vision/" + names[i] + " Has Data", false);
+                continue;
+            }
 
-                    PoseEstimate poseEstimate;
+            String limelightName = names[i];
 
-                    // MegaTag switching
-                    if (megaTagMode == MegaTagMode.MEGATAG1) {
-                        poseEstimate = Robot.isBlue() 
-                            ? LimelightHelpers.getBotPoseEstimate_wpiBlue(limelightName)
-                            : LimelightHelpers.getBotPoseEstimate_wpiRed(limelightName);
-                    } else {
-                        poseEstimate = Robot.isBlue() 
-                            ? LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2(limelightName)
-                            : LimelightHelpers.getBotPoseEstimate_wpiRed_MegaTag2(limelightName);
-                    }
-                    
-                    boolean notNull = false;
-                    boolean withinAngularVelocityTolerance = false;
-                    boolean withinInvalidPositionTolerance = false;
+            // Seed robot heading (used by MT2)
+            LimelightHelpers.SetRobotOrientation(
+                limelightName, 
+                (CommandSwerveDrivetrain.getInstance().getPose().getRotation().getDegrees() + (Robot.isBlue() ? 0 : 180)) % 360, 
+                0, 
+                0, 
+                0, 
+                0, 
+                0
+            );
 
-                    // Adding to pose estimator
-                    if (poseEstimate != null && poseEstimate.tagCount > 0) {
-                        notNull = true;
+            PoseEstimate poseEstimate;
 
-                        if (poseEstimate.pose.equals(Settings.Vision.INVALID_POSITION)) {
-                            withinInvalidPositionTolerance = true;
-                        }
+            // MegaTag switching
+            if (megaTagMode == MegaTagMode.MEGATAG1) {
+                poseEstimate = Robot.isBlue() 
+                    ? LimelightHelpers.getBotPoseEstimate_wpiBlue(limelightName)
+                    : LimelightHelpers.getBotPoseEstimate_wpiRed(limelightName);
+            } else {
+                poseEstimate = Robot.isBlue() 
+                    ? LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2(limelightName)
+                    : LimelightHelpers.getBotPoseEstimate_wpiRed_MegaTag2(limelightName);
+            }
+                
+            boolean notNull = false;
+            boolean withinAngularVelocityTolerance = false;
+            boolean withinInvalidPositionTolerance = false;
 
-                        if (CommandSwerveDrivetrain.getInstance().getChassisSpeeds().omegaRadiansPerSecond < Settings.Vision.MAX_ANGULAR_VELOCITY_RAD_SEC) {
-                            withinAngularVelocityTolerance = true;
-                        }
+            // Adding to pose estimator
+            if (poseEstimate != null && poseEstimate.tagCount > 0) {
+                notNull = true;
 
-                        Boolean isValidPose = notNull && withinAngularVelocityTolerance && withinInvalidPositionTolerance;
-
-                        SmartDashboard.putBoolean("Vision/isValidPose", isValidPose);
-                        SmartDashboard.putBoolean("Vision/isWithinAngularVel", withinAngularVelocityTolerance);
-                            SmartDashboard.putBoolean("Vision/isWithinPos", withinInvalidPositionTolerance);
-                        Pose2d robotPose = poseEstimate.pose;
-                        double timestamp = poseEstimate.timestampSeconds;
-
-                        if (megaTagMode == MegaTagMode.MEGATAG1 && isValidPose) {
-                            CommandSwerveDrivetrain.getInstance().addVisionMeasurement(robotPose, timestamp, Settings.Vision.MT1_STDEVS);
-                        } else if (megaTagMode == MegaTagMode.MEGATAG2 && isValidPose){
-                            CommandSwerveDrivetrain.getInstance().addVisionMeasurement(robotPose, timestamp, Settings.Vision.MT2_STDEVS);
-                        }
-                        
-                        SmartDashboard.putNumber("Vision/Pose X Component", robotPose.getX());
-                        SmartDashboard.putNumber("Vision/Pose Y Component", robotPose.getY());
-                        SmartDashboard.putNumber("Vision/Pose Theta (Degrees)", robotPose.getRotation().getDegrees());
-
-                        SmartDashboard.putBoolean("Vision/" + names[i] + " Has Data", true);
-                    } else {
-                        SmartDashboard.putBoolean("Vision/" + names[i] + " Has Data", false);
-                    }
-
-                    SmartDashboard.putString("Vision/MegaTag Mode", megaTagMode.toString());
-                    // this yaw is seems to be the robot yaw passed into the LL
-                    SmartDashboard.putNumber("Vision/Pipeline", LimelightHelpers.getCurrentPipelineIndex(limelightName));
-                    SmartDashboard.putNumber("Vision/Limelight Robot Yaw", LimelightHelpers.getIMUData(limelightName).robotYaw);
-                    // this is just the yaw of the internal imu 
-                    SmartDashboard.putNumber("Vision/Limelight Yaw", LimelightHelpers.getIMUData(limelightName).Yaw);
-                    SmartDashboard.putBoolean("Vision/Has at least 2 tags", poseEstimate.tagCount >= 2);
+                if (poseEstimate.pose.equals(Settings.Vision.INVALID_POSITION)) {
+                    withinInvalidPositionTolerance = true;
                 }
+
+                if (CommandSwerveDrivetrain.getInstance().getChassisSpeeds().omegaRadiansPerSecond < Settings.Vision.MAX_ANGULAR_VELOCITY_RAD_SEC) {
+                    withinAngularVelocityTolerance = true;
+                }
+
+                Boolean isValidPose = notNull && withinAngularVelocityTolerance && withinInvalidPositionTolerance;
+
+                SmartDashboard.putBoolean("Vision/isValidPose", isValidPose);
+                SmartDashboard.putBoolean("Vision/isWithinAngularVel", withinAngularVelocityTolerance);
+                SmartDashboard.putBoolean("Vision/isWithinPos", withinInvalidPositionTolerance);
+                Pose2d robotPose = poseEstimate.pose;
+                double timestamp = poseEstimate.timestampSeconds;
+
+                if (megaTagMode == MegaTagMode.MEGATAG1 && isValidPose) {
+                    CommandSwerveDrivetrain.getInstance().addVisionMeasurement(robotPose, timestamp, Settings.Vision.MT1_STDEVS);
+                } else if (megaTagMode == MegaTagMode.MEGATAG2 && isValidPose){
+                    CommandSwerveDrivetrain.getInstance().addVisionMeasurement(robotPose, timestamp, Settings.Vision.MT2_STDEVS);
+                }
+                    
+                SmartDashboard.putNumber("Vision/Pose X Component", robotPose.getX());
+                SmartDashboard.putNumber("Vision/Pose Y Component", robotPose.getY());
+                SmartDashboard.putNumber("Vision/Pose Theta (Degrees)", robotPose.getRotation().getDegrees());
+
+                SmartDashboard.putBoolean("Vision/" + names[i] + " Has Data", true);
+            
+                SmartDashboard.putString("Vision/MegaTag Mode", megaTagMode.toString());
+                // this yaw is seems to be the robot yaw passed into the LL
+                SmartDashboard.putNumber("Vision/Pipeline", LimelightHelpers.getCurrentPipelineIndex(limelightName));
+                SmartDashboard.putNumber("Vision/Limelight Robot Yaw", LimelightHelpers.getIMUData(limelightName).robotYaw);
+                // this is just the yaw of the internal imu 
+                SmartDashboard.putNumber("Vision/Limelight Yaw", LimelightHelpers.getIMUData(limelightName).Yaw);
+                SmartDashboard.putBoolean("Vision/Has at least 2 tags", poseEstimate.tagCount >= 2);
             }
         }
     }
