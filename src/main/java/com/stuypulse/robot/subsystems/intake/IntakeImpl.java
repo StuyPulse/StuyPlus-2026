@@ -179,9 +179,7 @@ public class IntakeImpl extends Intake {
         }
 
         // Input
-
-        final boolean pivotAboveThreshold = isPivotAboveThreshold();
-
+        
         final boolean pivotStalling = pivotStalling();
 
         final IntakeState currentState = getState();
