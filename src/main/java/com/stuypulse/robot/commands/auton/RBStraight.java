@@ -1,7 +1,7 @@
 package com.stuypulse.robot.commands.auton;
 
 import com.pathplanner.lib.path.PathPlannerPath;
-import com.stuypulse.robot.commands.intake.IntakeSetHomingDown;
+import com.stuypulse.robot.commands.intake.IntakeCommands;
 // import com.stuypulse.robot.commands.intake.IntakeSetIntake;
 import com.stuypulse.robot.commands.swerve.SwerveResetPose;
 import com.stuypulse.robot.commands.vision.SetVisionDisabled;
@@ -22,7 +22,7 @@ public class RBStraight extends SequentialCommandGroup{
 
             CommandSwerveDrivetrain.getInstance().followPathCommand(paths[1]),
             
-            new IntakeSetHomingDown()
+            IntakeCommands.setHomingDown()
         );
     }
 }

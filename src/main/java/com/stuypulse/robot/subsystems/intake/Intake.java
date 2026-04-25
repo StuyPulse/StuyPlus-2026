@@ -1,15 +1,13 @@
 package com.stuypulse.robot.subsystems.intake;
 
 import com.stuypulse.robot.Robot;
-import com.stuypulse.robot.commands.intake.IntakeSetZero;
-import com.stuypulse.robot.commands.intake.IntakeSetZeroAtBottom;
+import com.stuypulse.robot.commands.intake.IntakeCommands;
 import com.stuypulse.robot.constants.Settings;
 import com.stuypulse.robot.util.RobotVisualizer;
 
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.units.measure.Voltage;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
@@ -29,8 +27,8 @@ public abstract class Intake extends SubsystemBase {
         }
 
         // Elastic Commands
-        SmartDashboard.putData("Intake/Set Pivot 0", new IntakeSetZero());
-        SmartDashboard.putData("Intake/Set Pivot 0 at Bottom", new IntakeSetZeroAtBottom());
+        SmartDashboard.putData("Intake/Set Pivot 0", IntakeCommands.setZero());
+        SmartDashboard.putData("Intake/Set Pivot 0 at Bottom", IntakeCommands.setZeroAtBottom());
     }
 
     public static Intake getInstance() {
@@ -76,8 +74,8 @@ public abstract class Intake extends SubsystemBase {
     // Pivot Commands
     public abstract Trigger pivotStalling();
     public abstract Rotation2d getRelativePosition();
-    public abstract Command setPivotZero();
-    public abstract Command setPivotZeroAtBottom();
+    public abstract void setPivotZero();
+    public abstract void setPivotZeroAtBottom();
     public boolean atTargetAngle() {
         return Math.abs(
                 (getRelativePosition().getRotations())

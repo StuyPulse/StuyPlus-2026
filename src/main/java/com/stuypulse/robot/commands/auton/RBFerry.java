@@ -1,8 +1,8 @@
 package com.stuypulse.robot.commands.auton;
 
 import com.pathplanner.lib.path.PathPlannerPath;
+import com.stuypulse.robot.commands.intake.IntakeCommands;
 // import com.stuypulse.robot.commands.intake.IntakeAgitateWhileOuttaking;
-import com.stuypulse.robot.commands.intake.IntakeSetHomingDown;
 // import com.stuypulse.robot.commands.intake.IntakeSetIntake;
 import com.stuypulse.robot.commands.swerve.SwerveResetPose;
 import com.stuypulse.robot.subsystems.swerve.CommandSwerveDrivetrain;
@@ -23,13 +23,13 @@ public class RBFerry extends SequentialCommandGroup{
             // new WaitCommand(2).(new IntakeAgitateWhileOuttaking().repeatedly()),
             
             CommandSwerveDrivetrain.getInstance().followPathCommand(paths[2])
-                .alongWith(new IntakeSetHomingDown()),
+                .alongWith(IntakeCommands.setHomingDown()),
             
             CommandSwerveDrivetrain.getInstance().followPathCommand(paths[3]),
 
             // new WaitCommand(2).deadlineFor(new IntakeAgitateWhileOuttaking().repeatedly()),
 
-            new IntakeSetHomingDown()
+            IntakeCommands.setHomingDown()
         );
     }
 }

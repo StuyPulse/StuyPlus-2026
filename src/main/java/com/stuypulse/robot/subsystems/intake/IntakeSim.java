@@ -99,13 +99,13 @@ public class IntakeSim extends Intake {
     }
 
     @Override
-    public Command setPivotZero() {
-        return Commands.runOnce(() -> setZeroOffset(new Rotation2d(pivotSim.getAngleRads())));
+    public void setPivotZero() {
+        setZeroOffset(new Rotation2d(pivotSim.getAngleRads()));
     }
     
     @Override
-    public Command setPivotZeroAtBottom() {
-        return Commands.runOnce(() -> setZeroOffset(new Rotation2d(-pivotSim.getAngleRads()).plus(Settings.Intake.Pivot.DOWN_ANGLE)));
+    public void setPivotZeroAtBottom() {
+        setZeroOffset(new Rotation2d(-pivotSim.getAngleRads()).plus(Settings.Intake.Pivot.DOWN_ANGLE));
     }
 
     @Override

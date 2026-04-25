@@ -114,13 +114,13 @@ public class IntakeImpl extends Intake {
     }
 
     @Override
-    public Command setPivotZeroAtBottom() {
-        return Commands.runOnce(() -> intakePivotMotor.setPosition(Settings.Intake.Pivot.DOWN_ANGLE.getRotations()));
+    public void setPivotZeroAtBottom() {
+        intakePivotMotor.setPosition(Settings.Intake.Pivot.DOWN_ANGLE.getRotations());
     }
 
     @Override
-    public Command setPivotZero() {
-        return Commands.runOnce(() -> intakePivotMotor.setPosition(0));
+    public void setPivotZero() {
+        intakePivotMotor.setPosition(0);
     }
 
     @Override
