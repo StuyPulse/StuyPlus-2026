@@ -29,6 +29,11 @@ public class LEDDefaultCommand extends Command{
 
         addRequirements(leds);
     }
+    
+    @Override
+    public boolean runsWhenDisabled() {
+        return true;
+    }
 
     @Override
     public void execute() {
