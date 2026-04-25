@@ -22,9 +22,7 @@ import com.stuypulse.robot.commands.auton.RTDisrupt;
 import com.stuypulse.robot.commands.auton.RBMidlineSweep;
 import com.stuypulse.robot.commands.auton.RBOuttake;
 import com.stuypulse.robot.commands.auton.TwoMeterPath;
-import com.stuypulse.robot.commands.feeder.FeederSetForward;
-import com.stuypulse.robot.commands.feeder.FeederSetState;
-import com.stuypulse.robot.commands.feeder.FeederSetStop;
+import com.stuypulse.robot.commands.feeder.FeederCommands;
 import com.stuypulse.robot.commands.handoff.HandoffCommands;
 import com.stuypulse.robot.commands.swerve.SwerveDriveDrive;
 import com.stuypulse.robot.commands.swerve.SwerveDriveResetRotation;
@@ -116,10 +114,10 @@ public class RobotContainer {
 
     private void configureFeederLogic() {
         swerve.notAlignedToHub().and(() -> shooter.getState() == ShooterState.SHOOT)
-            .whileTrue(new FeederSetStop());
+            .whileTrue(FeederCommands.setStop());
 
         swerve.notAlignedToFerryZone().and(() -> shooter.getState() == ShooterState.FERRY)
-            .whileTrue(new FeederSetStop());
+            .whileTrue(FeederCommands.setStop());
     }
 
     private void configureHandoffLogic() {
@@ -163,7 +161,7 @@ public class RobotContainer {
                     .andThen(new SwerveDriveXMode())
                     .andThen(ShooterCommands.setShoot())
                     .andThen(HandoffCommands.setForward())
-                        .alongWith(new FeederSetForward(), new IntakeAgitateOnce().repeatedly()));
+                        .alongWith(FeederCommands.setForward(), new IntakeAgitateOnce().repeatedly()));
 
         //Top Left Paddle
         driver.a()
@@ -177,7 +175,7 @@ public class RobotContainer {
                     .andThen(new SwerveDriveXMode())
                     .andThen(ShooterCommands.setFerry())
                     .andThen(HandoffCommands.setForward())
-                        .alongWith(new FeederSetForward(), new IntakeAgitateOnce().repeatedly()));
+                        .alongWith(FeederCommands.setForward(), new IntakeAgitateOnce().repeatedly()));
 
         //Bottom Right Paddle
         //Manual shooting possibly from in front of the hub
@@ -185,12 +183,12 @@ public class RobotContainer {
             .onTrue(new SwerveDriveXMode()
                     .andThen(ShooterCommands.setManual())
                     .andThen(HandoffCommands.setForward())
-                        .alongWith(new FeederSetForward(), new IntakeAgitateOnce().repeatedly()));
+                        .alongWith(FeederCommands.setForward(), new IntakeAgitateOnce().repeatedly()));
 
         //Top Right Paddle
         driver.b()
             .onTrue(HandoffCommands.setIdle()
-                    .alongWith(new FeederSetStop(), new IntakeSetIntake()));
+                    .alongWith(FeederCommands.setStop(), new IntakeSetIntake()));
         
         //Bottom Left Paddle
         driver.x()
