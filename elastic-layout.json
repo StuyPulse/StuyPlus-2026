@@ -81,6 +81,19 @@
                   "period": 0.06,
                   "data_type": "boolean"
                 }
+              },
+              {
+                "title": "Handoff",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 150.0,
+                "height": 150.0,
+                "type": "Toggle Switch",
+                "properties": {
+                  "topic": "SmartDashboard/Enabled Subsystems/Handoff",
+                  "period": 0.06,
+                  "data_type": "boolean"
+                }
               }
             ]
           }
@@ -236,7 +249,7 @@
             "height": 100.0,
             "type": "Boolean Box",
             "properties": {
-              "topic": "/SmartDashboard/Intake/Pivot At Tolerance?",
+              "topic": "/SmartDashboard/Intake/Pivot/At Target Angle",
               "period": 0.06,
               "data_type": "boolean",
               "true_color": 4283215696,
@@ -253,7 +266,7 @@
             "height": 100.0,
             "type": "Text Display",
             "properties": {
-              "topic": "/SmartDashboard/Intake/Current Angle (deg)",
+              "topic": "/SmartDashboard/Intake/Pivot/Current Angle",
               "period": 0.5,
               "data_type": "double",
               "show_submit_button": false
@@ -271,19 +284,6 @@
               "period": 0.06,
               "data_type": "string",
               "show_submit_button": false
-            }
-          },
-          {
-            "title": "Auton Chooser",
-            "x": 1200.0,
-            "y": 400.0,
-            "width": 300.0,
-            "height": 150.0,
-            "type": "ComboBox Chooser",
-            "properties": {
-              "topic": "/SmartDashboard/Autonomous",
-              "period": 0.06,
-              "sort_options": false
             }
           },
           {
@@ -410,6 +410,19 @@
                   "period": 0.06,
                   "data_type": "boolean"
                 }
+              },
+              {
+                "title": "Handoff",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 150.0,
+                "height": 150.0,
+                "type": "Toggle Switch",
+                "properties": {
+                  "topic": "SmartDashboard/Enabled Subsystems/Handoff",
+                  "period": 0.06,
+                  "data_type": "boolean"
+                }
               }
             ]
           }
@@ -444,7 +457,7 @@
             "height": 150.0,
             "type": "Boolean Box",
             "properties": {
-              "topic": "/SmartDashboard/Intake/Pivot At Tolerance?",
+              "topic": "/SmartDashboard/Intake/Pivot/At Target Angle",
               "period": 0.06,
               "data_type": "boolean",
               "true_color": 4283215696,
@@ -507,7 +520,7 @@
             "height": 150.0,
             "type": "Text Display",
             "properties": {
-              "topic": "/SmartDashboard/Intake/Intake State",
+              "topic": "/SmartDashboard/Intake/State",
               "period": 0.06,
               "data_type": "string",
               "show_submit_button": false
