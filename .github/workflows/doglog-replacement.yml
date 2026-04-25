@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  replace-smartdashboard-with-doglog:
+  replace:
     runs-on: ubuntu-latest
 
     steps:
