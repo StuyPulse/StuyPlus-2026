@@ -26,7 +26,7 @@ public class HandoffImpl extends Handoff {
             handoffMotor.getSupplyCurrent(),
             handoffMotor.getStatorCurrent(),
             handoffMotor.getVelocity()
-        ).withLoggingPath("Handoff/").withSignalLocation(LoggedSignals.SignalLocation.RIO);
+        ).withLogPath("Handoff/").withSignalLocation(LoggedSignals.SignalLocation.CANIVORE);
 
         // Configuring
         Motors.Handoff.HANDOFF_MOTOR_CONFIG.configure(handoffMotor);

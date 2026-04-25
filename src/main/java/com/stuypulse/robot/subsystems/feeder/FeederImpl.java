@@ -31,7 +31,7 @@ public class FeederImpl extends Feeder {
             feederMotor.getSupplyCurrent(),
             feederMotor.getStatorCurrent(),
             feederMotor.getVelocity()
-        ).withLoggingPath("Feeder/").withSignalLocation(LoggedSignals.SignalLocation.RIO);
+        ).withLogPath("Feeder/").withSignalLocation(LoggedSignals.SignalLocation.CANIVORE);
     }
 
     @Override

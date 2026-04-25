@@ -16,7 +16,6 @@ import com.stuypulse.robot.util.SysId;
 
 import edu.wpi.first.units.measure.AngularVelocity;
 import edu.wpi.first.units.measure.Voltage;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 
 public class ShooterImpl extends Shooter {
@@ -25,7 +24,7 @@ public class ShooterImpl extends Shooter {
     private final TalonFX shooterMotorRight;
     private final VelocityTorqueCurrentFOC shooterController;
     private final Follower shooterFollowerController;
-    // private final LoggedSignals signals;
+    private final LoggedSignals signals;
 
     private Optional<Voltage> voltageOverride;
 
@@ -34,6 +33,22 @@ public class ShooterImpl extends Shooter {
         shooterMotorCenter = new TalonFX(Ports.Shooter.SHOOTER_MOTOR_CENTER, Settings.CANIVORE);
         shooterMotorRight = new TalonFX(Ports.Shooter.SHOOTER_MOTOR_RIGHT, Settings.CANIVORE);
         shooterController = new VelocityTorqueCurrentFOC(getState().getTargetAngularVelocity());
+        signals = new LoggedSignals(
+            "Left Motor", 
+            shooterMotorLeft.getSupplyCurrent(),
+            shooterMotorLeft.getStatorCurrent(),
+            shooterMotorLeft.getVelocity()
+        ).withMotor(
+            "Center Motor", 
+            shooterMotorCenter.getSupplyCurrent(),
+            shooterMotorCenter.getStatorCurrent(),
+            shooterMotorCenter.getVelocity()
+        ).withMotor(
+            "Right Motor", 
+            shooterMotorRight.getSupplyCurrent(),
+            shooterMotorRight.getStatorCurrent(),
+            shooterMotorRight.getVelocity()
+        ).withLogPath("Shooter/").withSignalLocation(LoggedSignals.SignalLocation.CANIVORE);
 
         // configure
         Motors.Shooter.SHOOTER_MOTOR_CONFIG.configure(shooterMotorLeft);
@@ -91,10 +106,7 @@ public class ShooterImpl extends Shooter {
 
         shooterMotorLeft.setControl(shooterControl);
 
-        logMotor("ShooterLeft", shooterMotorLeft);
-        logMotor("ShooterCenter", shooterMotorCenter);
-        logMotor("ShooterRight", shooterMotorRight);
-
+        this.signals.logAll();
         super.periodic();
     }
 

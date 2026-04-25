@@ -1,6 +1,7 @@
 package com.stuypulse.robot.util;
 
 import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Set;
 
@@ -80,38 +81,49 @@ public class LoggedSignals {
         }
     }
 
-    private final Set<BaseStatusSignal> statusSignals;
-    private String loggingPath;
+    /****************************/
+    /*** INSTANCES & BUILDERS ***/
+    /****************************/
+
+    private final LinkedHashMap <String, Set<BaseStatusSignal>> statusSignals;
+    private String logPath;
     private SignalLocation signalLocation;
 
     /**
-     * <h4>Creates a new {@code LoggedSignals} instance and defaults to registering signals to {@link SignalLocation#RIO}</h4>
+     * <h4>Creates a new {@code LoggedSignals} instance with a named motor and defaults to registering signals to {@link SignalLocation#RIO}</h4>
      *
-     * <p>The logging path defaults to an empty string. Use {@link #withLoggingPath(String)} and {@link #withSignalLocation(SignalLocation)}
-     * to change it.
+     * <p>The logging path defaults to an empty string.
+     * Use {@link #withlogPath(String)} and {@link #withSignalLocation(SignalLocation)} to change it.
+     * It also registers the signals for you, so you don't have to call {@link #register()}
+     *
+     * @param motorName name of the motor whose signals are being registered
+     * @param statusSignals the signals to manage, duplicates allowed but filtered out
+     */
+    public LoggedSignals(String motorName, BaseStatusSignal... statusSignals) {
+        this.statusSignals = new LinkedHashMap<>();
+        this.statusSignals.put(motorName, Set.of(statusSignals));
+        this.logPath = "";
+        this.signalLocation = SignalLocation.CANIVORE;
+        register();
+    }
+
+    /**
+     * <h4>Creates a new {@code LoggedSignals} instance with an unnamed motor and defaults to registering signals to {@link SignalLocation#RIO}</h4>
+     *
+     * <p>The logging path defaults to an empty string.
+     * Use {@link #withlogPath(String)} and {@link #withSignalLocation(SignalLocation)} to change it.
      * It also registers the signals for you, so you don't have to call {@link #register()}
      *
      * @param statusSignals the signals to manage, duplicates allowed but filtered out
      */
     public LoggedSignals(BaseStatusSignal... statusSignals) {
-        this.statusSignals = Set.of(statusSignals);
-        this.loggingPath = "";
-        this.signalLocation = SignalLocation.RIO;
+        this("", statusSignals);
+    }
+
+    public LoggedSignals withMotor(String motorName, BaseStatusSignal... statusSignals) {
+        this.statusSignals.put(motorName, Set.of(statusSignals));
         register();
-    }
-
-    /**
-     * <h4>Registers all signals in this instance in the current {@link SignalLocation}</h4>
-     */
-    public void register() {
-        this.signalLocation.register(this.statusSignals);
-    }
-
-    /**
-     * <h4>Deregisters all signals in this instance from the current {@link SignalLocation}</h4>
-     */
-    public void deregister() {
-        this.signalLocation.deregister(this.statusSignals);
+        return this;
     }
 
     /**
@@ -134,23 +146,58 @@ public class LoggedSignals {
      * <p>For example, the path {@code "Shooter/"} will log values like
      * {@code "Shooter/PositionRotations"}.
      *
-     * @param loggingPath the prefix string for {@code SmartDashboard} signal logging
+     * @param logPath the prefix string for {@code SmartDashboard} signal logging
      * @return this instance for chaining
      */
-    public LoggedSignals withLoggingPath(String loggingPath) {
-        this.loggingPath = loggingPath;
+    public LoggedSignals withLogPath(String logPath) {
+        this.logPath = logPath;
         return this;
+    }
+
+    /****************/
+    /*** REGISTRY ***/
+    /****************/
+
+    /**
+     * <h4>Registers all signals in this instance to the current {@link SignalLocation}</h4>
+     * 
+     * <p>SHould be called whenever the internal signal set is added to
+     */
+    public void register() {
+        for (final Set<BaseStatusSignal> signals : this.statusSignals.values())
+            this.signalLocation.register(signals);
+    }
+
+    /**
+     * <h4>Deregisters all signals in this instance from the current {@link SignalLocation}</h4>
+     * 
+     * <p>Should be called whenever stuff is removed from the internal signal set 
+     */
+    public void deregister() {
+        for (final Set<BaseStatusSignal> signals : this.statusSignals.values())
+            this.signalLocation.deregister(signals);
+    }
+
+    /***************/
+    /*** LOGGING ***/
+    /***************/
+
+    private void logSignal(String motorName, BaseStatusSignal signal) {
+        SmartDashboard.putNumber(logPath + String.join(" ", motorName + signal.getName() + signal.getUnits()),
+                signal.getValueAsDouble());
     }
 
     /**
      * <h4>Publishes the current value of each signal to SmartDashboard with the specified log path</h4>
      *
-     * <p>Should be called after {@link #refreshAll()}. Uses the units and name of the signal to determine the log key.
+     * <p>Should be called after {@link #refreshAll()}. Iterates over the motors and logs the signal values to SmartDashboard
+     * by 
      */
     public void logAll() {
-        for (final BaseStatusSignal signal : statusSignals) {
-            SmartDashboard.putNumber(loggingPath + signal.getName() + signal.getUnits(), signal.getValueAsDouble());
-        }
+        this.statusSignals.forEach((String motorName, Set<BaseStatusSignal> signalSet) -> {
+            for (final BaseStatusSignal signal : signalSet)
+                logSignal(motorName, signal);
+        });
     }
 
     /**

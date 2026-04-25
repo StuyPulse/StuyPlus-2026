@@ -57,7 +57,7 @@ public class IntakeImpl extends Intake {
             intakePivotMotor.getSupplyCurrent(),
             intakePivotMotor.getStatorCurrent(),
             intakePivotMotor.getVelocity()
-        ).withLoggingPath("Intake/Pivot/").withSignalLocation(LoggedSignals.SignalLocation.RIO);
+        ).withLogPath("Intake/Pivot/").withSignalLocation(LoggedSignals.SignalLocation.CANIVORE);
 
         intakeRollerMotorLeft = new TalonFX(Ports.Intake.MOTOR_INTAKE_ROLLER_LEFT, Settings.CANIVORE); // leader
         intakeRollerMotorRight = new TalonFX(Ports.Intake.MOTOR_INTAKE_ROLLER_RIGHT, Settings.CANIVORE);
@@ -66,13 +66,16 @@ public class IntakeImpl extends Intake {
         Motors.Intake.RIGHT_ROLLER_CONFIG.configure(intakeRollerMotorRight);
 
         rollerSignals = new LoggedSignals(
+            "Intake Roller Left",
             intakeRollerMotorLeft.getSupplyCurrent(),
             intakeRollerMotorLeft.getStatorCurrent(),
-            intakeRollerMotorLeft.getVelocity(),
+            intakeRollerMotorLeft.getVelocity()
+        ).withMotor(
+            "Intake Roller Right",
             intakeRollerMotorRight.getSupplyCurrent(),
             intakeRollerMotorRight.getStatorCurrent(),
             intakeRollerMotorRight.getVelocity()
-        ).withLoggingPath("Intake/Roller/").withSignalLocation(LoggedSignals.SignalLocation.RIO);
+        ).withLogPath("Intake/Roller/").withSignalLocation(LoggedSignals.SignalLocation.CANIVORE);
 
         pivotController = new PositionTorqueCurrentFOC(getState().getTargetAngle().getRotations());
         homingController = new VoltageOut(Settings.Intake.Pivot.HOMING_DOWN_VOLTAGE).withEnableFOC(true);
