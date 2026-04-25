@@ -23,16 +23,6 @@ public abstract class Handoff extends SubsystemBase {// handoff is feeder ---> s
         return instance;
     }
 
-    public void logMotor(String motorName, TalonFX motor) {
-        String stem = "Handoff/Motors/" + motorName + "/";
-
-        SmartDashboard.putNumber(stem + "MotorVoltage", motor.getMotorVoltage().getValueAsDouble());
-        SmartDashboard.putNumber(stem + "SupplyCurrent", motor.getSupplyCurrent().getValueAsDouble());
-        SmartDashboard.putNumber(stem + "StatorCurrent", motor.getStatorCurrent().getValueAsDouble());
-
-        SmartDashboard.putNumber(stem + "DutyCycle", motor.getDutyCycle().getValueAsDouble());
-    }
-
     protected Handoff() {
         this.state = HandoffState.IDLE;
     }

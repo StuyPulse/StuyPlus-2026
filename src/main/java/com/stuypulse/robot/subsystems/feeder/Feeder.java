@@ -21,7 +21,7 @@ public abstract class Feeder extends SubsystemBase{
         }
     }
 
-    public static Feeder getInstance(){
+    public static Feeder getInstance() {
         return instance;
     }
 
@@ -45,7 +45,7 @@ public abstract class Feeder extends SubsystemBase{
         this.state = FeederState.STOP;
     }
 
-    public void setState(FeederState state){
+    public void setState(FeederState state) {
         this.state = state;
     }
 

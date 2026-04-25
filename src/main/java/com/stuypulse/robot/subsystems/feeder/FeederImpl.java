@@ -1,9 +1,7 @@
 package com.stuypulse.robot.subsystems.feeder;
 
 import com.ctre.phoenix6.controls.DutyCycleOut;
-import com.ctre.phoenix6.controls.Follower;
 import com.ctre.phoenix6.hardware.TalonFX;
-import com.ctre.phoenix6.signals.MotorAlignmentValue;
 import com.stuypulse.robot.constants.Field;
 import com.stuypulse.robot.constants.Motors;
 import com.stuypulse.robot.constants.Ports;
@@ -12,31 +10,38 @@ import com.stuypulse.robot.constants.Settings.EnabledSubsystems;
 import com.stuypulse.robot.subsystems.shooter.Shooter;
 import com.stuypulse.robot.subsystems.shooter.Shooter.ShooterState;
 import com.stuypulse.robot.subsystems.swerve.CommandSwerveDrivetrain;
+import com.stuypulse.robot.util.LoggedSignals;
 
 import edu.wpi.first.units.measure.*;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class FeederImpl extends Feeder {
-    private final TalonFX feederLeader;
+    private final TalonFX feederMotor;
     private final DutyCycleOut controller;
+    private final LoggedSignals signals;
 
     public FeederImpl() {
-        feederLeader = new TalonFX(Ports.Feeder.FEEDER_MOTOR, Settings.CANIVORE);
+        feederMotor = new TalonFX(Ports.Feeder.FEEDER_MOTOR, Settings.CANIVORE);
 
-        Motors.Feeder.LEADER_CONFIG.configure(feederLeader);
+        Motors.Feeder.LEADER_CONFIG.configure(feederMotor);
 
         controller = new DutyCycleOut(getState().getTargetDutyCycle()).withEnableFOC(true);
+        this.signals = new LoggedSignals(
+            feederMotor.getSupplyCurrent(),
+            feederMotor.getStatorCurrent(),
+            feederMotor.getVelocity()
+        ).withLogPath("Feeder/").withSignalLocation(LoggedSignals.SignalLocation.CANIVORE);
     }
 
     @Override
     public AngularVelocity getCurrentAngularVelocity() {
-        return feederLeader.getVelocity().getValue();
+        return feederMotor.getVelocity().getValue();
     }
 
     @Override
     protected void stopMotors() {
-        feederLeader.stopMotor();
+        feederMotor.stopMotor();
     }
 
     @Override
@@ -58,14 +63,11 @@ public class FeederImpl extends Feeder {
         }
 
         // Apply
-        feederLeader.setControl(controller.withOutput(getState().getTargetDutyCycle()));
+        feederMotor.setControl(controller.withOutput(getState().getTargetDutyCycle()));
 
         // Logging
-        if (Settings.DEBUG_MODE) {
-            SmartDashboard.putNumber("Feeder/Leader Current", feederLeader.getStatorCurrent().getValueAsDouble());
-            SmartDashboard.putNumber("Feeder/Leader Voltage", feederLeader.getMotorVoltage().getValueAsDouble());
-        }
 
+        this.signals.logAll();
         super.periodic();
     }
 }

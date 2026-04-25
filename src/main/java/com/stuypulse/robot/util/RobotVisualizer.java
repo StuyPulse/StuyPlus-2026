@@ -131,7 +131,6 @@ public class RobotVisualizer {
     public void updateShooter(AngularVelocity angularVelocity){
         double rot = angularVelocity.in(RPM) * 6 * Settings.DT.in(Seconds);
 
-        // ആറ് ഏഴ്
         for (MechanismLigament2d spoke : shooterSpokes)
             spoke.setAngle(spoke.getAngle() + rot);
     }

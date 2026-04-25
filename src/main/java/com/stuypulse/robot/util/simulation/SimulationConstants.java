@@ -54,7 +54,7 @@ public interface SimulationConstants {
         Angle roll, Angle pitch, Angle yaw) {
 
         /**
-         * <h2>Constructs an Offsets instance with no rotation</h2>
+         * <h4>Constructs an Offsets instance with no rotation</h4>
          * @param x X translation from the robot origin (meters)
          * @param y Y translation from the robot origin (meters)
          * @param z Z translation from the robot origin (meters)
@@ -64,7 +64,7 @@ public interface SimulationConstants {
         }
 
         /**
-         * <h2>Constructs an Offsets instance with no rotation, using your unit of choice</h2>
+         * <h4>Constructs an Offsets instance with no rotation, using your unit of choice</h4>
          * @param x X translation from the robot origin
          * @param y Y translation from the robot origin
          * @param z Z translation from the robot origin
@@ -74,7 +74,7 @@ public interface SimulationConstants {
         }
 
         /**
-         * <h2>Constructs an Offsets instance with no translation</h2>
+         * <h4>Constructs an Offsets instance with no translation</h4>
          * @param roll Rotation about the X axis
          * @param pitch Rotation about the Y axis
          * @param yaw Rotation about the Z axis
@@ -84,7 +84,7 @@ public interface SimulationConstants {
         }
 
         /**
-         * <h2>Constructs an Offsets instance with no rotation</h2>
+         * <h4>Constructs an Offsets instance with no rotation</h4>
          * @param x X translation from the robot origin (meters)
          * @param y Y translation from the robot origin (meters)
          * @param z Z translation from the robot origin (meters)
@@ -97,7 +97,7 @@ public interface SimulationConstants {
         }
 
         /**
-         * <h2>Translational component as a {@link Translation3d}</h2>
+         * <h4>Translational component as a {@link Translation3d}</h4>
          * @return translation from the robot origin
          */
         public Translation3d toTranslation3d() {
@@ -105,7 +105,7 @@ public interface SimulationConstants {
         }
 
         /**
-         * <h2>Rotational component as a {@link Rotation3d}</h2>
+         * <h4>Rotational component as a {@link Rotation3d}</h4>
          * @return Rotation3d of the roll, pitch, and yaw components of the offset
          */
         public Rotation3d toRotation3d() {
@@ -113,7 +113,7 @@ public interface SimulationConstants {
         }
 
         /**
-         * <h2>This offset as a {@link Pose3d}.</h2>
+         * <h4>This offset as a {@link Pose3d}.</h4>
          * <p>Useful for components whose pose is fully static and requires no adjustments</p>
          * @return pose at this offset's position and orientation
          */
@@ -122,7 +122,7 @@ public interface SimulationConstants {
         }
 
         /**
-         * <h2>Applies this offset's translation and rotation onto an existing {@link Pose3d}</h2>
+         * <h4>Applies this offset's translation and rotation onto an existing {@link Pose3d}</h4>
          * @param pose the base pose to offset
          * @return a new pose with this offset applied to both translation and rotation
          */
@@ -134,7 +134,7 @@ public interface SimulationConstants {
         }
 
         /**
-         * <h2>Applies this offset's translation and rotation onto an existing {@link Pose3d}</h2>
+         * <h4>Applies this offset's translation and rotation onto an existing {@link Pose3d}</h4>
          * <p>Translation is applied, but it is <b>robot robot relative</b>
          * @param pose the base pose to offset
          * @return a new pose with this offset applied to both translation and rotation
@@ -148,7 +148,7 @@ public interface SimulationConstants {
         }
 
         /**
-         * <h2>Composes this offset's rotation onto an existing {@link Rotation3d}</h2>
+         * <h4>Composes this offset's rotation onto an existing {@link Rotation3d}</h4>
          * @param rotation the base rotation to offset
          * @return a new rotation with this offset's rotation applied on top
          */
@@ -161,7 +161,7 @@ public interface SimulationConstants {
         }
 
         /**
-         * <h2>Pose at this offset's translation with an additional rotation</h2>
+         * <h4>Pose at this offset's translation with an additional rotation</h4>
          * <p>Applies a rotation to this offsets rotation
          * <pre>{@code
          * SHOOTER_OFFSETS.withRotation(
@@ -176,7 +176,7 @@ public interface SimulationConstants {
         }
 
         /**
-         * <h2>Applies this offset's X/Y translation and yaw onto an existing {@link Pose2d}</h2>
+         * <h4>Applies this offset's X/Y translation and yaw onto an existing {@link Pose2d}</h4>
          * <p>Roll and pitch are ignored because they have no 2D equivalent
          * @param pose the base 2D pose to offset
          * @return a new pose of this offset's X, Y, and yaw
@@ -187,7 +187,7 @@ public interface SimulationConstants {
         }
 
         /**
-         * <h2>Applies this offset's X/Y translation and yaw onto an existing {@link Pose2d}</h2>
+         * <h4>Applies this offset's X/Y translation and yaw onto an existing {@link Pose2d}</h4>
          * <p>Translation is applied, but it is <b>robot robot relative</b>
          * @param pose the base 2D pose to offset
          * @return a new pose with this offset applied
@@ -201,7 +201,7 @@ public interface SimulationConstants {
         }
 
         /**
-         * <h2>Applies this offset's yaw onto an existing {@link Rotation2d}</h2>
+         * <h4>Applies this offset's yaw onto an existing {@link Rotation2d}</h4>
          * <p>Roll and pitch are ignored because they have no 2D equivalent
          * @param rotation the base 2D rotation to offset
          * @return a new rotation with this offset's yaw applied on top

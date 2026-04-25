@@ -53,7 +53,7 @@ public class MapleSimSwerveDrivetrain {
     /**
      *
      *
-     * <h2>Constructs a drivetrain simulation using the specified parameters.</h2>
+     * <h4>Constructs a drivetrain simulation using the specified parameters.</h4>
      *
      * @param simPeriod the time period of the simulation
      * @param robotMassWithBumpers the total mass of the robot, including bumpers
@@ -111,7 +111,7 @@ public class MapleSimSwerveDrivetrain {
     /**
      *
      *
-     * <h2>Update the simulation.</h2>
+     * <h4>Update the simulation.</h4>
      *
      * <p>Updates the Maple-Sim simulation and injects the results into the simulated CTRE devices, including motors and
      * the IMU.
@@ -127,7 +127,7 @@ public class MapleSimSwerveDrivetrain {
     /**
      *
      *
-     * <h1>Represents the simulation of a single {@link SwerveModule}.</h1>
+     * <h2>Represents the simulation of a single {@link SwerveModule}.</h2>
      */
     protected static class SimSwerveModule {
         public final SwerveModuleConstants<TalonFXConfiguration, TalonFXConfiguration, CANcoderConfiguration>
@@ -199,7 +199,7 @@ public class MapleSimSwerveDrivetrain {
     /**
      *
      *
-     * <h2>Regulates all {@link SwerveModuleConstants} for a drivetrain simulation.</h2>
+     * <h4>Regulates all {@link SwerveModuleConstants} for a drivetrain simulation.</h4>
      *
      * <p>This method processes an array of {@link SwerveModuleConstants} to apply necessary adjustments for simulation
      * purposes, ensuring compatibility and avoiding known bugs.
@@ -217,7 +217,7 @@ public class MapleSimSwerveDrivetrain {
     /**
      *
      *
-     * <h2>Regulates the {@link SwerveModuleConstants} for a single module.</h2>
+     * <h4>Regulates the {@link SwerveModuleConstants} for a single module.</h4>
      *
      * <p>This method applies specific adjustments to the {@link SwerveModuleConstants} for simulation purposes. These
      * changes have no effect on real robot operations and address known simulation bugs:

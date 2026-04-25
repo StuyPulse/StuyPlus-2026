@@ -211,7 +211,7 @@ public class Simulation {
             summonFuelAtIntake();
         } else if ((shooterSim.getState() == ShooterState.SHOOT || shooterSim.getState() == ShooterState.FERRY) && Settings.EnabledSubsystems.SHOOTER.get()) {
             final Pose2d shooterPose = SimulationConstants.Shooter.OFFSETS.applyToPose2d(swerveMSim.getSimulatedDriveTrainPose());
-            final double launchAngle = 67.67; // ആറ് ഏഴ്
+            final double launchAngle = 67.67;
 
             robotRelativeAddPieceWithVariance(
                 shooterPose.getTranslation(),
