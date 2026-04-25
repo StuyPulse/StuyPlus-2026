@@ -29,5 +29,6 @@ jobs:
           git checkout docs
           cp -r build/docs/javadoc/. docs/
           git add docs/
+          rm -rf build/ .gradle/
           git commit -m "DOCS: Automated documentation update from main"
           git push origin docs
