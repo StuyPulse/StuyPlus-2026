@@ -1,3 +1,5 @@
+name: "Javadoc Generator"
+
 on:
   push:
     branches:
@@ -6,7 +8,7 @@ on:
 permissions:
   contents: write
 jobs:
-  build:
+  generate:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
