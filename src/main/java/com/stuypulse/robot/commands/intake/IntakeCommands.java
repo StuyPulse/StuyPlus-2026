@@ -50,10 +50,10 @@ public class IntakeCommands {
     //Zeroing
 
     public static Command setZero() {
-        return Commands.runOnce(() -> intake.setPivotZero(), intake);
+        return Commands.runOnce(() -> intake.setPivotZero());
     }
 
     public static Command setZeroAtBottom() {
-        return Commands.runOnce(() -> intake.setPivotZeroAtBottom(), intake);
+        return Commands.runOnce(() -> intake.setPivotZeroAtBottom());
     }
 }
