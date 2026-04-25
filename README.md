@@ -10,6 +10,9 @@
 
 [![WCP 2026 Rebuilt Competitive Concept Video](https://www.video-thumbnail.com/youtube/wO9aJNpCE8Q)](https://www.youtube.com/watch?v=wO9aJNpCE8Q)
 
+## Documentation
+The documentation for StuyPlus-2026 can be found [here](https://stuypulse.github.io/StuyPlus-2026/index.html).
+
 ## Subsystems and Features
 - [Drivetrain](#drivetrain)
 - [Intake](#intake)
