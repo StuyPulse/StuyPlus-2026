@@ -10,6 +10,9 @@
 
 [![WCP 2026 Rebuilt Competitive Concept Video](https://www.video-thumbnail.com/youtube/wO9aJNpCE8Q)](https://www.youtube.com/watch?v=wO9aJNpCE8Q)
 
+## Documentation
+The documentation for StuyPlus-2026 can be found [here](https://stuypulse.github.io/StuyPlus-2026/index.html).
+
 ## Subsystems and Features
 - [Drivetrain](#drivetrain)
 - [Intake](#intake)
@@ -83,6 +86,8 @@ It contains the following states:
 In the `periodic` method, the shooter RPM is controlled via `VelocityTorqueCurrentFOC` control request.
 
 ## Handoff
+File: [`src/main/java/com/stuypulse/robot/subsystems/handoff`](https://github.com/StuyPulse/StuyPlus-2026/tree/main/src/main/java/com/stuypulse/robot/subsystems/handoff)
+
 The handoff is a singular motor that helps the feeder by "handing off" the fuel from the hopper to the feeder indexer lanes.
 
 It contains the following states:

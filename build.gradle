@@ -136,3 +136,7 @@ wpi.java.configureTestTasks(test)
 tasks.withType(JavaCompile) {
     options.compilerArgs.add '-XDstringConcat=inline'
 }
+
+tasks.javadoc {
+    options.addStringOption("favicon", "images/favicon.ico")
+}
