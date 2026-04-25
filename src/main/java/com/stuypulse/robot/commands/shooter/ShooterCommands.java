@@ -14,18 +14,18 @@ public class ShooterCommands {
     }
 
     public static Command setShoot() {
-        return Commands.runOnce(() -> shooter.setState(ShooterState.SHOOT));
+        return Commands.runOnce(() -> shooter.setState(ShooterState.SHOOT), shooter);
     }
 
     public static Command setFerry() {
-        return Commands.runOnce(() -> shooter.setState(ShooterState.FERRY));
+        return Commands.runOnce(() -> shooter.setState(ShooterState.FERRY), shooter);
     }
 
     public static Command setIdle() {
-        return Commands.runOnce(() -> shooter.setState(ShooterState.IDLE));
+        return Commands.runOnce(() -> shooter.setState(ShooterState.IDLE), shooter);
     }
 
     public static Command setManual() {
-        return Commands.runOnce(() -> shooter.setState(ShooterState.MANUAL_HUB));
+        return Commands.runOnce(() -> shooter.setState(ShooterState.MANUAL_HUB), shooter);
     }
 }

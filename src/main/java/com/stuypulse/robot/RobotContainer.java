@@ -25,9 +25,7 @@ import com.stuypulse.robot.commands.auton.TwoMeterPath;
 import com.stuypulse.robot.commands.feeder.FeederSetForward;
 import com.stuypulse.robot.commands.feeder.FeederSetState;
 import com.stuypulse.robot.commands.feeder.FeederSetStop;
-import com.stuypulse.robot.commands.handoff.HandoffSetForward;
-import com.stuypulse.robot.commands.handoff.HandoffSetIdle;
-import com.stuypulse.robot.commands.handoff.HandoffSetReverse;
+import com.stuypulse.robot.commands.handoff.HandoffCommands;
 import com.stuypulse.robot.commands.swerve.SwerveDriveDrive;
 import com.stuypulse.robot.commands.swerve.SwerveDriveResetRotation;
 import com.stuypulse.robot.commands.swerve.SwerveDriveRotate;
@@ -126,14 +124,14 @@ public class RobotContainer {
 
     private void configureHandoffLogic() {
         swerve.notAlignedToHub().and(() -> shooter.getState() == ShooterState.SHOOT)
-            .whileTrue(new HandoffSetIdle());
+            .whileTrue(HandoffCommands.setIdle());
 
         swerve.notAlignedToFerryZone().and(() -> shooter.getState() == ShooterState.FERRY)
-            .whileTrue(new HandoffSetIdle());
+            .whileTrue(HandoffCommands.setIdle());
 
         handoff.handoffStalling()
-            .onTrue(new HandoffSetReverse())
-            .onFalse(new HandoffSetForward());
+            .onTrue(HandoffCommands.setReverse())
+            .onFalse(HandoffCommands.setForward());
     }
 
     /***************/
@@ -164,7 +162,7 @@ public class RobotContainer {
             .onTrue(new SwerveDriveAlignToHub()
                     .andThen(new SwerveDriveXMode())
                     .andThen(ShooterCommands.setShoot())
-                    .andThen(new HandoffSetForward())
+                    .andThen(HandoffCommands.setForward())
                         .alongWith(new FeederSetForward(), new IntakeAgitateOnce().repeatedly()));
 
         //Top Left Paddle
@@ -178,7 +176,7 @@ public class RobotContainer {
             .onTrue(new SwerveDriveAlignToFerryZone()
                     .andThen(new SwerveDriveXMode())
                     .andThen(ShooterCommands.setFerry())
-                    .andThen(new HandoffSetForward())
+                    .andThen(HandoffCommands.setForward())
                         .alongWith(new FeederSetForward(), new IntakeAgitateOnce().repeatedly()));
 
         //Bottom Right Paddle
@@ -186,12 +184,12 @@ public class RobotContainer {
         driver.y()
             .onTrue(new SwerveDriveXMode()
                     .andThen(ShooterCommands.setManual())
-                    .andThen(new HandoffSetForward())
+                    .andThen(HandoffCommands.setForward())
                         .alongWith(new FeederSetForward(), new IntakeAgitateOnce().repeatedly()));
 
         //Top Right Paddle
         driver.b()
-            .onTrue(new HandoffSetIdle()
+            .onTrue(HandoffCommands.setIdle()
                     .alongWith(new FeederSetStop(), new IntakeSetIntake()));
         
         //Bottom Left Paddle
