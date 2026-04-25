@@ -17,31 +17,31 @@ import edu.wpi.first.units.measure.*;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class FeederImpl extends Feeder {
-    private final TalonFX feederLeader;
+    private final TalonFX feederMotor;
     private final DutyCycleOut controller;
     private final LoggedSignals signals;
 
     public FeederImpl() {
-        feederLeader = new TalonFX(Ports.Feeder.FEEDER_MOTOR, Settings.CANIVORE);
+        feederMotor = new TalonFX(Ports.Feeder.FEEDER_MOTOR, Settings.CANIVORE);
 
-        Motors.Feeder.LEADER_CONFIG.configure(feederLeader);
+        Motors.Feeder.LEADER_CONFIG.configure(feederMotor);
 
         controller = new DutyCycleOut(getState().getTargetDutyCycle()).withEnableFOC(true);
         this.signals = new LoggedSignals(
-            feederLeader.getSupplyCurrent(),
-            feederLeader.getStatorCurrent(),
-            feederLeader.getVelocity()
+            feederMotor.getSupplyCurrent(),
+            feederMotor.getStatorCurrent(),
+            feederMotor.getVelocity()
         ).withLoggingPath("Feeder/").withSignalLocation(LoggedSignals.SignalLocation.RIO);
     }
 
     @Override
     public AngularVelocity getCurrentAngularVelocity() {
-        return feederLeader.getVelocity().getValue();
+        return feederMotor.getVelocity().getValue();
     }
 
     @Override
     protected void stopMotors() {
-        feederLeader.stopMotor();
+        feederMotor.stopMotor();
     }
 
     @Override
@@ -63,12 +63,12 @@ public class FeederImpl extends Feeder {
         }
 
         // Apply
-        feederLeader.setControl(controller.withOutput(getState().getTargetDutyCycle()));
+        feederMotor.setControl(controller.withOutput(getState().getTargetDutyCycle()));
 
         // Logging
         if (Settings.DEBUG_MODE) {
-            SmartDashboard.putNumber("Feeder/Leader Current", feederLeader.getStatorCurrent().getValueAsDouble());
-            SmartDashboard.putNumber("Feeder/Leader Voltage", feederLeader.getMotorVoltage().getValueAsDouble());
+            SmartDashboard.putNumber("Feeder/Leader Current", feederMotor.getStatorCurrent().getValueAsDouble());
+            SmartDashboard.putNumber("Feeder/Leader Voltage", feederMotor.getMotorVoltage().getValueAsDouble());
         }
 
         this.signals.logAll();

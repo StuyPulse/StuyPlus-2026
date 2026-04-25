@@ -11,10 +11,12 @@ import com.ctre.phoenix6.signals.MotorAlignmentValue;
 import com.stuypulse.robot.constants.Motors;
 import com.stuypulse.robot.constants.Ports;
 import com.stuypulse.robot.constants.Settings;
+import com.stuypulse.robot.util.LoggedSignals;
 import com.stuypulse.robot.util.SysId;
 
 import edu.wpi.first.units.measure.AngularVelocity;
 import edu.wpi.first.units.measure.Voltage;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 
 public class ShooterImpl extends Shooter {
@@ -23,6 +25,7 @@ public class ShooterImpl extends Shooter {
     private final TalonFX shooterMotorRight;
     private final VelocityTorqueCurrentFOC shooterController;
     private final Follower shooterFollowerController;
+    // private final LoggedSignals signals;
 
     private Optional<Voltage> voltageOverride;
 

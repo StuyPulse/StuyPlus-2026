@@ -29,6 +29,7 @@ public class LoggedSignals {
 
         private SignalLocation() {
             this.signals = new HashSet<>();
+            cache();
         }
 
         /**
@@ -153,12 +154,13 @@ public class LoggedSignals {
     }
 
     /**
-     * <h4>Performs a batch refresh of all registered signals</h4>
+     * <h4>Refreshes all registered signals</h4>
      *
      * <p>Should be called once per robot periodic loop before reading any signal values or calling {@link #logAll()}.
      */
     public static void refreshAll() {
         for (SignalLocation location : SignalLocation.values())
-            BaseStatusSignal.refreshAll(location.getSignalsList());
+            if (location.getSignalsList().size() > 0)
+                BaseStatusSignal.refreshAll(location.getSignalsList());
     }
 }

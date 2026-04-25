@@ -9,17 +9,24 @@ import com.stuypulse.robot.constants.Settings;
 import com.stuypulse.robot.subsystems.shooter.Shooter;
 import com.stuypulse.robot.subsystems.shooter.Shooter.ShooterState;
 import com.stuypulse.robot.subsystems.swerve.CommandSwerveDrivetrain;
+import com.stuypulse.robot.util.LoggedSignals;
 import com.stuypulse.stuylib.streams.booleans.BStream;
 import com.stuypulse.stuylib.streams.booleans.filters.BDebounce;
 
 public class HandoffImpl extends Handoff {
     private final TalonFX handoffMotor;
     private final DutyCycleOut handoffController;
+    private final LoggedSignals signals;
     private final BStream handoffStalling;
 
     public HandoffImpl() {
         handoffMotor = new TalonFX(Ports.Handoff.HANDOFF_MOTOR, Settings.CANIVORE);
         handoffController = new DutyCycleOut(getState().getHandoffDutyCycle()).withEnableFOC(true);
+        signals = new LoggedSignals(
+            handoffMotor.getSupplyCurrent(),
+            handoffMotor.getStatorCurrent(),
+            handoffMotor.getVelocity()
+        ).withLoggingPath("Handoff/").withSignalLocation(LoggedSignals.SignalLocation.RIO);
 
         // Configuring
         Motors.Handoff.HANDOFF_MOTOR_CONFIG.configure(handoffMotor);
@@ -59,7 +66,7 @@ public class HandoffImpl extends Handoff {
         handoffMotor.setControl(handoffControl);
 
         // Logging
-        this.logMotor("Handoff", handoffMotor);
+        this.signals.logAll();
         super.periodic();
     }
 }

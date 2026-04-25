@@ -3,8 +3,6 @@ package com.stuypulse.robot.subsystems.intake;
 import edu.wpi.first.units.measure.*;
 import static edu.wpi.first.units.Units.*;
 
-import static edu.wpi.first.units.Units.Volts;
-
 import java.util.Optional;
 import java.util.function.BooleanSupplier;
 
@@ -20,6 +18,7 @@ import com.stuypulse.robot.constants.Motors;
 import com.stuypulse.robot.constants.Ports;
 import com.stuypulse.robot.constants.Settings;
 import com.stuypulse.robot.constants.Settings.EnabledSubsystems;
+import com.stuypulse.robot.util.LoggedSignals;
 import com.stuypulse.robot.util.SysId;
 import com.stuypulse.stuylib.streams.booleans.BStream;
 import com.stuypulse.stuylib.streams.booleans.filters.BDebounce;
@@ -39,6 +38,8 @@ public class IntakeImpl extends Intake {
     private final DutyCycleOut rollerController;
     private final Follower followerController;
 
+    private final LoggedSignals pivotSignals;
+    private final LoggedSignals rollerSignals;
     private final BooleanSupplier pivotStalling;
     private Optional<Voltage> pivotVoltageOverride;
 
@@ -47,14 +48,31 @@ public class IntakeImpl extends Intake {
 
     public IntakeImpl() {
         intakePivotMotor = new TalonFX(Ports.Intake.MOTOR_INTAKE_PIVOT, Settings.CANIVORE);
+
         Motors.Intake.PIVOT_CONFIG.configure(intakePivotMotor);
-        intakePivotMotor.setPosition(Settings.Intake.Pivot.INITIAL_ANGLE.getRotations());
+
+        intakePivotMotor.setPosition(Settings.Intake.Pivot.INITIAL_ANGLE.getRotations()); // zero it at the up pos
+
+        pivotSignals = new LoggedSignals(
+            intakePivotMotor.getSupplyCurrent(),
+            intakePivotMotor.getStatorCurrent(),
+            intakePivotMotor.getVelocity()
+        ).withLoggingPath("Intake/Pivot/").withSignalLocation(LoggedSignals.SignalLocation.RIO);
 
         intakeRollerMotorLeft = new TalonFX(Ports.Intake.MOTOR_INTAKE_ROLLER_LEFT, Settings.CANIVORE); // leader
         intakeRollerMotorRight = new TalonFX(Ports.Intake.MOTOR_INTAKE_ROLLER_RIGHT, Settings.CANIVORE);
 
         Motors.Intake.LEFT_ROLLER_CONFIG.configure(intakeRollerMotorLeft);
         Motors.Intake.RIGHT_ROLLER_CONFIG.configure(intakeRollerMotorRight);
+
+        rollerSignals = new LoggedSignals(
+            intakeRollerMotorLeft.getSupplyCurrent(),
+            intakeRollerMotorLeft.getStatorCurrent(),
+            intakeRollerMotorLeft.getVelocity(),
+            intakeRollerMotorRight.getSupplyCurrent(),
+            intakeRollerMotorRight.getStatorCurrent(),
+            intakeRollerMotorRight.getVelocity()
+        ).withLoggingPath("Intake/Roller/").withSignalLocation(LoggedSignals.SignalLocation.RIO);
 
         pivotController = new PositionTorqueCurrentFOC(getState().getTargetAngle().getRotations());
         homingController = new VoltageOut(Settings.Intake.Pivot.HOMING_DOWN_VOLTAGE).withEnableFOC(true);
@@ -141,11 +159,11 @@ public class IntakeImpl extends Intake {
 
         // Input
 
-        boolean pivotAboveThreshold = isPivotAboveThreshold();
+        final boolean pivotAboveThreshold = isPivotAboveThreshold();
 
-        boolean pivotStalling = pivotStalling();
+        final boolean pivotStalling = pivotStalling();
 
-        IntakeState currentState = getState();
+        final IntakeState currentState = getState();
 
         // State
 
@@ -160,7 +178,7 @@ public class IntakeImpl extends Intake {
 
         // Output
 
-        ControlRequest pivotControl = switch (currentState) {
+        final ControlRequest pivotControl = switch (currentState) {
             case INTAKE, OUTTAKE, DOWN -> {
                 if (pivotAboveThreshold) {
                     // wait until pivot reaches the bottom to apply pushdown
@@ -173,23 +191,17 @@ public class IntakeImpl extends Intake {
             default -> pivotController.withPosition(currentState.getTargetAngle().getRotations());
         };
 
-        DutyCycleOut rollerControl = rollerController.withOutput(currentState.getTargetDutyCycle());
+        final DutyCycleOut rollerControl = rollerController.withOutput(currentState.getTargetDutyCycle());
 
         // Apply
-
         
         intakePivotMotor.setControl(pivotControl);
         intakeRollerMotorLeft.setControl(rollerControl);
 
         // Logging
-        SmartDashboard.putNumber("Intake/Pivot/Stator Current", intakePivotMotor.getStatorCurrent().getValueAsDouble()); // all current measured in amps
-        SmartDashboard.putNumber("Intake/Pivot/Supply Current", intakePivotMotor.getSupplyCurrent().getValueAsDouble());
-        SmartDashboard.putNumber("Intake/Pivot/Voltage", intakePivotMotor.getMotorVoltage().getValueAsDouble());
 
-        SmartDashboard.putNumber("Intake/Rollers/Left Current", intakeRollerMotorLeft.getStatorCurrent().getValueAsDouble());
-        SmartDashboard.putNumber("Intake/Rollers/Right Current", intakeRollerMotorRight.getStatorCurrent().getValueAsDouble());
-        SmartDashboard.putNumber("Intake/Rollers/Left Voltage", intakeRollerMotorLeft.getMotorVoltage().getValueAsDouble());
-        SmartDashboard.putNumber("Intake/Rollers/Right Voltage", intakeRollerMotorRight.getMotorVoltage().getValueAsDouble());
+        this.pivotSignals.logAll();
+        this.rollerSignals.logAll();
         SmartDashboard.putBoolean("Intake/Rollers/Stalling", leftRollerStalling() || rightRollerStalling());
 
         super.periodic();

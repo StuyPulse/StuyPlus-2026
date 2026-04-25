@@ -19,6 +19,7 @@ import edu.wpi.first.math.system.plant.LinearSystemId;
 import edu.wpi.first.units.measure.AngularVelocity;
 import edu.wpi.first.units.measure.Voltage;
 import edu.wpi.first.wpilibj.simulation.FlywheelSim;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 
 public class ShooterSim extends Shooter {
@@ -86,6 +87,7 @@ public class ShooterSim extends Shooter {
         shooterFollower2.update(Settings.DT);
 
         RobotVisualizer.getInstance().updateShooter(getCurrentAngularVelocity());
+        SmartDashboard.putString("CHINACHINACHINA", shooterLeader.getVelocity().getName());
 
         super.periodic();
     }
