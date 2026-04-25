@@ -23,6 +23,8 @@ jobs:
         run: ./gradlew javadoc
       - name: Commit and Push
         run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
           git fetch origin docs
           git checkout docs
           git rm -rf .
