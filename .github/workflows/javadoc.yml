@@ -20,7 +20,7 @@ jobs:
       - name: Build with Gradle
         run: ./gradlew build
       - name: Generate docs
-        run: ./gradlew javadoc -favicon images/favicon.ico
+        run: ./gradlew javadoc
       - name: Commit and Push
         run: |
           git config user.name "github-actions[bot]"
