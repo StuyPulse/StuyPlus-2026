@@ -114,21 +114,13 @@ public class RobotContainer {
         Trigger leftTrigger = new Trigger(() -> driver.getLeftTriggerAxis() > 0.5);
         Trigger rightTrigger = new Trigger(() -> driver.getRightTriggerAxis() > 0.5);
  
-        // leftTrigger
-        //     .whileTrue(new IntakeSetOuttake());
-        // leftTrigger
-        //     .onFalse(new IntakeSetHomingDown());
         leftTrigger.onTrue(new IntakeSetIntake());
 
         driver.leftBumper()
             .whileTrue(new IntakeSetOuttake());
         driver.leftBumper()
             .onFalse(new IntakeSetIntake());
-        
-        // rightTrigger    
-        //     .onTrue(new IntakeSetHomingDown()
-        //         .andThen(new WaitUntilCommand(() -> intake.getState() == IntakeState.DOWN))
-        //         .andThen(new IntakeSetIntake()));
+
         rightTrigger
             .onTrue(new SwerveDriveAlignToHub()
                     .andThen(new SwerveDriveXMode())
