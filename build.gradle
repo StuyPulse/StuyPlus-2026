@@ -146,5 +146,5 @@ tasks.javadoc {
 
 tasks.register("runDogLogAST", JavaExec) {
     classpath = sourceSets.main.runtimeClasspath
-    mainClass = "tools.doglog_ast.Main"
+    mainClass = "tools.DogLogASTParser.Main"
 }
