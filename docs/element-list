@@ -22,4 +22,4 @@ com.stuypulse.robot.util
 com.stuypulse.robot.util.shooter
 com.stuypulse.robot.util.simulation
 com.stuypulse.robot.util.vision
-tools.doglog_ast
+tools.DogLogAst
