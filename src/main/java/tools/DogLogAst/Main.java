@@ -1,4 +1,4 @@
-package tools.DogLogAst;
+package tools.DogLogAST;
 
 import java.nio.file.Files;
 import java.nio.file.Path;

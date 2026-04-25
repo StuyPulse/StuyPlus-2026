@@ -1,4 +1,4 @@
-package tools.DogLogAst;
+package tools.DogLogAST;
 
 import com.github.javaparser.ast.CompilationUnit;
 import com.github.javaparser.ast.expr.MethodCallExpr;
