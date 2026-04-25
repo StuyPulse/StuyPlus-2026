@@ -40,6 +40,7 @@ import com.stuypulse.robot.commands.intake.IntakeSetHomingDown;
 import com.stuypulse.robot.commands.intake.IntakeSetIdle;
 import com.stuypulse.robot.commands.intake.IntakeSetIntake;
 import com.stuypulse.robot.commands.intake.IntakeSetOuttake;
+import com.stuypulse.robot.commands.leds.LEDDefaultCommand;
 import com.stuypulse.robot.commands.shooter.ShooterSetFerry;
 import com.stuypulse.robot.commands.shooter.ShooterSetManual;
 import com.stuypulse.robot.commands.shooter.ShooterSetShoot;
@@ -61,6 +62,7 @@ import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
 
 import com.stuypulse.robot.subsystems.intake.Intake;
 import com.stuypulse.robot.subsystems.intake.Intake.IntakeState;
+import com.stuypulse.robot.subsystems.leds.LEDController;
 import com.stuypulse.robot.subsystems.feeder.Feeder;
 import com.stuypulse.robot.subsystems.swerve.CommandSwerveDrivetrain;
 import com.stuypulse.robot.subsystems.shooter.Shooter;
@@ -76,6 +78,7 @@ public class RobotContainer {
     private final Shooter shooter = Shooter.getInstance();
     private final CommandSwerveDrivetrain swerve = CommandSwerveDrivetrain.getInstance();
     private final LimelightVision vision = LimelightVision.getInstance();
+    private final LEDController leds = LEDController.getInstance();
 
     // Autons
     private static SendableChooser<Command> autonChooser = new SendableChooser<>();
@@ -97,6 +100,7 @@ public class RobotContainer {
 
     private void configureDefaultCommands() {
         swerve.setDefaultCommand(new SwerveDriveDrive(driver));
+        leds.setDefaultCommand(new LEDDefaultCommand());
     }
 
     /***************/

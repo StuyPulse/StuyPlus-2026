@@ -13,6 +13,10 @@ public interface Ports {
         int DEBUGGER = 2;
     }
 
+    public interface LED {
+        int LED_PWM_PORT = 0;//TODO: Get actual port
+    }
+
     // public interface LED {
     //     int PORT = 2;
     // }

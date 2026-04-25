@@ -14,7 +14,8 @@ import edu.wpi.first.math.util.Units;
 import static edu.wpi.first.units.Units.*;
 import edu.wpi.first.units.*;
 import edu.wpi.first.units.measure.*;
-
+import edu.wpi.first.wpilibj.LEDPattern;
+import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.math.VecBuilder;
 import edu.wpi.first.math.Vector;
 import edu.wpi.first.math.geometry.Pose2d;
@@ -36,7 +37,7 @@ public interface Settings {
     public interface EnabledSubsystems {
         SmartBoolean FEEDER = new SmartBoolean("Enabled Subsystems/Feeder", true);
         SmartBoolean INTAKE = new SmartBoolean("Enabled Subsystems/Intake", true);
-        // SmartBoolean LED = new SmartBoolean("Enabled Subsystems/LED", true);
+        SmartBoolean LED = new SmartBoolean("Enabled Subsystems/LED", true);
         SmartBoolean HANDOFF = new SmartBoolean("Enabled Subsystems/Handoff", true);
         SmartBoolean SHOOTER = new SmartBoolean("Enabled Subsystems/Shooter", true);
         SmartBoolean VISION = new SmartBoolean("Enabled Subsystems/Vision", true);
@@ -100,25 +101,38 @@ public interface Settings {
         MomentOfInertia J = KilogramSquareMeters.of(0.001);
     }
 
-    // public interface LED {
-    //     int LED_LENGTH = 60; 
+    public interface LED {
+        int LED_LENGTH = 80; //TODO: Get actual length of led, along with length of individual sections
+
+        //Buffer Views {Starting Index, Ending Index}
+        int[] SHOOTER_BUFFER = {0, 19};
+        int[] FEEDER_BUFFER = {20, 39};
+        int[] INTAKE_BUFFER = {40, 59};
+        int[] HANDOFF_BUFFER = {60, 79};
  
-    //     //shooter
-    //     LEDPattern SHOOTING = LEDPattern.solid(Color.kOrange);
-    //     LEDPattern FERRYING = LEDPattern.solid(Color.kPurple);
+        //shooter
+        LEDPattern SHOOTING = LEDPattern.solid(Color.kOrange);
+        LEDPattern FERRYING = LEDPattern.solid(Color.kPurple);
+        LEDPattern MANUAL = LEDPattern.solid(Color.kPeru);
 
-    //     //feeder
-    //     LEDPattern FEEDER_FORWARD = LEDPattern.solid(Color.kBlue);
-    //     LEDPattern FEEDER_REVERSE = LEDPattern.solid(Color.kRed);
 
-    //     //take
-    //     LEDPattern INTAKING = LEDPattern.solid(Color.kYellow);
-    //     LEDPattern OUTTAKING = LEDPattern.solid(Color.kGreen);
-    //     LEDPattern AGITATING = LEDPattern.solid(Color.kCyan);
+        //feeder
+        LEDPattern FEEDER_FORWARD = LEDPattern.solid(Color.kBlue);
+        LEDPattern FEEDER_REVERSE = LEDPattern.solid(Color.kRed);
+
+        //intake
+        LEDPattern INTAKING = LEDPattern.solid(Color.kYellow);
+        LEDPattern OUTTAKING = LEDPattern.solid(Color.kGreen);
+        LEDPattern HOMING_DOWN = LEDPattern.solid(Color.kGainsboro);
+        LEDPattern AGITATING = LEDPattern.solid(Color.kCyan);
+
+        //handoff
+        LEDPattern HANDOFF_FORWARD = LEDPattern.solid(Color.kDarkOrange);
+        LEDPattern HANDOFF_REVERSE = LEDPattern.solid(Color.kPapayaWhip);//mmm papaya whip
         
-    //     //states
-    //     LEDPattern DISABLED = LEDPattern.solid(Color.kGray);
-    // }
+        //states
+        LEDPattern DISABLED = LEDPattern.solid(Color.kGray);
+    }
 
     public interface Handoff {
         double IDLE_DUTY_CYCLE = 0.0;
