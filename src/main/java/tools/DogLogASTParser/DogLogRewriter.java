@@ -7,7 +7,7 @@ import com.github.javaparser.ast.visitor.ModifierVisitor;
 
 public class DogLogRewriter extends ModifierVisitor<Void> {
 
-    private boolean smartDashboardCallFound = false;
+    private boolean fileChanged = false;
 
     @Override
     public MethodCallExpr visit(MethodCallExpr methodCall, Void arg) {
@@ -18,7 +18,6 @@ public class DogLogRewriter extends ModifierVisitor<Void> {
         }
 
         if (methodCall.getScope().get().toString().equals("SmartDashboard")) {
-            smartDashboardCallFound = true;
             String methodName = methodCall.getNameAsString();
             boolean shouldBeReplaced = 
                 switch (methodName) {
@@ -32,6 +31,7 @@ public class DogLogRewriter extends ModifierVisitor<Void> {
 
             methodCall.setScope(new NameExpr("DogLog"));
             methodCall.setName("log");
+            fileChanged = true;
         }
 
         return methodCall;
@@ -41,7 +41,7 @@ public class DogLogRewriter extends ModifierVisitor<Void> {
         DogLogRewriter doglogRewriter = new DogLogRewriter();
         parsed.accept(doglogRewriter, null);
 
-        if (!doglogRewriter.smartDashboardCallFound) {
+        if (!doglogRewriter.fileChanged) {
             return;
         }
 

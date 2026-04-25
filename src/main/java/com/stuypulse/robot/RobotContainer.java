@@ -64,6 +64,7 @@ import com.stuypulse.robot.subsystems.intake.Intake;
 import com.stuypulse.robot.subsystems.intake.Intake.IntakeState;
 import com.stuypulse.robot.subsystems.leds.LEDController;
 import com.stuypulse.robot.subsystems.feeder.Feeder;
+import com.stuypulse.robot.subsystems.handoff.Handoff;
 import com.stuypulse.robot.subsystems.swerve.CommandSwerveDrivetrain;
 import com.stuypulse.robot.subsystems.shooter.Shooter;
 
@@ -79,6 +80,7 @@ public class RobotContainer {
     private final CommandSwerveDrivetrain swerve = CommandSwerveDrivetrain.getInstance();
     private final LimelightVision vision = LimelightVision.getInstance();
     private final LEDController leds = LEDController.getInstance();
+    private final Handoff handoff = Handoff.getInstance();
 
     // Autons
     private static SendableChooser<Command> autonChooser = new SendableChooser<>();
