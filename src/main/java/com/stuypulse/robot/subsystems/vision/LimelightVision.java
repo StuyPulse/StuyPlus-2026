@@ -107,6 +107,12 @@ public class LimelightVision extends SubsystemBase{
         }
     }
 
+    public void setPipeline(int pipeline) {
+        for (String name : names) {
+            LimelightHelpers.setPipelineIndex(name, pipeline);
+        }
+    }
+
     /**
      * Allows you to set the convergence speed of the internal LL IMU and robot gyro. 
      *
