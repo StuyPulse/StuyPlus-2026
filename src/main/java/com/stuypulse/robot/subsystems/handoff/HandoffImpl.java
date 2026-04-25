@@ -13,6 +13,8 @@ import com.stuypulse.robot.util.LoggedSignals;
 import com.stuypulse.stuylib.streams.booleans.BStream;
 import com.stuypulse.stuylib.streams.booleans.filters.BDebounce;
 
+import edu.wpi.first.wpilibj2.command.button.Trigger;
+
 public class HandoffImpl extends Handoff {
     private final TalonFX handoffMotor;
     private final DutyCycleOut handoffController;
@@ -42,25 +44,14 @@ public class HandoffImpl extends Handoff {
     }
 
     @Override
+    public Trigger handoffStalling() {
+        return new Trigger(handoffStalling);
+    }
+
+    @Override
     public void periodic() {
-        // States
-        final Shooter shooter = Shooter.getInstance();
-        final CommandSwerveDrivetrain swerve = CommandSwerveDrivetrain.getInstance();
-
-        if (!(swerve.isAlignedToTarget(Field.getHubPose())) && shooter.getState() == ShooterState.SHOOT) {
-            setState(HandoffState.IDLE);
-        }
-        // TODO: consider relaxing tolerances for ferrying
-        if (!(swerve.isAlignedToTarget(Field.getFerryZonePose(swerve.getPose().getTranslation()))) && 
-        shooter.getState() == ShooterState.FERRY) {
-            setState(HandoffState.IDLE);
-        }
-
         // Control
-        final double dutyCycle = handoffStalling.get()
-            ? Handoff.HandoffState.REVERSE.getHandoffDutyCycle()
-            : getState().getHandoffDutyCycle();
-        final DutyCycleOut handoffControl = handoffController.withOutput(dutyCycle);
+        final DutyCycleOut handoffControl = handoffController.withOutput(getState().getHandoffDutyCycle());
 
         // Apply
         handoffMotor.setControl(handoffControl);

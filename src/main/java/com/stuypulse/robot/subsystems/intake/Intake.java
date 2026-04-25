@@ -9,7 +9,9 @@ import com.stuypulse.robot.util.RobotVisualizer;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.units.measure.Voltage;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 
 import static edu.wpi.first.units.Units.RPM;
@@ -72,9 +74,10 @@ public abstract class Intake extends SubsystemBase {
     }
 
     // Pivot Commands
+    public abstract Trigger pivotStalling();
     public abstract Rotation2d getRelativePosition();
-    public abstract void setPivotZero();
-    public abstract void setPivotZeroAtBottom();
+    public abstract Command setPivotZero();
+    public abstract Command setPivotZeroAtBottom();
     public boolean atTargetAngle() {
         return Math.abs(
                 (getRelativePosition().getRotations())

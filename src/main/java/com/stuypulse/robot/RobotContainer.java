@@ -27,6 +27,7 @@ import com.stuypulse.robot.commands.feeder.FeederSetState;
 import com.stuypulse.robot.commands.feeder.FeederSetStop;
 import com.stuypulse.robot.commands.handoff.HandoffSetForward;
 import com.stuypulse.robot.commands.handoff.HandoffSetIdle;
+import com.stuypulse.robot.commands.handoff.HandoffSetReverse;
 import com.stuypulse.robot.commands.swerve.SwerveDriveDrive;
 import com.stuypulse.robot.commands.swerve.SwerveDriveResetRotation;
 import com.stuypulse.robot.commands.swerve.SwerveDriveRotate;
@@ -64,8 +65,10 @@ import com.stuypulse.robot.subsystems.intake.Intake;
 import com.stuypulse.robot.subsystems.intake.Intake.IntakeState;
 import com.stuypulse.robot.subsystems.leds.LEDController;
 import com.stuypulse.robot.subsystems.feeder.Feeder;
+import com.stuypulse.robot.subsystems.handoff.Handoff;
 import com.stuypulse.robot.subsystems.swerve.CommandSwerveDrivetrain;
 import com.stuypulse.robot.subsystems.shooter.Shooter;
+import com.stuypulse.robot.subsystems.shooter.Shooter.ShooterState;
 
 public class RobotContainer {
     // Gamepads
@@ -79,6 +82,7 @@ public class RobotContainer {
     private final CommandSwerveDrivetrain swerve = CommandSwerveDrivetrain.getInstance();
     private final LimelightVision vision = LimelightVision.getInstance();
     private final LEDController leds = LEDController.getInstance();
+    private final Handoff handoff = Handoff.getInstance();
 
     // Autons
     private static SendableChooser<Command> autonChooser = new SendableChooser<>();
@@ -90,6 +94,10 @@ public class RobotContainer {
         configureDefaultCommands();
         configureButtonBindings();
         configureAutons();
+
+        configureIntakeLogic();
+        configureFeederLogic();
+        configureHandoffLogic();
         
         SmartDashboard.putData("Field", Field.FIELD2D);
     }
@@ -101,6 +109,33 @@ public class RobotContainer {
     private void configureDefaultCommands() {
         swerve.setDefaultCommand(new SwerveDriveDrive(driver));
         leds.setDefaultCommand(new LEDDefaultCommand());
+    }
+
+    //Subsystem automatic logic
+
+    private void configureIntakeLogic() {
+        intake.pivotStalling()
+            .onTrue(intake.setPivotZeroAtBottom().alongWith(new IntakeSetDown()));
+    }
+
+    private void configureFeederLogic() {
+        swerve.notAlignedToHub().and(() -> shooter.getState() == ShooterState.SHOOT)
+            .whileTrue(new FeederSetStop());
+
+        swerve.notAlignedToFerryZone().and(() -> shooter.getState() == ShooterState.FERRY)
+            .whileTrue(new FeederSetStop());
+    }
+
+    private void configureHandoffLogic() {
+        swerve.notAlignedToHub().and(() -> shooter.getState() == ShooterState.SHOOT)
+            .whileTrue(new HandoffSetIdle());
+
+        swerve.notAlignedToFerryZone().and(() -> shooter.getState() == ShooterState.FERRY)
+            .whileTrue(new HandoffSetIdle());
+
+        handoff.handoffStalling()
+            .onTrue(new HandoffSetReverse())
+            .onFalse(new HandoffSetForward());
     }
 
     /***************/

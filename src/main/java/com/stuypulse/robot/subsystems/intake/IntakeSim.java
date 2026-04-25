@@ -24,6 +24,9 @@ import edu.wpi.first.math.system.plant.LinearSystemId;
 import edu.wpi.first.wpilibj.simulation.DCMotorSim;
 import edu.wpi.first.wpilibj.simulation.SingleJointedArmSim;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 
 public class IntakeSim extends Intake {
@@ -86,14 +89,23 @@ public class IntakeSim extends Intake {
         return new Rotation2d(pivotSim.getAngleRads() + zeroOffset.getRadians());
     }
 
+    private void setZeroOffset(Rotation2d offset) {
+        zeroOffset = offset;
+    }
+
     @Override
-    public void setPivotZero() {
-        zeroOffset = new Rotation2d(-pivotSim.getAngleRads());
+    public Trigger pivotStalling() {
+        return new Trigger(() -> false);
+    }
+
+    @Override
+    public Command setPivotZero() {
+        return Commands.runOnce(() -> setZeroOffset(new Rotation2d(pivotSim.getAngleRads())));
     }
     
     @Override
-    public void setPivotZeroAtBottom() {
-        zeroOffset = new Rotation2d(-pivotSim.getAngleRads()).plus(Settings.Intake.Pivot.DOWN_ANGLE);
+    public Command setPivotZeroAtBottom() {
+        return Commands.runOnce(() -> setZeroOffset(new Rotation2d(-pivotSim.getAngleRads()).plus(Settings.Intake.Pivot.DOWN_ANGLE)));
     }
 
     @Override

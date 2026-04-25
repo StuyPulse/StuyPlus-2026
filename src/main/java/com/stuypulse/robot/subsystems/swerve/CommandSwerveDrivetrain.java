@@ -40,6 +40,7 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Subsystem;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 
 import com.ctre.phoenix6.SignalLogger;
@@ -395,6 +396,14 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
         Rotation2d targetAngle = new Rotation2d(Math.atan2(target.getY() - currentPose.getY(), target.getX() - currentPose.getX()));
 
         return currentPose.getRotation().minus(targetAngle).getDegrees() < Settings.Swerve.Alignment.Tolerances.THETA_TOLERANCE.getDegrees();
+    }
+
+    public Trigger notAlignedToHub() {
+        return new Trigger(() -> !isAlignedToTarget(Field.getHubPose()));
+    }
+
+    public Trigger notAlignedToFerryZone() {
+        return new Trigger(() -> !isAlignedToTarget(Field.getFerryZonePose(getPose().getTranslation())));
     }
     
     public Pose2d getShooterPose() {

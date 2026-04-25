@@ -25,6 +25,9 @@ import com.stuypulse.stuylib.streams.booleans.filters.BDebounce;
 
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 
 public class IntakeImpl extends Intake {
@@ -111,17 +114,18 @@ public class IntakeImpl extends Intake {
     }
 
     @Override
-    public void setPivotZeroAtBottom() {
-        intakePivotMotor.setPosition(Settings.Intake.Pivot.DOWN_ANGLE.getRotations());
+    public Command setPivotZeroAtBottom() {
+        return Commands.runOnce(() -> intakePivotMotor.setPosition(Settings.Intake.Pivot.DOWN_ANGLE.getRotations()));
     }
 
     @Override
-    public void setPivotZero() {
-        intakePivotMotor.setPosition(0);
+    public Command setPivotZero() {
+        return Commands.runOnce(() -> intakePivotMotor.setPosition(0));
     }
 
-    private boolean pivotStalling() {
-        return pivotStalling.getAsBoolean();
+    @Override
+    public Trigger pivotStalling() {
+        return new Trigger(pivotStalling);
     }
 
     /***********************/
@@ -148,6 +152,21 @@ public class IntakeImpl extends Intake {
         intakeRollerMotorRight.setControl(followerController); // re-add the follow control after stopMotor removes it
     }
 
+    private ControlRequest getPivotControl() {
+        return switch (getState()) {
+            case INTAKE, OUTTAKE, DOWN -> {
+                if (isPivotAboveThreshold()) {
+                    // wait until pivot reaches the bottom to apply pushdown
+                    yield pushdownController.withOutput(Settings.Intake.Pivot.PUSHDOWN_CURRENT.getAsDouble());
+                } else {
+                    yield pivotController.withPosition(getState().getTargetAngle().getRotations());
+                }
+            }
+            case HOMING_DOWN -> homingController;
+            default -> pivotController.withPosition(getState().getTargetAngle().getRotations());
+        };
+    }
+
     @Override
     public void periodic() {
         if (!EnabledSubsystems.INTAKE.get()) {
@@ -162,37 +181,11 @@ public class IntakeImpl extends Intake {
 
         // Input
 
-        final boolean pivotAboveThreshold = isPivotAboveThreshold();
-
-        final boolean pivotStalling = pivotStalling();
-
         final IntakeState currentState = getState();
-
-        // State
-
-        if (currentState == IntakeState.HOMING_DOWN && pivotStalling) {
-            setPivotZeroAtBottom();
-            setState(IntakeState.DOWN);
-        }
-
-        if ((currentState == IntakeState.DOWN) && pivotStalling) {
-            setPivotZeroAtBottom();
-        }
 
         // Output
 
-        final ControlRequest pivotControl = switch (currentState) {
-            case INTAKE, OUTTAKE, DOWN -> {
-                if (pivotAboveThreshold) {
-                    // wait until pivot reaches the bottom to apply pushdown
-                    yield pushdownController.withOutput(Settings.Intake.Pivot.PUSHDOWN_CURRENT.getAsDouble());
-                } else {
-                    yield pivotController.withPosition(currentState.getTargetAngle().getRotations());
-                }
-            }
-            case HOMING_DOWN -> homingController;
-            default -> pivotController.withPosition(currentState.getTargetAngle().getRotations());
-        };
+        final ControlRequest pivotControl = getPivotControl();
 
         final DutyCycleOut rollerControl = rollerController.withOutput(currentState.getTargetDutyCycle());
 
