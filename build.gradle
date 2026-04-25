@@ -86,6 +86,7 @@ dependencies {
     testImplementation 'junit:junit:4.13.1'
 
     implementation "com.github.StuyPulse:StuyLib:${STUYLIB_VERSION}";
+    implementation "com.github.javaparser:javaparser-core:3.24.0";
 }
 
 // Simulation configuration (e.g. environment variables).
@@ -141,4 +142,9 @@ tasks.javadoc {
     options.addBooleanOption("-allow-script-in-comments", true)
     options.header = '<script>var l=document.createElement("link");l.rel="icon";l.href="/StuyPlus-2026/favicon.ico?t=" + Date.now();l.type="image/x-icon";document.head.appendChild(l);</script>'
     options.addStringOption("doctitle", "StuyPlus 2026")
+}
+
+tasks.register("runDogLogAST", JavaExec) {
+    classpath = sourceSets.main.runtimeClasspath
+    mainClass = "tools.doglog_ast.Main"
 }
