@@ -15,7 +15,7 @@ public class Main {
         try {
             Files.walk(root)
                  .filter(Files::isRegularFile)
-                 .filter(p -> !p.toString().contains("tools/doglog_ast"))
+                 .filter(p -> !p.toString().contains("tools/"))
                  .filter(p -> p.toString().endsWith(".java"))
                  .forEach(Main::processFile);
         } catch (java.io.IOException e) {
