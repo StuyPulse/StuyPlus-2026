@@ -66,10 +66,6 @@ public class FeederImpl extends Feeder {
         feederMotor.setControl(controller.withOutput(getState().getTargetDutyCycle()));
 
         // Logging
-        if (Settings.DEBUG_MODE) {
-            SmartDashboard.putNumber("Feeder/Leader Current", feederMotor.getStatorCurrent().getValueAsDouble());
-            SmartDashboard.putNumber("Feeder/Leader Voltage", feederMotor.getMotorVoltage().getValueAsDouble());
-        }
 
         this.signals.logAll();
         super.periodic();
