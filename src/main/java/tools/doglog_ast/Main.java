@@ -29,8 +29,9 @@ public class Main {
 
             System.out.println("Replaced file: " + filePath + " with DogLog calls.");
             
-        } catch (java.io.IOException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            String errorReason = e.getClass().getSimpleName() + ": " + e.getMessage();
+            System.out.println("Error processing file: " + filePath + ", will be skipped: " + errorReason);
         }
     }
 }
