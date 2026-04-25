@@ -31,5 +31,5 @@ jobs:
           cp -r build/docs/javadoc/. docs/
           git add docs/
           rm -rf build/ .gradle/
-          git commit -m "DOCS: Automated documentation update from main"
+          git commit -m "DOCS: Automated documentation update from main" || "No changes to commit"
           git push origin docs
