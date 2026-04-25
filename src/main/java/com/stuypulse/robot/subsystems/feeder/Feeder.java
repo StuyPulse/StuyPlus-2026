@@ -1,9 +1,7 @@
 package com.stuypulse.robot.subsystems.feeder;
 
-import com.ctre.phoenix6.hardware.TalonFX;
 import com.stuypulse.robot.Robot;
 import com.stuypulse.robot.constants.Settings;
-import com.stuypulse.robot.util.LoggedSignals;
 
 import edu.wpi.first.units.measure.*;
 import static edu.wpi.first.units.Units.*;
@@ -14,7 +12,6 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 public abstract class Feeder extends SubsystemBase{
     private static final Feeder instance;
     private FeederState state;
-    private LoggedSignals signals;
 
     static {
         if (Robot.isReal()) {
@@ -48,15 +45,6 @@ public abstract class Feeder extends SubsystemBase{
         this.state = FeederState.STOP;
     }
 
-    protected void setupSignals() {
-        final TalonFX motor = getMotor();
-        this.signals = new LoggedSignals(
-            motor.getSupplyCurrent(),
-            motor.getStatorCurrent(),
-            motor.getVelocity()
-        ).withLoggingPath("Feeder/").withSignalLocation(LoggedSignals.SignalLocation.RIO);
-    }
-
     public void setState(FeederState state) {
         this.state = state;
     }
@@ -66,7 +54,6 @@ public abstract class Feeder extends SubsystemBase{
     }
 
     public abstract AngularVelocity getCurrentAngularVelocity();
-    protected abstract TalonFX getMotor();
     protected abstract void stopMotors();
 
     @Override
@@ -79,6 +66,5 @@ public abstract class Feeder extends SubsystemBase{
 
         SmartDashboard.putString("Feeder/State", currentState.name());
         SmartDashboard.putString("States/Feeder", currentState.name());
-        this.signals.logAll();
     }
 }

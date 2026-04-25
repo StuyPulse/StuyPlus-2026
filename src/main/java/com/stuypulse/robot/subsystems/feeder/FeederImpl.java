@@ -10,6 +10,7 @@ import com.stuypulse.robot.constants.Settings.EnabledSubsystems;
 import com.stuypulse.robot.subsystems.shooter.Shooter;
 import com.stuypulse.robot.subsystems.shooter.Shooter.ShooterState;
 import com.stuypulse.robot.subsystems.swerve.CommandSwerveDrivetrain;
+import com.stuypulse.robot.util.LoggedSignals;
 
 import edu.wpi.first.units.measure.*;
 
@@ -18,6 +19,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class FeederImpl extends Feeder {
     private final TalonFX feederLeader;
     private final DutyCycleOut controller;
+    private final LoggedSignals signals;
 
     public FeederImpl() {
         feederLeader = new TalonFX(Ports.Feeder.FEEDER_MOTOR, Settings.CANIVORE);
@@ -25,17 +27,16 @@ public class FeederImpl extends Feeder {
         Motors.Feeder.LEADER_CONFIG.configure(feederLeader);
 
         controller = new DutyCycleOut(getState().getTargetDutyCycle()).withEnableFOC(true);
-        setupSignals();
+        this.signals = new LoggedSignals(
+            feederLeader.getSupplyCurrent(),
+            feederLeader.getStatorCurrent(),
+            feederLeader.getVelocity()
+        ).withLoggingPath("Feeder/").withSignalLocation(LoggedSignals.SignalLocation.RIO);
     }
 
     @Override
     public AngularVelocity getCurrentAngularVelocity() {
         return feederLeader.getVelocity().getValue();
-    }
-
-    @Override
-    protected TalonFX getMotor() {
-        return this.feederLeader;
     }
 
     @Override
@@ -70,6 +71,7 @@ public class FeederImpl extends Feeder {
             SmartDashboard.putNumber("Feeder/Leader Voltage", feederLeader.getMotorVoltage().getValueAsDouble());
         }
 
+        this.signals.logAll();
         super.periodic();
     }
 }

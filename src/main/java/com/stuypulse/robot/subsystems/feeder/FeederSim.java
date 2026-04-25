@@ -4,7 +4,6 @@ import edu.wpi.first.units.measure.*;
 import static edu.wpi.first.units.Units.*;
 
 import com.ctre.phoenix6.controls.DutyCycleOut;
-import com.ctre.phoenix6.hardware.TalonFX;
 import com.stuypulse.robot.constants.Settings;
 import com.stuypulse.robot.util.RobotVisualizer;
 import com.stuypulse.robot.util.simulation.TalonFXSimulation;
@@ -35,17 +34,11 @@ public class FeederSim extends Feeder {
 
         feederController = new DutyCycleOut(0)
             .withEnableFOC(true);
-        setupSignals();
     }
 
     @Override
     public AngularVelocity getCurrentAngularVelocity() {
         return feederMotor.getVelocity().getValue();
-    }
-
-    @Override
-    protected TalonFX getMotor() {
-        return this.feederMotor;
     }
 
     @Override
