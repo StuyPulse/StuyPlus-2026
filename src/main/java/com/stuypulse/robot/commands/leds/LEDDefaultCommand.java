@@ -32,6 +32,10 @@ public class LEDDefaultCommand extends Command{
 
     @Override
     public void execute() {
+        if (!Settings.EnabledSubsystems.LED.get()) {
+            return;
+        }
+
         if (DriverStation.isDisabled()) {
             leds.applyPattern(Settings.LED.DISABLED);
             return;
