@@ -3,12 +3,15 @@ package tools.doglog_ast;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
+import com.github.javaparser.ParserConfiguration;
 import com.github.javaparser.StaticJavaParser;
 import com.github.javaparser.ast.CompilationUnit;
 
 public class Main {
     public static void main(String[] args) {
-        Path root = Path.of("src/main/java");
+        StaticJavaParser.getConfiguration()
+            .setLanguageLevel(ParserConfiguration.LanguageLevel.JAVA_17);
+        final Path root = Path.of("src/main/java");
         try {
             Files.walk(root)
                  .filter(Files::isRegularFile)
