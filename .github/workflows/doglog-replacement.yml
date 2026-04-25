@@ -28,7 +28,7 @@ jobs:
         run: ./gradlew runDogLogAST
 
       - name: Add DogLog vendordep
-        run: ./gradlew vendordep https://doglog.dev/vendordep.json
+        run: ./gradlew vendordep --url=https://doglog.dev/vendordep.json
 
       - name: Commit changes
         run: |
