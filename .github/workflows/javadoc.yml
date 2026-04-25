@@ -27,7 +27,6 @@ jobs:
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git fetch origin docs
           git checkout docs
-          git rm -rf .
           cp -r build/docs/javadoc/. docs/
           git add docs/
           git commit -m "DOCS: Automated documentation update from main"
