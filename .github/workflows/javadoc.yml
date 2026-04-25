@@ -25,6 +25,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
+          cp images/favicon.ico build/docs/javadoc/
           git fetch origin docs
           git checkout docs
           cp -r build/docs/javadoc/. docs/
