@@ -53,18 +53,6 @@ public class HandoffSim extends Handoff{
             stopMotors();
             return;
         }
-       
-        Shooter shooter = Shooter.getInstance();
-        CommandSwerveDrivetrain swerve = CommandSwerveDrivetrain.getInstance();
-
-        if (!(swerve.isAlignedToTarget(Field.getHubPose())) && shooter.getState() == ShooterState.SHOOT) {
-            setState(HandoffState.IDLE);
-        }
-
-        if (!(swerve.isAlignedToTarget(Field.getFerryZonePose(swerve.getPose().getTranslation()))) && 
-                shooter.getState() == ShooterState.FERRY) {
-            setState(HandoffState.IDLE);
-        }
         
         handoffMotor.setControl(handoffMotorController.withOutput(getState().getHandoffDutyCycle()));
         handoffMotor.update(Settings.DT);
