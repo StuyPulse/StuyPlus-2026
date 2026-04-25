@@ -78,8 +78,6 @@ public class LEDController extends SubsystemBase {
     public void periodic() {
         if (!Settings.EnabledSubsystems.LED.get()) {
             LEDPattern.kOff.applyTo(buffer);
-            led.setData(buffer);
-            return;
         }
 
         led.setData(buffer);
