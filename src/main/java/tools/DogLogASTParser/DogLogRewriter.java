@@ -17,7 +17,13 @@ public class DogLogRewriter extends ModifierVisitor<Void> {
             return methodCall;
         }
 
-        if (methodCall.getScope().get().toString().equals("SmartDashboard")) {
+        boolean isSmartDashboardCall = methodCall.getScope()
+            .filter(s -> s instanceof NameExpr)
+            .map(s -> ((NameExpr) s).getNameAsString())
+            .filter(name -> name.equals("SmartDashboard"))
+            .isPresent();
+
+        if (isSmartDashboardCall ) {
             String methodName = methodCall.getNameAsString();
             boolean shouldBeReplaced = 
                 switch (methodName) {
