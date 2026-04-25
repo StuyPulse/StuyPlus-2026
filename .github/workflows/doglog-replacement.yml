@@ -1,0 +1,44 @@
+name: "DogLog Replacer"
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  migrate:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          java-version: 17
+          distribution: temurin
+        
+      - name: Make gradlew executable
+        run: chmod +x gradlew
+
+      - name: Run AST Replacer
+        run: ./gradlew runDogLogAST
+
+      - name: Add DogLog vendordep
+        run: ./gradlew vendordep add https://doglog.dev/vendordep.json
+
+      - name: Commit changes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          git checkout -B doglog
+
+          git add .
+          git commit -m "Replace SmartDashboard with DogLog" || echo "No changes to commit"
+
+      - name: Force push to doglog branch
+        run: git push origin doglog --force
