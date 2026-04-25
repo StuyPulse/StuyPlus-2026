@@ -1,0 +1,31 @@
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up JDK 1.17
+        uses: actions/setup-java@v3
+        with:
+          java-version: 17
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+      - name: Build with Gradle
+        run: ./gradlew build
+      - name: Generate docs
+        run: ./gradlew javadoc
+      - name: Commit and Push
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          mkdir -p docs/
+          cp -r build/docs/javadoc/. docs/
+          git add docs/
+          git commit -m "DOCS: Automated documentation update from main" || echo "No changes to commit"
+          git push --force origin docs
