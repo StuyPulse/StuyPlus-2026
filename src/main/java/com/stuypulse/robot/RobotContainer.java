@@ -42,9 +42,7 @@ import com.stuypulse.robot.commands.intake.IntakeSetIdle;
 import com.stuypulse.robot.commands.intake.IntakeSetIntake;
 import com.stuypulse.robot.commands.intake.IntakeSetOuttake;
 import com.stuypulse.robot.commands.leds.LEDDefaultCommand;
-import com.stuypulse.robot.commands.shooter.ShooterSetFerry;
-import com.stuypulse.robot.commands.shooter.ShooterSetManual;
-import com.stuypulse.robot.commands.shooter.ShooterSetShoot;
+import com.stuypulse.robot.commands.shooter.ShooterCommands;
 // import com.stuypulse.robot.commands.intake.IntakeSetIntake;
 // import com.stuypulse.robot.commands.intake.IntakeSetOuttake;
 import com.stuypulse.robot.constants.Field;
@@ -165,7 +163,7 @@ public class RobotContainer {
         rightTrigger
             .onTrue(new SwerveDriveAlignToHub()
                     .andThen(new SwerveDriveXMode())
-                    .andThen(new ShooterSetShoot())
+                    .andThen(ShooterCommands.setShoot())
                     .andThen(new HandoffSetForward())
                         .alongWith(new FeederSetForward(), new IntakeAgitateOnce().repeatedly()));
 
@@ -179,7 +177,7 @@ public class RobotContainer {
         driver.rightBumper()
             .onTrue(new SwerveDriveAlignToFerryZone()
                     .andThen(new SwerveDriveXMode())
-                    .andThen(new ShooterSetFerry())
+                    .andThen(ShooterCommands.setFerry())
                     .andThen(new HandoffSetForward())
                         .alongWith(new FeederSetForward(), new IntakeAgitateOnce().repeatedly()));
 
@@ -187,7 +185,7 @@ public class RobotContainer {
         //Manual shooting possibly from in front of the hub
         driver.y()
             .onTrue(new SwerveDriveXMode()
-                    .andThen(new ShooterSetManual())
+                    .andThen(ShooterCommands.setManual())
                     .andThen(new HandoffSetForward())
                         .alongWith(new FeederSetForward(), new IntakeAgitateOnce().repeatedly()));
 
