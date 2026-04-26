@@ -6,12 +6,8 @@
 package com.stuypulse.robot;
 
 import com.ctre.phoenix6.SignalLogger;
-import com.stuypulse.robot.commands.vision.SetIMUMode;
-import com.stuypulse.robot.commands.vision.SetMegaTagMode;
-import com.stuypulse.robot.commands.vision.SetVisionEnabled;
-import com.stuypulse.robot.commands.vision.WhitelistAllTags;
+import com.stuypulse.robot.commands.vision.VisionCommands;
 import com.stuypulse.robot.subsystems.swerve.CommandSwerveDrivetrain;
-import com.stuypulse.robot.subsystems.vision.LimelightVision;
 import com.stuypulse.robot.subsystems.vision.LimelightVision.MegaTagMode;
 
 import com.stuypulse.robot.util.LoggedSignals;
@@ -94,14 +90,13 @@ public class Robot extends TimedRobot {
 
     @Override
     public void disabledInit() {
-        CommandScheduler.getInstance().schedule(new SetIMUMode(1));
-        CommandScheduler.getInstance().schedule(new SetMegaTagMode(MegaTagMode.MEGATAG1));
+        CommandScheduler.getInstance().schedule(VisionCommands.setImuMode(1));
+        CommandScheduler.getInstance().schedule(VisionCommands.setMegaTagMode(MegaTagMode.MEGATAG1));
     }
 
     @Override
     public void disabledPeriodic() {
-        CommandScheduler.getInstance().schedule(new SetIMUMode(1));
-        CommandScheduler.getInstance().schedule(new SetMegaTagMode(MegaTagMode.MEGATAG1));
+
     }
 
     /***********************/
@@ -112,11 +107,9 @@ public class Robot extends TimedRobot {
     public void autonomousInit() {
         auto = robot.getAutonomousCommand();
 
-        CommandScheduler.getInstance().schedule(new SetMegaTagMode(MegaTagMode.MEGATAG2));
-        CommandScheduler.getInstance().schedule(new SetIMUMode(4));
-        CommandScheduler.getInstance().schedule(new WhitelistAllTags());
-
-        LimelightVision.getInstance().disable();
+        CommandScheduler.getInstance().schedule(VisionCommands.setMegaTagMode(MegaTagMode.MEGATAG2));
+        CommandScheduler.getInstance().schedule(VisionCommands.setImuMode(4));
+        CommandScheduler.getInstance().schedule(VisionCommands.whitelistAllTags());
 
         if (auto != null) {
             CommandScheduler.getInstance().schedule(auto);
@@ -137,15 +130,15 @@ public class Robot extends TimedRobot {
 
     @Override
     public void teleopInit() {
-        CommandScheduler.getInstance().schedule(new SetMegaTagMode(MegaTagMode.MEGATAG2));
-        CommandScheduler.getInstance().schedule(new SetIMUMode(4));
-        CommandScheduler.getInstance().schedule(new WhitelistAllTags());
+        CommandScheduler.getInstance().schedule(VisionCommands.setMegaTagMode(MegaTagMode.MEGATAG2));
+        CommandScheduler.getInstance().schedule(VisionCommands.setImuMode(4));
+        CommandScheduler.getInstance().schedule(VisionCommands.whitelistAllTags());
 
         if (auto != null) {
             auto.cancel();
         }
 
-        CommandScheduler.getInstance().schedule(new SetVisionEnabled());
+        CommandScheduler.getInstance().schedule(VisionCommands.enable());
 
         Boolean autonWon = DriverStation.getGameSpecificMessage()
                 .equals(String.valueOf(alliance.name().charAt(0)).toUpperCase());
