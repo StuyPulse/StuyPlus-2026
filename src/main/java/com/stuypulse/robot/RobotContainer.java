@@ -123,7 +123,7 @@ public class RobotContainer {
             .whileTrue(HandoffCommands.setIdle());
 
         handoff.handoffStalling()
-            .onTrue(HandoffCommands.setReverse())
+            .whileTrue(HandoffCommands.setReverse())
             .onFalse(HandoffCommands.setForward());
     }
 
