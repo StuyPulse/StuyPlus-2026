@@ -16,19 +16,19 @@ static Handoff* initInstance()
     }
 }
 
-Feeder* instance = initInstance();
-Feeder& Feeder::getInstance() {
+Handoff* instance = initInstance();
+Handoff& Handoff::getInstance() {
     return *instance;
 }
 
-Feeder::Feeder() : state(FeederState::IDLE) {}
+Handoff::Handoff() : state(HandoffState::IDLE) {}
 
-void Feeder::setState(FeederState state)
+void Handoff::setState(HandoffState state)
 {
     this -> state = state;
 }
 
-FeederState Feeder::getState()
+HandoffState Handoff::getState()
 {
     return state;
 }
