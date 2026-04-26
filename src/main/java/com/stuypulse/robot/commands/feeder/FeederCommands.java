@@ -22,6 +22,6 @@ public class FeederCommands {
     }
 
     public static Command setStop() {
-        return Commands.runOnce(() -> feeder.setState(FeederState.STOP), feeder);
+        return Commands.runOnce(() -> feeder.setState(FeederState.IDLE), feeder);
     }
 }
