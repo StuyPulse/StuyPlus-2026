@@ -90,7 +90,7 @@ public class Robot extends TimedRobot {
 
     @Override
     public void disabledInit() {
-        CommandScheduler.getInstance().schedule(VisionCommands.setImuMode(1));
+        CommandScheduler.getInstance().schedule(VisionCommands.setIMUMode(1));
         CommandScheduler.getInstance().schedule(VisionCommands.setMegaTagMode(MegaTagMode.MEGATAG1));
     }
 
@@ -108,7 +108,7 @@ public class Robot extends TimedRobot {
         auto = robot.getAutonomousCommand();
 
         CommandScheduler.getInstance().schedule(VisionCommands.setMegaTagMode(MegaTagMode.MEGATAG2));
-        CommandScheduler.getInstance().schedule(VisionCommands.setImuMode(4));
+        CommandScheduler.getInstance().schedule(VisionCommands.setIMUMode(4));
         CommandScheduler.getInstance().schedule(VisionCommands.whitelistAllTags());
 
         if (auto != null) {
@@ -131,7 +131,7 @@ public class Robot extends TimedRobot {
     @Override
     public void teleopInit() {
         CommandScheduler.getInstance().schedule(VisionCommands.setMegaTagMode(MegaTagMode.MEGATAG2));
-        CommandScheduler.getInstance().schedule(VisionCommands.setImuMode(4));
+        CommandScheduler.getInstance().schedule(VisionCommands.setIMUMode(4));
         CommandScheduler.getInstance().schedule(VisionCommands.whitelistAllTags());
 
         if (auto != null) {

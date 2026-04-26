@@ -14,7 +14,7 @@ public class VisionCommands {
         vision = LimelightVision.getInstance();
     }
 
-    public static Command setImuMode(int mode) {
+    public static Command setIMUMode(int mode) {
         return Commands.runOnce(() -> vision.setIMUMode(mode)).ignoringDisable(true);
     }
 
