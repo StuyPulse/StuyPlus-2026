@@ -85,6 +85,11 @@ loadScripts(document, 'script');</script>
 <hr>
 <div class="type-signature"><span class="modifiers">public class </span><span class="element-name type-name-label">DogLogRewriter</span>
 <span class="extends-implements">extends com.github.javaparser.ast.visitor.ModifierVisitor&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Void.html" title="class or interface in java.lang" class="external-link">Void</a>&gt;</span></div>
+<div class="block"><h2>DogLogRewriter | Actual functionality</h2>
+ 
+ <p>The actual class that performs the AST parsing and replacement of <code>SmartDashboard</code> calls with <code>DogLog</code> calls, invoked by the <a href="Main.html" title="class in tools.DogLogASTParser"><code>Main</code></a> class.
+ 
+ <p>Extends <code>ModifierVisitor</code> to "visit" and modify the calls.</div>
 </section>
 <section class="summary">
 <ul class="summary-list">
@@ -114,11 +119,15 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#applyReplacement(com.github.javaparser.ast.CompilationUnit)" class="member-name-link">applyReplacement</a><wbr>(com.github.javaparser.ast.CompilationUnit&nbsp;parsed)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="block">Applies the replacement</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>com.github.javaparser.ast.expr.MethodCallExpr</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#visit(com.github.javaparser.ast.expr.MethodCallExpr,java.lang.Void)" class="member-name-link">visit</a><wbr>(com.github.javaparser.ast.expr.MethodCallExpr&nbsp;methodCall,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Void.html" title="class or interface in java.lang" class="external-link">Void</a>&nbsp;arg)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Visit Method</div>
+</div>
 </div>
 </div>
 </div>
@@ -158,11 +167,22 @@ loadScripts(document, 'script');</script>
 <h3>visit</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">com.github.javaparser.ast.expr.MethodCallExpr</span>&nbsp;<span class="element-name">visit</span><wbr><span class="parameters">(com.github.javaparser.ast.expr.MethodCallExpr&nbsp;methodCall,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Void.html" title="class or interface in java.lang" class="external-link">Void</a>&nbsp;arg)</span></div>
+<div class="block"><h4>Visit Method</h4>
+ 
+ <p>Overrides the <a href="#visit(com.github.javaparser.ast.expr.MethodCallExpr,java.lang.Void)"><code>visit(com.github.javaparser.ast.expr.MethodCallExpr,java.lang.Void)</code></a> method for method calls. 
+ <p>It loops through every <code>MethodCallExpr</code> to check for a <code>SmartDashboard</code> call with the methods <code>putNumber</code>, <code>putBoolean</code>, or <code>putString</code>. If so, it replaces the scope with <code>DogLog</code> and changes the method name to <code>log</code>.
+ 
+ <p>Sets variable <code>fileChanged</code> to check if any changes were made to the file to determine whether to import <code>DogLog</code> at the end of the file.</div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code>visit</code>&nbsp;in interface&nbsp;<code>com.github.javaparser.ast.visitor.GenericVisitor&lt;com.github.javaparser.ast.visitor.Visitable,<wbr><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Void.html" title="class or interface in java.lang" class="external-link">Void</a>&gt;</code></dd>
 <dt>Overrides:</dt>
 <dd><code>visit</code>&nbsp;in class&nbsp;<code>com.github.javaparser.ast.visitor.ModifierVisitor&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Void.html" title="class or interface in java.lang" class="external-link">Void</a>&gt;</code></dd>
+<dt>Parameters:</dt>
+<dd><code>methodCall</code> - the method call expression being visited</dd>
+<dd><code>arg</code> - additional argument (not used in this case)</dd>
+<dt>Returns:</dt>
+<dd>the modified method call expression</dd>
 </dl>
 </section>
 </li>
@@ -170,6 +190,15 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="applyReplacement(com.github.javaparser.ast.CompilationUnit)">
 <h3>applyReplacement</h3>
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">applyReplacement</span><wbr><span class="parameters">(com.github.javaparser.ast.CompilationUnit&nbsp;parsed)</span></div>
+<div class="block"><h4>Applies the replacement</h4>
+ 
+ <p>Applies the <code>SmartDashboard</code> to <code>DogLog</code> replacement to the given <code>CompilationUnit</code>.
+ 
+ <p>If the <code>fileChanged</code> flag is true, it checks if the files already has an import for <code>DogLog</code>. If not, it adds the import statement. If the flag is false, it does nothing to avoid unnecessary changes and imports.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>parsed</code> - the <code>CompilationUnit</code> to process</dd>
+</dl>
 </section>
 </li>
 </ul>

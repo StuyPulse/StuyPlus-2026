@@ -171,8 +171,8 @@ loadScripts(document, 'script');</script>
  
  <p>Walks through the java files in the robot code, excluding the tools directory, and invokes the <a href="#processFile(java.nio.file.Path)"><code>processFile(Path)</code></a> method for AST parsing.
  
- <p>It makes a CompilationUnit for the file, then applies the <a href="DogLogRewriter.html" title="class in tools.DogLogASTParser"><code>DogLogRewriter</code></a> to replace SmartDashboard calls with DogLog calls.
- <p>When <a href="DogLogRewriter.html" title="class in tools.DogLogASTParser"><code>DogLogRewriter</code></a> is done, the modified CompilationUnit is written back to the file path, replacing the original file.</div>
+ <p>It makes a <code>CompilationUnit</code> for the file, then applies the <a href="DogLogRewriter.html" title="class in tools.DogLogASTParser"><code>DogLogRewriter</code></a> to replace SmartDashboard calls with DogLog calls.
+ <p>When <a href="DogLogRewriter.html" title="class in tools.DogLogASTParser"><code>DogLogRewriter</code></a> is done, the modified <code>CompilationUnit</code> is written back to the file path, replacing the original file.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>filePath</code> - the path of the Java file to be processed</dd>
