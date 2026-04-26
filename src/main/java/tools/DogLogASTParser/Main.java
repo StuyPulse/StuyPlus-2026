@@ -19,7 +19,7 @@ import com.github.javaparser.ast.CompilationUnit;
 public class Main {
 
     /**
-     * <h3>Entry Point</h3>
+     * <h4>Entry Point</h4>
      * 
      * <p>Walks through the Java files in the robot code, filtering the tools directory, and invokes the {@link #processFile(Path)} method for AST parsing.
      * 
@@ -40,12 +40,14 @@ public class Main {
     }
 
     /**
-     * <h3>Processes individual Java files.</h3>
+     * <h4>Processes individual Java files.</h4>
      * 
      * <p>Walks through the java files in the robot code, excluding the tools directory, and invokes the {@link #processFile(Path)} method for AST parsing.
      * 
      * <p>It makes a CompilationUnit for the file, then applies the {@link DogLogRewriter} to replace SmartDashboard calls with DogLog calls.
      * <p>When {@link DogLogRewriter} is done, the modified CompilationUnit is written back to the file path, replacing the original file.
+     * 
+     * @param filePath the path of the Java file to be processed
      */
     public static void processFile(Path filePath) {
         try {
