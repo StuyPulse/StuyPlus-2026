@@ -1,18 +1,18 @@
-#include "handoff/Handoff.hpp"
-#include "handoff/HandoffState.hpp"
-#include "HandoffImpl.cpp"
-#include "HandoffSim.cpp"
+#include "feeder/Feeder.hpp"
+#include "feeder/FeederState.hpp"
+#include "FeederImpl.cpp"
+#include "FeederSim.cpp"
 #include <frc/RobotBase.h>
 
-static Handoff* initInstance()
+static Feeder* initInstance()
 {
     if (frc::RobotBase::IsReal())
     {
-        return new HandoffImpl();
+        return new FeederImpl();
     }
     else
     {
-        return new HandoffSim();
+        return new FeederSim();
     }
 }
 
