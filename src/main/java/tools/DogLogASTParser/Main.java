@@ -44,8 +44,8 @@ public class Main {
      * 
      * <p>Walks through the java files in the robot code, excluding the tools directory, and invokes the {@link #processFile(Path)} method for AST parsing.
      * 
-     * <p>It makes a { @link CompilationUnit} for the file, then applies the {@link DogLogRewriter} to replace SmartDashboard calls with DogLog calls.
-     * <p>When {@link DogLogRewriter} is done, the modified { @link CompilationUnit} is written back to the file path, replacing the original file.
+     * <p>It makes a {@link CompilationUnit} for the file, then applies the {@link DogLogRewriter} to replace SmartDashboard calls with DogLog calls.
+     * <p>When {@link DogLogRewriter} is done, the modified {@link CompilationUnit} is written back to the file path, replacing the original file.
      * 
      * @param filePath the path of the Java file to be processed
      */
