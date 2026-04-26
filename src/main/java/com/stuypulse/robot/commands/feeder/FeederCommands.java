@@ -21,7 +21,7 @@ public class FeederCommands {
         return Commands.runOnce(() -> feeder.setState(FeederState.REVERSE), feeder).withName("FeederSetReverse");
     }
 
-    public static Command setStop() {
-        return Commands.runOnce(() -> feeder.setState(FeederState.IDLE), feeder).withName("FeederSetStop");
+    public static Command setIdle() {
+        return Commands.runOnce(() -> feeder.setState(FeederState.IDLE), feeder).withName("FeederSetIdle");
     }
 }
