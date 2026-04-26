@@ -152,18 +152,20 @@ public class IntakeImpl extends Intake {
         intakeRollerMotorRight.setControl(followerController); // re-add the follow control after stopMotor removes it
     }
 
-    private ControlRequest getPivotControl() {
-        return switch (getState()) {
+    private ControlRequest getPivotControl(IntakeState currentState) {
+        boolean pivotAboveThreshold = isPivotAboveThreshold();
+
+        return switch (currentState) {
             case INTAKE, OUTTAKE, DOWN -> {
-                if (isPivotAboveThreshold()) {
+                if (pivotAboveThreshold) {
                     // wait until pivot reaches the bottom to apply pushdown
                     yield pushdownController.withOutput(Settings.Intake.Pivot.PUSHDOWN_CURRENT.getAsDouble());
                 } else {
-                    yield pivotController.withPosition(getState().getTargetAngle().getRotations());
+                    yield pivotController.withPosition(currentState.getTargetAngle().getRotations());
                 }
             }
             case HOMING_DOWN -> homingController;
-            default -> pivotController.withPosition(getState().getTargetAngle().getRotations());
+            default -> pivotController.withPosition(currentState.getTargetAngle().getRotations());
         };
     }
 
@@ -185,7 +187,7 @@ public class IntakeImpl extends Intake {
 
         // Output
 
-        final ControlRequest pivotControl = getPivotControl();
+        final ControlRequest pivotControl = getPivotControl(currentState);
 
         final DutyCycleOut rollerControl = rollerController.withOutput(currentState.getTargetDutyCycle());
 
