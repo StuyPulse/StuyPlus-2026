@@ -2,15 +2,23 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-#include "Robot.h"
+#include "Robot.hpp"
 
 #include <frc/smartdashboard/SmartDashboard.h>
 #include <wpi/print.h>
+#include <telemetrykit/TelemetryKit.h>
 
 Robot::Robot() {
   m_chooser.SetDefaultOption(kAutoNameDefault, kAutoNameDefault);
   m_chooser.AddOption(kAutoNameCustom, kAutoNameCustom);
   frc::SmartDashboard::PutData("Auto Modes", &m_chooser);
+  
+  tkit::Logger& logger = tkit::Logger::GetInstance();
+
+  logger.AddReceiver(std::make_unique<tkit::NetworkTablesReceiver>());
+  logger.AddReceiver(std::make_unique<tkit::WPILogWriter>("/home/lvuser/logs"));
+
+  logger.Start();
 }
 
 /**
@@ -21,7 +29,9 @@ Robot::Robot() {
  * <p> This runs after the mode specific periodic functions, but before
  * LiveWindow and SmartDashboard integrated updating.
  */
-void Robot::RobotPeriodic() {}
+void Robot::RobotPeriodic() {
+  tkit::Logger::GetInstance().Periodic();
+}
 
 /**
  * This autonomous (along with the chooser code above) shows how to select
