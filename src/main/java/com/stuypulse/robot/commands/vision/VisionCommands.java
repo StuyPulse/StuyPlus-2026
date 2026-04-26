@@ -15,26 +15,26 @@ public class VisionCommands {
     }
 
     public static Command setIMUMode(int mode) {
-        return Commands.runOnce(() -> vision.setIMUMode(mode)).ignoringDisable(true);
+        return Commands.runOnce(() -> vision.setIMUMode(mode)).ignoringDisable(true).withName("VisionSetIMUMode");
     }
 
     public static Command setMegaTagMode(MegaTagMode mode) {
-        return Commands.runOnce(() -> vision.setMegaTagMode(mode)).ignoringDisable(true);
+        return Commands.runOnce(() -> vision.setMegaTagMode(mode)).ignoringDisable(true).withName("VisionSetMegaTagMode");
     }
 
     public static Command setPipeline(int pipelineIndex) {
-        return Commands.runOnce(() -> vision.setPipeline(pipelineIndex)).ignoringDisable(true);
+        return Commands.runOnce(() -> vision.setPipeline(pipelineIndex)).ignoringDisable(true).withName("VisionSetPipeline");
     }
 
     public static Command enable() {
-        return Commands.runOnce(() -> vision.enable()).ignoringDisable(true);
+        return Commands.runOnce(() -> vision.enable()).ignoringDisable(true).withName("VisionSetEnabled");
     }
     
     public static Command disable() {
-        return Commands.runOnce(() -> vision.disable()).ignoringDisable(true);
+        return Commands.runOnce(() -> vision.disable()).ignoringDisable(true).withName("VisionSetDisabled");
     }
 
     public static Command whitelistAllTags() {
-        return Commands.runOnce(() -> vision.setTagWhitelist(Field.ALL_TAGS)).ignoringDisable(true);
+        return Commands.runOnce(() -> vision.setTagWhitelist(Field.ALL_TAGS)).ignoringDisable(true).withName("VisionWhitelistAllTags");
     }
 }

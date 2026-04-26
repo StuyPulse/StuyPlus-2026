@@ -14,14 +14,14 @@ public class FeederCommands {
     }
 
     public static Command setForward() {
-        return Commands.runOnce(() -> feeder.setState(FeederState.FORWARD), feeder);
+        return Commands.runOnce(() -> feeder.setState(FeederState.FORWARD), feeder).withName("FeederSetForward");
     }
 
     public static Command setReverse() {
-        return Commands.runOnce(() -> feeder.setState(FeederState.REVERSE), feeder);
+        return Commands.runOnce(() -> feeder.setState(FeederState.REVERSE), feeder).withName("FeederSetReverse");
     }
 
     public static Command setStop() {
-        return Commands.runOnce(() -> feeder.setState(FeederState.IDLE), feeder);
+        return Commands.runOnce(() -> feeder.setState(FeederState.IDLE), feeder).withName("FeederSetStop");
     }
 }

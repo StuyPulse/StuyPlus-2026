@@ -14,14 +14,14 @@ public class HandoffCommands {
     }
 
     public static Command setForward() {
-        return Commands.runOnce(() -> handoff.setState(HandoffState.FORWARD), handoff);
+        return Commands.runOnce(() -> handoff.setState(HandoffState.FORWARD), handoff).withName("HandoffSetForward");
     }
 
     public static Command setReverse() {
-        return Commands.runOnce(() -> handoff.setState(HandoffState.REVERSE), handoff);
+        return Commands.runOnce(() -> handoff.setState(HandoffState.REVERSE), handoff).withName("HandoffSetReverse");
     }
 
     public static Command setIdle() {
-        return Commands.runOnce(() -> handoff.setState(HandoffState.IDLE), handoff);
+        return Commands.runOnce(() -> handoff.setState(HandoffState.IDLE), handoff).withName("HandoffSetIdle");
     }
 }

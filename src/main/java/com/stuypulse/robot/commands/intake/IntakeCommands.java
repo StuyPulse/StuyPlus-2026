@@ -17,22 +17,22 @@ public class IntakeCommands {
     //States
 
     public static Command setIntake() {
-        return Commands.runOnce(() -> intake.setState(IntakeState.INTAKE), intake);
+        return Commands.runOnce(() -> intake.setState(IntakeState.INTAKE), intake).withName("IntakeSetIntake");
     }
 
     public static Command setOuttake() {
-        return Commands.runOnce(() -> intake.setState(IntakeState.OUTTAKE), intake);
+        return Commands.runOnce(() -> intake.setState(IntakeState.OUTTAKE), intake).withName("IntakeSetOuttake");
     }
     public static Command setIdle() {
-        return Commands.runOnce(() -> intake.setState(IntakeState.IDLE), intake);
+        return Commands.runOnce(() -> intake.setState(IntakeState.IDLE), intake).withName("IntakeSetIdle");
     }
 
     public static Command setDown() {
-        return Commands.runOnce(() -> intake.setState(IntakeState.DOWN), intake);
+        return Commands.runOnce(() -> intake.setState(IntakeState.DOWN), intake).withName("IntakeSetDown");
     }
 
     public static Command setHomingDown() {
-        return Commands.runOnce(() -> intake.setState(IntakeState.HOMING_DOWN), intake);
+        return Commands.runOnce(() -> intake.setState(IntakeState.HOMING_DOWN), intake).withName("IntakeSetHomingDown");
     }
 
     //Agitation
@@ -44,16 +44,16 @@ public class IntakeCommands {
             setIdle(),
             new WaitCommand(0.25),
             setDown()
-        );
+        ).withName("IntakeAgitateOnce");
     }
 
     //Zeroing
 
     public static Command setZero() {
-        return Commands.runOnce(() -> intake.setPivotZero());
+        return Commands.runOnce(() -> intake.setPivotZero()).withName("IntakePivotSetZero");
     }
 
     public static Command setZeroAtBottom() {
-        return Commands.runOnce(() -> intake.setPivotZeroAtBottom());
+        return Commands.runOnce(() -> intake.setPivotZeroAtBottom()).withName("IntakePivotSetZeroAtBottom");
     }
 }
