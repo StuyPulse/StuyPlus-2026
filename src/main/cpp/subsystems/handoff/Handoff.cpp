@@ -1,5 +1,5 @@
-#include "handoff/Handoff.hpp"
-#include "handoff/HandoffState.hpp"
+#include "subsystems/handoff/Handoff.hpp"
+#include "subsystems/handoff/HandoffState.hpp"
 #include "HandoffImpl.cpp"
 #include "HandoffSim.cpp"
 #include <frc/RobotBase.h>
