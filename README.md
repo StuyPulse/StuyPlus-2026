@@ -5,10 +5,10 @@
 </div>
 <div align="center">
 
-[![WPILib](https://img.shields.io/badge/WPILib-v2026.2.1-ff4031?style=for-the-badge&logo=first)](https://github.com/wpilibsuite/allwpilib/releases/tag/v2026.2.1)
-[![Java Version](https://img.shields.io/badge/Java-17-ff4031?style=for-the-badge&logo=openjdk)](https://jdk.java.net/17/)
-[![Java Version](https://img.shields.io/badge/C++-20-ff4031?style=for-the-badge&logo=cplusplus)](../cpp)
-[![License](https://img.shields.io/badge/License-MIT-ff4031?style=for-the-badge&logo=markdown)](LICENSE)
+[![WPILib](https://img.shields.io/badge/WPILib-v2026.2.1-AB1A2D?style=for-the-badge&logo=first)](https://github.com/wpilibsuite/allwpilib/releases/tag/v2026.2.1)
+[![Java Version](https://img.shields.io/badge/Java-17-F29111?style=for-the-badge&logo=openjdk)](https://jdk.java.net/17/)
+[![Java Version](https://img.shields.io/badge/C++-20-659AD2?style=for-the-badge&logo=cplusplus)](../cpp)
+[![License](https://img.shields.io/badge/License-MIT-750014?style=for-the-badge&logo=markdown)](LICENSE)
 <br>
 ![Build](https://img.shields.io/github/actions/workflow/status/StuyPulse/StuyPlus-2026/gradle.yml?style=for-the-badge&label=Build)
 
