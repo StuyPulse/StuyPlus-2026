@@ -3,6 +3,16 @@
     <h1>Ron 2026</h1>
     <p>FRC Team StuyPlus <b>516</b> - First regular season Rookie Robot</p>
 </div>
+<div align="center">
+
+[![WPILib](https://img.shields.io/badge/WPILib-v2026.2.1-ff4031?style=for-the-badge&logo=first)](https://github.com/wpilibsuite/allwpilib/releases/tag/v2026.2.1)
+[![Java Version](https://img.shields.io/badge/Java-17-ff4031?style=for-the-badge&logo=openjdk)](https://jdk.java.net/17/)
+[![Java Version](https://img.shields.io/badge/C++-20-ff4031?style=for-the-badge&logo=cplusplus)](https://en.cppreference.com/cpp/20)
+[![License](https://img.shields.io/badge/License-MIT-ff4031?style=for-the-badge&logo=markdown)](LICENSE)
+<br>
+![Build](https://img.shields.io/github/actions/workflow/status/StuyPulse/StuyPlus-2026/gradle.yml?style=for-the-badge&label=Build)
+
+</div>
 
 ---
 
