@@ -35,13 +35,13 @@ public interface Settings {
     CANBus CANIVORE = new CANBus("rio");
 
     public interface EnabledSubsystems {
-        SmartBoolean FEEDER = new SmartBoolean("Enabled Subsystems/Feeder", true);
+        SmartBoolean FEEDER = new SmartBoolean("Enabled Subsystems/Feeder", false);
         SmartBoolean INTAKE = new SmartBoolean("Enabled Subsystems/Intake", true);
-        SmartBoolean LED = new SmartBoolean("Enabled Subsystems/LED", true);
-        SmartBoolean HANDOFF = new SmartBoolean("Enabled Subsystems/Handoff", true);
-        SmartBoolean SHOOTER = new SmartBoolean("Enabled Subsystems/Shooter", true);
-        SmartBoolean VISION = new SmartBoolean("Enabled Subsystems/Vision", true);
-        SmartBoolean SWERVE = new SmartBoolean("Enabled Subsystems/Swerve", true);
+        SmartBoolean LED = new SmartBoolean("Enabled Subsystems/LED", false);
+        SmartBoolean HANDOFF = new SmartBoolean("Enabled Subsystems/Handoff", false);
+        SmartBoolean SHOOTER = new SmartBoolean("Enabled Subsystems/Shooter", false);
+        SmartBoolean VISION = new SmartBoolean("Enabled Subsystems/Vision", false);
+        SmartBoolean SWERVE = new SmartBoolean("Enabled Subsystems/Swerve", false);
     }
 
     public interface Vision {
@@ -71,7 +71,7 @@ public interface Settings {
 
             // sysid
             Velocity<VoltageUnit> RAMP_RATE = Volts.of(1).per(Second);
-            Voltage STEP_VOLTAGE = Volts.of(4);
+            Voltage STEP_VOLTAGE = Volts.of(1);
 
             // sim
             Rotation2d MIN_ANGLE = Rotation2d.fromDegrees(0);
