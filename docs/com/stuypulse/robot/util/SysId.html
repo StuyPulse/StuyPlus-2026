@@ -79,6 +79,7 @@ loadScripts(document, 'script');</script>
 <hr>
 <div class="type-signature"><span class="modifiers">public class </span><span class="element-name type-name-label">SysId</span>
 <span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></span></div>
+<div class="block"><h2>A class that handles the Mechanism logging and unit conversions required to create a SysId routine</h2></div>
 </section>
 <section class="summary">
 <ul class="summary-list">
@@ -115,7 +116,9 @@ loadScripts(document, 'script');</script>
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Supplier.html" title="class or interface in java.util.function" class="external-link">Supplier</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Double.html" title="class or interface in java.lang" class="external-link">Double</a>&gt;&nbsp;velocitySupplier,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Supplier.html" title="class or interface in java.util.function" class="external-link">Supplier</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Double.html" title="class or interface in java.lang" class="external-link">Double</a>&gt;&nbsp;voltageSupplier,
  edu.wpi.first.wpilibj2.command.Subsystem&nbsp;subsystemInstance)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="block">Creates a SysId routine from the parameters</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#getRoutine(edu.wpi.first.units.measure.Velocity,edu.wpi.first.units.measure.Voltage,java.lang.String,java.util.function.Consumer,java.util.function.Supplier,java.util.function.Supplier,java.util.function.Supplier,edu.wpi.first.wpilibj2.command.Subsystem)" class="member-name-link">getRoutine</a><wbr>(edu.wpi.first.units.measure.Velocity&lt;edu.wpi.first.units.VoltageUnit&gt;&nbsp;rampRate,
  edu.wpi.first.units.measure.Voltage&nbsp;stepVoltage,
@@ -125,7 +128,9 @@ loadScripts(document, 'script');</script>
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Supplier.html" title="class or interface in java.util.function" class="external-link">Supplier</a>&lt;edu.wpi.first.units.measure.AngularVelocity&gt;&nbsp;velocitySupplier,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Supplier.html" title="class or interface in java.util.function" class="external-link">Supplier</a>&lt;edu.wpi.first.units.measure.Voltage&gt;&nbsp;voltageSupplier,
  edu.wpi.first.wpilibj2.command.Subsystem&nbsp;subsystemInstance)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="block">Creates a SysId routine from the parameters</div>
+</div>
 </div>
 </div>
 </div>
@@ -168,6 +173,17 @@ loadScripts(document, 'script');</script>
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Supplier.html" title="class or interface in java.util.function" class="external-link">Supplier</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Double.html" title="class or interface in java.lang" class="external-link">Double</a>&gt;&nbsp;velocitySupplier,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Supplier.html" title="class or interface in java.util.function" class="external-link">Supplier</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Double.html" title="class or interface in java.lang" class="external-link">Double</a>&gt;&nbsp;voltageSupplier,
  edu.wpi.first.wpilibj2.command.Subsystem&nbsp;subsystemInstance)</span></div>
+<div class="block"><h4>Creates a SysId routine from the parameters</h4></div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>rampRate</code> - - Measured in volts per second, the voltage ramp rate used for quasistatic test routines.</dd>
+<dd><code>stepVoltage</code> - - Measured in volts, the step voltage output used for dynamic test routines.</dd>
+<dd><code>subsystemName</code> - - Name of the subsystem used for logging.</dd>
+<dd><code>voltageSetter</code> - - Double consumer that sets the voltage of the subsystem.</dd>
+<dd><code>positionSupplier</code> - - In rotations, a supplier for the position of the subsystem.</dd>
+<dd><code>voltageSupplier</code> - - A supplier for the voltage of the subsystem's motors.</dd>
+<dd><code>subsystemInstance</code> - - The subsystem containing the motor(s) that is (or are) being characterized.</dd>
+</dl>
 </section>
 </li>
 <li>
@@ -181,6 +197,19 @@ loadScripts(document, 'script');</script>
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Supplier.html" title="class or interface in java.util.function" class="external-link">Supplier</a>&lt;edu.wpi.first.units.measure.AngularVelocity&gt;&nbsp;velocitySupplier,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Supplier.html" title="class or interface in java.util.function" class="external-link">Supplier</a>&lt;edu.wpi.first.units.measure.Voltage&gt;&nbsp;voltageSupplier,
  edu.wpi.first.wpilibj2.command.Subsystem&nbsp;subsystemInstance)</span></div>
+<div class="block"><h4>Creates a SysId routine from the parameters</h4>
+
+ <p>Uses WPILib unit classes so inputs can be in any unit.</p></div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>rampRate</code> - - The voltage ramp rate used for quasistatic test routines.</dd>
+<dd><code>stepVoltage</code> - - The step voltage output used for dynamic test routines.</dd>
+<dd><code>subsystemName</code> - - Name of the subsystem used for logging.</dd>
+<dd><code>voltageSetter</code> - - Double consumer that sets the voltage of the subsystem.</dd>
+<dd><code>positionSupplier</code> - - A supplier for the position of the subsystem.</dd>
+<dd><code>voltageSupplier</code> - - A supplier for the voltage of the subsystem's motors.</dd>
+<dd><code>subsystemInstance</code> - - The subsystem containing the motor(s) that is (or are) being characterized.</dd>
+</dl>
 </section>
 </li>
 </ul>
