@@ -4,7 +4,7 @@ import java.io.IOException;
 import tools.PathplannerSearch.PathplannerSearch.SearchType;
 
 /**
- * <h3>Main class for PathplannerSearch</h3>
+ * <h2>Main class for PathplannerSearch</h2>
  *
  * <p>To use, run:
  * <pre>
