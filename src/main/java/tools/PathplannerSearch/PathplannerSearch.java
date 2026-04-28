@@ -6,7 +6,7 @@ import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 
-/*
+/**
  * <h2>Utility class that gives search features that Pathplanner lacks</h2>
  * <p>This class is meant to help search for where paths and linked variables are used so you can clean up unused ones.
  */
