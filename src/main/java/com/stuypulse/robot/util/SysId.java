@@ -23,13 +23,13 @@ public class SysId {
     /**
      * <h4><Creates a SysId routine from the parameters/h4>
      *
-     * @oaram rampRate - Measured in volts per second, the voltage ramp rate used for quasistatic test routines.
-     * @oaram stepVoltage - Measured in volts, the step voltage output used for dynamic test routines.
-     * @oaram subsystemName - Name of the subsystem used for logging.
-     * @oaram voltageSetter - Double consumer that sets the voltage of the subsystem.
-     * @oaram positionSupplier - In rotations, a supplier for the position of the subsystem.
-     * @oaram voltageSupplier - A supplier for the voltage of the subsystem's motors.
-     * @oaram subsystemInstance - The subsystem containing the motor(s) that is (or are) being characterized.
+     * @param rampRate - Measured in volts per second, the voltage ramp rate used for quasistatic test routines.
+     * @param stepVoltage - Measured in volts, the step voltage output used for dynamic test routines.
+     * @param subsystemName - Name of the subsystem used for logging.
+     * @param voltageSetter - Double consumer that sets the voltage of the subsystem.
+     * @param positionSupplier - In rotations, a supplier for the position of the subsystem.
+     * @param voltageSupplier - A supplier for the voltage of the subsystem's motors.
+     * @param subsystemInstance - The subsystem containing the motor(s) that is (or are) being characterized.
      */
     public static SysIdRoutine getRoutine(
             double rampRate,
@@ -62,13 +62,13 @@ public class SysId {
      *
      * <p>Uses WPILib unit classes so inputs can be in any unit.</p>
      *
-     * @oaram rampRate - The voltage ramp rate used for quasistatic test routines.
-     * @oaram stepVoltage - The step voltage output used for dynamic test routines.
-     * @oaram subsystemName - Name of the subsystem used for logging.
-     * @oaram voltageSetter - Double consumer that sets the voltage of the subsystem.
-     * @oaram positionSupplier - A supplier for the position of the subsystem.
-     * @oaram voltageSupplier - A supplier for the voltage of the subsystem's motors.
-     * @oaram subsystemInstance - The subsystem containing the motor(s) that is (or are) being characterized.
+     * @param rampRate - The voltage ramp rate used for quasistatic test routines.
+     * @param stepVoltage - The step voltage output used for dynamic test routines.
+     * @param subsystemName - Name of the subsystem used for logging.
+     * @param voltageSetter - Double consumer that sets the voltage of the subsystem.
+     * @param positionSupplier - A supplier for the position of the subsystem.
+     * @param voltageSupplier - A supplier for the voltage of the subsystem's motors.
+     * @param subsystemInstance - The subsystem containing the motor(s) that is (or are) being characterized.
      */
     public static SysIdRoutine getRoutine(
             Velocity<VoltageUnit> rampRate,
