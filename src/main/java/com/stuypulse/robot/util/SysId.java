@@ -16,8 +16,21 @@ import static edu.wpi.first.units.Units.Volts;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 
+/**
+ *<h2>A class that handles the Mechanism logging and unit conversions required to create a SysId routine</h2>
+ */
 public class SysId {
-
+    /**
+     * <h4><Creates a SysId routine from the parameters/h4>
+     *
+     * @oaram rampRate - Measured in volts per second, the voltage ramp rate used for quasistatic test routines.
+     * @oaram stepVoltage - Measured in volts, the step voltage output used for dynamic test routines.
+     * @oaram subsystemName - Name of the subsystem used for logging.
+     * @oaram voltageSetter - Double consumer that sets the voltage of the subsystem.
+     * @oaram positionSupplier - In rotations, a supplier for the position of the subsystem.
+     * @oaram voltageSupplier - A supplier for the voltage of the subsystem's motors.
+     * @oaram subsystemInstance - The subsystem containing the motor(s) that is (or are) being characterized.
+     */
     public static SysIdRoutine getRoutine(
             double rampRate,
             double stepVoltage,
@@ -44,6 +57,19 @@ public class SysId {
                         subsystemInstance));
     }
 
+    /**
+     * <h4><Creates a SysId routine from the parameters/h4>
+     *
+     * <p>Uses WPILib unit classes so inputs can be in any unit.</p>
+     *
+     * @oaram rampRate - The voltage ramp rate used for quasistatic test routines.
+     * @oaram stepVoltage - The step voltage output used for dynamic test routines.
+     * @oaram subsystemName - Name of the subsystem used for logging.
+     * @oaram voltageSetter - Double consumer that sets the voltage of the subsystem.
+     * @oaram positionSupplier - A supplier for the position of the subsystem.
+     * @oaram voltageSupplier - A supplier for the voltage of the subsystem's motors.
+     * @oaram subsystemInstance - The subsystem containing the motor(s) that is (or are) being characterized.
+     */
     public static SysIdRoutine getRoutine(
             Velocity<VoltageUnit> rampRate,
             Voltage stepVoltage,
