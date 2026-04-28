@@ -12,16 +12,16 @@ import java.util.List;
  * <br>Use by first changing the SEARCH_TERM and type variables to indicate what you want to search for & the type of thing you are searching for. 
  */
 public final class PathplannerSearch {
-    private enum SearchType {
+    public enum SearchType {
         LINKED_WAYPOINT,
         PATH
     }
 
-    public static void main(String[] args) throws IOException {
-        final String SEARCH_TERM = "YOUR_SEARCH_TERM_HERE".toLowerCase();
-        final SearchType type = SearchType.PATH;
+    public static void search(String searchTerm, SearchType searchType) throws IOException {
+        final String SEARCH_TERM = searchTerm.toLowerCase();
+        final SearchType SEARCH_TYPE = searchType;
 
-        switch (type) {
+        switch (SEARCH_TYPE) {
             case LINKED_WAYPOINT -> {
                 final File[] files = new File("./src/main/deploy/pathplanner/paths/").listFiles();
                 if (files == null) break;
