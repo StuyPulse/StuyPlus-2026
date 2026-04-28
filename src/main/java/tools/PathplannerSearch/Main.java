@@ -36,7 +36,7 @@ public class Main {
     public static void main(String[] args) throws IOException {
         String searchTerm = 
             args[Arguments.SEARCH_TERM.ordinal()] != null ? 
-                args[Arguments.SEARCH_TERM.ordinal()] 
+                args[Arguments.SEARCH_TERM.ordinal()].toLowerCase() 
                 : "";
         SearchType searchType = 
             args[Arguments.SEARCH_TYPE.ordinal()] != null ? 

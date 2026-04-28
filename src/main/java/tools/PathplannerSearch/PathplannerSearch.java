@@ -17,10 +17,7 @@ public final class PathplannerSearch {
     }
 
     public static void search(String searchTerm, SearchType searchType) throws IOException {
-        final String SEARCH_TERM = searchTerm.toLowerCase();
-        final SearchType SEARCH_TYPE = searchType;
-
-        switch (SEARCH_TYPE) {
+        switch (searchType) {
             case LINKED_WAYPOINT -> {
                 final File[] files = new File("./src/main/deploy/pathplanner/paths/").listFiles();
                 if (files == null) break;
@@ -29,11 +26,11 @@ public final class PathplannerSearch {
                 for (final File file : files) {
                     final String content = Files.readString(file.toPath()).toLowerCase();
                     if (content.isBlank()) continue;
-                    if (content.contains("\"linkedname\"") && content.contains("\"" + SEARCH_TERM + "\"")) {
+                    if (content.contains("\"linkedname\"") && content.contains("\"" + searchTerm + "\"")) {
                         matches.add(file.getName());
                     }
                 }
-                System.out.println("Paths that use the linked waypoint '" + SEARCH_TERM + "':\n" + (matches.isEmpty() ? "none" : String.join(", ", matches)));
+                System.out.println("Paths that use the linked waypoint '" + searchTerm + "':\n" + (matches.isEmpty() ? "none" : String.join(", ", matches)));
             }
             case PATH -> {
                 final File[] files = new File("./src/main/deploy/pathplanner/autos/").listFiles();
@@ -43,11 +40,11 @@ public final class PathplannerSearch {
                 for (final File file : files) {
                     final String content = Files.readString(file.toPath()).toLowerCase();
                     if (!content.contains("\"sequential\"")) continue;
-                    if (content.contains("\"path\"") && content.contains("\"pathname\"") && content.contains("\"" + SEARCH_TERM + "\"")) {
+                    if (content.contains("\"path\"") && content.contains("\"pathname\"") && content.contains("\"" + searchTerm + "\"")) {
                         matches.add(file.getName());
                     }
                 }
-                System.out.println("Autons that use the path '" + SEARCH_TERM + "':\n" + (matches.isEmpty() ? "none" : String.join(", ", matches)));
+                System.out.println("Autons that use the path '" + searchTerm + "':\n" + (matches.isEmpty() ? "none" : String.join(", ", matches)));
             }
             default -> {
                 System.out.println("Specify a valid search type by editing the file.");
