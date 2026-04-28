@@ -21,7 +21,7 @@ import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
  */
 public class SysId {
     /**
-     * <h4><Creates a SysId routine from the parameters/h4>
+     * <h4>Creates a SysId routine from the parameters</h4>
      *
      * @param rampRate - Measured in volts per second, the voltage ramp rate used for quasistatic test routines.
      * @param stepVoltage - Measured in volts, the step voltage output used for dynamic test routines.
@@ -58,7 +58,7 @@ public class SysId {
     }
 
     /**
-     * <h4><Creates a SysId routine from the parameters/h4>
+     * <h4>Creates a SysId routine from the parameters</h4>
      *
      * <p>Uses WPILib unit classes so inputs can be in any unit.</p>
      *
