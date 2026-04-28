@@ -224,9 +224,11 @@ public class LoggedSignals {
     /*** LOGGING ***/
     /***************/
 
-    private void logSignal(String motorName, BaseStatusSignal signal) {
-        SmartDashboard.putNumber(logPath + String.join(" ", motorName, signal.getName(), signal.getUnits()).trim(), // removes whitespace if motorName is empty
-                signal.getValueAsDouble());
+    private void logSignals(String motorName, Set<BaseStatusSignal> signals) {
+        for (final BaseStatusSignal signal : signals) {
+            SmartDashboard.putNumber(logPath + String.join(" ", motorName, signal.getName(), signal.getUnits()).trim(), // removes whitespace if motorName is empty
+                    signal.getValueAsDouble());
+        }
     }
 
     /**
@@ -235,10 +237,7 @@ public class LoggedSignals {
      * <p>Should be called after {@link #refreshAll()}. Iterates over the motors and logs the signal values to SmartDashboard
      */
     public void logAll() {
-        this.statusSignals.forEach((String motorName, Set<BaseStatusSignal> signalSet) -> {
-            for (final BaseStatusSignal signal : signalSet)
-                logSignal(motorName, signal);
-        });
+        this.statusSignals.forEach(this::logSignals);
     }
 
     /**
