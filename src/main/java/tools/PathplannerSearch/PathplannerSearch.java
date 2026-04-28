@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * <h3>Utility class that gives search features that Pathplanner lacks</h3>
+ * <h2>Utility class that gives search features that Pathplanner lacks</h2>
  * <p>This class is meant to help search for where paths and linked variables are used so you can clean up unused ones.
  * <br>Use by first changing the SEARCH_TERM and type variables to indicate what you want to search for & the type of thing you are searching for. 
  */
