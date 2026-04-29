@@ -124,7 +124,7 @@ Features:
 - Commands for switching the Limelight pipeline based on `Sunny` and `Cloudy` conditions to increase efficiency.
 
 ## MapleSim w/ AdvantageScope
-How to use our MapleSim implementation on **your** computer: [`MapleSim Usage Guide`](https://github.com/StuyPulse/StuyPlus-2026/blob/main/ascope_assets/README.md)
+The usage guide can be found [here.](https://github.com/StuyPulse/StuyPlus-2026/blob/main/ascope_assets/README.md)
 
 Files:
 - [`Simulation.java`](https://github.com/StuyPulse/StuyPlus-2026/blob/main/src/main/java/com/stuypulse/robot/util/simulation/Simulation.java)
@@ -148,7 +148,7 @@ We use this for:
 - Visualizing and testing our code logic
 - Testing how autons might look on the field
 - Helping members understand how the robot will operate
-- Visualize match logs in 3d
+- Visualizing match logs in 3d
 
 <img src="/images/references/maplesim/1.png" alt="Image of the robot a the starting position" />
 <img src="/images/references/maplesim/2.png" alt="Image of the field right after the robot collided with the fuel in the neutral zone" />
