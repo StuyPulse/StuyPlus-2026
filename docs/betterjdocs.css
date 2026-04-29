@@ -65,6 +65,24 @@
   }
 }
 
+.title {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+}
+
+.title::after {
+  --size: 50px;
+  content: "";
+  position: relative;
+  width: var(--size);
+  height: var(--size);
+  background-image: url("/StuyPlus-2026/StuyPlusLogo.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
 /*
  * MAIN STYLE SHEET FROM https://github.com/xMrAfonso/BetterJDocs
  * Javadoc style sheet starts here.
