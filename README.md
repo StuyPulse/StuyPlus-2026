@@ -116,7 +116,7 @@ This uses Limelights from [Limelight Vision](https://limelightvision.io/) to use
 
 All of the math and code is mostly done within the Limelight itself via LimelightOS. You mainly just need to connect it to your robot and determine the protocol  it sends to.
 
-`LimelightHelpers.java` is a wrapper class for the vision `NetworkTables` from the Limelight that abstracts many functions for you such as setting pipelines and the pose estimation.
+[`LimelightHelpers.java`](https://github.com/StuyPulse/StuyPlus-2026/blob/main/src/main/java/com/stuypulse/robot/util/vision/LimelightHelpers.java) is a wrapper class for the vision `NetworkTables` from the Limelight that abstracts many functions for you such as setting pipelines and the pose estimation. You can find the latest version of `LimelightHelpers.java` [here](https://github.com/LimelightVision/limelightlib-wpijava/releases).
 
 Features:
 - The robot currently only has one Limelight
@@ -124,7 +124,7 @@ Features:
 - Commands for switching the Limelight pipeline based on `Sunny` and `Cloudy` conditions to increase efficiency.
 
 ## MapleSim w/ AdvantageScope
-How to use our MapleSim implementation on **your** computer: [`MapleSim Usage Guide`](https://github.com/StuyPulse/StuyPlus-2026/blob/main/ascope_assets/README.md)
+The usage guide can be found [here.](https://github.com/StuyPulse/StuyPlus-2026/blob/main/ascope_assets/README.md)
 
 Files:
 - [`Simulation.java`](https://github.com/StuyPulse/StuyPlus-2026/blob/main/src/main/java/com/stuypulse/robot/util/simulation/Simulation.java)
@@ -148,11 +148,17 @@ We use this for:
 - Visualizing and testing our code logic
 - Testing how autons might look on the field
 - Helping members understand how the robot will operate
-- Visualize match logs in 3d
+- Visualizing match logs in 3d
 
 <img src="/images/references/maplesim/1.png" alt="Image of the robot a the starting position" />
 <img src="/images/references/maplesim/2.png" alt="Image of the field right after the robot collided with the fuel in the neutral zone" />
 <img src="/images/references/maplesim/3.png" alt="Image of the side of the robot with the intake out">
+
+## Credit
+The styling in [`betterjdocs.css`](https://github.com/StuyPulse/StuyPlus-2026/blob/main/javadoc_assets/betterjdocs.css) is based on a modified version of BetterJDocs.
+<br>
+Credit to [@xMrAfonso](https://github.com/xMrAfonso) and [@Andre601](https://github.com/Andre601) for the original file:
+[https://github.com/xMrAfonso/BetterJDocs](https://github.com/xMrAfonso/BetterJDocs)
 
 ## License
 This project is under the [MIT License](/LICENSE)
