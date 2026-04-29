@@ -27,11 +27,11 @@ public class VisionCommands {
     }
 
     public static Command enable() {
-        return Commands.runOnce(() -> vision.enable()).ignoringDisable(true).withName("VisionSetEnabled");
+        return Commands.runOnce(vision::enable).ignoringDisable(true).withName("VisionSetEnabled");
     }
     
     public static Command disable() {
-        return Commands.runOnce(() -> vision.disable()).ignoringDisable(true).withName("VisionSetDisabled");
+        return Commands.runOnce(vision::disable).ignoringDisable(true).withName("VisionSetDisabled");
     }
 
     public static Command whitelistAllTags() {
