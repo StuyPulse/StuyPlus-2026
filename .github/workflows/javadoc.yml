@@ -26,21 +26,16 @@ jobs:
         run: ./gradlew build
       - name: Generate docs
         run: ./gradlew javadoc
-      - name: Add favicon and logo
-        run: |
-          cp assets/javadoc/favicon.ico build/docs/javadoc/
-          cp assets/logos/StuyPlusLogo.png build/docs/javadoc/
-      - name: Move generated docs to docs/ directory
-        run: |
-          cp -r build/docs/javadoc/. docs/
-      - name: Clean up build artifacts
-        run: rm -rf build/ .gradle/
-      - name: Commit and push
+      - name: Commit and Push
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
+          cp assets/javadoc/favicon.ico build/docs/javadoc/
+          cp assets/logos/StuyPlusLogo.png build/docs/javadoc/
           git fetch origin docs
-          git checkout origin/docs
+          git checkout docs
+          cp -r build/docs/javadoc/. docs/
           git add docs/
+          rm -rf build/ .gradle/
           git commit -m "DOCS: Automated documentation update from main" || echo "No changes to commit"
           git push origin docs
