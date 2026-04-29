@@ -1,6 +1,7 @@
 package tools.DogLogASTParser;
 
 import java.nio.file.Files;
+import java.io.File;
 import java.nio.file.Path;
 
 import com.github.javaparser.ParserConfiguration;
@@ -63,4 +64,20 @@ public class Main {
             System.out.println("Error processing file: " + filePath + ", will be skipped: " + errorReason);
         }
     }
+
+    // private static void configureDogLog() {
+    //     try {
+    //         final File file = new File("");
+    //         String doglogImport = "dev.doglog.DogLog";
+    //         boolean hasDogLogImport = parsed.getImports().stream()
+    //             .anyMatch(i -> i.getNameAsString().equals(doglogImport));
+    
+    //         if (!hasDogLogImport) {
+    //             parsed.addImport(doglogImport);
+    //         }
+    //     } catch (Exception e) {
+    //         String errorReason = e.getClass().getSimpleName() + ": " + e.getMessage();
+    //         System.out.println("Error processing Robot.java, it will be skipped: " + errorReason);
+    //     }
+    // }
 }
