@@ -40,7 +40,7 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git fetch origin docs
-          git checkout docs
+          git checkout origin/docs
           git add docs/
           git commit -m "DOCS: Automated documentation update from main" || echo "No changes to commit"
-          git push origin main
+          git push origin docs
