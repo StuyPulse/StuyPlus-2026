@@ -79,13 +79,26 @@ loadScripts(document, 'script');</script>
 <hr>
 <div class="type-signature"><span class="modifiers">public class </span><span class="element-name type-name-label">Main</span>
 <span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></span></div>
-<div class="block"><h2>DogLogASTParser | A tool for replacing SmartDashboard calls with DogLog calls</h2>
+<div class="block"><h2>DogLogASTParser | A tool for replacing SmartDashboard calls with DogLog
+ calls</h2>
  
- <p>The main entry point for DogLogASTParser. It uses an abstract syntax tree (AST) parser called <a href="https://javaparser.org">JavaParser</a> to read and modify the java files in the robot code.
+ <p>
+ The main entry point for DogLogASTParser. It uses an abstract syntax tree
+ (AST) parser called <a href="https://javaparser.org">JavaParser</a> to read
+ and modify the java files in the robot code.
  
- <p>SmartDashboard calls of <code>putNumber</code>, <code>putBoolean</code>, and <code>putString</code> are replaced with <code>DogLog.log</code> calls. <code>SmartDashboard.putData</code> remains unchanged for more complex data.
- <p>Works with a Github Action workflow (doglog-replacement.yml) to automate the replacement with every push onto the main branch.
- <p>To execute, manually run the workflow in Github or push to main. It's not recommended to run this tool locally as the purpose of this tool is to automate the replacement and push to the <code>doglog</code> branch for testing.</div>
+ <p>
+ SmartDashboard calls of <code>putNumber</code>, <code>putBoolean</code>, and
+ <code>putString</code> are replaced with <code>DogLog.log</code> calls.
+ <code>SmartDashboard.putData</code> remains unchanged for more complex data.
+ <p>
+ Works with a Github Action workflow (doglog-replacement.yml) to automate the
+ replacement with every push onto the main branch.
+ <p>
+ To execute, manually run the workflow in Github or push to main. It's not
+ recommended to run this tool locally as the purpose of this tool is to
+ automate the replacement and push to the <code>doglog</code> branch for
+ testing.</div>
 </section>
 <section class="summary">
 <ul class="summary-list">
@@ -160,7 +173,9 @@ loadScripts(document, 'script');</script>
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">main</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>[]&nbsp;args)</span></div>
 <div class="block"><h4>Entry Point</h4>
  
- <p>Walks through the Java files in the robot code, filtering the tools directory, and invokes the <a href="#processFile(java.nio.file.Path)"><code>processFile(Path)</code></a> method for AST parsing.</div>
+ <p>
+ Walks through the Java files in the robot code, filtering the tools
+ directory, and invokes the <a href="#processFile(java.nio.file.Path)"><code>processFile(Path)</code></a> method for AST parsing.</div>
 </section>
 </li>
 <li>
@@ -169,10 +184,16 @@ loadScripts(document, 'script');</script>
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">processFile</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/nio/file/Path.html" title="class or interface in java.nio.file" class="external-link">Path</a>&nbsp;filePath)</span></div>
 <div class="block"><h4>Processes individual Java files.</h4>
  
- <p>Walks through the java files in the robot code, excluding the tools directory, and invokes the <a href="#processFile(java.nio.file.Path)"><code>processFile(Path)</code></a> method for AST parsing.
+ <p>
+ Walks through the java files in the robot code, excluding the tools
+ directory, and invokes the <a href="#processFile(java.nio.file.Path)"><code>processFile(Path)</code></a> method for AST parsing.
  
- <p>It makes a <code>CompilationUnit</code> for the file, then applies the <a href="DogLogRewriter.html" title="class in tools.DogLogASTParser"><code>DogLogRewriter</code></a> to replace SmartDashboard calls with DogLog calls.
- <p>When <a href="DogLogRewriter.html" title="class in tools.DogLogASTParser"><code>DogLogRewriter</code></a> is done, the modified <code>CompilationUnit</code> is written back to the file path, replacing the original file.</div>
+ <p>
+ It makes a <code>CompilationUnit</code> for the file, then applies the
+ <a href="DogLogRewriter.html" title="class in tools.DogLogASTParser"><code>DogLogRewriter</code></a> to replace SmartDashboard calls with DogLog calls.
+ <p>
+ When <a href="DogLogRewriter.html" title="class in tools.DogLogASTParser"><code>DogLogRewriter</code></a> is done, the modified <code>CompilationUnit</code> is
+ written back to the file path, replacing the original file.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>filePath</code> - the path of the Java file to be processed</dd>
