@@ -116,7 +116,7 @@ This uses Limelights from [Limelight Vision](https://limelightvision.io/) to use
 
 All of the math and code is mostly done within the Limelight itself via LimelightOS. You mainly just need to connect it to your robot and determine the protocol  it sends to.
 
-`LimelightHelpers.java` is a wrapper class for the vision `NetworkTables` from the Limelight that abstracts many functions for you such as setting pipelines and the pose estimation.
+[`LimelightHelpers.java`](https://github.com/StuyPulse/StuyPlus-2026/blob/main/src/main/java/com/stuypulse/robot/util/vision/LimelightHelpers.java) is a wrapper class for the vision `NetworkTables` from the Limelight that abstracts many functions for you such as setting pipelines and the pose estimation. You can find the latest version of `LimelightHelpers.java` [here](https://github.com/LimelightVision/limelightlib-wpijava/releases).
 
 Features:
 - The robot currently only has one Limelight
