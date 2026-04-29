@@ -11,13 +11,13 @@
 
 :root {
   /* Mostly used on links & buttons */
-  --primary-color: #4186f5;
+  --primary-color: #ff0000;
   /* Used in fields, parameters, types, etc. */
   --secondary-color: #ffffff;
   /* Used specifically for descriptions and text */
   --description-color: #949494;
   /* Hover color for links */
-  --hover-color: #76a6f4;
+  --hover-color: #cf4444;
   /* Color for Top Navigation and Cards */
   --bg-900-color: #121212;
   /* Color used in the body's background */
