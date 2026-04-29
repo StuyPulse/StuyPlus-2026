@@ -148,6 +148,7 @@ tasks.javadoc {
     options.addBooleanOption("-allow-script-in-comments", true)
     options.header = '<script>var l=document.createElement("link");l.rel="icon";l.href="/StuyPlus-2026/favicon.ico?t=" + Date.now();l.type="image/x-icon";document.head.appendChild(l);</script>'
     options.addStringOption("doctitle", "StuyPlus 2026")
+    options.stylesheetFile = file("${projectDir}/javadoc_assets/betterjdocs.css")
 }
 
 tasks.register("runDogLogAST", JavaExec) {
