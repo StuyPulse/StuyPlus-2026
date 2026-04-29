@@ -148,8 +148,7 @@ public class IntakeImpl extends Intake {
         intakeRollerMotorRight.setControl(followerController); // re-add the follow control after stopMotor removes it
     }
 
-    private ControlRequest getPivotControl() {
-        IntakeState currentState = getState();
+    private ControlRequest getPivotControl(IntakeState currentState) {
         boolean pivotAboveThreshold = isPivotAboveThreshold();
 
         return switch (currentState) {
@@ -197,7 +196,7 @@ public class IntakeImpl extends Intake {
 
         // Output
 
-        final ControlRequest pivotControl = getPivotControl();
+        final ControlRequest pivotControl = getPivotControl(currentState);
 
         final DutyCycleOut rollerControl = rollerController.withOutput(currentState.getTargetDutyCycle());
 
