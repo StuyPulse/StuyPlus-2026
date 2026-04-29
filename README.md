@@ -154,5 +154,11 @@ We use this for:
 <img src="/images/references/maplesim/2.png" alt="Image of the field right after the robot collided with the fuel in the neutral zone" />
 <img src="/images/references/maplesim/3.png" alt="Image of the side of the robot with the intake out">
 
+## Credit
+The styling in [`betterjdocs.css`](https://github.com/StuyPulse/StuyPlus-2026/blob/main/javadoc_assets/betterjdocs.css) is based on a modified version of BetterJDocs.
+<br>
+Credit to [@xMrAfonso](https://github.com/xMrAfonso) and [@Andre601](https://github.com/Andre601) for the original file:
+[https://github.com/xMrAfonso/BetterJDocs](https://github.com/xMrAfonso/BetterJDocs)
+
 ## License
 This project is under the [MIT License](/LICENSE)
