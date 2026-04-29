@@ -65,14 +65,14 @@
   }
 }
 
-.title {
+.package-index-page .title {
   position: relative;
   display: flex;
   flex-direction: row;
   align-items: flex-end;
 }
 
-.title::after {
+.package-index-page .title::after {
   --size: 50px;
   content: "";
   position: relative;
