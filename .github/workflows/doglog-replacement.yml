@@ -38,7 +38,7 @@ jobs:
       - name: Add DogLog vendordep
         run: ./gradlew vendordep --url=https://doglog.dev/vendordep.json
 
-      - name: Commit changes
+      - name: Commit and push changes
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
@@ -47,6 +47,4 @@ jobs:
 
           git add .
           git commit -m "Replace SmartDashboard with DogLog" || echo "No changes to commit"
-
-      - name: Force push to doglog branch
-        run: git push origin doglog
+          git push origin doglog
