@@ -43,10 +43,10 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
-          git checkout -B doglog
+          git checkout doglog
 
           git add .
           git commit -m "Replace SmartDashboard with DogLog" || echo "No changes to commit"
 
       - name: Force push to doglog branch
-        run: git push origin doglog --force
+        run: git push origin doglog
