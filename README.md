@@ -1,5 +1,5 @@
 <div align="center">
-    <img src="/images/logos/StuyPlusLogo.png" width="200" /> <img src="/images/logos/StuyPulseLogo.png" width="180" />
+    <img src="/assets/logos/StuyPlusLogo.png" width="200" /> <img src="/assets/logos/StuyPulseLogo.png" width="180" />
     <h1>Ron 2026</h1>
     <p>FRC Team StuyPlus <b>516</b> - First regular season Rookie Robot</p>
 </div>
@@ -124,7 +124,7 @@ Features:
 - Commands for switching the Limelight pipeline based on `Sunny` and `Cloudy` conditions to increase efficiency.
 
 ## MapleSim w/ AdvantageScope
-The usage guide can be found [here.](https://github.com/StuyPulse/StuyPlus-2026/blob/main/ascope_assets/README.md)
+The usage guide can be found [here.](https://github.com/StuyPulse/StuyPlus-2026/blob/main/assets/ascope/README.md)
 
 Files:
 - [`Simulation.java`](https://github.com/StuyPulse/StuyPlus-2026/blob/main/src/main/java/com/stuypulse/robot/util/simulation/Simulation.java)
@@ -150,12 +150,12 @@ We use this for:
 - Helping members understand how the robot will operate
 - Visualizing match logs in 3d
 
-<img src="/images/references/maplesim/1.png" alt="Image of the robot a the starting position" />
-<img src="/images/references/maplesim/2.png" alt="Image of the field right after the robot collided with the fuel in the neutral zone" />
-<img src="/images/references/maplesim/3.png" alt="Image of the side of the robot with the intake out">
+<img src="/assets/readme/maplesim/1.png" alt="Image of the robot a the starting position" />
+<img src="/assets/readme/maplesim/2.png" alt="Image of the field right after the robot collided with the fuel in the neutral zone" />
+<img src="/assets/readme/maplesim/3.png" alt="Image of the side of the robot with the intake out">
 
 ## Credit
-The styling in [`betterjdocs.css`](https://github.com/StuyPulse/StuyPlus-2026/blob/main/javadoc_assets/betterjdocs.css) is based on a modified version of BetterJDocs.
+The styling in [`betterjdocs.css`](https://github.com/StuyPulse/StuyPlus-2026/blob/main/assets/javadoc/betterjdocs.css) is based on a modified version of BetterJDocs.
 <br>
 Credit to [@xMrAfonso](https://github.com/xMrAfonso) and [@Andre601](https://github.com/Andre601) for the original file:
 [https://github.com/xMrAfonso/BetterJDocs](https://github.com/xMrAfonso/BetterJDocs)

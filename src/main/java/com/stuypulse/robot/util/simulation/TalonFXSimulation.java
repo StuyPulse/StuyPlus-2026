@@ -107,8 +107,6 @@ public class TalonFXSimulation extends TalonFX {
         }
     }
 
-    private static int id = 50;
-
     private final SystemSim simMotor;
 
     private TalonFXSimulation(int port, SystemSim adapter) {
@@ -130,11 +128,6 @@ public class TalonFXSimulation extends TalonFX {
 
     public TalonFXSimulation(int port, SingleJointedArmSim sim) {
         this(port, SystemSim.of(sim));
-    }
-
-    public static int getID() {
-        id += 1;
-        return id;
     }
 
     public void configure(TalonFXConfig config) {

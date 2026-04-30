@@ -37,6 +37,9 @@
   --bg-800-color-light: #f5f5f5;
   --bg-700-color-light: #fafafa;
   --bg-600-color-light: #ffffff;
+
+  --autocomplete-selected-bg-dark: #580202;
+  --autocomplete-selected-bg-light: #ffcccc;
 }
 
 /* OUR STYLESHEETS */
@@ -50,6 +53,8 @@
     --bg-800-color: var(--bg-800-color-dark);
     --bg-700-color: var(--bg-700-color-dark);
     --bg-600-color: var(--bg-600-color-dark);
+
+    --autocomplete-selected-bg: var(--autocomplete-selected-bg-dark);
   }
 }
 @media (prefers-color-scheme: light) {
@@ -62,7 +67,34 @@
     --bg-800-color: var(--bg-800-color-light);
     --bg-700-color: var(--bg-700-color-light);
     --bg-600-color: var(--bg-600-color-light);
+
+    --autocomplete-selected-bg: var(--autocomplete-selected-bg-light);
   }
+}
+
+.package-index-page .title {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+}
+
+.package-index-page .title::after {
+  --size: 50px;
+  content: "";
+  position: relative;
+  width: var(--size);
+  height: var(--size);
+  background-image: url("/StuyPlus-2026/StuyPlusLogo.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+.result-item > .ui-menu-item-wrapper.ui-state-active {
+  background: var(--autocomplete-selected-bg) !important;
+  border: var(--primary-color) solid 1px !important;
+  text-shadow: 0px 0px 2px var(--primary-color);
+  margin: 0 !important;
 }
 
 /*
@@ -687,21 +719,11 @@ div.table-tabs > button:last-child {
   overflow-y: auto
 }
 
-.ui-state-active {
-  background-color: transparent !important;
-  border: solid 1px transparent !important;
-  margin: 0 !important;
-}
-
 .ui-menu-item-wrapper {
   padding-left: 8px !important;
   padding-block: 6px !important;
 }
-.ui-menu-item-wrapper:hover,
-.ui-menu-item-wrapper:active {
-  background: transparent !important;
-  border: solid 1px transparent !important;
-}
+
 .summary-table > div,
 .details-table > div {
   text-align: left;
