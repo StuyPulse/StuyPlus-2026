@@ -48,6 +48,7 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
 
 import com.stuypulse.robot.subsystems.intake.Intake;
@@ -116,15 +117,20 @@ public class RobotContainer {
     }
 
     private void configureHandoffLogic() {
-        swerve.notAlignedToHub().and(() -> shooter.getState() == ShooterState.SHOOT)
+        Trigger cannotShoot =  swerve.notAlignedToHub().and(() -> shooter.getState() == ShooterState.SHOOT);
+        Trigger cannotFerry = swerve.notAlignedToFerryZone().and(() -> shooter.getState() == ShooterState.FERRY);
+
+        cannotShoot
             .whileTrue(HandoffCommands.setIdle().repeatedly());
 
-        swerve.notAlignedToFerryZone().and(() -> shooter.getState() == ShooterState.FERRY)
+        cannotFerry
             .whileTrue(HandoffCommands.setIdle().repeatedly());
 
         handoff.handoffStalling()
-            .whileTrue(HandoffCommands.setReverse())
-            .onFalse(HandoffCommands.setForward());
+            .whileTrue(HandoffCommands.setReverse().repeatedly())
+            .onFalse(Commands.either(HandoffCommands.setIdle(), 
+                                     HandoffCommands.setForward(), 
+                                     cannotShoot.or(cannotFerry)));
     }
 
     /***************/
