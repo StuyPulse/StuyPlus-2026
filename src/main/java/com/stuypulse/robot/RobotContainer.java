@@ -109,18 +109,18 @@ public class RobotContainer {
 
     private void configureFeederLogic() {
         swerve.notAlignedToHub().and(() -> shooter.getState() == ShooterState.SHOOT)
-            .whileTrue(FeederCommands.setIdle());
+            .whileTrue(FeederCommands.setIdle().repeatedly());
 
         swerve.notAlignedToFerryZone().and(() -> shooter.getState() == ShooterState.FERRY)
-            .whileTrue(FeederCommands.setIdle());
+            .whileTrue(FeederCommands.setIdle().repeatedly());
     }
 
     private void configureHandoffLogic() {
         swerve.notAlignedToHub().and(() -> shooter.getState() == ShooterState.SHOOT)
-            .whileTrue(HandoffCommands.setIdle());
+            .whileTrue(HandoffCommands.setIdle().repeatedly());
 
         swerve.notAlignedToFerryZone().and(() -> shooter.getState() == ShooterState.FERRY)
-            .whileTrue(HandoffCommands.setIdle());
+            .whileTrue(HandoffCommands.setIdle().repeatedly());
 
         handoff.handoffStalling()
             .whileTrue(HandoffCommands.setReverse())
