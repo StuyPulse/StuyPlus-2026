@@ -1,42 +1,16 @@
-/************************ PROJECT PHIL ************************/
-/* Copyright (c) 2026 StuyPulse Robotics. All rights reserved.*/
-/* This work is licensed under the terms of the MIT license.  */
-/**************************************************************/
-
+/************************* PROJECT RON *************************/
+/* Copyright (c) 2026 StuyPulse Robotics. All rights reserved. */
+/* Use of this source code is governed by an MIT-style license */
+/* that can be found in the repository LICENSE file.           */
+/***************************************************************/
 package com.stuypulse.robot;
 
 import com.stuypulse.robot.commands.auton.DoNothingAuton;
-import com.stuypulse.robot.commands.auton.LBDisrupt;
-import com.stuypulse.robot.commands.auton.LBFerry;
-import com.stuypulse.robot.commands.auton.LBMid;
-import com.stuypulse.robot.commands.auton.LBStraight;
-import com.stuypulse.robot.commands.auton.LTDisrupt;
-import com.stuypulse.robot.commands.auton.LBMidlineSweep;
-import com.stuypulse.robot.commands.auton.LBOuttake;
-import com.stuypulse.robot.commands.auton.OutpostOnly;
-import com.stuypulse.robot.commands.auton.RBDisrupt;
-import com.stuypulse.robot.commands.auton.RBFerry;
-import com.stuypulse.robot.commands.auton.RBMid;
-import com.stuypulse.robot.commands.auton.RBStraight;
-import com.stuypulse.robot.commands.auton.RTDisrupt;
-import com.stuypulse.robot.commands.auton.RBMidlineSweep;
-import com.stuypulse.robot.commands.auton.RBOuttake;
-import com.stuypulse.robot.commands.auton.TwoMeterPath;
 import com.stuypulse.robot.commands.feeder.FeederSetForward;
-import com.stuypulse.robot.commands.feeder.FeederSetState;
 import com.stuypulse.robot.commands.feeder.FeederSetStop;
 import com.stuypulse.robot.commands.handoff.HandoffSetForward;
 import com.stuypulse.robot.commands.handoff.HandoffSetIdle;
-import com.stuypulse.robot.commands.swerve.SwerveDriveDrive;
-import com.stuypulse.robot.commands.swerve.SwerveDriveResetRotation;
-import com.stuypulse.robot.commands.swerve.SwerveDriveRotate;
-import com.stuypulse.robot.commands.swerve.SwerveDriveXMode;
-import com.stuypulse.robot.commands.swerve.driveAligned.SwerveDriveAlignToFerryZone;
-import com.stuypulse.robot.commands.swerve.driveAligned.SwerveDriveAlignToHub;
 import com.stuypulse.robot.commands.intake.IntakeAgitateOnce;
-// import com.stuypulse.robot.commands.intake.IntakeAgitateWhileOuttaking;
-import com.stuypulse.robot.commands.intake.IntakeSetDown;
-import com.stuypulse.robot.commands.intake.IntakeSetHomingDown;
 import com.stuypulse.robot.commands.intake.IntakeSetIdle;
 import com.stuypulse.robot.commands.intake.IntakeSetIntake;
 import com.stuypulse.robot.commands.intake.IntakeSetOuttake;
@@ -44,30 +18,28 @@ import com.stuypulse.robot.commands.leds.LEDDefaultCommand;
 import com.stuypulse.robot.commands.shooter.ShooterSetFerry;
 import com.stuypulse.robot.commands.shooter.ShooterSetManual;
 import com.stuypulse.robot.commands.shooter.ShooterSetShoot;
-// import com.stuypulse.robot.commands.intake.IntakeSetIntake;
-// import com.stuypulse.robot.commands.intake.IntakeSetOuttake;
+import com.stuypulse.robot.commands.swerve.SwerveDriveDrive;
+import com.stuypulse.robot.commands.swerve.SwerveDriveResetRotation;
+import com.stuypulse.robot.commands.swerve.SwerveDriveXMode;
+import com.stuypulse.robot.commands.swerve.driveAligned.SwerveDriveAlignToFerryZone;
+import com.stuypulse.robot.commands.swerve.driveAligned.SwerveDriveAlignToHub;
 import com.stuypulse.robot.constants.Field;
 import com.stuypulse.robot.constants.Ports;
+import com.stuypulse.robot.subsystems.feeder.Feeder;
+import com.stuypulse.robot.subsystems.handoff.Handoff;
+import com.stuypulse.robot.subsystems.intake.Intake;
+import com.stuypulse.robot.subsystems.leds.LEDController;
+import com.stuypulse.robot.subsystems.shooter.Shooter;
+import com.stuypulse.robot.subsystems.swerve.CommandSwerveDrivetrain;
 import com.stuypulse.robot.subsystems.vision.LimelightVision;
-import com.stuypulse.robot.util.PathUtil.AutonConfig;
 
-import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
-import edu.wpi.first.wpilibj2.command.button.Trigger;
-import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
-import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
-import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
-
-import com.stuypulse.robot.subsystems.intake.Intake;
-import com.stuypulse.robot.subsystems.intake.Intake.IntakeState;
-import com.stuypulse.robot.subsystems.leds.LEDController;
-import com.stuypulse.robot.subsystems.feeder.Feeder;
-import com.stuypulse.robot.subsystems.handoff.Handoff;
-import com.stuypulse.robot.subsystems.swerve.CommandSwerveDrivetrain;
-import com.stuypulse.robot.subsystems.shooter.Shooter;
+import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
+import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
 
 public class RobotContainer {
     // Gamepads

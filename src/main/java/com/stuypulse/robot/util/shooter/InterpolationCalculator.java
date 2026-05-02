@@ -1,4 +1,4 @@
-/************************ PROJECT TRIBECBOT *************************/
+/************************* PROJECT RON *************************/
 /* Copyright (c) 2026 StuyPulse Robotics. All rights reserved. */
 /* Use of this source code is governed by an MIT-style license */
 /* that can be found in the repository LICENSE file.           */
@@ -6,7 +6,6 @@
 package com.stuypulse.robot.util.shooter;
 
 import com.stuypulse.robot.constants.Field;
-import com.stuypulse.robot.constants.Settings;
 import com.stuypulse.robot.constants.Settings.Shooter.FerryRPMInterpolation;
 import com.stuypulse.robot.constants.Settings.Shooter.FerryTOFInterpolation;
 import com.stuypulse.robot.constants.Settings.Shooter.RPMInterpolation;
@@ -14,7 +13,6 @@ import com.stuypulse.robot.constants.Settings.Shooter.TOFInterpolation;
 import com.stuypulse.robot.subsystems.swerve.CommandSwerveDrivetrain;
 
 import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.interpolation.InterpolatingDoubleTreeMap;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;

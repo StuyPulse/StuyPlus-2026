@@ -1,6 +1,10 @@
+/************************* PROJECT RON *************************/
+/* Copyright (c) 2026 StuyPulse Robotics. All rights reserved. */
+/* Use of this source code is governed by an MIT-style license */
+/* that can be found in the repository LICENSE file.           */
+/***************************************************************/
 package com.stuypulse.robot.subsystems.handoff;
 
-import com.ctre.phoenix6.controls.DutyCycleOut;
 import com.stuypulse.robot.constants.Field;
 import com.stuypulse.robot.constants.Motors;
 import com.stuypulse.robot.constants.Ports;
@@ -13,6 +17,8 @@ import com.stuypulse.robot.util.simulation.TalonFXSimulation;
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.math.system.plant.LinearSystemId;
 import edu.wpi.first.wpilibj.simulation.DCMotorSim;
+
+import com.ctre.phoenix6.controls.DutyCycleOut;
 
 
 public class HandoffSim extends Handoff{

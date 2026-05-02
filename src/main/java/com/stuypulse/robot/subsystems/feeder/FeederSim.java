@@ -1,18 +1,24 @@
+/************************* PROJECT RON *************************/
+/* Copyright (c) 2026 StuyPulse Robotics. All rights reserved. */
+/* Use of this source code is governed by an MIT-style license */
+/* that can be found in the repository LICENSE file.           */
+/***************************************************************/
 package com.stuypulse.robot.subsystems.feeder;
 
-import edu.wpi.first.units.measure.*;
 import static edu.wpi.first.units.Units.*;
 
-import com.ctre.phoenix6.controls.DutyCycleOut;
+import com.stuypulse.robot.constants.Motors;
+import com.stuypulse.robot.constants.Ports;
 import com.stuypulse.robot.constants.Settings;
 import com.stuypulse.robot.util.RobotVisualizer;
 import com.stuypulse.robot.util.simulation.TalonFXSimulation;
-import com.stuypulse.robot.constants.Motors;
-import com.stuypulse.robot.constants.Ports;
 
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.math.system.plant.LinearSystemId;
+import edu.wpi.first.units.measure.*;
 import edu.wpi.first.wpilibj.simulation.DCMotorSim;
+
+import com.ctre.phoenix6.controls.DutyCycleOut;
 
 public class FeederSim extends Feeder {
     private final TalonFXSimulation feederMotor;

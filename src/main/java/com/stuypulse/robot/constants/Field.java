@@ -1,10 +1,12 @@
-/************************ PROJECT KITBOT *************************/
+/************************* PROJECT RON *************************/
 /* Copyright (c) 2026 StuyPulse Robotics. All rights reserved. */
 /* Use of this source code is governed by an MIT-style license */
 /* that can be found in the repository LICENSE file.           */
 /***************************************************************/
-
 package com.stuypulse.robot.constants;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import com.stuypulse.robot.Robot;
 import com.stuypulse.robot.subsystems.swerve.CommandSwerveDrivetrain;
@@ -19,10 +21,8 @@ import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.FieldObject2d;
-import com.pathplanner.lib.util.FlippingUtil;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.pathplanner.lib.util.FlippingUtil;
 
 /** This interface stores information about the field elements. */
 public interface Field {

@@ -1,3 +1,8 @@
+/************************* PROJECT RON *************************/
+/* Copyright (c) 2026 StuyPulse Robotics. All rights reserved. */
+/* Use of this source code is governed by an MIT-style license */
+/* that can be found in the repository LICENSE file.           */
+/***************************************************************/
 package com.stuypulse.robot.util;
 
 import java.util.HashSet;
@@ -5,9 +10,9 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Set;
 
-import com.ctre.phoenix6.BaseStatusSignal;
-
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
+import com.ctre.phoenix6.BaseStatusSignal;
 
 /**
  * <h2>A container and handler for Phoenix's StatusSignals</h2>
