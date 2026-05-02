@@ -16,6 +16,20 @@
 
 ---
 
+## Table of Contents
+- [Inspiration](#based-on-the-wcp-2026-competitive-concept-for-rebuilt)
+- [Documentation](#documentation)
+- [Branch Naming Convention](#branch-naming-convention)
+- Subsystems
+    - [Drivetrain](#drivetrain)
+    - [Intake](#intake)
+    - [Feeder](#feeder)
+    - [Shooter](#shooter)
+    - [Vision](#vision)
+- [MapleSim w/ AdvantageScope](#maplesim-w-advantagescope)
+- [Credits](#credits)
+- [License](#license)
+
 ## Based on the [WCP 2026 Competitive Concept](https://wcproducts.com/pages/wcp-competitive-concepts) for Rebuilt
 
 [![WCP 2026 Rebuilt Competitive Concept Video](https://www.video-thumbnail.com/youtube/wO9aJNpCE8Q)](https://www.youtube.com/watch?v=wO9aJNpCE8Q)
@@ -34,12 +48,6 @@ The documentation for StuyPlus-2026 can be found [here](https://stuypulse.github
 
 
 ## Subsystems and Features
-- [Drivetrain](#drivetrain)
-- [Intake](#intake)
-- [Feeder](#feeder)
-- [Shooter](#shooter)
-- [Vision](#vision)
-- [MapleSim w/ AdvantageScope](#maplesim-w-advantagescope)
 
 ## Drivetrain
 Files: 
@@ -164,7 +172,7 @@ We use this for:
 <img src="/assets/readme/maplesim/2.png" alt="Image of the field right after the robot collided with the fuel in the neutral zone" />
 <img src="/assets/readme/maplesim/3.png" alt="Image of the side of the robot with the intake out">
 
-## Credit
+## Credits
 The styling in [`betterjdocs.css`](https://github.com/StuyPulse/StuyPlus-2026/blob/main/assets/javadoc/betterjdocs.css) is based on a modified version of BetterJDocs.
 <br>
 Credit to [@xMrAfonso](https://github.com/xMrAfonso) and [@Andre601](https://github.com/Andre601) for the original file:
