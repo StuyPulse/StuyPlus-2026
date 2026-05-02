@@ -103,7 +103,7 @@ spotless {
     enforceCheck = false
     java {
         targetExclude(
-            "src/main/java/com/stuypulse/robot/commands/autons/*.java"
+            "src/main/java/com/stuypulse/robot/commands/auton/*.java"
         )
         licenseHeader("""/************************* PROJECT RON *************************/
 /* Copyright (c) 2026 StuyPulse Robotics. All rights reserved. */
