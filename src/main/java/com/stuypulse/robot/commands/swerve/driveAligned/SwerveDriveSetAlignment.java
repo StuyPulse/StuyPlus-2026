@@ -46,8 +46,6 @@ public class SwerveDriveSetAlignment extends Command {
 
     @Override
     public boolean isFinished() {
-        SmartDashboard.putNumber("A_TARGET", getTargetAngle().getDegrees());
-        SmartDashboard.putBoolean("ALIGNED", isAligned.get());
         return isAligned.get();
     }
 
@@ -59,5 +57,10 @@ public class SwerveDriveSetAlignment extends Command {
             .withVelocityY(0)
             .withHeadingPID(Alignment.akP, Alignment.akI, Alignment.akD);
         swerve.setControl(request);
+
+        SmartDashboard.putBoolean("ALIGNED", isAligned.get());
+        SmartDashboard.putNumber("A_TARGET", getTargetAngle().getDegrees());
+
+
     }
 }
