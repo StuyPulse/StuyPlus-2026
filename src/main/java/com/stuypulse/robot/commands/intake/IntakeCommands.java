@@ -59,13 +59,13 @@ public class IntakeCommands {
         return Commands.runOnce(() -> {
             intake.setPivotZero();
             intake.setState(IntakeState.IDLE);
-        }).withName("IntakePivotSetZero");
+        }).ignoringDisable(true).withName("IntakePivotSetZero");
     }
 
     public static Command setZeroAtBottom() {
         return Commands.runOnce(() -> {
             intake.setPivotZeroAtBottom();
             intake.setState(IntakeState.DOWN);
-        }).withName("IntakePivotSetZeroAtBottom");
+        }).ignoringDisable(true).withName("IntakePivotSetZeroAtBottom");
     }
 }
