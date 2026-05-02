@@ -56,10 +56,16 @@ public class IntakeCommands {
     //Zeroing
 
     public static Command setZero() {
-        return Commands.runOnce(() -> intake.setPivotZero()).withName("IntakePivotSetZero");
+        return Commands.runOnce(() -> {
+            intake.setPivotZero();
+            intake.setState(IntakeState.IDLE);
+        }).withName("IntakePivotSetZero");
     }
 
     public static Command setZeroAtBottom() {
-        return Commands.runOnce(() -> intake.setPivotZeroAtBottom()).withName("IntakePivotSetZeroAtBottom");
+        return Commands.runOnce(() -> {
+            intake.setPivotZeroAtBottom();
+            intake.setState(IntakeState.DOWN);
+        }).withName("IntakePivotSetZeroAtBottom");
     }
 }
