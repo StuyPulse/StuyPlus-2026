@@ -36,7 +36,9 @@ public class SwerveDriveSetAlignment extends Command {
     
     public Rotation2d getTargetAngle() {
         Pose2d currentPose = swerve.getPose();
-        double atan = Math.atan2(pose.get().getY() - currentPose.getY(), pose.get().getX() - currentPose.getX());
+        Pose2d targetPose = pose.get();
+
+        double atan = Math.atan2(targetPose.getY() - currentPose.getY(), targetPose.getX() - currentPose.getX());
         return new Rotation2d((atan));
     };
 
