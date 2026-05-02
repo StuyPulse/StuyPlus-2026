@@ -156,14 +156,10 @@ public class IntakeImpl extends Intake {
         boolean pivotAboveThreshold = isPivotAboveThreshold();
 
         return switch (currentState) {
-            case INTAKE, OUTTAKE, DOWN -> {
-                if (pivotAboveThreshold) {
-                    // wait until pivot reaches the bottom to apply pushdown
-                    yield pushdownController.withOutput(Settings.Intake.Pivot.PUSHDOWN_CURRENT.getAsDouble());
-                } else {
-                    yield pivotController.withPosition(currentState.getTargetAngle().getRotations());
-                }
-            }
+            case INTAKE, OUTTAKE, DOWN -> 
+                pivotAboveThreshold 
+                    ? pushdownController.withOutput(Settings.Intake.Pivot.PUSHDOWN_CURRENT.getAsDouble())
+                    : pivotController.withPosition(currentState.getTargetAngle().getRotations());
             case HOMING_DOWN -> homingController;
             default -> pivotController.withPosition(currentState.getTargetAngle().getRotations());
         };
