@@ -220,7 +220,7 @@ public interface SimulationConstants {
     }
 
     /**
-     * <h4>Contains simulation constants related to the intake subsystem</h4>
+     * Contains simulation constants related to the intake subsystem
      */
     public interface Intake {
         double INTAKE_WIDTH = 0.5;
@@ -243,7 +243,7 @@ public interface SimulationConstants {
     }
 
     /**
-     * <h4>Contains simulation constants related to our physical hopper.</h4>
+     * Contains simulation constants related to our physical hopper.
      * <p>The hopper is not necessarily its own subsystem, but it has some important properties.
      */
     public interface Hopper {
@@ -257,7 +257,7 @@ public interface SimulationConstants {
     }
 
     /**
-     * <h4>Contains simulation constants related to the shooter subsystem</h4>
+     * Contains simulation constants related to the shooter subsystem
      */
     public interface Shooter {
         double BPS = 8;
@@ -272,7 +272,7 @@ public interface SimulationConstants {
     }
 
     /**
-     * <h4>Contains simulation constants related to our drivetrain and its components</h4>
+     * Contains simulation constants related to our drivetrain and its components
      */
     public interface Drivetrain {
         PIDConstants XY = new PIDConstants(2.2, 0, 0.0); // alignment
@@ -314,9 +314,6 @@ public interface SimulationConstants {
         };
     }
 
-    /**
-     * <h4>Contains simulation constants related to the robot's starting positions and queening positions</h4>
-     */
     public static final Pose2d[] ROBOT_QUEENING_POSITIONS = new Pose2d[] {
 			new Pose2d(-6, 0, new Rotation2d()),
 			new Pose2d(-5, 0, new Rotation2d()),
@@ -325,9 +322,6 @@ public interface SimulationConstants {
 			new Pose2d(-2, 0, new Rotation2d())
 	};
 
-    /**
-     * <h4>Contains simulation constants related to the robot's starting positions</h4>
-     */
 	public static final Pose2d[] ROBOTS_STARTING_POSITIONS = new Pose2d[] {
 			new Pose2d(12.5, 0.5, Rotation2d.fromDegrees(90)), // depot side trench facing hub
 			new Pose2d(12.5, 7.777, Rotation2d.fromDegrees(270)),

@@ -29,7 +29,7 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 /**
  * <h2>Robot Class</h2>
  * 
- * This is the main class for robot code, instantiated in {@link Main.java} It extends TimedRobot, meaning that the methods in this
+ * This is the main class for robot code, instantiated in {@link com.stuypulse.robot.Main} It extends TimedRobot, meaning that the methods in this
  * class are called automatically during specific states of the robot.
  * 
  * This robot is structured using the <a href="https://docs.wpilib.org/en/stable/docs/software/commandbased/what-is-command-based.html">CommandBased</a> framework.
