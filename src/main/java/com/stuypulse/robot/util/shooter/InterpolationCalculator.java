@@ -8,6 +8,7 @@ package com.stuypulse.robot.util.shooter;
 import com.stuypulse.robot.constants.Field;
 import com.stuypulse.robot.constants.Settings;
 import com.stuypulse.robot.constants.Settings.Shooter.FerryRPMInterpolation;
+import com.stuypulse.robot.constants.Settings.Shooter.FerryTOFInterpolation;
 import com.stuypulse.robot.constants.Settings.Shooter.RPMInterpolation;
 import com.stuypulse.robot.constants.Settings.Shooter.TOFInterpolation;
 import com.stuypulse.robot.subsystems.swerve.CommandSwerveDrivetrain;
@@ -44,6 +45,11 @@ public class InterpolationCalculator {
         ferryingDistanceRPMInterpolator = new InterpolatingDoubleTreeMap();
         for(double[] pair: FerryRPMInterpolation.ferryDistanceRPMInterpolation) {
             ferryingDistanceRPMInterpolator.put(pair[0], pair[1]);
+        }
+
+        ferryingDistanceTOFInterpolator = new InterpolatingDoubleTreeMap();
+        for (double[] pair: FerryTOFInterpolation.FerryTOFInterpolationInterpolation) {
+            ferryingDistanceTOFInterpolator.put(pair[0], pair[1]);
         }
     }
     

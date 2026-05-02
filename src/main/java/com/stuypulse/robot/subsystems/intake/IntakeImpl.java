@@ -207,7 +207,7 @@ public class IntakeImpl extends Intake {
         return SysId.getRoutine(Settings.Intake.Pivot.RAMP_RATE,
                 Settings.Intake.Pivot.STEP_VOLTAGE,
                 "Intake",
-                voltage -> setPivotVoltageOverride(voltage),
+                this::setPivotVoltageOverride,
                 () -> intakePivotMotor.getPosition().getValue(),
                 () -> intakePivotMotor.getVelocity().getValue(),
                 () -> intakePivotMotor.getMotorVoltage().getValue(),
