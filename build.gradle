@@ -102,24 +102,28 @@ wpi.sim.addDriverstation()
 spotless {
     enforceCheck = false
     java {
-        targetExclude("src/main/java/com/stuypulse/robot/commands/autons/*.java")
-        licenseHeaderFile "LICENSE"
-
-        googleJavaFormat().aosp()
-        
-        trimTrailingWhitespace()
-        endWithNewline()
+        targetExclude(
+            "src/main/java/com/stuypulse/robot/commands/autons/*.java"
+        )
+        licenseHeader("""/************************* PROJECT RON *************************/
+/* Copyright (c) 2026 StuyPulse Robotics. All rights reserved. */
+/* Use of this source code is governed by an MIT-style license */
+/* that can be found in the repository LICENSE file.           */
+/***************************************************************/
+""").updateYearWithLatest(false)
 
         importOrder(
-            'com.stuypulse.stuylib', 
-            'com.stuypulse.constants', 
-            'com.stuypulse.subsystems', 
-            'com.stuypulse.commands', 
-            'com.stuypulse.commands.auton', 
-            'com.stuypulse.util', 
-            'com.stuypulse', 
-            'edu.wpi', 
-            'com.revrobotics'
+            'java',
+            'com.stuypulse.constants',
+            'com.stuypulse.subsystems',
+            'com.stuypulse.commands',
+            'com.stuypulse.commands.auton',
+            'com.stuypulse.util',
+            'com.stuypulse',
+            'edu.wpi',
+            'com.ctre',
+            'com.revrobotics',
+            'com.stuypulse.stuylib'
         )
         removeUnusedImports()
     }
