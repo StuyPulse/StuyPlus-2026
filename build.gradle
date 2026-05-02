@@ -92,7 +92,7 @@ dependencies {
     testImplementation 'junit:junit:4.13.1'
 
     implementation "com.github.StuyPulse:StuyLib:${STUYLIB_VERSION}";
-    implementation "com.github.javaparser:javaparser-core:3.24.0";
+    compileOnly "com.github.javaparser:javaparser-core:3.24.0";
 }
 
 // Simulation configuration (e.g. environment variables).
@@ -156,7 +156,7 @@ tasks.javadoc {
 }
 
 tasks.register("runDogLogAST", JavaExec) {
-    classpath = sourceSets.main.runtimeClasspath
+    classpath = sourceSets.main.runtimeClasspath + configurations.compileClasspath
     mainClass = "tools.DogLogASTParser.Main"
 }
 
