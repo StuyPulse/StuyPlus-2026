@@ -181,7 +181,7 @@ public class RobotContainer {
         //Top Right Paddle
         driver.b()
             .onTrue(HandoffCommands.setIdle()
-                    .alongWith(FeederCommands.setIdle(), IntakeCommands.setIntake()));
+                    .alongWith(FeederCommands.setIdle(), IntakeCommands.setIntake(), Commands.runOnce(() -> new SwerveDriveXMode().cancel())));
         
         //Bottom Left Paddle
         driver.x()
