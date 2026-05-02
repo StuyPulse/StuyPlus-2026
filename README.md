@@ -37,6 +37,11 @@
 ## Documentation
 The documentation for StuyPlus-2026 can be found [here](https://stuypulse.github.io/StuyPlus-2026/).
 
+<picture>
+    <source media="(prefers-color-scheme: light)" srcset="./assets/readme/documentation/documentation-light.png">
+    <img width="80%" src="./assets/readme/documentation/documentation-dark.png" alt="Screenshot of the documentation page">
+</picture>
+
 ## Branch Naming Convention
 | Prefix | Use Case |
 |--------|---------|
