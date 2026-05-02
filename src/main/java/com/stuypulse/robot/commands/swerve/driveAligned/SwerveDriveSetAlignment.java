@@ -12,6 +12,7 @@ import com.stuypulse.stuylib.streams.booleans.filters.BDebounceRC;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 
 import com.ctre.phoenix6.swerve.SwerveRequest; 
@@ -45,6 +46,8 @@ public class SwerveDriveSetAlignment extends Command {
 
     @Override
     public boolean isFinished() {
+        SmartDashboard.putNumber("A_TARGET", getTargetAngle().getDegrees());
+        SmartDashboard.putBoolean("ALIGNED", isAligned.get());
         return isAligned.get();
     }
 
