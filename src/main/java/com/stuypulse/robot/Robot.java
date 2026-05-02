@@ -26,12 +26,24 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
+/**
+ * <h2>Main Robot Class
+ * 
+ * This is the main class for robot code, instantiated in {@link Main.java} It extends TimedRobot, meaning that the methods in this
+ * class are called automatically during specific states of the robot.
+ * 
+ * This robot is structured using the <a href="https://docs.wpilib.org/en/stable/docs/software/commandbased/what-is-command-based.html">CommandBased</a> framework.
+ */
 public class Robot extends TimedRobot {
 
     private RobotContainer robot;
     private Command auto;
     private static Alliance alliance;
 
+    /**
+     * Checks the alliance the robot is on
+     * @return true if the robot is on the blue alliance, false if the robot is on the red alliance
+     */
     public static boolean isBlue() {
         return alliance == Alliance.Blue;
     }
@@ -40,6 +52,9 @@ public class Robot extends TimedRobot {
     /*** ROBOT SCHEDULEING ***/
     /*************************/
 
+    /** 
+     * This method is called when the robot is first started up.
+    */
     @Override
     public void robotInit() {
         robot = new RobotContainer();
@@ -57,11 +72,19 @@ public class Robot extends TimedRobot {
         // SmartDashboard.putData(CommandScheduler.getInstance());
     }
 
+    /**
+     * This method runs when the robot connects to Driver Station.
+     * 
+     * It is used to update the robot's current alliance.
+     */
     @Override
     public void driverStationConnected() {
         alliance = DriverStation.getAlliance().get();
     }
 
+    /**
+     * This function is called every 20ms, regardless of the robot mode.
+     */
     @Override
     public void robotPeriodic() {
         LoggedSignals.refreshAll();
@@ -75,6 +98,12 @@ public class Robot extends TimedRobot {
     /******************/
     /*** SIMULATION ***/
     /******************/
+
+    /**
+     * This method is called when the robot first starts in simulation mode.
+     * 
+     * It is used to set the robot's starting position in the simulation, which is defined in {@link SimulationConstants.ROBOTS_STARTING_POSITIONS}.
+     */
     @Override
     public void simulationInit() {
         CommandSwerveDrivetrain
@@ -82,6 +111,9 @@ public class Robot extends TimedRobot {
                 .resetPose(SimulationConstants.ROBOTS_STARTING_POSITIONS[0]); // start off in a convenient spot
     }
 
+    /**
+     * This method is called every 20ms during simulation mode.
+     */
     @Override
     public void simulationPeriodic() {
         Simulation.getInstance().update();
@@ -92,12 +124,18 @@ public class Robot extends TimedRobot {
     /*** DISABLED MODE ***/
     /*********************/
 
+    /**
+     * This method is called each time when the robot is disabled.
+     */
     @Override
     public void disabledInit() {
         CommandScheduler.getInstance().schedule(new SetIMUMode(1));
         CommandScheduler.getInstance().schedule(new SetMegaTagMode(MegaTagMode.MEGATAG1));
     }
 
+    /**
+     * This method is called every 20ms when the robot is disabled.
+     */
     @Override
     public void disabledPeriodic() {
         CommandScheduler.getInstance().schedule(new SetIMUMode(1));
@@ -108,6 +146,9 @@ public class Robot extends TimedRobot {
     /*** AUTONOMOUS MODE ***/
     /***********************/
 
+    /**
+     * This method is called at the start of autonomous mode.
+     */
     @Override
     public void autonomousInit() {
         auto = robot.getAutonomousCommand();
@@ -123,10 +164,16 @@ public class Robot extends TimedRobot {
         }
     }
 
+    /**
+     * This method is called every 20ms during autonomous mode.
+     */
     @Override
     public void autonomousPeriodic() {
     }
 
+    /**
+     * This method is called when autonomous mode ends.
+     */
     @Override
     public void autonomousExit() {
     }
@@ -135,6 +182,9 @@ public class Robot extends TimedRobot {
     /*** TELEOP MODE ***/
     /*******************/
 
+    /**
+     * This method is called at the start of teleop mode.
+     */
     @Override
     public void teleopInit() {
         CommandScheduler.getInstance().schedule(new SetMegaTagMode(MegaTagMode.MEGATAG2));
@@ -153,10 +203,16 @@ public class Robot extends TimedRobot {
         SmartDashboard.putBoolean("Auton Won", autonWon);
     }
 
+    /**
+     * This method is called every 20ms in teleop mode.
+     */
     @Override
     public void teleopPeriodic() {
     }
 
+    /**
+     * This method is called when teleop mode ends.
+     */
     @Override
     public void teleopExit() {
     }
@@ -165,16 +221,25 @@ public class Robot extends TimedRobot {
     /*** TEST MODE ***/
     /*****************/
 
+    /**
+     * This method is called at the start of test mode.
+     */
     @Override
     public void testInit() {
 
         CommandScheduler.getInstance().cancelAll();
     }
 
+    /**
+     * This method is called every 20ms in test mode.
+     */
     @Override
     public void testPeriodic() {
     }
 
+    /**
+     * This method is called when test mode ends.
+     */
     @Override
     public void testExit() {
     }
