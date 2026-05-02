@@ -27,7 +27,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
 /**
- * <h2>Main Robot Class
+ * <h2>Robot Class</h2>
  * 
  * This is the main class for robot code, instantiated in {@link Main.java} It extends TimedRobot, meaning that the methods in this
  * class are called automatically during specific states of the robot.
