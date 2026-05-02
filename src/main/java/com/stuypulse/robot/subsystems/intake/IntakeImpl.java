@@ -197,6 +197,7 @@ public class IntakeImpl extends Intake {
         this.pivotSignals.logAll();
         this.rollerSignals.logAll();
         SmartDashboard.putBoolean("Intake/Rollers/Stalling", leftRollerStalling() || rightRollerStalling());
+        SmartDashboard.putBoolean("Intake/Pivot/Pushing Down", intakePivotMotor.getAppliedControl() == pushdownController);
 
         super.periodic();
     }

@@ -108,11 +108,6 @@ public abstract class Intake extends SubsystemBase {
         SmartDashboard.putNumber("Intake/Pivot/Current Angle", getRelativePosition().getDegrees());
         SmartDashboard.putBoolean("Intake/Pivot/At Target Angle", atTargetAngle());
         SmartDashboard.putBoolean("Intake/Pivot/Above Threshold", isPivotAboveThreshold());
-        SmartDashboard.putBoolean("Intake/Pivot/Pushing Down", currentState == IntakeState.INTAKE ||
-                currentState == IntakeState.OUTTAKE ||
-                currentState == IntakeState.DOWN &&
-                isPivotAboveThreshold());
-
         SmartDashboard.putNumber("Intake/Rollers/Target Duty Cycle", currentState.getTargetDutyCycle());
         SmartDashboard.putNumber("Intake/Rollers/RPM", getRollerRPM());
     }
