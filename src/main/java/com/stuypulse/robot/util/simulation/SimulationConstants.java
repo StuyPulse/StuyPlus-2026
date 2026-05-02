@@ -31,6 +31,12 @@ import edu.wpi.first.units.measure.Distance;
 import edu.wpi.first.units.measure.Mass;
 import edu.wpi.first.units.measure.Time;
 
+/**
+ * <h2>SimulationConstants</h2>
+ * <p>A collection of constants used within our MapleSim code and other related sim classes.
+ * <p>This includes things like component offsets, physical constants, and any other values 
+ * that are relevant to the simulation</p>
+ */
 public interface SimulationConstants {
     /**
      * <h2>Record that holds CAD Offsets</h2>
@@ -213,6 +219,9 @@ public interface SimulationConstants {
         }
     }
 
+    /**
+     * <h4>Contains simulation constants related to the intake subsystem</h4>
+     */
     public interface Intake {
         double INTAKE_WIDTH = 0.5;
         double INTAKE_LENGTH = 0.15;
@@ -233,6 +242,10 @@ public interface SimulationConstants {
         public Offsets OUTTAKE_OFFSETS = new Offsets(0.4, 0, 0);
     }
 
+    /**
+     * <h4>Contains simulation constants related to our physical hopper.</h4>
+     * <p>The hopper is not necessarily its own subsystem, but it has some important properties.
+     */
     public interface Hopper {
         int FUEL_CAPACITY = 54;
 
@@ -243,6 +256,9 @@ public interface SimulationConstants {
         Pose3d HIDDEN_POSE = new Pose3d(1000, 1000, 1000, new Rotation3d());
     }
 
+    /**
+     * <h4>Contains simulation constants related to the shooter subsystem</h4>
+     */
     public interface Shooter {
         double BPS = 8;
 
@@ -255,6 +271,9 @@ public interface SimulationConstants {
         public Offsets OFFSETS = new Offsets(Units.inchesToMeters(-7.836), 0, 0.7);
     }
 
+    /**
+     * <h4>Contains simulation constants related to our drivetrain and its components</h4>
+     */
     public interface Drivetrain {
         PIDConstants XY = new PIDConstants(2.2, 0, 0.0); // alignment
         PIDConstants THETA = new PIDConstants(3, 0, 0.0);
