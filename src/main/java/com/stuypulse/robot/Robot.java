@@ -101,8 +101,6 @@ public class Robot extends TimedRobot {
 
     /**
      * This method is called when the robot first starts in simulation mode.
-     * 
-     * It is used to set the robot's starting position in the simulation, which is defined in {@link SimulationConstants.Drivetrain.ROBOTS_STARTING_POSITIONS}.
      */
     @Override
     public void simulationInit() {

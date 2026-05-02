@@ -314,6 +314,9 @@ public interface SimulationConstants {
         };
     }
 
+    /**
+     * <h4>Contains simulation constants related to the robot's starting positions and queening positions</h4>
+     */
     public static final Pose2d[] ROBOT_QUEENING_POSITIONS = new Pose2d[] {
 			new Pose2d(-6, 0, new Rotation2d()),
 			new Pose2d(-5, 0, new Rotation2d()),
@@ -322,6 +325,9 @@ public interface SimulationConstants {
 			new Pose2d(-2, 0, new Rotation2d())
 	};
 
+    /**
+     * <h4>Contains simulation constants related to the robot's starting positions</h4>
+     */
 	public static final Pose2d[] ROBOTS_STARTING_POSITIONS = new Pose2d[] {
 			new Pose2d(12.5, 0.5, Rotation2d.fromDegrees(90)), // depot side trench facing hub
 			new Pose2d(12.5, 7.777, Rotation2d.fromDegrees(270)),
