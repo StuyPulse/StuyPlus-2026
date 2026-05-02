@@ -105,7 +105,7 @@ public class RobotContainer {
 
     private void configureIntakeLogic() {
         intake.pivotStalling()
-            .onTrue(IntakeCommands.setZeroAtBottom().andThen(IntakeCommands.setDown()));
+            .onTrue(IntakeCommands.setZeroAtBottom());
     }
 
     private void configureFeederLogic() {
