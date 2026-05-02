@@ -36,7 +36,8 @@ public abstract class Intake extends SubsystemBase {
     }
 
     public enum IntakeState {
-        IDLE(Settings.Intake.Pivot.IDLE_ANGLE, 0), // (rollers do not run)
+        IDLE(Settings.Intake.Pivot.IDLE_ANGLE, 0), // (rollers do not run),
+        AGITATE(Settings.Intake.Pivot.AGITATE_UP_ANGLE, 0),
         INTAKE(Settings.Intake.Pivot.DOWN_ANGLE, Settings.Intake.Roller.INTAKE_DUTY_CYCLE), // (sucks in the balls) [pivot down, rollers running]
         OUTTAKE(Settings.Intake.Pivot.DOWN_ANGLE, Settings.Intake.Roller.OUTTAKE_DUTY_CYCLE), // (trips the balls out) [pivot down, rollers running reverse]
         DOWN(Settings.Intake.Pivot.DOWN_ANGLE, 0),
