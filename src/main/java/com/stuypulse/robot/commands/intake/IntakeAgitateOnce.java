@@ -8,7 +8,7 @@ public class IntakeAgitateOnce extends SequentialCommandGroup {
         addCommands(
             new IntakeSetDown(),
             new WaitCommand(0.25),
-            new IntakeSetIdle(),
+            new IntakeSetAgitateUp(),
             new WaitCommand(0.25),
             new IntakeSetDown()
         );
