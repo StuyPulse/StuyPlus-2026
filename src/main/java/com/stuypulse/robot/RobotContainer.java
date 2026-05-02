@@ -151,10 +151,10 @@ public class RobotContainer {
 
         rightTrigger
             .onTrue(new SwerveDriveAlignToHub()
-                    .andThen(new SwerveDriveXMode())
-                    .andThen(ShooterCommands.setShoot())
-                    .andThen(HandoffCommands.setForward())
-                        .alongWith(FeederCommands.setForward(), IntakeCommands.agitateOnce().repeatedly()));
+                    .andThen(new SwerveDriveXMode()
+                    .alongWith(ShooterCommands.setShoot()
+                        .andThen(HandoffCommands.setForward()
+                        .alongWith(FeederCommands.setForward(), IntakeCommands.agitateOnce().repeatedly())))));
 
         //Top Left Paddle
         driver.a()
@@ -165,18 +165,18 @@ public class RobotContainer {
 
         driver.rightBumper()
             .onTrue(new SwerveDriveAlignToFerryZone()
-                    .andThen(new SwerveDriveXMode())
-                    .andThen(ShooterCommands.setFerry())
-                    .andThen(HandoffCommands.setForward())
-                        .alongWith(FeederCommands.setForward(), IntakeCommands.agitateOnce().repeatedly()));
+                    .andThen(new SwerveDriveXMode()
+                    .alongWith(ShooterCommands.setFerry()
+                        .andThen(HandoffCommands.setForward()
+                        .alongWith(FeederCommands.setForward(), IntakeCommands.agitateOnce().repeatedly())))));
 
         //Bottom Right Paddle
         //Manual shooting possibly from in front of the hub
         driver.y()
             .onTrue(new SwerveDriveXMode()
-                    .andThen(ShooterCommands.setManual())
-                    .andThen(HandoffCommands.setForward())
-                        .alongWith(FeederCommands.setForward(), IntakeCommands.agitateOnce().repeatedly()));
+                    .alongWith(ShooterCommands.setManual()
+                                .andThen(HandoffCommands.setForward()
+                                        .alongWith(FeederCommands.setForward(), IntakeCommands.agitateOnce().repeatedly()))));
 
         //Top Right Paddle
         driver.b()
