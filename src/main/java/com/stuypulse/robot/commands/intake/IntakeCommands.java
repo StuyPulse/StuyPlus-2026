@@ -1,5 +1,7 @@
 package com.stuypulse.robot.commands.intake;
 
+import org.ironmaple.simulation.IntakeSimulation.IntakeSide;
+
 import com.stuypulse.robot.subsystems.intake.Intake;
 import com.stuypulse.robot.subsystems.intake.Intake.IntakeState;
 
@@ -31,6 +33,10 @@ public class IntakeCommands {
         return Commands.runOnce(() -> intake.setState(IntakeState.DOWN), intake).withName("IntakeSetDown");
     }
 
+    public static Command setAgitate() {
+        return Commands.runOnce(() -> intake.setState(IntakeState.AGITATE), intake).withName("IntakeSetAgitate");
+    }
+
     public static Command setHomingDown() {
         return Commands.runOnce(() -> intake.setState(IntakeState.HOMING_DOWN), intake).withName("IntakeSetHomingDown");
     }
@@ -41,7 +47,7 @@ public class IntakeCommands {
         return Commands.sequence(
             setDown(),
             new WaitCommand(0.25),
-            setIdle(),
+            setAgitate(),
             new WaitCommand(0.25),
             setDown()
         ).withName("IntakeAgitateOnce");
