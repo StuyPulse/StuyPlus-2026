@@ -315,17 +315,6 @@ public interface SimulationConstants {
     }
 
     /**
-     * Starting positions for the robots in the simulation when they are queening at the start of the match.
-     */
-    public static final Pose2d[] ROBOT_QUEENING_POSITIONS = new Pose2d[] {
-			new Pose2d(-6, 0, new Rotation2d()),
-			new Pose2d(-5, 0, new Rotation2d()),
-			new Pose2d(-4, 0, new Rotation2d()),
-			new Pose2d(-3, 0, new Rotation2d()),
-			new Pose2d(-2, 0, new Rotation2d())
-	};
-
-    /**
      * Starting positions for the robots in the simulation.
      */
 	public static final Pose2d[] ROBOTS_STARTING_POSITIONS = new Pose2d[] {
