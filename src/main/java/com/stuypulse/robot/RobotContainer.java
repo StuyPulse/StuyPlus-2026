@@ -58,6 +58,7 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
 
 import com.stuypulse.robot.subsystems.intake.Intake;
@@ -165,7 +166,7 @@ public class RobotContainer {
         //Top Right Paddle
         driver.b()
             .onTrue(new HandoffSetIdle()
-                    .alongWith(new FeederSetStop(), new IntakeSetIntake()));
+                    .alongWith(new FeederSetStop(), new IntakeSetIntake(), Commands.runOnce(() -> new SwerveDriveXMode().cancel())));
         
         //Bottom Left Paddle
         driver.x()
