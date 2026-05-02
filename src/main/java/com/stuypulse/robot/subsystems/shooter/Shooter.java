@@ -85,7 +85,7 @@ public abstract class Shooter extends SubsystemBase {
     public void periodic() {
         final ShooterState currentState = getState();
 
-        SmartDashboard.putNumber("Shooter/Top Target RPM", currentState.getTargetAngularVelocity().in(RPM));
+        SmartDashboard.putNumber("Shooter/Target RPM", currentState.getTargetAngularVelocity().in(RPM));
         SmartDashboard.putString("Shooter/State", currentState.name());
         SmartDashboard.putString("States/Shooter", currentState.name());
     }
