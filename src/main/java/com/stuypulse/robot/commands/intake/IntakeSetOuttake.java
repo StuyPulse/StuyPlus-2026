@@ -3,14 +3,12 @@
 /* Use of this source code is governed by an MIT-style license */
 /* that can be found in the repository LICENSE file.           */
 /***************************************************************/
-package com.stuypulse.robot;
+package com.stuypulse.robot.commands.intake;
 
-import edu.wpi.first.wpilibj.RobotBase;
+import com.stuypulse.robot.subsystems.intake.Intake.IntakeState;
 
-public final class Main {
-    private Main() {}
-
-    public static void main(String... args) {
-        RobotBase.startRobot(Robot::new);
+public class IntakeSetOuttake extends IntakeSetState{
+    public IntakeSetOuttake() {
+        super(IntakeState.INTAKE);
     }
 }

@@ -72,6 +72,7 @@ def includeDesktopSupport = false
 // Defining my dependencies. In this case, WPILib (+ friends), and vendor libraries.
 // Also defines JUnit 5.
 dependencies {
+    annotationProcessor wpi.java.deps.wpilibAnnotations()
     implementation wpi.java.deps.wpilib()
     implementation wpi.java.vendor.java()
 
@@ -89,10 +90,16 @@ dependencies {
     nativeRelease wpi.java.vendor.jniRelease(wpi.platforms.desktop)
     simulationRelease wpi.sim.enableRelease()
 
-    testImplementation 'junit:junit:4.13.1'
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.10.1'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 
     implementation "com.github.StuyPulse:StuyLib:${STUYLIB_VERSION}";
-    implementation "com.github.javaparser:javaparser-core:3.24.0";
+    compileOnly "com.github.javaparser:javaparser-core:3.24.0";
+}
+
+test {
+    useJUnitPlatform()
+    systemProperty 'junit.jupiter.extensions.autodetection.enabled', 'true'
 }
 
 // Simulation configuration (e.g. environment variables).
@@ -102,24 +109,28 @@ wpi.sim.addDriverstation()
 spotless {
     enforceCheck = false
     java {
-        targetExclude("src/main/java/com/stuypulse/robot/commands/autons/*.java")
-        licenseHeaderFile "LICENSE"
-
-        googleJavaFormat().aosp()
-        
-        trimTrailingWhitespace()
-        endWithNewline()
+        targetExclude(
+            "src/main/java/com/stuypulse/robot/commands/auton/*.java"
+        )
+        licenseHeader("""/************************* PROJECT RON *************************/
+/* Copyright (c) 2026 StuyPulse Robotics. All rights reserved. */
+/* Use of this source code is governed by an MIT-style license */
+/* that can be found in the repository LICENSE file.           */
+/***************************************************************/
+""").updateYearWithLatest(false)
 
         importOrder(
-            'com.stuypulse.stuylib', 
-            'com.stuypulse.constants', 
-            'com.stuypulse.subsystems', 
-            'com.stuypulse.commands', 
-            'com.stuypulse.commands.auton', 
-            'com.stuypulse.util', 
-            'com.stuypulse', 
-            'edu.wpi', 
-            'com.revrobotics'
+            'java',
+            'com.stuypulse.constants',
+            'com.stuypulse.subsystems',
+            'com.stuypulse.commands',
+            'com.stuypulse.commands.auton',
+            'com.stuypulse.util',
+            'com.stuypulse',
+            'edu.wpi',
+            'com.ctre',
+            'com.revrobotics',
+            'com.stuypulse.stuylib'
         )
         removeUnusedImports()
     }
@@ -152,7 +163,7 @@ tasks.javadoc {
 }
 
 tasks.register("runDogLogAST", JavaExec) {
-    classpath = sourceSets.main.runtimeClasspath
+    classpath = sourceSets.main.runtimeClasspath + configurations.compileClasspath
     mainClass = "tools.DogLogASTParser.Main"
 }
 

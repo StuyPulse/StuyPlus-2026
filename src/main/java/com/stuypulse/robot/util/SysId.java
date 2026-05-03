@@ -1,20 +1,24 @@
+/************************* PROJECT RON *************************/
+/* Copyright (c) 2026 StuyPulse Robotics. All rights reserved. */
+/* Use of this source code is governed by an MIT-style license */
+/* that can be found in the repository LICENSE file.           */
+/***************************************************************/
 package com.stuypulse.robot.util;
+
+import static edu.wpi.first.units.Units.*;
+import static edu.wpi.first.units.Units.Second;
+import static edu.wpi.first.units.Units.Volts;
 
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
-import com.ctre.phoenix6.SignalLogger;
-
-import edu.wpi.first.units.measure.*;
-import static edu.wpi.first.units.Units.*;
-
 import edu.wpi.first.units.Units;
 import edu.wpi.first.units.VoltageUnit;
-
-import static edu.wpi.first.units.Units.Second;
-import static edu.wpi.first.units.Units.Volts;
+import edu.wpi.first.units.measure.*;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
+
+import com.ctre.phoenix6.SignalLogger;
 
 /**
  *<h2>A class that handles the Mechanism logging and unit conversions required to create a SysId routine</h2>

@@ -3,23 +3,21 @@
 /* Use of this source code is governed by an MIT-style license */
 /* that can be found in the repository LICENSE file.           */
 /***************************************************************/
-package com.stuypulse.robot.commands;
+package com.stuypulse.robot.commands.vision;
+
+import com.stuypulse.robot.subsystems.vision.LimelightVision;
 
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 
-/*-
- * This command does a whole load of nothing... 
- *
- * @author Ivan Chen
- */
-public class DoNothingCommand extends InstantCommand {
+public class SetVisionEnabled extends InstantCommand{
+    private LimelightVision vision;
 
-    public DoNothingCommand() {
-        // Do loads of nothing
+    public SetVisionEnabled() {
+        this.vision = LimelightVision.getInstance();
     }
 
     @Override
     public void initialize() {
-        // Do loads of nothing
+        vision.enable();
     }
 }

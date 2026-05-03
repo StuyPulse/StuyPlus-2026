@@ -5,13 +5,13 @@
 </div>
 <div align="center">
 
-[![WPILib](https://img.shields.io/badge/WPILib-v2026.2.1-AB1A2D?style=for-the-badge&logo=first)](https://github.com/wpilibsuite/allwpilib/releases/tag/v2026.2.1)
 [![Java Version](https://img.shields.io/badge/Java-17-F29111?style=for-the-badge&logo=openjdk)](https://jdk.java.net/17/)
 [![Java Version](https://img.shields.io/badge/C++-20-659AD2?style=for-the-badge&logo=cplusplus)](../cpp)
 [![License](https://img.shields.io/badge/License-MIT-750014?style=for-the-badge&logo=markdown)](LICENSE)
-<br>
 ![Build](https://img.shields.io/github/actions/workflow/status/StuyPulse/StuyPlus-2026/gradle.yml?style=for-the-badge&label=Build)
-
+<br>
+[![Build](https://img.shields.io/badge/Dedicated%20To-Zixi%20Qiao-blue?style=for-the-badge&logo=ghostty)](#dedications)
+[![Build](https://img.shields.io/badge/Dedicated%20To-Ron%20Kunicki-blue?style=for-the-badge)](#dedications)
 </div>
 
 ---
@@ -27,6 +27,7 @@
     - [Shooter](#shooter)
     - [Vision](#vision)
 - [MapleSim w/ AdvantageScope](#maplesim-w-advantagescope)
+- [Dedications](#dedications)
 - [Credits](#credits)
 - [License](#license)
 
@@ -35,12 +36,8 @@
 [![WCP 2026 Rebuilt Competitive Concept Video](https://www.video-thumbnail.com/youtube/wO9aJNpCE8Q)](https://www.youtube.com/watch?v=wO9aJNpCE8Q)
 
 ## Documentation
-The documentation for StuyPlus-2026 can be found [here](https://stuypulse.github.io/StuyPlus-2026/).
+The documentation for StuyPlus-2026 can be found [here](https://stuypulse.github.io/StuyPlus-2026/). It's a work in progess, but hopefully we'll be able to make this a valuable resource for people learning robot code.
 
-<picture>
-    <source media="(prefers-color-scheme: light)" srcset="./assets/readme/documentation/documentation-light.png">
-    <img width="80%" src="./assets/readme/documentation/documentation-dark.png" alt="Screenshot of the documentation page">
-</picture>
 
 ## Branch Naming Convention
 | Prefix | Use Case |
@@ -173,6 +170,11 @@ We use this for:
 <img src="/assets/readme/maplesim/1.png" alt="Image of the robot a the starting position" />
 <img src="/assets/readme/maplesim/2.png" alt="Image of the field right after the robot collided with the fuel in the neutral zone" />
 <img src="/assets/readme/maplesim/3.png" alt="Image of the side of the robot with the intake out">
+
+## Dedications
+This project is dedicated to Ron, for his constant presence and help in our Rookie education program. He has helped so many of us, and neither Plus or Pulse would be the same without him.
+
+This project is also dedicated to Zixi Qiao, for pushing us to succeed and innovate, and for acting as our only software mentor for a long time. Even without the resources of the main team, Zixi has supported us through every step of coding a great robot, and we will miss him after he graduates this year 💗.
 
 ## Credits
 The styling in [`betterjdocs.css`](https://github.com/StuyPulse/StuyPlus-2026/blob/main/assets/javadoc/betterjdocs.css) is based on a modified version of BetterJDocs.

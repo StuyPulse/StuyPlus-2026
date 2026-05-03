@@ -1,20 +1,25 @@
+/************************* PROJECT RON *************************/
+/* Copyright (c) 2026 StuyPulse Robotics. All rights reserved. */
+/* Use of this source code is governed by an MIT-style license */
+/* that can be found in the repository LICENSE file.           */
+/***************************************************************/
 package com.stuypulse.robot.subsystems.shooter;
-
-import edu.wpi.first.units.measure.AngularVelocity;
-import edu.wpi.first.units.measure.Voltage;
 
 import static edu.wpi.first.units.Units.RPM;
 
 import java.util.function.DoubleSupplier;
 
-import com.ctre.phoenix6.hardware.TalonFX;
 import com.stuypulse.robot.Robot;
 import com.stuypulse.robot.constants.Settings;
 import com.stuypulse.robot.util.shooter.InterpolationCalculator;
 
+import edu.wpi.first.units.measure.AngularVelocity;
+import edu.wpi.first.units.measure.Voltage;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
+
+import com.ctre.phoenix6.hardware.TalonFX;
 
 public abstract class Shooter extends SubsystemBase {
     private final static Shooter instance;
@@ -90,4 +95,3 @@ public abstract class Shooter extends SubsystemBase {
         SmartDashboard.putString("States/Shooter", currentState.name());
     }
 }
-

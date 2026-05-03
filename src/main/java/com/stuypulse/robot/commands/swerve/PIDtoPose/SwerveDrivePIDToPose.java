@@ -1,16 +1,13 @@
+/************************* PROJECT RON *************************/
+/* Copyright (c) 2026 StuyPulse Robotics. All rights reserved. */
+/* Use of this source code is governed by an MIT-style license */
+/* that can be found in the repository LICENSE file.           */
+/***************************************************************/
 package com.stuypulse.robot.commands.swerve.PIDtoPose;
 
 import static edu.wpi.first.units.Units.*;
 
-import com.stuypulse.stuylib.control.angle.feedback.AnglePIDController;
-import com.stuypulse.stuylib.control.feedback.PIDController;
-import com.stuypulse.stuylib.math.Vector2D;
-import com.stuypulse.stuylib.streams.angles.filters.AMotionProfile;
-import com.stuypulse.stuylib.streams.booleans.BStream;
-import com.stuypulse.stuylib.streams.booleans.filters.BDebounceRC;
-import com.stuypulse.stuylib.streams.numbers.IStream;
-import com.stuypulse.stuylib.streams.numbers.filters.LowPassFilter;
-import com.stuypulse.stuylib.streams.vectors.VStream;
+import java.util.function.Supplier;
 
 import com.stuypulse.robot.Robot;
 import com.stuypulse.robot.constants.Field;
@@ -27,7 +24,15 @@ import edu.wpi.first.wpilibj.smartdashboard.FieldObject2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 
-import java.util.function.Supplier;
+import com.stuypulse.stuylib.control.angle.feedback.AnglePIDController;
+import com.stuypulse.stuylib.control.feedback.PIDController;
+import com.stuypulse.stuylib.math.Vector2D;
+import com.stuypulse.stuylib.streams.angles.filters.AMotionProfile;
+import com.stuypulse.stuylib.streams.booleans.BStream;
+import com.stuypulse.stuylib.streams.booleans.filters.BDebounceRC;
+import com.stuypulse.stuylib.streams.numbers.IStream;
+import com.stuypulse.stuylib.streams.numbers.filters.LowPassFilter;
+import com.stuypulse.stuylib.streams.vectors.VStream;
 
 public class SwerveDrivePIDToPose extends Command {
     
@@ -193,4 +198,3 @@ public class SwerveDrivePIDToPose extends Command {
         Field.clearFieldObject(targetPose2d);
     }
 }
-
