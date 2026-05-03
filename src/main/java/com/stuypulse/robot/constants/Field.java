@@ -102,13 +102,13 @@ public interface Field {
         public final AprilTag tag;
 
         public int getID() {
-            return tag.getID();
+            return tag.id();
         }
 
         public Pose3d getLocation() {
             return Robot.isBlue()
-                ? tag.getLocation()
-                : transformToOppositeAlliance(tag.getLocation());
+                ? tag.location()
+                : transformToOppositeAlliance(tag.location());
         }
 
         private NamedTags() {
@@ -154,7 +154,7 @@ public interface Field {
 
     public static boolean isValidTag(int id) {
         for (AprilTag tag : APRILTAGS) {
-            if (tag.getID() == id) {
+            if (tag.id() == id) {
                 return true;
             }
         }
@@ -163,7 +163,7 @@ public interface Field {
 
     public static AprilTag getTag(int id) {
         for (AprilTag tag : APRILTAGS) {
-            if (tag.getID() == id) {
+            if (tag.id() == id) {
                 return tag;
             }
         }
