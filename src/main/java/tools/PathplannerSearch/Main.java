@@ -21,6 +21,12 @@ import tools.PathplannerSearch.PathplannerSearch.SearchType;
  * <pre>
  * ./gradlew runPathplannerSearch -Pargs="disruptAUton path"
  * </pre>
+ * 
+ * If your search term has spaces, it will only check the last word for the search type.
+ * <p><b>Example:</b>
+ * <pre>
+ * ./gradlew runPathplannerSearch -Pargs="Disrupt Auton Thing path"
+ * </pre>
  *
  * <p><b>Arguments:</b>
  * <ul>

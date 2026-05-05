@@ -51,8 +51,8 @@ public class LimelightVision extends SubsystemBase{
     public LimelightVision() {
         names = new String[Cameras.LimelightCameras.length];
         for (int i = 0; i < Cameras.LimelightCameras.length; i++) {
-            names[i] = Cameras.LimelightCameras[i].getName();
-            Pose3d robotRelativePose = Cameras.LimelightCameras[i].getLocation();
+            names[i] = Cameras.LimelightCameras[i].name();
+            Pose3d robotRelativePose = Cameras.LimelightCameras[i].location();
             LimelightHelpers.setCameraPose_RobotSpace(
                 names[i], 
                 robotRelativePose.getX(), 
@@ -133,7 +133,7 @@ public class LimelightVision extends SubsystemBase{
         IMUData[] data = new IMUData[Cameras.LimelightCameras.length];
 
         for (int i = 0; i < Cameras.LimelightCameras.length; i++) {
-            data[i] = LimelightHelpers.getIMUData(Cameras.LimelightCameras[i].getName());
+            data[i] = LimelightHelpers.getIMUData(Cameras.LimelightCameras[i].name());
         }
 
         return data;

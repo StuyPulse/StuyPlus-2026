@@ -161,7 +161,7 @@ It uses the [dyn4j physics engine](https://github.com/dyn4j/dyn4j), simulating y
 It works with AdvantageScope simply for rendering the Poses for all elements in the sim.
 
 We use this for:
-- Overall testing our archetype before our Mechanical Engineering department finishes the physical robot
+- Overall testing of our archetype before our Mechanical Engineering department finishes the physical robot
 - Visualizing and testing our code logic
 - Testing how autons might look on the field
 - Helping members understand how the robot will operate

@@ -171,6 +171,15 @@ tasks.register("runPathplannerSearch", JavaExec) {
     classpath = sourceSets.main.runtimeClasspath
     mainClass = "tools.PathplannerSearch.Main"
 
-    def searchArgs = project.findProperty("args") ?: ""
-    args searchArgs.split(" ")
+    def rawArgs = (project.findProperty("args") ?: "").trim()
+    if (rawArgs) {
+        int lastSpace = rawArgs.lastIndexOf(' ')
+        if (lastSpace == -1) {
+            args rawArgs
+        } else {
+            def searchTerm = rawArgs.substring(0, lastSpace)
+            def secondParam = rawArgs.substring(lastSpace + 1)
+            args searchTerm, secondParam
+        }
+    } // makes it so that if ur search term has spaces, the 2nd param is only checked by the last space.
 }
