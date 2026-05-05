@@ -194,7 +194,7 @@ public class LimelightVision extends SubsystemBase{
                     withinAngularVelocityTolerance = true;
                 }
 
-                Boolean isValidPose = notNull && withinAngularVelocityTolerance && withinInvalidPositionTolerance;
+                boolean isValidPose = notNull && withinAngularVelocityTolerance && withinInvalidPositionTolerance;
 
                 SmartDashboard.putBoolean("Vision/isValidPose", isValidPose);
                 SmartDashboard.putBoolean("Vision/isWithinAngularVel", withinAngularVelocityTolerance);

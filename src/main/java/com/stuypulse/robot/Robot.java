@@ -124,6 +124,10 @@ public class Robot extends TimedRobot {
 
     @Override
     public void autonomousExit() {
+        boolean autonWon = DriverStation.getGameSpecificMessage()
+            .equals(String.valueOf(alliance.name().charAt(0)).toUpperCase());
+
+        SmartDashboard.putBoolean("Auton Won", autonWon);
     }
 
     /*******************/
@@ -141,11 +145,6 @@ public class Robot extends TimedRobot {
         }
 
         CommandScheduler.getInstance().schedule(VisionCommands.enable());
-
-        Boolean autonWon = DriverStation.getGameSpecificMessage()
-                .equals(String.valueOf(alliance.name().charAt(0)).toUpperCase());
-
-        SmartDashboard.putBoolean("Auton Won", autonWon);
     }
 
     @Override

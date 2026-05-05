@@ -7,6 +7,7 @@ package com.stuypulse.robot.commands.swerve.PIDtoPose;
 
 import static edu.wpi.first.units.Units.*;
 
+import java.util.function.BooleanSupplier;
 import java.util.function.Supplier;
 
 import com.stuypulse.robot.Robot;
@@ -58,7 +59,7 @@ public class SwerveDrivePIDToPose extends Command {
 
     private VStream translationSetpoint;
 
-    private Supplier<Boolean> canEnd;
+    private BooleanSupplier canEnd;
 
     public SwerveDrivePIDToPose(Pose2d targetPose) {
         this(() -> targetPose);
@@ -119,7 +120,7 @@ public class SwerveDrivePIDToPose extends Command {
         return this;
     }
 
-    public SwerveDrivePIDToPose withCanEnd(Supplier<Boolean> canEnd){
+    public SwerveDrivePIDToPose withCanEnd(BooleanSupplier canEnd){
         this.canEnd = canEnd;
         return this;
     }
@@ -186,7 +187,7 @@ public class SwerveDrivePIDToPose extends Command {
 
     @Override
     public boolean isFinished(){
-        return isAligned.get() && canEnd.get();
+        return isAligned.get() && canEnd.getAsBoolean();
     }
 
     @Override
