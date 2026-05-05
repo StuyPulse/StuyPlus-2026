@@ -14,13 +14,11 @@ import java.util.List;
 
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * <h2>Utility class that gives search features that Pathplanner lacks</h2>
- * <p>
- * This class is meant to help search for where paths and linked variables are
- * used so you can clean up unused ones.
+ * <p> This class is meant to help search for where paths and linked variables 
+ * are used so you can clean up unused ones.
  */
 public final class PathplannerSearch {
     public enum SearchType {
@@ -28,6 +26,14 @@ public final class PathplannerSearch {
         PATH
     }
 
+     /**
+     * <h4>Main entry point</h4>
+     * <p>Searches through .path files in <code>src/main/deploy/pathplanner</code> 
+     * and logs files that match a certain search term based on the search type.
+     * @param searchTerm
+     * @param searchType
+     * @throws IOException
+     */
     public static void search(String searchTerm, SearchType searchType) throws IOException {
         switch (searchType) {
             case LINKED_WAYPOINT -> {
@@ -75,6 +81,15 @@ public final class PathplannerSearch {
         }
     }
 
+    /**
+     * Parses the "folder" key from the content of a .path file.
+     * <p>As Java doesn't have a built in JSON parser and for only having to 
+     * do this once, it would be overkill to add a dependency.
+     * <p>This method uses regex to parse the "folder" key from the .path file. 
+     * <code>.path</code> files are essentially just JSON files but with a different extension. 
+     * @param the content of the .path file
+     * @return the value of the "folder" key in the .path file, or an empty string if it doesn't exist
+     */
     private static String parseFolderKeyFromFileContent(String content) {
         final String folderName;
         Pattern regex = Pattern.compile("\"folder\"\\s*:\\s*\"([^\"]*)\"", Pattern.CASE_INSENSITIVE); // ima be honest i used ai for this regex 🤤
@@ -88,6 +103,25 @@ public final class PathplannerSearch {
         return folderName;
     }
 
+    /**
+     * Logs the result of the search to the console with some formatting.
+     * <p>Uses ANSI color codes for coloring the output.
+     * <p>If no matches are found, it will log "None were found." in red.
+     * <p>Otherwise, it will log the list of matches in green on separate lines.
+     * 
+     * <p><b>Example input and output:</b>
+     * <pre>./gradlew runPathPlannersearch -Pargs="disrupt path"</pre>
+     * <pre>
+     * Autons that use the path 'disrupt':
+     * disrupt/LB Disrupt.auto
+     * disrupt/LT Disrupt.auto
+     * disrupt/RB Disrupt.auto
+     * disrupt/RT Disrupt.auto
+     * </pre>
+     * @param searchTerm
+     * @param searchType
+     * @param matches
+     */
     private static void logFiles(String searchTerm, SearchType searchType, List<String> matches) {
         final String RESET = "\u001B[0m";
         final String RED = "\u001B[31m";
