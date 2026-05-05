@@ -1,0 +1,25 @@
+{
+  "version": "2025.0",
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "RB to Mid Neutral LF"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Mid Neutral LF to RB"
+          }
+        }
+      ]
+    }
+  },
+  "resetOdom": true,
+  "folder": "Shooting",
+  "choreoAuto": false
+}
