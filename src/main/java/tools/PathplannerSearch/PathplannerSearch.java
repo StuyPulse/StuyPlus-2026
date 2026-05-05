@@ -87,7 +87,7 @@ public final class PathplannerSearch {
      * do this once, it would be overkill to add a dependency.
      * <p>This method uses regex to parse the "folder" key from the .path file. 
      * <code>.path</code> files are essentially just JSON files but with a different extension. 
-     * @param the content of the .path file
+     * @param content the content of the .path file
      * @return the value of the "folder" key in the .path file, or an empty string if it doesn't exist
      */
     public static String parseFolderKeyFromFileContent(String content) {
