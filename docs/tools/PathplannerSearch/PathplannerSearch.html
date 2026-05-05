@@ -80,9 +80,8 @@ loadScripts(document, 'script');</script>
 <div class="type-signature"><span class="modifiers">public final class </span><span class="element-name type-name-label">PathplannerSearch</span>
 <span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></span></div>
 <div class="block"><h2>Utility class that gives search features that Pathplanner lacks</h2>
- <p>
- This class is meant to help search for where paths and linked variables are
- used so you can clean up unused ones.</div>
+ <p> This class is meant to help search for where paths and linked variables 
+ are used so you can clean up unused ones.</div>
 </section>
 <section class="summary">
 <ul class="summary-list">
@@ -128,7 +127,9 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#search(java.lang.String,tools.PathplannerSearch.PathplannerSearch.SearchType)" class="member-name-link">search</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;searchTerm,
  <a href="PathplannerSearch.SearchType.html" title="enum class in tools.PathplannerSearch">PathplannerSearch.SearchType</a>&nbsp;searchType)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="block">Main entry point</div>
+</div>
 </div>
 </div>
 </div>
@@ -166,7 +167,13 @@ loadScripts(document, 'script');</script>
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">search</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;searchTerm,
  <a href="PathplannerSearch.SearchType.html" title="enum class in tools.PathplannerSearch">PathplannerSearch.SearchType</a>&nbsp;searchType)</span>
                    throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></span></div>
+<div class="block"><h4>Main entry point</h4>
+ <p>Searches through .path files in <code>src/main/deploy/pathplanner</code> 
+ and logs files that match a certain search term based on the search type.</div>
 <dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>searchTerm</code> - </dd>
+<dd><code>searchType</code> - </dd>
 <dt>Throws:</dt>
 <dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></code></dd>
 </dl>
