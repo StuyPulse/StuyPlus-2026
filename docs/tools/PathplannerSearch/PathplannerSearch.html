@@ -125,6 +125,18 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#logFiles(java.lang.String,tools.PathplannerSearch.PathplannerSearch.SearchType,java.util.List)" class="member-name-link">logFiles</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;searchTerm,
+ <a href="PathplannerSearch.SearchType.html" title="enum class in tools.PathplannerSearch">PathplannerSearch.SearchType</a>&nbsp;searchType,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;&nbsp;matches)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="block">Logs the result of the search to the console with some formatting.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#parseFolderKeyFromFileContent(java.lang.String)" class="member-name-link">parseFolderKeyFromFileContent</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;content)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="block">Parses the "folder" key from the content of a .path file.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#search(java.lang.String,tools.PathplannerSearch.PathplannerSearch.SearchType)" class="member-name-link">search</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;searchTerm,
  <a href="PathplannerSearch.SearchType.html" title="enum class in tools.PathplannerSearch">PathplannerSearch.SearchType</a>&nbsp;searchType)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
@@ -176,6 +188,51 @@ loadScripts(document, 'script');</script>
 <dd><code>searchType</code> - </dd>
 <dt>Throws:</dt>
 <dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></code></dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="parseFolderKeyFromFileContent(java.lang.String)">
+<h3>parseFolderKeyFromFileContent</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">parseFolderKeyFromFileContent</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;content)</span></div>
+<div class="block">Parses the "folder" key from the content of a .path file.
+ <p>As Java doesn't have a built in JSON parser and for only having to 
+ do this once, it would be overkill to add a dependency.
+ <p>This method uses regex to parse the "folder" key from the .path file. 
+ <code>.path</code> files are essentially just JSON files but with a different extension.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>content</code> - the content of the .path file</dd>
+<dt>Returns:</dt>
+<dd>the value of the "folder" key in the .path file, or an empty string if it doesn't exist</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="logFiles(java.lang.String,tools.PathplannerSearch.PathplannerSearch.SearchType,java.util.List)">
+<h3>logFiles</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">logFiles</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;searchTerm,
+ <a href="PathplannerSearch.SearchType.html" title="enum class in tools.PathplannerSearch">PathplannerSearch.SearchType</a>&nbsp;searchType,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;&nbsp;matches)</span></div>
+<div class="block">Logs the result of the search to the console with some formatting.
+ <p>Uses ANSI color codes for coloring the output.
+ <p>If no matches are found, it will log "None were found." in red.
+ <p>Otherwise, it will log the list of matches in green on separate lines.
+ 
+ <p><b>Example input and output:</b>
+ <pre>./gradlew runPathPlannersearch -Pargs="disrupt path"</pre>
+ <pre>
+ Autons that use the path 'disrupt':
+ disrupt/LB Disrupt.auto
+ disrupt/LT Disrupt.auto
+ disrupt/RB Disrupt.auto
+ disrupt/RT Disrupt.auto
+ </pre></div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>searchTerm</code> - </dd>
+<dd><code>searchType</code> - </dd>
+<dd><code>matches</code> - </dd>
 </dl>
 </section>
 </li>
