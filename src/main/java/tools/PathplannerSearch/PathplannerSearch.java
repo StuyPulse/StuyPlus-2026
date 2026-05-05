@@ -90,7 +90,7 @@ public final class PathplannerSearch {
      * @param the content of the .path file
      * @return the value of the "folder" key in the .path file, or an empty string if it doesn't exist
      */
-    private static String parseFolderKeyFromFileContent(String content) {
+    public static String parseFolderKeyFromFileContent(String content) {
         final String folderName;
         Pattern regex = Pattern.compile("\"folder\"\\s*:\\s*\"([^\"]*)\"", Pattern.CASE_INSENSITIVE); // ima be honest i used ai for this regex 🤤
         Matcher match = regex.matcher(content);
@@ -122,7 +122,7 @@ public final class PathplannerSearch {
      * @param searchType
      * @param matches
      */
-    private static void logFiles(String searchTerm, SearchType searchType, List<String> matches) {
+    public static void logFiles(String searchTerm, SearchType searchType, List<String> matches) {
         final String RESET = "\u001B[0m";
         final String RED = "\u001B[31m";
         final String GREEN = "\u001B[32m";
