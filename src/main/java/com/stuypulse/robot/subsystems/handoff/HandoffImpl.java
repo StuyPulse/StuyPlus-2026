@@ -29,7 +29,7 @@ public class HandoffImpl extends Handoff {
     private final BStream handoffStalling;
 
     public HandoffImpl() {
-        handoffMotor = new TalonFX(Ports.Handoff.HANDOFF_MOTOR, Settings.CANIVORE);
+        handoffMotor = new TalonFX(Ports.Handoff.HANDOFF_MOTOR, Settings.CANBUS);
         handoffController = new DutyCycleOut(getState().getHandoffDutyCycle()).withEnableFOC(true);
         signals = new LoggedSignals(
             handoffMotor.getSupplyCurrent(),

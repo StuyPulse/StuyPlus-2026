@@ -22,9 +22,9 @@ public interface Ports {
     // }
 
     public interface Shooter {
-        int SHOOTER_MOTOR_LEFT = 22;
-        int SHOOTER_MOTOR_CENTER = 1; // TODO: get after champs
-        int SHOOTER_MOTOR_RIGHT = 2;
+        int SHOOTER_MOTOR_LEFT = 30;
+        int SHOOTER_MOTOR_CENTER = 100; // TODO: get after champs
+        int SHOOTER_MOTOR_RIGHT = 47;
     }
 
     public interface Handoff {
@@ -37,8 +37,8 @@ public interface Ports {
     }
 
     public interface Intake {
-        int MOTOR_INTAKE_ROLLER_LEFT = 6;
-        int MOTOR_INTAKE_ROLLER_RIGHT = 7;
+        int MOTOR_INTAKE_ROLLER_LEFT = 22;
+        int MOTOR_INTAKE_ROLLER_RIGHT = 17;
         int MOTOR_INTAKE_PIVOT = 10;
     }
     

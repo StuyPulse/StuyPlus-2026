@@ -35,9 +35,9 @@ public class ShooterImpl extends Shooter {
     private Optional<Voltage> voltageOverride;
 
     public ShooterImpl() {
-        shooterMotorLeft = new TalonFX(Ports.Shooter.SHOOTER_MOTOR_LEFT, Settings.CANIVORE); // leader
-        shooterMotorCenter = new TalonFX(Ports.Shooter.SHOOTER_MOTOR_CENTER, Settings.CANIVORE);
-        shooterMotorRight = new TalonFX(Ports.Shooter.SHOOTER_MOTOR_RIGHT, Settings.CANIVORE);
+        shooterMotorLeft = new TalonFX(Ports.Shooter.SHOOTER_MOTOR_LEFT, Settings.CANBUS); // leader
+        shooterMotorCenter = new TalonFX(Ports.Shooter.SHOOTER_MOTOR_CENTER, Settings.CANBUS);
+        shooterMotorRight = new TalonFX(Ports.Shooter.SHOOTER_MOTOR_RIGHT, Settings.CANBUS);
         shooterController = new VelocityTorqueCurrentFOC(getState().getTargetAngularVelocity());
         signals = new LoggedSignals(
             "Left Motor", 

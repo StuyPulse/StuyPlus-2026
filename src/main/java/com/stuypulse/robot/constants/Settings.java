@@ -34,7 +34,7 @@ import com.pathplanner.lib.path.PathConstraints;
 public interface Settings {
     Time DT = Seconds.of(0.020);
     boolean DEBUG_MODE = true;
-    CANBus CANIVORE = new CANBus("rio");
+    CANBus CANBUS = new CANBus("rio");
 
     public interface EnabledSubsystems {
         SmartBoolean FEEDER = new SmartBoolean("Enabled Subsystems/Feeder", true);
