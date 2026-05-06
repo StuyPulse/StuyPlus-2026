@@ -5,6 +5,8 @@
 /***************************************************************/
 package com.stuypulse.robot.constants;
 
+import static edu.wpi.first.units.Units.Amps;
+
 import com.ctre.phoenix6.configs.ClosedLoopRampsConfigs;
 import com.ctre.phoenix6.configs.CurrentLimitsConfigs;
 import com.ctre.phoenix6.configs.FeedbackConfigs;
@@ -39,8 +41,10 @@ public interface Motors {
             .withCurrentLimitAmps(40)
             .withInvertedValue(InvertedValue.Clockwise_Positive) // not necessarily true, get inverted val
             .withNeutralMode(NeutralModeValue.Brake)
-            .withPIDConstants(Gains.Intake.kP.get(), Gains.Intake.kI.get(), Gains.Intake.kD.get(), 0)
-            .withSensorToMechanismRatio(Settings.Intake.Pivot.GEAR_RATIO);
+            .withPIDConstants(Gains.Intake.kP, Gains.Intake.kI, Gains.Intake.kD, 0)
+            .withSensorToMechanismRatio(Settings.Intake.Pivot.GEAR_RATIO)
+            .withGravityType(GravityTypeValue.Arm_Cosine)
+            .withFFConstants(Gains.Intake.kS.in(Amps), Gains.Intake.kA.in(Amps), Gains.Intake.kV.in(Amps), Gains.Intake.kG.in(Amps), 0);
         
         TalonFXConfig LEFT_ROLLER_CONFIG = new TalonFXConfig() // TODO: apply later
             .withCurrentLimitAmps(50)

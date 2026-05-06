@@ -5,7 +5,9 @@
 /***************************************************************/
 package com.stuypulse.robot.constants;
 
-import com.stuypulse.stuylib.network.SmartNumber;
+import edu.wpi.first.units.measure.Current;
+
+import static edu.wpi.first.units.Units.Amps;
 
 import com.pathplanner.lib.config.PIDConstants;
 
@@ -32,11 +34,15 @@ public class Gains {
     // }
 
     public interface Intake {
-        SmartNumber kP = new SmartNumber("Intake/Pivot kP", 15);
-        SmartNumber kI = new SmartNumber("Intake/Pivot kI", 0);
-        SmartNumber kD = new SmartNumber("Intake/Pivot kD", 0);
+        // pivot gains
+        double kP = 15;
+        double kI = 0;
+        double kD = 0;
 
-        SmartNumber kV = new SmartNumber("Intake/Pivot kV", 0);
+        Current kS = Amps.of(0);
+        Current kV = Amps.of(0);
+        Current kA = Amps.of(0);
+        Current kG = Amps.of(-9);
     }
 
     public interface Swerve {
