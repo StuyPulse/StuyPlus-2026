@@ -26,7 +26,7 @@ public class FeederImpl extends Feeder {
     private final LoggedSignals signals;
 
     public FeederImpl() {
-        feederMotor = new TalonFX(Ports.Feeder.FEEDER_MOTOR, Settings.CANIVORE);
+        feederMotor = new TalonFX(Ports.Feeder.FEEDER_MOTOR, Settings.CANBUS);
 
         Motors.Feeder.LEADER_CONFIG.configure(feederMotor);
 

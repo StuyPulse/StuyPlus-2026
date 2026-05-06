@@ -54,7 +54,7 @@ public class IntakeImpl extends Intake {
     private final BStream rightRollerStalling;
 
     public IntakeImpl() {
-        intakePivotMotor = new TalonFX(Ports.Intake.MOTOR_INTAKE_PIVOT, Settings.CANIVORE);
+        intakePivotMotor = new TalonFX(Ports.Intake.MOTOR_INTAKE_PIVOT, Settings.CANBUS);
 
         Motors.Intake.PIVOT_CONFIG.configure(intakePivotMotor);
 
@@ -66,8 +66,8 @@ public class IntakeImpl extends Intake {
             intakePivotMotor.getVelocity()
         ).withLogPath("Intake/Pivot/").withSignalLocation(LoggedSignals.SignalLocation.CANIVORE);
 
-        intakeRollerMotorLeft = new TalonFX(Ports.Intake.MOTOR_INTAKE_ROLLER_LEFT, Settings.CANIVORE); // leader
-        intakeRollerMotorRight = new TalonFX(Ports.Intake.MOTOR_INTAKE_ROLLER_RIGHT, Settings.CANIVORE);
+        intakeRollerMotorLeft = new TalonFX(Ports.Intake.MOTOR_INTAKE_ROLLER_LEFT, Settings.CANBUS); // leader
+        intakeRollerMotorRight = new TalonFX(Ports.Intake.MOTOR_INTAKE_ROLLER_RIGHT, Settings.CANBUS);
 
         Motors.Intake.LEFT_ROLLER_CONFIG.configure(intakeRollerMotorLeft);
         Motors.Intake.RIGHT_ROLLER_CONFIG.configure(intakeRollerMotorRight);
