@@ -124,7 +124,7 @@ public class IntakeImpl extends Intake {
 
     @Override
     public void setPivotZero() {
-        intakePivotMotor.setPosition(0);
+        intakePivotMotor.setPosition(Settings.Intake.Pivot.INITIAL_ANGLE.getRotations());
     }
 
     private boolean pivotStalling() {
