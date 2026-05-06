@@ -60,10 +60,10 @@ public interface Settings {
         public interface Pivot {
             // state angles
             //TODO:Get new pivot angles
-            Rotation2d INITIAL_ANGLE = Rotation2d.fromDegrees(0);
-            Rotation2d IDLE_ANGLE = Rotation2d.fromDegrees(0);
-            Rotation2d DOWN_ANGLE = Rotation2d.fromDegrees(102);
-            Rotation2d AGITATE_UP_ANGLE = Rotation2d.fromDegrees(60);
+            Rotation2d INITIAL_ANGLE = Rotation2d.fromDegrees(102);
+            Rotation2d IDLE_ANGLE = Rotation2d.fromDegrees(102);
+            Rotation2d DOWN_ANGLE = Rotation2d.fromDegrees(0);
+            Rotation2d AGITATE_UP_ANGLE = Rotation2d.fromDegrees(42);
 
             // misc
             Rotation2d ANGLE_TOLERANCE = Rotation2d.fromDegrees(0.5);

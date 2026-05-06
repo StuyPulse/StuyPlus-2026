@@ -39,7 +39,7 @@ public interface Motors {
         TalonFXConfig PIVOT_CONFIG = new TalonFXConfig()
             .withSupplyCurrentLimitAmps(30)
             .withCurrentLimitAmps(40)
-            .withInvertedValue(InvertedValue.Clockwise_Positive) // not necessarily true, get inverted val
+            .withInvertedValue(InvertedValue.CounterClockwise_Positive) // not necessarily true, get inverted val
             .withNeutralMode(NeutralModeValue.Brake)
             .withPIDConstants(Gains.Intake.kP, Gains.Intake.kI, Gains.Intake.kD, 0)
             .withSensorToMechanismRatio(Settings.Intake.Pivot.GEAR_RATIO)
