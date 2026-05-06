@@ -41,6 +41,7 @@ import com.stuypulse.robot.constants.Ports;
 import com.stuypulse.robot.constants.Settings;
 import com.stuypulse.robot.subsystems.feeder.Feeder;
 import com.stuypulse.robot.subsystems.handoff.Handoff;
+import com.stuypulse.robot.subsystems.handoff.Handoff.HandoffState;
 import com.stuypulse.robot.subsystems.intake.Intake;
 import com.stuypulse.robot.subsystems.leds.LEDController;
 import com.stuypulse.robot.subsystems.shooter.Shooter;
@@ -149,40 +150,36 @@ public class RobotContainer {
         Trigger leftTrigger = new Trigger(() -> driver.getLeftTriggerAxis() > 0.5);
         Trigger rightTrigger = new Trigger(() -> driver.getRightTriggerAxis() > 0.5);
 
-        Trigger isShooting = new Trigger(() -> {
-            ShooterState state = shooter.getState();
-            return state == ShooterState.SHOOT || 
-                state == ShooterState.MANUAL_HUB ||
-                state == ShooterState.FERRY; // add any other shooting states
-        });
+        Trigger isShooting = new Trigger(() -> handoff.getState() == HandoffState.FORWARD);
 
+        //Move joysticks or top right paddle pressed
         Trigger cancelShooting = new Trigger(this::joysticksMoving).or(driver.b());
 
-        // shoot stuff
+        //This way X Mode will cancel when stopping shooting
+        isShooting 
+            .whileTrue(new SwerveDriveXMode());
+
         rightTrigger.onTrue(new SwerveDriveAlignToHub()
-            .andThen(new SwerveDriveXMode()
-                .alongWith(ShooterCommands.setShoot()
-                    .andThen(HandoffCommands.setForward()
-                        .alongWith(FeederCommands.setForward(),
-                            IntakeCommands.agitateOnce().repeatedly()))))
+            .andThen(ShooterCommands.setShoot())
+            .andThen(HandoffCommands.setForward()
+                .alongWith(FeederCommands.setForward(), IntakeCommands.agitateOnce().repeatedly()))
             .until(cancelShooting));
 
         driver.rightBumper().onTrue(new SwerveDriveAlignToFerryZone()
-            .andThen(new SwerveDriveXMode()
-                .alongWith(ShooterCommands.setFerry()
-                    .andThen(HandoffCommands.setForward()
-                        .alongWith(FeederCommands.setForward(),
-                            IntakeCommands.agitateOnce().repeatedly()))))
+            .andThen(ShooterCommands.setFerry())
+            .andThen(HandoffCommands.setForward()
+                .alongWith(FeederCommands.setForward(), IntakeCommands.agitateOnce().repeatedly()))
             .until(cancelShooting));
 
-        driver.y().onTrue(new SwerveDriveXMode()
-            .alongWith(ShooterCommands.setManual()
-                .andThen(HandoffCommands.setForward()
-                    .alongWith(FeederCommands.setForward(),
-                        IntakeCommands.agitateOnce().repeatedly())))
+        //Bottom Right Paddle
+        driver.y().onTrue(ShooterCommands.setManual()
+            .andThen(HandoffCommands.setForward()
+                .alongWith(FeederCommands.setForward(), IntakeCommands.agitateOnce().repeatedly()))
             .until(cancelShooting));
 
-        // other things
+            
+        //Only trigger button press when not shooting
+
         leftTrigger.and(isShooting.negate())
             .onTrue(IntakeCommands.setIntake());
 
@@ -191,17 +188,18 @@ public class RobotContainer {
         driver.leftBumper().and(isShooting.negate())
             .onFalse(IntakeCommands.setIntake());
 
+        //Top Left Paddle
         driver.a().and(isShooting.negate())
             .onTrue(IntakeCommands.setIdle());
-
+    
+        //Bottom Left Paddle
         driver.x().and(isShooting.negate())
             .whileTrue(new SwerveDriveXMode());
 
-        // utility
         driver.povUp()
             .onTrue(new SwerveDriveResetRotation());
 
-        // stop shooting on b or whenevr its time to stop shooting
+        //Stop shooting when joysticks move or top right paddle pressed
         cancelShooting.and(isShooting)
             .onTrue(HandoffCommands.setIdle()
                 .alongWith(FeederCommands.setIdle(), IntakeCommands.setIntake()));
