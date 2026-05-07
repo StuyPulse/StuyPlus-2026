@@ -1,12 +1,15 @@
-/************************* PROJECT RON *************************/
+/**
+ * ********************** PROJECT RON ************************
+ */
 /* Copyright (c) 2026 StuyPulse Robotics. All rights reserved. */
 /* Use of this source code is governed by an MIT-style license */
 /* that can be found in the repository LICENSE file.           */
-/***************************************************************/
+/**
+ * ***********************************************************
+ */
 package com.stuypulse.robot.constants;
 
 import static edu.wpi.first.units.Units.Amps;
-
 import com.ctre.phoenix6.configs.ClosedLoopRampsConfigs;
 import com.ctre.phoenix6.configs.CurrentLimitsConfigs;
 import com.ctre.phoenix6.configs.FeedbackConfigs;
@@ -34,94 +37,69 @@ import com.ctre.phoenix6.signals.NeutralModeValue;
  */
 public interface Motors {
 
-    /** Classes to store all of the values a motor needs */
+    /**
+     * Classes to store all of the values a motor needs
+     */
     public interface Intake {
-        TalonFXConfig PIVOT_CONFIG = new TalonFXConfig()
-            .withSupplyCurrentLimitAmps(30)
-            .withCurrentLimitAmps(40)
-            .withInvertedValue(InvertedValue.CounterClockwise_Positive) // not necessarily true, get inverted val
-            .withNeutralMode(NeutralModeValue.Brake)
-            .withPIDConstants(Gains.Intake.kP, Gains.Intake.kI, Gains.Intake.kD, 0)
-            .withSensorToMechanismRatio(Settings.Intake.Pivot.GEAR_RATIO)
-            .withGravityType(GravityTypeValue.Arm_Cosine)
-            .withFFConstants(Gains.Intake.kS.in(Amps), Gains.Intake.kA.in(Amps), Gains.Intake.kV.in(Amps), Gains.Intake.kG.in(Amps), 0);
-        
-        TalonFXConfig LEFT_ROLLER_CONFIG = new TalonFXConfig() // TODO: apply later
-            .withCurrentLimitAmps(50)
-            .withInvertedValue(InvertedValue.CounterClockwise_Positive) // not necessarily true, get inverted val
-            .withNeutralMode(NeutralModeValue.Coast)
-            .withSensorToMechanismRatio(Settings.Intake.Roller.GEAR_RATIO);
-        
-        TalonFXConfig RIGHT_ROLLER_CONFIG = new TalonFXConfig() // TODO: apply later
-            .withCurrentLimitAmps(50)
-            .withInvertedValue(InvertedValue.Clockwise_Positive) 
-            .withNeutralMode(NeutralModeValue.Coast)
-            .withSensorToMechanismRatio(Settings.Intake.Roller.GEAR_RATIO);
 
+        TalonFXConfig PIVOT_CONFIG = new TalonFXConfig().withSupplyCurrentLimitAmps(30).withCurrentLimitAmps(40).withInvertedValue(// not necessarily true, get inverted val
+        InvertedValue.CounterClockwise_Positive).withNeutralMode(NeutralModeValue.Brake).withPIDConstants(Gains.Intake.kP, Gains.Intake.kI, Gains.Intake.kD, 0).withSensorToMechanismRatio(Settings.Intake.Pivot.GEAR_RATIO).withGravityType(GravityTypeValue.Arm_Cosine).withFFConstants(Gains.Intake.kS.in(Amps), Gains.Intake.kA.in(Amps), Gains.Intake.kV.in(Amps), Gains.Intake.kG.in(Amps), 0);
+
+        TalonFXConfig LEFT_ROLLER_CONFIG = // TODO: apply later
+        new TalonFXConfig().withCurrentLimitAmps(50).withInvertedValue(// not necessarily true, get inverted val
+        InvertedValue.CounterClockwise_Positive).withNeutralMode(NeutralModeValue.Coast).withSensorToMechanismRatio(Settings.Intake.Roller.GEAR_RATIO);
+
+        TalonFXConfig RIGHT_ROLLER_CONFIG = // TODO: apply later
+        new TalonFXConfig().withCurrentLimitAmps(50).withInvertedValue(InvertedValue.Clockwise_Positive).withNeutralMode(NeutralModeValue.Coast).withSensorToMechanismRatio(Settings.Intake.Roller.GEAR_RATIO);
     }
 
     public interface Feeder {
+
         // TODO: get values after motor pinion swap
-        TalonFXConfig LEADER_CONFIG = new TalonFXConfig()
-            .withCurrentLimitAmps(80)
-			.withRampRate(0.25)
-			.withNeutralMode(NeutralModeValue.Coast)
-			.withInvertedValue(InvertedValue.CounterClockwise_Positive);
+        TalonFXConfig LEADER_CONFIG = new TalonFXConfig().withCurrentLimitAmps(80).withRampRate(0.25).withNeutralMode(NeutralModeValue.Coast).withInvertedValue(InvertedValue.CounterClockwise_Positive);
     }
 
     public interface Shooter {
-        TalonFXConfig SHOOTER_MOTOR_CONFIG = new TalonFXConfig()
-            .withPIDConstants(Gains.Shooter.kP, Gains.Shooter.kI, Gains.Shooter.kD, 0)
-            .withCurrentLimitAmps(80)
-			.withRampRate(0.25)
-			.withNeutralMode(NeutralModeValue.Coast)
-            .withFFConstants(Gains.Shooter.kS, Gains.Shooter.kV, Gains.Shooter.kA, 0)
-			.withInvertedValue(InvertedValue.CounterClockwise_Positive);
 
-        
-        TalonFXConfig SHOOTER_MOTOR_RIGHT = new TalonFXConfig()
-            .withPIDConstants(Gains.Shooter.kP, Gains.Shooter.kI, Gains.Shooter.kD, 0)
-            .withCurrentLimitAmps(80)
-			.withRampRate(0.25)
-			.withNeutralMode(NeutralModeValue.Coast)
-            .withFFConstants(Gains.Shooter.kS, Gains.Shooter.kV, Gains.Shooter.kA, 0)
-			.withInvertedValue(InvertedValue.Clockwise_Positive);
+        TalonFXConfig SHOOTER_MOTOR_CONFIG = new TalonFXConfig().withPIDConstants(Gains.Shooter.kP, Gains.Shooter.kI, Gains.Shooter.kD, 0).withCurrentLimitAmps(80).withRampRate(0.25).withNeutralMode(NeutralModeValue.Coast).withFFConstants(Gains.Shooter.kS, Gains.Shooter.kV, Gains.Shooter.kA, 0).withInvertedValue(InvertedValue.CounterClockwise_Positive);
+
+        TalonFXConfig SHOOTER_MOTOR_RIGHT = new TalonFXConfig().withPIDConstants(Gains.Shooter.kP, Gains.Shooter.kI, Gains.Shooter.kD, 0).withCurrentLimitAmps(80).withRampRate(0.25).withNeutralMode(NeutralModeValue.Coast).withFFConstants(Gains.Shooter.kS, Gains.Shooter.kV, Gains.Shooter.kA, 0).withInvertedValue(InvertedValue.Clockwise_Positive);
 
         // TalonFXConfig SHOOTER_MOTOR_RIGHT = new TalonFXConfig()
-        //     .withPIDConstants(Gains.Shooter.kP, Gains.Shooter.kI, Gains.Shooter.kD, 0)
-        //     .withCurrentLimitAmps(80)
-		// 	.withRampRate(0.25)
-		// 	.withNeutralMode(NeutralModeValue.Coast)
-        //     .withFFConstants(Gains.Shooter.kS, Gains.Shooter.kV, Gains.Shooter.kA, 0)
-		// 	.withInvertedValue(InvertedValue.Clockwise_Positive);
-
-        TalonFXConfig SHOOTER_MOTOR_LEFT = new TalonFXConfig()
-            .withPIDConstants(Gains.Shooter.kP, Gains.Shooter.kI, Gains.Shooter.kD, 0)
-            .withCurrentLimitAmps(80)
-			.withRampRate(0.25)
-			.withNeutralMode(NeutralModeValue.Coast)
-            .withFFConstants(Gains.Shooter.kS, Gains.Shooter.kV, Gains.Shooter.kA, 0)
-			.withInvertedValue(InvertedValue.CounterClockwise_Positive);
+        // .withPIDConstants(Gains.Shooter.kP, Gains.Shooter.kI, Gains.Shooter.kD, 0)
+        // .withCurrentLimitAmps(80)
+        // .withRampRate(0.25)
+        // .withNeutralMode(NeutralModeValue.Coast)
+        // .withFFConstants(Gains.Shooter.kS, Gains.Shooter.kV, Gains.Shooter.kA, 0)
+        // .withInvertedValue(InvertedValue.Clockwise_Positive);
+        TalonFXConfig SHOOTER_MOTOR_LEFT = new TalonFXConfig().withPIDConstants(Gains.Shooter.kP, Gains.Shooter.kI, Gains.Shooter.kD, 0).withCurrentLimitAmps(80).withRampRate(0.25).withNeutralMode(NeutralModeValue.Coast).withFFConstants(Gains.Shooter.kS, Gains.Shooter.kV, Gains.Shooter.kA, 0).withInvertedValue(InvertedValue.CounterClockwise_Positive);
     }
 
     public interface Handoff {
-        TalonFXConfig HANDOFF_MOTOR_CONFIG = new TalonFXConfig()
-            .withCurrentLimitAmps(80)
-            .withRampRate(0.25)
-            .withNeutralMode(NeutralModeValue.Coast)
-            .withInvertedValue(InvertedValue.CounterClockwise_Positive);
+
+        TalonFXConfig HANDOFF_MOTOR_CONFIG = new TalonFXConfig().withCurrentLimitAmps(80).withRampRate(0.25).withNeutralMode(NeutralModeValue.Coast).withInvertedValue(InvertedValue.CounterClockwise_Positive);
     }
 
     public static class TalonFXConfig {
+
         private final TalonFXConfiguration configuration = new TalonFXConfiguration();
+
         private final Slot0Configs slot0Configs = new Slot0Configs();
+
         private final Slot1Configs slot1Configs = new Slot1Configs();
+
         private final Slot2Configs slot2Configs = new Slot2Configs();
+
         private final MotorOutputConfigs motorOutputConfigs = new MotorOutputConfigs();
+
         private final ClosedLoopRampsConfigs closedLoopRampsConfigs = new ClosedLoopRampsConfigs();
+
         private final OpenLoopRampsConfigs openLoopRampsConfigs = new OpenLoopRampsConfigs();
+
         private final CurrentLimitsConfigs currentLimitsConfigs = new CurrentLimitsConfigs();
+
         private final FeedbackConfigs feedbackConfigs = new FeedbackConfigs();
+
         private final MotionMagicConfigs motionMagicConfigs = new MotionMagicConfigs();
 
         public void configure(TalonFX motor) {
@@ -129,9 +107,8 @@ public interface Motors {
         }
 
         // SLOT 0 CONFIGS
-
         public TalonFXConfig withPIDConstants(double kP, double kI, double kD, int slot) {
-            switch (slot) {
+            switch(slot) {
                 case 0:
                     slot0Configs.kP = kP;
                     slot0Configs.kI = kI;
@@ -159,7 +136,7 @@ public interface Motors {
         }
 
         public TalonFXConfig withFFConstants(double kS, double kV, double kA, double kG, int slot) {
-            switch (slot) {
+            switch(slot) {
                 case 0:
                     slot0Configs.kS = kS;
                     slot0Configs.kV = kV;
@@ -189,98 +166,73 @@ public interface Motors {
             slot0Configs.GravityType = gravityType;
             slot1Configs.GravityType = gravityType;
             slot2Configs.GravityType = gravityType;
-
             configuration.withSlot0(slot0Configs);
             configuration.withSlot1(slot1Configs);
             configuration.withSlot2(slot2Configs);
-
             return this;
         }
 
         // MOTOR OUTPUT CONFIGS
-
         public TalonFXConfig withInvertedValue(InvertedValue invertedValue) {
             motorOutputConfigs.Inverted = invertedValue;
-
             configuration.withMotorOutput(motorOutputConfigs);
-
             return this;
         }
 
         public TalonFXConfig withNeutralMode(NeutralModeValue neutralMode) {
             motorOutputConfigs.NeutralMode = neutralMode;
-
             configuration.withMotorOutput(motorOutputConfigs);
-
             return this;
         }
 
         // RAMP RATE CONFIGS
-
         public TalonFXConfig withRampRate(double rampRate) {
             closedLoopRampsConfigs.DutyCycleClosedLoopRampPeriod = rampRate;
             closedLoopRampsConfigs.TorqueClosedLoopRampPeriod = rampRate;
             closedLoopRampsConfigs.VoltageClosedLoopRampPeriod = rampRate;
-
             openLoopRampsConfigs.DutyCycleOpenLoopRampPeriod = rampRate;
             openLoopRampsConfigs.TorqueOpenLoopRampPeriod = rampRate;
             openLoopRampsConfigs.VoltageOpenLoopRampPeriod = rampRate;
-
             configuration.withClosedLoopRamps(closedLoopRampsConfigs);
             configuration.withOpenLoopRamps(openLoopRampsConfigs);
-
             return this;
         }
 
         // CURRENT LIMIT CONFIGS
-
         public TalonFXConfig withCurrentLimitAmps(double currentLimitAmps) {
-			currentLimitsConfigs.StatorCurrentLimit = currentLimitAmps;
+            currentLimitsConfigs.StatorCurrentLimit = currentLimitAmps;
             currentLimitsConfigs.StatorCurrentLimitEnable = true;
-
             configuration.withCurrentLimits(currentLimitsConfigs);
-
             return this;
         }
 
         public TalonFXConfig withSupplyCurrentLimitAmps(double currentLimitAmps) {
             currentLimitsConfigs.SupplyCurrentLimit = currentLimitAmps;
             currentLimitsConfigs.SupplyCurrentLimitEnable = true;
-
             configuration.withCurrentLimits(currentLimitsConfigs);
-
             return this;
         }
 
         // MOTION MAGIC CONFIGS
-
         public TalonFXConfig withMotionProfile(double maxVelocity, double maxAcceleration) {
             motionMagicConfigs.MotionMagicCruiseVelocity = maxVelocity;
             motionMagicConfigs.MotionMagicAcceleration = maxAcceleration;
-
             configuration.withMotionMagic(motionMagicConfigs);
-
             return this;
         }
 
         // FEEDBACK CONFIGS
-
-        public TalonFXConfig withRemoteSensor(
-                int ID, FeedbackSensorSourceValue source, double rotorToSensorRatio) {
+        public TalonFXConfig withRemoteSensor(int ID, FeedbackSensorSourceValue source, double rotorToSensorRatio) {
             feedbackConfigs.FeedbackRemoteSensorID = ID;
             feedbackConfigs.FeedbackSensorSource = source;
             feedbackConfigs.RotorToSensorRatio = rotorToSensorRatio;
-
             configuration.withFeedback(feedbackConfigs);
-
             return this;
         }
 
         public TalonFXConfig withSensorToMechanismRatio(double sensorToMechanismRatio) {
             feedbackConfigs.SensorToMechanismRatio = sensorToMechanismRatio;
-
             configuration.withFeedback(feedbackConfigs);
-
             return this;
         }
     }

@@ -1,61 +1,60 @@
-/************************* PROJECT RON *************************/
+/**
+ * ********************** PROJECT RON ************************
+ */
 /* Copyright (c) 2026 StuyPulse Robotics. All rights reserved. */
 /* Use of this source code is governed by an MIT-style license */
 /* that can be found in the repository LICENSE file.           */
-/***************************************************************/
+/**
+ * ***********************************************************
+ */
 package com.stuypulse.robot.subsystems.shooter;
 
 import static edu.wpi.first.units.Units.*;
-
 import java.util.Optional;
-
 import com.stuypulse.robot.constants.Motors;
 import com.stuypulse.robot.constants.Ports;
 import com.stuypulse.robot.constants.Settings;
 import com.stuypulse.robot.util.RobotVisualizer;
 import com.stuypulse.robot.util.SysId;
 import com.stuypulse.robot.util.simulation.TalonFXSimulation;
-
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.math.system.plant.LinearSystemId;
 import edu.wpi.first.units.measure.AngularVelocity;
 import edu.wpi.first.units.measure.Voltage;
 import edu.wpi.first.wpilibj.simulation.FlywheelSim;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
-
 import com.ctre.phoenix6.controls.Follower;
 import com.ctre.phoenix6.controls.VelocityTorqueCurrentFOC;
 import com.ctre.phoenix6.signals.MotorAlignmentValue;
 
 public class ShooterSim extends Shooter {
+
     private final FlywheelSim shooterSim;
+
     private final TalonFXSimulation shooterLeader;
+
     private final TalonFXSimulation shooterFollower1;
+
     private final TalonFXSimulation shooterFollower2;
+
     private final VelocityTorqueCurrentFOC shooterController;
+
     private final Follower shooterFollowerController;
 
     private Optional<Voltage> voltageOverride;
 
     public ShooterSim() {
-        shooterSim = new FlywheelSim(LinearSystemId.createFlywheelSystem(
-            DCMotor.getKrakenX60(3),
-            Settings.Shooter.J.in(KilogramSquareMeters),
-            Settings.Shooter.GEAR_RATIO),
-            DCMotor.getKrakenX60(3)
-        );
+        shooterSim = new FlywheelSim(LinearSystemId.createFlywheelSystem(DCMotor.getKrakenX60(3), Settings.Shooter.J.in(KilogramSquareMeters), Settings.Shooter.GEAR_RATIO), DCMotor.getKrakenX60(3));
         shooterLeader = new TalonFXSimulation(Ports.Shooter.SHOOTER_MOTOR_LEFT, shooterSim);
         shooterFollower1 = new TalonFXSimulation(Ports.Shooter.SHOOTER_MOTOR_CENTER, shooterSim);
         shooterFollower2 = new TalonFXSimulation(Ports.Shooter.SHOOTER_MOTOR_RIGHT, shooterSim);
         shooterLeader.configure(Motors.Shooter.SHOOTER_MOTOR_CONFIG);
         shooterFollower1.configure(Motors.Shooter.SHOOTER_MOTOR_CONFIG);
         shooterFollower2.configure(Motors.Shooter.SHOOTER_MOTOR_CONFIG);
-
         shooterFollowerController = new Follower(shooterLeader.getDeviceID(), MotorAlignmentValue.Opposed);
         shooterFollower1.setControl(shooterFollowerController);
         shooterFollower2.setControl(shooterFollowerController);
         shooterController = new VelocityTorqueCurrentFOC(getState().getTargetAngularVelocity());
-
         voltageOverride = Optional.empty();
     }
 
@@ -69,7 +68,6 @@ public class ShooterSim extends Shooter {
         shooterLeader.stopMotor();
         shooterFollower1.stopMotor();
         shooterFollower2.stopMotor();
-
         shooterFollower1.setControl(shooterFollowerController);
         shooterFollower2.setControl(shooterFollowerController);
     }
@@ -85,26 +83,15 @@ public class ShooterSim extends Shooter {
             stopMotors();
             return;
         }
-
         shooterLeader.setControl(shooterController.withVelocity(getState().getTargetAngularVelocity().in(RotationsPerSecond)));
         shooterLeader.update(Settings.DT);
         shooterFollower1.update(Settings.DT);
         shooterFollower2.update(Settings.DT);
-
         RobotVisualizer.getInstance().updateShooter(getCurrentAngularVelocity());
-
         super.periodic();
     }
 
-    
     public SysIdRoutine getShooterSysIdRoutine() {
-        return SysId.getRoutine(Settings.Shooter.RAMP_RATE,
-                Settings.Shooter.STEP_VOLTAGE,
-                "Shooter",
-                voltage -> setVoltageOverride(voltage),
-                () -> shooterLeader.getPosition().getValue(),
-                () -> shooterLeader.getVelocity().getValue(),
-                () -> shooterLeader.getMotorVoltage().getValue(),
-                getInstance());
+        return SysId.getRoutine(Settings.Shooter.RAMP_RATE, Settings.Shooter.STEP_VOLTAGE, "Shooter", voltage -> setVoltageOverride(voltage), () -> shooterLeader.getPosition().getValue(), () -> shooterLeader.getVelocity().getValue(), () -> shooterLeader.getMotorVoltage().getValue(), getInstance());
     }
 }

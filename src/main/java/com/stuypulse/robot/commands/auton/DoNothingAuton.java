@@ -1,8 +1,11 @@
-/************************ PROJECT PHIL ************************/
+/**
+ * ********************* PROJECT PHIL ***********************
+ */
 /* Copyright (c) 2024 StuyPulse Robotics. All rights reserved.*/
 /* This work is licensed under the terms of the MIT license.  */
-/**************************************************************/
-
+/**
+ * **********************************************************
+ */
 package com.stuypulse.robot.commands.auton;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
@@ -15,8 +18,6 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 public class DoNothingAuton extends SequentialCommandGroup {
 
     public DoNothingAuton() {
-        addCommands(
-                /** Do a whole lot of nothing */
-                );
+        addCommands();
     }
 }

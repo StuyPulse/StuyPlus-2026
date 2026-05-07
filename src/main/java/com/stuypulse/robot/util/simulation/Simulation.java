@@ -1,19 +1,21 @@
-/************************* PROJECT RON *************************/
+/**
+ * ********************** PROJECT RON ************************
+ */
 /* Copyright (c) 2026 StuyPulse Robotics. All rights reserved. */
 /* Use of this source code is governed by an MIT-style license */
 /* that can be found in the repository LICENSE file.           */
-/***************************************************************/
+/**
+ * ***********************************************************
+ */
 package com.stuypulse.robot.util.simulation;
 
 import static edu.wpi.first.units.Units.*;
-
 import com.stuypulse.robot.constants.Settings;
 import com.stuypulse.robot.subsystems.intake.Intake;
 import com.stuypulse.robot.subsystems.intake.Intake.IntakeState;
 import com.stuypulse.robot.subsystems.shooter.Shooter;
 import com.stuypulse.robot.subsystems.shooter.Shooter.ShooterState;
 import com.stuypulse.robot.subsystems.swerve.CommandSwerveDrivetrain;
-
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -27,33 +29,45 @@ import edu.wpi.first.units.measure.Distance;
 import edu.wpi.first.units.measure.LinearVelocity;
 import edu.wpi.first.wpilibj.Notifier;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
 import org.ironmaple.simulation.IntakeSimulation;
 import org.ironmaple.simulation.SimulatedArena;
 import org.ironmaple.simulation.drivesims.SwerveDriveSimulation;
 import org.ironmaple.simulation.seasonspecific.rebuilt2026.Arena2026Rebuilt;
 import org.ironmaple.simulation.seasonspecific.rebuilt2026.RebuiltFuelOnFly;
+import dev.doglog.DogLog;
 
 public class Simulation {
+
     private final static Simulation instance;
 
     public final Arena2026Rebuilt arenaInstance;
+
     private final Notifier shotLoop;
 
     private final SwerveDriveSimulation swerveMSim;
+
     private final IntakeSimulation intakeMSim;
+
     private final Intake intakeSim;
+
     private final Shooter shooterSim;
 
     private final StructArrayPublisher<Pose3d> fuel;
+
     private final StructPublisher<Pose3d> intakePivot;
+
     private final StructPublisher<Pose3d> hopper;
+
     private final StructArrayPublisher<Pose3d> fuelLayers;
+
     private final StructPublisher<Pose3d> shooter;
 
     static {
-        if (CommandSwerveDrivetrain.getInstance().getMapleSimDrive() != null) instance = new Simulation();
-        else instance = null; // extra safeguarding to ensure NO overlap between sim code and actual code
+        if (CommandSwerveDrivetrain.getInstance().getMapleSimDrive() != null)
+            instance = new Simulation();
+        else
+            // extra safeguarding to ensure NO overlap between sim code and actual code
+            instance = null;
     }
 
     public static Simulation getInstance() {
@@ -64,15 +78,12 @@ public class Simulation {
         intakeSim = Intake.getInstance();
         shooterSim = Shooter.getInstance();
         swerveMSim = CommandSwerveDrivetrain.getInstance().getMapleSimDrive();
-
         arenaInstance = new Arena2026Rebuilt(false);
         configureArena();
         intakeMSim = createIntakeSimulation();
         intakeMSim.addGamePiecesToIntake(SimulationConstants.Hopper.FUEL_CAPACITY);
-        
         shotLoop = new Notifier(this::updateShooting);
         shotLoop.startPeriodic(1.0 / SimulationConstants.Shooter.BPS);
-
         NetworkTableInstance table = NetworkTableInstance.getDefault();
         fuel = table.getStructArrayTopic("AdvScope/FuelPoses", Pose3d.struct).publish();
         intakePivot = table.getStructTopic("AdvScope/IntakePose", Pose3d.struct).publish();
@@ -89,27 +100,17 @@ public class Simulation {
     }
 
     private IntakeSimulation createIntakeSimulation() {
-        return IntakeSimulation.OverTheBumperIntake(
-                "Fuel",
-                swerveMSim,
-                Meters.of(SimulationConstants.Intake.INTAKE_WIDTH),
-                Meters.of(SimulationConstants.Intake.INTAKE_LENGTH),
-                IntakeSimulation.IntakeSide.FRONT,
-                SimulationConstants.Hopper.FUEL_CAPACITY);
+        return IntakeSimulation.OverTheBumperIntake("Fuel", swerveMSim, Meters.of(SimulationConstants.Intake.INTAKE_WIDTH), Meters.of(SimulationConstants.Intake.INTAKE_LENGTH), IntakeSimulation.IntakeSide.FRONT, SimulationConstants.Hopper.FUEL_CAPACITY);
     }
 
     private Pose3d getIntakePivotPose() {
-        return SimulationConstants.Intake.PIVOT_OFFSETS.withRotation(new Rotation3d(
-                0,
-                intakeSim.getRelativePosition().getRadians(), // inverts the angle
-                0));
+        return SimulationConstants.Intake.PIVOT_OFFSETS.withRotation(new Rotation3d(0, // inverts the angle
+        intakeSim.getRelativePosition().getRadians(), 0));
     }
 
     private double getIntakeArmEndX() {
-        return SimulationConstants.Intake.PIVOT_END_X
-                + SimulationConstants.Intake.PIVOT_ARM_LENGTH // sin works somehow??
-                        * Math.sin(intakeSim.getRelativePosition().getRadians()
-                                + SimulationConstants.Intake.PIVOT_OFFSETS.toRotation3d().getX());
+        return SimulationConstants.Intake.PIVOT_END_X + // sin works somehow??
+        SimulationConstants.Intake.PIVOT_ARM_LENGTH * Math.sin(intakeSim.getRelativePosition().getRadians() + SimulationConstants.Intake.PIVOT_OFFSETS.toRotation3d().getX());
     }
 
     private void updateIntakeEnabled(boolean enabled) {
@@ -122,25 +123,20 @@ public class Simulation {
 
     private void updateIntake() {
         boolean intakeEnabled = intakeSim.atTargetAngle() && (intakeSim.getState() == IntakeState.DOWN) && Settings.EnabledSubsystems.INTAKE.get();
-
         updateIntakeEnabled(intakeEnabled);
     }
 
     private void updateHopperFuel() {
-        final double hopperPercentage = (double) intakeMSim.getGamePiecesAmount()
-                / (double) SimulationConstants.Hopper.FUEL_CAPACITY;
-
+        final double hopperPercentage = (double) intakeMSim.getGamePiecesAmount() / (double) SimulationConstants.Hopper.FUEL_CAPACITY;
         final int layers = SimulationConstants.Hopper.FUEL_LAYERS;
         final Pose3d visiblePose = SimulationConstants.Hopper.VISIBLE_POSE;
         final Pose3d hiddenPose = SimulationConstants.Hopper.HIDDEN_POSE;
-
         final Pose3d[] poses = new Pose3d[layers];
         for (int i = 0; i < layers; i++) {
             poses[i] = hopperPercentage >= (1 / (double) layers) * (i + 1) ? visiblePose : hiddenPose;
         }
         fuelLayers.set(poses);
-
-        SmartDashboard.putNumber("Intake/hopperpercentage", hopperPercentage);
+        DogLog.log("Intake/hopperpercentage", hopperPercentage);
     }
 
     /**
@@ -166,47 +162,14 @@ public class Simulation {
      * @param pitchVariance The max amount of variance that should be added too the pitch of the game piece.
      * @param target The target of the gamepiece
      */
-    private void robotRelativeAddPieceWithVariance(
-        Translation2d piecePose,
-        Rotation2d yaw,
-        Distance height,
-        LinearVelocity speed,
-        Angle pitch,
-        double xVariance,
-        double yVariance,
-        double yawVariance,
-        double speedVariance,
-        double pitchVariance) {
-        arenaInstance.addGamePieceProjectile(
-            new RebuiltFuelOnFly(
-                piecePose.plus(new Translation2d(Arena2026Rebuilt.randomInRange(xVariance), Arena2026Rebuilt.randomInRange(yVariance))),
-                new Translation2d(),
-                swerveMSim.getDriveTrainSimulatedChassisSpeedsFieldRelative(),
-                yaw.plus(Rotation2d.fromDegrees(Arena2026Rebuilt.randomInRange(yawVariance))),
-                height,
-                speed.plus(MetersPerSecond.of(Arena2026Rebuilt.randomInRange(speedVariance))),
-                Degrees.of(pitch.in(Degrees) + Arena2026Rebuilt.randomInRange(pitchVariance))
-            )
-        );
+    private void robotRelativeAddPieceWithVariance(Translation2d piecePose, Rotation2d yaw, Distance height, LinearVelocity speed, Angle pitch, double xVariance, double yVariance, double yawVariance, double speedVariance, double pitchVariance) {
+        arenaInstance.addGamePieceProjectile(new RebuiltFuelOnFly(piecePose.plus(new Translation2d(Arena2026Rebuilt.randomInRange(xVariance), Arena2026Rebuilt.randomInRange(yVariance))), new Translation2d(), swerveMSim.getDriveTrainSimulatedChassisSpeedsFieldRelative(), yaw.plus(Rotation2d.fromDegrees(Arena2026Rebuilt.randomInRange(yawVariance))), height, speed.plus(MetersPerSecond.of(Arena2026Rebuilt.randomInRange(speedVariance))), Degrees.of(pitch.in(Degrees) + Arena2026Rebuilt.randomInRange(pitchVariance))));
     }
 
     private void summonFuelAtIntake() {
-        robotRelativeAddPieceWithVariance(
-            swerveMSim.getSimulatedDriveTrainPose().getTranslation().plus(
-                SimulationConstants.Intake.OUTTAKE_OFFSETS.applyToPose3dRobotRelative(
-                    new Pose3d(getIntakeArmEndX(), 0, 0, 
-                    new Rotation3d(swerveMSim.getSimulatedDriveTrainPose().getRotation())
-                )).getTranslation().toTranslation2d()),
-            swerveMSim.getSimulatedDriveTrainPose().getRotation(),
-            Meters.of(0),
-            MetersPerSecond.of(2),
-            Radians.of(0),
-            SimulationConstants.Intake.INTAKE_WIDTH, // x
-            0.0,
-            0.0,
-            1.0, // speed
-            0.0
-        );
+        robotRelativeAddPieceWithVariance(swerveMSim.getSimulatedDriveTrainPose().getTranslation().plus(SimulationConstants.Intake.OUTTAKE_OFFSETS.applyToPose3dRobotRelative(new Pose3d(getIntakeArmEndX(), 0, 0, new Rotation3d(swerveMSim.getSimulatedDriveTrainPose().getRotation()))).getTranslation().toTranslation2d()), swerveMSim.getSimulatedDriveTrainPose().getRotation(), Meters.of(0), MetersPerSecond.of(2), Radians.of(0), // x
+        SimulationConstants.Intake.INTAKE_WIDTH, 0.0, 0.0, // speed
+        1.0, 0.0);
     }
 
     private void updateShooting() {
@@ -215,19 +178,7 @@ public class Simulation {
         } else if ((shooterSim.getState() == ShooterState.SHOOT || shooterSim.getState() == ShooterState.FERRY) && Settings.EnabledSubsystems.SHOOTER.get()) {
             final Pose2d shooterPose = SimulationConstants.Shooter.OFFSETS.applyToPose2d(swerveMSim.getSimulatedDriveTrainPose());
             final double launchAngle = 67.67;
-
-            robotRelativeAddPieceWithVariance(
-                shooterPose.getTranslation(),
-                swerveMSim.getSimulatedDriveTrainPose().getRotation(),
-                Meters.of(SimulationConstants.Shooter.OFFSETS.toPose3d().getZ()),
-                MetersPerSecond.of(SimulationConstants.Shooter.angularVelocityToMps(shooterSim.getCurrentAngularVelocity())),
-                Degrees.of(launchAngle),
-                SimulationConstants.Intake.INTAKE_WIDTH,
-                0,
-                0,
-                0.5,
-                0
-            );
+            robotRelativeAddPieceWithVariance(shooterPose.getTranslation(), swerveMSim.getSimulatedDriveTrainPose().getRotation(), Meters.of(SimulationConstants.Shooter.OFFSETS.toPose3d().getZ()), MetersPerSecond.of(SimulationConstants.Shooter.angularVelocityToMps(shooterSim.getCurrentAngularVelocity())), Degrees.of(launchAngle), SimulationConstants.Intake.INTAKE_WIDTH, 0, 0, 0.5, 0);
         }
     }
 
@@ -235,17 +186,14 @@ public class Simulation {
         if (swerveMSim == null)
             return;
         fuel.set(arenaInstance.getGamePiecesArrayByType("Fuel"));
-
         updateIntake();
         updateHopperFuel();
-
         double armEndX = getIntakeArmEndX();
         intakePivot.set(getIntakePivotPose());
         hopper.set(SimulationConstants.Hopper.OFFSETS.applyToPose3d(new Pose3d(armEndX, 0, 0, new Rotation3d())));
-
         // Translation2d outtakeTranslationRobotRelative = swerveMSim.getSimulatedDriveTrainPose().getTranslation().plus(
-        //         SimulationConstants.Intake.OUTTAKE_OFFSETS.applyToPose3dRobotRelative(
-        //             new Pose3d(getIntakeArmEndX(), 0, 0, new Rotation3d(swerveMSim.getSimulatedDriveTrainPose().getRotation()))).getTranslation().toTranslation2d());
+        // SimulationConstants.Intake.OUTTAKE_OFFSETS.applyToPose3dRobotRelative(
+        // new Pose3d(getIntakeArmEndX(), 0, 0, new Rotation3d(swerveMSim.getSimulatedDriveTrainPose().getRotation()))).getTranslation().toTranslation2d());
         // shooter.set(new Pose3d(tra.getX(), tra.getY(), 0, new Rotation3d()));
         // shooter.set(SimulationConstants.Shooter.OFFSETS.applyToPose3dRobotRelative(new Pose3d(swerveMSim.getSimulatedDriveTrainPose())));
     }

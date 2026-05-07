@@ -1,21 +1,26 @@
-/************************* PROJECT RON *************************/
+/**
+ * ********************** PROJECT RON ************************
+ */
 /* Copyright (c) 2026 StuyPulse Robotics. All rights reserved. */
 /* Use of this source code is governed by an MIT-style license */
 /* that can be found in the repository LICENSE file.           */
-/***************************************************************/
+/**
+ * ***********************************************************
+ */
 package com.stuypulse.robot.subsystems.feeder;
 
 import static edu.wpi.first.units.Units.*;
-
 import com.stuypulse.robot.Robot;
 import com.stuypulse.robot.constants.Settings;
-
 import edu.wpi.first.units.measure.*;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import dev.doglog.DogLog;
 
-public abstract class Feeder extends SubsystemBase{
+public abstract class Feeder extends SubsystemBase {
+
     private static final Feeder instance;
+
     private FeederState state;
 
     static {
@@ -31,21 +36,20 @@ public abstract class Feeder extends SubsystemBase{
     }
 
     public enum FeederState {
-        STOP(0),
-        REVERSE(Settings.Feeder.FEEDER_REVERSE_DUTY_CYCLE),
-        FORWARD(Settings.Feeder.FEEDER_FORWARD_DUTY_CYCLE);
+
+        STOP(0), REVERSE(Settings.Feeder.FEEDER_REVERSE_DUTY_CYCLE), FORWARD(Settings.Feeder.FEEDER_FORWARD_DUTY_CYCLE);
 
         private double targetDutyCycle;
 
-        private FeederState(double targetDutyCycle){
+        private FeederState(double targetDutyCycle) {
             this.targetDutyCycle = targetDutyCycle;
         }
 
-        public double getTargetDutyCycle(){
+        public double getTargetDutyCycle() {
             return this.targetDutyCycle;
         }
     }
-    
+
     protected Feeder() {
         this.state = FeederState.STOP;
     }
@@ -59,17 +63,16 @@ public abstract class Feeder extends SubsystemBase{
     }
 
     public abstract AngularVelocity getCurrentAngularVelocity();
+
     protected abstract void stopMotors();
 
     @Override
     public void periodic() {
         final FeederState currentState = getState();
-
         // Logging
-        SmartDashboard.putNumber("Feeder/Target Duty Cycle", currentState.getTargetDutyCycle());
-        SmartDashboard.putNumber("Feeder/Current RPM", getCurrentAngularVelocity().in(RPM));
-
-        SmartDashboard.putString("Feeder/State", currentState.name());
-        SmartDashboard.putString("States/Feeder", currentState.name());
+        DogLog.log("Feeder/Target Duty Cycle", currentState.getTargetDutyCycle());
+        DogLog.log("Feeder/Current RPM", getCurrentAngularVelocity().in(RPM));
+        DogLog.log("Feeder/State", currentState.name());
+        DogLog.log("States/Feeder", currentState.name());
     }
 }
