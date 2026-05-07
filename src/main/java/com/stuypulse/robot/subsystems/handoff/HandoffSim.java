@@ -17,6 +17,7 @@ import com.stuypulse.robot.util.simulation.TalonFXSimulation;
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.math.system.plant.LinearSystemId;
 import edu.wpi.first.wpilibj.simulation.DCMotorSim;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
 
 import com.ctre.phoenix6.controls.DutyCycleOut;
 
@@ -46,24 +47,17 @@ public class HandoffSim extends Handoff{
     protected void stopMotors(){
         handoffMotor.stopMotor();
     }
+
+    @Override
+    public Trigger handoffStalling() {
+        return new Trigger(() -> false);
+    }
  
     @Override
     public void periodic(){
         if (!Settings.EnabledSubsystems.HANDOFF.get()) {
             stopMotors();
             return;
-        }
-       
-        Shooter shooter = Shooter.getInstance();
-        CommandSwerveDrivetrain swerve = CommandSwerveDrivetrain.getInstance();
-
-        if (!(swerve.isAlignedToTarget(Field.getHubPose())) && shooter.getState() == ShooterState.SHOOT) {
-            setState(HandoffState.IDLE);
-        }
-
-        if (!(swerve.isAlignedToTarget(Field.getFerryZonePose(swerve.getPose().getTranslation()))) && 
-                shooter.getState() == ShooterState.FERRY) {
-            setState(HandoffState.IDLE);
         }
         
         handoffMotor.setControl(handoffMotorController.withOutput(getState().getHandoffDutyCycle()));

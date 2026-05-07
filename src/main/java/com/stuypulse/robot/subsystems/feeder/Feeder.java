@@ -31,7 +31,7 @@ public abstract class Feeder extends SubsystemBase{
     }
 
     public enum FeederState {
-        STOP(0),
+        IDLE(0),
         REVERSE(Settings.Feeder.FEEDER_REVERSE_DUTY_CYCLE),
         FORWARD(Settings.Feeder.FEEDER_FORWARD_DUTY_CYCLE);
 
@@ -47,7 +47,7 @@ public abstract class Feeder extends SubsystemBase{
     }
     
     protected Feeder() {
-        this.state = FeederState.STOP;
+        this.state = FeederState.IDLE;
     }
 
     public void setState(FeederState state) {

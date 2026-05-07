@@ -8,7 +8,7 @@ package com.stuypulse.robot.subsystems.vision;
 import static edu.wpi.first.units.Units.*;
 
 import com.stuypulse.robot.Robot;
-import com.stuypulse.robot.commands.vision.SetPipeline;
+import com.stuypulse.robot.commands.vision.VisionCommands;
 import com.stuypulse.robot.constants.Cameras;
 import com.stuypulse.robot.constants.Settings;
 import com.stuypulse.robot.constants.Settings.EnabledSubsystems;
@@ -31,8 +31,8 @@ public class LimelightVision extends SubsystemBase{
     static {
         instance = new LimelightVision();
 
-        SmartDashboard.putData("Vision/Set Cloudy Pipeline", new SetPipeline(0));
-        SmartDashboard.putData("Vision/Set Sunny Pipeline", new SetPipeline(1));
+        SmartDashboard.putData("Vision/Set Cloudy Pipeline", VisionCommands.setPipeline(0));
+        SmartDashboard.putData("Vision/Set Sunny Pipeline", VisionCommands.setPipeline(1));
     }
 
     public static LimelightVision getInstance() {
@@ -40,7 +40,6 @@ public class LimelightVision extends SubsystemBase{
     }
 
     private String[] names;
-    private SmartBoolean enabled;
     private SmartBoolean[] camerasEnabled;
     private MegaTagMode megaTagMode;
 
@@ -195,7 +194,7 @@ public class LimelightVision extends SubsystemBase{
                     withinAngularVelocityTolerance = true;
                 }
 
-                Boolean isValidPose = notNull && withinAngularVelocityTolerance && withinInvalidPositionTolerance;
+                boolean isValidPose = notNull && withinAngularVelocityTolerance && withinInvalidPositionTolerance;
 
                 SmartDashboard.putBoolean("Vision/isValidPose", isValidPose);
                 SmartDashboard.putBoolean("Vision/isWithinAngularVel", withinAngularVelocityTolerance);

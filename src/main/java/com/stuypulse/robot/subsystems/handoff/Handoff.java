@@ -10,6 +10,7 @@ import com.stuypulse.robot.constants.Settings;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
 
 
 public abstract class Handoff extends SubsystemBase {// handoff is feeder ---> shooter btw
@@ -57,6 +58,8 @@ public abstract class Handoff extends SubsystemBase {// handoff is feeder ---> s
     }
 
     protected abstract void stopMotors();
+
+    public abstract Trigger handoffStalling();
 
     @Override
     public void periodic() {

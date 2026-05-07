@@ -10,9 +10,6 @@ import com.stuypulse.robot.constants.Motors;
 import com.stuypulse.robot.constants.Ports;
 import com.stuypulse.robot.constants.Settings;
 import com.stuypulse.robot.constants.Settings.EnabledSubsystems;
-import com.stuypulse.robot.subsystems.shooter.Shooter;
-import com.stuypulse.robot.subsystems.shooter.Shooter.ShooterState;
-import com.stuypulse.robot.subsystems.swerve.CommandSwerveDrivetrain;
 import com.stuypulse.robot.util.LoggedSignals;
 
 import edu.wpi.first.units.measure.*;
@@ -53,17 +50,6 @@ public class FeederImpl extends Feeder {
         if (!EnabledSubsystems.FEEDER.get()) {
             stopMotors();
             return;
-        }
-        // Stop shooting if not aligned  
-        CommandSwerveDrivetrain swerve = CommandSwerveDrivetrain.getInstance();
-        Shooter shooter = Shooter.getInstance();
-
-        if (!(swerve.isAlignedToTarget(Field.getHubPose())) && shooter.getState() == ShooterState.SHOOT) {
-            setState(FeederState.STOP);
-        }
-
-        if (!(swerve.isAlignedToTarget(Field.getFerryZonePose(swerve.getPose().getTranslation()))) && shooter.getState() == ShooterState.FERRY) {
-            setState(FeederState.STOP);
         }
 
         // Apply

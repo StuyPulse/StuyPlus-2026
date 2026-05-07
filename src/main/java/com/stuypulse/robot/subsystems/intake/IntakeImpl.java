@@ -20,6 +20,9 @@ import com.stuypulse.robot.util.SysId;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.units.measure.*;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 
 import com.ctre.phoenix6.controls.ControlRequest;
@@ -127,8 +130,9 @@ public class IntakeImpl extends Intake {
         intakePivotMotor.setPosition(Settings.Intake.Pivot.INITIAL_ANGLE.getRotations());
     }
 
-    private boolean pivotStalling() {
-        return pivotStalling.getAsBoolean();
+    @Override
+    public Trigger pivotStalling() {
+        return new Trigger(pivotStalling);
     }
 
     /***********************/
@@ -181,21 +185,8 @@ public class IntakeImpl extends Intake {
         }
 
         // Input
-        
-        final boolean pivotStalling = pivotStalling();
 
         final IntakeState currentState = getState();
-
-        // State
-
-        if (currentState == IntakeState.HOMING_DOWN && pivotStalling) {
-            setPivotZeroAtBottom();
-            setState(IntakeState.DOWN);
-        }
-
-        if ((currentState == IntakeState.DOWN) && pivotStalling) {
-            setPivotZeroAtBottom();
-        }
 
         // Output
 

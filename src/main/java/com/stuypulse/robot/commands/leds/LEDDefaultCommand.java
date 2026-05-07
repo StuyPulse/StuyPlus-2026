@@ -64,7 +64,7 @@ public class LEDDefaultCommand extends Command{
         switch (feeder.getState()) {
             case FORWARD -> leds.applyFeed(Settings.LED.FEEDER_FORWARD);
             case REVERSE -> leds.applyFeed(Settings.LED.FEEDER_REVERSE);
-            case STOP -> leds.applyFeed(LEDPattern.kOff);
+            case IDLE -> leds.applyFeed(LEDPattern.kOff);
         }
 
         switch (intake.getState()) {
