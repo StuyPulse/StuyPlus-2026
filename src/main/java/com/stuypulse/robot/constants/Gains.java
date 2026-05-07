@@ -42,7 +42,7 @@ public class Gains {
         Current kS = Amps.of(0);
         Current kV = Amps.of(0);
         Current kA = Amps.of(0);
-        Current kG = Amps.of(-9);
+        Current kG = Amps.of(9);
     }
 
     public interface Swerve {
