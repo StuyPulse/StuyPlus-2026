@@ -9,6 +9,7 @@ import static edu.wpi.first.units.Units.RPM;
 import static edu.wpi.first.units.Units.Radians;
 
 import com.stuypulse.robot.Robot;
+import com.stuypulse.robot.commands.intake.IntakeSetNinety;
 import com.stuypulse.robot.commands.intake.IntakeSetZero;
 import com.stuypulse.robot.commands.intake.IntakeSetZeroAtBottom;
 import com.stuypulse.robot.constants.Settings;
@@ -34,6 +35,7 @@ public abstract class Intake extends SubsystemBase {
         // Elastic Commands
         SmartDashboard.putData("Intake/Set Pivot 0", new IntakeSetZero());
         SmartDashboard.putData("Intake/Set Pivot 0 at Bottom", new IntakeSetZeroAtBottom());
+        SmartDashboard.putData("Intake/Set Pivot Ninety", new IntakeSetNinety());
     }
 
     public static Intake getInstance() {
@@ -78,6 +80,7 @@ public abstract class Intake extends SubsystemBase {
     }
 
     // Pivot Commands
+    public abstract void setPivotNinety();
     public abstract Rotation2d getRelativePosition();
     public abstract void setPivotZero();
     public abstract void setPivotZeroAtBottom();
@@ -91,7 +94,7 @@ public abstract class Intake extends SubsystemBase {
     }
 
     // Roller Commands
-    public abstract double getRollerRPM();
+    //public abstract double getRollerRPM();
 
     protected abstract void stopMotors();
 
@@ -101,7 +104,7 @@ public abstract class Intake extends SubsystemBase {
 
     @Override
     public void periodic() {
-        RobotVisualizer.getInstance().updateIntake(Radians.of(getRelativePosition().getRadians()), RPM.of(getRollerRPM()));
+        //RobotVisualizer.getInstance().updateIntake(Radians.of(getRelativePosition().getRadians()), RPM.of(getRollerRPM()));
 
         final IntakeState currentState = getState();
         // Logging
@@ -113,6 +116,6 @@ public abstract class Intake extends SubsystemBase {
         SmartDashboard.putBoolean("Intake/Pivot/At Target Angle", atTargetAngle());
         SmartDashboard.putBoolean("Intake/Pivot/Above Threshold", isPivotAboveThreshold());
         SmartDashboard.putNumber("Intake/Rollers/Target Duty Cycle", currentState.getTargetDutyCycle());
-        SmartDashboard.putNumber("Intake/Rollers/RPM", getRollerRPM());
+        //SmartDashboard.putNumber("Intake/Rollers/RPM", getRollerRPM());
     }
 }

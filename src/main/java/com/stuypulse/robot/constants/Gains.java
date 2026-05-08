@@ -35,14 +35,14 @@ public class Gains {
 
     public interface Intake {
         // pivot gains
-        double kP = 15;
+        double kP = 300;
         double kI = 0;
-        double kD = 0;
+        double kD = 75;
 
         Current kS = Amps.of(0);
         Current kV = Amps.of(0);
         Current kA = Amps.of(0);
-        Current kG = Amps.of(9);
+        Current kG = Amps.of(-13);
     }
 
     public interface Swerve {

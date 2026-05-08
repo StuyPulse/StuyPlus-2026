@@ -102,9 +102,12 @@ public class IntakeSim extends Intake {
     }
 
     @Override
-    public double getRollerRPM() {
-        return rollerMotor.getVelocity().getValue().in(RPM);
-    }
+    public void setPivotNinety() {}
+
+    // @Override
+    // public double getRollerRPM() {
+    //     return rollerMotor.getVelocity().getValue().in(RPM);
+    // }
 
     @Override
     protected void stopMotors() {
