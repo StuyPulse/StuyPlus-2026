@@ -44,34 +44,36 @@ public class ShooterSim extends Shooter {
             Settings.Shooter.GEAR_RATIO),
             DCMotor.getKrakenX60(3)
         );
-        shooterMotorLeft = new TalonFXSimulation(Ports.Shooter.SHOOTER_MOTOR_LEFT, shooterSim);
-        shooterMotorCenter = new TalonFXSimulation(Ports.Shooter.SHOOTER_MOTOR_CENTER, shooterSim);
         shooterMotorRight = new TalonFXSimulation(Ports.Shooter.SHOOTER_MOTOR_RIGHT, shooterSim);
-        shooterMotorLeft.configure(Motors.Shooter.SHOOTER_MOTOR_LEFT);
-        shooterMotorCenter.configure(Motors.Shooter.SHOOTER_MOTOR_CENTER);
-        shooterMotorRight.configure(Motors.Shooter.SHOOTER_MOTOR_RIGHT);
+        shooterMotorCenter = new TalonFXSimulation(Ports.Shooter.SHOOTER_MOTOR_CENTER, shooterSim);
+        shooterMotorLeft = new TalonFXSimulation(Ports.Shooter.SHOOTER_MOTOR_LEFT, shooterSim);
 
-        shooterFollowerController = new Follower(shooterMotorLeft.getDeviceID(), MotorAlignmentValue.Opposed);
-        shooterMotorCenter.setControl(shooterFollowerController);
-        shooterMotorRight.setControl(shooterFollowerController);
+        Motors.Shooter.SHOOTER_MOTOR_RIGHT.configure(shooterMotorRight); // leader
+        Motors.Shooter.SHOOTER_MOTOR_CENTER.configure(shooterMotorCenter);
+        Motors.Shooter.SHOOTER_MOTOR_LEFT.configure(shooterMotorLeft);
+
         shooterController = new VelocityTorqueCurrentFOC(getState().getTargetAngularVelocity());
+        shooterFollowerController = new Follower(shooterMotorRight.getDeviceID(), MotorAlignmentValue.Opposed);
+
+        shooterMotorCenter.setControl(shooterFollowerController);
+        shooterMotorLeft.setControl(shooterFollowerController);
 
         voltageOverride = Optional.empty();
     }
 
     @Override
     public AngularVelocity getCurrentAngularVelocity() {
-        return shooterMotorLeft.getVelocity().getValue();
+        return shooterMotorRight.getVelocity().getValue();
     }
 
     @Override
     protected void stopMotors() {
-        shooterMotorLeft.stopMotor();
-        shooterMotorCenter.stopMotor();
         shooterMotorRight.stopMotor();
+        shooterMotorCenter.stopMotor();
+        shooterMotorLeft.stopMotor();
 
         shooterMotorCenter.setControl(shooterFollowerController);
-        shooterMotorRight.setControl(shooterFollowerController);
+        shooterMotorLeft.setControl(shooterFollowerController);
     }
 
     @Override
@@ -86,10 +88,10 @@ public class ShooterSim extends Shooter {
             return;
         }
 
-        shooterMotorLeft.setControl(shooterController.withVelocity(getState().getTargetAngularVelocity().in(RotationsPerSecond)));
-        shooterMotorLeft.update(Settings.DT);
+        shooterMotorRight.setControl(shooterController.withVelocity(getState().getTargetAngularVelocity().in(RotationsPerSecond)));
+        shooterMotorRight.update(Settings.DT); // leader first
         shooterMotorCenter.update(Settings.DT);
-        shooterMotorRight.update(Settings.DT);
+        shooterMotorLeft.update(Settings.DT);
 
         RobotVisualizer.getInstance().updateShooter(getCurrentAngularVelocity());
 
