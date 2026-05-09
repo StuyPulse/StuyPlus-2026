@@ -13,7 +13,6 @@ import com.stuypulse.robot.constants.Motors;
 import com.stuypulse.robot.constants.Ports;
 import com.stuypulse.robot.constants.Settings;
 import com.stuypulse.robot.util.SysId;
-import com.stuypulse.robot.util.simulation.SimulationConstants;
 import com.stuypulse.robot.util.simulation.TalonFXSimulation;
 
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -57,13 +56,13 @@ public class IntakeSim extends Intake {
                 Settings.Intake.Pivot.GEAR_RATIO),
             DCMotor.getKrakenX60(1),
             Settings.Intake.Pivot.GEAR_RATIO,
-            SimulationConstants.Intake.PIVOT_ARM_LENGTH,
+            Settings.Intake.Pivot.PIVOT_ARM_LENGTH.in(Meters),
             Settings.Intake.Pivot.MIN_ANGLE.getRadians(),
             Settings.Intake.Pivot.MAX_ANGLE.getRadians(),
             true,
             Settings.Intake.Pivot.INITIAL_ANGLE.getRadians()
         );
-        pivotMotor = new TalonFXSimulation(Ports.Intake.MOTOR_INTAKE_PIVOT, pivotSim);
+        pivotMotor = new TalonFXSimulation(Ports.Intake.INTAKE_PIVOT_MOTOR, pivotSim);
         pivotMotor.configure(Motors.Intake.PIVOT_CONFIG);
         pivotController = new PositionTorqueCurrentFOC(getState().getTargetAngle().getRotations());
 
@@ -75,8 +74,8 @@ public class IntakeSim extends Intake {
             ),
             DCMotor.getKrakenX60(2)
         );
-        rollerMotor = new TalonFXSimulation(Ports.Intake.MOTOR_INTAKE_ROLLER_LEFT, rollerSim);
-        rollerFollower = new TalonFXSimulation(Ports.Intake.MOTOR_INTAKE_ROLLER_RIGHT, rollerSim);
+        rollerMotor = new TalonFXSimulation(Ports.Intake.INTAKE_ROLLER_MOTOR_LEFT, rollerSim);
+        rollerFollower = new TalonFXSimulation(Ports.Intake.INTAKE_ROLLER_MOTOR_RIGHT, rollerSim);
         rollerMotor.configure(Motors.Intake.LEFT_ROLLER_CONFIG);
         rollerFollower.configure(Motors.Intake.RIGHT_ROLLER_CONFIG);
 
@@ -113,10 +112,13 @@ public class IntakeSim extends Intake {
         setZeroOffset(new Rotation2d(-pivotSim.getAngleRads()).plus(Settings.Intake.Pivot.DOWN_ANGLE));
     }
 
-    @Override
-    public double getRollerRPM() {
-        return rollerMotor.getVelocity().getValue().in(RPM);
-    }
+    // @Override
+    // public void setPivotNinety() {}
+
+    // @Override
+    // public double getRollerRPM() {
+    //     return rollerMotor.getVelocity().getValue().in(RPM);
+    // }
 
     @Override
     protected void stopMotors() {

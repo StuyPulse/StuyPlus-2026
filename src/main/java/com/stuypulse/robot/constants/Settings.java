@@ -16,6 +16,7 @@ import edu.wpi.first.math.util.Units;
 import edu.wpi.first.units.*;
 import edu.wpi.first.units.measure.*;
 import edu.wpi.first.wpilibj.LEDPattern;
+import edu.wpi.first.wpilibj.simulation.SingleJointedArmSim;
 import edu.wpi.first.wpilibj.util.Color;
 
 import com.ctre.phoenix6.CANBus;
@@ -60,14 +61,14 @@ public interface Settings {
         public interface Pivot {
             // state angles
             //TODO:Get new pivot angles
-            Rotation2d INITIAL_ANGLE = Rotation2d.fromDegrees(0);
-            Rotation2d IDLE_ANGLE = Rotation2d.fromDegrees(0);
-            Rotation2d DOWN_ANGLE = Rotation2d.fromDegrees(102);
-            Rotation2d AGITATE_UP_ANGLE = Rotation2d.fromDegrees(60);
+            Rotation2d INITIAL_ANGLE = Rotation2d.fromDegrees(-102);
+            Rotation2d IDLE_ANGLE = Rotation2d.fromDegrees(-102);
+            Rotation2d DOWN_ANGLE = Rotation2d.fromDegrees(0);
+            Rotation2d AGITATE_UP_ANGLE = Rotation2d.fromDegrees(-42);
 
             // misc
             Rotation2d ANGLE_TOLERANCE = Rotation2d.fromDegrees(0.5);
-            Rotation2d PUSHDOWN_THRESHOLD = Rotation2d.fromDegrees(85);
+            Rotation2d PUSHDOWN_THRESHOLD = Rotation2d.fromDegrees(-20);
             SmartNumber PUSHDOWN_CURRENT = new SmartNumber("Intake/Pivot/Pushdown Current Tuning Amps", 30.0);
             Current STALL_CURRENT = Amps.of(25); // amps
             Time STALL_DEBOUNCE_SEC = Seconds.of(0.0); // TODO: set this up?
@@ -79,9 +80,11 @@ public interface Settings {
 
             // sim
             Rotation2d MIN_ANGLE = Rotation2d.fromDegrees(0);
-            Rotation2d MAX_ANGLE = Rotation2d.fromDegrees(102.0);
+            Rotation2d MAX_ANGLE = Rotation2d.fromDegrees(-102.0);
             double GEAR_RATIO = 60.0;
-            MomentOfInertia J = KilogramSquareMeters.of(0.001);
+
+            Distance PIVOT_ARM_LENGTH = Meters.of(0.1439822);
+            MomentOfInertia J = KilogramSquareMeters.of(SingleJointedArmSim.estimateMOI(PIVOT_ARM_LENGTH.in(Meters), 30)); // mass in kg
         }
 
         public interface Roller {

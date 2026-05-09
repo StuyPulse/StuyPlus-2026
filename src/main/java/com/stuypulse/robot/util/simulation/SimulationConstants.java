@@ -218,7 +218,6 @@ public interface SimulationConstants {
         double INTAKE_WIDTH = 0.5;
         double INTAKE_LENGTH = 0.15;
 
-        double PIVOT_ARM_LENGTH = 0.1439822;
         double PIVOT_END_X = 0;
 
         public Offsets PIVOT_OFFSETS = new Offsets(
@@ -277,8 +276,6 @@ public interface SimulationConstants {
                 return ROBOT_WEIGHT.plus(RED_BUMPER_WEIGHT);
             }
         };
-
-        int PIGEON_ID = 0; // TODO: get actual
 
         @SuppressWarnings("unchecked")
         public static final SwerveModuleConstants<TalonFXConfiguration, TalonFXConfiguration, CANcoderConfiguration>[] MODULE_CONSTANTS = new SwerveModuleConstants[] {

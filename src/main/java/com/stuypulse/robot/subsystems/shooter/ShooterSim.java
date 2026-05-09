@@ -29,9 +29,9 @@ import com.ctre.phoenix6.signals.MotorAlignmentValue;
 
 public class ShooterSim extends Shooter {
     private final FlywheelSim shooterSim;
-    private final TalonFXSimulation shooterLeader;
-    private final TalonFXSimulation shooterFollower1;
-    private final TalonFXSimulation shooterFollower2;
+    private final TalonFXSimulation shooterMotorLeft;
+    private final TalonFXSimulation shooterMotorCenter;
+    private final TalonFXSimulation shooterMotorRight;
     private final VelocityTorqueCurrentFOC shooterController;
     private final Follower shooterFollowerController;
 
@@ -44,34 +44,36 @@ public class ShooterSim extends Shooter {
             Settings.Shooter.GEAR_RATIO),
             DCMotor.getKrakenX60(3)
         );
-        shooterLeader = new TalonFXSimulation(Ports.Shooter.SHOOTER_MOTOR_LEFT, shooterSim);
-        shooterFollower1 = new TalonFXSimulation(Ports.Shooter.SHOOTER_MOTOR_CENTER, shooterSim);
-        shooterFollower2 = new TalonFXSimulation(Ports.Shooter.SHOOTER_MOTOR_RIGHT, shooterSim);
-        shooterLeader.configure(Motors.Shooter.SHOOTER_MOTOR_CONFIG);
-        shooterFollower1.configure(Motors.Shooter.SHOOTER_MOTOR_CONFIG);
-        shooterFollower2.configure(Motors.Shooter.SHOOTER_MOTOR_CONFIG);
+        shooterMotorRight = new TalonFXSimulation(Ports.Shooter.SHOOTER_MOTOR_RIGHT, shooterSim);
+        shooterMotorCenter = new TalonFXSimulation(Ports.Shooter.SHOOTER_MOTOR_CENTER, shooterSim);
+        shooterMotorLeft = new TalonFXSimulation(Ports.Shooter.SHOOTER_MOTOR_LEFT, shooterSim);
 
-        shooterFollowerController = new Follower(shooterLeader.getDeviceID(), MotorAlignmentValue.Opposed);
-        shooterFollower1.setControl(shooterFollowerController);
-        shooterFollower2.setControl(shooterFollowerController);
+        Motors.Shooter.SHOOTER_MOTOR_RIGHT.configure(shooterMotorRight); // leader
+        Motors.Shooter.SHOOTER_MOTOR_CENTER.configure(shooterMotorCenter);
+        Motors.Shooter.SHOOTER_MOTOR_LEFT.configure(shooterMotorLeft);
+
         shooterController = new VelocityTorqueCurrentFOC(getState().getTargetAngularVelocity());
+        shooterFollowerController = new Follower(shooterMotorRight.getDeviceID(), MotorAlignmentValue.Opposed);
+
+        shooterMotorCenter.setControl(shooterFollowerController);
+        shooterMotorLeft.setControl(shooterFollowerController);
 
         voltageOverride = Optional.empty();
     }
 
     @Override
     public AngularVelocity getCurrentAngularVelocity() {
-        return shooterLeader.getVelocity().getValue();
+        return shooterMotorRight.getVelocity().getValue();
     }
 
     @Override
     protected void stopMotors() {
-        shooterLeader.stopMotor();
-        shooterFollower1.stopMotor();
-        shooterFollower2.stopMotor();
+        shooterMotorRight.stopMotor();
+        shooterMotorCenter.stopMotor();
+        shooterMotorLeft.stopMotor();
 
-        shooterFollower1.setControl(shooterFollowerController);
-        shooterFollower2.setControl(shooterFollowerController);
+        shooterMotorCenter.setControl(shooterFollowerController);
+        shooterMotorLeft.setControl(shooterFollowerController);
     }
 
     @Override
@@ -86,10 +88,10 @@ public class ShooterSim extends Shooter {
             return;
         }
 
-        shooterLeader.setControl(shooterController.withVelocity(getState().getTargetAngularVelocity().in(RotationsPerSecond)));
-        shooterLeader.update(Settings.DT);
-        shooterFollower1.update(Settings.DT);
-        shooterFollower2.update(Settings.DT);
+        shooterMotorRight.setControl(shooterController.withVelocity(getState().getTargetAngularVelocity().in(RotationsPerSecond)));
+        shooterMotorRight.update(Settings.DT); // leader first
+        shooterMotorCenter.update(Settings.DT);
+        shooterMotorLeft.update(Settings.DT);
 
         RobotVisualizer.getInstance().updateShooter(getCurrentAngularVelocity());
 
@@ -102,9 +104,9 @@ public class ShooterSim extends Shooter {
                 Settings.Shooter.STEP_VOLTAGE,
                 "Shooter",
                 voltage -> setVoltageOverride(voltage),
-                () -> shooterLeader.getPosition().getValue(),
-                () -> shooterLeader.getVelocity().getValue(),
-                () -> shooterLeader.getMotorVoltage().getValue(),
+                () -> shooterMotorLeft.getPosition().getValue(),
+                () -> shooterMotorLeft.getVelocity().getValue(),
+                () -> shooterMotorLeft.getMotorVoltage().getValue(),
                 getInstance());
     }
 }

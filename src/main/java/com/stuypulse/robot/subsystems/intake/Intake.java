@@ -92,7 +92,7 @@ public abstract class Intake extends SubsystemBase {
     }
 
     // Roller Commands
-    public abstract double getRollerRPM();
+    //public abstract double getRollerRPM();
 
     protected abstract void stopMotors();
 
@@ -102,7 +102,7 @@ public abstract class Intake extends SubsystemBase {
 
     @Override
     public void periodic() {
-        RobotVisualizer.getInstance().updateIntake(Radians.of(getRelativePosition().getRadians()), RPM.of(getRollerRPM()));
+        //RobotVisualizer.getInstance().updateIntake(Radians.of(getRelativePosition().getRadians()), RPM.of(getRollerRPM()));
 
         final IntakeState currentState = getState();
         // Logging
@@ -114,6 +114,6 @@ public abstract class Intake extends SubsystemBase {
         SmartDashboard.putBoolean("Intake/Pivot/At Target Angle", atTargetAngle());
         SmartDashboard.putBoolean("Intake/Pivot/Above Threshold", isPivotAboveThreshold());
         SmartDashboard.putNumber("Intake/Rollers/Target Duty Cycle", currentState.getTargetDutyCycle());
-        SmartDashboard.putNumber("Intake/Rollers/RPM", getRollerRPM());
+        //SmartDashboard.putNumber("Intake/Rollers/RPM", getRollerRPM());
     }
 }
