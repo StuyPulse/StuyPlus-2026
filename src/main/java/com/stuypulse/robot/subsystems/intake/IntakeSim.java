@@ -59,7 +59,7 @@ public class IntakeSim extends Intake {
             true,
             Settings.Intake.Pivot.INITIAL_ANGLE.getRadians()
         );
-        pivotMotor = new TalonFXSimulation(Ports.Intake.MOTOR_INTAKE_PIVOT, pivotSim);
+        pivotMotor = new TalonFXSimulation(Ports.Intake.INTAKE_PIVOT_MOTOR, pivotSim);
         pivotMotor.configure(Motors.Intake.PIVOT_CONFIG);
         pivotController = new PositionTorqueCurrentFOC(getState().getTargetAngle().getRotations());
 
@@ -71,8 +71,8 @@ public class IntakeSim extends Intake {
             ),
             DCMotor.getKrakenX60(2)
         );
-        rollerMotor = new TalonFXSimulation(Ports.Intake.MOTOR_INTAKE_ROLLER_LEFT, rollerSim);
-        rollerFollower = new TalonFXSimulation(Ports.Intake.MOTOR_INTAKE_ROLLER_RIGHT, rollerSim);
+        rollerMotor = new TalonFXSimulation(Ports.Intake.INTAKE_ROLLER_MOTOR_LEFT, rollerSim);
+        rollerFollower = new TalonFXSimulation(Ports.Intake.INTAKE_ROLLER_MOTOR_RIGHT, rollerSim);
         rollerMotor.configure(Motors.Intake.LEFT_ROLLER_CONFIG);
         rollerFollower.configure(Motors.Intake.RIGHT_ROLLER_CONFIG);
 

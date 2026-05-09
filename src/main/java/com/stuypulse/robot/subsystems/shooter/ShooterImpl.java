@@ -57,9 +57,9 @@ public class ShooterImpl extends Shooter {
         ).withLogPath("Shooter/").withSignalLocation(LoggedSignals.SignalLocation.CANIVORE);
 
         // configure
-        Motors.Shooter.SHOOTER_MOTOR_CONFIG.configure(shooterMotorLeft);
-        Motors.Shooter.SHOOTER_MOTOR_CONFIG.configure(shooterMotorCenter);
-        Motors.Shooter.SHOOTER_MOTOR_CONFIG.configure(shooterMotorRight);
+        Motors.Shooter.SHOOTER_MOTOR_LEFT.configure(shooterMotorLeft);
+        Motors.Shooter.SHOOTER_MOTOR_CENTER.configure(shooterMotorCenter);
+        Motors.Shooter.SHOOTER_MOTOR_RIGHT.configure(shooterMotorRight);
 
         // Set shooter 2 and 3 motors to follow 1
         shooterFollowerController = new Follower(shooterMotorLeft.getDeviceID(), MotorAlignmentValue.Opposed);

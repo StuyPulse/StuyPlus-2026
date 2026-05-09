@@ -54,7 +54,7 @@ public class IntakeImpl extends Intake {
     //private final BStream rightRollerStalling;
 
     public IntakeImpl() {
-        intakePivotMotor = new TalonFX(Ports.Intake.MOTOR_INTAKE_PIVOT, Settings.CANBUS);
+        intakePivotMotor = new TalonFX(Ports.Intake.INTAKE_PIVOT_MOTOR, Settings.CANBUS);
 
         Motors.Intake.PIVOT_CONFIG.configure(intakePivotMotor);
 
@@ -67,8 +67,8 @@ public class IntakeImpl extends Intake {
         ).withLogPath("Intake/Pivot/").withSignalLocation(LoggedSignals.SignalLocation.CANIVORE);
 
         //until rollers are fixed
-        // intakeRollerMotorLeft = new TalonFX(Ports.Intake.MOTOR_INTAKE_ROLLER_LEFT, Settings.CANBUS); // leader
-        // intakeRollerMotorRight = new TalonFX(Ports.Intake.MOTOR_INTAKE_ROLLER_RIGHT, Settings.CANBUS);
+        // intakeRollerMotorLeft = new TalonFX(Ports.Intake.INTAKE_ROLLER_MOTOR_LEFT, Settings.CANBUS); // leader
+        // intakeRollerMotorRight = new TalonFX(Ports.Intake.INTAKE_ROLLER_MOTOR_RIGHT, Settings.CANBUS);
 
         // Motors.Intake.LEFT_ROLLER_CONFIG.configure(intakeRollerMotorLeft);
         // Motors.Intake.RIGHT_ROLLER_CONFIG.configure(intakeRollerMotorRight);
@@ -90,7 +90,7 @@ public class IntakeImpl extends Intake {
         homingController = new VoltageOut(Settings.Intake.Pivot.HOMING_DOWN_VOLTAGE).withEnableFOC(true);
         pushdownController = new TorqueCurrentFOC(Settings.Intake.Pivot.PUSHDOWN_CURRENT.getAsDouble());
         rollerController = new DutyCycleOut(getState().getTargetDutyCycle()).withEnableFOC(true);
-        followerController = new Follower(Ports.Intake.MOTOR_INTAKE_ROLLER_LEFT, MotorAlignmentValue.Opposed);
+        followerController = new Follower(Ports.Intake.INTAKE_ROLLER_MOTOR_LEFT, MotorAlignmentValue.Opposed);
 
         //intakeRollerMotorRight.setControl(followerController);
 
