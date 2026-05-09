@@ -18,6 +18,11 @@ public class WhitelistAllTags extends InstantCommand{
     }
 
     @Override
+    public boolean runsWhenDisabled() {
+        return true;
+    }
+
+    @Override
     public void initialize() {
         vision.setTagWhitelist(Field.ALL_TAGS);
     }

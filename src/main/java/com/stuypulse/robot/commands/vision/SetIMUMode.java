@@ -19,6 +19,11 @@ public class SetIMUMode extends InstantCommand{
     }
 
     @Override
+    public boolean runsWhenDisabled() {
+        return true;
+    }
+
+    @Override
     public void initialize() {
         vision.setIMUMode(mode);
     }
