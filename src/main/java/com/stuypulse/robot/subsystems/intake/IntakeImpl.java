@@ -118,10 +118,10 @@ public class IntakeImpl extends Intake {
     /**********************/
     /*** Pivot Commands ***/
     /**********************/
-    // @Override
-    // public void setPivotNinety() {
-    //     intakePivotMotor.setPosition(Degrees.of(-90));
-    // }
+    @Override
+    public void setPivotNinety() {
+        intakePivotMotor.setPosition(Degrees.of(-90));
+    }
 
     @Override
     public Rotation2d getRelativePosition() {

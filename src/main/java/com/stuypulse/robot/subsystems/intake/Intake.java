@@ -32,8 +32,9 @@ public abstract class Intake extends SubsystemBase {
         }
 
         // Elastic Commands
-        SmartDashboard.putData("Intake/Set Pivot 0", IntakeCommands.setZero());
-        SmartDashboard.putData("Intake/Set Pivot 0 at Bottom", IntakeCommands.setZeroAtBottom());
+        SmartDashboard.putData("Intake/Zero Pivot Stowed", IntakeCommands.zeroPivotStowed());
+        SmartDashboard.putData("Intake/Zero Pivot Deployed", IntakeCommands.zeroPivotDeployed());
+        SmartDashboard.putData("Intake/Zero Pivot Ninety", IntakeCommands.zeroPivotNinety());
     }
 
     public static Intake getInstance() {
@@ -78,6 +79,7 @@ public abstract class Intake extends SubsystemBase {
     }
 
     // Pivot Commands
+    public abstract void setPivotNinety();
     public abstract Trigger pivotStalling();
     public abstract Rotation2d getRelativePosition();
     public abstract void setPivotZero();

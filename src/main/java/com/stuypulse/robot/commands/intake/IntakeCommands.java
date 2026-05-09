@@ -1,7 +1,5 @@
 package com.stuypulse.robot.commands.intake;
 
-import org.ironmaple.simulation.IntakeSimulation.IntakeSide;
-
 import com.stuypulse.robot.subsystems.intake.Intake;
 import com.stuypulse.robot.subsystems.intake.Intake.IntakeState;
 
@@ -55,14 +53,18 @@ public class IntakeCommands {
 
     //Zeroing
 
-    public static Command setZero() {
+    public static Command zeroPivotNinety() {
+        return Commands.runOnce(() -> intake.setPivotNinety()).ignoringDisable(true).withName("IntakeSetPivotNinety");
+    }
+
+    public static Command zeroPivotStowed() {
         return Commands.runOnce(() -> {
             intake.setPivotZero();
             intake.setState(IntakeState.IDLE);
         }).ignoringDisable(true).withName("IntakePivotSetZero");
     }
 
-    public static Command setZeroAtBottom() {
+    public static Command zeroPivotDeployed() {
         return Commands.runOnce(() -> {
             intake.setPivotZeroAtBottom();
             intake.setState(IntakeState.DOWN);

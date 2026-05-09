@@ -112,8 +112,8 @@ public class IntakeSim extends Intake {
         setZeroOffset(new Rotation2d(-pivotSim.getAngleRads()).plus(Settings.Intake.Pivot.DOWN_ANGLE));
     }
 
-    // @Override
-    // public void setPivotNinety() {}
+    @Override
+    public void setPivotNinety() {}
 
     // @Override
     // public double getRollerRPM() {
