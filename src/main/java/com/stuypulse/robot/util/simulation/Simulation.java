@@ -107,7 +107,7 @@ public class Simulation {
 
     private double getIntakeArmEndX() {
         return SimulationConstants.Intake.PIVOT_END_X
-                + SimulationConstants.Intake.PIVOT_ARM_LENGTH // sin works somehow??
+                + Settings.Intake.Pivot.PIVOT_ARM_LENGTH.in(Meters) // sin works because we're zeroed at horizontal
                         * Math.sin(intakeSim.getRelativePosition().getRadians()
                                 + SimulationConstants.Intake.PIVOT_OFFSETS.toRotation3d().getX());
     }

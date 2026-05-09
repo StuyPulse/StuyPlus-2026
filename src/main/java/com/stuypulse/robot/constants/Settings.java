@@ -16,6 +16,7 @@ import edu.wpi.first.math.util.Units;
 import edu.wpi.first.units.*;
 import edu.wpi.first.units.measure.*;
 import edu.wpi.first.wpilibj.LEDPattern;
+import edu.wpi.first.wpilibj.simulation.SingleJointedArmSim;
 import edu.wpi.first.wpilibj.util.Color;
 
 import com.ctre.phoenix6.CANBus;
@@ -81,7 +82,9 @@ public interface Settings {
             Rotation2d MIN_ANGLE = Rotation2d.fromDegrees(0);
             Rotation2d MAX_ANGLE = Rotation2d.fromDegrees(-102.0);
             double GEAR_RATIO = 60.0;
-            MomentOfInertia J = KilogramSquareMeters.of(0.001);
+
+            Distance PIVOT_ARM_LENGTH = Meters.of(0.1439822);
+            MomentOfInertia J = KilogramSquareMeters.of(SingleJointedArmSim.estimateMOI(PIVOT_ARM_LENGTH.in(Meters), 30)); // mass in kg
         }
 
         public interface Roller {

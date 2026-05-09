@@ -13,7 +13,6 @@ import com.stuypulse.robot.constants.Motors;
 import com.stuypulse.robot.constants.Ports;
 import com.stuypulse.robot.constants.Settings;
 import com.stuypulse.robot.util.SysId;
-import com.stuypulse.robot.util.simulation.SimulationConstants;
 import com.stuypulse.robot.util.simulation.TalonFXSimulation;
 
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -54,7 +53,7 @@ public class IntakeSim extends Intake {
                 Settings.Intake.Pivot.GEAR_RATIO),
             DCMotor.getKrakenX60(1),
             Settings.Intake.Pivot.GEAR_RATIO,
-            SimulationConstants.Intake.PIVOT_ARM_LENGTH,
+            Settings.Intake.Pivot.PIVOT_ARM_LENGTH.in(Meters),
             Settings.Intake.Pivot.MIN_ANGLE.getRadians(),
             Settings.Intake.Pivot.MAX_ANGLE.getRadians(),
             true,
