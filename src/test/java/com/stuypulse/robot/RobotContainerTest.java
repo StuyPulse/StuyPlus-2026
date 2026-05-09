@@ -1,3 +1,5 @@
+package com.stuypulse.robot;
+
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 import edu.wpi.first.hal.HAL;
