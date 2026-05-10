@@ -65,7 +65,7 @@ public interface Settings {
             Angle IDLE_ANGLE = Degrees.of(-102);
             Angle DOWN_ANGLE = Degrees.of(0);
             Angle AGITATE_UP_ANGLE = Degrees.of(-42);
-            Angle DIGEST_ANGLE = Degrees.of(-80);
+            Angle DIGEST_ANGLE = Degrees.of(-92);
 
             // misc
             Angle ANGLE_TOLERANCE = Degrees.of(0.5);
