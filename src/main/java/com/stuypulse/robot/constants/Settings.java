@@ -61,15 +61,16 @@ public interface Settings {
         public interface Pivot {
             // state angles
             //TODO:Get new pivot angles
-            Rotation2d INITIAL_ANGLE = Rotation2d.fromDegrees(-102);
-            Rotation2d IDLE_ANGLE = Rotation2d.fromDegrees(-102);
-            Rotation2d DOWN_ANGLE = Rotation2d.fromDegrees(0);
-            Rotation2d AGITATE_UP_ANGLE = Rotation2d.fromDegrees(-42);
+            Angle INITIAL_ANGLE = Degrees.of(-102);
+            Angle IDLE_ANGLE = Degrees.of(-102);
+            Angle DOWN_ANGLE = Degrees.of(0);
+            Angle AGITATE_UP_ANGLE = Degrees.of(-42);
+            Angle DIGEST_ANGLE = Degrees.of(-80);
 
             // misc
-            Rotation2d ANGLE_TOLERANCE = Rotation2d.fromDegrees(0.5);
-            Rotation2d PUSHDOWN_THRESHOLD = Rotation2d.fromDegrees(-20);
-            SmartNumber AGITATE_SLOW_UP_CURRENT = new SmartNumber("Intake/Pivot/Agitate Slow Up Current Amps", 30);
+            Angle ANGLE_TOLERANCE = Degrees.of(0.5);
+            Angle PUSHDOWN_THRESHOLD = Degrees.of(-20);
+            SmartNumber DIGEST_CURRENT = new SmartNumber("Intake/Pivot/Agitate Slow Up Current Amps", 30);
             SmartNumber PUSHDOWN_CURRENT = new SmartNumber("Intake/Pivot/Pushdown Current Tuning Amps", 30.0);
             Current STALL_CURRENT = Amps.of(25); // amps
             Time STALL_DEBOUNCE_SEC = Seconds.of(0.0); // TODO: set this up?
@@ -80,8 +81,8 @@ public interface Settings {
             Voltage STEP_VOLTAGE = Volts.of(1);
 
             // sim
-            Rotation2d MIN_ANGLE = Rotation2d.fromDegrees(0);
-            Rotation2d MAX_ANGLE = Rotation2d.fromDegrees(-102.0);
+            Angle MIN_ANGLE = Degrees.of(0);
+            Angle MAX_ANGLE = Degrees.of(-102.0);
             double GEAR_RATIO = 60.0;
 
             Distance PIVOT_ARM_LENGTH = Meters.of(0.1439822);

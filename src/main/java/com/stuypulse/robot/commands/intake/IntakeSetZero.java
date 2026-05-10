@@ -5,6 +5,8 @@
 /***************************************************************/
 package com.stuypulse.robot.commands.intake;
 
+import com.stuypulse.robot.constants.Settings;
+
 import com.stuypulse.robot.subsystems.intake.Intake;
 import com.stuypulse.robot.subsystems.intake.Intake.IntakeState;
 
@@ -25,7 +27,7 @@ public class IntakeSetZero extends InstantCommand {
 
     @Override
     public void initialize() {
-        intake.setPivotZero();
+        intake.setPivotZero(Settings.Intake.Pivot.IDLE_ANGLE);
         intake.setState(IntakeState.IDLE);
     }
 }

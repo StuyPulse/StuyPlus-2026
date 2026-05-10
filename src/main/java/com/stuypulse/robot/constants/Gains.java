@@ -43,6 +43,12 @@ public class Gains {
         Current kV = Amps.of(0);
         Current kA = Amps.of(0);
         Current kG = Amps.of(-13);
+
+        public interface Digestion {
+            double kP = 200;
+            double kI = 0;
+            double kD = 55; // TODO: tune
+        }
     }
 
     public interface Swerve {

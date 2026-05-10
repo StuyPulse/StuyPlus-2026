@@ -85,7 +85,7 @@ public class RobotVisualizer {
         intakePivot = new MechanismLigament2d(
             "Intake Arm",
             9,
-            IntakeState.IDLE.getTargetAngle().getDegrees(),
+            IntakeState.IDLE.getTargetAngle().in(Degrees),
             4,
             new Color8Bit(Color.kGray)
         );

@@ -101,14 +101,14 @@ public class Simulation {
     private Pose3d getIntakePivotPose() {
         return SimulationConstants.Intake.PIVOT_OFFSETS.withRotation(new Rotation3d(
                 0,
-                intakeSim.getRelativePosition().getRadians(), // inverts the angle
+                intakeSim.getRelativePosition().in(Radians), // inverts the angle
                 0));
     }
 
     private double getIntakeArmEndX() {
         return SimulationConstants.Intake.PIVOT_END_X
                 + Settings.Intake.Pivot.PIVOT_ARM_LENGTH.in(Meters) // sin works because we're zeroed at horizontal
-                        * Math.sin(intakeSim.getRelativePosition().getRadians()
+                        * Math.sin(intakeSim.getRelativePosition().in(Radians)
                                 + SimulationConstants.Intake.PIVOT_OFFSETS.toRotation3d().getX());
     }
 

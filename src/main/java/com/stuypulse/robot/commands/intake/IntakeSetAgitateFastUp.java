@@ -9,6 +9,6 @@ import com.stuypulse.robot.subsystems.intake.Intake.IntakeState;
 
 public class IntakeSetAgitateFastUp extends IntakeSetState{
     public IntakeSetAgitateFastUp() {
-        super(IntakeState.AGITATE_FAST_UP);
+        super(IntakeState.AGITATE);
     }
 }
