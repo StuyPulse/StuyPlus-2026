@@ -7,8 +7,8 @@ package com.stuypulse.robot.commands.intake;
 
 import com.stuypulse.robot.subsystems.intake.Intake.IntakeState;
 
-public class IntakeSetAgitateUp extends IntakeSetState{
-    public IntakeSetAgitateUp() {
-        super(IntakeState.AGITATE);
+public class IntakeSetAgitateFastUp extends IntakeSetState{
+    public IntakeSetAgitateFastUp() {
+        super(IntakeState.AGITATE_FAST_UP);
     }
 }

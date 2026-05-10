@@ -10,7 +10,8 @@ import com.stuypulse.robot.commands.feeder.FeederSetForward;
 import com.stuypulse.robot.commands.feeder.FeederSetStop;
 import com.stuypulse.robot.commands.handoff.HandoffSetForward;
 import com.stuypulse.robot.commands.handoff.HandoffSetIdle;
-import com.stuypulse.robot.commands.intake.IntakeAgitateOnce;
+import com.stuypulse.robot.commands.intake.IntakeAgitateFastOnce;
+import com.stuypulse.robot.commands.intake.IntakeSetAgitateSlowUp;
 import com.stuypulse.robot.commands.intake.IntakeSetIdle;
 import com.stuypulse.robot.commands.intake.IntakeSetIntake;
 import com.stuypulse.robot.commands.intake.IntakeSetOuttake;
@@ -99,7 +100,7 @@ public class RobotContainer {
                     .andThen(new SwerveDriveXMode())
                     .andThen(new ShooterSetShoot())
                     .andThen(new HandoffSetForward())
-                        .alongWith(new FeederSetForward(), new IntakeAgitateOnce().repeatedly()));
+                        .alongWith(new FeederSetForward(), new IntakeSetAgitateSlowUp()));
 
         //Top Left Paddle
         driver.a()
@@ -113,7 +114,7 @@ public class RobotContainer {
                     .andThen(new SwerveDriveXMode())
                     .andThen(new ShooterSetFerry())
                     .andThen(new HandoffSetForward())
-                        .alongWith(new FeederSetForward(), new IntakeAgitateOnce().repeatedly()));
+                        .alongWith(new FeederSetForward(), new IntakeSetAgitateSlowUp()));
 
         //Bottom Right Paddle
         //Manual shooting possibly from in front of the hub
@@ -121,7 +122,7 @@ public class RobotContainer {
             .onTrue(new SwerveDriveXMode()
                     .andThen(new ShooterSetManual())
                     .andThen(new HandoffSetForward())
-                        .alongWith(new FeederSetForward(), new IntakeAgitateOnce().repeatedly()));
+                        .alongWith(new FeederSetForward(), new IntakeSetAgitateSlowUp()));
 
         //Top Right Paddle
         driver.b()

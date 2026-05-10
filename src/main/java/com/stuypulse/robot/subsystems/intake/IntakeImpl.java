@@ -39,9 +39,10 @@ public class IntakeImpl extends Intake {
     //private final TalonFX intakeRollerMotorLeft;
     //private final TalonFX intakeRollerMotorRight;
 
-    private final PositionTorqueCurrentFOC pivotController;
+    private final PositionTorqueCurrentFOC positionController;
     private final VoltageOut homingController;
     private final TorqueCurrentFOC pushdownController;
+    private final TorqueCurrentFOC agitateSlowController;
     private final DutyCycleOut rollerController;
     private final Follower followerController;
 
@@ -86,9 +87,10 @@ public class IntakeImpl extends Intake {
         //     intakeRollerMotorRight.getVelocity()
         // ).withLogPath("Intake/Roller/").withSignalLocation(LoggedSignals.SignalLocation.CANIVORE);
 
-        pivotController = new PositionTorqueCurrentFOC(getState().getTargetAngle().getRotations());
+        positionController = new PositionTorqueCurrentFOC(getState().getTargetAngle().getRotations());
         homingController = new VoltageOut(Settings.Intake.Pivot.HOMING_DOWN_VOLTAGE).withEnableFOC(true);
         pushdownController = new TorqueCurrentFOC(Settings.Intake.Pivot.PUSHDOWN_CURRENT.getAsDouble());
+        agitateSlowController = new TorqueCurrentFOC(Settings.Intake.Pivot.AGITATE_SLOW_UP_CURRENT.getAsDouble());
         rollerController = new DutyCycleOut(getState().getTargetDutyCycle()).withEnableFOC(true);
         followerController = new Follower(Ports.Intake.INTAKE_ROLLER_MOTOR_LEFT, MotorAlignmentValue.Opposed);
 
@@ -176,9 +178,10 @@ public class IntakeImpl extends Intake {
             case INTAKE, OUTTAKE, DOWN -> 
                 pivotAboveThreshold 
                     ? pushdownController.withOutput(Settings.Intake.Pivot.PUSHDOWN_CURRENT.getAsDouble())
-                    : pivotController.withPosition(currentState.getTargetAngle().getRotations());
+                    : positionController.withPosition(currentState.getTargetAngle().getRotations());
             case HOMING_DOWN -> homingController;
-            default -> pivotController.withPosition(currentState.getTargetAngle().getRotations());
+            case AGITATE_SLOW_UP -> agitateSlowController.withOutput(Settings.Intake.Pivot.PUSHDOWN_CURRENT.getAsDouble());
+            default -> positionController.withPosition(currentState.getTargetAngle().getRotations());
         };
     }
 
