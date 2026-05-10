@@ -41,26 +41,48 @@ public abstract class Intake extends SubsystemBase {
     }
 
     public enum IntakeState {
-        IDLE(Settings.Intake.Pivot.IDLE_ANGLE, 0), // (rollers do not run),
+        /** The intake is stowed and rollers are off. */
+        IDLE(Settings.Intake.Pivot.IDLE_ANGLE, 0),
+        /** The intake is deployed but rollers are off. */
         DOWN(Settings.Intake.Pivot.DOWN_ANGLE, 0),
-        INTAKE(Settings.Intake.Pivot.DOWN_ANGLE, Settings.Intake.Roller.INTAKE_DUTY_CYCLE), // (sucks in the balls) [pivot down, rollers running]
-        OUTTAKE(Settings.Intake.Pivot.DOWN_ANGLE, Settings.Intake.Roller.OUTTAKE_DUTY_CYCLE), // (trips the balls out) [pivot down, rollers running reverse]
+        /** The intake is deployed and rollers are running to take in gamepieces. */
+        INTAKE(Settings.Intake.Pivot.DOWN_ANGLE, Settings.Intake.Roller.INTAKE_DUTY_CYCLE),
+        /** The intake is deployed and rollers are running in reverse to expel gamepieces. */
+        OUTTAKE(Settings.Intake.Pivot.DOWN_ANGLE, Settings.Intake.Roller.OUTTAKE_DUTY_CYCLE),
+        /** The intake is brought up repeatedly to an angle between stowed and deployed to dislodge gamepieces. Rollers do not run. */
         AGITATE(Settings.Intake.Pivot.AGITATE_UP_ANGLE, 0),
+        /** The intake is brought up once to an angle between stowed and deployed to dislodge gamepieces. Rollers do not run. */
         DIGEST(Settings.Intake.Pivot.DIGEST_ANGLE, 0),
+        /** The intake is pushed against the bumpers to re-zero the pivot. */
         HOMING_DOWN(Settings.Intake.Pivot.DOWN_ANGLE, 0);
 
+        /** The target angle of the intake pivot. */
         private Angle targetAngle;
+        /** The target percentage of voltage of the intake rollers. */
         private double targetDutyCycle;
 
+        /** 
+         * Constructs an IntakeState with its target values.
+         * @param targetAngle In any unit, the target position of the intake pivot
+         * @param targetDutyCycle In any unit, the target percentage of voltage of the intake rollers
+         */
         private IntakeState(Angle targetAngle, double targetDutyCycle) {
             this.targetAngle = targetAngle;
             this.targetDutyCycle = targetDutyCycle;
         }
 
+        /**
+         * Gets the target position of the pivot.
+         * @return the target angle
+         */
         public Angle getTargetAngle() {
             return targetAngle;
         }
 
+        /**
+         * Gets the target position of the pivot.
+         * @return the target percentage of voltage of the intake rollers
+         */
         public double getTargetDutyCycle() {
             return targetDutyCycle;
         }
