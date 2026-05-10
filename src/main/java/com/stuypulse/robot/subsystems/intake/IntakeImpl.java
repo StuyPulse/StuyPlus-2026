@@ -17,7 +17,6 @@ import com.stuypulse.robot.constants.Settings.EnabledSubsystems;
 import com.stuypulse.robot.util.LoggedSignals;
 import com.stuypulse.robot.util.SysId;
 
-import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.units.measure.*;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
@@ -42,7 +41,6 @@ public class IntakeImpl extends Intake {
     private final PositionTorqueCurrentFOC positionController;
     private final VoltageOut homingController;
     private final TorqueCurrentFOC pushdownController;
-    private final TorqueCurrentFOC agitateSlowController;
     private final DutyCycleOut rollerController;
     private final Follower followerController;
 
@@ -59,7 +57,7 @@ public class IntakeImpl extends Intake {
 
         Motors.Intake.PIVOT_CONFIG.configure(intakePivotMotor);
 
-        intakePivotMotor.setPosition(Settings.Intake.Pivot.INITIAL_ANGLE.getRotations()); // zero it at the up pos
+        intakePivotMotor.setPosition(Settings.Intake.Pivot.INITIAL_ANGLE); // zero it at the up pos
 
         pivotSignals = new LoggedSignals(
             intakePivotMotor.getSupplyCurrent(),
@@ -87,16 +85,15 @@ public class IntakeImpl extends Intake {
         //     intakeRollerMotorRight.getVelocity()
         // ).withLogPath("Intake/Roller/").withSignalLocation(LoggedSignals.SignalLocation.CANIVORE);
 
-        positionController = new PositionTorqueCurrentFOC(getState().getTargetAngle().getRotations());
+        positionController = new PositionTorqueCurrentFOC(getState().getTargetAngle());
         homingController = new VoltageOut(Settings.Intake.Pivot.HOMING_DOWN_VOLTAGE).withEnableFOC(true);
         pushdownController = new TorqueCurrentFOC(Settings.Intake.Pivot.PUSHDOWN_CURRENT.getAsDouble());
-        agitateSlowController = new TorqueCurrentFOC(Settings.Intake.Pivot.AGITATE_SLOW_UP_CURRENT.getAsDouble());
         rollerController = new DutyCycleOut(getState().getTargetDutyCycle()).withEnableFOC(true);
         followerController = new Follower(Ports.Intake.INTAKE_ROLLER_MOTOR_LEFT, MotorAlignmentValue.Opposed);
 
         //intakeRollerMotorRight.setControl(followerController);
 
-        pivotStalling = () -> intakePivotMotor.getStatorCurrent().getValueAsDouble() > Settings.Intake.Pivot.STALL_CURRENT.in(Amps);
+        pivotStalling = () -> intakePivotMotor.getStatorCurrent().getValue().gt(Settings.Intake.Pivot.STALL_CURRENT);
         //until rollers are fixed
         // leftRollerStalling = BStream
         //         .create(() -> intakeRollerMotorLeft.getStatorCurrent()
@@ -117,24 +114,15 @@ public class IntakeImpl extends Intake {
     /**********************/
     /*** Pivot Commands ***/
     /**********************/
+
     @Override
-    public void setPivotNinety() {
-        intakePivotMotor.setPosition(Degrees.of(-90));
+    public Angle getRelativePosition() {
+        return intakePivotMotor.getPosition().getValue();
     }
 
     @Override
-    public Rotation2d getRelativePosition() {
-        return Rotation2d.fromRotations(intakePivotMotor.getPosition().getValueAsDouble());
-    }
-
-    @Override
-    public void setPivotZeroAtBottom() {
-        intakePivotMotor.setPosition(Settings.Intake.Pivot.DOWN_ANGLE.getRotations());
-    }
-
-    @Override
-    public void setPivotZero() {
-        intakePivotMotor.setPosition(Settings.Intake.Pivot.INITIAL_ANGLE.getRotations());
+    public void setPivotZero(Angle angle) {
+        intakePivotMotor.setPosition(angle);
     }
     
 
@@ -147,9 +135,9 @@ public class IntakeImpl extends Intake {
     /***********************/
 
     //until rollers are fixed
-    //@Override
-    // public double getRollerRPM() {
-    //     return intakeRollerMotorRight.getVelocity().getValue().in(RPM);
+    // @Override
+    // public AngularVelocity getRollerRPM() {
+    //     return intakeRollerMotorRight.getVelocity().getValue();
     // }
 
     //until rollers are fixed
@@ -178,10 +166,10 @@ public class IntakeImpl extends Intake {
             case INTAKE, OUTTAKE, DOWN -> 
                 pivotAboveThreshold 
                     ? pushdownController.withOutput(Settings.Intake.Pivot.PUSHDOWN_CURRENT.getAsDouble())
-                    : positionController.withPosition(currentState.getTargetAngle().getRotations());
+                    : positionController.withPosition(currentState.getTargetAngle()).withSlot(0);
             case HOMING_DOWN -> homingController;
-            case AGITATE_SLOW_UP -> agitateSlowController.withOutput(Settings.Intake.Pivot.PUSHDOWN_CURRENT.getAsDouble());
-            default -> positionController.withPosition(currentState.getTargetAngle().getRotations());
+            case DIGEST -> positionController.withPosition(currentState.getTargetAngle()).withSlot(1);
+            default -> positionController.withPosition(currentState.getTargetAngle()).withSlot(0);
         };
     }
 
@@ -206,12 +194,12 @@ public class IntakeImpl extends Intake {
         // State
 
         if (currentState == IntakeState.HOMING_DOWN && pivotStalling) {
-            setPivotZeroAtBottom();
+            setPivotZero(Settings.Intake.Pivot.DOWN_ANGLE);
             setState(IntakeState.DOWN);
         }
 
         if ((currentState == IntakeState.DOWN) && pivotStalling) {
-            setPivotZeroAtBottom();
+            setPivotZero(Settings.Intake.Pivot.DOWN_ANGLE);
         }
 
         // Output

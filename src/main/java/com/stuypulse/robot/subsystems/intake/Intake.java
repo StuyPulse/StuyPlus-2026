@@ -5,8 +5,8 @@
 /***************************************************************/
 package com.stuypulse.robot.subsystems.intake;
 
-import static edu.wpi.first.units.Units.RPM;
-import static edu.wpi.first.units.Units.Radians;
+import static edu.wpi.first.units.Units.*;
+import edu.wpi.first.units.measure.*;
 
 import com.stuypulse.robot.Robot;
 import com.stuypulse.robot.commands.intake.IntakeSetNinety;
@@ -15,8 +15,6 @@ import com.stuypulse.robot.commands.intake.IntakeSetZeroAtBottom;
 import com.stuypulse.robot.constants.Settings;
 import com.stuypulse.robot.util.RobotVisualizer;
 
-import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.units.measure.Voltage;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
@@ -44,22 +42,22 @@ public abstract class Intake extends SubsystemBase {
 
     public enum IntakeState {
         IDLE(Settings.Intake.Pivot.IDLE_ANGLE, 0), // (rollers do not run),
-        AGITATE_FAST_UP(Settings.Intake.Pivot.AGITATE_UP_ANGLE, 0),
-        AGITATE_SLOW_UP(Settings.Intake.Pivot.IDLE_ANGLE, 0),
+        DOWN(Settings.Intake.Pivot.DOWN_ANGLE, 0),
         INTAKE(Settings.Intake.Pivot.DOWN_ANGLE, Settings.Intake.Roller.INTAKE_DUTY_CYCLE), // (sucks in the balls) [pivot down, rollers running]
         OUTTAKE(Settings.Intake.Pivot.DOWN_ANGLE, Settings.Intake.Roller.OUTTAKE_DUTY_CYCLE), // (trips the balls out) [pivot down, rollers running reverse]
-        DOWN(Settings.Intake.Pivot.DOWN_ANGLE, 0),
+        AGITATE(Settings.Intake.Pivot.AGITATE_UP_ANGLE, 0),
+        DIGEST(Settings.Intake.Pivot.DIGEST_ANGLE, 0),
         HOMING_DOWN(Settings.Intake.Pivot.DOWN_ANGLE, 0);
 
-        private Rotation2d targetAngle;
+        private Angle targetAngle;
         private double targetDutyCycle;
 
-        private IntakeState(Rotation2d targetAngle, double targetDutyCycle) {
+        private IntakeState(Angle targetAngle, double targetDutyCycle) {
             this.targetAngle = targetAngle;
             this.targetDutyCycle = targetDutyCycle;
         }
 
-        public Rotation2d getTargetAngle() {
+        public Angle getTargetAngle() {
             return targetAngle;
         }
 
@@ -81,21 +79,18 @@ public abstract class Intake extends SubsystemBase {
     }
 
     // Pivot Commands
-    public abstract void setPivotNinety();
-    public abstract Rotation2d getRelativePosition();
-    public abstract void setPivotZero();
-    public abstract void setPivotZeroAtBottom();
+    public abstract Angle getRelativePosition();
+    public abstract void setPivotZero(Angle angle);
+
     public boolean atTargetAngle() {
-        return Math.abs(
-                (getRelativePosition().getRotations())
-                        - getState().getTargetAngle().getRotations()) < Settings.Intake.Pivot.ANGLE_TOLERANCE.getRotations();
+        return getRelativePosition().minus(getState().getTargetAngle()).abs(Rotations) < Settings.Intake.Pivot.ANGLE_TOLERANCE.in(Rotations);
     };
     public boolean isPivotAboveThreshold() {
-        return getRelativePosition().getDegrees() > Settings.Intake.Pivot.PUSHDOWN_THRESHOLD.getDegrees();
+        return getRelativePosition().gt(Settings.Intake.Pivot.PUSHDOWN_THRESHOLD);
     }
 
     // Roller Commands
-    //public abstract double getRollerRPM();
+    // public abstract AngularVelocity getRollerRPM();
 
     protected abstract void stopMotors();
 
@@ -105,15 +100,15 @@ public abstract class Intake extends SubsystemBase {
 
     @Override
     public void periodic() {
-        //RobotVisualizer.getInstance().updateIntake(Radians.of(getRelativePosition().getRadians()), RPM.of(getRollerRPM()));
+        // RobotVisualizer.getInstance().updateIntake(Radians.of(getRelativePosition().in(Radians)), getRollerRPM());
 
         final IntakeState currentState = getState();
         // Logging
         SmartDashboard.putString("Intake/State", currentState.name());
         SmartDashboard.putString("States/Intake", currentState.name());
 
-        SmartDashboard.putNumber("Intake/Pivot/Target Angle", currentState.getTargetAngle().getDegrees());
-        SmartDashboard.putNumber("Intake/Pivot/Current Angle", getRelativePosition().getDegrees());
+        SmartDashboard.putNumber("Intake/Pivot/Target Angle", currentState.getTargetAngle().in(Degrees));
+        SmartDashboard.putNumber("Intake/Pivot/Current Angle", getRelativePosition().in(Degrees));
         SmartDashboard.putBoolean("Intake/Pivot/At Target Angle", atTargetAngle());
         SmartDashboard.putBoolean("Intake/Pivot/Above Threshold", isPivotAboveThreshold());
         SmartDashboard.putNumber("Intake/Rollers/Target Duty Cycle", currentState.getTargetDutyCycle());

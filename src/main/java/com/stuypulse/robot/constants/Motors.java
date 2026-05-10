@@ -41,10 +41,12 @@ public interface Motors {
             .withCurrentLimitAmps(40)
             .withInvertedValue(InvertedValue.Clockwise_Positive) // not necessarily true, get inverted val
             .withNeutralMode(NeutralModeValue.Brake)
-            .withPIDConstants(Gains.Intake.kP, Gains.Intake.kI, Gains.Intake.kD, 0)
             .withSensorToMechanismRatio(Settings.Intake.Pivot.GEAR_RATIO)
             .withGravityType(GravityTypeValue.Arm_Cosine)
-            .withFFConstants(Gains.Intake.kS.in(Amps), Gains.Intake.kA.in(Amps), Gains.Intake.kV.in(Amps), Gains.Intake.kG.in(Amps), 0);
+            .withPIDConstants(Gains.Intake.kP, Gains.Intake.kI, Gains.Intake.kD, 0)
+            .withFFConstants(Gains.Intake.kS.in(Amps), Gains.Intake.kA.in(Amps), Gains.Intake.kV.in(Amps), Gains.Intake.kG.in(Amps), 0) // regular constants
+            .withPIDConstants(Gains.Intake.Digestion.kP, Gains.Intake.Digestion.kI, Gains.Intake.Digestion.kD, 1)
+            .withFFConstants(Gains.Intake.kS.in(Amps), Gains.Intake.kA.in(Amps), Gains.Intake.kV.in(Amps), Gains.Intake.kG.in(Amps), 1); // digestion constants
         
         TalonFXConfig LEFT_ROLLER_CONFIG = new TalonFXConfig() // TODO: apply later
             .withCurrentLimitAmps(50)
