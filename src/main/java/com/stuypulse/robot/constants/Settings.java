@@ -70,7 +70,6 @@ public interface Settings {
             // misc
             Angle ANGLE_TOLERANCE = Degrees.of(0.5);
             Angle PUSHDOWN_THRESHOLD = Degrees.of(-20);
-            SmartNumber DIGEST_CURRENT = new SmartNumber("Intake/Pivot/Agitate Slow Up Current Amps", 30);
             SmartNumber PUSHDOWN_CURRENT = new SmartNumber("Intake/Pivot/Pushdown Current Tuning Amps", 30.0);
             Current STALL_CURRENT = Amps.of(25); // amps
             Time STALL_DEBOUNCE_SEC = Seconds.of(0.0); // TODO: set this up?
