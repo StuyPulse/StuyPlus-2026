@@ -19,6 +19,7 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.math.system.plant.LinearSystemId;
 import edu.wpi.first.units.measure.Angle;
+import edu.wpi.first.units.measure.AngularVelocity;
 import edu.wpi.first.units.measure.Voltage;
 import edu.wpi.first.wpilibj.simulation.DCMotorSim;
 import edu.wpi.first.wpilibj.simulation.SingleJointedArmSim;
@@ -96,10 +97,10 @@ public class IntakeSim extends Intake {
         zeroOffset = new Rotation2d(-pivotSim.getAngleRads()).plus(new Rotation2d(angle));
     }
 
-    // @Override
-    // public AngularVelocity getRollerRPM() {
-    //     return intakeRollerMotorRight.getVelocity().getValue();
-    // }
+    @Override
+    public AngularVelocity getRollerVelocity() {
+        return rollerFollower.getVelocity().getValue();
+    }
 
     @Override
     protected void stopMotors() {
