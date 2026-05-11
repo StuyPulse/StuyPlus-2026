@@ -406,6 +406,8 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="com/stuypulse/robot/constants/Settings.Swerve.Alignment.Constraints.html#DEFAULT_MAX_VELOCITY" class="member-name-link">DEFAULT_MAX_VELOCITY</a> - Static variable in interface com.stuypulse.robot.constants.<a href="com/stuypulse/robot/constants/Settings.Swerve.Alignment.Constraints.html" title="interface in com.stuypulse.robot.constants">Settings.Swerve.Alignment.Constraints</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="com/stuypulse/robot/constants/Settings.Intake.Pivot.html#DEPLOY_ANGLE" class="member-name-link">DEPLOY_ANGLE</a> - Static variable in interface com.stuypulse.robot.constants.<a href="com/stuypulse/robot/constants/Settings.Intake.Pivot.html" title="interface in com.stuypulse.robot.constants">Settings.Intake.Pivot</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/stuypulse/robot/util/LoggedSignals.html#deregister()" class="member-name-link">deregister()</a> - Method in class com.stuypulse.robot.util.<a href="com/stuypulse/robot/util/LoggedSignals.html" title="class in com.stuypulse.robot.util">LoggedSignals</a></dt>
 <dd>
 <div class="block">Deregisters all signals in this instance from the current <a href="com/stuypulse/robot/util/LoggedSignals.SignalLocation.html" title="enum class in com.stuypulse.robot.util"><code>LoggedSignals.SignalLocation</code></a></div>
@@ -458,8 +460,6 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">The intake is deployed but rollers are off.</div>
 </dd>
-<dt><a href="com/stuypulse/robot/constants/Settings.Intake.Pivot.html#DOWN_ANGLE" class="member-name-link">DOWN_ANGLE</a> - Static variable in interface com.stuypulse.robot.constants.<a href="com/stuypulse/robot/constants/Settings.Intake.Pivot.html" title="interface in com.stuypulse.robot.constants">Settings.Intake.Pivot</a></dt>
-<dd>&nbsp;</dd>
 <dt><a href="com/stuypulse/robot/subsystems/swerve/CommandSwerveDrivetrain.html#drive(com.stuypulse.stuylib.math.Vector2D,double)" class="member-name-link">drive(Vector2D, double)</a> - Method in class com.stuypulse.robot.subsystems.swerve.<a href="com/stuypulse/robot/subsystems/swerve/CommandSwerveDrivetrain.html" title="class in com.stuypulse.robot.subsystems.swerve">CommandSwerveDrivetrain</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/stuypulse/robot/RobotContainer.html#driver" class="member-name-link">driver</a> - Variable in class com.stuypulse.robot.<a href="com/stuypulse/robot/RobotContainer.html" title="class in com.stuypulse.robot">RobotContainer</a></dt>
@@ -1182,8 +1182,6 @@ loadScripts(document, 'script');</script>
 </dd>
 <dt><a href="com/stuypulse/robot/subsystems/shooter/Shooter.ShooterState.html#IDLE" class="member-name-link">IDLE</a> - Enum constant in enum class com.stuypulse.robot.subsystems.shooter.<a href="com/stuypulse/robot/subsystems/shooter/Shooter.ShooterState.html" title="enum class in com.stuypulse.robot.subsystems.shooter">Shooter.ShooterState</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="com/stuypulse/robot/constants/Settings.Intake.Pivot.html#IDLE_ANGLE" class="member-name-link">IDLE_ANGLE</a> - Static variable in interface com.stuypulse.robot.constants.<a href="com/stuypulse/robot/constants/Settings.Intake.Pivot.html" title="interface in com.stuypulse.robot.constants">Settings.Intake.Pivot</a></dt>
-<dd>&nbsp;</dd>
 <dt><a href="com/stuypulse/robot/constants/Settings.Handoff.html#IDLE_DUTY_CYCLE" class="member-name-link">IDLE_DUTY_CYCLE</a> - Static variable in interface com.stuypulse.robot.constants.<a href="com/stuypulse/robot/constants/Settings.Handoff.html" title="interface in com.stuypulse.robot.constants">Settings.Handoff</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/stuypulse/robot/constants/Settings.Intake.Roller.html#IDLE_DUTY_CYCLE" class="member-name-link">IDLE_DUTY_CYCLE</a> - Static variable in interface com.stuypulse.robot.constants.<a href="com/stuypulse/robot/constants/Settings.Intake.Roller.html" title="interface in com.stuypulse.robot.constants">Settings.Intake.Roller</a></dt>
@@ -1206,13 +1204,13 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="com/stuypulse/robot/commands/handoff/HandoffSetState.html#initialize()" class="member-name-link">initialize()</a> - Method in class com.stuypulse.robot.commands.handoff.<a href="com/stuypulse/robot/commands/handoff/HandoffSetState.html" title="class in com.stuypulse.robot.commands.handoff">HandoffSetState</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="com/stuypulse/robot/commands/intake/IntakeSetNinety.html#initialize()" class="member-name-link">initialize()</a> - Method in class com.stuypulse.robot.commands.intake.<a href="com/stuypulse/robot/commands/intake/IntakeSetNinety.html" title="class in com.stuypulse.robot.commands.intake">IntakeSetNinety</a></dt>
+<dt><a href="com/stuypulse/robot/commands/intake/IntakeSeedPivotDeployed.html#initialize()" class="member-name-link">initialize()</a> - Method in class com.stuypulse.robot.commands.intake.<a href="com/stuypulse/robot/commands/intake/IntakeSeedPivotDeployed.html" title="class in com.stuypulse.robot.commands.intake">IntakeSeedPivotDeployed</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/stuypulse/robot/commands/intake/IntakeSeedPivotNinety.html#initialize()" class="member-name-link">initialize()</a> - Method in class com.stuypulse.robot.commands.intake.<a href="com/stuypulse/robot/commands/intake/IntakeSeedPivotNinety.html" title="class in com.stuypulse.robot.commands.intake">IntakeSeedPivotNinety</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/stuypulse/robot/commands/intake/IntakeSeedPivotStowed.html#initialize()" class="member-name-link">initialize()</a> - Method in class com.stuypulse.robot.commands.intake.<a href="com/stuypulse/robot/commands/intake/IntakeSeedPivotStowed.html" title="class in com.stuypulse.robot.commands.intake">IntakeSeedPivotStowed</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/stuypulse/robot/commands/intake/IntakeSetState.html#initialize()" class="member-name-link">initialize()</a> - Method in class com.stuypulse.robot.commands.intake.<a href="com/stuypulse/robot/commands/intake/IntakeSetState.html" title="class in com.stuypulse.robot.commands.intake">IntakeSetState</a></dt>
-<dd>&nbsp;</dd>
-<dt><a href="com/stuypulse/robot/commands/intake/IntakeSetZero.html#initialize()" class="member-name-link">initialize()</a> - Method in class com.stuypulse.robot.commands.intake.<a href="com/stuypulse/robot/commands/intake/IntakeSetZero.html" title="class in com.stuypulse.robot.commands.intake">IntakeSetZero</a></dt>
-<dd>&nbsp;</dd>
-<dt><a href="com/stuypulse/robot/commands/intake/IntakeSetZeroAtBottom.html#initialize()" class="member-name-link">initialize()</a> - Method in class com.stuypulse.robot.commands.intake.<a href="com/stuypulse/robot/commands/intake/IntakeSetZeroAtBottom.html" title="class in com.stuypulse.robot.commands.intake">IntakeSetZeroAtBottom</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/stuypulse/robot/commands/shooter/ShooterSetState.html#initialize()" class="member-name-link">initialize()</a> - Method in class com.stuypulse.robot.commands.shooter.<a href="com/stuypulse/robot/commands/shooter/ShooterSetState.html" title="class in com.stuypulse.robot.commands.shooter">ShooterSetState</a></dt>
 <dd>&nbsp;</dd>
@@ -1272,6 +1270,18 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="com/stuypulse/robot/subsystems/intake/IntakeImpl.html#%3Cinit%3E()" class="member-name-link">IntakeImpl()</a> - Constructor for class com.stuypulse.robot.subsystems.intake.<a href="com/stuypulse/robot/subsystems/intake/IntakeImpl.html" title="class in com.stuypulse.robot.subsystems.intake">IntakeImpl</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="com/stuypulse/robot/commands/intake/IntakeSeedPivotDeployed.html" class="type-name-link" title="class in com.stuypulse.robot.commands.intake">IntakeSeedPivotDeployed</a> - Class in <a href="com/stuypulse/robot/commands/intake/package-summary.html">com.stuypulse.robot.commands.intake</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/stuypulse/robot/commands/intake/IntakeSeedPivotDeployed.html#%3Cinit%3E()" class="member-name-link">IntakeSeedPivotDeployed()</a> - Constructor for class com.stuypulse.robot.commands.intake.<a href="com/stuypulse/robot/commands/intake/IntakeSeedPivotDeployed.html" title="class in com.stuypulse.robot.commands.intake">IntakeSeedPivotDeployed</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/stuypulse/robot/commands/intake/IntakeSeedPivotNinety.html" class="type-name-link" title="class in com.stuypulse.robot.commands.intake">IntakeSeedPivotNinety</a> - Class in <a href="com/stuypulse/robot/commands/intake/package-summary.html">com.stuypulse.robot.commands.intake</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/stuypulse/robot/commands/intake/IntakeSeedPivotNinety.html#%3Cinit%3E()" class="member-name-link">IntakeSeedPivotNinety()</a> - Constructor for class com.stuypulse.robot.commands.intake.<a href="com/stuypulse/robot/commands/intake/IntakeSeedPivotNinety.html" title="class in com.stuypulse.robot.commands.intake">IntakeSeedPivotNinety</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/stuypulse/robot/commands/intake/IntakeSeedPivotStowed.html" class="type-name-link" title="class in com.stuypulse.robot.commands.intake">IntakeSeedPivotStowed</a> - Class in <a href="com/stuypulse/robot/commands/intake/package-summary.html">com.stuypulse.robot.commands.intake</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/stuypulse/robot/commands/intake/IntakeSeedPivotStowed.html#%3Cinit%3E()" class="member-name-link">IntakeSeedPivotStowed()</a> - Constructor for class com.stuypulse.robot.commands.intake.<a href="com/stuypulse/robot/commands/intake/IntakeSeedPivotStowed.html" title="class in com.stuypulse.robot.commands.intake">IntakeSeedPivotStowed</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/stuypulse/robot/commands/intake/IntakeSetAgitateFastUp.html" class="type-name-link" title="class in com.stuypulse.robot.commands.intake">IntakeSetAgitateFastUp</a> - Class in <a href="com/stuypulse/robot/commands/intake/package-summary.html">com.stuypulse.robot.commands.intake</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/stuypulse/robot/commands/intake/IntakeSetAgitateFastUp.html#%3Cinit%3E()" class="member-name-link">IntakeSetAgitateFastUp()</a> - Constructor for class com.stuypulse.robot.commands.intake.<a href="com/stuypulse/robot/commands/intake/IntakeSetAgitateFastUp.html" title="class in com.stuypulse.robot.commands.intake">IntakeSetAgitateFastUp</a></dt>
@@ -1292,10 +1302,6 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="com/stuypulse/robot/commands/intake/IntakeSetIntake.html#%3Cinit%3E()" class="member-name-link">IntakeSetIntake()</a> - Constructor for class com.stuypulse.robot.commands.intake.<a href="com/stuypulse/robot/commands/intake/IntakeSetIntake.html" title="class in com.stuypulse.robot.commands.intake">IntakeSetIntake</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="com/stuypulse/robot/commands/intake/IntakeSetNinety.html" class="type-name-link" title="class in com.stuypulse.robot.commands.intake">IntakeSetNinety</a> - Class in <a href="com/stuypulse/robot/commands/intake/package-summary.html">com.stuypulse.robot.commands.intake</a></dt>
-<dd>&nbsp;</dd>
-<dt><a href="com/stuypulse/robot/commands/intake/IntakeSetNinety.html#%3Cinit%3E()" class="member-name-link">IntakeSetNinety()</a> - Constructor for class com.stuypulse.robot.commands.intake.<a href="com/stuypulse/robot/commands/intake/IntakeSetNinety.html" title="class in com.stuypulse.robot.commands.intake">IntakeSetNinety</a></dt>
-<dd>&nbsp;</dd>
 <dt><a href="com/stuypulse/robot/commands/intake/IntakeSetOuttake.html" class="type-name-link" title="class in com.stuypulse.robot.commands.intake">IntakeSetOuttake</a> - Class in <a href="com/stuypulse/robot/commands/intake/package-summary.html">com.stuypulse.robot.commands.intake</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/stuypulse/robot/commands/intake/IntakeSetOuttake.html#%3Cinit%3E()" class="member-name-link">IntakeSetOuttake()</a> - Constructor for class com.stuypulse.robot.commands.intake.<a href="com/stuypulse/robot/commands/intake/IntakeSetOuttake.html" title="class in com.stuypulse.robot.commands.intake">IntakeSetOuttake</a></dt>
@@ -1303,14 +1309,6 @@ loadScripts(document, 'script');</script>
 <dt><a href="com/stuypulse/robot/commands/intake/IntakeSetState.html" class="type-name-link" title="class in com.stuypulse.robot.commands.intake">IntakeSetState</a> - Class in <a href="com/stuypulse/robot/commands/intake/package-summary.html">com.stuypulse.robot.commands.intake</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/stuypulse/robot/commands/intake/IntakeSetState.html#%3Cinit%3E(com.stuypulse.robot.subsystems.intake.Intake.IntakeState)" class="member-name-link">IntakeSetState(Intake.IntakeState)</a> - Constructor for class com.stuypulse.robot.commands.intake.<a href="com/stuypulse/robot/commands/intake/IntakeSetState.html" title="class in com.stuypulse.robot.commands.intake">IntakeSetState</a></dt>
-<dd>&nbsp;</dd>
-<dt><a href="com/stuypulse/robot/commands/intake/IntakeSetZero.html" class="type-name-link" title="class in com.stuypulse.robot.commands.intake">IntakeSetZero</a> - Class in <a href="com/stuypulse/robot/commands/intake/package-summary.html">com.stuypulse.robot.commands.intake</a></dt>
-<dd>&nbsp;</dd>
-<dt><a href="com/stuypulse/robot/commands/intake/IntakeSetZero.html#%3Cinit%3E()" class="member-name-link">IntakeSetZero()</a> - Constructor for class com.stuypulse.robot.commands.intake.<a href="com/stuypulse/robot/commands/intake/IntakeSetZero.html" title="class in com.stuypulse.robot.commands.intake">IntakeSetZero</a></dt>
-<dd>&nbsp;</dd>
-<dt><a href="com/stuypulse/robot/commands/intake/IntakeSetZeroAtBottom.html" class="type-name-link" title="class in com.stuypulse.robot.commands.intake">IntakeSetZeroAtBottom</a> - Class in <a href="com/stuypulse/robot/commands/intake/package-summary.html">com.stuypulse.robot.commands.intake</a></dt>
-<dd>&nbsp;</dd>
-<dt><a href="com/stuypulse/robot/commands/intake/IntakeSetZeroAtBottom.html#%3Cinit%3E()" class="member-name-link">IntakeSetZeroAtBottom()</a> - Constructor for class com.stuypulse.robot.commands.intake.<a href="com/stuypulse/robot/commands/intake/IntakeSetZeroAtBottom.html" title="class in com.stuypulse.robot.commands.intake">IntakeSetZeroAtBottom</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/stuypulse/robot/subsystems/intake/IntakeSim.html" class="type-name-link" title="class in com.stuypulse.robot.subsystems.intake">IntakeSim</a> - Class in <a href="com/stuypulse/robot/subsystems/intake/package-summary.html">com.stuypulse.robot.subsystems.intake</a></dt>
 <dd>&nbsp;</dd>
@@ -2084,11 +2082,11 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="com/stuypulse/robot/commands/auton/RTDisrupt.html#%3Cinit%3E(com.pathplanner.lib.path.PathPlannerPath...)" class="member-name-link">RTDisrupt(PathPlannerPath...)</a> - Constructor for class com.stuypulse.robot.commands.auton.<a href="com/stuypulse/robot/commands/auton/RTDisrupt.html" title="class in com.stuypulse.robot.commands.auton">RTDisrupt</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="com/stuypulse/robot/commands/intake/IntakeSetNinety.html#runsWhenDisabled()" class="member-name-link">runsWhenDisabled()</a> - Method in class com.stuypulse.robot.commands.intake.<a href="com/stuypulse/robot/commands/intake/IntakeSetNinety.html" title="class in com.stuypulse.robot.commands.intake">IntakeSetNinety</a></dt>
+<dt><a href="com/stuypulse/robot/commands/intake/IntakeSeedPivotDeployed.html#runsWhenDisabled()" class="member-name-link">runsWhenDisabled()</a> - Method in class com.stuypulse.robot.commands.intake.<a href="com/stuypulse/robot/commands/intake/IntakeSeedPivotDeployed.html" title="class in com.stuypulse.robot.commands.intake">IntakeSeedPivotDeployed</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="com/stuypulse/robot/commands/intake/IntakeSetZero.html#runsWhenDisabled()" class="member-name-link">runsWhenDisabled()</a> - Method in class com.stuypulse.robot.commands.intake.<a href="com/stuypulse/robot/commands/intake/IntakeSetZero.html" title="class in com.stuypulse.robot.commands.intake">IntakeSetZero</a></dt>
+<dt><a href="com/stuypulse/robot/commands/intake/IntakeSeedPivotNinety.html#runsWhenDisabled()" class="member-name-link">runsWhenDisabled()</a> - Method in class com.stuypulse.robot.commands.intake.<a href="com/stuypulse/robot/commands/intake/IntakeSeedPivotNinety.html" title="class in com.stuypulse.robot.commands.intake">IntakeSeedPivotNinety</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="com/stuypulse/robot/commands/intake/IntakeSetZeroAtBottom.html#runsWhenDisabled()" class="member-name-link">runsWhenDisabled()</a> - Method in class com.stuypulse.robot.commands.intake.<a href="com/stuypulse/robot/commands/intake/IntakeSetZeroAtBottom.html" title="class in com.stuypulse.robot.commands.intake">IntakeSetZeroAtBottom</a></dt>
+<dt><a href="com/stuypulse/robot/commands/intake/IntakeSeedPivotStowed.html#runsWhenDisabled()" class="member-name-link">runsWhenDisabled()</a> - Method in class com.stuypulse.robot.commands.intake.<a href="com/stuypulse/robot/commands/intake/IntakeSeedPivotStowed.html" title="class in com.stuypulse.robot.commands.intake">IntakeSeedPivotStowed</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/stuypulse/robot/commands/leds/LEDDefaultCommand.html#runsWhenDisabled()" class="member-name-link">runsWhenDisabled()</a> - Method in class com.stuypulse.robot.commands.leds.<a href="com/stuypulse/robot/commands/leds/LEDDefaultCommand.html" title="class in com.stuypulse.robot.commands.leds">LEDDefaultCommand</a></dt>
 <dd>&nbsp;</dd>
@@ -2432,6 +2430,8 @@ loadScripts(document, 'script');</script>
 <dt><a href="com/stuypulse/robot/subsystems/shooter/ShooterSim.html#stopMotors()" class="member-name-link">stopMotors()</a> - Method in class com.stuypulse.robot.subsystems.shooter.<a href="com/stuypulse/robot/subsystems/shooter/ShooterSim.html" title="class in com.stuypulse.robot.subsystems.shooter">ShooterSim</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/stuypulse/robot/util/vision/LimelightHelpers.RewindStats.html#storedSeconds" class="member-name-link">storedSeconds</a> - Variable in class com.stuypulse.robot.util.vision.<a href="com/stuypulse/robot/util/vision/LimelightHelpers.RewindStats.html" title="class in com.stuypulse.robot.util.vision">LimelightHelpers.RewindStats</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/stuypulse/robot/constants/Settings.Intake.Pivot.html#STOW_ANGLE" class="member-name-link">STOW_ANGLE</a> - Static variable in interface com.stuypulse.robot.constants.<a href="com/stuypulse/robot/constants/Settings.Intake.Pivot.html" title="interface in com.stuypulse.robot.constants">Settings.Intake.Pivot</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/stuypulse/robot/commands/swerve/driveAligned/SwerveDriveDriveWhileAligned.html#swerve" class="member-name-link">swerve</a> - Static variable in class com.stuypulse.robot.commands.swerve.driveAligned.<a href="com/stuypulse/robot/commands/swerve/driveAligned/SwerveDriveDriveWhileAligned.html" title="class in com.stuypulse.robot.commands.swerve.driveAligned">SwerveDriveDriveWhileAligned</a></dt>
 <dd>&nbsp;</dd>
