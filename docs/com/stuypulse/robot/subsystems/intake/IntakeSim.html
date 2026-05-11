@@ -126,23 +126,17 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getIntakeSysIdRoutine()" class="member-name-link">getIntakeSysIdRoutine</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>edu.wpi.first.math.geometry.Rotation2d</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>edu.wpi.first.units.measure.Angle</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getRelativePosition()" class="member-name-link">getRelativePosition</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#periodic()" class="member-name-link">periodic</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setPivotNinety()" class="member-name-link">setPivotNinety</a>()</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setPivotVoltageOverride(edu.wpi.first.units.measure.Voltage)" class="member-name-link">setPivotVoltageOverride</a><wbr>(edu.wpi.first.units.measure.Voltage&nbsp;voltage)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setPivotVoltageOverride(edu.wpi.first.units.measure.Voltage)" class="member-name-link">setPivotVoltageOverride</a><wbr>(edu.wpi.first.units.measure.Voltage&nbsp;voltage)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setPivotZero()" class="member-name-link">setPivotZero</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setPivotZeroAtBottom()" class="member-name-link">setPivotZeroAtBottom</a>()</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setPivotZero(edu.wpi.first.units.measure.Angle)" class="member-name-link">setPivotZero</a><wbr>(edu.wpi.first.units.measure.Angle&nbsp;angle)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#stopMotors()" class="member-name-link">stopMotors</a>()</code></div>
@@ -190,7 +184,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getRelativePosition()">
 <h3>getRelativePosition</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">edu.wpi.first.math.geometry.Rotation2d</span>&nbsp;<span class="element-name">getRelativePosition</span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">edu.wpi.first.units.measure.Angle</span>&nbsp;<span class="element-name">getRelativePosition</span>()</div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="Intake.html#getRelativePosition()">getRelativePosition</a></code>&nbsp;in class&nbsp;<code><a href="Intake.html" title="class in com.stuypulse.robot.subsystems.intake">Intake</a></code></dd>
@@ -198,32 +192,12 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
-<section class="detail" id="setPivotZero()">
+<section class="detail" id="setPivotZero(edu.wpi.first.units.measure.Angle)">
 <h3>setPivotZero</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setPivotZero</span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setPivotZero</span><wbr><span class="parameters">(edu.wpi.first.units.measure.Angle&nbsp;angle)</span></div>
 <dl class="notes">
 <dt>Specified by:</dt>
-<dd><code><a href="Intake.html#setPivotZero()">setPivotZero</a></code>&nbsp;in class&nbsp;<code><a href="Intake.html" title="class in com.stuypulse.robot.subsystems.intake">Intake</a></code></dd>
-</dl>
-</section>
-</li>
-<li>
-<section class="detail" id="setPivotZeroAtBottom()">
-<h3>setPivotZeroAtBottom</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setPivotZeroAtBottom</span>()</div>
-<dl class="notes">
-<dt>Specified by:</dt>
-<dd><code><a href="Intake.html#setPivotZeroAtBottom()">setPivotZeroAtBottom</a></code>&nbsp;in class&nbsp;<code><a href="Intake.html" title="class in com.stuypulse.robot.subsystems.intake">Intake</a></code></dd>
-</dl>
-</section>
-</li>
-<li>
-<section class="detail" id="setPivotNinety()">
-<h3>setPivotNinety</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setPivotNinety</span>()</div>
-<dl class="notes">
-<dt>Specified by:</dt>
-<dd><code><a href="Intake.html#setPivotNinety()">setPivotNinety</a></code>&nbsp;in class&nbsp;<code><a href="Intake.html" title="class in com.stuypulse.robot.subsystems.intake">Intake</a></code></dd>
+<dd><code><a href="Intake.html#setPivotZero(edu.wpi.first.units.measure.Angle)">setPivotZero</a></code>&nbsp;in class&nbsp;<code><a href="Intake.html" title="class in com.stuypulse.robot.subsystems.intake">Intake</a></code></dd>
 </dl>
 </section>
 </li>

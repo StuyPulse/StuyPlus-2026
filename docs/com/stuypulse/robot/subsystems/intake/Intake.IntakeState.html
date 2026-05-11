@@ -109,20 +109,34 @@ loadScripts(document, 'script');</script>
 <div class="summary-table two-column-summary">
 <div class="table-header col-first">Enum Constant</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color"><code><a href="#AGITATE_FAST_UP" class="member-name-link">AGITATE_FAST_UP</a></code></div>
-<div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code><a href="#AGITATE_SLOW_UP" class="member-name-link">AGITATE_SLOW_UP</a></code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code><a href="#AGITATE" class="member-name-link">AGITATE</a></code></div>
+<div class="col-last even-row-color">
+<div class="block">The intake is brought up repeatedly to an angle between stowed and deployed to dislodge gamepieces.</div>
+</div>
+<div class="col-first odd-row-color"><code><a href="#DIGEST" class="member-name-link">DIGEST</a></code></div>
+<div class="col-last odd-row-color">
+<div class="block">The intake is brought up once to an angle between stowed and deployed to dislodge gamepieces.</div>
+</div>
 <div class="col-first even-row-color"><code><a href="#DOWN" class="member-name-link">DOWN</a></code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-last even-row-color">
+<div class="block">The intake is deployed but rollers are off.</div>
+</div>
 <div class="col-first odd-row-color"><code><a href="#HOMING_DOWN" class="member-name-link">HOMING_DOWN</a></code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-last odd-row-color">
+<div class="block">The intake is pushed against the bumpers to re-zero the pivot.</div>
+</div>
 <div class="col-first even-row-color"><code><a href="#IDLE" class="member-name-link">IDLE</a></code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-last even-row-color">
+<div class="block">The intake is stowed and rollers are off.</div>
+</div>
 <div class="col-first odd-row-color"><code><a href="#INTAKE" class="member-name-link">INTAKE</a></code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-last odd-row-color">
+<div class="block">The intake is deployed and rollers are running to take in gamepieces.</div>
+</div>
 <div class="col-first even-row-color"><code><a href="#OUTTAKE" class="member-name-link">OUTTAKE</a></code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-last even-row-color">
+<div class="block">The intake is deployed and rollers are running in reverse to expel gamepieces.</div>
+</div>
 </div>
 </section>
 </li>
@@ -137,12 +151,16 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>edu.wpi.first.math.geometry.Rotation2d</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>edu.wpi.first.units.measure.Angle</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getTargetAngle()" class="member-name-link">getTargetAngle</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Gets the target position of the pivot.</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>double</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getTargetDutyCycle()" class="member-name-link">getTargetDutyCycle</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Gets the target position of the pivot.</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="Intake.IntakeState.html" title="enum class in com.stuypulse.robot.subsystems.intake">Intake.IntakeState</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#valueOf(java.lang.String)" class="member-name-link">valueOf</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
@@ -178,42 +196,49 @@ the order they are declared.</div>
 <section class="detail" id="IDLE">
 <h3>IDLE</h3>
 <div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="Intake.IntakeState.html" title="enum class in com.stuypulse.robot.subsystems.intake">Intake.IntakeState</a></span>&nbsp;<span class="element-name">IDLE</span></div>
-</section>
-</li>
-<li>
-<section class="detail" id="AGITATE_FAST_UP">
-<h3>AGITATE_FAST_UP</h3>
-<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="Intake.IntakeState.html" title="enum class in com.stuypulse.robot.subsystems.intake">Intake.IntakeState</a></span>&nbsp;<span class="element-name">AGITATE_FAST_UP</span></div>
-</section>
-</li>
-<li>
-<section class="detail" id="AGITATE_SLOW_UP">
-<h3>AGITATE_SLOW_UP</h3>
-<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="Intake.IntakeState.html" title="enum class in com.stuypulse.robot.subsystems.intake">Intake.IntakeState</a></span>&nbsp;<span class="element-name">AGITATE_SLOW_UP</span></div>
-</section>
-</li>
-<li>
-<section class="detail" id="INTAKE">
-<h3>INTAKE</h3>
-<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="Intake.IntakeState.html" title="enum class in com.stuypulse.robot.subsystems.intake">Intake.IntakeState</a></span>&nbsp;<span class="element-name">INTAKE</span></div>
-</section>
-</li>
-<li>
-<section class="detail" id="OUTTAKE">
-<h3>OUTTAKE</h3>
-<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="Intake.IntakeState.html" title="enum class in com.stuypulse.robot.subsystems.intake">Intake.IntakeState</a></span>&nbsp;<span class="element-name">OUTTAKE</span></div>
+<div class="block">The intake is stowed and rollers are off.</div>
 </section>
 </li>
 <li>
 <section class="detail" id="DOWN">
 <h3>DOWN</h3>
 <div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="Intake.IntakeState.html" title="enum class in com.stuypulse.robot.subsystems.intake">Intake.IntakeState</a></span>&nbsp;<span class="element-name">DOWN</span></div>
+<div class="block">The intake is deployed but rollers are off.</div>
+</section>
+</li>
+<li>
+<section class="detail" id="INTAKE">
+<h3>INTAKE</h3>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="Intake.IntakeState.html" title="enum class in com.stuypulse.robot.subsystems.intake">Intake.IntakeState</a></span>&nbsp;<span class="element-name">INTAKE</span></div>
+<div class="block">The intake is deployed and rollers are running to take in gamepieces.</div>
+</section>
+</li>
+<li>
+<section class="detail" id="OUTTAKE">
+<h3>OUTTAKE</h3>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="Intake.IntakeState.html" title="enum class in com.stuypulse.robot.subsystems.intake">Intake.IntakeState</a></span>&nbsp;<span class="element-name">OUTTAKE</span></div>
+<div class="block">The intake is deployed and rollers are running in reverse to expel gamepieces.</div>
+</section>
+</li>
+<li>
+<section class="detail" id="AGITATE">
+<h3>AGITATE</h3>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="Intake.IntakeState.html" title="enum class in com.stuypulse.robot.subsystems.intake">Intake.IntakeState</a></span>&nbsp;<span class="element-name">AGITATE</span></div>
+<div class="block">The intake is brought up repeatedly to an angle between stowed and deployed to dislodge gamepieces. Rollers do not run.</div>
+</section>
+</li>
+<li>
+<section class="detail" id="DIGEST">
+<h3>DIGEST</h3>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="Intake.IntakeState.html" title="enum class in com.stuypulse.robot.subsystems.intake">Intake.IntakeState</a></span>&nbsp;<span class="element-name">DIGEST</span></div>
+<div class="block">The intake is brought up once to an angle between stowed and deployed to dislodge gamepieces. Rollers do not run.</div>
 </section>
 </li>
 <li>
 <section class="detail" id="HOMING_DOWN">
 <h3>HOMING_DOWN</h3>
 <div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="Intake.IntakeState.html" title="enum class in com.stuypulse.robot.subsystems.intake">Intake.IntakeState</a></span>&nbsp;<span class="element-name">HOMING_DOWN</span></div>
+<div class="block">The intake is pushed against the bumpers to re-zero the pivot.</div>
 </section>
 </li>
 </ul>
@@ -258,13 +283,23 @@ not permitted.)</div>
 <li>
 <section class="detail" id="getTargetAngle()">
 <h3>getTargetAngle</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">edu.wpi.first.math.geometry.Rotation2d</span>&nbsp;<span class="element-name">getTargetAngle</span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">edu.wpi.first.units.measure.Angle</span>&nbsp;<span class="element-name">getTargetAngle</span>()</div>
+<div class="block">Gets the target position of the pivot.</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>the target angle</dd>
+</dl>
 </section>
 </li>
 <li>
 <section class="detail" id="getTargetDutyCycle()">
 <h3>getTargetDutyCycle</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">double</span>&nbsp;<span class="element-name">getTargetDutyCycle</span>()</div>
+<div class="block">Gets the target position of the pivot.</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>the target percentage of voltage of the intake rollers</dd>
+</dl>
 </section>
 </li>
 </ul>
