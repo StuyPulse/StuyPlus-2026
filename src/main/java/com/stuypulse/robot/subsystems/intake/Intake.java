@@ -31,9 +31,9 @@ public abstract class Intake extends SubsystemBase {
         }
 
         // Elastic Commands
-        SmartDashboard.putData("Intake/Set Pivot 0", new IntakeSeedPivotStowed());
-        SmartDashboard.putData("Intake/Set Pivot 0 at Bottom", new IntakeSeedPivotDeployed());
-        SmartDashboard.putData("Intake/Set Pivot Ninety", new IntakeSeedPivotNinety());
+        SmartDashboard.putData("Intake/Seed Pivot Angle Stowed", new IntakeSeedPivotStowed());
+        SmartDashboard.putData("Intake/Set Pivot Angle Deployed", new IntakeSeedPivotDeployed());
+        SmartDashboard.putData("Intake/Seed Pivot Angle 90", new IntakeSeedPivotNinety());
     }
 
     public static Intake getInstance() {
