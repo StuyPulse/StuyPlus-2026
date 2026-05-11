@@ -188,7 +188,7 @@ public class LimelightVision extends SubsystemBase{
                 notNull = true;
 
                 if (poseEstimate.pose.equals(Settings.Vision.INVALID_POSITION)) {
-                    withinInvalidPositionTolerance = true;
+                    withinInvalidPositionTolerance = false;
                 }
 
                 if (CommandSwerveDrivetrain.getInstance().getChassisSpeeds().omegaRadiansPerSecond < Settings.Vision.MAX_ANGULAR_VELOCITY_RAD_SEC) {
