@@ -92,7 +92,7 @@ public class IntakeSim extends Intake {
     }
 
     @Override
-    public void setPivotZero(Angle angle) {
+    public void seedPivotAngle(Angle angle) {
         zeroOffset = new Rotation2d(-pivotSim.getAngleRads()).plus(new Rotation2d(angle));
     }
 

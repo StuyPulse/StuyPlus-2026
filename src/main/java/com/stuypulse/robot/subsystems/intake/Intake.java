@@ -102,7 +102,7 @@ public abstract class Intake extends SubsystemBase {
 
     // Pivot Commands
     public abstract Angle getRelativePosition();
-    public abstract void setPivotZero(Angle angle);
+    public abstract void seedPivotAngle(Angle angle);
 
     public boolean atTargetAngle() {
         return getRelativePosition().minus(getState().getTargetAngle()).abs(Rotations) < Settings.Intake.Pivot.ANGLE_TOLERANCE.in(Rotations);

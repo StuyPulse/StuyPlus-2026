@@ -26,6 +26,6 @@ public class IntakeSetNinety extends InstantCommand {
 
     @Override
     public void initialize() {
-        intake.setPivotZero(Degrees.of(-90));
+        intake.seedPivotAngle(Degrees.of(-90));
     }
 }

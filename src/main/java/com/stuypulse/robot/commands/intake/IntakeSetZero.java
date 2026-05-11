@@ -27,7 +27,7 @@ public class IntakeSetZero extends InstantCommand {
 
     @Override
     public void initialize() {
-        intake.setPivotZero(Settings.Intake.Pivot.IDLE_ANGLE);
+        intake.seedPivotAngle(Settings.Intake.Pivot.IDLE_ANGLE);
         intake.setState(IntakeState.IDLE);
     }
 }

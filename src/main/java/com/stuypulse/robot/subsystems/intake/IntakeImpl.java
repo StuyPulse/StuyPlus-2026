@@ -121,7 +121,7 @@ public class IntakeImpl extends Intake {
     }
 
     @Override
-    public void setPivotZero(Angle angle) {
+    public void seedPivotAngle(Angle angle) {
         intakePivotMotor.setPosition(angle);
     }
     
@@ -194,12 +194,12 @@ public class IntakeImpl extends Intake {
         // State
 
         if (currentState == IntakeState.HOMING_DOWN && pivotStalling) {
-            setPivotZero(Settings.Intake.Pivot.DOWN_ANGLE);
+            seedPivotAngle(Settings.Intake.Pivot.DOWN_ANGLE);
             setState(IntakeState.DOWN);
         }
 
         if ((currentState == IntakeState.DOWN) && pivotStalling) {
-            setPivotZero(Settings.Intake.Pivot.DOWN_ANGLE);
+            seedPivotAngle(Settings.Intake.Pivot.DOWN_ANGLE);
         }
 
         // Output
