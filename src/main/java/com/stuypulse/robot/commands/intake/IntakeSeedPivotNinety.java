@@ -5,18 +5,17 @@
 /***************************************************************/
 package com.stuypulse.robot.commands.intake;
 
-import com.stuypulse.robot.constants.Settings;
+import static edu.wpi.first.units.Units.Degrees;
+
 import com.stuypulse.robot.subsystems.intake.Intake;
-import com.stuypulse.robot.subsystems.intake.Intake.IntakeState;
 
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 
-public class IntakeSetZeroAtBottom extends InstantCommand {
-    private Intake intake;
+public class IntakeSeedPivotNinety extends InstantCommand {
+    private final Intake intake;
 
-    public IntakeSetZeroAtBottom() {
+    public IntakeSeedPivotNinety() {
         this.intake = Intake.getInstance();
-
         addRequirements(intake);
     }
 
@@ -27,7 +26,6 @@ public class IntakeSetZeroAtBottom extends InstantCommand {
 
     @Override
     public void initialize() {
-        intake.seedPivotAngle(Settings.Intake.Pivot.DOWN_ANGLE);
-        intake.setState(IntakeState.DOWN);
+        intake.seedPivotAngle(Degrees.of(-90));
     }
 }

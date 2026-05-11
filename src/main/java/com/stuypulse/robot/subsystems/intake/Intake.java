@@ -9,9 +9,9 @@ import static edu.wpi.first.units.Units.*;
 import edu.wpi.first.units.measure.*;
 
 import com.stuypulse.robot.Robot;
-import com.stuypulse.robot.commands.intake.IntakeSetNinety;
-import com.stuypulse.robot.commands.intake.IntakeSetZero;
-import com.stuypulse.robot.commands.intake.IntakeSetZeroAtBottom;
+import com.stuypulse.robot.commands.intake.IntakeSeedPivotNinety;
+import com.stuypulse.robot.commands.intake.IntakeSeedPivotStowed;
+import com.stuypulse.robot.commands.intake.IntakeSeedPivotDeployed;
 import com.stuypulse.robot.constants.Settings;
 import com.stuypulse.robot.util.RobotVisualizer;
 
@@ -31,9 +31,9 @@ public abstract class Intake extends SubsystemBase {
         }
 
         // Elastic Commands
-        SmartDashboard.putData("Intake/Set Pivot 0", new IntakeSetZero());
-        SmartDashboard.putData("Intake/Set Pivot 0 at Bottom", new IntakeSetZeroAtBottom());
-        SmartDashboard.putData("Intake/Set Pivot Ninety", new IntakeSetNinety());
+        SmartDashboard.putData("Intake/Set Pivot 0", new IntakeSeedPivotStowed());
+        SmartDashboard.putData("Intake/Set Pivot 0 at Bottom", new IntakeSeedPivotDeployed());
+        SmartDashboard.putData("Intake/Set Pivot Ninety", new IntakeSeedPivotNinety());
     }
 
     public static Intake getInstance() {
@@ -42,19 +42,19 @@ public abstract class Intake extends SubsystemBase {
 
     public enum IntakeState {
         /** The intake is stowed and rollers are off. */
-        IDLE(Settings.Intake.Pivot.IDLE_ANGLE, 0),
+        IDLE(Settings.Intake.Pivot.STOW_ANGLE, 0),
         /** The intake is deployed but rollers are off. */
-        DOWN(Settings.Intake.Pivot.DOWN_ANGLE, 0),
+        DOWN(Settings.Intake.Pivot.DEPLOY_ANGLE, 0),
         /** The intake is deployed and rollers are running to take in gamepieces. */
-        INTAKE(Settings.Intake.Pivot.DOWN_ANGLE, Settings.Intake.Roller.INTAKE_DUTY_CYCLE),
+        INTAKE(Settings.Intake.Pivot.DEPLOY_ANGLE, Settings.Intake.Roller.INTAKE_DUTY_CYCLE),
         /** The intake is deployed and rollers are running in reverse to expel gamepieces. */
-        OUTTAKE(Settings.Intake.Pivot.DOWN_ANGLE, Settings.Intake.Roller.OUTTAKE_DUTY_CYCLE),
+        OUTTAKE(Settings.Intake.Pivot.DEPLOY_ANGLE, Settings.Intake.Roller.OUTTAKE_DUTY_CYCLE),
         /** The intake is brought up repeatedly to an angle between stowed and deployed to dislodge gamepieces. Rollers do not run. */
         AGITATE(Settings.Intake.Pivot.AGITATE_UP_ANGLE, 0),
         /** The intake is brought up once to an angle between stowed and deployed to dislodge gamepieces. Rollers do not run. */
         DIGEST(Settings.Intake.Pivot.DIGEST_ANGLE, 0),
         /** The intake is pushed against the bumpers to re-zero the pivot. */
-        HOMING_DOWN(Settings.Intake.Pivot.DOWN_ANGLE, 0);
+        HOMING_DOWN(Settings.Intake.Pivot.DEPLOY_ANGLE, 0);
 
         /** The target angle of the intake pivot. */
         private Angle targetAngle;

@@ -12,10 +12,10 @@ import com.stuypulse.robot.subsystems.intake.Intake.IntakeState;
 
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 
-public class IntakeSetZero extends InstantCommand {
+public class IntakeSeedPivotStowed extends InstantCommand {
     private final Intake intake;
 
-    public IntakeSetZero() {
+    public IntakeSeedPivotStowed() {
         this.intake = Intake.getInstance();
         addRequirements(intake);
     }
@@ -27,7 +27,7 @@ public class IntakeSetZero extends InstantCommand {
 
     @Override
     public void initialize() {
-        intake.seedPivotAngle(Settings.Intake.Pivot.IDLE_ANGLE);
+        intake.seedPivotAngle(Settings.Intake.Pivot.STOW_ANGLE);
         intake.setState(IntakeState.IDLE);
     }
 }

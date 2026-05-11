@@ -62,8 +62,8 @@ public interface Settings {
             // state angles
             //TODO:Get new pivot angles
             Angle INITIAL_ANGLE = Degrees.of(-102);
-            Angle IDLE_ANGLE = Degrees.of(-102);
-            Angle DOWN_ANGLE = Degrees.of(0);
+            Angle STOW_ANGLE = Degrees.of(-102);
+            Angle DEPLOY_ANGLE = Degrees.of(0);
             Angle AGITATE_UP_ANGLE = Degrees.of(-42);
             Angle DIGEST_ANGLE = Degrees.of(-92);
 

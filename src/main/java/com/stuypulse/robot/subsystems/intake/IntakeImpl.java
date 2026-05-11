@@ -194,12 +194,12 @@ public class IntakeImpl extends Intake {
         // State
 
         if (currentState == IntakeState.HOMING_DOWN && pivotStalling) {
-            seedPivotAngle(Settings.Intake.Pivot.DOWN_ANGLE);
+            seedPivotAngle(Settings.Intake.Pivot.DEPLOY_ANGLE);
             setState(IntakeState.DOWN);
         }
 
         if ((currentState == IntakeState.DOWN) && pivotStalling) {
-            seedPivotAngle(Settings.Intake.Pivot.DOWN_ANGLE);
+            seedPivotAngle(Settings.Intake.Pivot.DEPLOY_ANGLE);
         }
 
         // Output
