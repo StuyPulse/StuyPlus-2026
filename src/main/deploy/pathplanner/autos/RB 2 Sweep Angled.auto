@@ -17,6 +17,62 @@
           }
         },
         {
+          "type": "wait",
+          "data": {
+            "waitTime": 6.0
+          }
+        },
+        {
+          "type": "sequential",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "SwerveDriveAlignToHub"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "SwerveDriveXMode"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "ShooterSetShoot"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "HandoffSetForward"
+                }
+              },
+              {
+                "type": "parallel",
+                "data": {
+                  "commands": [
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "FeederSetForward"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "IntakeDigest"
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        },
+        {
           "type": "path",
           "data": {
             "pathName": "RB Shoot to RB Start"
