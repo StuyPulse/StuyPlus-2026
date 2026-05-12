@@ -46,7 +46,6 @@ The documentation for StuyPlus-2026 can be found [here](https://stuypulse.github
 | `feat/` | New features that may need some review before being pushed |
 | `experiments/` | Experimental work, may or may not necessarily be pushed to `main` |
 | `docs` | Not meant to be pushed to manually. Only for the [`javadoc.yml`](./.github/workflows/javadoc.yml) action for automatic [documentation page](https://stuypulse.github.io/StuyPlus-2026/) generation |
-| `feat/doglog` | Not meant to be pushed to manually. Only for the [`doglog-replacement.yml`](./.github/workflows/doglog-replacement.yml) action. Intended to just keep the Doglog option open without necessarily pushing to main. |
 
 ## Drivetrain
 Files: 
