@@ -80,7 +80,7 @@ loadScripts(document, 'script');</script>
 <div class="type-signature"><span class="modifiers">public class </span><span class="element-name type-name-label">LoggedSignals</span>
 <span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></span></div>
 <div class="block"><h2>A container and handler for Phoenix's StatusSignals</h2>
- 
+
  <p>Allows for compartmentalization of signals, which can be done by subsystem and by motor, and easy handling and logging.
  <p>Usage example:
  <pre><code>
@@ -89,23 +89,23 @@ loadScripts(document, 'script');</script>
      private final TalonFX motor1;
      private final TalonFX motor2;
      private final LoggedSignals signals;
- 
+
      public SubsystemImpl() {
          motor1 = new TalonFX(6);
          motor2 = new TalonFX(7);
          signals = new LoggedSignals(
-             "Motor Number 1", 
+             "Motor Number 1",
              motor1.getVelocity(),
              motor1.getStatorCurrent(),
              motor1.getSupplyCurrent()
          ).addMotor(
-             "Motor Number 2", 
+             "Motor Number 2",
              motor2.getVelocity(),
              motor2.getStatorCurrent(),
              motor2.getSupplyCurrent()
          );
      }
- 
+
      @Override
      public void periodic() {
          // ... other logic
@@ -264,7 +264,7 @@ loadScripts(document, 'script');</script>
  com.ctre.phoenix6.BaseStatusSignal...&nbsp;statusSignals)</span></div>
 <div class="block"><h4>Registers a named motor with its own set of signals</h4>
 
- <p>Adds to the internal set of the <a href="LoggedSignals.html" title="class in com.stuypulse.robot.util"><code>LoggedSignals</code></a> instance it is called on, 
+ <p>Adds to the internal set of the <a href="LoggedSignals.html" title="class in com.stuypulse.robot.util"><code>LoggedSignals</code></a> instance it is called on,
  so it uses the same logging path and signal location.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
@@ -307,8 +307,8 @@ loadScripts(document, 'script');</script>
 <h3>register</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">register</span>()</div>
 <div class="block"><h4>Registers all signals in this instance to the current <a href="LoggedSignals.SignalLocation.html" title="enum class in com.stuypulse.robot.util"><code>LoggedSignals.SignalLocation</code></a></h4>
- 
- <p>SHould be called whenever the internal signal set is added to. 
+
+ <p>SHould be called whenever the internal signal set is added to.
  Signal locations use a set internally, so no need to worry about duplicates</div>
 </section>
 </li>
@@ -317,8 +317,8 @@ loadScripts(document, 'script');</script>
 <h3>deregister</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">deregister</span>()</div>
 <div class="block"><h4>Deregisters all signals in this instance from the current <a href="LoggedSignals.SignalLocation.html" title="enum class in com.stuypulse.robot.util"><code>LoggedSignals.SignalLocation</code></a></h4>
- 
- <p>Should be called whenever stuff is removed from the internal signal set. 
+
+ <p>Should be called whenever stuff is removed from the internal signal set.
  Signal locations use a set internally, so no need to worry about duplicates</div>
 </section>
 </li>
