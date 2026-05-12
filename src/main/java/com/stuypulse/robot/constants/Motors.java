@@ -10,6 +10,7 @@
 package com.stuypulse.robot.constants;
 
 import static edu.wpi.first.units.Units.Amps;
+import edu.wpi.first.networktables.DoubleSubscriber;
 import com.ctre.phoenix6.configs.ClosedLoopRampsConfigs;
 import com.ctre.phoenix6.configs.CurrentLimitsConfigs;
 import com.ctre.phoenix6.configs.FeedbackConfigs;
@@ -19,6 +20,7 @@ import com.ctre.phoenix6.configs.OpenLoopRampsConfigs;
 import com.ctre.phoenix6.configs.Slot0Configs;
 import com.ctre.phoenix6.configs.Slot1Configs;
 import com.ctre.phoenix6.configs.Slot2Configs;
+import com.ctre.phoenix6.configs.SlotConfigs
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.FeedbackSensorSourceValue;
@@ -110,6 +112,69 @@ public interface Motors {
         private final FeedbackConfigs feedbackConfigs = new FeedbackConfigs();
 
         private final MotionMagicConfigs motionMagicConfigs = new MotionMagicConfigs();
+
+        private final double[] lastKP = new double[3];
+        private final double[] lastKI = new double[3];
+        private final double[] lastKD = new double[3];
+        private final double[] lastKS = new double[3];
+        private final double[] lastKV = new double[3];
+        private final double[] lastKA = new double[3];
+
+        public void updateGainsConfig(TalonFX motor, int slot, DoubleSubscriber kP, DoubleSubscriber kI, DoubleSubscriber kD, DoubleSubscriber kS, DoubleSubscriber kV, DoubleSubscriber kA) {
+            if (slot != 0 && slot != 1 && slot != 2) {
+                return;
+            }
+
+            final double currentKP = kP.get();
+            final double currentKI = kI.get();
+            final double currentKD = kD.get();
+            final double currentKS = kS.get();
+            final double currentKV = kV.get();
+            final double currentKA = kA.get();
+
+            final boolean changed =
+                currentKP != lastKP[slot] ||
+                currentKI != lastKI[slot] ||
+                currentKD != lastKD[slot] ||
+                currentKS != lastKS[slot] ||
+                currentKV != lastKV[slot] ||
+                currentKA != lastKA[slot];
+
+            if (!changed) {
+                return;
+            }
+
+            final SlotConfigs gainConfig = new SlotConfigs()
+                .withKP(currentKP)
+                .withKI(currentKI)
+                .withKD(currentKD)
+                .withKS(currentKS)
+                .withKV(currentKV)
+                .withKA(currentKA);
+
+            gainConfig.SlotNumber = slot;
+
+            motor.getConfigurator().apply(gainConfig);
+
+            lastKP[slot] = currentKP;
+            lastKI[slot] = currentKI;
+            lastKD[slot] = currentKD;
+            lastKS[slot] = currentKS;
+            lastKV[slot] = currentKV;
+            lastKA[slot] = currentKA;
+
+            switch (slot) {
+                case 0:
+                    motor.getConfigurator().refresh(this.getConfiguration().Slot0);
+                    break;
+                case 1:
+                    motor.getConfigurator().refresh(this.getConfiguration().Slot1);
+                    break;
+                case 2:
+                    motor.getConfigurator().refresh(this.getConfiguration().Slot2);
+                    break;
+            }
+        }
 
         public void configure(TalonFX motor) {
             motor.getConfigurator().apply(configuration);
