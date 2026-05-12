@@ -20,7 +20,7 @@ import com.ctre.phoenix6.configs.OpenLoopRampsConfigs;
 import com.ctre.phoenix6.configs.Slot0Configs;
 import com.ctre.phoenix6.configs.Slot1Configs;
 import com.ctre.phoenix6.configs.Slot2Configs;
-import com.ctre.phoenix6.configs.SlotConfigs
+import com.ctre.phoenix6.configs.SlotConfigs;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.FeedbackSensorSourceValue;
@@ -79,11 +79,29 @@ public interface Motors {
         // .withNeutralMode(NeutralModeValue.Coast)
         // .withFFConstants(Gains.Shooter.kS, Gains.Shooter.kV, Gains.Shooter.kA, 0)
         // .withInvertedValue(InvertedValue.Clockwise_Positive);
-        TalonFXConfig SHOOTER_MOTOR_LEFT = new TalonFXConfig().withPIDConstants(Gains.Shooter.kP, Gains.Shooter.kI, Gains.Shooter.kD, 0).withCurrentLimitAmps(80).withRampRate(0.25).withNeutralMode(NeutralModeValue.Coast).withFFConstants(Gains.Shooter.kS, Gains.Shooter.kV, Gains.Shooter.kA, 0).withInvertedValue(InvertedValue.CounterClockwise_Positive);
+        TalonFXConfig SHOOTER_MOTOR_LEFT = new TalonFXConfig()
+            .withPIDConstants(Gains.Shooter.kP, Gains.Shooter.kI, Gains.Shooter.kD, 0)
+            .withCurrentLimitAmps(80)
+            .withRampRate(0.25)
+            .withNeutralMode(NeutralModeValue.Coast)
+            .withFFConstants(Gains.Shooter.kS, Gains.Shooter.kV, Gains.Shooter.kA, 0)
+            .withInvertedValue(InvertedValue.CounterClockwise_Positive);
 
-        TalonFXConfig SHOOTER_MOTOR_CENTER = new TalonFXConfig().withPIDConstants(Gains.Shooter.kP, Gains.Shooter.kI, Gains.Shooter.kD, 0).withCurrentLimitAmps(80).withRampRate(0.25).withNeutralMode(NeutralModeValue.Coast).withFFConstants(Gains.Shooter.kS, Gains.Shooter.kV, Gains.Shooter.kA, 0).withInvertedValue(InvertedValue.CounterClockwise_Positive);
+        TalonFXConfig SHOOTER_MOTOR_CENTER = new TalonFXConfig()
+            .withPIDConstants(Gains.Shooter.kP, Gains.Shooter.kI, Gains.Shooter.kD, 0)
+            .withCurrentLimitAmps(80)
+            .withRampRate(0.25)
+            .withNeutralMode(NeutralModeValue.Coast)
+            .withFFConstants(Gains.Shooter.kS, Gains.Shooter.kV, Gains.Shooter.kA, 0)
+            .withInvertedValue(InvertedValue.CounterClockwise_Positive);
 
-        TalonFXConfig SHOOTER_MOTOR_RIGHT = new TalonFXConfig().withPIDConstants(Gains.Shooter.kP, Gains.Shooter.kI, Gains.Shooter.kD, 0).withCurrentLimitAmps(80).withRampRate(0.25).withNeutralMode(NeutralModeValue.Coast).withFFConstants(Gains.Shooter.kS, Gains.Shooter.kV, Gains.Shooter.kA, 0).withInvertedValue(InvertedValue.Clockwise_Positive);
+        TalonFXConfig SHOOTER_MOTOR_RIGHT = new TalonFXConfig()
+            .withPIDConstants(Gains.Shooter.kP, Gains.Shooter.kI, Gains.Shooter.kD, 0)
+            .withCurrentLimitAmps(80)
+            .withRampRate(0.25)
+            .withNeutralMode(NeutralModeValue.Coast)
+            .withFFConstants(Gains.Shooter.kS, Gains.Shooter.kV, Gains.Shooter.kA, 0)
+            .withInvertedValue(InvertedValue.Clockwise_Positive);
     }
 
     public interface Handoff {
