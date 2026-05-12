@@ -1,22 +1,25 @@
-/************************* PROJECT RON *************************/
+/**
+ * ********************** PROJECT RON ************************
+ */
 /* Copyright (c) 2026 StuyPulse Robotics. All rights reserved. */
 /* Use of this source code is governed by an MIT-style license */
 /* that can be found in the repository LICENSE file.           */
-/***************************************************************/
+/**
+ * ***********************************************************
+ */
 package com.stuypulse.robot.util;
 
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Set;
-
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
 import com.ctre.phoenix6.BaseStatusSignal;
+import dev.doglog.DogLog;
 
 /**
  * <h2>A container and handler for Phoenix's StatusSignals</h2>
- * 
+ *
  * <p>Allows for compartmentalization of signals, which can be done by subsystem and by motor, and easy handling and logging.
  * <p>Usage example:
  * <pre>{@code
@@ -25,23 +28,23 @@ import com.ctre.phoenix6.BaseStatusSignal;
  *     private final TalonFX motor1;
  *     private final TalonFX motor2;
  *     private final LoggedSignals signals;
- * 
+ *
  *     public SubsystemImpl() {
  *         motor1 = new TalonFX(6);
  *         motor2 = new TalonFX(7);
  *         signals = new LoggedSignals(
- *             "Motor Number 1", 
+ *             "Motor Number 1",
  *             motor1.getVelocity(),
  *             motor1.getStatorCurrent(),
  *             motor1.getSupplyCurrent()
  *         ).addMotor(
- *             "Motor Number 2", 
+ *             "Motor Number 2",
  *             motor2.getVelocity(),
  *             motor2.getStatorCurrent(),
  *             motor2.getSupplyCurrent()
  *         );
  *     }
- * 
+ *
  *     @Override
  *     public void periodic() {
  *         // ... other logic
@@ -51,6 +54,7 @@ import com.ctre.phoenix6.BaseStatusSignal;
  * }</pre>
  */
 public class LoggedSignals {
+
     /**
      * <h2>The CAN bus network that a group of signals is from</h2>
      *
@@ -58,10 +62,11 @@ public class LoggedSignals {
      * {@link BaseStatusSignal#refreshAll(List)} calls
      */
     public enum SignalLocation {
-        RIO,
-        CANIVORE;
+
+        RIO, CANIVORE;
 
         private final Set<BaseStatusSignal> signals;
+
         private List<BaseStatusSignal> signalList;
 
         private SignalLocation() {
@@ -111,18 +116,24 @@ public class LoggedSignals {
          * @param signals signals to deregister
          */
         public void deregister(Set<BaseStatusSignal> signals) {
-            for (BaseStatusSignal signal : signals)
-                this.signals.remove(signal);
+            for (BaseStatusSignal signal : signals) this.signals.remove(signal);
             cache();
         }
     }
 
-    /****************************/
-    /*** INSTANCES & BUILDERS ***/
-    /****************************/
+    /**
+     * ************************
+     */
+    /**
+     * INSTANCES & BUILDERS **
+     */
+    /**
+     * ************************
+     */
+    private final LinkedHashMap<String, Set<BaseStatusSignal>> statusSignals;
 
-    private final LinkedHashMap <String, Set<BaseStatusSignal>> statusSignals;
     private String logPath;
+
     private SignalLocation signalLocation;
 
     /**
@@ -159,9 +170,9 @@ public class LoggedSignals {
     /**
      * <h4>Registers a named motor with its own set of signals</h4>
      *
-     * <p>Adds to the internal set of the {@link LoggedSignals} instance it is called on, 
+     * <p>Adds to the internal set of the {@link LoggedSignals} instance it is called on,
      * so it uses the same logging path and signal location.
-     * 
+     *
      * @param motorName name of the motor whose signals are being registered
      * @param statusSignals the signals to manage, duplicates allowed but filtered out
      */
@@ -178,7 +189,8 @@ public class LoggedSignals {
      * @return this instance for chaining
      */
     public LoggedSignals withSignalLocation(SignalLocation location) {
-        if (location == this.signalLocation) return this;
+        if (location == this.signalLocation)
+            return this;
         deregister();
         this.signalLocation = location;
         register();
@@ -199,40 +211,48 @@ public class LoggedSignals {
         return this;
     }
 
-    /****************/
-    /*** REGISTRY ***/
-    /****************/
-
+    /**
+     * ************
+     */
+    /**
+     * REGISTRY **
+     */
+    /**
+     * ************
+     */
     /**
      * <h4>Registers all signals in this instance to the current {@link SignalLocation}</h4>
-     * 
-     * <p>SHould be called whenever the internal signal set is added to. 
+     *
+     * <p>SHould be called whenever the internal signal set is added to.
      * Signal locations use a set internally, so no need to worry about duplicates
      */
     public void register() {
-        for (final Set<BaseStatusSignal> signals : this.statusSignals.values())
-            this.signalLocation.register(signals);
+        for (final Set<BaseStatusSignal> signals : this.statusSignals.values()) this.signalLocation.register(signals);
     }
 
     /**
      * <h4>Deregisters all signals in this instance from the current {@link SignalLocation}</h4>
-     * 
-     * <p>Should be called whenever stuff is removed from the internal signal set. 
+     *
+     * <p>Should be called whenever stuff is removed from the internal signal set.
      * Signal locations use a set internally, so no need to worry about duplicates
      */
     public void deregister() {
-        for (final Set<BaseStatusSignal> signals : this.statusSignals.values())
-            this.signalLocation.deregister(signals);
+        for (final Set<BaseStatusSignal> signals : this.statusSignals.values()) this.signalLocation.deregister(signals);
     }
 
-    /***************/
-    /*** LOGGING ***/
-    /***************/
-
+    /**
+     * ***********
+     */
+    /**
+     * LOGGING **
+     */
+    /**
+     * ***********
+     */
     private void logSignals(String motorName, Set<BaseStatusSignal> signals) {
         for (final BaseStatusSignal signal : signals) {
-            SmartDashboard.putNumber(logPath + String.join(" ", motorName, signal.getName(), signal.getUnits()).trim(), // removes whitespace if motorName is empty
-                    signal.getValueAsDouble());
+            DogLog.log(// removes whitespace if motorName is empty
+            logPath + String.join(" ", motorName, signal.getName(), signal.getUnits()).trim(), signal.getValueAsDouble());
         }
     }
 
@@ -251,8 +271,7 @@ public class LoggedSignals {
      * <p>Should be called once per robot periodic loop before reading any signal values or calling {@link #logAll()}.
      */
     public static void refreshAll() {
-        for (SignalLocation location : SignalLocation.values())
-            if (location.getSignalsList().size() > 0)
-                BaseStatusSignal.refreshAll(location.getSignalsList());
+        for (SignalLocation location : SignalLocation.values()) if (location.getSignalsList().size() > 0)
+            BaseStatusSignal.refreshAll(location.getSignalsList());
     }
 }
