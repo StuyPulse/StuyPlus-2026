@@ -1,3 +1,8 @@
+/************************* PROJECT RON *************************/
+/* Copyright (c) 2026 StuyPulse Robotics. All rights reserved. */
+/* Use of this source code is governed by an MIT-style license */
+/* that can be found in the repository LICENSE file.           */
+/***************************************************************/
 package tools.DogLogASTParser;
 
 import java.io.File;
@@ -101,6 +106,7 @@ public class Main {
         try {
             final File file = new File("src/main/java/com/stuypulse/robot/Robot.java");
             final CompilationUnit parsed = StaticJavaParser.parse(file);
+            parsed.addImport("dev.doglog.DogLogOptions");
 
             final ObjectCreationExpr doglogOptions = new ObjectCreationExpr(null,
                     new ClassOrInterfaceType(null, "DogLogOptions"), new NodeList<>());

@@ -7,25 +7,12 @@ import com.stuypulse.robot.commands.swerve.SwerveResetPose;
 import com.stuypulse.robot.commands.vision.SetVisionDisabled;
 import com.stuypulse.robot.commands.vision.SetVisionEnabled;
 import com.stuypulse.robot.subsystems.swerve.CommandSwerveDrivetrain;
-
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
-public class LBMid extends SequentialCommandGroup{
-    public LBMid(PathPlannerPath...paths){
-        addCommands(
-            new SwerveResetPose(paths[0].getStartingHolonomicPose().get()),
+public class LBMid extends SequentialCommandGroup {
 
-            CommandSwerveDrivetrain.getInstance().followPathCommand(paths[0])
-                /* .alongWith(new IntakeSetIntake())*/,
-
-            new SetVisionDisabled(),
-
-            CommandSwerveDrivetrain.getInstance().followPathCommand(paths[1]),
-
-            new IntakeSetHomingDown(),
-            
-            new SetVisionEnabled()
-        );
+    public LBMid(PathPlannerPath... paths) {
+        addCommands(new SwerveResetPose(paths[0].getStartingHolonomicPose().get()), CommandSwerveDrivetrain.getInstance().followPathCommand(paths[0]), /* .alongWith(new IntakeSetIntake())*/
+        new SetVisionDisabled(), CommandSwerveDrivetrain.getInstance().followPathCommand(paths[1]), new IntakeSetHomingDown(), new SetVisionEnabled());
     }
-    
 }

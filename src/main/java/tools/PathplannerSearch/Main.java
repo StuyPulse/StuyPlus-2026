@@ -1,6 +1,12 @@
+/************************* PROJECT RON *************************/
+/* Copyright (c) 2026 StuyPulse Robotics. All rights reserved. */
+/* Use of this source code is governed by an MIT-style license */
+/* that can be found in the repository LICENSE file.           */
+/***************************************************************/
 package tools.PathplannerSearch;
 
 import java.io.IOException;
+
 import tools.PathplannerSearch.PathplannerSearch.SearchType;
 
 /**
@@ -14,6 +20,12 @@ import tools.PathplannerSearch.PathplannerSearch.SearchType;
  * <p><b>Example:</b>
  * <pre>
  * ./gradlew runPathplannerSearch -Pargs="disruptAUton path"
+ * </pre>
+ * 
+ * If your search term has spaces, it will only check the last word for the search type.
+ * <p><b>Example:</b>
+ * <pre>
+ * ./gradlew runPathplannerSearch -Pargs="Disrupt Auton Thing path"
  * </pre>
  *
  * <p><b>Arguments:</b>

@@ -1,0 +1,79 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 3.6,
+        "y": 2.25
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 4.6,
+        "y": 2.25
+      },
+      "isLocked": false,
+      "linkedName": "Right Bump Start LF"
+    },
+    {
+      "anchor": {
+        "x": 5.75,
+        "y": 2.25
+      },
+      "prevControl": {
+        "x": 4.750000000000002,
+        "y": 2.25
+      },
+      "nextControl": {
+        "x": 6.75,
+        "y": 2.25
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 7.9,
+        "y": 3.0
+      },
+      "prevControl": {
+        "x": 7.784831763393599,
+        "y": 2.513444476676123
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "mid neutral left facing"
+    }
+  ],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0.97,
+      "rotationDegrees": 90.0
+    },
+    {
+      "waypointRelativePos": 1.327868852459016,
+      "rotationDegrees": 45.0
+    }
+  ],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 3.0,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 1.0,
+    "rotation": 45.881
+  },
+  "reversed": false,
+  "folder": "Shooting",
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": 90.0
+  },
+  "useDefaultConstraints": true
+}
