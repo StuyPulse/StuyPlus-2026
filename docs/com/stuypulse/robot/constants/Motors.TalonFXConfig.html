@@ -113,6 +113,19 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#configure(com.ctre.phoenix6.hardware.TalonFX)" class="member-name-link">configure</a><wbr>(com.ctre.phoenix6.hardware.TalonFX&nbsp;motor)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>com.ctre.phoenix6.configs.TalonFXConfiguration</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getConfiguration()" class="member-name-link">getConfiguration</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#updateGainsConfig(com.ctre.phoenix6.hardware.TalonFX,int,edu.wpi.first.networktables.DoubleSubscriber,edu.wpi.first.networktables.DoubleSubscriber,edu.wpi.first.networktables.DoubleSubscriber,edu.wpi.first.networktables.DoubleSubscriber,edu.wpi.first.networktables.DoubleSubscriber,edu.wpi.first.networktables.DoubleSubscriber)" class="member-name-link">updateGainsConfig</a><wbr>(com.ctre.phoenix6.hardware.TalonFX&nbsp;motor,
+ int&nbsp;slot,
+ edu.wpi.first.networktables.DoubleSubscriber&nbsp;kP,
+ edu.wpi.first.networktables.DoubleSubscriber&nbsp;kI,
+ edu.wpi.first.networktables.DoubleSubscriber&nbsp;kD,
+ edu.wpi.first.networktables.DoubleSubscriber&nbsp;kS,
+ edu.wpi.first.networktables.DoubleSubscriber&nbsp;kV,
+ edu.wpi.first.networktables.DoubleSubscriber&nbsp;kA)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="Motors.TalonFXConfig.html" title="class in com.stuypulse.robot.constants">Motors.TalonFXConfig</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#withCurrentLimitAmps(double)" class="member-name-link">withCurrentLimitAmps</a><wbr>(double&nbsp;currentLimitAmps)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
@@ -193,6 +206,25 @@ loadScripts(document, 'script');</script>
 <section class="method-details" id="method-detail">
 <h2>Method Details</h2>
 <ul class="member-list">
+<li>
+<section class="detail" id="updateGainsConfig(com.ctre.phoenix6.hardware.TalonFX,int,edu.wpi.first.networktables.DoubleSubscriber,edu.wpi.first.networktables.DoubleSubscriber,edu.wpi.first.networktables.DoubleSubscriber,edu.wpi.first.networktables.DoubleSubscriber,edu.wpi.first.networktables.DoubleSubscriber,edu.wpi.first.networktables.DoubleSubscriber)">
+<h3>updateGainsConfig</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">updateGainsConfig</span><wbr><span class="parameters">(com.ctre.phoenix6.hardware.TalonFX&nbsp;motor,
+ int&nbsp;slot,
+ edu.wpi.first.networktables.DoubleSubscriber&nbsp;kP,
+ edu.wpi.first.networktables.DoubleSubscriber&nbsp;kI,
+ edu.wpi.first.networktables.DoubleSubscriber&nbsp;kD,
+ edu.wpi.first.networktables.DoubleSubscriber&nbsp;kS,
+ edu.wpi.first.networktables.DoubleSubscriber&nbsp;kV,
+ edu.wpi.first.networktables.DoubleSubscriber&nbsp;kA)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="getConfiguration()">
+<h3>getConfiguration</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">com.ctre.phoenix6.configs.TalonFXConfiguration</span>&nbsp;<span class="element-name">getConfiguration</span>()</div>
+</section>
+</li>
 <li>
 <section class="detail" id="configure(com.ctre.phoenix6.hardware.TalonFX)">
 <h3>configure</h3>
