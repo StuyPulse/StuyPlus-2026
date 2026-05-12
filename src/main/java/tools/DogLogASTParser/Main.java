@@ -106,6 +106,7 @@ public class Main {
         try {
             final File file = new File("src/main/java/com/stuypulse/robot/Robot.java");
             final CompilationUnit parsed = StaticJavaParser.parse(file);
+            parsed.addImport("dev.doglog.DogLogOptions");
 
             final ObjectCreationExpr doglogOptions = new ObjectCreationExpr(null,
                     new ClassOrInterfaceType(null, "DogLogOptions"), new NodeList<>());
