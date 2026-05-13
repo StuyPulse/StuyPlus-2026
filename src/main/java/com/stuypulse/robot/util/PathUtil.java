@@ -1,14 +1,14 @@
-/**
- * ********************** PROJECT RON ************************
- */
+/************************* PROJECT RON *************************/
 /* Copyright (c) 2026 StuyPulse Robotics. All rights reserved. */
 /* Use of this source code is governed by an MIT-style license */
 /* that can be found in the repository LICENSE file.           */
-/**
- * ***********************************************************
- */
+/***************************************************************/
 package com.stuypulse.robot.util;
 
+import com.pathplanner.lib.path.PathPlannerPath;
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj2.command.Command;
 import java.io.IOException;
 import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
@@ -19,10 +19,6 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.function.Function;
-import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-import edu.wpi.first.wpilibj2.command.Command;
-import com.pathplanner.lib.path.PathPlannerPath;
 
 public class PathUtil {
 
@@ -42,7 +38,13 @@ public class PathUtil {
                 try {
                     PathPlannerPath.fromPathFile(path);
                 } catch (Exception e) {
-                    DriverStation.reportError("Path \"" + path + "\" not found. Did you mean \"" + PathUtil.findClosestMatch(PathUtil.getPathFileNames(), path) + "\"?", false);
+                    DriverStation.reportError(
+                            "Path \""
+                                    + path
+                                    + "\" not found. Did you mean \""
+                                    + PathUtil.findClosestMatch(PathUtil.getPathFileNames(), path)
+                                    + "\"?",
+                            false);
                 }
             }
         }
@@ -58,9 +60,7 @@ public class PathUtil {
         }
     }
 
-    /**
-     * PATH LOADING **
-     */
+    /** PATH LOADING ** */
     public static PathPlannerPath[] loadPaths(String... names) {
         PathPlannerPath[] output = new PathPlannerPath[names.length];
         for (int i = 0; i < names.length; i++) {
@@ -78,9 +78,7 @@ public class PathUtil {
         }
     }
 
-    /**
-     * PATH FILENAME CORRECTION **
-     */
+    /** PATH FILENAME CORRECTION ** */
     public static List<String> getPathFileNames() {
         // ../../../../../deploy/pathplanner/paths
         Path path = Paths.get("").toAbsolutePath().resolve("src/main/deploy/pathplanner/paths");
@@ -128,7 +126,8 @@ public class PathUtil {
         return letterMap;
     }
 
-    public static double compareNameProximity(HashMap<Character, Integer> list1, HashMap<Character, Integer> list2) {
+    public static double compareNameProximity(
+            HashMap<Character, Integer> list1, HashMap<Character, Integer> list2) {
         double proximity = 0.0;
         int list1sum = 0, list2sum = 0;
         for (char key : list1.keySet()) {

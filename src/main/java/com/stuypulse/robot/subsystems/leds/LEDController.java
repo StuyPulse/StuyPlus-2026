@@ -1,12 +1,8 @@
-/**
- * ********************** PROJECT RON ************************
- */
+/************************* PROJECT RON *************************/
 /* Copyright (c) 2026 StuyPulse Robotics. All rights reserved. */
 /* Use of this source code is governed by an MIT-style license */
 /* that can be found in the repository LICENSE file.           */
-/**
- * ***********************************************************
- */
+/***************************************************************/
 package com.stuypulse.robot.subsystems.leds;
 
 import com.stuypulse.robot.constants.Ports;
@@ -20,7 +16,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class LEDController extends SubsystemBase {
 
-    private final static LEDController instance;
+    private static final LEDController instance;
 
     private final LEDPattern defaultPattern = LEDPattern.kOff;
 
@@ -50,10 +46,14 @@ public class LEDController extends SubsystemBase {
         led.setLength(buffer.getLength());
         led.setData(buffer);
         led.start();
-        this.shooterView = buffer.createView(Settings.LED.SHOOTER_BUFFER[0], Settings.LED.SHOOTER_BUFFER[1]);
-        this.feederView = buffer.createView(Settings.LED.FEEDER_BUFFER[0], Settings.LED.FEEDER_BUFFER[1]);
-        this.intakeView = buffer.createView(Settings.LED.INTAKE_BUFFER[0], Settings.LED.INTAKE_BUFFER[1]);
-        this.handoffView = buffer.createView(Settings.LED.HANDOFF_BUFFER[0], Settings.LED.HANDOFF_BUFFER[1]);
+        this.shooterView =
+                buffer.createView(Settings.LED.SHOOTER_BUFFER[0], Settings.LED.SHOOTER_BUFFER[1]);
+        this.feederView =
+                buffer.createView(Settings.LED.FEEDER_BUFFER[0], Settings.LED.FEEDER_BUFFER[1]);
+        this.intakeView =
+                buffer.createView(Settings.LED.INTAKE_BUFFER[0], Settings.LED.INTAKE_BUFFER[1]);
+        this.handoffView =
+                buffer.createView(Settings.LED.HANDOFF_BUFFER[0], Settings.LED.HANDOFF_BUFFER[1]);
         applyPattern(defaultPattern);
         SmartDashboard.putData(instance);
     }

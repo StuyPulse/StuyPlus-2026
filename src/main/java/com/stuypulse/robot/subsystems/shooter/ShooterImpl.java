@@ -1,16 +1,16 @@
-/**
- * ********************** PROJECT RON ************************
- */
+/************************* PROJECT RON *************************/
 /* Copyright (c) 2026 StuyPulse Robotics. All rights reserved. */
 /* Use of this source code is governed by an MIT-style license */
 /* that can be found in the repository LICENSE file.           */
-/**
- * ***********************************************************
- */
+/***************************************************************/
 package com.stuypulse.robot.subsystems.shooter;
 
 import static edu.wpi.first.units.Units.Volts;
-import java.util.Optional;
+
+import com.ctre.phoenix6.controls.Follower;
+import com.ctre.phoenix6.controls.VelocityTorqueCurrentFOC;
+import com.ctre.phoenix6.hardware.TalonFX;
+import com.ctre.phoenix6.signals.MotorAlignmentValue;
 import com.stuypulse.robot.constants.Motors;
 import com.stuypulse.robot.constants.Ports;
 import com.stuypulse.robot.constants.Settings;
@@ -19,10 +19,7 @@ import com.stuypulse.robot.util.SysId;
 import edu.wpi.first.units.measure.AngularVelocity;
 import edu.wpi.first.units.measure.Voltage;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
-import com.ctre.phoenix6.controls.Follower;
-import com.ctre.phoenix6.controls.VelocityTorqueCurrentFOC;
-import com.ctre.phoenix6.hardware.TalonFX;
-import com.ctre.phoenix6.signals.MotorAlignmentValue;
+import java.util.Optional;
 
 public class ShooterImpl extends Shooter {
 
@@ -46,13 +43,31 @@ public class ShooterImpl extends Shooter {
         shooterMotorCenter = new TalonFX(Ports.Shooter.SHOOTER_MOTOR_CENTER, Settings.CANBUS);
         shooterMotorLeft = new TalonFX(Ports.Shooter.SHOOTER_MOTOR_LEFT, Settings.CANBUS);
         shooterController = new VelocityTorqueCurrentFOC(getState().getTargetAngularVelocity());
-        signals = new LoggedSignals("Right Motor", shooterMotorRight.getSupplyCurrent(), shooterMotorRight.getStatorCurrent(), shooterMotorRight.getVelocity()).withMotor("Center Motor", shooterMotorCenter.getSupplyCurrent(), shooterMotorCenter.getStatorCurrent(), shooterMotorCenter.getVelocity()).withMotor("Left Motor", shooterMotorLeft.getSupplyCurrent(), shooterMotorLeft.getStatorCurrent(), shooterMotorLeft.getVelocity()).withLogPath("Shooter/").withSignalLocation(LoggedSignals.SignalLocation.CANIVORE);
+        signals =
+                new LoggedSignals(
+                                "Right Motor",
+                                shooterMotorRight.getSupplyCurrent(),
+                                shooterMotorRight.getStatorCurrent(),
+                                shooterMotorRight.getVelocity())
+                        .withMotor(
+                                "Center Motor",
+                                shooterMotorCenter.getSupplyCurrent(),
+                                shooterMotorCenter.getStatorCurrent(),
+                                shooterMotorCenter.getVelocity())
+                        .withMotor(
+                                "Left Motor",
+                                shooterMotorLeft.getSupplyCurrent(),
+                                shooterMotorLeft.getStatorCurrent(),
+                                shooterMotorLeft.getVelocity())
+                        .withLogPath("Shooter/")
+                        .withSignalLocation(LoggedSignals.SignalLocation.CANIVORE);
         // configure
         Motors.Shooter.SHOOTER_MOTOR_RIGHT.configure(shooterMotorRight);
         Motors.Shooter.SHOOTER_MOTOR_CENTER.configure(shooterMotorCenter);
         Motors.Shooter.SHOOTER_MOTOR_LEFT.configure(shooterMotorLeft);
         // Set center and left to follow right
-        shooterFollowerController = new Follower(shooterMotorRight.getDeviceID(), MotorAlignmentValue.Opposed);
+        shooterFollowerController =
+                new Follower(shooterMotorRight.getDeviceID(), MotorAlignmentValue.Opposed);
         shooterMotorCenter.setControl(shooterFollowerController);
         shooterMotorLeft.setControl(shooterFollowerController);
         voltageOverride = Optional.empty();
@@ -88,7 +103,8 @@ public class ShooterImpl extends Shooter {
             return;
         }
         final AngularVelocity targetAngularVelocity = getState().getTargetAngularVelocity();
-        final VelocityTorqueCurrentFOC shooterControl = shooterController.withVelocity(targetAngularVelocity);
+        final VelocityTorqueCurrentFOC shooterControl =
+                shooterController.withVelocity(targetAngularVelocity);
         shooterMotorRight.setControl(shooterControl);
         this.signals.logAll();
         super.periodic();
@@ -96,6 +112,14 @@ public class ShooterImpl extends Shooter {
 
     @Override
     public SysIdRoutine getShooterSysIdRoutine() {
-        return SysId.getRoutine(Settings.Shooter.RAMP_RATE, Settings.Shooter.STEP_VOLTAGE, "Shooter", this::setVoltageOverride, () -> shooterMotorRight.getPosition().getValue(), () -> shooterMotorRight.getVelocity().getValue(), () -> shooterMotorRight.getMotorVoltage().getValue(), getInstance());
+        return SysId.getRoutine(
+                Settings.Shooter.RAMP_RATE,
+                Settings.Shooter.STEP_VOLTAGE,
+                "Shooter",
+                this::setVoltageOverride,
+                () -> shooterMotorRight.getPosition().getValue(),
+                () -> shooterMotorRight.getVelocity().getValue(),
+                () -> shooterMotorRight.getMotorVoltage().getValue(),
+                getInstance());
     }
 }

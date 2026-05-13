@@ -1,21 +1,23 @@
-/**
- * ********************** PROJECT RON ************************
- */
+/************************* PROJECT RON *************************/
 /* Copyright (c) 2026 StuyPulse Robotics. All rights reserved. */
 /* Use of this source code is governed by an MIT-style license */
 /* that can be found in the repository LICENSE file.           */
-/**
- * ***********************************************************
- */
+/***************************************************************/
 package com.stuypulse.robot.subsystems.intake;
 
 import static edu.wpi.first.units.Units.*;
-import java.util.Optional;
+
+import com.ctre.phoenix6.controls.DutyCycleOut;
+import com.ctre.phoenix6.controls.Follower;
+import com.ctre.phoenix6.controls.PositionTorqueCurrentFOC;
+import com.ctre.phoenix6.controls.VoltageOut;
+import com.ctre.phoenix6.signals.MotorAlignmentValue;
 import com.stuypulse.robot.constants.Motors;
 import com.stuypulse.robot.constants.Ports;
 import com.stuypulse.robot.constants.Settings;
 import com.stuypulse.robot.util.SysId;
 import com.stuypulse.robot.util.simulation.TalonFXSimulation;
+import dev.doglog.DogLog;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.math.system.plant.LinearSystemId;
@@ -24,14 +26,8 @@ import edu.wpi.first.units.measure.AngularVelocity;
 import edu.wpi.first.units.measure.Voltage;
 import edu.wpi.first.wpilibj.simulation.DCMotorSim;
 import edu.wpi.first.wpilibj.simulation.SingleJointedArmSim;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
-import com.ctre.phoenix6.controls.DutyCycleOut;
-import com.ctre.phoenix6.controls.Follower;
-import com.ctre.phoenix6.controls.PositionTorqueCurrentFOC;
-import com.ctre.phoenix6.controls.VoltageOut;
-import com.ctre.phoenix6.signals.MotorAlignmentValue;
-import dev.doglog.DogLog;
+import java.util.Optional;
 
 public class IntakeSim extends Intake {
 
@@ -56,11 +52,29 @@ public class IntakeSim extends Intake {
     private Rotation2d zeroOffset;
 
     public IntakeSim() {
-        pivotSim = new SingleJointedArmSim(LinearSystemId.createDCMotorSystem(DCMotor.getKrakenX60(1), Settings.Intake.Pivot.J.in(KilogramSquareMeters), Settings.Intake.Pivot.GEAR_RATIO), DCMotor.getKrakenX60(1), Settings.Intake.Pivot.GEAR_RATIO, Settings.Intake.Pivot.PIVOT_ARM_LENGTH.in(Meters), Settings.Intake.Pivot.MIN_ANGLE.in(Radians), Settings.Intake.Pivot.MAX_ANGLE.in(Radians), true, Settings.Intake.Pivot.INITIAL_ANGLE.in(Radians));
+        pivotSim =
+                new SingleJointedArmSim(
+                        LinearSystemId.createDCMotorSystem(
+                                DCMotor.getKrakenX60(1),
+                                Settings.Intake.Pivot.J.in(KilogramSquareMeters),
+                                Settings.Intake.Pivot.GEAR_RATIO),
+                        DCMotor.getKrakenX60(1),
+                        Settings.Intake.Pivot.GEAR_RATIO,
+                        Settings.Intake.Pivot.PIVOT_ARM_LENGTH.in(Meters),
+                        Settings.Intake.Pivot.MIN_ANGLE.in(Radians),
+                        Settings.Intake.Pivot.MAX_ANGLE.in(Radians),
+                        true,
+                        Settings.Intake.Pivot.INITIAL_ANGLE.in(Radians));
         pivotMotor = new TalonFXSimulation(Ports.Intake.INTAKE_PIVOT_MOTOR, pivotSim);
         pivotMotor.configure(Motors.Intake.PIVOT_CONFIG);
         pivotController = new PositionTorqueCurrentFOC(getState().getTargetAngle().in(Rotations));
-        rollerSim = new DCMotorSim(LinearSystemId.createDCMotorSystem(DCMotor.getKrakenX60(2), Settings.Intake.Roller.J.in(KilogramSquareMeters), Settings.Intake.Roller.GEAR_RATIO), DCMotor.getKrakenX60(2));
+        rollerSim =
+                new DCMotorSim(
+                        LinearSystemId.createDCMotorSystem(
+                                DCMotor.getKrakenX60(2),
+                                Settings.Intake.Roller.J.in(KilogramSquareMeters),
+                                Settings.Intake.Roller.GEAR_RATIO),
+                        DCMotor.getKrakenX60(2));
         rollerMotor = new TalonFXSimulation(Ports.Intake.INTAKE_ROLLER_MOTOR_LEFT, rollerSim);
         rollerFollower = new TalonFXSimulation(Ports.Intake.INTAKE_ROLLER_MOTOR_RIGHT, rollerSim);
         rollerMotor.configure(Motors.Intake.LEFT_ROLLER_CONFIG);
@@ -122,7 +136,8 @@ public class IntakeSim extends Intake {
         DogLog.log("Intake/Pivot/Supply Current", pivotMotor.getSupplyCurrent().getValueAsDouble());
         DogLog.log("Intake/Pivot/Voltage", pivotMotor.getMotorVoltage().getValueAsDouble());
         DogLog.log("Intake/Rollers/Left Current", rollerMotor.getStatorCurrent().getValueAsDouble());
-        DogLog.log("Intake/Rollers/Right Current", rollerFollower.getStatorCurrent().getValueAsDouble());
+        DogLog.log(
+                "Intake/Rollers/Right Current", rollerFollower.getStatorCurrent().getValueAsDouble());
         DogLog.log("Intake/Rollers/Left Voltage", rollerMotor.getMotorVoltage().getValueAsDouble());
         DogLog.log("Intake/Rollers/Right Voltage", rollerFollower.getMotorVoltage().getValueAsDouble());
         DogLog.log("Intake/Rollers/Left Stalling", false);
@@ -133,6 +148,14 @@ public class IntakeSim extends Intake {
 
     @Override
     public SysIdRoutine getIntakeSysIdRoutine() {
-        return SysId.getRoutine(Settings.Intake.Pivot.RAMP_RATE, Settings.Intake.Pivot.STEP_VOLTAGE, "Intake", voltage -> setPivotVoltageOverride(voltage), () -> Radians.of(pivotSim.getAngleRads()), () -> RadiansPerSecond.of(pivotSim.getVelocityRadPerSec()), () -> Volts.of(pivotSim.getInput(0)), getInstance());
+        return SysId.getRoutine(
+                Settings.Intake.Pivot.RAMP_RATE,
+                Settings.Intake.Pivot.STEP_VOLTAGE,
+                "Intake",
+                voltage -> setPivotVoltageOverride(voltage),
+                () -> Radians.of(pivotSim.getAngleRads()),
+                () -> RadiansPerSecond.of(pivotSim.getVelocityRadPerSec()),
+                () -> Volts.of(pivotSim.getInput(0)),
+                getInstance());
     }
 }
