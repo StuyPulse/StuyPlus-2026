@@ -48,7 +48,7 @@ public class FeederSim extends Feeder {
 
     @Override
     public void periodic() {
-        if (!Settings.EnabledSubsystems.INTAKE.get()) {
+        if (!Settings.EnabledSubsystems.FEEDER.get()) {
             stopMotors();
             return;
         }
