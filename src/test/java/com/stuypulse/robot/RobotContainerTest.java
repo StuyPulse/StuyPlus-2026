@@ -1,24 +1,27 @@
+/************************* PROJECT RON *************************/
+/* Copyright (c) 2026 StuyPulse Robotics. All rights reserved. */
+/* Use of this source code is governed by an MIT-style license */
+/* that can be found in the repository LICENSE file.           */
+/***************************************************************/
 package com.stuypulse.robot;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 import edu.wpi.first.hal.HAL;
-import edu.wpi.first.wpilibj2.command.CommandScheduler;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import com.stuypulse.robot.RobotContainer;
 
 public class RobotContainerTest {
-    @BeforeEach
-    public void setup() {
-        assert HAL.initialize(500, 0);
-    }
+@BeforeEach
+public void setup() {
+	assert HAL.initialize(500, 0);
+}
 
-    @Test
-    public void testRobotContainer() {
-        assertDoesNotThrow(() -> {
-            new RobotContainer();
-        });
-    }
+@Test
+public void testRobotContainer() {
+	assertDoesNotThrow(
+		() -> {
+		new RobotContainer();
+		});
+}
 }
