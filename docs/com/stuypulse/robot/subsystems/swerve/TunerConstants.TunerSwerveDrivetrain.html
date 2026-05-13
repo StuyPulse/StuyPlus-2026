@@ -168,9 +168,10 @@ loadScripts(document, 'script');</script>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">TunerSwerveDrivetrain</span><wbr><span class="parameters">(com.ctre.phoenix6.swerve.SwerveDrivetrainConstants&nbsp;drivetrainConstants,
  com.ctre.phoenix6.swerve.SwerveModuleConstants&lt;?,<wbr>?,<wbr>?&gt;...&nbsp;modules)</span></div>
 <div class="block">Constructs a CTRE SwerveDrivetrain using the specified constants.
-
- <p>This constructs the underlying hardware devices, so users should not construct the devices
- themselves. If they need the devices, they can access them through getters in the classes.</div>
+ <p>
+ This constructs the underlying hardware devices, so users should not construct
+ the devices themselves. If they need the devices, they can access them through
+ getters in the classes.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>drivetrainConstants</code> - Drivetrain-wide constants for the swerve drive</dd>
@@ -185,14 +186,16 @@ loadScripts(document, 'script');</script>
  double&nbsp;odometryUpdateFrequency,
  com.ctre.phoenix6.swerve.SwerveModuleConstants&lt;?,<wbr>?,<wbr>?&gt;...&nbsp;modules)</span></div>
 <div class="block">Constructs a CTRE SwerveDrivetrain using the specified constants.
-
- <p>This constructs the underlying hardware devices, so users should not construct the devices
- themselves. If they need the devices, they can access them through getters in the classes.</div>
+ <p>
+ This constructs the underlying hardware devices, so users should not construct
+ the devices themselves. If they need the devices, they can access them through
+ getters in the classes.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>drivetrainConstants</code> - Drivetrain-wide constants for the swerve drive</dd>
-<dd><code>odometryUpdateFrequency</code> - The frequency to run the odometry loop. If unspecified or set
-     to 0 Hz, this is 250 Hz on CAN FD, and 100 Hz on CAN 2.0.</dd>
+<dd><code>odometryUpdateFrequency</code> - The frequency to run the odometry loop. If
+                                unspecified or set to 0 Hz, this is 250 Hz on
+                                CAN FD, and 100 Hz on CAN 2.0.</dd>
 <dd><code>modules</code> - Constants for each specific module</dd>
 </dl>
 </section>
@@ -206,18 +209,22 @@ loadScripts(document, 'script');</script>
  edu.wpi.first.math.Matrix&lt;edu.wpi.first.math.numbers.N3,<wbr>edu.wpi.first.math.numbers.N1&gt;&nbsp;visionStandardDeviation,
  com.ctre.phoenix6.swerve.SwerveModuleConstants&lt;?,<wbr>?,<wbr>?&gt;...&nbsp;modules)</span></div>
 <div class="block">Constructs a CTRE SwerveDrivetrain using the specified constants.
-
- <p>This constructs the underlying hardware devices, so users should not construct the devices
- themselves. If they need the devices, they can access them through getters in the classes.</div>
+ <p>
+ This constructs the underlying hardware devices, so users should not construct
+ the devices themselves. If they need the devices, they can access them through
+ getters in the classes.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>drivetrainConstants</code> - Drivetrain-wide constants for the swerve drive</dd>
-<dd><code>odometryUpdateFrequency</code> - The frequency to run the odometry loop. If unspecified or set
-     to 0 Hz, this is 250 Hz on CAN FD, and 100 Hz on CAN 2.0.</dd>
-<dd><code>odometryStandardDeviation</code> - The standard deviation for odometry calculation in the form
-     [x, y, theta]áµ€, with units in meters and radians</dd>
-<dd><code>visionStandardDeviation</code> - The standard deviation for vision calculation in the form [x,
-     y, theta]áµ€, with units in meters and radians</dd>
+<dd><code>odometryUpdateFrequency</code> - The frequency to run the odometry loop. If
+                                  unspecified or set to 0 Hz, this is 250 Hz on
+                                  CAN FD, and 100 Hz on CAN 2.0.</dd>
+<dd><code>odometryStandardDeviation</code> - The standard deviation for odometry calculation
+                                  in the form [x, y, theta]áµ€, with units in meters
+                                  and radians</dd>
+<dd><code>visionStandardDeviation</code> - The standard deviation for vision calculation
+                                  in the form [x, y, theta]áµ€, with units in meters
+                                  and radians</dd>
 <dd><code>modules</code> - Constants for each specific module</dd>
 </dl>
 </section>

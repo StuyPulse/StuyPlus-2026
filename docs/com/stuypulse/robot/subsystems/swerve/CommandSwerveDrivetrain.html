@@ -88,8 +88,8 @@ loadScripts(document, 'script');</script>
 <div class="type-signature"><span class="modifiers">public class </span><span class="element-name type-name-label">CommandSwerveDrivetrain</span>
 <span class="extends-implements">extends <a href="TunerConstants.TunerSwerveDrivetrain.html" title="class in com.stuypulse.robot.subsystems.swerve">TunerConstants.TunerSwerveDrivetrain</a>
 implements edu.wpi.first.wpilibj2.command.Subsystem</span></div>
-<div class="block">Class that extends the Phoenix 6 SwerveDrivetrain class and implements Subsystem so it can easily
- be used in command-based projects.</div>
+<div class="block">Class that extends the Phoenix 6 SwerveDrivetrain class and implements
+ Subsystem so it can easily be used in command-based projects.</div>
 </section>
 <section class="summary">
 <ul class="summary-list">
@@ -208,12 +208,14 @@ implements edu.wpi.first.wpilibj2.command.Subsystem</span></div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>edu.wpi.first.wpilibj2.command.Command</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#sysIdDynamic(edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction)" class="member-name-link">sysIdDynamic</a><wbr>(edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction&nbsp;direction)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Runs the SysId Dynamic test in the given direction for the routine specified by <code>m_sysIdRoutineToApply</code>.</div>
+<div class="block">Runs the SysId Dynamic test in the given direction for the routine
+ specified by <code>m_sysIdRoutineToApply</code>.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>edu.wpi.first.wpilibj2.command.Command</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#sysIdQuasistatic(edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction)" class="member-name-link">sysIdQuasistatic</a><wbr>(edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction&nbsp;direction)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Runs the SysId Quasistatic test in the given direction for the routine specified by <code>m_sysIdRoutineToApply</code>.</div>
+<div class="block">Runs the SysId Quasistatic test in the given direction for the routine
+ specified by <code>m_sysIdRoutineToApply</code>.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>edu.wpi.first.wpilibj2.command.Command</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#sysidRotationDynamic(edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction)" class="member-name-link">sysidRotationDynamic</a><wbr>(edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction&nbsp;direction)</code></div>
@@ -256,9 +258,10 @@ implements edu.wpi.first.wpilibj2.command.Subsystem</span></div>
 <div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="element-name">CommandSwerveDrivetrain</span><wbr><span class="parameters">(com.ctre.phoenix6.swerve.SwerveDrivetrainConstants&nbsp;drivetrainConstants,
  com.ctre.phoenix6.swerve.SwerveModuleConstants&lt;?,<wbr>?,<wbr>?&gt;...&nbsp;modules)</span></div>
 <div class="block">Constructs a CTRE SwerveDrivetrain using the specified constants.
-
- <p>This constructs the underlying hardware devices, so users should not construct the devices
- themselves. If they need the devices, they can access them through getters in the classes.</div>
+ <p>
+ This constructs the underlying hardware devices, so users should not construct
+ the devices themselves. If they need the devices, they can access them through
+ getters in the classes.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>drivetrainConstants</code> - Drivetrain-wide constants for the swerve drive</dd>
@@ -306,7 +309,8 @@ implements edu.wpi.first.wpilibj2.command.Subsystem</span></div>
 <section class="detail" id="sysIdQuasistatic(edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction)">
 <h3>sysIdQuasistatic</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">edu.wpi.first.wpilibj2.command.Command</span>&nbsp;<span class="element-name">sysIdQuasistatic</span><wbr><span class="parameters">(edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction&nbsp;direction)</span></div>
-<div class="block">Runs the SysId Quasistatic test in the given direction for the routine specified by <code>m_sysIdRoutineToApply</code>.</div>
+<div class="block">Runs the SysId Quasistatic test in the given direction for the routine
+ specified by <code>m_sysIdRoutineToApply</code>.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>direction</code> - Direction of the SysId Quasistatic test</dd>
@@ -319,7 +323,8 @@ implements edu.wpi.first.wpilibj2.command.Subsystem</span></div>
 <section class="detail" id="sysIdDynamic(edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction)">
 <h3>sysIdDynamic</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">edu.wpi.first.wpilibj2.command.Command</span>&nbsp;<span class="element-name">sysIdDynamic</span><wbr><span class="parameters">(edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction&nbsp;direction)</span></div>
-<div class="block">Runs the SysId Dynamic test in the given direction for the routine specified by <code>m_sysIdRoutineToApply</code>.</div>
+<div class="block">Runs the SysId Dynamic test in the given direction for the routine
+ specified by <code>m_sysIdRoutineToApply</code>.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>direction</code> - Direction of the SysId Dynamic test</dd>
@@ -382,17 +387,18 @@ implements edu.wpi.first.wpilibj2.command.Subsystem</span></div>
  edu.wpi.first.math.Matrix&lt;edu.wpi.first.math.numbers.N3,<wbr>edu.wpi.first.math.numbers.N1&gt;&nbsp;visionMeasurementStdDevs)</span></div>
 <div class="block">Adds a vision measurement to the Kalman Filter. This will correct the odometry pose estimate
  while still accounting for measurement noise.
-
- <p>Note that the vision measurement standard deviations passed into this method will continue
- to apply to future measurements until a subsequent call to <code>SwerveDrivetrain.setVisionMeasurementStdDevs(Matrgix)</code> or this method.</div>
+ <p>
+ Note that the vision measurement standard deviations passed into this method
+ will continue to apply to future measurements until a subsequent call to
+ <code>SwerveDrivetrain.setVisionMeasurementStdDevs(Matrgix)</code> or this method.</div>
 <dl class="notes">
 <dt>Overrides:</dt>
 <dd><code>addVisionMeasurement</code>&nbsp;in class&nbsp;<code>com.ctre.phoenix6.swerve.SwerveDrivetrain&lt;com.ctre.phoenix6.hardware.TalonFX,<wbr>com.ctre.phoenix6.hardware.TalonFX,<wbr>com.ctre.phoenix6.hardware.CANcoder&gt;</code></dd>
 <dt>Parameters:</dt>
 <dd><code>visionRobotPoseMeters</code> - The pose of the robot as measured by the vision camera.</dd>
 <dd><code>timestampSeconds</code> - The timestamp of the vision measurement in seconds.</dd>
-<dd><code>visionMeasurementStdDevs</code> - Standard deviations of the vision pose measurement in the form
-     [x, y, theta]ᵀ, with units in meters and radians.</dd>
+<dd><code>visionMeasurementStdDevs</code> - Standard deviations of the vision pose measurement
+     in the form [x, y, theta]ᵀ, with units in meters and radians.</dd>
 </dl>
 </section>
 </li>
