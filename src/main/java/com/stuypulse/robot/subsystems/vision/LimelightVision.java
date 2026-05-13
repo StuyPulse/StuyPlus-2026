@@ -77,7 +77,6 @@ public class LimelightVision extends SubsystemBase {
     }
 
     public void enable() {
-        // EnabledSubsystems.VISION.set(true);
         EnabledSubsystems.VISION.getTopic().publish().set(true);
     }
 

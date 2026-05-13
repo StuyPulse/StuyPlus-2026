@@ -26,15 +26,14 @@ import edu.wpi.first.wpilibj.util.Color;
 import com.ctre.phoenix6.CANBus;
 import dev.doglog.DogLog;
 
-// import com.stuypulse.stuylib.network.SmartBoolean;
-// import com.stuypulse.stuylib.network.SmartNumber;
 import com.pathplanner.lib.path.PathConstraints;
 
 /*-
  * File containing tunable settings for every subsystem on the robot.
  *
- * We use StuyLib's SmartNumber / SmartBoolean in order to have tunable
- * values that we can edit on Shuffleboard.
+ * We use DogLog's tunables in order to have tunable
+ * values that we can edit on whatever dashboard we
+ * are using.
  */
 public interface Settings {
 
