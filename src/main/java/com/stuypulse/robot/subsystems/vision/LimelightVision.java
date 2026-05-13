@@ -21,6 +21,7 @@ import com.stuypulse.robot.util.vision.LimelightHelpers.IMUData;
 import com.stuypulse.robot.util.vision.LimelightHelpers.PoseEstimate;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Pose3d;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.stuypulse.stuylib.network.SmartBoolean;
@@ -76,11 +77,12 @@ public class LimelightVision extends SubsystemBase {
     }
 
     public void enable() {
-        EnabledSubsystems.VISION.set(true);
+        // EnabledSubsystems.VISION.set(true);
+        EnabledSubsystems.VISION.getTopic().publish().set(true);
     }
 
     public void disable() {
-        EnabledSubsystems.VISION.set(false);
+        EnabledSubsystems.VISION.getTopic().publish().set(false);
     }
 
     public void setCameraEnabled(String name, boolean enabled) {

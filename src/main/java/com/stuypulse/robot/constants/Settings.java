@@ -16,14 +16,18 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.numbers.N3;
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.networktables.BooleanSubscriber;
+import edu.wpi.first.networktables.DoubleSubscriber;
 import edu.wpi.first.units.*;
 import edu.wpi.first.units.measure.*;
 import edu.wpi.first.wpilibj.LEDPattern;
 import edu.wpi.first.wpilibj.simulation.SingleJointedArmSim;
 import edu.wpi.first.wpilibj.util.Color;
 import com.ctre.phoenix6.CANBus;
-import com.stuypulse.stuylib.network.SmartBoolean;
-import com.stuypulse.stuylib.network.SmartNumber;
+import dev.doglog.DogLog;
+
+// import com.stuypulse.stuylib.network.SmartBoolean;
+// import com.stuypulse.stuylib.network.SmartNumber;
 import com.pathplanner.lib.path.PathConstraints;
 
 /*-
@@ -42,19 +46,19 @@ public interface Settings {
 
     public interface EnabledSubsystems {
 
-        SmartBoolean FEEDER = new SmartBoolean("Enabled Subsystems/Feeder", false);
+        BooleanSubscriber FEEDER = DogLog.tunable("Enabled Subsystems/Feeder", false);
 
-        SmartBoolean INTAKE = new SmartBoolean("Enabled Subsystems/Intake", true);
+        BooleanSubscriber INTAKE = DogLog.tunable("Enabled Subsystems/Intake", true);
 
-        SmartBoolean LED = new SmartBoolean("Enabled Subsystems/LED", false);
+        BooleanSubscriber LED = DogLog.tunable("Enabled Subsystems/LED", false);
 
-        SmartBoolean HANDOFF = new SmartBoolean("Enabled Subsystems/Handoff", false);
+        BooleanSubscriber HANDOFF = DogLog.tunable("Enabled Subsystems/Handoff", false);
 
-        SmartBoolean SHOOTER = new SmartBoolean("Enabled Subsystems/Shooter", false);
+        BooleanSubscriber SHOOTER = DogLog.tunable("Enabled Subsystems/Shooter", false);
 
-        SmartBoolean VISION = new SmartBoolean("Enabled Subsystems/Vision", false);
+        BooleanSubscriber VISION = DogLog.tunable("Enabled Subsystems/Vision", false);
 
-        SmartBoolean SWERVE = new SmartBoolean("Enabled Subsystems/Swerve", false);
+        BooleanSubscriber SWERVE = DogLog.tunable("Enabled Subsystems/Swerve", false);
     }
 
     public interface Vision {
@@ -90,7 +94,7 @@ public interface Settings {
 
             Angle PUSHDOWN_THRESHOLD = Degrees.of(-20);
 
-            SmartNumber PUSHDOWN_CURRENT = new SmartNumber("Intake/Pivot/Pushdown Current Tuning Amps", 30.0);
+            DoubleSubscriber PUSHDOWN_CURRENT = DogLog.tunable("Intake/Pivot/Pushdown Current Tuning Amps", 30.0);
 
             // amps
             Current STALL_CURRENT = Amps.of(25);
