@@ -7,25 +7,31 @@
         {
           "type": "path",
           "data": {
-            "pathName": "RB to N Mid"
+            "pathName": "Shooting LB to N"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "RB Return Mid"
+            "pathName": "Shooting N to LB"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "RB to Outpost Mid"
+            "pathName": "Shooting LB to N Hook"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Shooting N to LB Final"
           }
         }
       ]
     }
   },
   "resetOdom": true,
-  "folder": "Mid(Line)",
+  "folder": "Shooting",
   "choreoAuto": false
 }

@@ -5,19 +5,12 @@
   "pathFolders": [
     "Disrupt",
     "Ferry",
-    "Mid",
-    "Midline",
-    "Shooting",
-    "Outtake",
-    "Straight"
+    "Shooting"
   ],
   "autoFolders": [
     "Disrupt",
     "Ferry",
-    "Mid(Line)",
-    "Shooting",
-    "Outtake",
-    "Straight"
+    "Shooting"
   ],
   "defaultMaxVel": 3.0,
   "defaultMaxAccel": 3.0,
