@@ -22,47 +22,45 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 
 public class SwerveDriveDrive extends Command {
 
-    private final CommandSwerveDrivetrain swerve;
+	private final CommandSwerveDrivetrain swerve;
 
-    private final CommandXboxController driver;
+	private final CommandXboxController driver;
 
-    private final VStream speed;
+	private final VStream speed;
 
-    private final IStream turn;
+	private final IStream turn;
 
-    public SwerveDriveDrive(CommandXboxController driver) {
-        swerve = CommandSwerveDrivetrain.getInstance();
-        speed =
-                VStream.create(this::getDriverInputAsVelocity)
-                        .filtered(
-                                new VDeadZone(Drive.DEADBAND),
-                                x -> x.clamp(1),
-                                x -> x.pow(Drive.POWER),
-                                x -> x.mul(Swerve.Constraints.MAX_VELOCITY_M_PER_S),
-                                new VRateLimit(Swerve.Constraints.MAX_ACCEL_M_PER_S_SQUARED),
-                                new VLowPassFilter(Drive.RC));
-        turn =
-                IStream.create(driver::getRightX)
-                        .filtered(
-                                x -> SLMath.deadband(x, Turn.DEADBAND),
-                                x -> SLMath.spow(x, Turn.POWER),
-                                x -> x * Swerve.Constraints.MAX_ANGULAR_VEL_RAD_PER_S,
-                                new LowPassFilter(Turn.RC));
-        this.driver = driver;
-        addRequirements(swerve);
-    }
+	public SwerveDriveDrive(CommandXboxController driver) {
+		swerve = CommandSwerveDrivetrain.getInstance();
+		speed = VStream.create(this::getDriverInputAsVelocity)
+				.filtered(
+						new VDeadZone(Drive.DEADBAND),
+						x -> x.clamp(1),
+						x -> x.pow(Drive.POWER),
+						x -> x.mul(Swerve.Constraints.MAX_VELOCITY_M_PER_S),
+						new VRateLimit(Swerve.Constraints.MAX_ACCEL_M_PER_S_SQUARED),
+						new VLowPassFilter(Drive.RC));
+		turn = IStream.create(driver::getRightX)
+				.filtered(
+						x -> SLMath.deadband(x, Turn.DEADBAND),
+						x -> SLMath.spow(x, Turn.POWER),
+						x -> x * Swerve.Constraints.MAX_ANGULAR_VEL_RAD_PER_S,
+						new LowPassFilter(Turn.RC));
+		this.driver = driver;
+		addRequirements(swerve);
+	}
 
-    private Vector2D getDriverInputAsVelocity() {
-        return new Vector2D(-driver.getLeftY(), -driver.getLeftX());
-    }
+	private Vector2D getDriverInputAsVelocity() {
+		return new Vector2D(-driver.getLeftY(), -driver.getLeftX());
+	}
 
-    @Override
-    public void execute() {
-        swerve.setControl(
-                swerve
-                        .getFieldCentricSwerveRequest()
-                        .withVelocityX(speed.get().x)
-                        .withVelocityY(speed.get().y)
-                        .withRotationalRate(-turn.getAsDouble()));
-    }
+	@Override
+	public void execute() {
+		swerve.setControl(
+				swerve
+						.getFieldCentricSwerveRequest()
+						.withVelocityX(speed.get().x)
+						.withVelocityY(speed.get().y)
+						.withRotationalRate(-turn.getAsDouble()));
+	}
 }

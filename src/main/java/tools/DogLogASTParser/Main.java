@@ -22,21 +22,33 @@ import java.nio.file.Path;
 /**
  *
  *
- * <h2>DogLogASTParser | A tool for replacing SmartDashboard calls with DogLog calls</h2>
+ * <h2>DogLogASTParser | A tool for replacing SmartDashboard calls with DogLog
+ * calls</h2>
  *
- * <p>The main entry point for DogLogASTParser. It uses an abstract syntax tree (AST) parser called
- * <a href="https://javaparser.org">JavaParser</a> to read and modify the java files in the robot
+ * <p>
+ * The main entry point for DogLogASTParser. It uses an abstract syntax tree
+ * (AST) parser called
+ * <a href="https://javaparser.org">JavaParser</a> to read and modify the java
+ * files in the robot
  * code.
  *
- * <p>SmartDashboard calls of <code>putNumber</code>, <code>putBoolean</code>, and <code>putString
- * </code> are replaced with <code>DogLog.log</code> calls. <code>SmartDashboard.putData</code>
+ * <p>
+ * SmartDashboard calls of <code>putNumber</code>, <code>putBoolean</code>, and
+ * <code>putString
+ * </code> are replaced with <code>DogLog.log</code> calls.
+ * <code>SmartDashboard.putData</code>
  * remains unchanged for more complex data.
  *
- * <p>Works with a Github Action workflow (doglog-replacement.yml) to automate the replacement with
+ * <p>
+ * Works with a Github Action workflow (doglog-replacement.yml) to automate the
+ * replacement with
  * every push onto the main branch.
  *
- * <p>To execute, manually run the workflow in Github or push to main. It's not recommended to run
- * this tool locally as the purpose of this tool is to automate the replacement and push to the
+ * <p>
+ * To execute, manually run the workflow in Github or push to main. It's not
+ * recommended to run
+ * this tool locally as the purpose of this tool is to automate the replacement
+ * and push to the
  * <code>doglog</code> branch for testing.
  */
 public class Main {
@@ -46,7 +58,9 @@ public class Main {
      *
      * <h4>Entry Point</h4>
      *
-     * <p>Walks through the Java files in the robot code, filtering the tools directory, and invokes
+     * <p>
+     * Walks through the Java files in the robot code, filtering the tools
+     * directory, and invokes
      * the {@link #processFile(Path)} method for AST parsing.
      */
     public static void main(String[] args) {
@@ -69,13 +83,19 @@ public class Main {
      *
      * <h4>Processes individual Java files.</h4>
      *
-     * <p>Walks through the java files in the robot code, excluding the tools directory, and invokes
+     * <p>
+     * Walks through the java files in the robot code, excluding the tools
+     * directory, and invokes
      * the {@link #processFile(Path)} method for AST parsing.
      *
-     * <p>It makes a {@link CompilationUnit} for the file, then applies the {@link DogLogRewriter} to
+     * <p>
+     * It makes a {@link CompilationUnit} for the file, then applies the
+     * {@link DogLogRewriter} to
      * replace SmartDashboard calls with DogLog calls.
      *
-     * <p>When {@link DogLogRewriter} is done, the modified {@link CompilationUnit} is written back to
+     * <p>
+     * When {@link DogLogRewriter} is done, the modified {@link CompilationUnit} is
+     * written back to
      * the file path, replacing the original file.
      *
      * @param filePath the path of the Java file to be processed
@@ -107,16 +127,14 @@ public class Main {
             final CompilationUnit parsed = StaticJavaParser.parse(file);
             parsed.addImport("dev.doglog.DogLogOptions");
 
-            final ObjectCreationExpr doglogOptions =
-                    new ObjectCreationExpr(
-                            null, new ClassOrInterfaceType(null, "DogLogOptions"), new NodeList<>());
+            final ObjectCreationExpr doglogOptions = new ObjectCreationExpr(
+                    null, new ClassOrInterfaceType(null, "DogLogOptions"), new NodeList<>());
 
-            final MethodCallExpr withCaptureDs =
-                    new MethodCallExpr(doglogOptions, "withCaptureDs")
-                            .addArgument(new BooleanLiteralExpr(true));
+            final MethodCallExpr withCaptureDs = new MethodCallExpr(doglogOptions, "withCaptureDs")
+                    .addArgument(new BooleanLiteralExpr(true));
 
-            final MethodCallExpr doglogConfigCall =
-                    new MethodCallExpr(new NameExpr("DogLog"), "setOptions").addArgument(withCaptureDs);
+            final MethodCallExpr doglogConfigCall = new MethodCallExpr(new NameExpr("DogLog"), "setOptions")
+                    .addArgument(withCaptureDs);
 
             parsed
                     .findFirst(

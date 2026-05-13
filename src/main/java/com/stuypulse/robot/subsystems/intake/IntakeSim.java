@@ -52,29 +52,27 @@ public class IntakeSim extends Intake {
     private Rotation2d zeroOffset;
 
     public IntakeSim() {
-        pivotSim =
-                new SingleJointedArmSim(
-                        LinearSystemId.createDCMotorSystem(
-                                DCMotor.getKrakenX60(1),
-                                Settings.Intake.Pivot.J.in(KilogramSquareMeters),
-                                Settings.Intake.Pivot.GEAR_RATIO),
+        pivotSim = new SingleJointedArmSim(
+                LinearSystemId.createDCMotorSystem(
                         DCMotor.getKrakenX60(1),
-                        Settings.Intake.Pivot.GEAR_RATIO,
-                        Settings.Intake.Pivot.PIVOT_ARM_LENGTH.in(Meters),
-                        Settings.Intake.Pivot.MIN_ANGLE.in(Radians),
-                        Settings.Intake.Pivot.MAX_ANGLE.in(Radians),
-                        true,
-                        Settings.Intake.Pivot.INITIAL_ANGLE.in(Radians));
+                        Settings.Intake.Pivot.J.in(KilogramSquareMeters),
+                        Settings.Intake.Pivot.GEAR_RATIO),
+                DCMotor.getKrakenX60(1),
+                Settings.Intake.Pivot.GEAR_RATIO,
+                Settings.Intake.Pivot.PIVOT_ARM_LENGTH.in(Meters),
+                Settings.Intake.Pivot.MIN_ANGLE.in(Radians),
+                Settings.Intake.Pivot.MAX_ANGLE.in(Radians),
+                true,
+                Settings.Intake.Pivot.INITIAL_ANGLE.in(Radians));
         pivotMotor = new TalonFXSimulation(Ports.Intake.INTAKE_PIVOT_MOTOR, pivotSim);
         pivotMotor.configure(Motors.Intake.PIVOT_CONFIG);
         pivotController = new PositionTorqueCurrentFOC(getState().getTargetAngle().in(Rotations));
-        rollerSim =
-                new DCMotorSim(
-                        LinearSystemId.createDCMotorSystem(
-                                DCMotor.getKrakenX60(2),
-                                Settings.Intake.Roller.J.in(KilogramSquareMeters),
-                                Settings.Intake.Roller.GEAR_RATIO),
-                        DCMotor.getKrakenX60(2));
+        rollerSim = new DCMotorSim(
+                LinearSystemId.createDCMotorSystem(
+                        DCMotor.getKrakenX60(2),
+                        Settings.Intake.Roller.J.in(KilogramSquareMeters),
+                        Settings.Intake.Roller.GEAR_RATIO),
+                DCMotor.getKrakenX60(2));
         rollerMotor = new TalonFXSimulation(Ports.Intake.INTAKE_ROLLER_MOTOR_LEFT, rollerSim);
         rollerFollower = new TalonFXSimulation(Ports.Intake.INTAKE_ROLLER_MOTOR_RIGHT, rollerSim);
         rollerMotor.configure(Motors.Intake.LEFT_ROLLER_CONFIG);

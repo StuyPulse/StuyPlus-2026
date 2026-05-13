@@ -87,8 +87,7 @@ public interface Settings {
 
             Angle PUSHDOWN_THRESHOLD = Degrees.of(-20);
 
-            SmartNumber PUSHDOWN_CURRENT =
-                    new SmartNumber("Intake/Pivot/Pushdown Current Tuning Amps", 30.0);
+            SmartNumber PUSHDOWN_CURRENT = new SmartNumber("Intake/Pivot/Pushdown Current Tuning Amps", 30.0);
 
             // amps
             Current STALL_CURRENT = Amps.of(25);
@@ -113,8 +112,8 @@ public interface Settings {
             Distance PIVOT_ARM_LENGTH = Meters.of(0.1439822);
 
             // mass in kg
-            MomentOfInertia J =
-                    KilogramSquareMeters.of(SingleJointedArmSim.estimateMOI(PIVOT_ARM_LENGTH.in(Meters), 30));
+            MomentOfInertia J = KilogramSquareMeters
+                    .of(SingleJointedArmSim.estimateMOI(PIVOT_ARM_LENGTH.in(Meters), 30));
         }
 
         public interface Roller {
@@ -153,13 +152,13 @@ public interface Settings {
         int LED_LENGTH = 80;
 
         // Buffer Views {Starting Index, Ending Index}
-        int[] SHOOTER_BUFFER = {0, 19};
+        int[] SHOOTER_BUFFER = { 0, 19 };
 
-        int[] FEEDER_BUFFER = {20, 39};
+        int[] FEEDER_BUFFER = { 20, 39 };
 
-        int[] INTAKE_BUFFER = {40, 59};
+        int[] INTAKE_BUFFER = { 40, 59 };
 
-        int[] HANDOFF_BUFFER = {60, 79};
+        int[] HANDOFF_BUFFER = { 60, 79 };
 
         // shooter
         LEDPattern SHOOTING = LEDPattern.solid(Color.kOrange);
@@ -234,34 +233,38 @@ public interface Settings {
         public interface RPMInterpolation {
 
             double[][] distanceRPMInterpolationValues = {
-                {1.0, 1000.0}, {2.0, 1500.0}, {3.0, 2000.0}, {4.0, 2500.0}, {5.0, 3000.0}
+                    { 1.0, 1000.0 }, { 2.0, 1500.0 }, { 3.0, 2000.0 }, { 4.0, 2500.0 }, { 5.0, 3000.0 }
             };
         }
 
-        // These values are placeholders and should be replaced with actual data from testing
+        // These values are placeholders and should be replaced with actual data from
+        // testing
         public interface TOFInterpolation {
 
             double[][] distanceTOFInterpolationValues = {
-                {1.0, 0.5}, {2.0, 0.75}, {3.0, 1.0}, {4.0, 1.25}, {5.0, 1.5}
+                    { 1.0, 0.5 }, { 2.0, 0.75 }, { 3.0, 1.0 }, { 4.0, 1.25 }, { 5.0, 1.5 }
             };
         }
 
-        // These values are placeholders and should be replaced with actual data from testing
+        // These values are placeholders and should be replaced with actual data from
+        // testing
         public interface FerryRPMInterpolation {
 
             double[][] ferryDistanceRPMInterpolation = {
-                {1.0, 1000.0}, {2.0, 1500.0}, {3.0, 2000.0}, {4.0, 2500.0}, {5.0, 3000.0}
+                    { 1.0, 1000.0 }, { 2.0, 1500.0 }, { 3.0, 2000.0 }, { 4.0, 2500.0 }, { 5.0, 3000.0 }
             };
         }
 
-        // These values are placeholders and should be replaced with actual data from testing
+        // These values are placeholders and should be replaced with actual data from
+        // testing
         public interface FerryTOFInterpolation {
 
             double[][] FerryTOFInterpolationInterpolation = {
-                {1.0, 0.5}, {2.0, 0.75}, {3.0, 1.0}, {4.0, 1.25}, {5.0, 1.5}
+                    { 1.0, 0.5 }, { 2.0, 0.75 }, { 3.0, 1.0 }, { 4.0, 1.25 }, { 5.0, 1.5 }
             };
         }
-        // These values are placeholders and should be replaced with actual data from testing
+        // These values are placeholders and should be replaced with actual data from
+        // testing
     }
 
     public interface Swerve {
@@ -282,12 +285,11 @@ public interface Settings {
             // TODO: revert to 900
             double MAX_ANGULAR_ACCEL_RAD_PER_S = Units.degreesToRadians(300.0);
 
-            PathConstraints DEFAULT_CONSTRAINTS =
-                    new PathConstraints(
-                            MAX_VELOCITY_M_PER_S,
-                            MAX_ACCEL_M_PER_S_SQUARED,
-                            MAX_ANGULAR_VEL_RAD_PER_S,
-                            MAX_ANGULAR_ACCEL_RAD_PER_S);
+            PathConstraints DEFAULT_CONSTRAINTS = new PathConstraints(
+                    MAX_VELOCITY_M_PER_S,
+                    MAX_ACCEL_M_PER_S_SQUARED,
+                    MAX_ANGULAR_VEL_RAD_PER_S,
+                    MAX_ANGULAR_ACCEL_RAD_PER_S);
         }
 
         public interface Alignment {
@@ -311,8 +313,7 @@ public interface Settings {
 
                 Rotation2d THETA_TOLERANCE = Rotation2d.fromDegrees(1);
 
-                Pose2d POSE_TOLERANCE =
-                        new Pose2d(X_TOLERANCE.in(Meters), Y_TOLERANCE.in(Meters), THETA_TOLERANCE);
+                Pose2d POSE_TOLERANCE = new Pose2d(X_TOLERANCE.in(Meters), Y_TOLERANCE.in(Meters), THETA_TOLERANCE);
 
                 LinearVelocity MAX_VELOCITY_WHEN_ALIGNED = MetersPerSecond.of(0.15);
 

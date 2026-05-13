@@ -41,13 +41,12 @@ public class ShooterSim extends Shooter {
     private Optional<Voltage> voltageOverride;
 
     public ShooterSim() {
-        shooterSim =
-                new FlywheelSim(
-                        LinearSystemId.createFlywheelSystem(
-                                DCMotor.getKrakenX60(3),
-                                Settings.Shooter.J.in(KilogramSquareMeters),
-                                Settings.Shooter.GEAR_RATIO),
-                        DCMotor.getKrakenX60(3));
+        shooterSim = new FlywheelSim(
+                LinearSystemId.createFlywheelSystem(
+                        DCMotor.getKrakenX60(3),
+                        Settings.Shooter.J.in(KilogramSquareMeters),
+                        Settings.Shooter.GEAR_RATIO),
+                DCMotor.getKrakenX60(3));
         shooterMotorRight = new TalonFXSimulation(Ports.Shooter.SHOOTER_MOTOR_RIGHT, shooterSim);
         shooterMotorCenter = new TalonFXSimulation(Ports.Shooter.SHOOTER_MOTOR_CENTER, shooterSim);
         shooterMotorLeft = new TalonFXSimulation(Ports.Shooter.SHOOTER_MOTOR_LEFT, shooterSim);
@@ -56,8 +55,7 @@ public class ShooterSim extends Shooter {
         Motors.Shooter.SHOOTER_MOTOR_CENTER.configure(shooterMotorCenter);
         Motors.Shooter.SHOOTER_MOTOR_LEFT.configure(shooterMotorLeft);
         shooterController = new VelocityTorqueCurrentFOC(getState().getTargetAngularVelocity());
-        shooterFollowerController =
-                new Follower(shooterMotorRight.getDeviceID(), MotorAlignmentValue.Opposed);
+        shooterFollowerController = new Follower(shooterMotorRight.getDeviceID(), MotorAlignmentValue.Opposed);
         shooterMotorCenter.setControl(shooterFollowerController);
         shooterMotorLeft.setControl(shooterFollowerController);
         voltageOverride = Optional.empty();

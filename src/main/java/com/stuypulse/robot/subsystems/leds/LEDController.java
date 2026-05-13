@@ -46,14 +46,10 @@ public class LEDController extends SubsystemBase {
         led.setLength(buffer.getLength());
         led.setData(buffer);
         led.start();
-        this.shooterView =
-                buffer.createView(Settings.LED.SHOOTER_BUFFER[0], Settings.LED.SHOOTER_BUFFER[1]);
-        this.feederView =
-                buffer.createView(Settings.LED.FEEDER_BUFFER[0], Settings.LED.FEEDER_BUFFER[1]);
-        this.intakeView =
-                buffer.createView(Settings.LED.INTAKE_BUFFER[0], Settings.LED.INTAKE_BUFFER[1]);
-        this.handoffView =
-                buffer.createView(Settings.LED.HANDOFF_BUFFER[0], Settings.LED.HANDOFF_BUFFER[1]);
+        this.shooterView = buffer.createView(Settings.LED.SHOOTER_BUFFER[0], Settings.LED.SHOOTER_BUFFER[1]);
+        this.feederView = buffer.createView(Settings.LED.FEEDER_BUFFER[0], Settings.LED.FEEDER_BUFFER[1]);
+        this.intakeView = buffer.createView(Settings.LED.INTAKE_BUFFER[0], Settings.LED.INTAKE_BUFFER[1]);
+        this.handoffView = buffer.createView(Settings.LED.HANDOFF_BUFFER[0], Settings.LED.HANDOFF_BUFFER[1]);
         applyPattern(defaultPattern);
         SmartDashboard.putData(instance);
     }

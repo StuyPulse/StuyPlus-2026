@@ -112,12 +112,16 @@ public class LimelightVision extends SubsystemBase {
     }
 
     /**
-     * Allows you to set the convergence speed of the internal LL IMU and robot gyro.
+     * Allows you to set the convergence speed of the internal LL IMU and robot
+     * gyro.
      *
-     * @param assistValue, an double that sets the correction speed of the complementary filter for
-     *     the IMU. IMU Mode 4 uses the fusing of the internal IMU (1khz) with the external gyro
-     *     reading as well. Higher values ranging towards 1 indicate a faster convergence of internal
-     *     IMU to the robot IMU mode. Defaults to 0.001.
+     * @param assistValue, an double that sets the correction speed of the
+     *                     complementary filter for
+     *                     the IMU. IMU Mode 4 uses the fusing of the internal IMU
+     *                     (1khz) with the external gyro
+     *                     reading as well. Higher values ranging towards 1 indicate
+     *                     a faster convergence of internal
+     *                     IMU to the robot IMU mode. Defaults to 0.001.
      */
     public void setIMUAssistValue(double assistValue) {
         for (String name : names) {
@@ -148,7 +152,7 @@ public class LimelightVision extends SubsystemBase {
             LimelightHelpers.SetRobotOrientation(
                     limelightName,
                     (CommandSwerveDrivetrain.getInstance().getPose().getRotation().getDegrees()
-                                    + (Robot.isBlue() ? 0 : 180))
+                            + (Robot.isBlue() ? 0 : 180))
                             % 360,
                     0,
                     0,
@@ -158,15 +162,13 @@ public class LimelightVision extends SubsystemBase {
             PoseEstimate poseEstimate;
             // MegaTag switching
             if (megaTagMode == MegaTagMode.MEGATAG1) {
-                poseEstimate =
-                        Robot.isBlue()
-                                ? LimelightHelpers.getBotPoseEstimate_wpiBlue(limelightName)
-                                : LimelightHelpers.getBotPoseEstimate_wpiRed(limelightName);
+                poseEstimate = Robot.isBlue()
+                        ? LimelightHelpers.getBotPoseEstimate_wpiBlue(limelightName)
+                        : LimelightHelpers.getBotPoseEstimate_wpiRed(limelightName);
             } else {
-                poseEstimate =
-                        Robot.isBlue()
-                                ? LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2(limelightName)
-                                : LimelightHelpers.getBotPoseEstimate_wpiRed_MegaTag2(limelightName);
+                poseEstimate = Robot.isBlue()
+                        ? LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2(limelightName)
+                        : LimelightHelpers.getBotPoseEstimate_wpiRed_MegaTag2(limelightName);
             }
             boolean notNull = false;
             boolean withinAngularVelocityTolerance = false;
@@ -177,12 +179,11 @@ public class LimelightVision extends SubsystemBase {
                 if (poseEstimate.pose.equals(Settings.Vision.INVALID_POSITION)) {
                     withinInvalidPositionTolerance = false;
                 }
-                if (CommandSwerveDrivetrain.getInstance().getChassisSpeeds().omegaRadiansPerSecond
-                        < Settings.Vision.MAX_ANGULAR_VELOCITY_RAD_SEC) {
+                if (CommandSwerveDrivetrain.getInstance()
+                        .getChassisSpeeds().omegaRadiansPerSecond < Settings.Vision.MAX_ANGULAR_VELOCITY_RAD_SEC) {
                     withinAngularVelocityTolerance = true;
                 }
-                Boolean isValidPose =
-                        notNull && withinAngularVelocityTolerance && withinInvalidPositionTolerance;
+                Boolean isValidPose = notNull && withinAngularVelocityTolerance && withinInvalidPositionTolerance;
                 DogLog.log("Vision/isValidPose", isValidPose);
                 DogLog.log("Vision/isWithinAngularVel", withinAngularVelocityTolerance);
                 DogLog.log("Vision/isWithinPos", withinInvalidPositionTolerance);

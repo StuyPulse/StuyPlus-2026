@@ -18,7 +18,9 @@ import java.util.regex.Pattern;
  *
  * <h2>Utility class that gives search features that Pathplanner lacks</h2>
  *
- * <p>This class is meant to help search for where paths and linked variables are used so you can
+ * <p>
+ * This class is meant to help search for where paths and linked variables are
+ * used so you can
  * clean up unused ones.
  */
 public final class PathplannerSearch {
@@ -32,7 +34,9 @@ public final class PathplannerSearch {
      *
      * <h4>Main entry point</h4>
      *
-     * <p>Searches through .path files in <code>src/main/deploy/pathplanner</code> and logs files that
+     * <p>
+     * Searches through .path files in <code>src/main/deploy/pathplanner</code> and
+     * logs files that
      * match a certain search term based on the search type.
      *
      * @param searchTerm
@@ -43,12 +47,14 @@ public final class PathplannerSearch {
         switch (searchType) {
             case LINKED_WAYPOINT -> {
                 final File[] files = new File("./src/main/deploy/pathplanner/paths/").listFiles();
-                if (files == null) break;
+                if (files == null)
+                    break;
 
                 final List<String> matches = new ArrayList<>();
                 for (final File file : files) {
                     final String content = Files.readString(file.toPath()).toLowerCase();
-                    if (content.isBlank()) continue;
+                    if (content.isBlank())
+                        continue;
                     if (content.contains("\"linkedname\"") && content.contains("\"" + searchTerm + "\"")) {
                         final String folderName = parseFolderKeyFromFileContent(content);
                         matches.add(folderName + "/" + file.getName());
@@ -59,12 +65,14 @@ public final class PathplannerSearch {
             }
             case PATH -> {
                 final File[] files = new File("./src/main/deploy/pathplanner/autos/").listFiles();
-                if (files == null) break;
+                if (files == null)
+                    break;
 
                 final List<String> matches = new ArrayList<>();
                 for (final File file : files) {
                     final String content = Files.readString(file.toPath()).toLowerCase();
-                    if (!content.contains("\"sequential\"")) continue;
+                    if (!content.contains("\"sequential\""))
+                        continue;
                     if (content.contains("\"path\"")
                             && content.contains("\"pathname\"")
                             && content.contains("\"" + searchTerm + "\"")) {
@@ -86,21 +94,25 @@ public final class PathplannerSearch {
     /**
      * Parses the "folder" key from the content of a .path file.
      *
-     * <p>As Java doesn't have a built in JSON parser and for only having to do this once, it would be
+     * <p>
+     * As Java doesn't have a built in JSON parser and for only having to do this
+     * once, it would be
      * overkill to add a dependency.
      *
-     * <p>This method uses regex to parse the "folder" key from the .path file. <code>.path</code>
+     * <p>
+     * This method uses regex to parse the "folder" key from the .path file.
+     * <code>.path</code>
      * files are essentially just JSON files but with a different extension.
      *
      * @param content the content of the .path file
-     * @return the value of the "folder" key in the .path file, or an empty string if it doesn't exist
+     * @return the value of the "folder" key in the .path file, or an empty string
+     *         if it doesn't exist
      */
     public static String parseFolderKeyFromFileContent(String content) {
         final String folderName;
-        Pattern regex =
-                Pattern.compile(
-                        "\"folder\"\\s*:\\s*\"([^\"]*)\"",
-                        Pattern.CASE_INSENSITIVE); // ima be honest i used ai for this regex 🤤
+        Pattern regex = Pattern.compile(
+                "\"folder\"\\s*:\\s*\"([^\"]*)\"",
+                Pattern.CASE_INSENSITIVE); // ima be honest i used ai for this regex 🤤
         Matcher match = regex.matcher(content);
         if (match.find()) {
             folderName = match.group(1);
@@ -114,15 +126,21 @@ public final class PathplannerSearch {
     /**
      * Logs the result of the search to the console with some formatting.
      *
-     * <p>Uses ANSI color codes for coloring the output.
+     * <p>
+     * Uses ANSI color codes for coloring the output.
      *
-     * <p>If no matches are found, it will log "None were found." in red.
+     * <p>
+     * If no matches are found, it will log "None were found." in red.
      *
-     * <p>Otherwise, it will log the list of matches in green on separate lines.
+     * <p>
+     * Otherwise, it will log the list of matches in green on separate lines.
      *
-     * <p><b>Example input and output:</b>
+     * <p>
+     * <b>Example input and output:</b>
      *
-     * <pre>./gradlew runPathPlannersearch -Pargs="disrupt path"</pre>
+     * <pre>
+     * ./gradlew runPathPlannersearch -Pargs="disrupt path"
+     * </pre>
      *
      * <pre>
      * Autons that use the path 'disrupt':
@@ -142,12 +160,11 @@ public final class PathplannerSearch {
         final String GREEN = "\u001B[32m";
         final String YELLOW = "\u001B[33m";
 
-        String stem =
-                switch (searchType) {
-                    case LINKED_WAYPOINT -> "Paths that use the linked waypoint '";
-                    case PATH -> "Autons that use the path '";
-                    default -> "";
-                };
+        String stem = switch (searchType) {
+            case LINKED_WAYPOINT -> "Paths that use the linked waypoint '";
+            case PATH -> "Autons that use the path '";
+            default -> "";
+        };
 
         System.out.println(stem + YELLOW + searchTerm + "'" + RESET + ":");
         if (matches.isEmpty()) {

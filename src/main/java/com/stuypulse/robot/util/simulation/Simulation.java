@@ -131,17 +131,15 @@ public class Simulation {
     }
 
     private void updateIntake() {
-        boolean intakeEnabled =
-                intakeSim.atTargetAngle()
-                        && (intakeSim.getState() == IntakeState.DOWN)
-                        && Settings.EnabledSubsystems.INTAKE.get();
+        boolean intakeEnabled = intakeSim.atTargetAngle()
+                && (intakeSim.getState() == IntakeState.DOWN)
+                && Settings.EnabledSubsystems.INTAKE.get();
         updateIntakeEnabled(intakeEnabled);
     }
 
     private void updateHopperFuel() {
-        final double hopperPercentage =
-                (double) intakeMSim.getGamePiecesAmount()
-                        / (double) SimulationConstants.Hopper.FUEL_CAPACITY;
+        final double hopperPercentage = (double) intakeMSim.getGamePiecesAmount()
+                / (double) SimulationConstants.Hopper.FUEL_CAPACITY;
         final int layers = SimulationConstants.Hopper.FUEL_LAYERS;
         final Pose3d visiblePose = SimulationConstants.Hopper.VISIBLE_POSE;
         final Pose3d hiddenPose = SimulationConstants.Hopper.HIDDEN_POSE;
@@ -156,34 +154,49 @@ public class Simulation {
     /**
      *
      *
-     * <h2>Extension of {@link Arena2026Rebuilt#addPieceWithVariance} that uses chassis speeds</h2>
+     * <h2>Extension of {@link Arena2026Rebuilt#addPieceWithVariance} that uses
+     * chassis speeds</h2>
      *
-     * <p>Adds a game piece too the arena with a certain random variance. Param docs taken from {@link
+     * <p>
+     * Adds a game piece too the arena with a certain random variance. Param docs
+     * taken from {@link
      * Arena2026Rebuilt#addPieceWithVariance}
      *
-     * @param info the info of the game piece
-     * @param robotPosition the position of the robot (not the shooter) at the time of launching the
-     *     game piece
-     * @param shooterPositionOnRobot the translation from the shooter's position to the robot's
-     *     center, in the robot's frame of reference
-     * @param chassisSpeedsFieldRelative the field-relative velocity of the robot chassis when
-     *     launching the game piece, influencing the initial velocity of the game piece
-     * @param shooterFacing the direction in which the shooter is facing at launch
-     * @param initialHeight the initial height of the game piece when launched, i.e., the height of
-     *     the shooter from the ground
-     * @param launchingSpeed the speed at which the game piece is launch
-     * @param shooterAngle the pitch angle of the shooter when launching
-     * @param xVariance The max amount of variance that should be added too the x coordinate of the
-     *     game piece.
-     * @param yVariance The max amount of variance that should be added too the y coordinate of the
-     *     game piece.
-     * @param yawVariance The max amount of variance that should be added too the yaw of the game
-     *     piece.
-     * @param speedVariance The max amount of variance that should be added too the speed of the game
-     *     piece.
-     * @param pitchVariance The max amount of variance that should be added too the pitch of the game
-     *     piece.
-     * @param target The target of the gamepiece
+     * @param info                       the info of the game piece
+     * @param robotPosition              the position of the robot (not the shooter)
+     *                                   at the time of launching the
+     *                                   game piece
+     * @param shooterPositionOnRobot     the translation from the shooter's position
+     *                                   to the robot's
+     *                                   center, in the robot's frame of reference
+     * @param chassisSpeedsFieldRelative the field-relative velocity of the robot
+     *                                   chassis when
+     *                                   launching the game piece, influencing the
+     *                                   initial velocity of the game piece
+     * @param shooterFacing              the direction in which the shooter is
+     *                                   facing at launch
+     * @param initialHeight              the initial height of the game piece when
+     *                                   launched, i.e., the height of
+     *                                   the shooter from the ground
+     * @param launchingSpeed             the speed at which the game piece is launch
+     * @param shooterAngle               the pitch angle of the shooter when
+     *                                   launching
+     * @param xVariance                  The max amount of variance that should be
+     *                                   added too the x coordinate of the
+     *                                   game piece.
+     * @param yVariance                  The max amount of variance that should be
+     *                                   added too the y coordinate of the
+     *                                   game piece.
+     * @param yawVariance                The max amount of variance that should be
+     *                                   added too the yaw of the game
+     *                                   piece.
+     * @param speedVariance              The max amount of variance that should be
+     *                                   added too the speed of the game
+     *                                   piece.
+     * @param pitchVariance              The max amount of variance that should be
+     *                                   added too the pitch of the game
+     *                                   piece.
+     * @param target                     The target of the gamepiece
      */
     private void robotRelativeAddPieceWithVariance(
             Translation2d piecePose,
@@ -222,7 +235,8 @@ public class Simulation {
                                                         getIntakeArmEndX(),
                                                         0,
                                                         0,
-                                                        new Rotation3d(swerveMSim.getSimulatedDriveTrainPose().getRotation())))
+                                                        new Rotation3d(
+                                                                swerveMSim.getSimulatedDriveTrainPose().getRotation())))
                                         .getTranslation()
                                         .toTranslation2d()),
                 swerveMSim.getSimulatedDriveTrainPose().getRotation(),
@@ -242,11 +256,10 @@ public class Simulation {
                 && intakeMSim.obtainGamePieceFromIntake()) {
             summonFuelAtIntake();
         } else if ((shooterSim.getState() == ShooterState.SHOOT
-                        || shooterSim.getState() == ShooterState.FERRY)
+                || shooterSim.getState() == ShooterState.FERRY)
                 && Settings.EnabledSubsystems.SHOOTER.get()) {
-            final Pose2d shooterPose =
-                    SimulationConstants.Shooter.OFFSETS.applyToPose2d(
-                            swerveMSim.getSimulatedDriveTrainPose());
+            final Pose2d shooterPose = SimulationConstants.Shooter.OFFSETS.applyToPose2d(
+                    swerveMSim.getSimulatedDriveTrainPose());
             final double launchAngle = 67.67;
             robotRelativeAddPieceWithVariance(
                     shooterPose.getTranslation(),
@@ -265,7 +278,8 @@ public class Simulation {
     }
 
     public synchronized void update() {
-        if (swerveMSim == null) return;
+        if (swerveMSim == null)
+            return;
         fuel.set(arenaInstance.getGamePiecesArrayByType("Fuel"));
         updateIntake();
         updateHopperFuel();

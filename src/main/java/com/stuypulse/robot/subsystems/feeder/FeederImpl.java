@@ -30,13 +30,12 @@ public class FeederImpl extends Feeder {
         feederMotor = new TalonFX(Ports.Feeder.FEEDER_MOTOR, Settings.CANBUS);
         Motors.Feeder.LEADER_CONFIG.configure(feederMotor);
         controller = new DutyCycleOut(getState().getTargetDutyCycle()).withEnableFOC(true);
-        this.signals =
-                new LoggedSignals(
-                                feederMotor.getSupplyCurrent(),
-                                feederMotor.getStatorCurrent(),
-                                feederMotor.getVelocity())
-                        .withLogPath("Feeder/")
-                        .withSignalLocation(LoggedSignals.SignalLocation.CANIVORE);
+        this.signals = new LoggedSignals(
+                feederMotor.getSupplyCurrent(),
+                feederMotor.getStatorCurrent(),
+                feederMotor.getVelocity())
+                .withLogPath("Feeder/")
+                .withSignalLocation(LoggedSignals.SignalLocation.CANIVORE);
     }
 
     @Override

@@ -120,10 +120,12 @@ public class Robot extends TimedRobot {
     }
 
     @Override
-    public void autonomousPeriodic() {}
+    public void autonomousPeriodic() {
+    }
 
     @Override
-    public void autonomousExit() {}
+    public void autonomousExit() {
+    }
 
     /** *************** */
     /** TELEOP MODE ** */
@@ -137,17 +139,18 @@ public class Robot extends TimedRobot {
             auto.cancel();
         }
         CommandScheduler.getInstance().schedule(new SetVisionEnabled());
-        Boolean autonWon =
-                DriverStation.getGameSpecificMessage()
-                        .equals(String.valueOf(alliance.name().charAt(0)).toUpperCase());
+        Boolean autonWon = DriverStation.getGameSpecificMessage()
+                .equals(String.valueOf(alliance.name().charAt(0)).toUpperCase());
         DogLog.log("Auton Won", autonWon);
     }
 
     @Override
-    public void teleopPeriodic() {}
+    public void teleopPeriodic() {
+    }
 
     @Override
-    public void teleopExit() {}
+    public void teleopExit() {
+    }
 
     /** ************* */
     /** TEST MODE ** */
@@ -158,8 +161,10 @@ public class Robot extends TimedRobot {
     }
 
     @Override
-    public void testPeriodic() {}
+    public void testPeriodic() {
+    }
 
     @Override
-    public void testExit() {}
+    public void testExit() {
+    }
 }

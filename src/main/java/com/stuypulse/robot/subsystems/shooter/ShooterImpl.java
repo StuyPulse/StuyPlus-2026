@@ -43,31 +43,29 @@ public class ShooterImpl extends Shooter {
         shooterMotorCenter = new TalonFX(Ports.Shooter.SHOOTER_MOTOR_CENTER, Settings.CANBUS);
         shooterMotorLeft = new TalonFX(Ports.Shooter.SHOOTER_MOTOR_LEFT, Settings.CANBUS);
         shooterController = new VelocityTorqueCurrentFOC(getState().getTargetAngularVelocity());
-        signals =
-                new LoggedSignals(
-                                "Right Motor",
-                                shooterMotorRight.getSupplyCurrent(),
-                                shooterMotorRight.getStatorCurrent(),
-                                shooterMotorRight.getVelocity())
-                        .withMotor(
-                                "Center Motor",
-                                shooterMotorCenter.getSupplyCurrent(),
-                                shooterMotorCenter.getStatorCurrent(),
-                                shooterMotorCenter.getVelocity())
-                        .withMotor(
-                                "Left Motor",
-                                shooterMotorLeft.getSupplyCurrent(),
-                                shooterMotorLeft.getStatorCurrent(),
-                                shooterMotorLeft.getVelocity())
-                        .withLogPath("Shooter/")
-                        .withSignalLocation(LoggedSignals.SignalLocation.CANIVORE);
+        signals = new LoggedSignals(
+                "Right Motor",
+                shooterMotorRight.getSupplyCurrent(),
+                shooterMotorRight.getStatorCurrent(),
+                shooterMotorRight.getVelocity())
+                .withMotor(
+                        "Center Motor",
+                        shooterMotorCenter.getSupplyCurrent(),
+                        shooterMotorCenter.getStatorCurrent(),
+                        shooterMotorCenter.getVelocity())
+                .withMotor(
+                        "Left Motor",
+                        shooterMotorLeft.getSupplyCurrent(),
+                        shooterMotorLeft.getStatorCurrent(),
+                        shooterMotorLeft.getVelocity())
+                .withLogPath("Shooter/")
+                .withSignalLocation(LoggedSignals.SignalLocation.CANIVORE);
         // configure
         Motors.Shooter.SHOOTER_MOTOR_RIGHT.configure(shooterMotorRight);
         Motors.Shooter.SHOOTER_MOTOR_CENTER.configure(shooterMotorCenter);
         Motors.Shooter.SHOOTER_MOTOR_LEFT.configure(shooterMotorLeft);
         // Set center and left to follow right
-        shooterFollowerController =
-                new Follower(shooterMotorRight.getDeviceID(), MotorAlignmentValue.Opposed);
+        shooterFollowerController = new Follower(shooterMotorRight.getDeviceID(), MotorAlignmentValue.Opposed);
         shooterMotorCenter.setControl(shooterFollowerController);
         shooterMotorLeft.setControl(shooterFollowerController);
         voltageOverride = Optional.empty();
@@ -103,8 +101,7 @@ public class ShooterImpl extends Shooter {
             return;
         }
         final AngularVelocity targetAngularVelocity = getState().getTargetAngularVelocity();
-        final VelocityTorqueCurrentFOC shooterControl =
-                shooterController.withVelocity(targetAngularVelocity);
+        final VelocityTorqueCurrentFOC shooterControl = shooterController.withVelocity(targetAngularVelocity);
         shooterMotorRight.setControl(shooterControl);
         this.signals.logAll();
         super.periodic();

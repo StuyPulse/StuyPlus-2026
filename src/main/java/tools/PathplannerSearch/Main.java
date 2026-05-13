@@ -13,35 +13,40 @@ import tools.PathplannerSearch.PathplannerSearch.SearchType;
  *
  * <h2>Main class for PathplannerSearch</h2>
  *
- * <p>To use, run:
+ * <p>
+ * To use, run:
  *
  * <pre>
  * ./gradlew runPathplannerSearch -Pargs="[search term] [search type]"
  * </pre>
  *
- * <p><b>Example:</b>
+ * <p>
+ * <b>Example:</b>
  *
  * <pre>
  * ./gradlew runPathplannerSearch -Pargs="disruptAUton path"
  * </pre>
  *
- * If your search term has spaces, it will only check the last word for the search type.
+ * If your search term has spaces, it will only check the last word for the
+ * search type.
  *
- * <p><b>Example:</b>
+ * <p>
+ * <b>Example:</b>
  *
  * <pre>
  * ./gradlew runPathplannerSearch -Pargs="Disrupt Auton Thing path"
  * </pre>
  *
- * <p><b>Arguments:</b>
+ * <p>
+ * <b>Arguments:</b>
  *
  * <ul>
- *   <li><b>[search term]</b>: The term to search for in the Pathplanner files.
- *   <li><b>[search type]</b>: The type of search to perform:
- *       <ul>
- *         <li>{@code linked_waypoint}
- *         <li>{@code path}
- *       </ul>
+ * <li><b>[search term]</b>: The term to search for in the Pathplanner files.
+ * <li><b>[search type]</b>: The type of search to perform:
+ * <ul>
+ * <li>{@code linked_waypoint}
+ * <li>{@code path}
+ * </ul>
  * </ul>
  */
 public class Main {
@@ -51,14 +56,12 @@ public class Main {
     }
 
     public static void main(String[] args) throws IOException {
-        String searchTerm =
-                args[Arguments.SEARCH_TERM.ordinal()] != null
-                        ? args[Arguments.SEARCH_TERM.ordinal()].toLowerCase()
-                        : "";
-        SearchType searchType =
-                args[Arguments.SEARCH_TYPE.ordinal()] != null
-                        ? SearchType.valueOf(args[Arguments.SEARCH_TYPE.ordinal()].toUpperCase())
-                        : SearchType.PATH;
+        String searchTerm = args[Arguments.SEARCH_TERM.ordinal()] != null
+                ? args[Arguments.SEARCH_TERM.ordinal()].toLowerCase()
+                : "";
+        SearchType searchType = args[Arguments.SEARCH_TYPE.ordinal()] != null
+                ? SearchType.valueOf(args[Arguments.SEARCH_TYPE.ordinal()].toUpperCase())
+                : SearchType.PATH;
 
         PathplannerSearch.search(searchTerm, searchType);
     }

@@ -26,7 +26,8 @@ public class InterpolationCalculator {
 
     public static InterpolatingDoubleTreeMap ferryingDistanceTOFInterpolator;
 
-    public record InterpolatedInfo(double targetRPM, double flightTimeSeconds) {}
+    public record InterpolatedInfo(double targetRPM, double flightTimeSeconds) {
+    }
 
     static {
         shootingDistanceRPMInterpolator = new InterpolatingDoubleTreeMap();

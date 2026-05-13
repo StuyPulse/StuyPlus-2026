@@ -34,15 +34,14 @@ public class SwerveDriveRotate extends Command {
         this.swerve = CommandSwerveDrivetrain.getInstance();
         this.rotation = rotation;
         this.driver = driver;
-        speed =
-                VStream.create(this::getDriverInputAsVelocity)
-                        .filtered(
-                                new VDeadZone(Drive.DEADBAND),
-                                x -> x.clamp(1),
-                                x -> x.pow(Drive.POWER),
-                                x -> x.mul(Swerve.Constraints.MAX_VELOCITY_M_PER_S),
-                                new VRateLimit(Swerve.Constraints.MAX_ACCEL_M_PER_S_SQUARED),
-                                new VLowPassFilter(Drive.RC));
+        speed = VStream.create(this::getDriverInputAsVelocity)
+                .filtered(
+                        new VDeadZone(Drive.DEADBAND),
+                        x -> x.clamp(1),
+                        x -> x.pow(Drive.POWER),
+                        x -> x.mul(Swerve.Constraints.MAX_VELOCITY_M_PER_S),
+                        new VRateLimit(Swerve.Constraints.MAX_ACCEL_M_PER_S_SQUARED),
+                        new VLowPassFilter(Drive.RC));
         addRequirements(swerve);
     }
 
@@ -52,13 +51,12 @@ public class SwerveDriveRotate extends Command {
 
     @Override
     public void execute() {
-        SwerveRequest request =
-                new SwerveRequest.FieldCentricFacingAngle()
-                        .withTargetDirection(rotation)
-                        .withVelocityX(speed.get().x)
-                        .withVelocityY(speed.get().y)
-                        .withHeadingPID(
-                                Gains.Swerve.Alignment.akP, Gains.Swerve.Alignment.akI, Gains.Swerve.Alignment.akD);
+        SwerveRequest request = new SwerveRequest.FieldCentricFacingAngle()
+                .withTargetDirection(rotation)
+                .withVelocityX(speed.get().x)
+                .withVelocityY(speed.get().y)
+                .withHeadingPID(
+                        Gains.Swerve.Alignment.akP, Gains.Swerve.Alignment.akI, Gains.Swerve.Alignment.akD);
         swerve.setControl(request);
         DogLog.log(
                 "Swerve/Angle Minus Target Angle",

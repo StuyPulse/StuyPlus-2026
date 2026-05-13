@@ -27,13 +27,12 @@ public class FeederSim extends Feeder {
     private final DutyCycleOut feederController;
 
     public FeederSim() {
-        feederSim =
-                new DCMotorSim(
-                        LinearSystemId.createDCMotorSystem(
-                                DCMotor.getKrakenX60(2),
-                                Settings.Feeder.J.in(KilogramSquareMeters),
-                                Settings.Feeder.GEAR_RATIO),
-                        DCMotor.getKrakenX60(2));
+        feederSim = new DCMotorSim(
+                LinearSystemId.createDCMotorSystem(
+                        DCMotor.getKrakenX60(2),
+                        Settings.Feeder.J.in(KilogramSquareMeters),
+                        Settings.Feeder.GEAR_RATIO),
+                DCMotor.getKrakenX60(2));
         feederMotor = new TalonFXSimulation(Ports.Feeder.FEEDER_MOTOR, feederSim);
         feederMotor.configure(Motors.Feeder.LEADER_CONFIG);
         feederController = new DutyCycleOut(0).withEnableFOC(true);

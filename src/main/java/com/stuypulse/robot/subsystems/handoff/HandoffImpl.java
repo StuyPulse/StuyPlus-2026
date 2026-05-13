@@ -31,21 +31,17 @@ public class HandoffImpl extends Handoff {
     public HandoffImpl() {
         handoffMotor = new TalonFX(Ports.Handoff.HANDOFF_MOTOR, Settings.CANBUS);
         handoffController = new DutyCycleOut(getState().getHandoffDutyCycle()).withEnableFOC(true);
-        signals =
-                new LoggedSignals(
-                                handoffMotor.getSupplyCurrent(),
-                                handoffMotor.getStatorCurrent(),
-                                handoffMotor.getVelocity())
-                        .withLogPath("Handoff/")
-                        .withSignalLocation(LoggedSignals.SignalLocation.CANIVORE);
+        signals = new LoggedSignals(
+                handoffMotor.getSupplyCurrent(),
+                handoffMotor.getStatorCurrent(),
+                handoffMotor.getVelocity())
+                .withLogPath("Handoff/")
+                .withSignalLocation(LoggedSignals.SignalLocation.CANIVORE);
         // Configuring
         Motors.Handoff.HANDOFF_MOTOR_CONFIG.configure(handoffMotor);
-        handoffStalling =
-                BStream.create(
-                                () ->
-                                        Math.abs(handoffMotor.getStatorCurrent().getValueAsDouble())
-                                                > Settings.Handoff.STALL_CURRENT)
-                        .filtered(new BDebounce.Rising(Settings.Handoff.STALL_DEBOUNCE));
+        handoffStalling = BStream.create(
+                () -> Math.abs(handoffMotor.getStatorCurrent().getValueAsDouble()) > Settings.Handoff.STALL_CURRENT)
+                .filtered(new BDebounce.Rising(Settings.Handoff.STALL_DEBOUNCE));
     }
 
     @Override
@@ -68,10 +64,9 @@ public class HandoffImpl extends Handoff {
             setState(HandoffState.IDLE);
         }
         // Control
-        final double dutyCycle =
-                handoffStalling.get()
-                        ? Handoff.HandoffState.REVERSE.getHandoffDutyCycle()
-                        : getState().getHandoffDutyCycle();
+        final double dutyCycle = handoffStalling.get()
+                ? Handoff.HandoffState.REVERSE.getHandoffDutyCycle()
+                : getState().getHandoffDutyCycle();
         final DutyCycleOut handoffControl = handoffController.withOutput(dutyCycle);
         // Apply
         handoffMotor.setControl(handoffControl);

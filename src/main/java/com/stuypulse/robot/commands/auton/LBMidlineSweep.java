@@ -9,6 +9,8 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 public class LBMidlineSweep extends SequentialCommandGroup {
 
     public LBMidlineSweep(PathPlannerPath... paths) {
-        addCommands(new SwerveResetPose(paths[0].getStartingHolonomicPose().get()), CommandSwerveDrivetrain.getInstance().followPathCommand(paths[0]), CommandSwerveDrivetrain.getInstance().followPathCommand(paths[1]), new SwerveDriveXMode());
+        addCommands(new SwerveResetPose(paths[0].getStartingHolonomicPose().get()),
+                CommandSwerveDrivetrain.getInstance().followPathCommand(paths[0]),
+                CommandSwerveDrivetrain.getInstance().followPathCommand(paths[1]), new SwerveDriveXMode());
     }
 }

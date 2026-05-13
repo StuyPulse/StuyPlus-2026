@@ -48,15 +48,20 @@ public abstract class Intake extends SubsystemBase {
         DOWN(Settings.Intake.Pivot.DEPLOY_ANGLE, 0),
         /** The intake is deployed and rollers are running to take in gamepieces. */
         INTAKE(Settings.Intake.Pivot.DEPLOY_ANGLE, Settings.Intake.Roller.INTAKE_DUTY_CYCLE),
-        /** The intake is deployed and rollers are running in reverse to expel gamepieces. */
+        /**
+         * The intake is deployed and rollers are running in reverse to expel
+         * gamepieces.
+         */
         OUTTAKE(Settings.Intake.Pivot.DEPLOY_ANGLE, Settings.Intake.Roller.OUTTAKE_DUTY_CYCLE),
         /**
-         * The intake is brought up repeatedly to an angle between stowed and deployed to dislodge
+         * The intake is brought up repeatedly to an angle between stowed and deployed
+         * to dislodge
          * gamepieces. Rollers do not run.
          */
         AGITATE(Settings.Intake.Pivot.AGITATE_UP_ANGLE, 0),
         /**
-         * The intake is brought up once to an angle between stowed and deployed to dislodge gamepieces.
+         * The intake is brought up once to an angle between stowed and deployed to
+         * dislodge gamepieces.
          * Rollers do not run.
          */
         DIGEST(Settings.Intake.Pivot.DIGEST_ANGLE, 0),
@@ -72,8 +77,9 @@ public abstract class Intake extends SubsystemBase {
         /**
          * Constructs an IntakeState with its target values.
          *
-         * @param targetAngle In any unit, the target position of the intake pivot
-         * @param targetDutyCycle In any unit, the target percentage of voltage of the intake rollers
+         * @param targetAngle     In any unit, the target position of the intake pivot
+         * @param targetDutyCycle In any unit, the target percentage of voltage of the
+         *                        intake rollers
          */
         private IntakeState(Angle targetAngle, double targetDutyCycle) {
             this.targetAngle = targetAngle;
@@ -117,8 +123,8 @@ public abstract class Intake extends SubsystemBase {
     public abstract void seedPivotAngle(Angle angle);
 
     public boolean atTargetAngle() {
-        return getRelativePosition().minus(getState().getTargetAngle()).abs(Rotations)
-                < Settings.Intake.Pivot.ANGLE_TOLERANCE.in(Rotations);
+        return getRelativePosition().minus(getState().getTargetAngle())
+                .abs(Rotations) < Settings.Intake.Pivot.ANGLE_TOLERANCE.in(Rotations);
     }
 
     public boolean isPivotAboveThreshold() {

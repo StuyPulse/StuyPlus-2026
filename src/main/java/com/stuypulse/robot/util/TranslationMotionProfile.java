@@ -97,7 +97,8 @@ public class TranslationMotionProfile implements VFilter {
         }
         // Field.FIELD2D.getObject("Translation Motion Profile").setPose(!Robot.isBlue()
         // ? new Pose2d(mOutput.x, mOutput.y, new Rotation2d())
-        // : Field.transformToOppositeAlliance(new Pose2d(mOutput.x, mOutput.y, new Rotation2d())));
+        // : Field.transformToOppositeAlliance(new Pose2d(mOutput.x, mOutput.y, new
+        // Rotation2d())));
         return mOutput;
     }
 }

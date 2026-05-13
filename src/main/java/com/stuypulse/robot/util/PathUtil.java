@@ -111,8 +111,10 @@ public class PathUtil {
 
     public static HashMap<Character, Integer> countChars(char[] chars) {
         HashMap<Character, Integer> letterMap = new HashMap<>();
-        for (char i = 'a'; i <= 'z'; i++) letterMap.put(i, 0);
-        for (char i = 'a'; i <= 'z'; i++) letterMap.put(i, 0);
+        for (char i = 'a'; i <= 'z'; i++)
+            letterMap.put(i, 0);
+        for (char i = 'a'; i <= 'z'; i++)
+            letterMap.put(i, 0);
         letterMap.put('(', 0);
         letterMap.put(' ', 0);
         letterMap.put(')', 0);
@@ -144,8 +146,10 @@ public class PathUtil {
             }
             proximity += 0.05 * Math.abs(list1.get(key) - list2.get(key));
         }
-        for (int count : list1.values()) list1sum += count;
-        for (int count : list2.values()) list2sum += count;
+        for (int count : list1.values())
+            list1sum += count;
+        for (int count : list2.values())
+            list2sum += count;
         proximity += 0.4 * Math.abs(list2sum - list1sum);
         return proximity;
     }

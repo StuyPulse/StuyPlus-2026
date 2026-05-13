@@ -33,15 +33,14 @@ public class SwerveDriveDriveWhileAligned extends Command {
     private final Supplier<Pose2d> targetPose;
 
     public SwerveDriveDriveWhileAligned(CommandXboxController driver, Supplier<Pose2d> targetPose) {
-        this.speed =
-                VStream.create(this::getDriverInputAsVelocity)
-                        .filtered(
-                                new VDeadZone(Drive.DEADBAND),
-                                x -> x.clamp(1),
-                                x -> x.pow(Drive.POWER),
-                                x -> x.mul(Swerve.Constraints.MAX_VELOCITY_M_PER_S),
-                                new VRateLimit(Swerve.Constraints.MAX_ACCEL_M_PER_S_SQUARED),
-                                new VLowPassFilter(Drive.RC));
+        this.speed = VStream.create(this::getDriverInputAsVelocity)
+                .filtered(
+                        new VDeadZone(Drive.DEADBAND),
+                        x -> x.clamp(1),
+                        x -> x.pow(Drive.POWER),
+                        x -> x.mul(Swerve.Constraints.MAX_VELOCITY_M_PER_S),
+                        new VRateLimit(Swerve.Constraints.MAX_ACCEL_M_PER_S_SQUARED),
+                        new VLowPassFilter(Drive.RC));
         this.driver = driver;
         this.targetPose = targetPose;
         addRequirements(swerve);
@@ -57,10 +56,9 @@ public class SwerveDriveDriveWhileAligned extends Command {
 
     public Rotation2d getTargetAngle() {
         Pose2d currentPose = swerve.getPose();
-        double atan =
-                Math.atan2(
-                        targetPose.get().getY() - currentPose.getY(),
-                        targetPose.get().getX() - currentPose.getX());
+        double atan = Math.atan2(
+                targetPose.get().getY() - currentPose.getY(),
+                targetPose.get().getX() - currentPose.getX());
         return new Rotation2d(atan);
     }
 

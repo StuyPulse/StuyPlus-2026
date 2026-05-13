@@ -27,13 +27,12 @@ public class HandoffSim extends Handoff {
     private final DutyCycleOut handoffMotorController;
 
     public HandoffSim() {
-        handoffSim =
-                new DCMotorSim(
-                        LinearSystemId.createDCMotorSystem(
-                                DCMotor.getKrakenX60(1),
-                                Settings.Handoff.J_KG_METERS_SQUARED,
-                                Settings.Handoff.SIM_GEAR_RATIO),
-                        DCMotor.getKrakenX60(1));
+        handoffSim = new DCMotorSim(
+                LinearSystemId.createDCMotorSystem(
+                        DCMotor.getKrakenX60(1),
+                        Settings.Handoff.J_KG_METERS_SQUARED,
+                        Settings.Handoff.SIM_GEAR_RATIO),
+                DCMotor.getKrakenX60(1));
         handoffMotor = new TalonFXSimulation(Ports.Handoff.HANDOFF_MOTOR, handoffSim);
         handoffMotor.configure(Motors.Handoff.HANDOFF_MOTOR_CONFIG);
         handoffMotorController = new DutyCycleOut(getState().getHandoffDutyCycle()).withEnableFOC(true);
