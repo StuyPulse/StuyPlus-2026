@@ -133,7 +133,8 @@ spotless {
             'com.stuypulse.stuylib'
         )
         googleJavaFormat()
-        indentWithTabs(4)
+        indentWithTabs(2)
+        indentWithSpaces(4)
         removeUnusedImports()
     }
 }
