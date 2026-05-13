@@ -96,16 +96,17 @@ loadScripts(document, 'script');</script>
 <span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Record.html" title="class or interface in java.lang" class="external-link">Record</a></span></div>
 <div class="block"><h2>Record that holds CAD Offsets</h2>
 
- <p>Sourced from CAD exports to hold a component's positional offsets from their position in CAD
+ <p>
+ Sourced from CAD exports to hold a component's positional offsets from their
+ position in CAD
  to their position in sim
 
  <pre><code>
  Offsets SHOOTER = new Offsets(-0.1016, 0.2032, 0.3255,
-     Degrees.of(90), Degrees.of(0), Degrees.of(-90));
+         Degrees.of(90), Degrees.of(0), Degrees.of(-90));
 
  Pose3d shooterPose = SHOOTER.withRotation(
-     new Rotation3d(0, 0, turretSim.getAngle().getRadians())
- );
+         new Rotation3d(0, 0, turretSim.getAngle().getRadians()));
  </code></pre></div>
 </section>
 <section class="summary">
@@ -143,7 +144,8 @@ loadScripts(document, 'script');</script>
  edu.wpi.first.units.measure.Distance&nbsp;y,
  edu.wpi.first.units.measure.Distance&nbsp;z)</code></div>
 <div class="col-last odd-row-color">
-<div class="block">Constructs an Offsets instance with no rotation, using your unit of choice</div>
+<div class="block">Constructs an Offsets instance with no rotation, using your unit of
+ choice</div>
 </div>
 <div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(edu.wpi.first.units.measure.Distance,edu.wpi.first.units.measure.Distance,edu.wpi.first.units.measure.Distance,edu.wpi.first.units.measure.Angle,edu.wpi.first.units.measure.Angle,edu.wpi.first.units.measure.Angle)" class="member-name-link">Offsets</a><wbr>(edu.wpi.first.units.measure.Distance&nbsp;x,
  edu.wpi.first.units.measure.Distance&nbsp;y,
@@ -171,22 +173,26 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>edu.wpi.first.math.geometry.Pose2d</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#applyToPose2d(edu.wpi.first.math.geometry.Pose2d)" class="member-name-link">applyToPose2d</a><wbr>(edu.wpi.first.math.geometry.Pose2d&nbsp;pose)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Applies this offset's X/Y translation and yaw onto an existing <code>Pose2d</code></div>
+<div class="block">Applies this offset's X/Y translation and yaw onto an existing
+ <code>Pose2d</code></div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>edu.wpi.first.math.geometry.Pose2d</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#applyToPose2dRobotRelative(edu.wpi.first.math.geometry.Pose2d)" class="member-name-link">applyToPose2dRobotRelative</a><wbr>(edu.wpi.first.math.geometry.Pose2d&nbsp;pose)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Applies this offset's X/Y translation and yaw onto an existing <code>Pose2d</code></div>
+<div class="block">Applies this offset's X/Y translation and yaw onto an existing
+ <code>Pose2d</code></div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>edu.wpi.first.math.geometry.Pose3d</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#applyToPose3d(edu.wpi.first.math.geometry.Pose3d)" class="member-name-link">applyToPose3d</a><wbr>(edu.wpi.first.math.geometry.Pose3d&nbsp;pose)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Applies this offset's translation and rotation onto an existing <code>Pose3d</code></div>
+<div class="block">Applies this offset's translation and rotation onto an existing
+ <code>Pose3d</code></div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>edu.wpi.first.math.geometry.Pose3d</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#applyToPose3dRobotRelative(edu.wpi.first.math.geometry.Pose3d)" class="member-name-link">applyToPose3dRobotRelative</a><wbr>(edu.wpi.first.math.geometry.Pose3d&nbsp;pose)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Applies this offset's translation and rotation onto an existing <code>Pose3d</code></div>
+<div class="block">Applies this offset's translation and rotation onto an existing
+ <code>Pose3d</code></div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>edu.wpi.first.math.geometry.Rotation2d</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#applyToRotation2d(edu.wpi.first.math.geometry.Rotation2d)" class="member-name-link">applyToRotation2d</a><wbr>(edu.wpi.first.math.geometry.Rotation2d&nbsp;rotation)</code></div>
@@ -301,7 +307,8 @@ loadScripts(document, 'script');</script>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">Offsets</span><wbr><span class="parameters">(edu.wpi.first.units.measure.Distance&nbsp;x,
  edu.wpi.first.units.measure.Distance&nbsp;y,
  edu.wpi.first.units.measure.Distance&nbsp;z)</span></div>
-<div class="block"><h4>Constructs an Offsets instance with no rotation, using your unit of choice</h4></div>
+<div class="block"><h4>Constructs an Offsets instance with no rotation, using your unit of
+ choice</h4></div>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>x</code> - X translation from the robot origin</dd>
@@ -403,7 +410,8 @@ loadScripts(document, 'script');</script>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">edu.wpi.first.math.geometry.Pose3d</span>&nbsp;<span class="element-name">toPose3d</span>()</div>
 <div class="block"><h4>This offset as a <code>Pose3d</code>.</h4>
 
- <p>Useful for components whose pose is fully static and requires no adjustments</div>
+ <p>
+ Useful for components whose pose is fully static and requires no adjustments</div>
 <dl class="notes">
 <dt>Returns:</dt>
 <dd>pose at this offset's position and orientation</dd>
@@ -414,7 +422,8 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="applyToPose3d(edu.wpi.first.math.geometry.Pose3d)">
 <h3>applyToPose3d</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">edu.wpi.first.math.geometry.Pose3d</span>&nbsp;<span class="element-name">applyToPose3d</span><wbr><span class="parameters">(edu.wpi.first.math.geometry.Pose3d&nbsp;pose)</span></div>
-<div class="block"><h4>Applies this offset's translation and rotation onto an existing <code>Pose3d</code></h4></div>
+<div class="block"><h4>Applies this offset's translation and rotation onto an existing
+ <code>Pose3d</code></h4></div>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>pose</code> - the base pose to offset</dd>
@@ -427,9 +436,11 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="applyToPose3dRobotRelative(edu.wpi.first.math.geometry.Pose3d)">
 <h3>applyToPose3dRobotRelative</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">edu.wpi.first.math.geometry.Pose3d</span>&nbsp;<span class="element-name">applyToPose3dRobotRelative</span><wbr><span class="parameters">(edu.wpi.first.math.geometry.Pose3d&nbsp;pose)</span></div>
-<div class="block"><h4>Applies this offset's translation and rotation onto an existing <code>Pose3d</code></h4>
+<div class="block"><h4>Applies this offset's translation and rotation onto an existing
+ <code>Pose3d</code></h4>
 
- <p>Translation is applied, but it is <b>robot robot relative</b></div>
+ <p>
+ Translation is applied, but it is <b>robot robot relative</b></div>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>pose</code> - the base pose to offset</dd>
@@ -457,12 +468,12 @@ loadScripts(document, 'script');</script>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">edu.wpi.first.math.geometry.Pose3d</span>&nbsp;<span class="element-name">withRotation</span><wbr><span class="parameters">(edu.wpi.first.math.geometry.Rotation3d&nbsp;rotation)</span></div>
 <div class="block"><h4>Pose at this offset's translation with an additional rotation</h4>
 
- <p>Applies a rotation to this offsets rotation
+ <p>
+ Applies a rotation to this offsets rotation
 
  <pre><code>
  SHOOTER_OFFSETS.withRotation(
-     new Rotation3d(0, 0, turretSim.getAngle().getRadians())
- );
+         new Rotation3d(0, 0, turretSim.getAngle().getRadians()));
  </code></pre></div>
 <dl class="notes">
 <dt>Parameters:</dt>
@@ -476,9 +487,11 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="applyToPose2d(edu.wpi.first.math.geometry.Pose2d)">
 <h3>applyToPose2d</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">edu.wpi.first.math.geometry.Pose2d</span>&nbsp;<span class="element-name">applyToPose2d</span><wbr><span class="parameters">(edu.wpi.first.math.geometry.Pose2d&nbsp;pose)</span></div>
-<div class="block"><h4>Applies this offset's X/Y translation and yaw onto an existing <code>Pose2d</code></h4>
+<div class="block"><h4>Applies this offset's X/Y translation and yaw onto an existing
+ <code>Pose2d</code></h4>
 
- <p>Roll and pitch are ignored because they have no 2D equivalent</div>
+ <p>
+ Roll and pitch are ignored because they have no 2D equivalent</div>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>pose</code> - the base 2D pose to offset</dd>
@@ -491,9 +504,11 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="applyToPose2dRobotRelative(edu.wpi.first.math.geometry.Pose2d)">
 <h3>applyToPose2dRobotRelative</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">edu.wpi.first.math.geometry.Pose2d</span>&nbsp;<span class="element-name">applyToPose2dRobotRelative</span><wbr><span class="parameters">(edu.wpi.first.math.geometry.Pose2d&nbsp;pose)</span></div>
-<div class="block"><h4>Applies this offset's X/Y translation and yaw onto an existing <code>Pose2d</code></h4>
+<div class="block"><h4>Applies this offset's X/Y translation and yaw onto an existing
+ <code>Pose2d</code></h4>
 
- <p>Translation is applied, but it is <b>robot robot relative</b></div>
+ <p>
+ Translation is applied, but it is <b>robot robot relative</b></div>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>pose</code> - the base 2D pose to offset</dd>
@@ -508,7 +523,8 @@ loadScripts(document, 'script');</script>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">edu.wpi.first.math.geometry.Rotation2d</span>&nbsp;<span class="element-name">applyToRotation2d</span><wbr><span class="parameters">(edu.wpi.first.math.geometry.Rotation2d&nbsp;rotation)</span></div>
 <div class="block"><h4>Applies this offset's yaw onto an existing <code>Rotation2d</code></h4>
 
- <p>Roll and pitch are ignored because they have no 2D equivalent</div>
+ <p>
+ Roll and pitch are ignored because they have no 2D equivalent</div>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>rotation</code> - the base 2D rotation to offset</dd>

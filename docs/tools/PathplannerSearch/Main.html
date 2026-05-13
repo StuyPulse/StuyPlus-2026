@@ -81,35 +81,40 @@ loadScripts(document, 'script');</script>
 <span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></span></div>
 <div class="block"><h2>Main class for PathplannerSearch</h2>
 
- <p>To use, run:
+ <p>
+ To use, run:
 
  <pre>
  ./gradlew runPathplannerSearch -Pargs="[search term] [search type]"
  </pre>
 
- <p><b>Example:</b>
+ <p>
+ <b>Example:</b>
 
  <pre>
  ./gradlew runPathplannerSearch -Pargs="disruptAUton path"
  </pre>
 
- If your search term has spaces, it will only check the last word for the search type.
+ If your search term has spaces, it will only check the last word for the
+ search type.
 
- <p><b>Example:</b>
+ <p>
+ <b>Example:</b>
 
  <pre>
  ./gradlew runPathplannerSearch -Pargs="Disrupt Auton Thing path"
  </pre>
 
- <p><b>Arguments:</b>
+ <p>
+ <b>Arguments:</b>
 
  <ul>
-   <li><b>[search term]</b>: The term to search for in the Pathplanner files.
-   <li><b>[search type]</b>: The type of search to perform:
-       <ul>
-         <li><code>linked_waypoint</code>
-         <li><code>path</code>
-       </ul>
+ <li><b>[search term]</b>: The term to search for in the Pathplanner files.
+ <li><b>[search type]</b>: The type of search to perform:
+ <ul>
+ <li><code>linked_waypoint</code>
+ <li><code>path</code>
+ </ul>
  </ul></div>
 </section>
 <section class="summary">

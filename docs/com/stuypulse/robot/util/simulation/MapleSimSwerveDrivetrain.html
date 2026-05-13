@@ -81,9 +81,12 @@ loadScripts(document, 'script');</script>
 <span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></span></div>
 <div class="block"><h2>Injects Maple-Sim simulation data into a CTRE swerve drivetrain.</h2>
 
- <p>This class retrieves simulation data from Maple-Sim and injects it into the CTRE <code>SwerveDrivetrain</code> instance.
+ <p>
+ This class retrieves simulation data from Maple-Sim and injects it into the
+ CTRE <code>SwerveDrivetrain</code> instance.
 
- <p>It replaces the <code>SimSwerveDrivetrain</code> class.</div>
+ <p>
+ It replaces the <code>SimSwerveDrivetrain</code> class.</div>
 </section>
 <section class="summary">
 <ul class="summary-list">
@@ -164,7 +167,8 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static com.ctre.phoenix6.swerve.SwerveModuleConstants&lt;?,<wbr>?,<wbr>?&gt;[]</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#regulateModuleConstantsForSimulation(com.ctre.phoenix6.swerve.SwerveModuleConstants%5B%5D)" class="member-name-link">regulateModuleConstantsForSimulation</a><wbr>(com.ctre.phoenix6.swerve.SwerveModuleConstants&lt;?,<wbr>?,<wbr>?&gt;[]&nbsp;moduleConstants)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
-<div class="block">Regulates all <code>SwerveModuleConstants</code> for a drivetrain simulation.</div>
+<div class="block">Regulates all <code>SwerveModuleConstants</code> for a drivetrain
+ simulation.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#update()" class="member-name-link">update</a>()</code></div>
@@ -221,21 +225,27 @@ loadScripts(document, 'script');</script>
 <dt>Parameters:</dt>
 <dd><code>simPeriod</code> - the time period of the simulation</dd>
 <dd><code>robotMassWithBumpers</code> - the total mass of the robot, including bumpers</dd>
-<dd><code>bumperLengthX</code> - the length of the bumper along the X-axis (influences the collision space
-     of the robot)</dd>
-<dd><code>bumperWidthY</code> - the width of the bumper along the Y-axis (influences the collision space of
-     the robot)</dd>
-<dd><code>driveMotorModel</code> - the <code>DCMotor</code> model for the drive motor, typically <code>
+<dd><code>bumperLengthX</code> - the length of the bumper along the X-axis
+                             (influences the collision space
+                             of the robot)</dd>
+<dd><code>bumperWidthY</code> - the width of the bumper along the Y-axis
+                             (influences the collision space of
+                             the robot)</dd>
+<dd><code>driveMotorModel</code> - the <code>DCMotor</code> model for the drive motor,
+                             typically <code>
      DCMotor.getKrakenX60Foc()
      </code></dd>
-<dd><code>steerMotorModel</code> - the <code>DCMotor</code> model for the steer motor, typically <code>
+<dd><code>steerMotorModel</code> - the <code>DCMotor</code> model for the steer motor,
+                             typically <code>
      DCMotor.getKrakenX60Foc()
      </code></dd>
 <dd><code>wheelCOF</code> - the coefficient of friction of the drive wheels</dd>
-<dd><code>moduleLocations</code> - the locations of the swerve modules on the robot, in the order <code>
+<dd><code>moduleLocations</code> - the locations of the swerve modules on the robot,
+                             in the order <code>
      FL, FR, BL, BR</code></dd>
 <dd><code>pigeon</code> - the <code>Pigeon2</code> IMU used in the drivetrain</dd>
-<dd><code>modules</code> - the <code>SwerveModule</code>s, typically obtained via <code>SwerveDrivetrain.getModules()</code></dd>
+<dd><code>modules</code> - the <code>SwerveModule</code>s, typically obtained via
+                             <code>SwerveDrivetrain.getModules()</code></dd>
 <dd><code>moduleConstants</code> - the constants for the swerve modules</dd>
 </dl>
 </section>
@@ -254,7 +264,9 @@ loadScripts(document, 'script');</script>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">update</span>()</div>
 <div class="block"><h4>Update the simulation.</h4>
 
- <p>Updates the Maple-Sim simulation and injects the results into the simulated CTRE devices,
+ <p>
+ Updates the Maple-Sim simulation and injects the results into the simulated
+ CTRE devices,
  including motors and the IMU.</div>
 </section>
 </li>
@@ -262,10 +274,14 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="regulateModuleConstantsForSimulation(com.ctre.phoenix6.swerve.SwerveModuleConstants[])">
 <h3>regulateModuleConstantsForSimulation</h3>
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">com.ctre.phoenix6.swerve.SwerveModuleConstants&lt;?,<wbr>?,<wbr>?&gt;[]</span>&nbsp;<span class="element-name">regulateModuleConstantsForSimulation</span><wbr><span class="parameters">(com.ctre.phoenix6.swerve.SwerveModuleConstants&lt;?,<wbr>?,<wbr>?&gt;[]&nbsp;moduleConstants)</span></div>
-<div class="block"><h4>Regulates all <code>SwerveModuleConstants</code> for a drivetrain simulation.</h4>
+<div class="block"><h4>Regulates all <code>SwerveModuleConstants</code> for a drivetrain
+ simulation.</h4>
 
- <p>This method processes an array of <code>SwerveModuleConstants</code> to apply necessary
- adjustments for simulation purposes, ensuring compatibility and avoiding known bugs.</div>
+ <p>
+ This method processes an array of <code>SwerveModuleConstants</code> to apply
+ necessary
+ adjustments for simulation purposes, ensuring compatibility and avoiding
+ known bugs.</div>
 <dl class="notes">
 <dt>See Also:</dt>
 <dd>

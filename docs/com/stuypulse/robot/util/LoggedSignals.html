@@ -81,10 +81,13 @@ loadScripts(document, 'script');</script>
 <span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></span></div>
 <div class="block"><h2>A container and handler for Phoenix's StatusSignals</h2>
 
- <p>Allows for compartmentalization of signals, which can be done by subsystem and by motor, and
+ <p>
+ Allows for compartmentalization of signals, which can be done by subsystem
+ and by motor, and
  easy handling and logging.
 
- <p>Usage example:
+ <p>
+ Usage example:
 
  <pre><code>
  // ... imports
@@ -97,16 +100,14 @@ loadScripts(document, 'script');</script>
          motor1 = new TalonFX(6);
          motor2 = new TalonFX(7);
          signals = new LoggedSignals(
-             "Motor Number 1",
-             motor1.getVelocity(),
-             motor1.getStatorCurrent(),
-             motor1.getSupplyCurrent()
-         ).addMotor(
-             "Motor Number 2",
-             motor2.getVelocity(),
-             motor2.getStatorCurrent(),
-             motor2.getSupplyCurrent()
-         );
+                 "Motor Number 1",
+                 motor1.getVelocity(),
+                 motor1.getStatorCurrent(),
+                 motor1.getSupplyCurrent()).addMotor(
+                         "Motor Number 2",
+                         motor2.getVelocity(),
+                         motor2.getStatorCurrent(),
+                         motor2.getSupplyCurrent());
      }
 
      @Override
@@ -146,13 +147,15 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-last">Description</div>
 <div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(com.ctre.phoenix6.BaseStatusSignal...)" class="member-name-link">LoggedSignals</a><wbr>(com.ctre.phoenix6.BaseStatusSignal...&nbsp;statusSignals)</code></div>
 <div class="col-last even-row-color">
-<div class="block">Creates a new <code>LoggedSignals</code> instance with an unnamed motor and defaults to
+<div class="block">Creates a new <code>LoggedSignals</code> instance with an unnamed motor and
+ defaults to
  registering signals to <a href="LoggedSignals.SignalLocation.html#RIO"><code>LoggedSignals.SignalLocation.RIO</code></a></div>
 </div>
 <div class="col-constructor-name odd-row-color"><code><a href="#%3Cinit%3E(java.lang.String,com.ctre.phoenix6.BaseStatusSignal...)" class="member-name-link">LoggedSignals</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;motorName,
  com.ctre.phoenix6.BaseStatusSignal...&nbsp;statusSignals)</code></div>
 <div class="col-last odd-row-color">
-<div class="block">Creates a new <code>LoggedSignals</code> instance with a named motor and defaults to registering
+<div class="block">Creates a new <code>LoggedSignals</code> instance with a named motor and
+ defaults to registering
  signals to <a href="LoggedSignals.SignalLocation.html#RIO"><code>LoggedSignals.SignalLocation.RIO</code></a></div>
 </div>
 </div>
@@ -172,12 +175,14 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#deregister()" class="member-name-link">deregister</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Deregisters all signals in this instance from the current <a href="LoggedSignals.SignalLocation.html" title="enum class in com.stuypulse.robot.util"><code>LoggedSignals.SignalLocation</code></a></div>
+<div class="block">Deregisters all signals in this instance from the current
+ <a href="LoggedSignals.SignalLocation.html" title="enum class in com.stuypulse.robot.util"><code>LoggedSignals.SignalLocation</code></a></div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#logAll()" class="member-name-link">logAll</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Publishes the current value of each signal to SmartDashboard with the specified log path</div>
+<div class="block">Publishes the current value of each signal to SmartDashboard with the
+ specified log path</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#refreshAll()" class="member-name-link">refreshAll</a>()</code></div>
@@ -187,7 +192,8 @@ loadScripts(document, 'script');</script>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#register()" class="member-name-link">register</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Registers all signals in this instance to the current <a href="LoggedSignals.SignalLocation.html" title="enum class in com.stuypulse.robot.util"><code>LoggedSignals.SignalLocation</code></a></div>
+<div class="block">Registers all signals in this instance to the current
+ <a href="LoggedSignals.SignalLocation.html" title="enum class in com.stuypulse.robot.util"><code>LoggedSignals.SignalLocation</code></a></div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="LoggedSignals.html" title="class in com.stuypulse.robot.util">LoggedSignals</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#withLogPath(java.lang.String)" class="member-name-link">withLogPath</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;logPath)</code></div>
@@ -227,15 +233,20 @@ loadScripts(document, 'script');</script>
 <h3>LoggedSignals</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">LoggedSignals</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;motorName,
  com.ctre.phoenix6.BaseStatusSignal...&nbsp;statusSignals)</span></div>
-<div class="block"><h4>Creates a new <code>LoggedSignals</code> instance with a named motor and defaults to registering
+<div class="block"><h4>Creates a new <code>LoggedSignals</code> instance with a named motor and
+ defaults to registering
  signals to <a href="LoggedSignals.SignalLocation.html#RIO"><code>LoggedSignals.SignalLocation.RIO</code></a></h4>
 
- <p>The logging path defaults to an empty string. Use <a href="#withLogPath(java.lang.String)"><code>withLogPath(String)</code></a> and <a href="#withSignalLocation(com.stuypulse.robot.util.LoggedSignals.SignalLocation)"><code>withSignalLocation(SignalLocation)</code></a> to change it. It also registers the signals for you, so
+ <p>
+ The logging path defaults to an empty string. Use
+ <a href="#withLogPath(java.lang.String)"><code>withLogPath(String)</code></a> and <a href="#withSignalLocation(com.stuypulse.robot.util.LoggedSignals.SignalLocation)"><code>withSignalLocation(SignalLocation)</code></a> to change it. It also registers the
+ signals for you, so
  you don't have to call <a href="#register()"><code>register()</code></a></div>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>motorName</code> - name of the motor whose signals are being registered</dd>
-<dd><code>statusSignals</code> - the signals to manage, duplicates allowed but filtered out</dd>
+<dd><code>statusSignals</code> - the signals to manage, duplicates allowed but filtered
+                      out</dd>
 </dl>
 </section>
 </li>
@@ -243,14 +254,19 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="&lt;init&gt;(com.ctre.phoenix6.BaseStatusSignal...)">
 <h3>LoggedSignals</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">LoggedSignals</span><wbr><span class="parameters">(com.ctre.phoenix6.BaseStatusSignal...&nbsp;statusSignals)</span></div>
-<div class="block"><h4>Creates a new <code>LoggedSignals</code> instance with an unnamed motor and defaults to
+<div class="block"><h4>Creates a new <code>LoggedSignals</code> instance with an unnamed motor and
+ defaults to
  registering signals to <a href="LoggedSignals.SignalLocation.html#RIO"><code>LoggedSignals.SignalLocation.RIO</code></a></h4>
 
- <p>The logging path defaults to an empty string. Use <a href="#withLogPath(java.lang.String)"><code>withLogPath(String)</code></a> and <a href="#withSignalLocation(com.stuypulse.robot.util.LoggedSignals.SignalLocation)"><code>withSignalLocation(SignalLocation)</code></a> to change it. It also registers the signals for you, so
+ <p>
+ The logging path defaults to an empty string. Use
+ <a href="#withLogPath(java.lang.String)"><code>withLogPath(String)</code></a> and <a href="#withSignalLocation(com.stuypulse.robot.util.LoggedSignals.SignalLocation)"><code>withSignalLocation(SignalLocation)</code></a> to change it. It also registers the
+ signals for you, so
  you don't have to call <a href="#register()"><code>register()</code></a></div>
 <dl class="notes">
 <dt>Parameters:</dt>
-<dd><code>statusSignals</code> - the signals to manage, duplicates allowed but filtered out</dd>
+<dd><code>statusSignals</code> - the signals to manage, duplicates allowed but filtered
+                      out</dd>
 </dl>
 </section>
 </li>
@@ -269,12 +285,15 @@ loadScripts(document, 'script');</script>
  com.ctre.phoenix6.BaseStatusSignal...&nbsp;statusSignals)</span></div>
 <div class="block"><h4>Registers a named motor with its own set of signals</h4>
 
- <p>Adds to the internal set of the <a href="LoggedSignals.html" title="class in com.stuypulse.robot.util"><code>LoggedSignals</code></a> instance it is called on, so it uses
+ <p>
+ Adds to the internal set of the <a href="LoggedSignals.html" title="class in com.stuypulse.robot.util"><code>LoggedSignals</code></a> instance it is called
+ on, so it uses
  the same logging path and signal location.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>motorName</code> - name of the motor whose signals are being registered</dd>
-<dd><code>statusSignals</code> - the signals to manage, duplicates allowed but filtered out</dd>
+<dd><code>statusSignals</code> - the signals to manage, duplicates allowed but filtered
+                      out</dd>
 </dl>
 </section>
 </li>
@@ -297,7 +316,8 @@ loadScripts(document, 'script');</script>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="LoggedSignals.html" title="class in com.stuypulse.robot.util">LoggedSignals</a></span>&nbsp;<span class="element-name">withLogPath</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;logPath)</span></div>
 <div class="block"><h4>Sets the SmartDashboard section to log values to</h4>
 
- <p>For example, the path <code>"Shooter/"</code> will log values like <code>
+ <p>
+ For example, the path <code>"Shooter/"</code> will log values like <code>
  "Shooter/PositionRotations"</code> if no motor name was specified.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
@@ -311,9 +331,12 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="register()">
 <h3>register</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">register</span>()</div>
-<div class="block"><h4>Registers all signals in this instance to the current <a href="LoggedSignals.SignalLocation.html" title="enum class in com.stuypulse.robot.util"><code>LoggedSignals.SignalLocation</code></a></h4>
+<div class="block"><h4>Registers all signals in this instance to the current
+ <a href="LoggedSignals.SignalLocation.html" title="enum class in com.stuypulse.robot.util"><code>LoggedSignals.SignalLocation</code></a></h4>
 
- <p>SHould be called whenever the internal signal set is added to. Signal locations use a set
+ <p>
+ SHould be called whenever the internal signal set is added to. Signal
+ locations use a set
  internally, so no need to worry about duplicates</div>
 </section>
 </li>
@@ -321,9 +344,12 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="deregister()">
 <h3>deregister</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">deregister</span>()</div>
-<div class="block"><h4>Deregisters all signals in this instance from the current <a href="LoggedSignals.SignalLocation.html" title="enum class in com.stuypulse.robot.util"><code>LoggedSignals.SignalLocation</code></a></h4>
+<div class="block"><h4>Deregisters all signals in this instance from the current
+ <a href="LoggedSignals.SignalLocation.html" title="enum class in com.stuypulse.robot.util"><code>LoggedSignals.SignalLocation</code></a></h4>
 
- <p>Should be called whenever stuff is removed from the internal signal set. Signal locations
+ <p>
+ Should be called whenever stuff is removed from the internal signal set.
+ Signal locations
  use a set internally, so no need to worry about duplicates</div>
 </section>
 </li>
@@ -331,10 +357,13 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="logAll()">
 <h3>logAll</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">logAll</span>()</div>
-<div class="block"><h4>Publishes the current value of each signal to SmartDashboard with the specified log path
+<div class="block"><h4>Publishes the current value of each signal to SmartDashboard with the
+ specified log path
  </h4>
 
- <p>Should be called after <a href="#refreshAll()"><code>refreshAll()</code></a>. Iterates over the motors and logs the signal
+ <p>
+ Should be called after <a href="#refreshAll()"><code>refreshAll()</code></a>. Iterates over the motors and
+ logs the signal
  values to SmartDashboard</div>
 </section>
 </li>
@@ -344,7 +373,9 @@ loadScripts(document, 'script');</script>
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">refreshAll</span>()</div>
 <div class="block"><h4>Refreshes all registered signals</h4>
 
- <p>Should be called once per robot periodic loop before reading any signal values or calling
+ <p>
+ Should be called once per robot periodic loop before reading any signal
+ values or calling
  <a href="#logAll()"><code>logAll()</code></a>.</div>
 </section>
 </li>
