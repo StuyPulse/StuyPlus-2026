@@ -10,6 +10,8 @@
 package com.stuypulse.robot.subsystems.intake;
 
 import static edu.wpi.first.units.Units.*;
+import edu.wpi.first.units.measure.*;
+
 import java.util.Optional;
 import java.util.function.BooleanSupplier;
 import com.stuypulse.robot.constants.Motors;
@@ -18,8 +20,6 @@ import com.stuypulse.robot.constants.Settings;
 import com.stuypulse.robot.constants.Settings.EnabledSubsystems;
 import com.stuypulse.robot.util.LoggedSignals;
 import com.stuypulse.robot.util.SysId;
-import edu.wpi.first.units.measure.*;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import com.ctre.phoenix6.controls.ControlRequest;
 import com.ctre.phoenix6.controls.DutyCycleOut;
@@ -29,8 +29,7 @@ import com.ctre.phoenix6.controls.TorqueCurrentFOC;
 import com.ctre.phoenix6.controls.VoltageOut;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.MotorAlignmentValue;
-import com.stuypulse.stuylib.streams.booleans.BStream;
-import com.stuypulse.stuylib.streams.booleans.filters.BDebounce;
+import edu.wpi.first.math.filter.Debouncer;
 import dev.doglog.DogLog;
 
 public class IntakeImpl extends Intake {
@@ -59,9 +58,7 @@ public class IntakeImpl extends Intake {
 
     private Optional<Voltage> pivotVoltageOverride;
 
-    private final BStream leftRollerStalling;
-
-    private final BStream rightRollerStalling;
+    private final Debouncer rollerStallingDebouncer;
 
     public IntakeImpl() {
         intakePivotMotor = new TalonFX(Ports.Intake.INTAKE_PIVOT_MOTOR, Settings.CANBUS);
@@ -85,8 +82,7 @@ public class IntakeImpl extends Intake {
         intakeRollerMotorRight.setControl(followerController);
         pivotStalling = () -> intakePivotMotor.getStatorCurrent().getValue().gt(Settings.Intake.Pivot.STALL_CURRENT);
         // until rollers are fixed
-        leftRollerStalling = BStream.create(() -> intakeRollerMotorLeft.getStatorCurrent().getValueAsDouble() > Settings.Intake.Roller.STALL_CURRENT.in(Amps)).filtered(new BDebounce.Both(Settings.Intake.Roller.STALL_DEBOUNCE_SEC.in(Seconds)));
-        rightRollerStalling = BStream.create(() -> intakeRollerMotorRight.getStatorCurrent().getValueAsDouble() > Settings.Intake.Roller.STALL_CURRENT.in(Amps)).filtered(new BDebounce.Both(Settings.Intake.Roller.STALL_DEBOUNCE_SEC.in(Seconds)));
+        rollerStallingDebouncer = new Debouncer(Settings.Intake.Roller.STALL_DEBOUNCE_SEC.in(Seconds), Debouncer.DebounceType.kBoth);
         pivotVoltageOverride = Optional.empty();
     }
 
@@ -136,11 +132,13 @@ public class IntakeImpl extends Intake {
 
     // until rollers are fixed
     private boolean leftRollerStalling() {
-        return leftRollerStalling.get();
+        boolean stalling = intakeRollerMotorLeft.getStatorCurrent().getValueAsDouble() > Settings.Intake.Roller.STALL_CURRENT.in(Amps);
+        return rollerStallingDebouncer.calculate(stalling);
     }
 
     private boolean rightRollerStalling() {
-        return rightRollerStalling.get();
+        boolean stalling = intakeRollerMotorRight.getStatorCurrent().getValueAsDouble() > Settings.Intake.Roller.STALL_CURRENT.in(Amps);
+        return rollerStallingDebouncer.calculate(stalling);
     }
 
     @Override
