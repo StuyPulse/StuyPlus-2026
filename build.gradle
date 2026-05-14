@@ -132,9 +132,7 @@ spotless {
             'com.revrobotics',
             'com.stuypulse.stuylib'
         )
-        googleJavaFormat()
-        indentWithTabs(2)
-        indentWithSpaces(4)
+        googleJavaFormat().aosp()
         removeUnusedImports()
     }
 }
