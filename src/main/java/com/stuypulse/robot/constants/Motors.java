@@ -41,7 +41,7 @@ public interface Motors {
 
 		TalonFXConfig PIVOT_CONFIG = new TalonFXConfig()
 				.withSupplyCurrentLimitAmps(30)
-				.withCurrentLimitAmps(40)
+				.withStatorCurrentLimitAmps(40)
 				.withInvertedValue( // not necessarily true, get inverted val
 						InvertedValue.Clockwise_Positive)
 				.withNeutralMode(NeutralModeValue.Brake)
@@ -65,7 +65,7 @@ public interface Motors {
 
 		TalonFXConfig LEFT_ROLLER_CONFIG = // TODO: apply later
 				new TalonFXConfig()
-						.withCurrentLimitAmps(50)
+						.withStatorCurrentLimitAmps(50)
 						.withInvertedValue( // not necessarily true, get inverted val
 								InvertedValue.CounterClockwise_Positive)
 						.withNeutralMode(NeutralModeValue.Coast)
@@ -73,7 +73,7 @@ public interface Motors {
 
 		TalonFXConfig RIGHT_ROLLER_CONFIG = // TODO: apply later
 				new TalonFXConfig()
-						.withCurrentLimitAmps(50)
+						.withStatorCurrentLimitAmps(50)
 						.withInvertedValue(InvertedValue.Clockwise_Positive)
 						.withNeutralMode(NeutralModeValue.Coast)
 						.withSensorToMechanismRatio(Settings.Intake.Roller.GEAR_RATIO);
@@ -83,7 +83,7 @@ public interface Motors {
 
 		// TODO: get values after motor pinion swap
 		TalonFXConfig LEADER_CONFIG = new TalonFXConfig()
-				.withCurrentLimitAmps(80)
+				.withStatorCurrentLimitAmps(80)
 				.withRampRate(0.25)
 				.withNeutralMode(NeutralModeValue.Coast)
 				.withInvertedValue(InvertedValue.CounterClockwise_Positive);
@@ -93,21 +93,21 @@ public interface Motors {
 
 		// TalonFXConfig SHOOTER_MOTOR_CONFIG = new TalonFXConfig()
 		// .withPIDConstants(Gains.Shooter.kP, Gains.Shooter.kI, Gains.Shooter.kD, 0)
-		// .withCurrentLimitAmps(80)
+		// .withStatorCurrentLimitAmps(80)
 		// .withRampRate(0.25)
 		// .withNeutralMode(NeutralModeValue.Coast)
 		// .withFFConstants(Gains.Shooter.kS, Gains.Shooter.kV, Gains.Shooter.kA, 0)
 		// .withInvertedValue(InvertedValue.CounterClockwise_Positive);
 		// TalonFXConfig SHOOTER_MOTOR_RIGHT = new TalonFXConfig()
 		// .withPIDConstants(Gains.Shooter.kP, Gains.Shooter.kI, Gains.Shooter.kD, 0)
-		// .withCurrentLimitAmps(80)
+		// .withStatorCurrentLimitAmps(80)
 		// .withRampRate(0.25)
 		// .withNeutralMode(NeutralModeValue.Coast)
 		// .withFFConstants(Gains.Shooter.kS, Gains.Shooter.kV, Gains.Shooter.kA, 0)
 		// .withInvertedValue(InvertedValue.Clockwise_Positive);
 		TalonFXConfig SHOOTER_MOTOR_LEFT = new TalonFXConfig()
 				.withPIDConstants(Gains.Shooter.kP, Gains.Shooter.kI, Gains.Shooter.kD, 0)
-				.withCurrentLimitAmps(80)
+				.withStatorCurrentLimitAmps(80)
 				.withRampRate(0.25)
 				.withNeutralMode(NeutralModeValue.Coast)
 				.withFFConstants(Gains.Shooter.kS, Gains.Shooter.kV, Gains.Shooter.kA, 0)
@@ -115,7 +115,7 @@ public interface Motors {
 
 		TalonFXConfig SHOOTER_MOTOR_CENTER = new TalonFXConfig()
 				.withPIDConstants(Gains.Shooter.kP, Gains.Shooter.kI, Gains.Shooter.kD, 0)
-				.withCurrentLimitAmps(80)
+				.withStatorCurrentLimitAmps(80)
 				.withRampRate(0.25)
 				.withNeutralMode(NeutralModeValue.Coast)
 				.withFFConstants(Gains.Shooter.kS, Gains.Shooter.kV, Gains.Shooter.kA, 0)
@@ -123,7 +123,7 @@ public interface Motors {
 
 		TalonFXConfig SHOOTER_MOTOR_RIGHT = new TalonFXConfig()
 				.withPIDConstants(Gains.Shooter.kP, Gains.Shooter.kI, Gains.Shooter.kD, 0)
-				.withCurrentLimitAmps(80)
+				.withStatorCurrentLimitAmps(80)
 				.withRampRate(0.25)
 				.withNeutralMode(NeutralModeValue.Coast)
 				.withFFConstants(Gains.Shooter.kS, Gains.Shooter.kV, Gains.Shooter.kA, 0)
@@ -133,7 +133,7 @@ public interface Motors {
 	public interface Handoff {
 
 		TalonFXConfig HANDOFF_MOTOR_CONFIG = new TalonFXConfig()
-				.withCurrentLimitAmps(80)
+				.withStatorCurrentLimitAmps(80)
 				.withRampRate(0.25)
 				.withNeutralMode(NeutralModeValue.Coast)
 				.withInvertedValue(InvertedValue.CounterClockwise_Positive);
@@ -308,7 +308,7 @@ public interface Motors {
 		}
 
 		// CURRENT LIMIT CONFIGS
-		public TalonFXConfig withCurrentLimitAmps(double currentLimitAmps) {
+		public TalonFXConfig withStatorCurrentLimitAmps(double currentLimitAmps) {
 			currentLimitsConfigs
 					.withStatorCurrentLimit(currentLimitAmps)
 					.withStatorCurrentLimitEnable(true);
