@@ -19,8 +19,8 @@ import com.stuypulse.robot.subsystems.swerve.CommandSwerveDrivetrain;
 import com.stuypulse.robot.util.LoggedSignals;
 import com.ctre.phoenix6.controls.DutyCycleOut;
 import com.ctre.phoenix6.hardware.TalonFX;
-import com.stuypulse.stuylib.streams.booleans.BStream;
-import com.stuypulse.stuylib.streams.booleans.filters.BDebounce;
+
+import edu.wpi.first.math.filter.Debouncer;
 
 public class HandoffImpl extends Handoff {
 
@@ -30,7 +30,7 @@ public class HandoffImpl extends Handoff {
 
     private final LoggedSignals signals;
 
-    private final BStream handoffStalling;
+    private final Debouncer handoffStalling;
 
     public HandoffImpl() {
         handoffMotor = new TalonFX(Ports.Handoff.HANDOFF_MOTOR, Settings.CANBUS);
@@ -38,12 +38,18 @@ public class HandoffImpl extends Handoff {
         signals = new LoggedSignals(handoffMotor.getSupplyCurrent(), handoffMotor.getStatorCurrent(), handoffMotor.getVelocity()).withLogPath("Handoff/").withSignalLocation(LoggedSignals.SignalLocation.CANIVORE);
         // Configuring
         Motors.Handoff.HANDOFF_MOTOR_CONFIG.configure(handoffMotor);
-        handoffStalling = BStream.create(() -> Math.abs(handoffMotor.getStatorCurrent().getValueAsDouble()) > Settings.Handoff.STALL_CURRENT).filtered(new BDebounce.Rising(Settings.Handoff.STALL_DEBOUNCE));
+        // handoffStalling = BStream.create(() -> Math.abs(handoffMotor.getStatorCurrent().getValueAsDouble()) > Settings.Handoff.STALL_CURRENT).filtered(new BDebounce.Rising(Settings.Handoff.STALL_DEBOUNCE));
+        handoffStalling = new Debouncer(Settings.Handoff.STALL_DEBOUNCE, Debouncer.DebounceType.kRising);
     }
 
     @Override
     protected void stopMotors() {
         handoffMotor.stopMotor();
+    }
+
+    private boolean getHandoffStalling() {
+        boolean isStalling = Math.abs(handoffMotor.getStatorCurrent().getValueAsDouble()) > Settings.Handoff.STALL_CURRENT;
+        return handoffStalling.calculate(isStalling);
     }
 
     @Override
@@ -59,7 +65,7 @@ public class HandoffImpl extends Handoff {
             setState(HandoffState.IDLE);
         }
         // Control
-        final double dutyCycle = handoffStalling.get() ? Handoff.HandoffState.REVERSE.getHandoffDutyCycle() : getState().getHandoffDutyCycle();
+        final double dutyCycle = getHandoffStalling() ? Handoff.HandoffState.REVERSE.getHandoffDutyCycle() : getState().getHandoffDutyCycle();
         final DutyCycleOut handoffControl = handoffController.withOutput(dutyCycle);
         // Apply
         handoffMotor.setControl(handoffControl);
