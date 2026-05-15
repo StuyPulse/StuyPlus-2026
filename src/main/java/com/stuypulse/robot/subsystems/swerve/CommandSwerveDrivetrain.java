@@ -20,6 +20,7 @@ import com.stuypulse.robot.util.simulation.SimulationConstants;
 import edu.wpi.first.math.Matrix;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.geometry.Twist2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
@@ -31,7 +32,6 @@ import edu.wpi.first.networktables.StructArrayPublisher;
 import edu.wpi.first.networktables.StructPublisher;
 import edu.wpi.first.wpilibj.Notifier;
 import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
@@ -41,8 +41,6 @@ import com.ctre.phoenix6.swerve.SwerveDrivetrainConstants;
 import com.ctre.phoenix6.swerve.SwerveModule.DriveRequestType;
 import com.ctre.phoenix6.swerve.SwerveModuleConstants;
 import com.ctre.phoenix6.swerve.SwerveRequest;
-import com.stuypulse.stuylib.math.Angle;
-import com.stuypulse.stuylib.math.Vector2D;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.config.RobotConfig;
 import com.pathplanner.lib.controllers.PPHolonomicDriveController;
@@ -359,16 +357,19 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
         return getKinematics().toChassisSpeeds(getModuleStates());
     }
 
-    public Vector2D getFieldRelativeSpeeds() {
-        return new Vector2D(getChassisSpeeds().vxMetersPerSecond, getChassisSpeeds().vyMetersPerSecond).rotate(Angle.fromRotation2d(getPose().getRotation()));
+    public Translation2d getFieldRelativeSpeeds() {
+        ChassisSpeeds chassisSpeeds = getChassisSpeeds();
+        Translation2d robotRelativeSpeeds = new Translation2d(chassisSpeeds.vxMetersPerSecond, chassisSpeeds.vyMetersPerSecond);
+        Translation2d fieldRelativeSpeeds = robotRelativeSpeeds.rotateBy(getPose().getRotation());
+        return fieldRelativeSpeeds;
     }
 
     private void setChassisSpeeds(ChassisSpeeds robotSpeeds) {
         setControl(new SwerveRequest.RobotCentric().withVelocityX(robotSpeeds.vxMetersPerSecond).withVelocityY(robotSpeeds.vyMetersPerSecond).withRotationalRate(robotSpeeds.omegaRadiansPerSecond));
     }
 
-    public void drive(Vector2D velocity, double rotation) {
-        ChassisSpeeds speeds = ChassisSpeeds.fromFieldRelativeSpeeds(Robot.isBlue() ? velocity.y : -velocity.y, Robot.isBlue() ? -velocity.x : velocity.x, -rotation, getPose().getRotation());
+    public void drive(Translation2d velocity, double rotation) {
+        ChassisSpeeds speeds = ChassisSpeeds.fromFieldRelativeSpeeds(Robot.isBlue() ? velocity.getY() : -velocity.getY(), Robot.isBlue() ? -velocity.getX() : velocity.getX(), -rotation, getPose().getRotation());
         Pose2d robotVel = new Pose2d(Settings.DT.in(Seconds) * speeds.vxMetersPerSecond, Settings.DT.in(Seconds) * speeds.vyMetersPerSecond, Rotation2d.fromRadians(Settings.DT.in(Seconds) * speeds.omegaRadiansPerSecond));
         Twist2d twistVel = new Pose2d().log(robotVel);
         setChassisSpeeds(new ChassisSpeeds(twistVel.dx / Settings.DT.in(Seconds), twistVel.dy / Settings.DT.in(Seconds), twistVel.dtheta / Settings.DT.in(Seconds)));
@@ -406,9 +407,9 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
             }
             DogLog.log("Swerve/Velocity Robot Relative X (m per s)", getChassisSpeeds().vxMetersPerSecond);
             DogLog.log("Swerve/Velocity Robot Relative Y (m per s)", getChassisSpeeds().vyMetersPerSecond);
-            DogLog.log("Swerve/Velocity Field Relative X (m per s)", getFieldRelativeSpeeds().x);
+            DogLog.log("Swerve/Velocity Field Relative X (m per s)", getFieldRelativeSpeeds().getX());
             DogLog.log("Swerve/Field Relative Rotation", getPose().getRotation().getDegrees());
-            DogLog.log("Swerve/Velocity Field Relative Y (m per s)", getFieldRelativeSpeeds().y);
+            DogLog.log("Swerve/Velocity Field Relative Y (m per s)", getFieldRelativeSpeeds().getY());
             DogLog.log("Swerve/Angular Velocity (rad per s)", getChassisSpeeds().omegaRadiansPerSecond);
         }
     }
