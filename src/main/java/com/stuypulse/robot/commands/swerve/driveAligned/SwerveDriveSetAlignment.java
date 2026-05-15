@@ -14,23 +14,23 @@ import java.util.function.Supplier;
 import com.stuypulse.robot.constants.Gains.Swerve.Alignment;
 import com.stuypulse.robot.constants.Settings;
 import com.stuypulse.robot.subsystems.swerve.CommandSwerveDrivetrain;
+
+import edu.wpi.first.math.filter.Debouncer;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj2.command.Command;
 import com.ctre.phoenix6.swerve.SwerveRequest;
-import com.stuypulse.stuylib.streams.booleans.BStream;
-import com.stuypulse.stuylib.streams.booleans.filters.BDebounceRC;
 
 public class SwerveDriveSetAlignment extends Command {
 
     protected static final CommandSwerveDrivetrain swerve;
 
-    protected final BStream isAligned;
+    protected final Debouncer alignmentDebouncer;
 
     private Supplier<Pose2d> pose;
 
     protected SwerveDriveSetAlignment(Supplier<Pose2d> pose) {
-        this.isAligned = BStream.create(this::isAligned).filtered(new BDebounceRC.Both(Settings.Swerve.Alignment.Tolerances.ALIGNMENT_DEBOUNCE.in(Seconds)));
+        this.alignmentDebouncer = new Debouncer(Settings.Swerve.Alignment.Tolerances.ALIGNMENT_DEBOUNCE.in(Seconds), Debouncer.DebounceType.kRising);
         this.pose = pose;
         addRequirements(swerve);
     }
@@ -51,7 +51,7 @@ public class SwerveDriveSetAlignment extends Command {
 
     @Override
     public boolean isFinished() {
-        return isAligned.get();
+        return alignmentDebouncer.calculate(isAligned());
     }
 
     @Override
