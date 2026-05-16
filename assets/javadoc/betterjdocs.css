@@ -80,14 +80,17 @@
 }
 
 .package-index-page .title::after {
-  --size: 50px;
+  --size: 75px;
   content: "";
-  position: relative;
+  position: absolute;
   width: var(--size);
   height: var(--size);
   background-image: url("/StuyPlus-2026/StuyPlusLogo.png");
   background-size: contain;
   background-repeat: no-repeat;
+  right: 0;
+  align-self: flex-start;
+  top: -0.5rem;
 }
 
 .result-item > .ui-menu-item-wrapper.ui-state-active {
