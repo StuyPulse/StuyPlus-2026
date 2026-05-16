@@ -1,33 +1,39 @@
-/************************* PROJECT RON *************************/
+/**
+ * ********************** PROJECT RON ************************
+ */
 /* Copyright (c) 2026 StuyPulse Robotics. All rights reserved. */
 /* Use of this source code is governed by an MIT-style license */
 /* that can be found in the repository LICENSE file.           */
-/***************************************************************/
+/**
+ * ***********************************************************
+ */
 package com.stuypulse.robot.constants;
 
 import static edu.wpi.first.units.Units.*;
-
-import com.ctre.phoenix6.CANBus;
-import com.pathplanner.lib.path.PathConstraints;
-import com.stuypulse.stuylib.network.SmartBoolean;
-import com.stuypulse.stuylib.network.SmartNumber;
 import edu.wpi.first.math.VecBuilder;
 import edu.wpi.first.math.Vector;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.numbers.N3;
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.networktables.BooleanSubscriber;
+import edu.wpi.first.networktables.DoubleSubscriber;
 import edu.wpi.first.units.*;
 import edu.wpi.first.units.measure.*;
 import edu.wpi.first.wpilibj.LEDPattern;
 import edu.wpi.first.wpilibj.simulation.SingleJointedArmSim;
 import edu.wpi.first.wpilibj.util.Color;
+import com.ctre.phoenix6.CANBus;
+import dev.doglog.DogLog;
+
+import com.pathplanner.lib.path.PathConstraints;
 
 /*-
  * File containing tunable settings for every subsystem on the robot.
  *
- * We use StuyLib's SmartNumber / SmartBoolean in order to have tunable
- * values that we can edit on Shuffleboard.
+ * We use DogLog's tunables in order to have tunable
+ * values that we can edit on whatever dashboard we
+ * are using.
  */
 public interface Settings {
 
@@ -39,19 +45,19 @@ public interface Settings {
 
     public interface EnabledSubsystems {
 
-        SmartBoolean FEEDER = new SmartBoolean("Enabled Subsystems/Feeder", false);
+        BooleanSubscriber FEEDER = DogLog.tunable("Enabled Subsystems/Feeder", false);
 
-        SmartBoolean INTAKE = new SmartBoolean("Enabled Subsystems/Intake", true);
+        BooleanSubscriber INTAKE = DogLog.tunable("Enabled Subsystems/Intake", true);
 
-        SmartBoolean LED = new SmartBoolean("Enabled Subsystems/LED", false);
+        BooleanSubscriber LED = DogLog.tunable("Enabled Subsystems/LED", false);
 
-        SmartBoolean HANDOFF = new SmartBoolean("Enabled Subsystems/Handoff", false);
+        BooleanSubscriber HANDOFF = DogLog.tunable("Enabled Subsystems/Handoff", false);
 
-        SmartBoolean SHOOTER = new SmartBoolean("Enabled Subsystems/Shooter", false);
+        BooleanSubscriber SHOOTER = DogLog.tunable("Enabled Subsystems/Shooter", false);
 
-        SmartBoolean VISION = new SmartBoolean("Enabled Subsystems/Vision", false);
+        BooleanSubscriber VISION = DogLog.tunable("Enabled Subsystems/Vision", false);
 
-        SmartBoolean SWERVE = new SmartBoolean("Enabled Subsystems/Swerve", false);
+        BooleanSubscriber SWERVE = DogLog.tunable("Enabled Subsystems/Swerve", false);
     }
 
     public interface Vision {
@@ -87,7 +93,7 @@ public interface Settings {
 
             Angle PUSHDOWN_THRESHOLD = Degrees.of(-20);
 
-            SmartNumber PUSHDOWN_CURRENT = new SmartNumber("Intake/Pivot/Pushdown Current Tuning Amps", 30.0);
+            DoubleSubscriber PUSHDOWN_CURRENT = DogLog.tunable("Intake/Pivot/Pushdown Current Tuning Amps", 30.0);
 
             // amps
             Current STALL_CURRENT = Amps.of(25);
@@ -112,8 +118,7 @@ public interface Settings {
             Distance PIVOT_ARM_LENGTH = Meters.of(0.1439822);
 
             // mass in kg
-            MomentOfInertia J = KilogramSquareMeters
-                    .of(SingleJointedArmSim.estimateMOI(PIVOT_ARM_LENGTH.in(Meters), 30));
+            MomentOfInertia J = KilogramSquareMeters.of(SingleJointedArmSim.estimateMOI(PIVOT_ARM_LENGTH.in(Meters), 30));
         }
 
         public interface Roller {
@@ -232,39 +237,27 @@ public interface Settings {
 
         public interface RPMInterpolation {
 
-            double[][] distanceRPMInterpolationValues = {
-                    { 1.0, 1000.0 }, { 2.0, 1500.0 }, { 3.0, 2000.0 }, { 4.0, 2500.0 }, { 5.0, 3000.0 }
-            };
+            double[][] distanceRPMInterpolationValues = { { 1.0, 1000.0 }, { 2.0, 1500.0 }, { 3.0, 2000.0 }, { 4.0, 2500.0 }, { 5.0, 3000.0 } };
         }
 
-        // These values are placeholders and should be replaced with actual data from
-        // testing
+        // These values are placeholders and should be replaced with actual data from testing
         public interface TOFInterpolation {
 
-            double[][] distanceTOFInterpolationValues = {
-                    { 1.0, 0.5 }, { 2.0, 0.75 }, { 3.0, 1.0 }, { 4.0, 1.25 }, { 5.0, 1.5 }
-            };
+            double[][] distanceTOFInterpolationValues = { { 1.0, 0.5 }, { 2.0, 0.75 }, { 3.0, 1.0 }, { 4.0, 1.25 }, { 5.0, 1.5 } };
         }
 
-        // These values are placeholders and should be replaced with actual data from
-        // testing
+        // These values are placeholders and should be replaced with actual data from testing
         public interface FerryRPMInterpolation {
 
-            double[][] ferryDistanceRPMInterpolation = {
-                    { 1.0, 1000.0 }, { 2.0, 1500.0 }, { 3.0, 2000.0 }, { 4.0, 2500.0 }, { 5.0, 3000.0 }
-            };
+            double[][] ferryDistanceRPMInterpolation = { { 1.0, 1000.0 }, { 2.0, 1500.0 }, { 3.0, 2000.0 }, { 4.0, 2500.0 }, { 5.0, 3000.0 } };
         }
 
-        // These values are placeholders and should be replaced with actual data from
-        // testing
+        // These values are placeholders and should be replaced with actual data from testing
         public interface FerryTOFInterpolation {
 
-            double[][] FerryTOFInterpolationInterpolation = {
-                    { 1.0, 0.5 }, { 2.0, 0.75 }, { 3.0, 1.0 }, { 4.0, 1.25 }, { 5.0, 1.5 }
-            };
+            double[][] FerryTOFInterpolationInterpolation = { { 1.0, 0.5 }, { 2.0, 0.75 }, { 3.0, 1.0 }, { 4.0, 1.25 }, { 5.0, 1.5 } };
         }
-        // These values are placeholders and should be replaced with actual data from
-        // testing
+        // These values are placeholders and should be replaced with actual data from testing
     }
 
     public interface Swerve {
@@ -285,11 +278,7 @@ public interface Settings {
             // TODO: revert to 900
             double MAX_ANGULAR_ACCEL_RAD_PER_S = Units.degreesToRadians(300.0);
 
-            PathConstraints DEFAULT_CONSTRAINTS = new PathConstraints(
-                    MAX_VELOCITY_M_PER_S,
-                    MAX_ACCEL_M_PER_S_SQUARED,
-                    MAX_ANGULAR_VEL_RAD_PER_S,
-                    MAX_ANGULAR_ACCEL_RAD_PER_S);
+            PathConstraints DEFAULT_CONSTRAINTS = new PathConstraints(MAX_VELOCITY_M_PER_S, MAX_ACCEL_M_PER_S_SQUARED, MAX_ANGULAR_VEL_RAD_PER_S, MAX_ANGULAR_ACCEL_RAD_PER_S);
         }
 
         public interface Alignment {
