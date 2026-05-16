@@ -14,15 +14,11 @@ import com.stuypulse.robot.constants.Motors;
 import com.stuypulse.robot.constants.Ports;
 import com.stuypulse.robot.constants.Settings;
 import com.stuypulse.robot.util.RobotVisualizer;
-import com.stuypulse.robot.util.SysId;
 import com.stuypulse.robot.util.simulation.TalonFXSimulation;
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.math.system.plant.LinearSystemId;
 import edu.wpi.first.units.measure.AngularVelocity;
-import edu.wpi.first.units.measure.Voltage;
 import edu.wpi.first.wpilibj.simulation.FlywheelSim;
-import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
-import java.util.Optional;
 
 public class ShooterSim extends Shooter {
 
@@ -37,8 +33,6 @@ public class ShooterSim extends Shooter {
     private final VelocityTorqueCurrentFOC shooterController;
 
     private final Follower shooterFollowerController;
-
-    private Optional<Voltage> voltageOverride;
 
     public ShooterSim() {
         shooterSim = new FlywheelSim(
@@ -58,7 +52,6 @@ public class ShooterSim extends Shooter {
         shooterFollowerController = new Follower(shooterMotorRight.getDeviceID(), MotorAlignmentValue.Opposed);
         shooterMotorCenter.setControl(shooterFollowerController);
         shooterMotorLeft.setControl(shooterFollowerController);
-        voltageOverride = Optional.empty();
     }
 
     @Override
@@ -76,11 +69,6 @@ public class ShooterSim extends Shooter {
     }
 
     @Override
-    public void setVoltageOverride(Voltage voltage) {
-        this.voltageOverride = Optional.of(voltage);
-    }
-
-    @Override
     public void periodic() {
         if (!Settings.EnabledSubsystems.SHOOTER.get()) {
             stopMotors();
@@ -95,17 +83,5 @@ public class ShooterSim extends Shooter {
         shooterMotorLeft.update(Settings.DT);
         RobotVisualizer.getInstance().updateShooter(getCurrentAngularVelocity());
         super.periodic();
-    }
-
-    public SysIdRoutine getShooterSysIdRoutine() {
-        return SysId.getRoutine(
-                Settings.Shooter.RAMP_RATE,
-                Settings.Shooter.STEP_VOLTAGE,
-                "Shooter",
-                voltage -> setVoltageOverride(voltage),
-                () -> shooterMotorLeft.getPosition().getValue(),
-                () -> shooterMotorLeft.getVelocity().getValue(),
-                () -> shooterMotorLeft.getMotorVoltage().getValue(),
-                getInstance());
     }
 }

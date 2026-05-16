@@ -70,7 +70,6 @@ public class ShooterImpl extends Shooter {
         voltageOverride = Optional.empty();
     }
 
-    @Override
     public void setVoltageOverride(Voltage voltage) {
         this.voltageOverride = Optional.of(voltage);
     }
@@ -106,7 +105,6 @@ public class ShooterImpl extends Shooter {
         super.periodic();
     }
 
-    @Override
     public SysIdRoutine getShooterSysIdRoutine() {
         return SysId.getRoutine(
                 Settings.Shooter.RAMP_RATE,

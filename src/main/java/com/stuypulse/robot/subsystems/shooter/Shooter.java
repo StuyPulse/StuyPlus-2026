@@ -13,9 +13,7 @@ import com.stuypulse.robot.constants.Settings;
 import com.stuypulse.robot.util.shooter.InterpolationCalculator;
 import dev.doglog.DogLog;
 import edu.wpi.first.units.measure.AngularVelocity;
-import edu.wpi.first.units.measure.Voltage;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import java.util.function.DoubleSupplier;
 
 public abstract class Shooter extends SubsystemBase {
@@ -79,10 +77,6 @@ public abstract class Shooter extends SubsystemBase {
     public abstract AngularVelocity getCurrentAngularVelocity();
 
     protected abstract void stopMotors();
-
-    public abstract SysIdRoutine getShooterSysIdRoutine();
-
-    public abstract void setVoltageOverride(Voltage voltage);
 
     @Override
     public void periodic() {
