@@ -67,8 +67,8 @@ public class Robot extends TimedRobot {
     public void robotPeriodic() {
         LoggedSignals.refreshAll();
         CommandScheduler.getInstance().run();
-        DogLog.log("Bot/Alliance", alliance.name());
-        DogLog.log("Match Time", DriverStation.getMatchTime());
+        DogLog.forceNt.log("Bot/Alliance", alliance.name());
+        DogLog.forceNt.log("Match Time", DriverStation.getMatchTime());
         SmartDashboard.putData("Command Scheduler", CommandScheduler.getInstance());
     }
 

@@ -198,8 +198,8 @@ public class IntakeImpl extends Intake {
         this.pivotSignals.logAll();
         // until rollers are fixed
         this.rollerSignals.logAll();
-        DogLog.log("Intake/Rollers/Stalling", leftRollerStalling() || rightRollerStalling());
-        DogLog.log(
+        DogLog.forceNt.log("Intake/Rollers/Stalling", leftRollerStalling() || rightRollerStalling());
+        DogLog.forceNt.log(
                 "Intake/Pivot/Pushing Down", intakePivotMotor.getAppliedControl() == pushdownController);
         super.periodic();
     }

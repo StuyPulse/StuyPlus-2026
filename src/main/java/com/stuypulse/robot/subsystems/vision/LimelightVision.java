@@ -175,7 +175,7 @@ public class LimelightVision extends SubsystemBase {
                 DogLog.log("Vision/" + names[i] + " Has Data", true);
                 DogLog.log("Vision/MegaTag Mode", megaTagMode.toString());
                 // this yaw is seems to be the robot yaw passed into the LL
-                DogLog.log("Vision/Pipeline", LimelightHelpers.getCurrentPipelineIndex(limelightName));
+                DogLog.forceNt.log("Vision/Pipeline", LimelightHelpers.getCurrentPipelineIndex(limelightName));
                 DogLog.log("Vision/Limelight Robot Yaw", LimelightHelpers.getIMUData(limelightName).robotYaw);
                 // this is just the yaw of the internal imu
                 DogLog.log("Vision/Limelight Yaw", LimelightHelpers.getIMUData(limelightName).Yaw);
