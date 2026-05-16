@@ -105,7 +105,6 @@ public class IntakeImpl extends Intake {
     }
 
     // For sysid
-    @Override
     public void setPivotVoltageOverride(Voltage voltage) {
         this.pivotVoltageOverride = Optional.of(voltage);
     }
@@ -204,7 +203,6 @@ public class IntakeImpl extends Intake {
         super.periodic();
     }
 
-    @Override
     public SysIdRoutine getIntakeSysIdRoutine() {
         return SysId.getRoutine(
                 Settings.Intake.Pivot.RAMP_RATE,

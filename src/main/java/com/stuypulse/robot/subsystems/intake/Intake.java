@@ -16,7 +16,6 @@ import dev.doglog.DogLog;
 import edu.wpi.first.units.measure.*;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 
 public abstract class Intake extends SubsystemBase {
 
@@ -135,11 +134,6 @@ public abstract class Intake extends SubsystemBase {
     public abstract AngularVelocity getRollerVelocity();
 
     protected abstract void stopMotors();
-
-    // Sysid
-    public abstract SysIdRoutine getIntakeSysIdRoutine();
-
-    public abstract void setPivotVoltageOverride(Voltage voltage);
 
     @Override
     public void periodic() {

@@ -10,12 +10,10 @@ import static edu.wpi.first.units.Units.*;
 import com.ctre.phoenix6.controls.DutyCycleOut;
 import com.ctre.phoenix6.controls.Follower;
 import com.ctre.phoenix6.controls.PositionTorqueCurrentFOC;
-import com.ctre.phoenix6.controls.VoltageOut;
 import com.ctre.phoenix6.signals.MotorAlignmentValue;
 import com.stuypulse.robot.constants.Motors;
 import com.stuypulse.robot.constants.Ports;
 import com.stuypulse.robot.constants.Settings;
-import com.stuypulse.robot.util.SysId;
 import com.stuypulse.robot.util.simulation.TalonFXSimulation;
 import dev.doglog.DogLog;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -23,11 +21,8 @@ import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.math.system.plant.LinearSystemId;
 import edu.wpi.first.units.measure.Angle;
 import edu.wpi.first.units.measure.AngularVelocity;
-import edu.wpi.first.units.measure.Voltage;
 import edu.wpi.first.wpilibj.simulation.DCMotorSim;
 import edu.wpi.first.wpilibj.simulation.SingleJointedArmSim;
-import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
-import java.util.Optional;
 
 public class IntakeSim extends Intake {
 
@@ -46,8 +41,6 @@ public class IntakeSim extends Intake {
     private final DutyCycleOut rollerController;
 
     private final Follower rollerFollowerController;
-
-    private Optional<Voltage> pivotVoltageOverride;
 
     private Rotation2d zeroOffset;
 
@@ -80,7 +73,6 @@ public class IntakeSim extends Intake {
         rollerController = new DutyCycleOut(0).withEnableFOC(true);
         rollerFollowerController = new Follower(rollerMotor.getDeviceID(), MotorAlignmentValue.Opposed);
         rollerFollower.setControl(rollerFollowerController);
-        pivotVoltageOverride = Optional.empty();
         zeroOffset = new Rotation2d();
     }
 
@@ -109,21 +101,12 @@ public class IntakeSim extends Intake {
     }
 
     @Override
-    public void setPivotVoltageOverride(Voltage voltage) {
-        this.pivotVoltageOverride = Optional.of(voltage);
-    }
-
-    @Override
     public void periodic() {
         if (!Settings.EnabledSubsystems.INTAKE.get()) {
             stopMotors();
             return;
         }
-        if (pivotVoltageOverride.isPresent()) {
-            pivotMotor.setControl(new VoltageOut(pivotVoltageOverride.get()));
-            pivotMotor.update(Settings.DT);
-            return;
-        }
+
         rollerMotor.setControl(rollerController.withOutput(getState().getTargetDutyCycle()));
         rollerMotor.update(Settings.DT);
         rollerFollower.update(Settings.DT);
@@ -142,18 +125,5 @@ public class IntakeSim extends Intake {
         // TODO: implement
         DogLog.log("Intake/Rollers/Right Stalling", false);
         super.periodic();
-    }
-
-    @Override
-    public SysIdRoutine getIntakeSysIdRoutine() {
-        return SysId.getRoutine(
-                Settings.Intake.Pivot.RAMP_RATE,
-                Settings.Intake.Pivot.STEP_VOLTAGE,
-                "Intake",
-                voltage -> setPivotVoltageOverride(voltage),
-                () -> Radians.of(pivotSim.getAngleRads()),
-                () -> RadiansPerSecond.of(pivotSim.getVelocityRadPerSec()),
-                () -> Volts.of(pivotSim.getInput(0)),
-                getInstance());
     }
 }
