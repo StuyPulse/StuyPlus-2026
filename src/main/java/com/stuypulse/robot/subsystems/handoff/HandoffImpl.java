@@ -31,12 +31,10 @@ public class HandoffImpl extends Handoff {
     public HandoffImpl() {
         handoffMotor = new TalonFX(Ports.Handoff.HANDOFF_MOTOR, Settings.CANBUS);
         handoffController = new DutyCycleOut(getState().getHandoffDutyCycle()).withEnableFOC(true);
-        signals = new LoggedSignals(
+        signals = new LoggedSignals(LoggedSignals.SignalLocation.CANIVORE, "Handoff/",
                 handoffMotor.getSupplyCurrent(),
                 handoffMotor.getStatorCurrent(),
-                handoffMotor.getVelocity())
-                .withLogPath("Handoff/")
-                .withSignalLocation(LoggedSignals.SignalLocation.CANIVORE);
+                handoffMotor.getVelocity());
         // Configuring
         Motors.Handoff.HANDOFF_MOTOR_CONFIG.configure(handoffMotor);
         handoffStalling = BStream.create(

@@ -64,12 +64,10 @@ public class IntakeImpl extends Intake {
         Motors.Intake.PIVOT_CONFIG.configure(intakePivotMotor);
         // zero it at the up pos
         intakePivotMotor.setPosition(Settings.Intake.Pivot.INITIAL_ANGLE);
-        pivotSignals = new LoggedSignals(
+        pivotSignals = new LoggedSignals(LoggedSignals.SignalLocation.CANIVORE, "Intake/Pivot/",
                 intakePivotMotor.getSupplyCurrent(),
                 intakePivotMotor.getStatorCurrent(),
-                intakePivotMotor.getVelocity())
-                .withLogPath("Intake/Pivot/")
-                .withSignalLocation(LoggedSignals.SignalLocation.CANIVORE);
+                intakePivotMotor.getVelocity());
         // until rollers are fixed
         // leader
         intakeRollerMotorLeft = new TalonFX(Ports.Intake.INTAKE_ROLLER_MOTOR_LEFT, Settings.CANBUS);
@@ -77,7 +75,7 @@ public class IntakeImpl extends Intake {
         Motors.Intake.LEFT_ROLLER_CONFIG.configure(intakeRollerMotorLeft);
         Motors.Intake.RIGHT_ROLLER_CONFIG.configure(intakeRollerMotorRight);
         // until rollers are fixed
-        rollerSignals = new LoggedSignals(
+        rollerSignals = new LoggedSignals(LoggedSignals.SignalLocation.CANIVORE, "Intake/Roller/").withMotor(
                 "Intake Roller Left",
                 intakeRollerMotorLeft.getSupplyCurrent(),
                 intakeRollerMotorLeft.getStatorCurrent(),
@@ -86,9 +84,7 @@ public class IntakeImpl extends Intake {
                         "Intake Roller Right",
                         intakeRollerMotorRight.getSupplyCurrent(),
                         intakeRollerMotorRight.getStatorCurrent(),
-                        intakeRollerMotorRight.getVelocity())
-                .withLogPath("Intake/Roller/")
-                .withSignalLocation(LoggedSignals.SignalLocation.CANIVORE);
+                        intakeRollerMotorRight.getVelocity());
         positionController = new PositionTorqueCurrentFOC(getState().getTargetAngle());
         homingController = new VoltageOut(Settings.Intake.Pivot.HOMING_DOWN_VOLTAGE).withEnableFOC(true);
         pushdownController = new TorqueCurrentFOC(Settings.Intake.Pivot.PUSHDOWN_CURRENT.getAsDouble());
