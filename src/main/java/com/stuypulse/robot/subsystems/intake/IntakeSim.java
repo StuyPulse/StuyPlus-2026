@@ -37,15 +37,15 @@ public class IntakeSim extends Intake {
 
     private final PositionTorqueCurrentFOC pivotController;
 
-    private final TalonFXSimulation rollerMotor;
+    private final TalonFXSimulation rollerMotorLeft;
 
-    private final TalonFXSimulation rollerFollower;
+    private final TalonFXSimulation rollerMotorRight;
 
     private final DCMotorSim rollerSim;
 
     private final DutyCycleOut rollerController;
 
-    private final Follower rollerFollowerController;
+    private final Follower followerController;
 
     private Optional<Voltage> pivotVoltageOverride;
 
@@ -73,13 +73,13 @@ public class IntakeSim extends Intake {
                         Settings.Intake.Roller.J.in(KilogramSquareMeters),
                         Settings.Intake.Roller.GEAR_RATIO),
                 DCMotor.getKrakenX60(2));
-        rollerMotor = new TalonFXSimulation(Ports.Intake.INTAKE_ROLLER_MOTOR_LEFT, rollerSim);
-        rollerFollower = new TalonFXSimulation(Ports.Intake.INTAKE_ROLLER_MOTOR_RIGHT, rollerSim);
-        rollerMotor.configure(Motors.Intake.LEFT_ROLLER_CONFIG);
-        rollerFollower.configure(Motors.Intake.RIGHT_ROLLER_CONFIG);
+        rollerMotorLeft = new TalonFXSimulation(Ports.Intake.INTAKE_ROLLER_MOTOR_LEFT, rollerSim);
+        rollerMotorRight = new TalonFXSimulation(Ports.Intake.INTAKE_ROLLER_MOTOR_RIGHT, rollerSim);
+        rollerMotorLeft.configure(Motors.Intake.LEFT_ROLLER_CONFIG);
+        rollerMotorRight.configure(Motors.Intake.RIGHT_ROLLER_CONFIG);
         rollerController = new DutyCycleOut(0).withEnableFOC(true);
-        rollerFollowerController = new Follower(rollerMotor.getDeviceID(), MotorAlignmentValue.Opposed);
-        rollerFollower.setControl(rollerFollowerController);
+        followerController = new Follower(rollerMotorLeft.getDeviceID(), MotorAlignmentValue.Opposed);
+        rollerMotorRight.setControl(followerController);
         pivotVoltageOverride = Optional.empty();
         zeroOffset = new Rotation2d();
     }
@@ -96,16 +96,16 @@ public class IntakeSim extends Intake {
 
     @Override
     public AngularVelocity getRollerVelocity() {
-        return rollerFollower.getVelocity().getValue();
+        return rollerMotorRight.getVelocity().getValue();
     }
 
     @Override
     protected void stopMotors() {
         pivotMotor.stopMotor();
-        rollerMotor.stopMotor();
-        rollerFollower.stopMotor();
+        rollerMotorLeft.stopMotor();
+        rollerMotorRight.stopMotor();
         // re-add the follow control after stopMotor removes it
-        rollerFollower.setControl(rollerFollowerController);
+        rollerMotorRight.setControl(followerController);
     }
 
     @Override
@@ -124,20 +124,20 @@ public class IntakeSim extends Intake {
             pivotMotor.update(Settings.DT);
             return;
         }
-        rollerMotor.setControl(rollerController.withOutput(getState().getTargetDutyCycle()));
-        rollerMotor.update(Settings.DT);
-        rollerFollower.update(Settings.DT);
+        rollerMotorLeft.setControl(rollerController.withOutput(getState().getTargetDutyCycle()));
+        rollerMotorLeft.update(Settings.DT);
+        rollerMotorRight.update(Settings.DT);
         pivotMotor.setControl(pivotController.withPosition(getState().getTargetAngle().in(Rotations)));
         pivotMotor.update(Settings.DT);
         // all current measured in amps
         DogLog.log("Intake/Pivot/Stator Current", pivotMotor.getStatorCurrent().getValueAsDouble());
         DogLog.log("Intake/Pivot/Supply Current", pivotMotor.getSupplyCurrent().getValueAsDouble());
         DogLog.log("Intake/Pivot/Voltage", pivotMotor.getMotorVoltage().getValueAsDouble());
-        DogLog.log("Intake/Rollers/Left Current", rollerMotor.getStatorCurrent().getValueAsDouble());
+        DogLog.log("Intake/Rollers/Left Current", rollerMotorLeft.getStatorCurrent().getValueAsDouble());
         DogLog.log(
-                "Intake/Rollers/Right Current", rollerFollower.getStatorCurrent().getValueAsDouble());
-        DogLog.log("Intake/Rollers/Left Voltage", rollerMotor.getMotorVoltage().getValueAsDouble());
-        DogLog.log("Intake/Rollers/Right Voltage", rollerFollower.getMotorVoltage().getValueAsDouble());
+                "Intake/Rollers/Right Current", rollerMotorRight.getStatorCurrent().getValueAsDouble());
+        DogLog.log("Intake/Rollers/Left Voltage", rollerMotorLeft.getMotorVoltage().getValueAsDouble());
+        DogLog.log("Intake/Rollers/Right Voltage", rollerMotorRight.getMotorVoltage().getValueAsDouble());
         DogLog.log("Intake/Rollers/Left Stalling", false);
         // TODO: implement
         DogLog.log("Intake/Rollers/Right Stalling", false);

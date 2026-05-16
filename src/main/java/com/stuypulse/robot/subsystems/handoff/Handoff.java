@@ -10,10 +10,7 @@ import com.stuypulse.robot.constants.Settings;
 import dev.doglog.DogLog;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-public abstract class // handoff is feeder ---> shooter btw
-Handoff extends // handoff is feeder ---> shooter btw
-        SubsystemBase {
-
+public abstract class Handoff extends SubsystemBase {
     private static final Handoff instance;
 
     private HandoffState state;

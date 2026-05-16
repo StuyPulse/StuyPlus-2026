@@ -31,11 +31,11 @@ import java.util.function.BooleanSupplier;
 
 public class IntakeImpl extends Intake {
 
-    private final TalonFX intakePivotMotor;
+    private final TalonFX pivotMotor;
 
-    private final TalonFX intakeRollerMotorLeft;
+    private final TalonFX rollerMotorLeft;
 
-    private final TalonFX intakeRollerMotorRight;
+    private final TalonFX rollerMotorRight;
 
     private final PositionTorqueCurrentFOC positionController;
 
@@ -60,45 +60,45 @@ public class IntakeImpl extends Intake {
     private final BStream rightRollerStalling;
 
     public IntakeImpl() {
-        intakePivotMotor = new TalonFX(Ports.Intake.INTAKE_PIVOT_MOTOR, Settings.CANBUS);
-        Motors.Intake.PIVOT_CONFIG.configure(intakePivotMotor);
+        pivotMotor = new TalonFX(Ports.Intake.INTAKE_PIVOT_MOTOR, Settings.CANBUS);
+        Motors.Intake.PIVOT_CONFIG.configure(pivotMotor);
         // zero it at the up pos
-        intakePivotMotor.setPosition(Settings.Intake.Pivot.INITIAL_ANGLE);
+        pivotMotor.setPosition(Settings.Intake.Pivot.INITIAL_ANGLE);
         pivotSignals = new LoggedSignals(LoggedSignals.SignalLocation.CANIVORE, "Intake/Pivot/",
-                intakePivotMotor.getSupplyCurrent(),
-                intakePivotMotor.getStatorCurrent(),
-                intakePivotMotor.getVelocity());
+                pivotMotor.getSupplyCurrent(),
+                pivotMotor.getStatorCurrent(),
+                pivotMotor.getVelocity());
         // until rollers are fixed
         // leader
-        intakeRollerMotorLeft = new TalonFX(Ports.Intake.INTAKE_ROLLER_MOTOR_LEFT, Settings.CANBUS);
-        intakeRollerMotorRight = new TalonFX(Ports.Intake.INTAKE_ROLLER_MOTOR_RIGHT, Settings.CANBUS);
-        Motors.Intake.LEFT_ROLLER_CONFIG.configure(intakeRollerMotorLeft);
-        Motors.Intake.RIGHT_ROLLER_CONFIG.configure(intakeRollerMotorRight);
+        rollerMotorLeft = new TalonFX(Ports.Intake.INTAKE_ROLLER_MOTOR_LEFT, Settings.CANBUS);
+        rollerMotorRight = new TalonFX(Ports.Intake.INTAKE_ROLLER_MOTOR_RIGHT, Settings.CANBUS);
+        Motors.Intake.LEFT_ROLLER_CONFIG.configure(rollerMotorLeft);
+        Motors.Intake.RIGHT_ROLLER_CONFIG.configure(rollerMotorRight);
         // until rollers are fixed
         rollerSignals = new LoggedSignals(LoggedSignals.SignalLocation.CANIVORE, "Intake/Roller/").withMotor(
                 "Intake Roller Left",
-                intakeRollerMotorLeft.getSupplyCurrent(),
-                intakeRollerMotorLeft.getStatorCurrent(),
-                intakeRollerMotorLeft.getVelocity())
+                rollerMotorLeft.getSupplyCurrent(),
+                rollerMotorLeft.getStatorCurrent(),
+                rollerMotorLeft.getVelocity())
                 .withMotor(
                         "Intake Roller Right",
-                        intakeRollerMotorRight.getSupplyCurrent(),
-                        intakeRollerMotorRight.getStatorCurrent(),
-                        intakeRollerMotorRight.getVelocity());
+                        rollerMotorRight.getSupplyCurrent(),
+                        rollerMotorRight.getStatorCurrent(),
+                        rollerMotorRight.getVelocity());
         positionController = new PositionTorqueCurrentFOC(getState().getTargetAngle());
         homingController = new VoltageOut(Settings.Intake.Pivot.HOMING_DOWN_VOLTAGE).withEnableFOC(true);
         pushdownController = new TorqueCurrentFOC(Settings.Intake.Pivot.PUSHDOWN_CURRENT.getAsDouble());
         rollerController = new DutyCycleOut(getState().getTargetDutyCycle()).withEnableFOC(true);
         followerController = new Follower(Ports.Intake.INTAKE_ROLLER_MOTOR_LEFT, MotorAlignmentValue.Opposed);
-        intakeRollerMotorRight.setControl(followerController);
-        pivotStalling = () -> intakePivotMotor.getStatorCurrent().getValue().gt(Settings.Intake.Pivot.STALL_CURRENT);
+        rollerMotorRight.setControl(followerController);
+        pivotStalling = () -> pivotMotor.getStatorCurrent().getValue().gt(Settings.Intake.Pivot.STALL_CURRENT);
         // until rollers are fixed
         leftRollerStalling = BStream.create(
-                () -> intakeRollerMotorLeft.getStatorCurrent().getValueAsDouble() > Settings.Intake.Roller.STALL_CURRENT
+                () -> rollerMotorLeft.getStatorCurrent().getValueAsDouble() > Settings.Intake.Roller.STALL_CURRENT
                         .in(Amps))
                 .filtered(new BDebounce.Both(Settings.Intake.Roller.STALL_DEBOUNCE_SEC.in(Seconds)));
         rightRollerStalling = BStream.create(
-                () -> intakeRollerMotorRight.getStatorCurrent()
+                () -> rollerMotorRight.getStatorCurrent()
                         .getValueAsDouble() > Settings.Intake.Roller.STALL_CURRENT.in(Amps))
                 .filtered(new BDebounce.Both(Settings.Intake.Roller.STALL_DEBOUNCE_SEC.in(Seconds)));
         pivotVoltageOverride = Optional.empty();
@@ -115,12 +115,12 @@ public class IntakeImpl extends Intake {
     /** ****************** */
     @Override
     public Angle getRelativePosition() {
-        return intakePivotMotor.getPosition().getValue();
+        return pivotMotor.getPosition().getValue();
     }
 
     @Override
     public void seedPivotAngle(Angle angle) {
-        intakePivotMotor.setPosition(angle);
+        pivotMotor.setPosition(angle);
     }
 
     private boolean pivotStalling() {
@@ -133,7 +133,7 @@ public class IntakeImpl extends Intake {
     // until rollers are fixed
     @Override
     public AngularVelocity getRollerVelocity() {
-        return intakeRollerMotorRight.getVelocity().getValue();
+        return rollerMotorRight.getVelocity().getValue();
     }
 
     // until rollers are fixed
@@ -147,12 +147,12 @@ public class IntakeImpl extends Intake {
 
     @Override
     protected void stopMotors() {
-        intakePivotMotor.stopMotor();
+        pivotMotor.stopMotor();
         // until rollers are fixed
-        intakeRollerMotorLeft.stopMotor();
-        intakeRollerMotorRight.stopMotor();
+        rollerMotorLeft.stopMotor();
+        rollerMotorRight.stopMotor();
         // re-add the follow control after stopMotor removes it
-        intakeRollerMotorRight.setControl(followerController);
+        rollerMotorRight.setControl(followerController);
     }
 
     private ControlRequest getPivotControl(IntakeState currentState) {
@@ -174,7 +174,7 @@ public class IntakeImpl extends Intake {
             return;
         }
         if (pivotVoltageOverride.isPresent()) {
-            intakePivotMotor.setVoltage(pivotVoltageOverride.get().in(Volts));
+            pivotMotor.setVoltage(pivotVoltageOverride.get().in(Volts));
             return;
         }
         // Input
@@ -192,15 +192,15 @@ public class IntakeImpl extends Intake {
         final ControlRequest pivotControl = getPivotControl(currentState);
         final DutyCycleOut rollerControl = rollerController.withOutput(currentState.getTargetDutyCycle());
         // Apply
-        intakePivotMotor.setControl(pivotControl);
-        intakeRollerMotorLeft.setControl(rollerControl);
+        pivotMotor.setControl(pivotControl);
+        rollerMotorLeft.setControl(rollerControl);
         // Logging
         this.pivotSignals.logAll();
         // until rollers are fixed
         this.rollerSignals.logAll();
         DogLog.forceNt.log("Intake/Rollers/Stalling", leftRollerStalling() || rightRollerStalling());
         DogLog.forceNt.log(
-                "Intake/Pivot/Pushing Down", intakePivotMotor.getAppliedControl() == pushdownController);
+                "Intake/Pivot/Pushing Down", pivotMotor.getAppliedControl() == pushdownController);
         super.periodic();
     }
 
@@ -211,9 +211,9 @@ public class IntakeImpl extends Intake {
                 Settings.Intake.Pivot.STEP_VOLTAGE,
                 "Intake",
                 this::setPivotVoltageOverride,
-                () -> intakePivotMotor.getPosition().getValue(),
-                () -> intakePivotMotor.getVelocity().getValue(),
-                () -> intakePivotMotor.getMotorVoltage().getValue(),
+                () -> pivotMotor.getPosition().getValue(),
+                () -> pivotMotor.getVelocity().getValue(),
+                () -> pivotMotor.getMotorVoltage().getValue(),
                 getInstance());
     }
 }

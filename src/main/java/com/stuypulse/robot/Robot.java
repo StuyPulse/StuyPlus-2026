@@ -55,7 +55,7 @@ public class Robot extends TimedRobot {
         System.out.println("]LOGGING DIRECTORY]: " + DataLogManager.getLogDir());
         SignalLogger.start();
         // SmartDashboard.putData(CommandScheduler.getInstance());
-        DogLog.setOptions(new DogLogOptions().withCaptureDs(true));
+        DogLog.setOptions(new DogLogOptions().withCaptureDs(true).withNtTunables(true).withLogExtras(true));
     }
 
     @Override
