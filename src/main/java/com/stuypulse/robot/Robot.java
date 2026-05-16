@@ -14,7 +14,7 @@ import com.stuypulse.robot.subsystems.swerve.CommandSwerveDrivetrain;
 import com.stuypulse.robot.subsystems.vision.LimelightVision;
 import com.stuypulse.robot.subsystems.vision.LimelightVision.MegaTagMode;
 import com.stuypulse.robot.util.LoggedSignals;
-import com.stuypulse.robot.util.RobotVisualizer;
+import com.stuypulse.robot.util.simulation.RobotVisualizer;
 import com.stuypulse.robot.util.simulation.Simulation;
 import com.stuypulse.robot.util.simulation.SimulationConstants;
 import dev.doglog.DogLog;

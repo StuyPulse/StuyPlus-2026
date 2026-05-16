@@ -3,7 +3,7 @@
 /* Use of this source code is governed by an MIT-style license */
 /* that can be found in the repository LICENSE file.           */
 /***************************************************************/
-package com.stuypulse.robot.util;
+package com.stuypulse.robot.util.simulation;
 
 import static edu.wpi.first.units.Units.*;
 
@@ -144,8 +144,7 @@ public class RobotVisualizer {
     }
 
     public void updateIntake(Angle pivotAngle, AngularVelocity angularVelocity) {
-        // 180 degrees to make it face left
-        intakePivot.setAngle(pivotAngle.in(Degrees));
+        intakePivot.setAngle(pivotAngle.in(Degrees) + 102); // counteract the weird zeroing
         double rot = angularVelocity.in(RPM) * Settings.DT.in(Seconds);
         for (MechanismLigament2d spoke : intakeSpokes)
             spoke.setAngle(spoke.getAngle() + rot);

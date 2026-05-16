@@ -143,8 +143,6 @@ public abstract class Intake extends SubsystemBase {
 
     @Override
     public void periodic() {
-        // RobotVisualizer.getInstance().updateIntake(Radians.of(getRelativePosition().in(Radians)),
-        // getRollerRPM());
         final IntakeState currentState = getState();
         // Logging
         DogLog.log("Intake/State", currentState.name());

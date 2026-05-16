@@ -16,6 +16,7 @@ import com.stuypulse.robot.constants.Motors;
 import com.stuypulse.robot.constants.Ports;
 import com.stuypulse.robot.constants.Settings;
 import com.stuypulse.robot.util.SysId;
+import com.stuypulse.robot.util.simulation.RobotVisualizer;
 import com.stuypulse.robot.util.simulation.TalonFXSimulation;
 import dev.doglog.DogLog;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -55,18 +56,18 @@ public class IntakeSim extends Intake {
         pivotSim = new SingleJointedArmSim(
                 LinearSystemId.createDCMotorSystem(
                         DCMotor.getKrakenX60(1),
-                        Settings.Intake.Pivot.J.in(KilogramSquareMeters),
+                        Settings.Intake.Pivot.MOI.in(KilogramSquareMeters),
                         Settings.Intake.Pivot.GEAR_RATIO),
                 DCMotor.getKrakenX60(1),
                 Settings.Intake.Pivot.GEAR_RATIO,
                 Settings.Intake.Pivot.PIVOT_ARM_LENGTH.in(Meters),
-                Settings.Intake.Pivot.MIN_ANGLE.in(Radians),
                 Settings.Intake.Pivot.MAX_ANGLE.in(Radians),
+                Settings.Intake.Pivot.MIN_ANGLE.in(Radians), // reversed because negative?
                 true,
                 Settings.Intake.Pivot.INITIAL_ANGLE.in(Radians));
         pivotMotor = new TalonFXSimulation(Ports.Intake.INTAKE_PIVOT_MOTOR, pivotSim);
         pivotMotor.configure(Motors.Intake.PIVOT_CONFIG);
-        pivotController = new PositionTorqueCurrentFOC(getState().getTargetAngle().in(Rotations));
+        pivotController = new PositionTorqueCurrentFOC(getState().getTargetAngle());
         rollerSim = new DCMotorSim(
                 LinearSystemId.createDCMotorSystem(
                         DCMotor.getKrakenX60(2),
@@ -127,7 +128,7 @@ public class IntakeSim extends Intake {
         rollerMotorLeft.setControl(rollerController.withOutput(getState().getTargetDutyCycle()));
         rollerMotorLeft.update(Settings.DT);
         rollerMotorRight.update(Settings.DT);
-        pivotMotor.setControl(pivotController.withPosition(getState().getTargetAngle().in(Rotations)));
+        pivotMotor.setControl(pivotController.withPosition(getState().getTargetAngle().times(-1)).withSlot(0)); // cooked inversion
         pivotMotor.update(Settings.DT);
         // all current measured in amps
         DogLog.log("Intake/Pivot/Stator Current", pivotMotor.getStatorCurrent().getValueAsDouble());
@@ -141,6 +142,8 @@ public class IntakeSim extends Intake {
         DogLog.log("Intake/Rollers/Left Stalling", false);
         // TODO: implement
         DogLog.log("Intake/Rollers/Right Stalling", false);
+
+        RobotVisualizer.getInstance().updateIntake(Radians.of(getRelativePosition().in(Radians)), getRollerVelocity());
         super.periodic();
     }
 

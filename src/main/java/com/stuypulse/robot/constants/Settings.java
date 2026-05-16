@@ -118,7 +118,7 @@ public interface Settings {
             Distance PIVOT_ARM_LENGTH = Meters.of(0.1439822);
 
             // mass in kg
-            MomentOfInertia J = KilogramSquareMeters.of(SingleJointedArmSim.estimateMOI(PIVOT_ARM_LENGTH.in(Meters), 30));
+            MomentOfInertia MOI = KilogramSquareMeters.of(SingleJointedArmSim.estimateMOI(PIVOT_ARM_LENGTH.in(Meters), 1));
         }
 
         public interface Roller {
