@@ -152,8 +152,8 @@ public class Simulation {
     }
 
     /**
-     * <h3>Extension of {@link Arena2026Rebuilt#addPieceWithVariance} that uses
-     * chassis speeds</h3>
+     * <h4>Extension of {@link Arena2026Rebuilt#addPieceWithVariance} that uses
+     * chassis speeds</h4>
      *
      * <p>
      * Adds a gamepiece too the arena with a certain random variance.
