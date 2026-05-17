@@ -46,13 +46,13 @@ loadScripts(document, 'script');</script>
 <ul class="sub-nav-list">
 <li>Summary:&nbsp;</li>
 <li><a href="#nested-class-summary">Nested</a>&nbsp;|&nbsp;</li>
-<li>Field&nbsp;|&nbsp;</li>
+<li><a href="#field-summary">Field</a>&nbsp;|&nbsp;</li>
 <li><a href="#constructor-summary">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method-summary">Method</a></li>
 </ul>
 <ul class="sub-nav-list">
 <li>Detail:&nbsp;</li>
-<li>Field&nbsp;|&nbsp;</li>
+<li><a href="#field-detail">Field</a>&nbsp;|&nbsp;</li>
 <li><a href="#constructor-detail">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method-detail">Method</a></li>
 </ul>
@@ -97,6 +97,30 @@ loadScripts(document, 'script');</script>
 <code>edu.wpi.first.wpilibj2.command.Command.InterruptionBehavior</code></div>
 </section>
 </li>
+<!-- =========== FIELD SUMMARY =========== -->
+<li>
+<section class="field-summary" id="field-summary">
+<h2>Field Summary</h2>
+<div class="caption"><span>Fields</span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Field</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code>private final edu.wpi.first.wpilibj2.command.button.CommandXboxController</code></div>
+<div class="col-second even-row-color"><code><a href="#driver" class="member-name-link">driver</a></code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>private final com.stuypulse.stuylib.streams.vectors.VStream</code></div>
+<div class="col-second odd-row-color"><code><a href="#speed" class="member-name-link">speed</a></code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>private final <a href="../../subsystems/swerve/CommandSwerveDrivetrain.html" title="class in com.stuypulse.robot.subsystems.swerve">CommandSwerveDrivetrain</a></code></div>
+<div class="col-second even-row-color"><code><a href="#swerve" class="member-name-link">swerve</a></code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>private final com.stuypulse.stuylib.streams.numbers.IStream</code></div>
+<div class="col-second odd-row-color"><code><a href="#turn" class="member-name-link">turn</a></code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+</div>
+</section>
+</li>
 <!-- ======== CONSTRUCTOR SUMMARY ======== -->
 <li>
 <section class="constructor-summary" id="constructor-summary">
@@ -124,6 +148,9 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#execute()" class="member-name-link">execute</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>private com.stuypulse.stuylib.math.Vector2D</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getDriverInputAsVelocity()" class="member-name-link">getDriverInputAsVelocity</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 </div>
 </div>
 </div>
@@ -139,6 +166,38 @@ loadScripts(document, 'script');</script>
 </section>
 <section class="details">
 <ul class="details-list">
+<!-- ============ FIELD DETAIL =========== -->
+<li>
+<section class="field-details" id="field-detail">
+<h2>Field Details</h2>
+<ul class="member-list">
+<li>
+<section class="detail" id="swerve">
+<h3>swerve</h3>
+<div class="member-signature"><span class="modifiers">private final</span>&nbsp;<span class="return-type"><a href="../../subsystems/swerve/CommandSwerveDrivetrain.html" title="class in com.stuypulse.robot.subsystems.swerve">CommandSwerveDrivetrain</a></span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/commands/swerve/SwerveDriveDrive.html#line-25">swerve</a></span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="driver">
+<h3>driver</h3>
+<div class="member-signature"><span class="modifiers">private final</span>&nbsp;<span class="return-type">edu.wpi.first.wpilibj2.command.button.CommandXboxController</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/commands/swerve/SwerveDriveDrive.html#line-27">driver</a></span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="speed">
+<h3>speed</h3>
+<div class="member-signature"><span class="modifiers">private final</span>&nbsp;<span class="return-type">com.stuypulse.stuylib.streams.vectors.VStream</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/commands/swerve/SwerveDriveDrive.html#line-29">speed</a></span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="turn">
+<h3>turn</h3>
+<div class="member-signature"><span class="modifiers">private final</span>&nbsp;<span class="return-type">com.stuypulse.stuylib.streams.numbers.IStream</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/commands/swerve/SwerveDriveDrive.html#line-31">turn</a></span></div>
+</section>
+</li>
+</ul>
+</section>
+</li>
 <!-- ========= CONSTRUCTOR DETAIL ======== -->
 <li>
 <section class="constructor-details" id="constructor-detail">
@@ -158,6 +217,12 @@ loadScripts(document, 'script');</script>
 <section class="method-details" id="method-detail">
 <h2>Method Details</h2>
 <ul class="member-list">
+<li>
+<section class="detail" id="getDriverInputAsVelocity()">
+<h3>getDriverInputAsVelocity</h3>
+<div class="member-signature"><span class="modifiers">private</span>&nbsp;<span class="return-type">com.stuypulse.stuylib.math.Vector2D</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/commands/swerve/SwerveDriveDrive.html#line-53">getDriverInputAsVelocity</a></span>()</div>
+</section>
+</li>
 <li>
 <section class="detail" id="execute()">
 <h3>execute</h3>

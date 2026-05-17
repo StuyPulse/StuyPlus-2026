@@ -97,8 +97,32 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Field</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color"><code>final edu.wpi.first.wpilibj2.command.button.CommandXboxController</code></div>
-<div class="col-second even-row-color"><code><a href="#driver" class="member-name-link">driver</a></code></div>
+<div class="col-first even-row-color"><code>private static edu.wpi.first.wpilibj.smartdashboard.SendableChooser&lt;edu.wpi.first.wpilibj2.command.Command&gt;</code></div>
+<div class="col-second even-row-color"><code><a href="#autonChooser" class="member-name-link">autonChooser</a></code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>final edu.wpi.first.wpilibj2.command.button.CommandXboxController</code></div>
+<div class="col-second odd-row-color"><code><a href="#driver" class="member-name-link">driver</a></code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>private final <a href="subsystems/feeder/Feeder.html" title="class in com.stuypulse.robot.subsystems.feeder">Feeder</a></code></div>
+<div class="col-second even-row-color"><code><a href="#feeder" class="member-name-link">feeder</a></code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>private final <a href="subsystems/handoff/Handoff.html" title="class in com.stuypulse.robot.subsystems.handoff">Handoff</a></code></div>
+<div class="col-second odd-row-color"><code><a href="#handoff" class="member-name-link">handoff</a></code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>private final <a href="subsystems/intake/Intake.html" title="class in com.stuypulse.robot.subsystems.intake">Intake</a></code></div>
+<div class="col-second even-row-color"><code><a href="#intake" class="member-name-link">intake</a></code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>private final <a href="subsystems/leds/LEDController.html" title="class in com.stuypulse.robot.subsystems.leds">LEDController</a></code></div>
+<div class="col-second odd-row-color"><code><a href="#leds" class="member-name-link">leds</a></code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>private final <a href="subsystems/shooter/Shooter.html" title="class in com.stuypulse.robot.subsystems.shooter">Shooter</a></code></div>
+<div class="col-second even-row-color"><code><a href="#shooter" class="member-name-link">shooter</a></code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>private final <a href="subsystems/swerve/CommandSwerveDrivetrain.html" title="class in com.stuypulse.robot.subsystems.swerve">CommandSwerveDrivetrain</a></code></div>
+<div class="col-second odd-row-color"><code><a href="#swerve" class="member-name-link">swerve</a></code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>private final <a href="subsystems/vision/LimelightVision.html" title="class in com.stuypulse.robot.subsystems.vision">LimelightVision</a></code></div>
+<div class="col-second even-row-color"><code><a href="#vision" class="member-name-link">vision</a></code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 </div>
 </section>
@@ -134,6 +158,14 @@ loadScripts(document, 'script');</script>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">This method is used to configure the autonomous commands.</div>
 </div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>private void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#configureButtonBindings()" class="member-name-link">configureButtonBindings</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">This method is used to configure button bindings for controlling the robot.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>private void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#configureDefaultCommands()" class="member-name-link">configureDefaultCommands</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>edu.wpi.first.wpilibj2.command.Command</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getAutonomousCommand()" class="member-name-link">getAutonomousCommand</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
@@ -162,6 +194,54 @@ loadScripts(document, 'script');</script>
 <div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type">edu.wpi.first.wpilibj2.command.button.CommandXboxController</span>&nbsp;<span class="element-name"><a href="../../../src-html/com/stuypulse/robot/RobotContainer.html#line-54">driver</a></span></div>
 </section>
 </li>
+<li>
+<section class="detail" id="feeder">
+<h3>feeder</h3>
+<div class="member-signature"><span class="modifiers">private final</span>&nbsp;<span class="return-type"><a href="subsystems/feeder/Feeder.html" title="class in com.stuypulse.robot.subsystems.feeder">Feeder</a></span>&nbsp;<span class="element-name"><a href="../../../src-html/com/stuypulse/robot/RobotContainer.html#line-57">feeder</a></span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="intake">
+<h3>intake</h3>
+<div class="member-signature"><span class="modifiers">private final</span>&nbsp;<span class="return-type"><a href="subsystems/intake/Intake.html" title="class in com.stuypulse.robot.subsystems.intake">Intake</a></span>&nbsp;<span class="element-name"><a href="../../../src-html/com/stuypulse/robot/RobotContainer.html#line-59">intake</a></span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="shooter">
+<h3>shooter</h3>
+<div class="member-signature"><span class="modifiers">private final</span>&nbsp;<span class="return-type"><a href="subsystems/shooter/Shooter.html" title="class in com.stuypulse.robot.subsystems.shooter">Shooter</a></span>&nbsp;<span class="element-name"><a href="../../../src-html/com/stuypulse/robot/RobotContainer.html#line-61">shooter</a></span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="swerve">
+<h3>swerve</h3>
+<div class="member-signature"><span class="modifiers">private final</span>&nbsp;<span class="return-type"><a href="subsystems/swerve/CommandSwerveDrivetrain.html" title="class in com.stuypulse.robot.subsystems.swerve">CommandSwerveDrivetrain</a></span>&nbsp;<span class="element-name"><a href="../../../src-html/com/stuypulse/robot/RobotContainer.html#line-63">swerve</a></span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="vision">
+<h3>vision</h3>
+<div class="member-signature"><span class="modifiers">private final</span>&nbsp;<span class="return-type"><a href="subsystems/vision/LimelightVision.html" title="class in com.stuypulse.robot.subsystems.vision">LimelightVision</a></span>&nbsp;<span class="element-name"><a href="../../../src-html/com/stuypulse/robot/RobotContainer.html#line-65">vision</a></span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="leds">
+<h3>leds</h3>
+<div class="member-signature"><span class="modifiers">private final</span>&nbsp;<span class="return-type"><a href="subsystems/leds/LEDController.html" title="class in com.stuypulse.robot.subsystems.leds">LEDController</a></span>&nbsp;<span class="element-name"><a href="../../../src-html/com/stuypulse/robot/RobotContainer.html#line-67">leds</a></span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="handoff">
+<h3>handoff</h3>
+<div class="member-signature"><span class="modifiers">private final</span>&nbsp;<span class="return-type"><a href="subsystems/handoff/Handoff.html" title="class in com.stuypulse.robot.subsystems.handoff">Handoff</a></span>&nbsp;<span class="element-name"><a href="../../../src-html/com/stuypulse/robot/RobotContainer.html#line-69">handoff</a></span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="autonChooser">
+<h3>autonChooser</h3>
+<div class="member-signature"><span class="modifiers">private static</span>&nbsp;<span class="return-type">edu.wpi.first.wpilibj.smartdashboard.SendableChooser&lt;edu.wpi.first.wpilibj2.command.Command&gt;</span>&nbsp;<span class="element-name"><a href="../../../src-html/com/stuypulse/robot/RobotContainer.html#line-72">autonChooser</a></span></div>
+</section>
+</li>
 </ul>
 </section>
 </li>
@@ -185,6 +265,19 @@ loadScripts(document, 'script');</script>
 <section class="method-details" id="method-detail">
 <h2>Method Details</h2>
 <ul class="member-list">
+<li>
+<section class="detail" id="configureDefaultCommands()">
+<h3>configureDefaultCommands</h3>
+<div class="member-signature"><span class="modifiers">private</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../src-html/com/stuypulse/robot/RobotContainer.html#line-88">configureDefaultCommands</a></span>()</div>
+</section>
+</li>
+<li>
+<section class="detail" id="configureButtonBindings()">
+<h3>configureButtonBindings</h3>
+<div class="member-signature"><span class="modifiers">private</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../src-html/com/stuypulse/robot/RobotContainer.html#line-100">configureButtonBindings</a></span>()</div>
+<div class="block">This method is used to configure button bindings for controlling the robot.</div>
+</section>
+</li>
 <li>
 <section class="detail" id="configureAutons()">
 <h3>configureAutons</h3>

@@ -110,9 +110,18 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Field</div>
 <div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code>private final edu.wpi.first.wpilibj2.command.button.CommandXboxController</code></div>
+<div class="col-second even-row-color"><code><a href="#driver" class="member-name-link">driver</a></code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>private final com.stuypulse.stuylib.streams.vectors.VStream</code></div>
+<div class="col-second odd-row-color"><code><a href="#speed" class="member-name-link">speed</a></code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code>protected static final <a href="../../../subsystems/swerve/CommandSwerveDrivetrain.html" title="class in com.stuypulse.robot.subsystems.swerve">CommandSwerveDrivetrain</a></code></div>
 <div class="col-second even-row-color"><code><a href="#swerve" class="member-name-link">swerve</a></code></div>
 <div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>private final <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Supplier.html" title="class or interface in java.util.function" class="external-link">Supplier</a>&lt;edu.wpi.first.math.geometry.Pose2d&gt;</code></div>
+<div class="col-second odd-row-color"><code><a href="#targetPose" class="member-name-link">targetPose</a></code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
 </div>
 </section>
 </li>
@@ -144,9 +153,12 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#execute()" class="member-name-link">execute</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>edu.wpi.first.math.geometry.Rotation2d</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getTargetAngle()" class="member-name-link">getTargetAngle</a>()</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>private com.stuypulse.stuylib.math.Vector2D</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getDriverInputAsVelocity()" class="member-name-link">getDriverInputAsVelocity</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>edu.wpi.first.math.geometry.Rotation2d</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getTargetAngle()" class="member-name-link">getTargetAngle</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 </div>
 </div>
 </div>
@@ -173,6 +185,24 @@ loadScripts(document, 'script');</script>
 <div class="member-signature"><span class="modifiers">protected static final</span>&nbsp;<span class="return-type"><a href="../../../subsystems/swerve/CommandSwerveDrivetrain.html" title="class in com.stuypulse.robot.subsystems.swerve">CommandSwerveDrivetrain</a></span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/com/stuypulse/robot/commands/swerve/driveAligned/SwerveDriveDriveWhileAligned.html#line-27">swerve</a></span></div>
 </section>
 </li>
+<li>
+<section class="detail" id="driver">
+<h3>driver</h3>
+<div class="member-signature"><span class="modifiers">private final</span>&nbsp;<span class="return-type">edu.wpi.first.wpilibj2.command.button.CommandXboxController</span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/com/stuypulse/robot/commands/swerve/driveAligned/SwerveDriveDriveWhileAligned.html#line-29">driver</a></span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="speed">
+<h3>speed</h3>
+<div class="member-signature"><span class="modifiers">private final</span>&nbsp;<span class="return-type">com.stuypulse.stuylib.streams.vectors.VStream</span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/com/stuypulse/robot/commands/swerve/driveAligned/SwerveDriveDriveWhileAligned.html#line-31">speed</a></span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="targetPose">
+<h3>targetPose</h3>
+<div class="member-signature"><span class="modifiers">private final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Supplier.html" title="class or interface in java.util.function" class="external-link">Supplier</a>&lt;edu.wpi.first.math.geometry.Pose2d&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/com/stuypulse/robot/commands/swerve/driveAligned/SwerveDriveDriveWhileAligned.html#line-33">targetPose</a></span></div>
+</section>
+</li>
 </ul>
 </section>
 </li>
@@ -196,6 +226,12 @@ loadScripts(document, 'script');</script>
 <section class="method-details" id="method-detail">
 <h2>Method Details</h2>
 <ul class="member-list">
+<li>
+<section class="detail" id="getDriverInputAsVelocity()">
+<h3>getDriverInputAsVelocity</h3>
+<div class="member-signature"><span class="modifiers">private</span>&nbsp;<span class="return-type">com.stuypulse.stuylib.math.Vector2D</span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/com/stuypulse/robot/commands/swerve/driveAligned/SwerveDriveDriveWhileAligned.html#line-53">getDriverInputAsVelocity</a></span>()</div>
+</section>
+</li>
 <li>
 <section class="detail" id="getTargetAngle()">
 <h3>getTargetAngle</h3>

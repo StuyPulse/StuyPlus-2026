@@ -52,7 +52,7 @@ loadScripts(document, 'script');</script>
 </ul>
 <ul class="sub-nav-list">
 <li>Detail:&nbsp;</li>
-<li>Field&nbsp;|&nbsp;</li>
+<li><a href="#field-detail">Field</a>&nbsp;|&nbsp;</li>
 <li><a href="#constructor-detail">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method-detail">Method</a></li>
 </ul>
@@ -107,6 +107,66 @@ implements edu.wpi.first.wpilibj2.command.Subsystem</span></div>
 <li>
 <section class="field-summary" id="field-summary">
 <h2>Field Summary</h2>
+<div class="caption"><span>Fields</span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Field</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code>private final edu.wpi.first.networktables.StructPublisher&lt;edu.wpi.first.math.kinematics.ChassisSpeeds&gt;</code></div>
+<div class="col-second even-row-color"><code><a href="#chassisPublisher" class="member-name-link">chassisPublisher</a></code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>private final com.ctre.phoenix6.swerve.SwerveRequest.FieldCentric</code></div>
+<div class="col-second odd-row-color"><code><a href="#fieldCentricRequest" class="member-name-link">fieldCentricRequest</a></code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>private static final <a href="CommandSwerveDrivetrain.html" title="class in com.stuypulse.robot.subsystems.swerve">CommandSwerveDrivetrain</a></code></div>
+<div class="col-second even-row-color"><code><a href="#instance" class="member-name-link">instance</a></code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>private static final double</code></div>
+<div class="col-second odd-row-color"><code><a href="#kSimLoopPeriod" class="member-name-link">kSimLoopPeriod</a></code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>private double</code></div>
+<div class="col-second even-row-color"><code><a href="#m_lastSimTime" class="member-name-link">m_lastSimTime</a></code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>private final com.ctre.phoenix6.swerve.SwerveRequest.SysIdSwerveTranslation</code></div>
+<div class="col-second odd-row-color"><code><a href="#m_moduleTranslationCharacterization" class="member-name-link">m_moduleTranslationCharacterization</a></code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>private final com.ctre.phoenix6.swerve.SwerveRequest.SysIdSwerveRotation</code></div>
+<div class="col-second even-row-color"><code><a href="#m_rotationCharacterization" class="member-name-link">m_rotationCharacterization</a></code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>private edu.wpi.first.wpilibj.Notifier</code></div>
+<div class="col-second odd-row-color"><code><a href="#m_simNotifier" class="member-name-link">m_simNotifier</a></code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>private final com.ctre.phoenix6.swerve.SwerveRequest.SysIdSwerveSteerGains</code></div>
+<div class="col-second even-row-color"><code><a href="#m_steerCharacterization" class="member-name-link">m_steerCharacterization</a></code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>private final edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine</code></div>
+<div class="col-second odd-row-color"><code><a href="#m_sysIdRoutineChassisTranslation" class="member-name-link">m_sysIdRoutineChassisTranslation</a></code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>private final edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine</code></div>
+<div class="col-second even-row-color"><code><a href="#m_sysIdRoutineModuleTranslation" class="member-name-link">m_sysIdRoutineModuleTranslation</a></code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>private final edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine</code></div>
+<div class="col-second odd-row-color"><code><a href="#m_sysIdRoutineRotation" class="member-name-link">m_sysIdRoutineRotation</a></code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>private final edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine</code></div>
+<div class="col-second even-row-color"><code><a href="#m_sysIdRoutineSteer" class="member-name-link">m_sysIdRoutineSteer</a></code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>private edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine</code></div>
+<div class="col-second odd-row-color"><code><a href="#m_sysIdRoutineToApply" class="member-name-link">m_sysIdRoutineToApply</a></code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>private <a href="../../util/simulation/MapleSimSwerveDrivetrain.html" title="class in com.stuypulse.robot.util.simulation">MapleSimSwerveDrivetrain</a></code></div>
+<div class="col-second even-row-color"><code><a href="#mapleSimSwerveDrivetrain" class="member-name-link">mapleSimSwerveDrivetrain</a></code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>private final edu.wpi.first.networktables.StructArrayPublisher&lt;edu.wpi.first.math.kinematics.SwerveModuleState&gt;</code></div>
+<div class="col-second odd-row-color"><code><a href="#modulePublisher" class="member-name-link">modulePublisher</a></code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>private final edu.wpi.first.networktables.StructPublisher&lt;edu.wpi.first.math.geometry.Pose2d&gt;</code></div>
+<div class="col-second even-row-color"><code><a href="#posePublisher" class="member-name-link">posePublisher</a></code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>private final com.ctre.phoenix6.swerve.SwerveRequest.RobotCentric</code></div>
+<div class="col-second odd-row-color"><code><a href="#robotCentricRequest" class="member-name-link">robotCentricRequest</a></code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+</div>
 <div class="inherited-list">
 <h3 id="fields-inherited-from-class-com.ctre.phoenix6.swerve.SwerveDrivetrain">Fields inherited from class&nbsp;com.ctre.phoenix6.swerve.SwerveDrivetrain</h3>
 <code>kNumConfigAttempts, m_drivetrainId, m_jni, m_telemetryJNI</code></div>
@@ -121,6 +181,22 @@ implements edu.wpi.first.wpilibj2.command.Subsystem</span></div>
 <div class="table-header col-first">Modifier</div>
 <div class="table-header col-second">Constructor</div>
 <div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code>private </code></div>
+<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(com.ctre.phoenix6.swerve.SwerveDrivetrainConstants,double,com.ctre.phoenix6.swerve.SwerveModuleConstants...)" class="member-name-link">CommandSwerveDrivetrain</a><wbr>(com.ctre.phoenix6.swerve.SwerveDrivetrainConstants&nbsp;drivetrainConstants,
+ double&nbsp;odometryUpdateFrequency,
+ com.ctre.phoenix6.swerve.SwerveModuleConstants&lt;?,<wbr>?,<wbr>?&gt;...&nbsp;modules)</code></div>
+<div class="col-last even-row-color">
+<div class="block">Constructs a CTRE SwerveDrivetrain using the specified constants.</div>
+</div>
+<div class="col-first odd-row-color"><code>private </code></div>
+<div class="col-constructor-name odd-row-color"><code><a href="#%3Cinit%3E(com.ctre.phoenix6.swerve.SwerveDrivetrainConstants,double,edu.wpi.first.math.Matrix,edu.wpi.first.math.Matrix,com.ctre.phoenix6.swerve.SwerveModuleConstants...)" class="member-name-link">CommandSwerveDrivetrain</a><wbr>(com.ctre.phoenix6.swerve.SwerveDrivetrainConstants&nbsp;drivetrainConstants,
+ double&nbsp;odometryUpdateFrequency,
+ edu.wpi.first.math.Matrix&lt;edu.wpi.first.math.numbers.N3,<wbr>edu.wpi.first.math.numbers.N1&gt;&nbsp;odometryStandardDeviation,
+ edu.wpi.first.math.Matrix&lt;edu.wpi.first.math.numbers.N3,<wbr>edu.wpi.first.math.numbers.N1&gt;&nbsp;visionStandardDeviation,
+ com.ctre.phoenix6.swerve.SwerveModuleConstants&lt;?,<wbr>?,<wbr>?&gt;...&nbsp;modules)</code></div>
+<div class="col-last odd-row-color">
+<div class="block">Constructs a CTRE SwerveDrivetrain using the specified constants.</div>
+</div>
 <div class="col-first even-row-color"><code>protected </code></div>
 <div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(com.ctre.phoenix6.swerve.SwerveDrivetrainConstants,com.ctre.phoenix6.swerve.SwerveModuleConstants...)" class="member-name-link">CommandSwerveDrivetrain</a><wbr>(com.ctre.phoenix6.swerve.SwerveDrivetrainConstants&nbsp;drivetrainConstants,
  com.ctre.phoenix6.swerve.SwerveModuleConstants&lt;?,<wbr>?,<wbr>?&gt;...&nbsp;modules)</code></div>
@@ -203,20 +279,26 @@ implements edu.wpi.first.wpilibj2.command.Subsystem</span></div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#resetPose(edu.wpi.first.math.geometry.Pose2d)" class="member-name-link">resetPose</a><wbr>(edu.wpi.first.math.geometry.Pose2d&nbsp;pose)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setControl(com.ctre.phoenix6.swerve.SwerveRequest)" class="member-name-link">setControl</a><wbr>(com.ctre.phoenix6.swerve.SwerveRequest&nbsp;request)</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>private void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setChassisSpeeds(edu.wpi.first.math.kinematics.ChassisSpeeds)" class="member-name-link">setChassisSpeeds</a><wbr>(edu.wpi.first.math.kinematics.ChassisSpeeds&nbsp;robotSpeeds)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setControl(com.ctre.phoenix6.swerve.SwerveRequest)" class="member-name-link">setControl</a><wbr>(com.ctre.phoenix6.swerve.SwerveRequest&nbsp;request)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>private void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#startSimThread()" class="member-name-link">startSimThread</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>edu.wpi.first.wpilibj2.command.Command</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#sysIdDynamic(edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction)" class="member-name-link">sysIdDynamic</a><wbr>(edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction&nbsp;direction)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Runs the SysId Dynamic test in the given direction for the routine specified
- by <code>m_sysIdRoutineToApply</code>.</div>
+ by <a href="#m_sysIdRoutineToApply"><code>m_sysIdRoutineToApply</code></a>.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>edu.wpi.first.wpilibj2.command.Command</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#sysIdQuasistatic(edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction)" class="member-name-link">sysIdQuasistatic</a><wbr>(edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction&nbsp;direction)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Runs the SysId Quasistatic test in the given direction for the routine
- specified by <code>m_sysIdRoutineToApply</code>.</div>
+ specified by <a href="#m_sysIdRoutineToApply"><code>m_sysIdRoutineToApply</code></a>.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>edu.wpi.first.wpilibj2.command.Command</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#sysidRotationDynamic(edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction)" class="member-name-link">sysidRotationDynamic</a><wbr>(edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction&nbsp;direction)</code></div>
@@ -248,6 +330,130 @@ implements edu.wpi.first.wpilibj2.command.Subsystem</span></div>
 </section>
 <section class="details">
 <ul class="details-list">
+<!-- ============ FIELD DETAIL =========== -->
+<li>
+<section class="field-details" id="field-detail">
+<h2>Field Details</h2>
+<ul class="member-list">
+<li>
+<section class="detail" id="instance">
+<h3>instance</h3>
+<div class="member-signature"><span class="modifiers">private static final</span>&nbsp;<span class="return-type"><a href="CommandSwerveDrivetrain.html" title="class in com.stuypulse.robot.subsystems.swerve">CommandSwerveDrivetrain</a></span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/swerve/CommandSwerveDrivetrain.html#line-57">instance</a></span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="kSimLoopPeriod">
+<h3>kSimLoopPeriod</h3>
+<div class="member-signature"><span class="modifiers">private static final</span>&nbsp;<span class="return-type">double</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/swerve/CommandSwerveDrivetrain.html#line-68">kSimLoopPeriod</a></span></div>
+<dl class="notes">
+<dt>See Also:</dt>
+<dd>
+<ul class="see-list">
+<li><a href="../../../../../constant-values.html#com.stuypulse.robot.subsystems.swerve.CommandSwerveDrivetrain.kSimLoopPeriod">Constant Field Values</a></li>
+</ul>
+</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="m_simNotifier">
+<h3>m_simNotifier</h3>
+<div class="member-signature"><span class="modifiers">private</span>&nbsp;<span class="return-type">edu.wpi.first.wpilibj.Notifier</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/swerve/CommandSwerveDrivetrain.html#line-70">m_simNotifier</a></span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="m_lastSimTime">
+<h3>m_lastSimTime</h3>
+<div class="member-signature"><span class="modifiers">private</span>&nbsp;<span class="return-type">double</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/swerve/CommandSwerveDrivetrain.html#line-72">m_lastSimTime</a></span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="m_moduleTranslationCharacterization">
+<h3>m_moduleTranslationCharacterization</h3>
+<div class="member-signature"><span class="modifiers">private final</span>&nbsp;<span class="return-type">com.ctre.phoenix6.swerve.SwerveRequest.SysIdSwerveTranslation</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/swerve/CommandSwerveDrivetrain.html#line-75">m_moduleTranslationCharacterization</a></span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="m_steerCharacterization">
+<h3>m_steerCharacterization</h3>
+<div class="member-signature"><span class="modifiers">private final</span>&nbsp;<span class="return-type">com.ctre.phoenix6.swerve.SwerveRequest.SysIdSwerveSteerGains</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/swerve/CommandSwerveDrivetrain.html#line-77">m_steerCharacterization</a></span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="m_rotationCharacterization">
+<h3>m_rotationCharacterization</h3>
+<div class="member-signature"><span class="modifiers">private final</span>&nbsp;<span class="return-type">com.ctre.phoenix6.swerve.SwerveRequest.SysIdSwerveRotation</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/swerve/CommandSwerveDrivetrain.html#line-79">m_rotationCharacterization</a></span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="fieldCentricRequest">
+<h3>fieldCentricRequest</h3>
+<div class="member-signature"><span class="modifiers">private final</span>&nbsp;<span class="return-type">com.ctre.phoenix6.swerve.SwerveRequest.FieldCentric</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/swerve/CommandSwerveDrivetrain.html#line-81">fieldCentricRequest</a></span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="robotCentricRequest">
+<h3>robotCentricRequest</h3>
+<div class="member-signature"><span class="modifiers">private final</span>&nbsp;<span class="return-type">com.ctre.phoenix6.swerve.SwerveRequest.RobotCentric</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/swerve/CommandSwerveDrivetrain.html#line-87">robotCentricRequest</a></span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="m_sysIdRoutineModuleTranslation">
+<h3>m_sysIdRoutineModuleTranslation</h3>
+<div class="member-signature"><span class="modifiers">private final</span>&nbsp;<span class="return-type">edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/swerve/CommandSwerveDrivetrain.html#line-105">m_sysIdRoutineModuleTranslation</a></span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="m_sysIdRoutineChassisTranslation">
+<h3>m_sysIdRoutineChassisTranslation</h3>
+<div class="member-signature"><span class="modifiers">private final</span>&nbsp;<span class="return-type">edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/swerve/CommandSwerveDrivetrain.html#line-121">m_sysIdRoutineChassisTranslation</a></span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="m_sysIdRoutineSteer">
+<h3>m_sysIdRoutineSteer</h3>
+<div class="member-signature"><span class="modifiers">private final</span>&nbsp;<span class="return-type">edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/swerve/CommandSwerveDrivetrain.html#line-163">m_sysIdRoutineSteer</a></span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="m_sysIdRoutineRotation">
+<h3>m_sysIdRoutineRotation</h3>
+<div class="member-signature"><span class="modifiers">private final</span>&nbsp;<span class="return-type">edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/swerve/CommandSwerveDrivetrain.html#line-179">m_sysIdRoutineRotation</a></span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="m_sysIdRoutineToApply">
+<h3>m_sysIdRoutineToApply</h3>
+<div class="member-signature"><span class="modifiers">private</span>&nbsp;<span class="return-type">edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/swerve/CommandSwerveDrivetrain.html#line-212">m_sysIdRoutineToApply</a></span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="mapleSimSwerveDrivetrain">
+<h3>mapleSimSwerveDrivetrain</h3>
+<div class="member-signature"><span class="modifiers">private</span>&nbsp;<span class="return-type"><a href="../../util/simulation/MapleSimSwerveDrivetrain.html" title="class in com.stuypulse.robot.util.simulation">MapleSimSwerveDrivetrain</a></span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/swerve/CommandSwerveDrivetrain.html#line-358">mapleSimSwerveDrivetrain</a></span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="posePublisher">
+<h3>posePublisher</h3>
+<div class="member-signature"><span class="modifiers">private final</span>&nbsp;<span class="return-type">edu.wpi.first.networktables.StructPublisher&lt;edu.wpi.first.math.geometry.Pose2d&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/swerve/CommandSwerveDrivetrain.html#line-540">posePublisher</a></span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="chassisPublisher">
+<h3>chassisPublisher</h3>
+<div class="member-signature"><span class="modifiers">private final</span>&nbsp;<span class="return-type">edu.wpi.first.networktables.StructPublisher&lt;edu.wpi.first.math.kinematics.ChassisSpeeds&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/swerve/CommandSwerveDrivetrain.html#line-543">chassisPublisher</a></span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="modulePublisher">
+<h3>modulePublisher</h3>
+<div class="member-signature"><span class="modifiers">private final</span>&nbsp;<span class="return-type">edu.wpi.first.networktables.StructArrayPublisher&lt;edu.wpi.first.math.kinematics.SwerveModuleState&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/swerve/CommandSwerveDrivetrain.html#line-547">modulePublisher</a></span></div>
+</section>
+</li>
+</ul>
+</section>
+</li>
 <!-- ========= CONSTRUCTOR DETAIL ======== -->
 <li>
 <section class="constructor-details" id="constructor-detail">
@@ -268,6 +474,64 @@ implements edu.wpi.first.wpilibj2.command.Subsystem</span></div>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>drivetrainConstants</code> - Drivetrain-wide constants for the swerve drive</dd>
+<dd><code>modules</code> - Constants for each specific module</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="&lt;init&gt;(com.ctre.phoenix6.swerve.SwerveDrivetrainConstants,double,com.ctre.phoenix6.swerve.SwerveModuleConstants...)">
+<h3>CommandSwerveDrivetrain</h3>
+<div class="member-signature"><span class="modifiers">private</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/swerve/CommandSwerveDrivetrain.html#line-255">CommandSwerveDrivetrain</a></span><wbr><span class="parameters">(com.ctre.phoenix6.swerve.SwerveDrivetrainConstants&nbsp;drivetrainConstants,
+ double&nbsp;odometryUpdateFrequency,
+ com.ctre.phoenix6.swerve.SwerveModuleConstants&lt;?,<wbr>?,<wbr>?&gt;...&nbsp;modules)</span></div>
+<div class="block">Constructs a CTRE SwerveDrivetrain using the specified constants.
+
+ <p>
+ This constructs the underlying hardware devices, so users should not
+ construct the devices
+ themselves. If they need the devices, they can access them through getters in
+ the classes.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>drivetrainConstants</code> - Drivetrain-wide constants for the swerve drive</dd>
+<dd><code>odometryUpdateFrequency</code> - The frequency to run the odometry loop. If
+                                unspecified or set to
+                                0 Hz, this is 250 Hz on CAN FD, and 100 Hz on
+                                CAN 2.0.</dd>
+<dd><code>modules</code> - Constants for each specific module</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="&lt;init&gt;(com.ctre.phoenix6.swerve.SwerveDrivetrainConstants,double,edu.wpi.first.math.Matrix,edu.wpi.first.math.Matrix,com.ctre.phoenix6.swerve.SwerveModuleConstants...)">
+<h3>CommandSwerveDrivetrain</h3>
+<div class="member-signature"><span class="modifiers">private</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/swerve/CommandSwerveDrivetrain.html#line-292">CommandSwerveDrivetrain</a></span><wbr><span class="parameters">(com.ctre.phoenix6.swerve.SwerveDrivetrainConstants&nbsp;drivetrainConstants,
+ double&nbsp;odometryUpdateFrequency,
+ edu.wpi.first.math.Matrix&lt;edu.wpi.first.math.numbers.N3,<wbr>edu.wpi.first.math.numbers.N1&gt;&nbsp;odometryStandardDeviation,
+ edu.wpi.first.math.Matrix&lt;edu.wpi.first.math.numbers.N3,<wbr>edu.wpi.first.math.numbers.N1&gt;&nbsp;visionStandardDeviation,
+ com.ctre.phoenix6.swerve.SwerveModuleConstants&lt;?,<wbr>?,<wbr>?&gt;...&nbsp;modules)</span></div>
+<div class="block">Constructs a CTRE SwerveDrivetrain using the specified constants.
+
+ <p>
+ This constructs the underlying hardware devices, so users should not
+ construct the devices
+ themselves. If they need the devices, they can access them through getters in
+ the classes.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>drivetrainConstants</code> - Drivetrain-wide constants for the swerve
+                                  drive</dd>
+<dd><code>odometryUpdateFrequency</code> - The frequency to run the odometry loop. If
+                                  unspecified or set to
+                                  0 Hz, this is 250 Hz on CAN FD, and 100 Hz
+                                  on CAN 2.0.</dd>
+<dd><code>odometryStandardDeviation</code> - The standard deviation for odometry
+                                  calculation in the form
+                                  [x, y, theta]ᵀ, with units in meters and
+                                  radians</dd>
+<dd><code>visionStandardDeviation</code> - The standard deviation for vision
+                                  calculation in the form [x, y,
+                                  theta]ᵀ, with units in meters and radians</dd>
 <dd><code>modules</code> - Constants for each specific module</dd>
 </dl>
 </section>
@@ -313,7 +577,7 @@ implements edu.wpi.first.wpilibj2.command.Subsystem</span></div>
 <h3>sysIdQuasistatic</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">edu.wpi.first.wpilibj2.command.Command</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/swerve/CommandSwerveDrivetrain.html#line-326">sysIdQuasistatic</a></span><wbr><span class="parameters">(edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction&nbsp;direction)</span></div>
 <div class="block">Runs the SysId Quasistatic test in the given direction for the routine
- specified by <code>m_sysIdRoutineToApply</code>.</div>
+ specified by <a href="#m_sysIdRoutineToApply"><code>m_sysIdRoutineToApply</code></a>.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>direction</code> - Direction of the SysId Quasistatic test</dd>
@@ -327,7 +591,7 @@ implements edu.wpi.first.wpilibj2.command.Subsystem</span></div>
 <h3>sysIdDynamic</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">edu.wpi.first.wpilibj2.command.Command</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/swerve/CommandSwerveDrivetrain.html#line-338">sysIdDynamic</a></span><wbr><span class="parameters">(edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction&nbsp;direction)</span></div>
 <div class="block">Runs the SysId Dynamic test in the given direction for the routine specified
- by <code>m_sysIdRoutineToApply</code>.</div>
+ by <a href="#m_sysIdRoutineToApply"><code>m_sysIdRoutineToApply</code></a>.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>direction</code> - Direction of the SysId Dynamic test</dd>
@@ -358,6 +622,12 @@ implements edu.wpi.first.wpilibj2.command.Subsystem</span></div>
 <section class="detail" id="sysidSteerQuasistatic(edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction)">
 <h3>sysidSteerQuasistatic</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">edu.wpi.first.wpilibj2.command.Command</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/swerve/CommandSwerveDrivetrain.html#line-354">sysidSteerQuasistatic</a></span><wbr><span class="parameters">(edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction&nbsp;direction)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="startSimThread()">
+<h3>startSimThread</h3>
+<div class="member-signature"><span class="modifiers">private</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/swerve/CommandSwerveDrivetrain.html#line-360">startSimThread</a></span>()</div>
 </section>
 </li>
 <li>
@@ -476,6 +746,12 @@ implements edu.wpi.first.wpilibj2.command.Subsystem</span></div>
 <section class="detail" id="getFieldRelativeSpeeds()">
 <h3>getFieldRelativeSpeeds</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">com.stuypulse.stuylib.math.Vector2D</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/swerve/CommandSwerveDrivetrain.html#line-509">getFieldRelativeSpeeds</a></span>()</div>
+</section>
+</li>
+<li>
+<section class="detail" id="setChassisSpeeds(edu.wpi.first.math.kinematics.ChassisSpeeds)">
+<h3>setChassisSpeeds</h3>
+<div class="member-signature"><span class="modifiers">private</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/swerve/CommandSwerveDrivetrain.html#line-514">setChassisSpeeds</a></span><wbr><span class="parameters">(edu.wpi.first.math.kinematics.ChassisSpeeds&nbsp;robotSpeeds)</span></div>
 </section>
 </li>
 <li>

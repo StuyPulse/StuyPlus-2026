@@ -46,13 +46,13 @@ loadScripts(document, 'script');</script>
 <ul class="sub-nav-list">
 <li>Summary:&nbsp;</li>
 <li><a href="#nested-class-summary">Nested</a>&nbsp;|&nbsp;</li>
-<li>Field&nbsp;|&nbsp;</li>
+<li><a href="#field-summary">Field</a>&nbsp;|&nbsp;</li>
 <li><a href="#constructor-summary">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method-summary">Method</a></li>
 </ul>
 <ul class="sub-nav-list">
 <li>Detail:&nbsp;</li>
-<li>Field&nbsp;|&nbsp;</li>
+<li><a href="#field-detail">Field</a>&nbsp;|&nbsp;</li>
 <li><a href="#constructor-detail">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method-detail">Method</a></li>
 </ul>
@@ -97,6 +97,39 @@ loadScripts(document, 'script');</script>
 <div class="inherited-list">
 <h2 id="nested-classes-inherited-from-class-com.stuypulse.robot.subsystems.shooter.Shooter">Nested classes/interfaces inherited from class&nbsp;com.stuypulse.robot.subsystems.shooter.<a href="Shooter.html" title="class in com.stuypulse.robot.subsystems.shooter">Shooter</a></h2>
 <code><a href="Shooter.ShooterState.html" title="enum class in com.stuypulse.robot.subsystems.shooter">Shooter.ShooterState</a></code></div>
+</section>
+</li>
+<!-- =========== FIELD SUMMARY =========== -->
+<li>
+<section class="field-summary" id="field-summary">
+<h2>Field Summary</h2>
+<div class="caption"><span>Fields</span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Field</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code>private final com.ctre.phoenix6.controls.VelocityTorqueCurrentFOC</code></div>
+<div class="col-second even-row-color"><code><a href="#shooterController" class="member-name-link">shooterController</a></code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>private final com.ctre.phoenix6.controls.Follower</code></div>
+<div class="col-second odd-row-color"><code><a href="#shooterFollowerController" class="member-name-link">shooterFollowerController</a></code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>private final <a href="../../util/simulation/TalonFXSimulation.html" title="class in com.stuypulse.robot.util.simulation">TalonFXSimulation</a></code></div>
+<div class="col-second even-row-color"><code><a href="#shooterMotorCenter" class="member-name-link">shooterMotorCenter</a></code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>private final <a href="../../util/simulation/TalonFXSimulation.html" title="class in com.stuypulse.robot.util.simulation">TalonFXSimulation</a></code></div>
+<div class="col-second odd-row-color"><code><a href="#shooterMotorLeft" class="member-name-link">shooterMotorLeft</a></code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>private final <a href="../../util/simulation/TalonFXSimulation.html" title="class in com.stuypulse.robot.util.simulation">TalonFXSimulation</a></code></div>
+<div class="col-second even-row-color"><code><a href="#shooterMotorRight" class="member-name-link">shooterMotorRight</a></code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>private final edu.wpi.first.wpilibj.simulation.FlywheelSim</code></div>
+<div class="col-second odd-row-color"><code><a href="#shooterSim" class="member-name-link">shooterSim</a></code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>private <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;edu.wpi.first.units.measure.Voltage&gt;</code></div>
+<div class="col-second even-row-color"><code><a href="#voltageOverride" class="member-name-link">voltageOverride</a></code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+</div>
 </section>
 </li>
 <!-- ======== CONSTRUCTOR SUMMARY ======== -->
@@ -159,6 +192,56 @@ loadScripts(document, 'script');</script>
 </section>
 <section class="details">
 <ul class="details-list">
+<!-- ============ FIELD DETAIL =========== -->
+<li>
+<section class="field-details" id="field-detail">
+<h2>Field Details</h2>
+<ul class="member-list">
+<li>
+<section class="detail" id="shooterSim">
+<h3>shooterSim</h3>
+<div class="member-signature"><span class="modifiers">private final</span>&nbsp;<span class="return-type">edu.wpi.first.wpilibj.simulation.FlywheelSim</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/shooter/ShooterSim.html#line-29">shooterSim</a></span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="shooterMotorLeft">
+<h3>shooterMotorLeft</h3>
+<div class="member-signature"><span class="modifiers">private final</span>&nbsp;<span class="return-type"><a href="../../util/simulation/TalonFXSimulation.html" title="class in com.stuypulse.robot.util.simulation">TalonFXSimulation</a></span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/shooter/ShooterSim.html#line-31">shooterMotorLeft</a></span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="shooterMotorCenter">
+<h3>shooterMotorCenter</h3>
+<div class="member-signature"><span class="modifiers">private final</span>&nbsp;<span class="return-type"><a href="../../util/simulation/TalonFXSimulation.html" title="class in com.stuypulse.robot.util.simulation">TalonFXSimulation</a></span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/shooter/ShooterSim.html#line-33">shooterMotorCenter</a></span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="shooterMotorRight">
+<h3>shooterMotorRight</h3>
+<div class="member-signature"><span class="modifiers">private final</span>&nbsp;<span class="return-type"><a href="../../util/simulation/TalonFXSimulation.html" title="class in com.stuypulse.robot.util.simulation">TalonFXSimulation</a></span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/shooter/ShooterSim.html#line-35">shooterMotorRight</a></span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="shooterController">
+<h3>shooterController</h3>
+<div class="member-signature"><span class="modifiers">private final</span>&nbsp;<span class="return-type">com.ctre.phoenix6.controls.VelocityTorqueCurrentFOC</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/shooter/ShooterSim.html#line-37">shooterController</a></span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="shooterFollowerController">
+<h3>shooterFollowerController</h3>
+<div class="member-signature"><span class="modifiers">private final</span>&nbsp;<span class="return-type">com.ctre.phoenix6.controls.Follower</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/shooter/ShooterSim.html#line-39">shooterFollowerController</a></span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="voltageOverride">
+<h3>voltageOverride</h3>
+<div class="member-signature"><span class="modifiers">private</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;edu.wpi.first.units.measure.Voltage&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/shooter/ShooterSim.html#line-41">voltageOverride</a></span></div>
+</section>
+</li>
+</ul>
+</section>
+</li>
 <!-- ========= CONSTRUCTOR DETAIL ======== -->
 <li>
 <section class="constructor-details" id="constructor-detail">

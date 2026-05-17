@@ -46,13 +46,13 @@ loadScripts(document, 'script');</script>
 <ul class="sub-nav-list">
 <li>Summary:&nbsp;</li>
 <li>Nested&nbsp;|&nbsp;</li>
-<li>Field&nbsp;|&nbsp;</li>
+<li><a href="#field-summary">Field</a>&nbsp;|&nbsp;</li>
 <li><a href="#constructor-summary">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method-summary">Method</a></li>
 </ul>
 <ul class="sub-nav-list">
 <li>Detail:&nbsp;</li>
-<li>Field&nbsp;|&nbsp;</li>
+<li><a href="#field-detail">Field</a>&nbsp;|&nbsp;</li>
 <li><a href="#constructor-detail">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method-detail">Method</a></li>
 </ul>
@@ -87,6 +87,39 @@ implements com.stuypulse.stuylib.streams.vectors.filters.VFilter</span></div>
 </section>
 <section class="summary">
 <ul class="summary-list">
+<!-- =========== FIELD SUMMARY =========== -->
+<li>
+<section class="field-summary" id="field-summary">
+<h2>Field Summary</h2>
+<div class="caption"><span>Fields</span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Field</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code>private static final int</code></div>
+<div class="col-second even-row-color"><code><a href="#kDefaultSteps" class="member-name-link">kDefaultSteps</a></code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>private <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Number.html" title="class or interface in java.lang" class="external-link">Number</a></code></div>
+<div class="col-second odd-row-color"><code><a href="#mAccelLimit" class="member-name-link">mAccelLimit</a></code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>private com.stuypulse.stuylib.math.Vector2D</code></div>
+<div class="col-second even-row-color"><code><a href="#mOutput" class="member-name-link">mOutput</a></code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>private final int</code></div>
+<div class="col-second odd-row-color"><code><a href="#mSteps" class="member-name-link">mSteps</a></code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>private com.stuypulse.stuylib.util.StopWatch</code></div>
+<div class="col-second even-row-color"><code><a href="#mTimer" class="member-name-link">mTimer</a></code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>private <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Number.html" title="class or interface in java.lang" class="external-link">Number</a></code></div>
+<div class="col-second odd-row-color"><code><a href="#mVelLimit" class="member-name-link">mVelLimit</a></code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>private com.stuypulse.stuylib.math.Vector2D</code></div>
+<div class="col-second even-row-color"><code><a href="#mVelocity" class="member-name-link">mVelocity</a></code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+</div>
+</section>
+</li>
 <!-- ======== CONSTRUCTOR SUMMARY ======== -->
 <li>
 <section class="constructor-summary" id="constructor-summary">
@@ -143,6 +176,64 @@ implements com.stuypulse.stuylib.streams.vectors.filters.VFilter</span></div>
 </section>
 <section class="details">
 <ul class="details-list">
+<!-- ============ FIELD DETAIL =========== -->
+<li>
+<section class="field-details" id="field-detail">
+<h2>Field Details</h2>
+<ul class="member-list">
+<li>
+<section class="detail" id="kDefaultSteps">
+<h3>kDefaultSteps</h3>
+<div class="member-signature"><span class="modifiers">private static final</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/stuypulse/robot/util/TranslationMotionProfile.html#line-15">kDefaultSteps</a></span></div>
+<dl class="notes">
+<dt>See Also:</dt>
+<dd>
+<ul class="see-list">
+<li><a href="../../../../constant-values.html#com.stuypulse.robot.util.TranslationMotionProfile.kDefaultSteps">Constant Field Values</a></li>
+</ul>
+</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="mTimer">
+<h3>mTimer</h3>
+<div class="member-signature"><span class="modifiers">private</span>&nbsp;<span class="return-type">com.stuypulse.stuylib.util.StopWatch</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/stuypulse/robot/util/TranslationMotionProfile.html#line-18">mTimer</a></span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="mVelLimit">
+<h3>mVelLimit</h3>
+<div class="member-signature"><span class="modifiers">private</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Number.html" title="class or interface in java.lang" class="external-link">Number</a></span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/stuypulse/robot/util/TranslationMotionProfile.html#line-21">mVelLimit</a></span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="mAccelLimit">
+<h3>mAccelLimit</h3>
+<div class="member-signature"><span class="modifiers">private</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Number.html" title="class or interface in java.lang" class="external-link">Number</a></span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/stuypulse/robot/util/TranslationMotionProfile.html#line-23">mAccelLimit</a></span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="mOutput">
+<h3>mOutput</h3>
+<div class="member-signature"><span class="modifiers">private</span>&nbsp;<span class="return-type">com.stuypulse.stuylib.math.Vector2D</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/stuypulse/robot/util/TranslationMotionProfile.html#line-26">mOutput</a></span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="mVelocity">
+<h3>mVelocity</h3>
+<div class="member-signature"><span class="modifiers">private</span>&nbsp;<span class="return-type">com.stuypulse.stuylib.math.Vector2D</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/stuypulse/robot/util/TranslationMotionProfile.html#line-28">mVelocity</a></span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="mSteps">
+<h3>mSteps</h3>
+<div class="member-signature"><span class="modifiers">private final</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/stuypulse/robot/util/TranslationMotionProfile.html#line-31">mSteps</a></span></div>
+</section>
+</li>
+</ul>
+</section>
+</li>
 <!-- ========= CONSTRUCTOR DETAIL ======== -->
 <li>
 <section class="constructor-details" id="constructor-detail">
