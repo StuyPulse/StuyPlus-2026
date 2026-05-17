@@ -21,9 +21,9 @@ import com.stuypulse.robot.util.vision.LimelightHelpers.IMUData;
 import com.stuypulse.robot.util.vision.LimelightHelpers.PoseEstimate;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Pose3d;
+import edu.wpi.first.networktables.BooleanSubscriber;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import com.stuypulse.stuylib.network.SmartBoolean;
 import dev.doglog.DogLog;
 
 public class LimelightVision extends SubsystemBase {
@@ -42,9 +42,7 @@ public class LimelightVision extends SubsystemBase {
 
     private String[] names;
 
-    private SmartBoolean enabled;
-
-    private SmartBoolean[] camerasEnabled;
+    private BooleanSubscriber[] camerasEnabled;
 
     private MegaTagMode megaTagMode;
 
@@ -60,9 +58,9 @@ public class LimelightVision extends SubsystemBase {
             Pose3d robotRelativePose = Cameras.LimelightCameras[i].location();
             LimelightHelpers.setCameraPose_RobotSpace(names[i], robotRelativePose.getX(), robotRelativePose.getY(), robotRelativePose.getZ(), robotRelativePose.getRotation().getMeasureX().in(Degrees), robotRelativePose.getRotation().getMeasureY().in(Degrees), robotRelativePose.getRotation().getMeasureZ().in(Degrees));
         }
-        camerasEnabled = new SmartBoolean[Cameras.LimelightCameras.length];
+        camerasEnabled = new BooleanSubscriber[Cameras.LimelightCameras.length];
         for (int i = 0; i < camerasEnabled.length; i++) {
-            camerasEnabled[i] = new SmartBoolean("Vision/" + names[i] + " Is Enabled", true);
+            camerasEnabled[i] = DogLog.tunable("Vision/" + names[i] + " Is Enabled", true);
             setIMUMode(1);
             DogLog.log("Vision/" + names[i] + " Has Data", false);
         }
@@ -76,17 +74,17 @@ public class LimelightVision extends SubsystemBase {
     }
 
     public void enable() {
-        EnabledSubsystems.VISION.set(true);
+        EnabledSubsystems.VISION.getTopic().publish().set(true);
     }
 
     public void disable() {
-        EnabledSubsystems.VISION.set(false);
+        EnabledSubsystems.VISION.getTopic().publish().set(false);
     }
 
     public void setCameraEnabled(String name, boolean enabled) {
         for (int i = 0; i < names.length; i++) {
             if (names[i].equals(name)) {
-                camerasEnabled[i].set(enabled);
+                camerasEnabled[i].getTopic().publish().set(enabled);
             }
         }
     }
@@ -177,7 +175,7 @@ public class LimelightVision extends SubsystemBase {
                 DogLog.log("Vision/" + names[i] + " Has Data", true);
                 DogLog.log("Vision/MegaTag Mode", megaTagMode.toString());
                 // this yaw is seems to be the robot yaw passed into the LL
-                DogLog.log("Vision/Pipeline", LimelightHelpers.getCurrentPipelineIndex(limelightName));
+                DogLog.forceNt.log("Vision/Pipeline", LimelightHelpers.getCurrentPipelineIndex(limelightName));
                 DogLog.log("Vision/Limelight Robot Yaw", LimelightHelpers.getIMUData(limelightName).robotYaw);
                 // this is just the yaw of the internal imu
                 DogLog.log("Vision/Limelight Yaw", LimelightHelpers.getIMUData(limelightName).Yaw);

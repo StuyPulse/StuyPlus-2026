@@ -21,6 +21,18 @@
           "data": {
             "pathName": "Mid Neutral LF to RB Shoot"
           }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "RB Shoot to RB Start"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "RB to Mid Neutral LF"
+          }
         }
       ]
     }

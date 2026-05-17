@@ -1,14 +1,11 @@
-/**
- * ********************** PROJECT RON ************************
- */
+/************************* PROJECT RON *************************/
 /* Copyright (c) 2026 StuyPulse Robotics. All rights reserved. */
 /* Use of this source code is governed by an MIT-style license */
 /* that can be found in the repository LICENSE file.           */
-/**
- * ***********************************************************
- */
+/***************************************************************/
 package com.stuypulse.robot;
 
+import com.ctre.phoenix6.SignalLogger;
 import com.stuypulse.robot.commands.vision.SetIMUMode;
 import com.stuypulse.robot.commands.vision.SetMegaTagMode;
 import com.stuypulse.robot.commands.vision.SetVisionEnabled;
@@ -17,9 +14,11 @@ import com.stuypulse.robot.subsystems.swerve.CommandSwerveDrivetrain;
 import com.stuypulse.robot.subsystems.vision.LimelightVision;
 import com.stuypulse.robot.subsystems.vision.LimelightVision.MegaTagMode;
 import com.stuypulse.robot.util.LoggedSignals;
-import com.stuypulse.robot.util.RobotVisualizer;
+import com.stuypulse.robot.util.simulation.RobotVisualizer;
 import com.stuypulse.robot.util.simulation.Simulation;
 import com.stuypulse.robot.util.simulation.SimulationConstants;
+import dev.doglog.DogLog;
+import dev.doglog.DogLogOptions;
 import edu.wpi.first.wpilibj.DataLogManager;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
@@ -27,9 +26,6 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import com.ctre.phoenix6.SignalLogger;
-import dev.doglog.DogLog;
-import dev.doglog.DogLogOptions;
 
 /**
  * <h2>Robot Class</h2>
@@ -55,15 +51,9 @@ public class Robot extends TimedRobot {
         return alliance == Alliance.Blue;
     }
 
-    /**
-     * *********************
-     */
-    /**
-     * ROBOT SCHEDULEING **
-     */
-    /**
-     * *********************
-     */
+    /** ********************* */
+    /** ROBOT SCHEDULEING ** */
+    /** ********************* */
     @Override
     public void robotInit() {
         robot = new RobotContainer();
@@ -77,7 +67,7 @@ public class Robot extends TimedRobot {
         System.out.println("]LOGGING DIRECTORY]: " + DataLogManager.getLogDir());
         SignalLogger.start();
         // SmartDashboard.putData(CommandScheduler.getInstance());
-        DogLog.setOptions(new DogLogOptions().withCaptureDs(true));
+        DogLog.setOptions(new DogLogOptions().withCaptureDs(true).withNtTunables(true).withLogExtras(true));
     }
 
     /**
@@ -97,8 +87,8 @@ public class Robot extends TimedRobot {
     public void robotPeriodic() {
         LoggedSignals.refreshAll();
         CommandScheduler.getInstance().run();
-        DogLog.log("Bot/Alliance", alliance.name());
-        DogLog.log("Match Time", DriverStation.getMatchTime());
+        DogLog.forceNt.log("Bot/Alliance", alliance.name());
+        DogLog.forceNt.log("Match Time", DriverStation.getMatchTime());
         SmartDashboard.putData("Command Scheduler", CommandScheduler.getInstance());
     }
 
@@ -111,9 +101,9 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void simulationInit() {
-        CommandSwerveDrivetrain
-                .getInstance()
-                .resetPose(SimulationConstants.ROBOTS_STARTING_POSITIONS[0]); // start off in a convenient spot
+        // start off in a convenient spot
+        CommandSwerveDrivetrain.getInstance()
+            .resetPose(SimulationConstants.ROBOTS_STARTING_POSITIONS[0]);
     }
 
     /**
@@ -196,7 +186,8 @@ public class Robot extends TimedRobot {
             auto.cancel();
         }
         CommandScheduler.getInstance().schedule(new SetVisionEnabled());
-        Boolean autonWon = DriverStation.getGameSpecificMessage().equals(String.valueOf(alliance.name().charAt(0)).toUpperCase());
+        Boolean autonWon = DriverStation.getGameSpecificMessage()
+                .equals(String.valueOf(alliance.name().charAt(0)).toUpperCase());
         DogLog.log("Auton Won", autonWon);
     }
 

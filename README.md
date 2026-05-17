@@ -5,8 +5,8 @@
 </div>
 <div align="center">
 
-[![Java Version](https://img.shields.io/badge/Java-17-F29111?style=for-the-badge&logo=openjdk)](https://jdk.java.net/17/)
-[![Java Version](https://img.shields.io/badge/C++-20-659AD2?style=for-the-badge&logo=cplusplus)](../cpp)
+[![Java Version](https://img.shields.io/badge/Java-17-F29111?style=for-the-badge&logo=openjdk)](https://github.com/StuyPulse/StuyPlus-2026/tree/main/src/main/java/com/stuypulse/robot)
+[![CPP Version](https://img.shields.io/badge/C++-20-659AD2?style=for-the-badge&logo=cplusplus)](https://github.com/StuyPulse/StuyPlus-2026/tree/experiments/cpp)
 [![License](https://img.shields.io/badge/License-MIT-750014?style=for-the-badge&logo=markdown)](LICENSE)
 ![Build](https://img.shields.io/github/actions/workflow/status/StuyPulse/StuyPlus-2026/gradle.yml?style=for-the-badge&label=Build)
 <br>

@@ -11,8 +11,10 @@ import edu.wpi.first.wpilibj2.command.WaitCommand;
 public class RBOuttake extends SequentialCommandGroup {
 
     public RBOuttake(PathPlannerPath... paths) {
-        addCommands(new SwerveResetPose(paths[0].getStartingHolonomicPose().get()), CommandSwerveDrivetrain.getInstance().followPathCommand(paths[0]), /* .alongWith(new IntakeSetIntake())*/
-        // ,
-        CommandSwerveDrivetrain.getInstance().followPathCommand(paths[1]));
+        addCommands(
+                new SwerveResetPose(paths[0].getStartingHolonomicPose().get()), CommandSwerveDrivetrain.getInstance()
+                        .followPathCommand(paths[0]), /* .alongWith(new IntakeSetIntake()) */
+                // ,
+                CommandSwerveDrivetrain.getInstance().followPathCommand(paths[1]));
     }
 }

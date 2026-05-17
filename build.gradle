@@ -132,6 +132,7 @@ spotless {
             'com.revrobotics',
             'com.stuypulse.stuylib'
         )
+        googleJavaFormat().aosp()
         removeUnusedImports()
     }
 }

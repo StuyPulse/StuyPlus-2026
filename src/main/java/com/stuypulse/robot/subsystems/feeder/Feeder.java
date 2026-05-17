@@ -1,21 +1,17 @@
-/**
- * ********************** PROJECT RON ************************
- */
+/************************* PROJECT RON *************************/
 /* Copyright (c) 2026 StuyPulse Robotics. All rights reserved. */
 /* Use of this source code is governed by an MIT-style license */
 /* that can be found in the repository LICENSE file.           */
-/**
- * ***********************************************************
- */
+/***************************************************************/
 package com.stuypulse.robot.subsystems.feeder;
 
 import static edu.wpi.first.units.Units.*;
+
 import com.stuypulse.robot.Robot;
 import com.stuypulse.robot.constants.Settings;
-import edu.wpi.first.units.measure.*;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import dev.doglog.DogLog;
+import edu.wpi.first.units.measure.*;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public abstract class Feeder extends SubsystemBase {
 
@@ -36,8 +32,9 @@ public abstract class Feeder extends SubsystemBase {
     }
 
     public enum FeederState {
-
-        STOP(0), REVERSE(Settings.Feeder.FEEDER_REVERSE_DUTY_CYCLE), FORWARD(Settings.Feeder.FEEDER_FORWARD_DUTY_CYCLE);
+        STOP(0),
+        REVERSE(Settings.Feeder.FEEDER_REVERSE_DUTY_CYCLE),
+        FORWARD(Settings.Feeder.FEEDER_FORWARD_DUTY_CYCLE);
 
         private double targetDutyCycle;
 
