@@ -79,6 +79,12 @@ loadScripts(document, 'script');</script>
 <hr>
 <div class="type-signature"><span class="modifiers">public class </span><span class="element-name type-name-label">RobotContainer</span>
 <span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></span></div>
+<div class="block"><h2>Robot Container Class</h2>
+ 
+ This class is where the bulk of the robot should be declared. Since Command-based is a
+ "declarative" paradigm, very little robot logic should actually be handled in the <a href="Robot.html" title="class in com.stuypulse.robot"><code>Robot</code></a>
+ periodic methods (other than the scheduler calls). Instead, the structure of the robot (including
+ subsystems, commands, and trigger mappings) should be declared here.</div>
 </section>
 <section class="summary">
 <ul class="summary-list">
@@ -106,7 +112,9 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-first">Constructor</div>
 <div class="table-header col-last">Description</div>
 <div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E()" class="member-name-link">RobotContainer</a>()</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-last even-row-color">
+<div class="block">The container for the robot.</div>
+</div>
 </div>
 </section>
 </li>
@@ -123,10 +131,14 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#configureAutons()" class="member-name-link">configureAutons</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">This method is used to configure the autonomous commands.</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>edu.wpi.first.wpilibj2.command.Command</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getAutonomousCommand()" class="member-name-link">getAutonomousCommand</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Use this to pass the autonomous command to the main <a href="Robot.html" title="class in com.stuypulse.robot"><code>Robot</code></a> class.</div>
+</div>
 </div>
 </div>
 </div>
@@ -162,6 +174,7 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="&lt;init&gt;()">
 <h3>RobotContainer</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">RobotContainer</span>()</div>
+<div class="block">The container for the robot. Contains subsystems, OI devices, and commands.</div>
 </section>
 </li>
 </ul>
@@ -176,12 +189,18 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="configureAutons()">
 <h3>configureAutons</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">configureAutons</span>()</div>
+<div class="block">This method is used to configure the autonomous commands.</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getAutonomousCommand()">
 <h3>getAutonomousCommand</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">edu.wpi.first.wpilibj2.command.Command</span>&nbsp;<span class="element-name">getAutonomousCommand</span>()</div>
+<div class="block">Use this to pass the autonomous command to the main <a href="Robot.html" title="class in com.stuypulse.robot"><code>Robot</code></a> class.</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>The command to run in autonomous</dd>
+</dl>
 </section>
 </li>
 </ul>

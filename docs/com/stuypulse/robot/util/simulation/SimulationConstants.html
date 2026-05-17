@@ -71,6 +71,10 @@ loadScripts(document, 'script');</script>
 <section class="class-description" id="class-description">
 <hr>
 <div class="type-signature"><span class="modifiers">public interface </span><span class="element-name type-name-label">SimulationConstants</span></div>
+<div class="block"><h2>SimulationConstants</h2>
+ <p>A collection of constants used within our MapleSim code and other related sim classes.
+ <p>This includes things like component offsets, physical constants, and any other values 
+ that are relevant to the simulation</p></div>
 </section>
 <section class="summary">
 <ul class="summary-list">
@@ -85,13 +89,19 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color"><code>static interface&nbsp;</code></div>
 <div class="col-second even-row-color"><code><a href="SimulationConstants.Drivetrain.html" class="type-name-link" title="interface in com.stuypulse.robot.util.simulation">SimulationConstants.Drivetrain</a></code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-last even-row-color">
+<div class="block">Contains simulation constants related to our drivetrain and its components</div>
+</div>
 <div class="col-first odd-row-color"><code>static interface&nbsp;</code></div>
 <div class="col-second odd-row-color"><code><a href="SimulationConstants.Hopper.html" class="type-name-link" title="interface in com.stuypulse.robot.util.simulation">SimulationConstants.Hopper</a></code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-last odd-row-color">
+<div class="block">Contains simulation constants related to our physical hopper.</div>
+</div>
 <div class="col-first even-row-color"><code>static interface&nbsp;</code></div>
 <div class="col-second even-row-color"><code><a href="SimulationConstants.Intake.html" class="type-name-link" title="interface in com.stuypulse.robot.util.simulation">SimulationConstants.Intake</a></code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-last even-row-color">
+<div class="block">Contains simulation constants related to the intake subsystem</div>
+</div>
 <div class="col-first odd-row-color"><code>static final record&nbsp;</code></div>
 <div class="col-second odd-row-color"><code><a href="SimulationConstants.Offsets.html" class="type-name-link" title="class in com.stuypulse.robot.util.simulation">SimulationConstants.Offsets</a></code></div>
 <div class="col-last odd-row-color">
@@ -99,7 +109,9 @@ loadScripts(document, 'script');</script>
 </div>
 <div class="col-first even-row-color"><code>static interface&nbsp;</code></div>
 <div class="col-second even-row-color"><code><a href="SimulationConstants.Shooter.html" class="type-name-link" title="interface in com.stuypulse.robot.util.simulation">SimulationConstants.Shooter</a></code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-last even-row-color">
+<div class="block">Contains simulation constants related to the shooter subsystem</div>
+</div>
 </div>
 </section>
 </li>
@@ -113,14 +125,15 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-second">Field</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color"><code>static final edu.wpi.first.math.geometry.Pose2d[]</code></div>
-<div class="col-second even-row-color"><code><a href="#ROBOT_QUEENING_POSITIONS" class="member-name-link">ROBOT_QUEENING_POSITIONS</a></code></div>
-<div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code>static final edu.wpi.first.math.geometry.Pose2d[]</code></div>
-<div class="col-second odd-row-color"><code><a href="#ROBOTS_STARTING_POSITIONS" class="member-name-link">ROBOTS_STARTING_POSITIONS</a></code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><code>static final <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Boolean.html" title="class or interface in java.lang" class="external-link">Boolean</a></code></div>
-<div class="col-second even-row-color"><code><a href="#SPAWN_GAMEPIECES_SPARSELY" class="member-name-link">SPAWN_GAMEPIECES_SPARSELY</a></code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-second even-row-color"><code><a href="#ROBOTS_STARTING_POSITIONS" class="member-name-link">ROBOTS_STARTING_POSITIONS</a></code></div>
+<div class="col-last even-row-color">
+<div class="block">Starting positions for the robots in the simulation.</div>
+</div>
+<div class="col-first odd-row-color"><code>static final <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Boolean.html" title="class or interface in java.lang" class="external-link">Boolean</a></code></div>
+<div class="col-second odd-row-color"><code><a href="#SPAWN_GAMEPIECES_SPARSELY" class="member-name-link">SPAWN_GAMEPIECES_SPARSELY</a></code></div>
+<div class="col-last odd-row-color">
+<div class="block">Boolean for whether <code>Arena2026Rebuilt</code> efficiency mode is enabled.</div>
+</div>
 </div>
 </section>
 </li>
@@ -134,21 +147,18 @@ loadScripts(document, 'script');</script>
 <h2>Field Details</h2>
 <ul class="member-list">
 <li>
-<section class="detail" id="ROBOT_QUEENING_POSITIONS">
-<h3>ROBOT_QUEENING_POSITIONS</h3>
-<div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type">edu.wpi.first.math.geometry.Pose2d[]</span>&nbsp;<span class="element-name">ROBOT_QUEENING_POSITIONS</span></div>
-</section>
-</li>
-<li>
 <section class="detail" id="ROBOTS_STARTING_POSITIONS">
 <h3>ROBOTS_STARTING_POSITIONS</h3>
 <div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type">edu.wpi.first.math.geometry.Pose2d[]</span>&nbsp;<span class="element-name">ROBOTS_STARTING_POSITIONS</span></div>
+<div class="block">Starting positions for the robots in the simulation.</div>
 </section>
 </li>
 <li>
 <section class="detail" id="SPAWN_GAMEPIECES_SPARSELY">
 <h3>SPAWN_GAMEPIECES_SPARSELY</h3>
 <div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Boolean.html" title="class or interface in java.lang" class="external-link">Boolean</a></span>&nbsp;<span class="element-name">SPAWN_GAMEPIECES_SPARSELY</span></div>
+<div class="block">Boolean for whether <code>Arena2026Rebuilt</code> efficiency mode is enabled. When true, less game pieces will be spawned.
+ If false, the normal amount will spawn.</div>
 </section>
 </li>
 </ul>

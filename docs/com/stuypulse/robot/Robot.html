@@ -89,6 +89,12 @@ loadScripts(document, 'script');</script>
 <hr>
 <div class="type-signature"><span class="modifiers">public class </span><span class="element-name type-name-label">Robot</span>
 <span class="extends-implements">extends edu.wpi.first.wpilibj.TimedRobot</span></div>
+<div class="block"><h2>Robot Class</h2>
+ 
+ This is the main class for robot code, instantiated in <a href="Main.html" title="class in com.stuypulse.robot"><code>Main</code></a> It extends TimedRobot, meaning that the methods in this
+ class are called automatically during specific states of the robot.
+ 
+ This robot is structured using the <a href="https://docs.wpilib.org/en/stable/docs/software/commandbased/what-is-command-based.html">CommandBased</a> framework.</div>
 </section>
 <section class="summary">
 <ul class="summary-list">
@@ -127,55 +133,87 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#autonomousExit()" class="member-name-link">autonomousExit</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">This method is called when autonomous mode ends.</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#autonomousInit()" class="member-name-link">autonomousInit</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">This method is called at the start of autonomous mode.</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#autonomousPeriodic()" class="member-name-link">autonomousPeriodic</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">This method is called every 20ms during autonomous mode.</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#disabledInit()" class="member-name-link">disabledInit</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">This method is called each time when the robot is disabled.</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#disabledPeriodic()" class="member-name-link">disabledPeriodic</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">This method is called every 20ms when the robot is disabled.</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#driverStationConnected()" class="member-name-link">driverStationConnected</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">This method runs when the robot connects to Driver Station.</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static boolean</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#isBlue()" class="member-name-link">isBlue</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="block">Checks the alliance the robot is on</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#robotInit()" class="member-name-link">robotInit</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#robotPeriodic()" class="member-name-link">robotPeriodic</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">This function is called every 20ms, regardless of the robot mode.</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#simulationInit()" class="member-name-link">simulationInit</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">This method is called when the robot first starts in simulation mode.</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#simulationPeriodic()" class="member-name-link">simulationPeriodic</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">This method is called every 20ms during simulation mode.</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#teleopExit()" class="member-name-link">teleopExit</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">This method is called when teleop mode ends.</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#teleopInit()" class="member-name-link">teleopInit</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">This method is called at the start of teleop mode.</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#teleopPeriodic()" class="member-name-link">teleopPeriodic</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">This method is called every 20ms in teleop mode.</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#testExit()" class="member-name-link">testExit</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">This method is called when test mode ends.</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#testInit()" class="member-name-link">testInit</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">This method is called at the start of test mode.</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#testPeriodic()" class="member-name-link">testPeriodic</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">This method is called every 20ms in test mode.</div>
+</div>
 </div>
 </div>
 </div>
@@ -220,6 +258,11 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="isBlue()">
 <h3>isBlue</h3>
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">isBlue</span>()</div>
+<div class="block">Checks the alliance the robot is on</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>true if the robot is on the blue alliance, false if the robot is on the red alliance</dd>
+</dl>
 </section>
 </li>
 <li>
@@ -236,6 +279,9 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="driverStationConnected()">
 <h3>driverStationConnected</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">driverStationConnected</span>()</div>
+<div class="block">This method runs when the robot connects to Driver Station.
+ 
+ It is used to update the robot's current alliance.</div>
 <dl class="notes">
 <dt>Overrides:</dt>
 <dd><code>driverStationConnected</code>&nbsp;in class&nbsp;<code>edu.wpi.first.wpilibj.IterativeRobotBase</code></dd>
@@ -246,6 +292,7 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="robotPeriodic()">
 <h3>robotPeriodic</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">robotPeriodic</span>()</div>
+<div class="block">This function is called every 20ms, regardless of the robot mode.</div>
 <dl class="notes">
 <dt>Overrides:</dt>
 <dd><code>robotPeriodic</code>&nbsp;in class&nbsp;<code>edu.wpi.first.wpilibj.IterativeRobotBase</code></dd>
@@ -256,6 +303,7 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="simulationInit()">
 <h3>simulationInit</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">simulationInit</span>()</div>
+<div class="block">This method is called when the robot first starts in simulation mode.</div>
 <dl class="notes">
 <dt>Overrides:</dt>
 <dd><code>simulationInit</code>&nbsp;in class&nbsp;<code>edu.wpi.first.wpilibj.IterativeRobotBase</code></dd>
@@ -266,6 +314,7 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="simulationPeriodic()">
 <h3>simulationPeriodic</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">simulationPeriodic</span>()</div>
+<div class="block">This method is called every 20ms during simulation mode.</div>
 <dl class="notes">
 <dt>Overrides:</dt>
 <dd><code>simulationPeriodic</code>&nbsp;in class&nbsp;<code>edu.wpi.first.wpilibj.IterativeRobotBase</code></dd>
@@ -276,6 +325,7 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="disabledInit()">
 <h3>disabledInit</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">disabledInit</span>()</div>
+<div class="block">This method is called each time when the robot is disabled.</div>
 <dl class="notes">
 <dt>Overrides:</dt>
 <dd><code>disabledInit</code>&nbsp;in class&nbsp;<code>edu.wpi.first.wpilibj.IterativeRobotBase</code></dd>
@@ -286,6 +336,7 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="disabledPeriodic()">
 <h3>disabledPeriodic</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">disabledPeriodic</span>()</div>
+<div class="block">This method is called every 20ms when the robot is disabled.</div>
 <dl class="notes">
 <dt>Overrides:</dt>
 <dd><code>disabledPeriodic</code>&nbsp;in class&nbsp;<code>edu.wpi.first.wpilibj.IterativeRobotBase</code></dd>
@@ -296,6 +347,7 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="autonomousInit()">
 <h3>autonomousInit</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">autonomousInit</span>()</div>
+<div class="block">This method is called at the start of autonomous mode.</div>
 <dl class="notes">
 <dt>Overrides:</dt>
 <dd><code>autonomousInit</code>&nbsp;in class&nbsp;<code>edu.wpi.first.wpilibj.IterativeRobotBase</code></dd>
@@ -306,6 +358,7 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="autonomousPeriodic()">
 <h3>autonomousPeriodic</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">autonomousPeriodic</span>()</div>
+<div class="block">This method is called every 20ms during autonomous mode.</div>
 <dl class="notes">
 <dt>Overrides:</dt>
 <dd><code>autonomousPeriodic</code>&nbsp;in class&nbsp;<code>edu.wpi.first.wpilibj.IterativeRobotBase</code></dd>
@@ -316,6 +369,7 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="autonomousExit()">
 <h3>autonomousExit</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">autonomousExit</span>()</div>
+<div class="block">This method is called when autonomous mode ends.</div>
 <dl class="notes">
 <dt>Overrides:</dt>
 <dd><code>autonomousExit</code>&nbsp;in class&nbsp;<code>edu.wpi.first.wpilibj.IterativeRobotBase</code></dd>
@@ -326,6 +380,7 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="teleopInit()">
 <h3>teleopInit</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">teleopInit</span>()</div>
+<div class="block">This method is called at the start of teleop mode.</div>
 <dl class="notes">
 <dt>Overrides:</dt>
 <dd><code>teleopInit</code>&nbsp;in class&nbsp;<code>edu.wpi.first.wpilibj.IterativeRobotBase</code></dd>
@@ -336,6 +391,7 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="teleopPeriodic()">
 <h3>teleopPeriodic</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">teleopPeriodic</span>()</div>
+<div class="block">This method is called every 20ms in teleop mode.</div>
 <dl class="notes">
 <dt>Overrides:</dt>
 <dd><code>teleopPeriodic</code>&nbsp;in class&nbsp;<code>edu.wpi.first.wpilibj.IterativeRobotBase</code></dd>
@@ -346,6 +402,7 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="teleopExit()">
 <h3>teleopExit</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">teleopExit</span>()</div>
+<div class="block">This method is called when teleop mode ends.</div>
 <dl class="notes">
 <dt>Overrides:</dt>
 <dd><code>teleopExit</code>&nbsp;in class&nbsp;<code>edu.wpi.first.wpilibj.IterativeRobotBase</code></dd>
@@ -356,6 +413,7 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="testInit()">
 <h3>testInit</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">testInit</span>()</div>
+<div class="block">This method is called at the start of test mode.</div>
 <dl class="notes">
 <dt>Overrides:</dt>
 <dd><code>testInit</code>&nbsp;in class&nbsp;<code>edu.wpi.first.wpilibj.IterativeRobotBase</code></dd>
@@ -366,6 +424,7 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="testPeriodic()">
 <h3>testPeriodic</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">testPeriodic</span>()</div>
+<div class="block">This method is called every 20ms in test mode.</div>
 <dl class="notes">
 <dt>Overrides:</dt>
 <dd><code>testPeriodic</code>&nbsp;in class&nbsp;<code>edu.wpi.first.wpilibj.IterativeRobotBase</code></dd>
@@ -376,6 +435,7 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="testExit()">
 <h3>testExit</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">testExit</span>()</div>
+<div class="block">This method is called when test mode ends.</div>
 <dl class="notes">
 <dt>Overrides:</dt>
 <dd><code>testExit</code>&nbsp;in class&nbsp;<code>edu.wpi.first.wpilibj.IterativeRobotBase</code></dd>

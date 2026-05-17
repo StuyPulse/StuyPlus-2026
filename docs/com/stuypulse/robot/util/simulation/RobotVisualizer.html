@@ -79,6 +79,13 @@ loadScripts(document, 'script');</script>
 <hr>
 <div class="type-signature"><span class="modifiers">public class </span><span class="element-name type-name-label">RobotVisualizer</span>
 <span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></span></div>
+<div class="block"><h2>Combined robot visualizer for all of the subsystems in one canvas.</h2>
+ 
+ <p>
+ This class employs the singleton pattern to ensure that only one visualizer
+ exists,
+ since only one robot instance should exist.
+ </p></div>
 </section>
 <section class="summary">
 <ul class="summary-list">
@@ -102,7 +109,7 @@ loadScripts(document, 'script');</script>
 <section class="method-summary" id="method-summary">
 <h2>Method Summary</h2>
 <div id="method-summary-table">
-<div class="table-tabs" role="tablist" aria-orientation="horizontal"><button id="method-summary-table-tab0" role="tab" aria-selected="true" aria-controls="method-summary-table.tabpanel" tabindex="0" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table', 3)" class="active-table-tab">All Methods</button><button id="method-summary-table-tab1" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab1', 3)" class="table-tab">Static Methods</button><button id="method-summary-table-tab2" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab2', 3)" class="table-tab">Instance Methods</button><button id="method-summary-table-tab4" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab4', 3)" class="table-tab">Concrete Methods</button></div>
+<div class="table-tabs" role="tablist" aria-orientation="horizontal"><button id="method-summary-table-tab0" role="tab" aria-selected="true" aria-controls="method-summary-table.tabpanel" tabindex="0" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table', 3)" class="active-table-tab">All Methods</button><button id="method-summary-table-tab1" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab1', 3)" class="table-tab">Static Methods</button><button id="method-summary-table-tab2" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab2', 3)" class="table-tab">Instance Methods</button><button id="method-summary-table-tab4" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab4', 3)" class="table-tab">Concrete Methods</button><button id="method-summary-table-tab6" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab6', 3)" class="table-tab">Deprecated Methods</button></div>
 <div id="method-summary-table.tabpanel" role="tabpanel" aria-labelledby="method-summary-table-tab0">
 <div class="summary-table three-column-summary">
 <div class="table-header col-first">Modifier and Type</div>
@@ -111,22 +118,32 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="RobotVisualizer.html" title="class in com.stuypulse.robot.util.simulation">RobotVisualizer</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#getInstance()" class="member-name-link">getInstance</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>edu.wpi.first.units.measure.Angle</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getIntakeAngle()" class="member-name-link">getIntakeAngle</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4 method-summary-table-tab6"><code>edu.wpi.first.units.measure.Angle</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4 method-summary-table-tab6"><code><a href="#getIntakeAngle()" class="member-name-link">getIntakeAngle</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4 method-summary-table-tab6">
+<div class="block"><span class="deprecated-label">Deprecated.</span></div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#update()" class="member-name-link">update</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Publish the canvas to <code>SmartDashboard</code></div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#updateFeeder(edu.wpi.first.units.measure.AngularVelocity)" class="member-name-link">updateFeeder</a><wbr>(edu.wpi.first.units.measure.AngularVelocity&nbsp;angularVelocity)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Update method for the feeder</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#updateIntake(edu.wpi.first.units.measure.Angle,edu.wpi.first.units.measure.AngularVelocity)" class="member-name-link">updateIntake</a><wbr>(edu.wpi.first.units.measure.Angle&nbsp;pivotAngle,
  edu.wpi.first.units.measure.AngularVelocity&nbsp;angularVelocity)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Update method for the intake</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#updateShooter(edu.wpi.first.units.measure.AngularVelocity)" class="member-name-link">updateShooter</a><wbr>(edu.wpi.first.units.measure.AngularVelocity&nbsp;angularVelocity)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Update method for the shooter</div>
+</div>
 </div>
 </div>
 </div>
@@ -168,12 +185,26 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="updateFeeder(edu.wpi.first.units.measure.AngularVelocity)">
 <h3>updateFeeder</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">updateFeeder</span><wbr><span class="parameters">(edu.wpi.first.units.measure.AngularVelocity&nbsp;angularVelocity)</span></div>
+<div class="block"><h4>Update method for the feeder</h4>
+ 
+ <p>To be called by subsystems using motor measurements</p></div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>angularVelocity</code> - measured angular velocity of the feeder rollers</dd>
+</dl>
 </section>
 </li>
 <li>
 <section class="detail" id="updateShooter(edu.wpi.first.units.measure.AngularVelocity)">
 <h3>updateShooter</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">updateShooter</span><wbr><span class="parameters">(edu.wpi.first.units.measure.AngularVelocity&nbsp;angularVelocity)</span></div>
+<div class="block"><h4>Update method for the shooter</h4>
+ 
+ <p>To be called by subsystems using motor measurements</p></div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>angularVelocity</code> - measured angular velocity of the shooter rollers</dd>
+</dl>
 </section>
 </li>
 <li>
@@ -181,18 +212,29 @@ loadScripts(document, 'script');</script>
 <h3>updateIntake</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">updateIntake</span><wbr><span class="parameters">(edu.wpi.first.units.measure.Angle&nbsp;pivotAngle,
  edu.wpi.first.units.measure.AngularVelocity&nbsp;angularVelocity)</span></div>
+<div class="block"><h4>Update method for the intake</h4>
+ 
+ <p>To be called by subsystems using motor measurements</p></div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>pivotAngle</code> - measured position of the intake pivot</dd>
+<dd><code>angularVelocity</code> - measured angular velocity of the intake rollers</dd>
+</dl>
 </section>
 </li>
 <li>
 <section class="detail" id="getIntakeAngle()">
 <h3>getIntakeAngle</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">edu.wpi.first.units.measure.Angle</span>&nbsp;<span class="element-name">getIntakeAngle</span>()</div>
+<div class="member-signature"><span class="annotations"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Deprecated.html" title="class or interface in java.lang" class="external-link">@Deprecated</a>
+</span><span class="modifiers">public</span>&nbsp;<span class="return-type">edu.wpi.first.units.measure.Angle</span>&nbsp;<span class="element-name">getIntakeAngle</span>()</div>
+<div class="deprecation-block"><span class="deprecated-label">Deprecated.</span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="update()">
 <h3>update</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">update</span>()</div>
+<div class="block"><p>Publish the canvas to <code>SmartDashboard</code></p></div>
 </section>
 </li>
 </ul>
