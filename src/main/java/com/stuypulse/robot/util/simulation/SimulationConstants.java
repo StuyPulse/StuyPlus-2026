@@ -7,6 +7,8 @@ package com.stuypulse.robot.util.simulation;
 
 import static edu.wpi.first.units.Units.*;
 
+import java.util.function.Supplier;
+
 import com.ctre.phoenix6.configs.CANcoderConfiguration;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.swerve.SwerveModuleConstants;
@@ -26,8 +28,13 @@ import edu.wpi.first.units.measure.AngularVelocity;
 import edu.wpi.first.units.measure.Distance;
 import edu.wpi.first.units.measure.Mass;
 import edu.wpi.first.units.measure.Time;
-import java.util.function.Supplier;
 
+/**
+ * <h2>SimulationConstants</h2>
+ * <p>A collection of constants used within our MapleSim code and other related sim classes.
+ * <p>This includes things like component offsets, physical constants, and any other values 
+ * that are relevant to the simulation</p>
+ */
 public interface SimulationConstants {
 
     /**
@@ -273,6 +280,9 @@ public interface SimulationConstants {
         }
     }
 
+    /**
+     * Contains simulation constants related to the intake subsystem
+     */
     public interface Intake {
 
         double INTAKE_WIDTH = 0.5;
@@ -294,6 +304,10 @@ public interface SimulationConstants {
         public Offsets OUTTAKE_OFFSETS = new Offsets(0.4, 0, 0);
     }
 
+    /**
+     * Contains simulation constants related to our physical hopper.
+     * <p>The hopper is not necessarily its own subsystem, but it has some important properties.
+     */
     public interface Hopper {
 
         int FUEL_CAPACITY = 54;
@@ -307,6 +321,9 @@ public interface SimulationConstants {
         Pose3d HIDDEN_POSE = new Pose3d(1000, 1000, 1000, new Rotation3d());
     }
 
+    /**
+     * Contains simulation constants related to the shooter subsystem
+     */
     public interface Shooter {
 
         double BPS = 8;
@@ -323,6 +340,9 @@ public interface SimulationConstants {
         public Offsets OFFSETS = new Offsets(Units.inchesToMeters(-7.836), 0, 0.7);
     }
 
+    /**
+     * Contains simulation constants related to our drivetrain and its components
+     */
     public interface Drivetrain {
 
         // alignment
@@ -369,22 +389,20 @@ public interface SimulationConstants {
         };
     }
 
-    public static final Pose2d[] ROBOT_QUEENING_POSITIONS = new Pose2d[] {
-            new Pose2d(-6, 0, new Rotation2d()),
-            new Pose2d(-5, 0, new Rotation2d()),
-            new Pose2d(-4, 0, new Rotation2d()),
-            new Pose2d(-3, 0, new Rotation2d()),
-            new Pose2d(-2, 0, new Rotation2d())
-    };
+    /**
+     * Starting positions for the robots in the simulation.
+     */
+	public static final Pose2d[] ROBOTS_STARTING_POSITIONS = new Pose2d[] {
+			new Pose2d(12.5, 0.5, Rotation2d.fromDegrees(90)), // depot side trench facing hub
+			new Pose2d(12.5, 7.777, Rotation2d.fromDegrees(270)),
+			new Pose2d(15, 2, Rotation2d.fromDegrees(180)),
+			new Pose2d(1.6, 6, new Rotation2d()),
+			new Pose2d(1.6, 4, new Rotation2d())
+	};
 
-    public static final Pose2d[] ROBOTS_STARTING_POSITIONS = new Pose2d[] { // depot side trench facing hub
-            new Pose2d(12.5, 0.5, Rotation2d.fromDegrees(90)),
-            new Pose2d(12.5, 7.777, Rotation2d.fromDegrees(270)),
-            new Pose2d(15, 2, Rotation2d.fromDegrees(180)),
-            new Pose2d(1.6, 6, new Rotation2d()),
-            new Pose2d(1.6, 4, new Rotation2d())
-    };
-
-    // whether to spawn a decreased set of gamepieces to conserve processing power
-    public static final Boolean SPAWN_GAMEPIECES_SPARSELY = true;
+    /**
+     * Boolean for whether {@link org.ironmaple.simulation.seasonspecific.rebuilt2026.Arena2026Rebuilt} efficiency mode is enabled. When true, less game pieces will be spawned.
+     * If false, the normal amount will spawn.
+     */
+    public static final Boolean SPAWN_GAMEPIECES_SPARSELY = true; // whether to spawn a decreased set of gamepieces to conserve processing power
 }

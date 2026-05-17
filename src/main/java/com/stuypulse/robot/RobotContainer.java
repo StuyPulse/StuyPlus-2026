@@ -40,6 +40,14 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
 
+/**
+ * <h2>Robot Container Class</h2>
+ * 
+ * This class is where the bulk of the robot should be declared. Since Command-based is a
+ * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
+ * periodic methods (other than the scheduler calls). Instead, the structure of the robot (including
+ * subsystems, commands, and trigger mappings) should be declared here.
+ */
 public class RobotContainer {
 
     // Gamepads
@@ -64,6 +72,8 @@ public class RobotContainer {
     private static SendableChooser<Command> autonChooser = new SendableChooser<>();
 
     // Robot container
+
+    /** The container for the robot. Contains subsystems, OI devices, and commands. */
     public RobotContainer() {
         swerve.configureAutoBuilder();
         configureDefaultCommands();
@@ -80,9 +90,13 @@ public class RobotContainer {
         leds.setDefaultCommand(new LEDDefaultCommand());
     }
 
-    /** *********** */
-    /** BUTTONS ** */
-    /** *********** */
+    /***************/
+    /*** BUTTONS ***/
+    /***************/
+
+    /**
+     * This method is used to configure button bindings for controlling the robot.
+   */
     private void configureButtonBindings() {
         // Trigger buttons did not work for some reason so I had to do this
         Trigger leftTrigger = new Trigger(() -> driver.getLeftTriggerAxis() > 0.5);
@@ -131,10 +145,14 @@ public class RobotContainer {
         driver.x().whileTrue(new SwerveDriveXMode());
     }
 
-    /** ********** */
-    /** AUTONS ** */
-    /** ********** */
-    public void configureAutons() {
+    /**************/
+    /*** AUTONS ***/
+    /**************/
+
+    /**
+     * This method is used to configure the autonomous commands.
+     */
+     public void configureAutons() {
         autonChooser.addOption("Do Nothing", new DoNothingAuton());
         // AutonConfig LBFerry = new AutonConfig("LB Ferry", LBFerry::new,
         // "LB to N Ferry",
@@ -261,6 +279,10 @@ public class RobotContainer {
         SmartDashboard.putData("Autonomous", autonChooser);
     }
 
+    /**
+     * Use this to pass the autonomous command to the main {@link Robot} class.
+     * @return The command to run in autonomous
+     */
     public Command getAutonomousCommand() {
         return autonChooser.getSelected();
     }
