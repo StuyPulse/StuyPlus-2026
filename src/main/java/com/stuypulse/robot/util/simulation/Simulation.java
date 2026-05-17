@@ -152,51 +152,22 @@ public class Simulation {
     }
 
     /**
-     *
-     *
-     * <h2>Extension of {@link Arena2026Rebuilt#addPieceWithVariance} that uses
-     * chassis speeds</h2>
+     * <h3>Extension of {@link Arena2026Rebuilt#addPieceWithVariance} that uses
+     * chassis speeds</h3>
      *
      * <p>
-     * Adds a game piece too the arena with a certain random variance. Param docs
-     * taken from {@link
-     * Arena2026Rebuilt#addPieceWithVariance}
+     * Adds a gamepiece too the arena with a certain random variance.
      *
-     * @param info                       the info of the game piece
-     * @param robotPosition              the position of the robot (not the shooter)
-     *                                   at the time of launching the
-     *                                   game piece
-     * @param shooterPositionOnRobot     the translation from the shooter's position
-     *                                   to the robot's
-     *                                   center, in the robot's frame of reference
-     * @param chassisSpeedsFieldRelative the field-relative velocity of the robot
-     *                                   chassis when
-     *                                   launching the game piece, influencing the
-     *                                   initial velocity of the game piece
-     * @param shooterFacing              the direction in which the shooter is
-     *                                   facing at launch
-     * @param initialHeight              the initial height of the game piece when
-     *                                   launched, i.e., the height of
-     *                                   the shooter from the ground
-     * @param launchingSpeed             the speed at which the game piece is launch
-     * @param shooterAngle               the pitch angle of the shooter when
-     *                                   launching
-     * @param xVariance                  The max amount of variance that should be
-     *                                   added too the x coordinate of the
-     *                                   game piece.
-     * @param yVariance                  The max amount of variance that should be
-     *                                   added too the y coordinate of the
-     *                                   game piece.
-     * @param yawVariance                The max amount of variance that should be
-     *                                   added too the yaw of the game
-     *                                   piece.
-     * @param speedVariance              The max amount of variance that should be
-     *                                   added too the speed of the game
-     *                                   piece.
-     * @param pitchVariance              The max amount of variance that should be
-     *                                   added too the pitch of the game
-     *                                   piece.
-     * @param target                     The target of the gamepiece
+     * @param piecePose the field relative position at which to spawn the gamepiece
+     * @param yaw the initial yaw of the gamepiece
+     * @param height the initial height of the gamepiece above the field
+     * @param speed the initial speed of the gamepiece
+     * @param pitch the initial pitch of the gamepiece
+     * @param xVariance the maximum random offset applied to the x coordinate
+     * @param yVariance the maximum random offset applied to the y coordinate
+     * @param yawVariance the maximum random offset applied to the yaw, in degrees
+     * @param speedVariance the maximum random offset applied to the speed, in m/s
+     * @param pitchVariance the maximum random offset applied to the pitch, in degrees
      */
     private void robotRelativeAddPieceWithVariance(
             Translation2d piecePose,

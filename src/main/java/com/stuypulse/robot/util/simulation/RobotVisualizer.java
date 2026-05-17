@@ -42,76 +42,74 @@ public class RobotVisualizer {
     private static final double CANVAS_WIDTH = 67, CANVAS_HEIGHT = 67;
 
     /**
-     * <h4>Number of spokes for wheels</h4>
+     * Number of spokes for wheels
      * 
-     * @see #createSpokes()
+     * @see #createSpokes(MechanismObject2d, String, double, double, Color8Bit)
      */
     private static final int NUM_SPOKES = 5;
     /**
-     * <h4>Color of spokes for wheels</h4>
+     * Color of spokes for wheels
      * 
-     * @see #createSpokes()
+     * @see #createSpokes(MechanismObject2d, String, double, double, Color8Bit)
      */
     private static final Color8Bit SPOKE_COLOR = new Color8Bit(Color.kWhite);
 
     /**
-     * <h4>Sendable main canvas object for every drawn mechanism</h4>
-     * 
-     * @see #createSpokes()
+     * Sendable main canvas object for every drawn mechanism
      */
     private final Mechanism2d canvas;
 
     /**
-     * <p>Root of the {@link #bumper red} bumpers to show the silhouette of the robot<p>
+     * Root of the {@link #bumper red} bumpers to show the silhouette of the robot
      */
     private final MechanismRoot2d bumperRoot;
     /**
-     * <p>Drawn representation of red bumpers to show the silhouette of the robot</p>
+     * Drawn representation of red bumpers to show the silhouette of the robot
      * 
      * @see #bumperRoot
      */
     private final MechanismLigament2d bumper;
 
     /**
-     * <h4>Root for the drawn representation of the feeder</h4>
+     * Root for the drawn representation of the feeder
      * 
-     * <p>The actual feeder is a belt, but spokes are easier. Additionally, the {@link #feederSpokes spokes} are placed where the handoff should be...</p>
+     * The actual feeder is a belt, but spokes are easier.
+     * Additionally, the {@link #feederSpokes spokes} are placed where the handoff should be...
      */
     private final MechanismRoot2d feederRoot;
 
     /**
-     * <p>Spokes of the feeder</p>
+     * Spokes of the feeder
      * 
      * @see #feederRoot
      */
     private final MechanismLigament2d[] feederSpokes;
 
     /**
-     * <p>Root for the drawn representation of the intake</p>
+     * Root for the drawn representation of the intake
      * 
      * @see #intakePivot
      * @see #intakeSpokes
      */
     private final MechanismRoot2d intakeRoot;
     /**
-     * <p>Pivoting arm of the intake.
-     * Parent of the {@link #intakeSpokes intake rollers}.</p>
+     * Pivoting arm of the intake.
+     * Parent of the {@link #intakeSpokes intake rollers}
      */
     private final MechanismLigament2d intakePivot;
     /**
-     * <h4>Intake Rollers</h4>
-     * <p>This is a flattened array of every set of rollers for easy iteration.</p>
+     * Intake rollers, made into flattened array of every set of rollers for easy iteration
      * 
      * @see #RobotVisualizer()
      */
     private final MechanismLigament2d[] intakeSpokes;
 
     /**
-     * <p>Root for the drawn representation of the shooter</p>
+     * Root for the drawn representation of the shooter
      */
     private final MechanismRoot2d shooterRoot;
     /**
-     * <p>Shooter rollers</p>
+     * Shooter rollers
      * 
      * @see #shooterRoot
      */
@@ -257,11 +255,6 @@ public class RobotVisualizer {
         double rot = angularVelocity.in(RPM) * Settings.DT.in(Seconds);
         for (MechanismLigament2d spoke : intakeSpokes)
             spoke.setAngle(spoke.getAngle() + rot);
-    }
-
-    @Deprecated
-    public Angle getIntakeAngle() {
-        return Degrees.of(intakePivot.getAngle());
     }
 
     /**
