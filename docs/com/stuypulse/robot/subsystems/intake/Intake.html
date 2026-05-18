@@ -87,7 +87,7 @@ loadScripts(document, 'script');</script>
 <dd><code><a href="IntakeImpl.html" title="class in com.stuypulse.robot.subsystems.intake">IntakeImpl</a></code>, <code><a href="IntakeSim.html" title="class in com.stuypulse.robot.subsystems.intake">IntakeSim</a></code></dd>
 </dl>
 <hr>
-<div class="type-signature"><span class="modifiers">public abstract class </span><span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/intake/Intake.html#line-21">Intake</a></span>
+<div class="type-signature"><span class="modifiers">public abstract class </span><span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/intake/Intake.html#line-25">Intake</a></span>
 <span class="extends-implements">extends edu.wpi.first.wpilibj2.command.SubsystemBase</span></div>
 </section>
 <section class="summary">
@@ -172,21 +172,24 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isPivotAboveThreshold()" class="member-name-link">isPivotAboveThreshold</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#periodic()" class="member-name-link">periodic</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>abstract void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#seedPivotAngle(edu.wpi.first.units.measure.Angle)" class="member-name-link">seedPivotAngle</a><wbr>(edu.wpi.first.units.measure.Angle&nbsp;angle)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>abstract void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#setPivotVoltageOverride(edu.wpi.first.units.measure.Voltage)" class="member-name-link">setPivotVoltageOverride</a><wbr>(edu.wpi.first.units.measure.Voltage&nbsp;voltage)</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>abstract boolean</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#limitSwitchHit()" class="member-name-link">limitSwitchHit</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setState(com.stuypulse.robot.subsystems.intake.Intake.IntakeState)" class="member-name-link">setState</a><wbr>(<a href="Intake.IntakeState.html" title="enum class in com.stuypulse.robot.subsystems.intake">Intake.IntakeState</a>&nbsp;state)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#periodic()" class="member-name-link">periodic</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>protected abstract void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#stopMotors()" class="member-name-link">stopMotors</a>()</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>abstract void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#seedPivotAngle(edu.wpi.first.units.measure.Angle)" class="member-name-link">seedPivotAngle</a><wbr>(edu.wpi.first.units.measure.Angle&nbsp;angle)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>abstract void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#setPivotVoltageOverride(edu.wpi.first.units.measure.Voltage)" class="member-name-link">setPivotVoltageOverride</a><wbr>(edu.wpi.first.units.measure.Voltage&nbsp;voltage)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setState(com.stuypulse.robot.subsystems.intake.Intake.IntakeState)" class="member-name-link">setState</a><wbr>(<a href="Intake.IntakeState.html" title="enum class in com.stuypulse.robot.subsystems.intake">Intake.IntakeState</a>&nbsp;state)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>protected abstract void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#stopMotors()" class="member-name-link">stopMotors</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
 </div>
 </div>
 </div>
@@ -213,13 +216,13 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="instance">
 <h3>instance</h3>
-<div class="member-signature"><span class="modifiers">private static final</span>&nbsp;<span class="return-type"><a href="Intake.html" title="class in com.stuypulse.robot.subsystems.intake">Intake</a></span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/intake/Intake.html#line-23">instance</a></span></div>
+<div class="member-signature"><span class="modifiers">private static final</span>&nbsp;<span class="return-type"><a href="Intake.html" title="class in com.stuypulse.robot.subsystems.intake">Intake</a></span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/intake/Intake.html#line-27">instance</a></span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="state">
 <h3>state</h3>
-<div class="member-signature"><span class="modifiers">private</span>&nbsp;<span class="return-type"><a href="Intake.IntakeState.html" title="enum class in com.stuypulse.robot.subsystems.intake">Intake.IntakeState</a></span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/intake/Intake.html#line-25">state</a></span></div>
+<div class="member-signature"><span class="modifiers">private</span>&nbsp;<span class="return-type"><a href="Intake.IntakeState.html" title="enum class in com.stuypulse.robot.subsystems.intake">Intake.IntakeState</a></span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/intake/Intake.html#line-29">state</a></span></div>
 </section>
 </li>
 </ul>
@@ -233,7 +236,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="&lt;init&gt;()">
 <h3>Intake</h3>
-<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/intake/Intake.html#line-108">Intake</a></span>()</div>
+<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/intake/Intake.html#line-114">Intake</a></span>()</div>
 </section>
 </li>
 </ul>
@@ -247,73 +250,79 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getInstance()">
 <h3>getInstance</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="Intake.html" title="class in com.stuypulse.robot.subsystems.intake">Intake</a></span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/intake/Intake.html#line-39">getInstance</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="Intake.html" title="class in com.stuypulse.robot.subsystems.intake">Intake</a></span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/intake/Intake.html#line-43">getInstance</a></span>()</div>
+</section>
+</li>
+<li>
+<section class="detail" id="limitSwitchHit()">
+<h3>limitSwitchHit</h3>
+<div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/intake/Intake.html#line-47">limitSwitchHit</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="setState(com.stuypulse.robot.subsystems.intake.Intake.IntakeState)">
 <h3>setState</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/intake/Intake.html#line-112">setState</a></span><wbr><span class="parameters">(<a href="Intake.IntakeState.html" title="enum class in com.stuypulse.robot.subsystems.intake">Intake.IntakeState</a>&nbsp;state)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/intake/Intake.html#line-118">setState</a></span><wbr><span class="parameters">(<a href="Intake.IntakeState.html" title="enum class in com.stuypulse.robot.subsystems.intake">Intake.IntakeState</a>&nbsp;state)</span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="getState()">
 <h3>getState</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="Intake.IntakeState.html" title="enum class in com.stuypulse.robot.subsystems.intake">Intake.IntakeState</a></span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/intake/Intake.html#line-116">getState</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="Intake.IntakeState.html" title="enum class in com.stuypulse.robot.subsystems.intake">Intake.IntakeState</a></span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/intake/Intake.html#line-122">getState</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getRelativePosition()">
 <h3>getRelativePosition</h3>
-<div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type">edu.wpi.first.units.measure.Angle</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/intake/Intake.html#line-121">getRelativePosition</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type">edu.wpi.first.units.measure.Angle</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/intake/Intake.html#line-127">getRelativePosition</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="seedPivotAngle(edu.wpi.first.units.measure.Angle)">
 <h3>seedPivotAngle</h3>
-<div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/intake/Intake.html#line-123">seedPivotAngle</a></span><wbr><span class="parameters">(edu.wpi.first.units.measure.Angle&nbsp;angle)</span></div>
+<div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/intake/Intake.html#line-129">seedPivotAngle</a></span><wbr><span class="parameters">(edu.wpi.first.units.measure.Angle&nbsp;angle)</span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="atTargetAngle()">
 <h3>atTargetAngle</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/intake/Intake.html#line-125">atTargetAngle</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/intake/Intake.html#line-131">atTargetAngle</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="isPivotAboveThreshold()">
 <h3>isPivotAboveThreshold</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/intake/Intake.html#line-130">isPivotAboveThreshold</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/intake/Intake.html#line-136">isPivotAboveThreshold</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getRollerVelocity()">
 <h3>getRollerVelocity</h3>
-<div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type">edu.wpi.first.units.measure.AngularVelocity</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/intake/Intake.html#line-135">getRollerVelocity</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type">edu.wpi.first.units.measure.AngularVelocity</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/intake/Intake.html#line-141">getRollerVelocity</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="stopMotors()">
 <h3>stopMotors</h3>
-<div class="member-signature"><span class="modifiers">protected abstract</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/intake/Intake.html#line-137">stopMotors</a></span>()</div>
+<div class="member-signature"><span class="modifiers">protected abstract</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/intake/Intake.html#line-143">stopMotors</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getIntakeSysIdRoutine()">
 <h3>getIntakeSysIdRoutine</h3>
-<div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type">edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/intake/Intake.html#line-140">getIntakeSysIdRoutine</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type">edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/intake/Intake.html#line-146">getIntakeSysIdRoutine</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="setPivotVoltageOverride(edu.wpi.first.units.measure.Voltage)">
 <h3>setPivotVoltageOverride</h3>
-<div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/intake/Intake.html#line-142">setPivotVoltageOverride</a></span><wbr><span class="parameters">(edu.wpi.first.units.measure.Voltage&nbsp;voltage)</span></div>
+<div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/intake/Intake.html#line-148">setPivotVoltageOverride</a></span><wbr><span class="parameters">(edu.wpi.first.units.measure.Voltage&nbsp;voltage)</span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="periodic()">
 <h3>periodic</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/intake/Intake.html#line-144">periodic</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/intake/Intake.html#line-150">periodic</a></span>()</div>
 </section>
 </li>
 </ul>

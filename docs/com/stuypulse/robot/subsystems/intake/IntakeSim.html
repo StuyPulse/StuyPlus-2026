@@ -85,7 +85,7 @@ loadScripts(document, 'script');</script>
 <dd><code>edu.wpi.first.util.sendable.Sendable</code>, <code>edu.wpi.first.wpilibj2.command.Subsystem</code></dd>
 </dl>
 <hr>
-<div class="type-signature"><span class="modifiers">public class </span><span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/intake/IntakeSim.html#line-33">IntakeSim</a></span>
+<div class="type-signature"><span class="modifiers">public class </span><span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/intake/IntakeSim.html#line-38">IntakeSim</a></span>
 <span class="extends-implements">extends <a href="Intake.html" title="class in com.stuypulse.robot.subsystems.intake">Intake</a></span></div>
 </section>
 <section class="summary">
@@ -174,18 +174,21 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>edu.wpi.first.units.measure.AngularVelocity</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getRollerVelocity()" class="member-name-link">getRollerVelocity</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#periodic()" class="member-name-link">periodic</a>()</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#limitSwitchHit()" class="member-name-link">limitSwitchHit</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#seedPivotAngle(edu.wpi.first.units.measure.Angle)" class="member-name-link">seedPivotAngle</a><wbr>(edu.wpi.first.units.measure.Angle&nbsp;angle)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#periodic()" class="member-name-link">periodic</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setPivotVoltageOverride(edu.wpi.first.units.measure.Voltage)" class="member-name-link">setPivotVoltageOverride</a><wbr>(edu.wpi.first.units.measure.Voltage&nbsp;voltage)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#seedPivotAngle(edu.wpi.first.units.measure.Angle)" class="member-name-link">seedPivotAngle</a><wbr>(edu.wpi.first.units.measure.Angle&nbsp;angle)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#stopMotors()" class="member-name-link">stopMotors</a>()</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setPivotVoltageOverride(edu.wpi.first.units.measure.Voltage)" class="member-name-link">setPivotVoltageOverride</a><wbr>(edu.wpi.first.units.measure.Voltage&nbsp;voltage)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#stopMotors()" class="member-name-link">stopMotors</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 </div>
 </div>
 </div>
@@ -215,61 +218,61 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="pivotSim">
 <h3>pivotSim</h3>
-<div class="member-signature"><span class="modifiers">private final</span>&nbsp;<span class="return-type">edu.wpi.first.wpilibj.simulation.SingleJointedArmSim</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/intake/IntakeSim.html#line-35">pivotSim</a></span></div>
+<div class="member-signature"><span class="modifiers">private final</span>&nbsp;<span class="return-type">edu.wpi.first.wpilibj.simulation.SingleJointedArmSim</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/intake/IntakeSim.html#line-40">pivotSim</a></span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="pivotMotor">
 <h3>pivotMotor</h3>
-<div class="member-signature"><span class="modifiers">private final</span>&nbsp;<span class="return-type"><a href="../../util/simulation/TalonFXSimulation.html" title="class in com.stuypulse.robot.util.simulation">TalonFXSimulation</a></span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/intake/IntakeSim.html#line-37">pivotMotor</a></span></div>
+<div class="member-signature"><span class="modifiers">private final</span>&nbsp;<span class="return-type"><a href="../../util/simulation/TalonFXSimulation.html" title="class in com.stuypulse.robot.util.simulation">TalonFXSimulation</a></span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/intake/IntakeSim.html#line-42">pivotMotor</a></span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="pivotController">
 <h3>pivotController</h3>
-<div class="member-signature"><span class="modifiers">private final</span>&nbsp;<span class="return-type">com.ctre.phoenix6.controls.PositionTorqueCurrentFOC</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/intake/IntakeSim.html#line-39">pivotController</a></span></div>
+<div class="member-signature"><span class="modifiers">private final</span>&nbsp;<span class="return-type">com.ctre.phoenix6.controls.PositionTorqueCurrentFOC</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/intake/IntakeSim.html#line-44">pivotController</a></span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="rollerMotorLeft">
 <h3>rollerMotorLeft</h3>
-<div class="member-signature"><span class="modifiers">private final</span>&nbsp;<span class="return-type"><a href="../../util/simulation/TalonFXSimulation.html" title="class in com.stuypulse.robot.util.simulation">TalonFXSimulation</a></span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/intake/IntakeSim.html#line-41">rollerMotorLeft</a></span></div>
+<div class="member-signature"><span class="modifiers">private final</span>&nbsp;<span class="return-type"><a href="../../util/simulation/TalonFXSimulation.html" title="class in com.stuypulse.robot.util.simulation">TalonFXSimulation</a></span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/intake/IntakeSim.html#line-46">rollerMotorLeft</a></span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="rollerMotorRight">
 <h3>rollerMotorRight</h3>
-<div class="member-signature"><span class="modifiers">private final</span>&nbsp;<span class="return-type"><a href="../../util/simulation/TalonFXSimulation.html" title="class in com.stuypulse.robot.util.simulation">TalonFXSimulation</a></span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/intake/IntakeSim.html#line-43">rollerMotorRight</a></span></div>
+<div class="member-signature"><span class="modifiers">private final</span>&nbsp;<span class="return-type"><a href="../../util/simulation/TalonFXSimulation.html" title="class in com.stuypulse.robot.util.simulation">TalonFXSimulation</a></span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/intake/IntakeSim.html#line-48">rollerMotorRight</a></span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="rollerSim">
 <h3>rollerSim</h3>
-<div class="member-signature"><span class="modifiers">private final</span>&nbsp;<span class="return-type">edu.wpi.first.wpilibj.simulation.DCMotorSim</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/intake/IntakeSim.html#line-45">rollerSim</a></span></div>
+<div class="member-signature"><span class="modifiers">private final</span>&nbsp;<span class="return-type">edu.wpi.first.wpilibj.simulation.DCMotorSim</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/intake/IntakeSim.html#line-50">rollerSim</a></span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="rollerController">
 <h3>rollerController</h3>
-<div class="member-signature"><span class="modifiers">private final</span>&nbsp;<span class="return-type">com.ctre.phoenix6.controls.DutyCycleOut</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/intake/IntakeSim.html#line-47">rollerController</a></span></div>
+<div class="member-signature"><span class="modifiers">private final</span>&nbsp;<span class="return-type">com.ctre.phoenix6.controls.DutyCycleOut</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/intake/IntakeSim.html#line-52">rollerController</a></span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="followerController">
 <h3>followerController</h3>
-<div class="member-signature"><span class="modifiers">private final</span>&nbsp;<span class="return-type">com.ctre.phoenix6.controls.Follower</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/intake/IntakeSim.html#line-49">followerController</a></span></div>
+<div class="member-signature"><span class="modifiers">private final</span>&nbsp;<span class="return-type">com.ctre.phoenix6.controls.Follower</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/intake/IntakeSim.html#line-54">followerController</a></span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="pivotVoltageOverride">
 <h3>pivotVoltageOverride</h3>
-<div class="member-signature"><span class="modifiers">private</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;edu.wpi.first.units.measure.Voltage&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/intake/IntakeSim.html#line-51">pivotVoltageOverride</a></span></div>
+<div class="member-signature"><span class="modifiers">private</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;edu.wpi.first.units.measure.Voltage&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/intake/IntakeSim.html#line-56">pivotVoltageOverride</a></span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="zeroOffset">
 <h3>zeroOffset</h3>
-<div class="member-signature"><span class="modifiers">private</span>&nbsp;<span class="return-type">edu.wpi.first.math.geometry.Rotation2d</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/intake/IntakeSim.html#line-53">zeroOffset</a></span></div>
+<div class="member-signature"><span class="modifiers">private</span>&nbsp;<span class="return-type">edu.wpi.first.math.geometry.Rotation2d</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/intake/IntakeSim.html#line-58">zeroOffset</a></span></div>
 </section>
 </li>
 </ul>
@@ -283,7 +286,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="&lt;init&gt;()">
 <h3>IntakeSim</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/intake/IntakeSim.html#line-55">IntakeSim</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/intake/IntakeSim.html#line-60">IntakeSim</a></span>()</div>
 </section>
 </li>
 </ul>
@@ -295,9 +298,19 @@ loadScripts(document, 'script');</script>
 <h2>Method Details</h2>
 <ul class="member-list">
 <li>
+<section class="detail" id="limitSwitchHit()">
+<h3>limitSwitchHit</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/intake/IntakeSim.html#line-93">limitSwitchHit</a></span>()</div>
+<dl class="notes">
+<dt>Specified by:</dt>
+<dd><code><a href="Intake.html#limitSwitchHit()">limitSwitchHit</a></code>&nbsp;in class&nbsp;<code><a href="Intake.html" title="class in com.stuypulse.robot.subsystems.intake">Intake</a></code></dd>
+</dl>
+</section>
+</li>
+<li>
 <section class="detail" id="getRelativePosition()">
 <h3>getRelativePosition</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">edu.wpi.first.units.measure.Angle</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/intake/IntakeSim.html#line-88">getRelativePosition</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">edu.wpi.first.units.measure.Angle</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/intake/IntakeSim.html#line-98">getRelativePosition</a></span>()</div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="Intake.html#getRelativePosition()">getRelativePosition</a></code>&nbsp;in class&nbsp;<code><a href="Intake.html" title="class in com.stuypulse.robot.subsystems.intake">Intake</a></code></dd>
@@ -307,7 +320,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="seedPivotAngle(edu.wpi.first.units.measure.Angle)">
 <h3>seedPivotAngle</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/intake/IntakeSim.html#line-93">seedPivotAngle</a></span><wbr><span class="parameters">(edu.wpi.first.units.measure.Angle&nbsp;angle)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/intake/IntakeSim.html#line-103">seedPivotAngle</a></span><wbr><span class="parameters">(edu.wpi.first.units.measure.Angle&nbsp;angle)</span></div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="Intake.html#seedPivotAngle(edu.wpi.first.units.measure.Angle)">seedPivotAngle</a></code>&nbsp;in class&nbsp;<code><a href="Intake.html" title="class in com.stuypulse.robot.subsystems.intake">Intake</a></code></dd>
@@ -317,7 +330,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getRollerVelocity()">
 <h3>getRollerVelocity</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">edu.wpi.first.units.measure.AngularVelocity</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/intake/IntakeSim.html#line-98">getRollerVelocity</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">edu.wpi.first.units.measure.AngularVelocity</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/intake/IntakeSim.html#line-108">getRollerVelocity</a></span>()</div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="Intake.html#getRollerVelocity()">getRollerVelocity</a></code>&nbsp;in class&nbsp;<code><a href="Intake.html" title="class in com.stuypulse.robot.subsystems.intake">Intake</a></code></dd>
@@ -327,7 +340,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="stopMotors()">
 <h3>stopMotors</h3>
-<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/intake/IntakeSim.html#line-103">stopMotors</a></span>()</div>
+<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/intake/IntakeSim.html#line-113">stopMotors</a></span>()</div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="Intake.html#stopMotors()">stopMotors</a></code>&nbsp;in class&nbsp;<code><a href="Intake.html" title="class in com.stuypulse.robot.subsystems.intake">Intake</a></code></dd>
@@ -337,7 +350,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="setPivotVoltageOverride(edu.wpi.first.units.measure.Voltage)">
 <h3>setPivotVoltageOverride</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/intake/IntakeSim.html#line-112">setPivotVoltageOverride</a></span><wbr><span class="parameters">(edu.wpi.first.units.measure.Voltage&nbsp;voltage)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/intake/IntakeSim.html#line-122">setPivotVoltageOverride</a></span><wbr><span class="parameters">(edu.wpi.first.units.measure.Voltage&nbsp;voltage)</span></div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="Intake.html#setPivotVoltageOverride(edu.wpi.first.units.measure.Voltage)">setPivotVoltageOverride</a></code>&nbsp;in class&nbsp;<code><a href="Intake.html" title="class in com.stuypulse.robot.subsystems.intake">Intake</a></code></dd>
@@ -347,7 +360,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="periodic()">
 <h3>periodic</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/intake/IntakeSim.html#line-117">periodic</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/intake/IntakeSim.html#line-127">periodic</a></span>()</div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code>periodic</code>&nbsp;in interface&nbsp;<code>edu.wpi.first.wpilibj2.command.Subsystem</code></dd>
@@ -359,7 +372,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getIntakeSysIdRoutine()">
 <h3>getIntakeSysIdRoutine</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/intake/IntakeSim.html#line-150">getIntakeSysIdRoutine</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/intake/IntakeSim.html#line-160">getIntakeSysIdRoutine</a></span>()</div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="Intake.html#getIntakeSysIdRoutine()">getIntakeSysIdRoutine</a></code>&nbsp;in class&nbsp;<code><a href="Intake.html" title="class in com.stuypulse.robot.subsystems.intake">Intake</a></code></dd>
