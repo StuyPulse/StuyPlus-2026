@@ -5,23 +5,22 @@
 /***************************************************************/
 package com.stuypulse.robot.subsystems.intake;
 
-import static edu.wpi.first.units.Units.RPM;
-import static edu.wpi.first.units.Units.Radians;
+import static edu.wpi.first.units.Units.*;
 
 import com.stuypulse.robot.Robot;
 import com.stuypulse.robot.commands.intake.IntakeCommands;
 import com.stuypulse.robot.constants.Settings;
-import com.stuypulse.robot.util.RobotVisualizer;
-
-import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.units.measure.Voltage;
+import dev.doglog.DogLog;
+import edu.wpi.first.units.measure.*;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 
 public abstract class Intake extends SubsystemBase {
+
     private static final Intake instance;
+
     private IntakeState state;
 
     static {
@@ -30,7 +29,6 @@ public abstract class Intake extends SubsystemBase {
         } else {
             instance = new IntakeSim();
         }
-
         // Elastic Commands
         SmartDashboard.putData("Intake/Zero Pivot Stowed", IntakeCommands.zeroPivotStowed());
         SmartDashboard.putData("Intake/Zero Pivot Deployed", IntakeCommands.zeroPivotDeployed());
@@ -42,25 +40,65 @@ public abstract class Intake extends SubsystemBase {
     }
 
     public enum IntakeState {
-        IDLE(Settings.Intake.Pivot.IDLE_ANGLE, 0), // (rollers do not run),
-        AGITATE(Settings.Intake.Pivot.AGITATE_UP_ANGLE, 0),
-        INTAKE(Settings.Intake.Pivot.DOWN_ANGLE, Settings.Intake.Roller.INTAKE_DUTY_CYCLE), // (sucks in the balls) [pivot down, rollers running]
-        OUTTAKE(Settings.Intake.Pivot.DOWN_ANGLE, Settings.Intake.Roller.OUTTAKE_DUTY_CYCLE), // (trips the balls out) [pivot down, rollers running reverse]
-        DOWN(Settings.Intake.Pivot.DOWN_ANGLE, 0),
-        HOMING_DOWN(Settings.Intake.Pivot.DOWN_ANGLE, 0);
 
-        private Rotation2d targetAngle;
+        /** The intake is stowed and rollers are off. */
+        IDLE(Settings.Intake.Pivot.STOW_ANGLE, 0),
+        /** The intake is deployed but rollers are off. */
+        DOWN(Settings.Intake.Pivot.DEPLOY_ANGLE, 0),
+        /** The intake is deployed and rollers are running to take in gamepieces. */
+        INTAKE(Settings.Intake.Pivot.DEPLOY_ANGLE, Settings.Intake.Roller.INTAKE_DUTY_CYCLE),
+        /**
+         * The intake is deployed and rollers are running in reverse to expel
+         * gamepieces.
+         */
+        OUTTAKE(Settings.Intake.Pivot.DEPLOY_ANGLE, Settings.Intake.Roller.OUTTAKE_DUTY_CYCLE),
+        /**
+         * The intake is brought up repeatedly to an angle between stowed and deployed
+         * to dislodge
+         * gamepieces. Rollers do not run.
+         */
+        AGITATE(Settings.Intake.Pivot.AGITATE_UP_ANGLE, 0),
+        /**
+         * The intake is brought up once to an angle between stowed and deployed to
+         * dislodge gamepieces.
+         * Rollers do not run.
+         */
+        DIGEST(Settings.Intake.Pivot.DIGEST_ANGLE, 0),
+        /** The intake is pushed against the bumpers to re-zero the pivot. */
+        HOMING_DOWN(Settings.Intake.Pivot.DEPLOY_ANGLE, 0);
+
+        /** The target angle of the intake pivot. */
+        private Angle targetAngle;
+
+        /** The target percentage of voltage of the intake rollers. */
         private double targetDutyCycle;
 
-        private IntakeState(Rotation2d targetAngle, double targetDutyCycle) {
+        /**
+         * Constructs an IntakeState with its target values.
+         *
+         * @param targetAngle     In any unit, the target position of the intake pivot
+         * @param targetDutyCycle In any unit, the target percentage of voltage of the
+         *                        intake rollers
+         */
+        private IntakeState(Angle targetAngle, double targetDutyCycle) {
             this.targetAngle = targetAngle;
             this.targetDutyCycle = targetDutyCycle;
         }
 
-        public Rotation2d getTargetAngle() {
+        /**
+         * Gets the target position of the pivot.
+         *
+         * @return the target angle
+         */
+        public Angle getTargetAngle() {
             return targetAngle;
         }
 
+        /**
+         * Gets the target position of the pivot.
+         *
+         * @return the target percentage of voltage of the intake rollers
+         */
         public double getTargetDutyCycle() {
             return targetDutyCycle;
         }
@@ -79,43 +117,42 @@ public abstract class Intake extends SubsystemBase {
     }
 
     // Pivot Commands
-    public abstract void setPivotNinety();
+    public abstract Angle getRelativePosition();
+
     public abstract Trigger pivotStalling();
-    public abstract Rotation2d getRelativePosition();
-    public abstract void setPivotZero();
-    public abstract void setPivotZeroAtBottom();
+
+    public abstract void seedPivotAngle(Angle angle);
+
     public boolean atTargetAngle() {
-        return Math.abs(
-                (getRelativePosition().getRotations())
-                        - getState().getTargetAngle().getRotations()) < Settings.Intake.Pivot.ANGLE_TOLERANCE.getRotations();
-    };
+        return getRelativePosition().minus(getState().getTargetAngle())
+                .abs(Rotations) < Settings.Intake.Pivot.ANGLE_TOLERANCE.in(Rotations);
+    }
+
     public boolean isPivotAboveThreshold() {
-        return getRelativePosition().getDegrees() > Settings.Intake.Pivot.PUSHDOWN_THRESHOLD.getDegrees();
+        return getRelativePosition().gt(Settings.Intake.Pivot.PUSHDOWN_THRESHOLD);
     }
 
     // Roller Commands
-    //public abstract double getRollerRPM();
+    public abstract AngularVelocity getRollerVelocity();
 
     protected abstract void stopMotors();
 
-    //Sysid
+    // Sysid
     public abstract SysIdRoutine getIntakeSysIdRoutine();
+
     public abstract void setPivotVoltageOverride(Voltage voltage);
 
     @Override
     public void periodic() {
-        //RobotVisualizer.getInstance().updateIntake(Radians.of(getRelativePosition().getRadians()), RPM.of(getRollerRPM()));
-
         final IntakeState currentState = getState();
         // Logging
-        SmartDashboard.putString("Intake/State", currentState.name());
-        SmartDashboard.putString("States/Intake", currentState.name());
-
-        SmartDashboard.putNumber("Intake/Pivot/Target Angle", currentState.getTargetAngle().getDegrees());
-        SmartDashboard.putNumber("Intake/Pivot/Current Angle", getRelativePosition().getDegrees());
-        SmartDashboard.putBoolean("Intake/Pivot/At Target Angle", atTargetAngle());
-        SmartDashboard.putBoolean("Intake/Pivot/Above Threshold", isPivotAboveThreshold());
-        SmartDashboard.putNumber("Intake/Rollers/Target Duty Cycle", currentState.getTargetDutyCycle());
-        //SmartDashboard.putNumber("Intake/Rollers/RPM", getRollerRPM());
+        DogLog.log("Intake/State", currentState.name());
+        DogLog.forceNt.log("States/Intake", currentState.name());
+        DogLog.log("Intake/Pivot/Target Angle", currentState.getTargetAngle().in(Degrees));
+        DogLog.forceNt.log("Intake/Pivot/Current Angle", getRelativePosition().in(Degrees));
+        DogLog.forceNt.log("Intake/Pivot/At Target Angle", atTargetAngle());
+        DogLog.log("Intake/Pivot/Above Threshold", isPivotAboveThreshold());
+        DogLog.forceNt.log("Intake/Rollers/Target Duty Cycle", currentState.getTargetDutyCycle());
+        DogLog.log("Intake/Rollers/RPM", getRollerVelocity().in(RPM));
     }
 }

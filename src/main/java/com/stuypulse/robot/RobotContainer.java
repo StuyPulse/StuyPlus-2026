@@ -58,18 +58,32 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
 
+/**
+ * <h2>Robot Container Class</h2>
+ * 
+ * This class is where the bulk of the robot should be declared. Since Command-based is a
+ * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
+ * periodic methods (other than the scheduler calls). Instead, the structure of the robot (including
+ * subsystems, commands, and trigger mappings) should be declared here.
+ */
 public class RobotContainer {
+
     // Gamepads
     public final CommandXboxController driver = new CommandXboxController(Ports.Gamepad.DRIVER);
 
     // Subsystem
-
     private final Feeder feeder = Feeder.getInstance();
+
     private final Intake intake = Intake.getInstance();
+
     private final Shooter shooter = Shooter.getInstance();
+
     private final CommandSwerveDrivetrain swerve = CommandSwerveDrivetrain.getInstance();
+
     private final LimelightVision vision = LimelightVision.getInstance();
+
     private final LEDController leds = LEDController.getInstance();
+
     private final Handoff handoff = Handoff.getInstance();
 
     // Autons
@@ -77,6 +91,7 @@ public class RobotContainer {
 
     // Robot container
 
+    /** The container for the robot. Contains subsystems, OI devices, and commands. */
     public RobotContainer() {
         swerve.configureAutoBuilder();
         configureDefaultCommands();
@@ -90,10 +105,9 @@ public class RobotContainer {
         SmartDashboard.putData("Field", Field.FIELD2D);
     }
 
-    /****************/
-    /*** DEFAULTS ***/
-    /****************/
-
+    /** ************ */
+    /** DEFAULTS ** */
+    /** ************ */
     private void configureDefaultCommands() {
         swerve.setDefaultCommand(new SwerveDriveDrive(driver));
         leds.setDefaultCommand(new LEDDefaultCommand());
@@ -145,6 +159,9 @@ public class RobotContainer {
     /*** BUTTONS ***/
     /***************/
 
+    /**
+     * This method is used to configure button bindings for controlling the robot.
+   */
     private void configureButtonBindings() {
         // Trigger buttons did not work for some reason so I had to do this
         Trigger leftTrigger = new Trigger(() -> driver.getLeftTriggerAxis() > 0.5);
@@ -162,19 +179,19 @@ public class RobotContainer {
         rightTrigger.onTrue(new SwerveDriveAlignToHub()
             .andThen(ShooterCommands.setShoot())
             .andThen(HandoffCommands.setForward()
-                .alongWith(FeederCommands.setForward(), IntakeCommands.agitateOnce().repeatedly()))
+                .alongWith(FeederCommands.setForward(), IntakeCommands.agitateFastOnce().repeatedly()))
             .until(cancelShooting));
 
         driver.rightBumper().onTrue(new SwerveDriveAlignToFerryZone()
             .andThen(ShooterCommands.setFerry())
             .andThen(HandoffCommands.setForward()
-                .alongWith(FeederCommands.setForward(), IntakeCommands.agitateOnce().repeatedly()))
+                .alongWith(FeederCommands.setForward(), IntakeCommands.agitateFastOnce().repeatedly()))
             .until(cancelShooting));
 
         //Bottom Right Paddle
         driver.y().onTrue(ShooterCommands.setManual()
             .andThen(HandoffCommands.setForward()
-                .alongWith(FeederCommands.setForward(), IntakeCommands.agitateOnce().repeatedly()))
+                .alongWith(FeederCommands.setForward(), IntakeCommands.agitateFastOnce().repeatedly()))
             .until(cancelShooting));
 
             
@@ -208,89 +225,78 @@ public class RobotContainer {
     /**************/
     /*** AUTONS ***/
     /**************/
-    public void configureAutons() {
-        autonChooser.addOption("Do Nothing", new DoNothingAuton());
 
+    /**
+     * This method is used to configure the autonomous commands.
+     */
+     public void configureAutons() {
+        autonChooser.addOption("Do Nothing", new DoNothingAuton());
         // AutonConfig LBFerry = new AutonConfig("LB Ferry", LBFerry::new,
         // "LB to N Ferry",
         // "N to LT Ferry",
         // "LT Hub Ferry",
         // "N to Depot Ferry");
         // LBFerry.register(autonChooser);
-
         // AutonConfig RBFerry = new AutonConfig("RB Ferry", RBFerry::new,
         // "RB to N Ferry",
         // "N to RT Ferry",
         // "RT Hub Ferry",
         // "N to Outpost Ferry");
         // RBFerry.register(autonChooser);
-
         // AutonConfig LBMid = new AutonConfig("LB Mid", LBMid::new,
         // "LB to N Mid",
         // "LB Return Mid");
         // LBMid.register(autonChooser);
-
         // AutonConfig LBStraight = new AutonConfig("LB Straight", LBStraight::new,
         // "LB to N Straight",
         // "N to LB Straight");
         // LBStraight.register(autonChooser);
-
         // AutonConfig RBStraight = new AutonConfig("RB Straight", RBStraight::new,
         // "RB to N Straight",
         // "N to RB Straight");
         // RBStraight.register(autonChooser);
-
         // AutonConfig RBMid = new AutonConfig("RB Mid", RBMid::new,
         // "RB to N Mid",
         // "RB Return Mid",
         // "RB to Outpost Mid");
         // RBMid.register(autonChooser);
-
         // AutonConfig TwoMeterPath = new AutonConfig("Two Meter Path",
         // TwoMeterPath::new,
         // "2 meter path");
         // TwoMeterPath.register(autonChooser);
-
         // AutonConfig OutpostOnly = new AutonConfig("Outpost Only", OutpostOnly::new,
         // "Outpost");
         // OutpostOnly.register(autonChooser);
-
         // AutonConfig RBOuttake = new AutonConfig("RB Outtake", RBOuttake::new,
         // "RB to N Outtake",
         // "N to RB Outtake");
         // RBOuttake.register(autonChooser);
-
         // AutonConfig LBOuttake = new AutonConfig("LB Outtake", LBOuttake::new,
         // "LB to N Outtake",
         // "N to LB Outtake");
         // LBOuttake.register(autonChooser);
-
         // AutonConfig LBMidlineSweep = new AutonConfig("LB Midline Sweep",
         // LBMidlineSweep::new,
         // "LB to N Midline",
         // "LN Sweep Midline");
         // LBMidlineSweep.register(autonChooser);
-
         // AutonConfig RBMidlineSweep = new AutonConfig("RB Midline Sweep",
         // RBMidlineSweep::new,
         // "RB to N Midline",
         // "RN Sweep Midline");
         // RBMidlineSweep.register(autonChooser);
-
         // AutonConfig LBDisrupt = new AutonConfig("LB Disrupt", LBDisrupt::new,
         // "LB to CN Disrupt",
         // "LN Circle Disrupt",
         // "LN Circle Disrupt",
         // "LB Disrupt Return");
         // LBDisrupt.register(autonChooser);
-
         // AutonConfig RBDisrupt = new AutonConfig("RB Disrupt", RBDisrupt::new,
         // "RB to CN Disrupt",
         // "RN Circle Disrupt",
         // "RN Circle Disrupt",
         // "RB Disrupt Return");
         // RBDisrupt.register(autonChooser);
-
         // AutonConfig LT_Disrupt = new AutonConfig("LT Disrupt", LTDisrupt::new,
         // "LT to N Disrupt",
         // "LT Circle Disrupt",
@@ -299,7 +305,6 @@ public class RobotContainer {
         // "LT Around Disrupt",
         // "LT Back Push Disrupt");
         // LT_Disrupt.register(autonChooser);
-
         // AutonConfig RT_Disrupt = new AutonConfig("RT Disrupt", RTDisrupt::new,
         // "RT to N Disrupt",
         // "RT Circle Disrupt",
@@ -308,7 +313,6 @@ public class RobotContainer {
         // "RT Around Disrupt",
         // "RT Back Push Disrupt");
         // RT_Disrupt.register(autonChooser);
-
         // autonChooser.addOption("SysID Module Translation Dynamic Forwards",
         // swerve.sysIdDynamic(Direction.kForward));
         // autonChooser.addOption("SysID Module Translation Dynamic Backwards",
@@ -317,7 +321,6 @@ public class RobotContainer {
         // swerve.sysIdQuasistatic(Direction.kForward));
         // autonChooser.addOption("SysID Module Translation Quasi Backwards",
         // swerve.sysIdQuasistatic(Direction.kReverse));
-
         // autonChooser.addOption("SysID Rotation Translation Dynamic Forwards",
         // swerve.sysidRotationDynamic(Direction.kForward));
         // autonChooser.addOption("SysID Rotation Translation Dynamic Backwards",
@@ -326,28 +329,37 @@ public class RobotContainer {
         // swerve.sysidRotationQuasiStatic(Direction.kForward));
         // autonChooser.addOption("SysID Rotation Translation Quasi Backwards",
         // swerve.sysidRotationQuasiStatic(Direction.kReverse));
-
-        autonChooser.addOption("Intake Pivot SysID  Quasi Forwards",
+        autonChooser.addOption(
+                "Intake Pivot SysID  Quasi Forwards",
                 intake.getIntakeSysIdRoutine().quasistatic(Direction.kForward));
-        autonChooser.addOption("Intake Pivot SysID  Quasi Reverse",
+        autonChooser.addOption(
+                "Intake Pivot SysID  Quasi Reverse",
                 intake.getIntakeSysIdRoutine().quasistatic(Direction.kReverse));
-        autonChooser.addOption("Intake Pivot SysID  Dynamic Forwards",
+        autonChooser.addOption(
+                "Intake Pivot SysID  Dynamic Forwards",
                 intake.getIntakeSysIdRoutine().dynamic(Direction.kForward));
-        autonChooser.addOption("Intake Pivot SysID  Dynamic Reverse",
+        autonChooser.addOption(
+                "Intake Pivot SysID  Dynamic Reverse",
                 intake.getIntakeSysIdRoutine().dynamic(Direction.kReverse));
-
-        autonChooser.addOption("Shooter SysID Quasi Forwards ",
+        autonChooser.addOption(
+                "Shooter SysID Quasi Forwards ",
                 shooter.getShooterSysIdRoutine().quasistatic(Direction.kForward));
-        autonChooser.addOption("Shooter SysID Quasi Reverse ",
+        autonChooser.addOption(
+                "Shooter SysID Quasi Reverse ",
                 shooter.getShooterSysIdRoutine().quasistatic(Direction.kReverse));
-        autonChooser.addOption("Shooter SysID Dynamic Forward ",
+        autonChooser.addOption(
+                "Shooter SysID Dynamic Forward ",
                 shooter.getShooterSysIdRoutine().dynamic(Direction.kForward));
-        autonChooser.addOption("Shooter SysID Dynamic Reverse ",
+        autonChooser.addOption(
+                "Shooter SysID Dynamic Reverse ",
                 shooter.getShooterSysIdRoutine().dynamic(Direction.kReverse));
-
         SmartDashboard.putData("Autonomous", autonChooser);
     }
 
+    /**
+     * Use this to pass the autonomous command to the main {@link Robot} class.
+     * @return The command to run in autonomous
+     */
     public Command getAutonomousCommand() {
         return autonChooser.getSelected();
     }

@@ -1,5 +1,8 @@
 package com.stuypulse.robot.commands.intake;
 
+import static edu.wpi.first.units.Units.Degrees;
+
+import com.stuypulse.robot.constants.Settings;
 import com.stuypulse.robot.subsystems.intake.Intake;
 import com.stuypulse.robot.subsystems.intake.Intake.IntakeState;
 
@@ -31,42 +34,46 @@ public class IntakeCommands {
         return Commands.runOnce(() -> intake.setState(IntakeState.DOWN), intake).withName("IntakeSetDown");
     }
 
-    public static Command setAgitate() {
-        return Commands.runOnce(() -> intake.setState(IntakeState.AGITATE), intake).withName("IntakeSetAgitate");
+    public static Command setAgitateFastUp() {
+        return Commands.runOnce(() -> intake.setState(IntakeState.AGITATE), intake).withName("IntakeSetAgitateFastUp");
     }
 
     public static Command setHomingDown() {
         return Commands.runOnce(() -> intake.setState(IntakeState.HOMING_DOWN), intake).withName("IntakeSetHomingDown");
     }
 
+    public static Command setDigest() {
+        return Commands.runOnce(() -> intake.setState(IntakeState.DIGEST), intake).withName("IntakeSetDigest");
+    }
+
     //Agitation
     
-    public static Command agitateOnce() {
+    public static Command agitateFastOnce() {
         return Commands.sequence(
             setDown(),
             new WaitCommand(0.25),
-            setAgitate(),
+            setAgitateFastUp(),
             new WaitCommand(0.25),
             setDown()
-        ).withName("IntakeAgitateOnce");
+        ).withName("IntakeAgitateFastOnce");
     }
 
     //Zeroing
 
     public static Command zeroPivotNinety() {
-        return Commands.runOnce(() -> intake.setPivotNinety()).ignoringDisable(true).withName("IntakeSetPivotNinety");
+        return Commands.runOnce(() -> intake.seedPivotAngle(Degrees.of(-90))).ignoringDisable(true).withName("IntakeSetPivotNinety");
     }
 
     public static Command zeroPivotStowed() {
         return Commands.runOnce(() -> {
-            intake.setPivotZero();
+            intake.seedPivotAngle(Settings.Intake.Pivot.STOW_ANGLE);
             intake.setState(IntakeState.IDLE);
         }).ignoringDisable(true).withName("IntakePivotSetZero");
     }
 
     public static Command zeroPivotDeployed() {
         return Commands.runOnce(() -> {
-            intake.setPivotZeroAtBottom();
+            intake.seedPivotAngle(Settings.Intake.Pivot.DEPLOY_ANGLE);
             intake.setState(IntakeState.DOWN);
         }).ignoringDisable(true).withName("IntakePivotSetZeroAtBottom");
     }

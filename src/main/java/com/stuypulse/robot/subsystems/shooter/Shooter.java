@@ -7,22 +7,21 @@ package com.stuypulse.robot.subsystems.shooter;
 
 import static edu.wpi.first.units.Units.RPM;
 
-import java.util.function.DoubleSupplier;
-
+import com.ctre.phoenix6.hardware.TalonFX;
 import com.stuypulse.robot.Robot;
 import com.stuypulse.robot.constants.Settings;
 import com.stuypulse.robot.util.shooter.InterpolationCalculator;
-
+import dev.doglog.DogLog;
 import edu.wpi.first.units.measure.AngularVelocity;
 import edu.wpi.first.units.measure.Voltage;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
-
-import com.ctre.phoenix6.hardware.TalonFX;
+import java.util.function.DoubleSupplier;
 
 public abstract class Shooter extends SubsystemBase {
-    private final static Shooter instance;
+
+    private static final Shooter instance;
+
     private ShooterState state;
 
     static {
@@ -51,12 +50,10 @@ public abstract class Shooter extends SubsystemBase {
 
     public void logMotor(String motorName, TalonFX motor) {
         String stem = "Shooter/Motors/" + motorName + "/";
-        
-        SmartDashboard.putNumber(stem + "MotorVoltage", motor.getMotorVoltage().getValueAsDouble());
-        SmartDashboard.putNumber(stem + "SupplyCurrent", motor.getSupplyCurrent().getValueAsDouble());
-        SmartDashboard.putNumber(stem + "StatorCurrent", motor.getStatorCurrent().getValueAsDouble());
-
-        SmartDashboard.putNumber(stem + "RPM", motor.getVelocity().getValue().in(RPM));
+        DogLog.log(stem + "MotorVoltage", motor.getMotorVoltage().getValueAsDouble());
+        DogLog.log(stem + "SupplyCurrent", motor.getSupplyCurrent().getValueAsDouble());
+        DogLog.log(stem + "StatorCurrent", motor.getStatorCurrent().getValueAsDouble());
+        DogLog.log(stem + "RPM", motor.getVelocity().getValue().in(RPM));
     }
 
     public enum ShooterState {
@@ -77,21 +74,21 @@ public abstract class Shooter extends SubsystemBase {
         public AngularVelocity getTargetAngularVelocity() {
             return RPM.of(RPMSupplier.getAsDouble());
         }
-
     }
 
     public abstract AngularVelocity getCurrentAngularVelocity();
+
     protected abstract void stopMotors();
 
     public abstract SysIdRoutine getShooterSysIdRoutine();
+
     public abstract void setVoltageOverride(Voltage voltage);
 
     @Override
     public void periodic() {
         final ShooterState currentState = getState();
-
-        SmartDashboard.putNumber("Shooter/Target RPM", currentState.getTargetAngularVelocity().in(RPM));
-        SmartDashboard.putString("Shooter/State", currentState.name());
-        SmartDashboard.putString("States/Shooter", currentState.name());
+        DogLog.log("Shooter/Target RPM", currentState.getTargetAngularVelocity().in(RPM));
+        DogLog.log("Shooter/State", currentState.name());
+        DogLog.log("States/Shooter", currentState.name());
     }
 }

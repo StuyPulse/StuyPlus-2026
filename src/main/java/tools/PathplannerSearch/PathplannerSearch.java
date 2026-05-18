@@ -8,17 +8,20 @@ package tools.PathplannerSearch;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
-
 import java.util.ArrayList;
 import java.util.List;
-
-import java.util.regex.Pattern;
 import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
+ *
+ *
  * <h2>Utility class that gives search features that Pathplanner lacks</h2>
- * <p> This class is meant to help search for where paths and linked variables 
- * are used so you can clean up unused ones.
+ *
+ * <p>
+ * This class is meant to help search for where paths and linked variables are
+ * used so you can
+ * clean up unused ones.
  */
 public final class PathplannerSearch {
     public enum SearchType {
@@ -26,10 +29,16 @@ public final class PathplannerSearch {
         PATH
     }
 
-     /**
+    /**
+     *
+     *
      * <h4>Main entry point</h4>
-     * <p>Searches through .path files in <code>src/main/deploy/pathplanner</code> 
-     * and logs files that match a certain search term based on the search type.
+     *
+     * <p>
+     * Searches through .path files in <code>src/main/deploy/pathplanner</code> and
+     * logs files that
+     * match a certain search term based on the search type.
+     *
      * @param searchTerm
      * @param searchType
      * @throws IOException
@@ -64,9 +73,10 @@ public final class PathplannerSearch {
                     final String content = Files.readString(file.toPath()).toLowerCase();
                     if (!content.contains("\"sequential\""))
                         continue;
-                    if (content.contains("\"path\"") && content.contains("\"pathname\"")
+                    if (content.contains("\"path\"")
+                            && content.contains("\"pathname\"")
                             && content.contains("\"" + searchTerm + "\"")) {
-                        
+
                         final String folderName = parseFolderKeyFromFileContent(content);
                         matches.add(folderName + "/" + file.getName());
                     }
@@ -83,16 +93,26 @@ public final class PathplannerSearch {
 
     /**
      * Parses the "folder" key from the content of a .path file.
-     * <p>As Java doesn't have a built in JSON parser and for only having to 
-     * do this once, it would be overkill to add a dependency.
-     * <p>This method uses regex to parse the "folder" key from the .path file. 
-     * <code>.path</code> files are essentially just JSON files but with a different extension. 
+     *
+     * <p>
+     * As Java doesn't have a built in JSON parser and for only having to do this
+     * once, it would be
+     * overkill to add a dependency.
+     *
+     * <p>
+     * This method uses regex to parse the "folder" key from the .path file.
+     * <code>.path</code>
+     * files are essentially just JSON files but with a different extension.
+     *
      * @param content the content of the .path file
-     * @return the value of the "folder" key in the .path file, or an empty string if it doesn't exist
+     * @return the value of the "folder" key in the .path file, or an empty string
+     *         if it doesn't exist
      */
     public static String parseFolderKeyFromFileContent(String content) {
         final String folderName;
-        Pattern regex = Pattern.compile("\"folder\"\\s*:\\s*\"([^\"]*)\"", Pattern.CASE_INSENSITIVE); // ima be honest i used ai for this regex 🤤
+        Pattern regex = Pattern.compile(
+                "\"folder\"\\s*:\\s*\"([^\"]*)\"",
+                Pattern.CASE_INSENSITIVE); // ima be honest i used ai for this regex 🤤
         Matcher match = regex.matcher(content);
         if (match.find()) {
             folderName = match.group(1);
@@ -105,12 +125,23 @@ public final class PathplannerSearch {
 
     /**
      * Logs the result of the search to the console with some formatting.
-     * <p>Uses ANSI color codes for coloring the output.
-     * <p>If no matches are found, it will log "None were found." in red.
-     * <p>Otherwise, it will log the list of matches in green on separate lines.
-     * 
-     * <p><b>Example input and output:</b>
-     * <pre>./gradlew runPathPlannersearch -Pargs="disrupt path"</pre>
+     *
+     * <p>
+     * Uses ANSI color codes for coloring the output.
+     *
+     * <p>
+     * If no matches are found, it will log "None were found." in red.
+     *
+     * <p>
+     * Otherwise, it will log the list of matches in green on separate lines.
+     *
+     * <p>
+     * <b>Example input and output:</b>
+     *
+     * <pre>
+     * ./gradlew runPathPlannersearch -Pargs="disrupt path"
+     * </pre>
+     *
      * <pre>
      * Autons that use the path 'disrupt':
      * disrupt/LB Disrupt.auto
@@ -118,6 +149,7 @@ public final class PathplannerSearch {
      * disrupt/RB Disrupt.auto
      * disrupt/RT Disrupt.auto
      * </pre>
+     *
      * @param searchTerm
      * @param searchType
      * @param matches

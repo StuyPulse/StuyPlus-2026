@@ -32,65 +32,82 @@ import com.ctre.phoenix6.controls.Follower;
 import com.ctre.phoenix6.controls.PositionTorqueCurrentFOC;
 import com.ctre.phoenix6.controls.VoltageOut;
 import com.ctre.phoenix6.signals.MotorAlignmentValue;
+import com.stuypulse.robot.constants.Motors;
+import com.stuypulse.robot.constants.Ports;
+import com.stuypulse.robot.constants.Settings;
+import com.stuypulse.robot.util.SysId;
+import com.stuypulse.robot.util.simulation.RobotVisualizer;
+import com.stuypulse.robot.util.simulation.TalonFXSimulation;
+import dev.doglog.DogLog;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.system.plant.DCMotor;
+import edu.wpi.first.math.system.plant.LinearSystemId;
+import edu.wpi.first.units.measure.Angle;
+import edu.wpi.first.units.measure.AngularVelocity;
+import edu.wpi.first.units.measure.Voltage;
+import edu.wpi.first.wpilibj.simulation.DCMotorSim;
+import edu.wpi.first.wpilibj.simulation.SingleJointedArmSim;
+import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
+import java.util.Optional;
 
 public class IntakeSim extends Intake {
+
     private final SingleJointedArmSim pivotSim;
+
     private final TalonFXSimulation pivotMotor;
+
     private final PositionTorqueCurrentFOC pivotController;
 
-    private final TalonFXSimulation rollerMotor;
-    private final TalonFXSimulation rollerFollower;
-    private final DCMotorSim rollerSim;
-    private final DutyCycleOut rollerController;
-    private final Follower rollerFollowerController;
-    private Optional<Voltage> pivotVoltageOverride;
+    private final TalonFXSimulation rollerMotorLeft;
 
+    private final TalonFXSimulation rollerMotorRight;
+
+    private final DCMotorSim rollerSim;
+
+    private final DutyCycleOut rollerController;
+
+    private final Follower followerController;
+
+    private Optional<Voltage> pivotVoltageOverride;
 
     private Rotation2d zeroOffset;
 
     public IntakeSim() {
         pivotSim = new SingleJointedArmSim(
-            LinearSystemId.createDCMotorSystem(
+                LinearSystemId.createDCMotorSystem(
+                        DCMotor.getKrakenX60(1),
+                        Settings.Intake.Pivot.MOI.in(KilogramSquareMeters),
+                        Settings.Intake.Pivot.GEAR_RATIO),
                 DCMotor.getKrakenX60(1),
-                Settings.Intake.Pivot.J.in(KilogramSquareMeters),
-                Settings.Intake.Pivot.GEAR_RATIO),
-            DCMotor.getKrakenX60(1),
-            Settings.Intake.Pivot.GEAR_RATIO,
-            Settings.Intake.Pivot.PIVOT_ARM_LENGTH.in(Meters),
-            Settings.Intake.Pivot.MIN_ANGLE.getRadians(),
-            Settings.Intake.Pivot.MAX_ANGLE.getRadians(),
-            true,
-            Settings.Intake.Pivot.INITIAL_ANGLE.getRadians()
-        );
+                Settings.Intake.Pivot.GEAR_RATIO,
+                Settings.Intake.Pivot.PIVOT_ARM_LENGTH.in(Meters),
+                Settings.Intake.Pivot.MAX_ANGLE.in(Radians),
+                Settings.Intake.Pivot.MIN_ANGLE.in(Radians), // reversed because negative?
+                true,
+                Settings.Intake.Pivot.INITIAL_ANGLE.in(Radians));
         pivotMotor = new TalonFXSimulation(Ports.Intake.INTAKE_PIVOT_MOTOR, pivotSim);
         pivotMotor.configure(Motors.Intake.PIVOT_CONFIG);
-        pivotController = new PositionTorqueCurrentFOC(getState().getTargetAngle().getRotations());
-
+        pivotController = new PositionTorqueCurrentFOC(getState().getTargetAngle());
         rollerSim = new DCMotorSim(
-            LinearSystemId.createDCMotorSystem(
-                DCMotor.getKrakenX60(2),
-                Settings.Intake.Roller.J.in(KilogramSquareMeters),
-                Settings.Intake.Roller.GEAR_RATIO
-            ),
-            DCMotor.getKrakenX60(2)
-        );
-        rollerMotor = new TalonFXSimulation(Ports.Intake.INTAKE_ROLLER_MOTOR_LEFT, rollerSim);
-        rollerFollower = new TalonFXSimulation(Ports.Intake.INTAKE_ROLLER_MOTOR_RIGHT, rollerSim);
-        rollerMotor.configure(Motors.Intake.LEFT_ROLLER_CONFIG);
-        rollerFollower.configure(Motors.Intake.RIGHT_ROLLER_CONFIG);
-
-        rollerController = new DutyCycleOut(0)
-            .withEnableFOC(true);
-        rollerFollowerController = new Follower(rollerMotor.getDeviceID(), MotorAlignmentValue.Opposed);
-        rollerFollower.setControl(rollerFollowerController);
+                LinearSystemId.createDCMotorSystem(
+                        DCMotor.getKrakenX60(2),
+                        Settings.Intake.Roller.J.in(KilogramSquareMeters),
+                        Settings.Intake.Roller.GEAR_RATIO),
+                DCMotor.getKrakenX60(2));
+        rollerMotorLeft = new TalonFXSimulation(Ports.Intake.INTAKE_ROLLER_MOTOR_LEFT, rollerSim);
+        rollerMotorRight = new TalonFXSimulation(Ports.Intake.INTAKE_ROLLER_MOTOR_RIGHT, rollerSim);
+        rollerMotorLeft.configure(Motors.Intake.LEFT_ROLLER_CONFIG);
+        rollerMotorRight.configure(Motors.Intake.RIGHT_ROLLER_CONFIG);
+        rollerController = new DutyCycleOut(0).withEnableFOC(true);
+        followerController = new Follower(rollerMotorLeft.getDeviceID(), MotorAlignmentValue.Opposed);
+        rollerMotorRight.setControl(followerController);
         pivotVoltageOverride = Optional.empty();
-        
         zeroOffset = new Rotation2d();
     }
 
     @Override
-    public Rotation2d getRelativePosition() {
-        return new Rotation2d(pivotSim.getAngleRads() + zeroOffset.getRadians());
+    public Angle getRelativePosition() {
+        return Radians.of(pivotSim.getAngleRads() + zeroOffset.getRadians());
     }
 
     private void setZeroOffset(Rotation2d offset) {
@@ -103,29 +120,22 @@ public class IntakeSim extends Intake {
     }
 
     @Override
-    public void setPivotZero() {
-        setZeroOffset(new Rotation2d(pivotSim.getAngleRads()));
-    }
-    
-    @Override
-    public void setPivotZeroAtBottom() {
-        setZeroOffset(new Rotation2d(-pivotSim.getAngleRads()).plus(Settings.Intake.Pivot.DOWN_ANGLE));
+    public void seedPivotAngle(Angle angle) {
+        zeroOffset = new Rotation2d(-pivotSim.getAngleRads()).plus(new Rotation2d(angle));
     }
 
     @Override
-    public void setPivotNinety() {}
-
-    // @Override
-    // public double getRollerRPM() {
-    //     return rollerMotor.getVelocity().getValue().in(RPM);
-    // }
+    public AngularVelocity getRollerVelocity() {
+        return rollerMotorRight.getVelocity().getValue();
+    }
 
     @Override
     protected void stopMotors() {
         pivotMotor.stopMotor();
-        rollerMotor.stopMotor();
-        rollerFollower.stopMotor();
-        rollerFollower.setControl(rollerFollowerController); // re-add the follow control after stopMotor removes it
+        rollerMotorLeft.stopMotor();
+        rollerMotorRight.stopMotor();
+        // re-add the follow control after stopMotor removes it
+        rollerMotorRight.setControl(followerController);
     }
 
     @Override
@@ -139,38 +149,37 @@ public class IntakeSim extends Intake {
             stopMotors();
             return;
         }
-
         if (pivotVoltageOverride.isPresent()) {
             pivotMotor.setControl(new VoltageOut(pivotVoltageOverride.get()));
             pivotMotor.update(Settings.DT);
             return;
         }
-
-        rollerMotor.setControl(rollerController.withOutput(getState().getTargetDutyCycle()));
-
-        rollerMotor.update(Settings.DT);
-        rollerFollower.update(Settings.DT);
-
-        pivotMotor.setControl(pivotController.withPosition(getState().getTargetAngle().getRotations()));
+        rollerMotorLeft.setControl(rollerController.withOutput(getState().getTargetDutyCycle()));
+        rollerMotorLeft.update(Settings.DT);
+        rollerMotorRight.update(Settings.DT);
+        pivotMotor.setControl(pivotController.withPosition(getState().getTargetAngle().times(-1)).withSlot(0)); // cooked inversion
         pivotMotor.update(Settings.DT);
+        // all current measured in amps
+        DogLog.log("Intake/Pivot/Stator Current", pivotMotor.getStatorCurrent().getValueAsDouble());
+        DogLog.log("Intake/Pivot/Supply Current", pivotMotor.getSupplyCurrent().getValueAsDouble());
+        DogLog.log("Intake/Pivot/Voltage", pivotMotor.getMotorVoltage().getValueAsDouble());
+        DogLog.log("Intake/Rollers/Left Current", rollerMotorLeft.getStatorCurrent().getValueAsDouble());
+        DogLog.log(
+                "Intake/Rollers/Right Current", rollerMotorRight.getStatorCurrent().getValueAsDouble());
+        DogLog.log("Intake/Rollers/Left Voltage", rollerMotorLeft.getMotorVoltage().getValueAsDouble());
+        DogLog.log("Intake/Rollers/Right Voltage", rollerMotorRight.getMotorVoltage().getValueAsDouble());
+        DogLog.log("Intake/Rollers/Left Stalling", false);
+        // TODO: implement
+        DogLog.log("Intake/Rollers/Right Stalling", false);
 
-        SmartDashboard.putNumber("Intake/Pivot/Stator Current", pivotMotor.getStatorCurrent().getValueAsDouble()); // all current measured in amps
-        SmartDashboard.putNumber("Intake/Pivot/Supply Current", pivotMotor.getSupplyCurrent().getValueAsDouble());
-        SmartDashboard.putNumber("Intake/Pivot/Voltage", pivotMotor.getMotorVoltage().getValueAsDouble());
-
-        SmartDashboard.putNumber("Intake/Rollers/Left Current", rollerMotor.getStatorCurrent().getValueAsDouble());
-        SmartDashboard.putNumber("Intake/Rollers/Right Current", rollerFollower.getStatorCurrent().getValueAsDouble());
-        SmartDashboard.putNumber("Intake/Rollers/Left Voltage", rollerMotor.getMotorVoltage().getValueAsDouble());
-        SmartDashboard.putNumber("Intake/Rollers/Right Voltage", rollerFollower.getMotorVoltage().getValueAsDouble());
-        SmartDashboard.putBoolean("Intake/Rollers/Left Stalling", false);
-        SmartDashboard.putBoolean("Intake/Rollers/Right Stalling", false); // TODO: implement
-
+        RobotVisualizer.getInstance().updateIntake(Radians.of(getRelativePosition().in(Radians)), getRollerVelocity());
         super.periodic();
     }
-    
+
     @Override
     public SysIdRoutine getIntakeSysIdRoutine() {
-        return SysId.getRoutine(Settings.Intake.Pivot.RAMP_RATE,
+        return SysId.getRoutine(
+                Settings.Intake.Pivot.RAMP_RATE,
                 Settings.Intake.Pivot.STEP_VOLTAGE,
                 "Intake",
                 voltage -> setPivotVoltageOverride(voltage),

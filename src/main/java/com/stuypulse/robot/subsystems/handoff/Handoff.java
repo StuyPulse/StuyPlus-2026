@@ -7,14 +7,13 @@ package com.stuypulse.robot.subsystems.handoff;
 
 import com.stuypulse.robot.Robot;
 import com.stuypulse.robot.constants.Settings;
-
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import dev.doglog.DogLog;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 
-
-public abstract class Handoff extends SubsystemBase {// handoff is feeder ---> shooter btw
+public abstract class Handoff extends SubsystemBase {
     private static final Handoff instance;
+
     private HandoffState state;
 
     static {
@@ -64,9 +63,8 @@ public abstract class Handoff extends SubsystemBase {// handoff is feeder ---> s
     @Override
     public void periodic() {
         final HandoffState currentState = getState();
-
-        SmartDashboard.putString("Handoff/State", currentState.name());
-        SmartDashboard.putString("States/Handoff", currentState.name());
-        SmartDashboard.putNumber("Shooter/Handoff Target Duty Cycle", currentState.getHandoffDutyCycle());
+        DogLog.log("Handoff/State", currentState.name());
+        DogLog.log("States/Handoff", currentState.name());
+        DogLog.log("Shooter/Handoff Target Duty Cycle", currentState.getHandoffDutyCycle());
     }
 }

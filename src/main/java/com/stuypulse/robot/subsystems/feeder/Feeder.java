@@ -9,13 +9,14 @@ import static edu.wpi.first.units.Units.*;
 
 import com.stuypulse.robot.Robot;
 import com.stuypulse.robot.constants.Settings;
-
+import dev.doglog.DogLog;
 import edu.wpi.first.units.measure.*;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-public abstract class Feeder extends SubsystemBase{
+public abstract class Feeder extends SubsystemBase {
+
     private static final Feeder instance;
+
     private FeederState state;
 
     static {
@@ -37,15 +38,15 @@ public abstract class Feeder extends SubsystemBase{
 
         private double targetDutyCycle;
 
-        private FeederState(double targetDutyCycle){
+        private FeederState(double targetDutyCycle) {
             this.targetDutyCycle = targetDutyCycle;
         }
 
-        public double getTargetDutyCycle(){
+        public double getTargetDutyCycle() {
             return this.targetDutyCycle;
         }
     }
-    
+
     protected Feeder() {
         this.state = FeederState.IDLE;
     }
@@ -59,17 +60,16 @@ public abstract class Feeder extends SubsystemBase{
     }
 
     public abstract AngularVelocity getCurrentAngularVelocity();
+
     protected abstract void stopMotors();
 
     @Override
     public void periodic() {
         final FeederState currentState = getState();
-
         // Logging
-        SmartDashboard.putNumber("Feeder/Target Duty Cycle", currentState.getTargetDutyCycle());
-        SmartDashboard.putNumber("Feeder/Current RPM", getCurrentAngularVelocity().in(RPM));
-
-        SmartDashboard.putString("Feeder/State", currentState.name());
-        SmartDashboard.putString("States/Feeder", currentState.name());
+        DogLog.log("Feeder/Target Duty Cycle", currentState.getTargetDutyCycle());
+        DogLog.log("Feeder/Current RPM", getCurrentAngularVelocity().in(RPM));
+        DogLog.log("Feeder/State", currentState.name());
+        DogLog.log("States/Feeder", currentState.name());
     }
 }

@@ -132,6 +132,7 @@ spotless {
             'com.revrobotics',
             'com.stuypulse.stuylib'
         )
+        googleJavaFormat().aosp()
         removeUnusedImports()
     }
 }
@@ -156,6 +157,8 @@ tasks.withType(JavaCompile) {
 }
 
 tasks.javadoc {
+    options.addBooleanOption("linksource", true)
+    options.addBooleanOption('private', true)
     options.addBooleanOption("-allow-script-in-comments", true)
     options.header = '<script>var l=document.createElement("link");l.rel="icon";l.href="/StuyPlus-2026/favicon.ico?t=" + Date.now();l.type="image/x-icon";document.head.appendChild(l);</script>'
     options.addStringOption("doctitle", "StuyPlus 2026")
