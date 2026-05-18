@@ -105,7 +105,7 @@ It contains the following states:
 - `IDLE`: Shooter doesn't run.
 - `SHOOT`: Shooter wheels spin at it's target RPM, interpolated based on distance to hub.
 - `FERRY`: Shooter wheels spin at it's target RPM, interpolated based on distance to ferry zone.
-- `MANUAL_HUB`: Shoots at a predetermined RPM.
+- `MANUAL_HUB`: Shooter wheels spin at a predetermined constant rate without interpolation.
 
 In the `periodic` method, the shooter RPM is controlled via `VelocityTorqueCurrentFOC` control request.
 
