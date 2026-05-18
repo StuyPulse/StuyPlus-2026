@@ -7,7 +7,7 @@ package com.stuypulse.robot;
 
 import com.stuypulse.robot.commands.auton.DoNothingAuton;
 import com.stuypulse.robot.commands.feeder.FeederSetForward;
-import com.stuypulse.robot.commands.feeder.FeederSetStop;
+import com.stuypulse.robot.commands.feeder.FeederSetIdle;
 import com.stuypulse.robot.commands.handoff.HandoffSetForward;
 import com.stuypulse.robot.commands.handoff.HandoffSetIdle;
 import com.stuypulse.robot.commands.intake.IntakeDigest;
@@ -136,7 +136,7 @@ public class RobotContainer {
                 .onTrue(
                         new HandoffSetIdle()
                                 .alongWith(
-                                        new FeederSetStop(),
+                                        new FeederSetIdle(),
                                         new IntakeSetIntake(),
                                         Commands.runOnce(
                                                 () -> new SwerveDriveXMode()

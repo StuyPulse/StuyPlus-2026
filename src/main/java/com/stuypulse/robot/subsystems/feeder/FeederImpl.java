@@ -57,11 +57,11 @@ public class FeederImpl extends Feeder {
         Shooter shooter = Shooter.getInstance();
         if (!(swerve.isAlignedToTarget(Field.getHubPose()))
                 && shooter.getState() == ShooterState.SHOOT) {
-            setState(FeederState.STOP);
+            setState(FeederState.IDLE);
         }
         if (!(swerve.isAlignedToTarget(Field.getFerryZonePose(swerve.getPose().getTranslation())))
                 && shooter.getState() == ShooterState.FERRY) {
-            setState(FeederState.STOP);
+            setState(FeederState.IDLE);
         }
         // Apply
         feederMotor.setControl(controller.withOutput(getState().getTargetDutyCycle()));

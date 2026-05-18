@@ -7,9 +7,9 @@ package com.stuypulse.robot.commands.feeder;
 
 import com.stuypulse.robot.subsystems.feeder.Feeder.FeederState;
 
-public class FeederSetStop extends FeederSetState {
+public class FeederSetIdle extends FeederSetState {
 
-    public FeederSetStop() {
-        super(FeederState.STOP);
+    public FeederSetIdle() {
+        super(FeederState.IDLE);
     }
 }

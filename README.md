@@ -86,7 +86,7 @@ File: [`src/main/java/com/stuypulse/robot/subsystems/feeder`](https://github.com
 Our feeder is of indexer type, having three lanes for  the [shooter](#shooter)'s three slots. It uses two motors (follower-leader) to guide the fuel from the hopper to the shooter.
 
 It contains the following states:
-- `STOP`: Feeder is stopped
+- `IDLE`: Feeder is stopped
 - `FORWARD`: Motors run forward on a duty cycle to feed fuel to the shooter
 - `REVERSE`: Motors run backward on a duty cycle to work with the intake to outtake fuel from the robot
 
