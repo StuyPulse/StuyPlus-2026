@@ -704,6 +704,10 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="com/stuypulse/robot/commands/feeder/FeederSetForward.html#%3Cinit%3E()" class="member-name-link">FeederSetForward()</a> - Constructor for class com.stuypulse.robot.commands.feeder.<a href="com/stuypulse/robot/commands/feeder/FeederSetForward.html" title="class in com.stuypulse.robot.commands.feeder">FeederSetForward</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="com/stuypulse/robot/commands/feeder/FeederSetIdle.html" class="type-name-link" title="class in com.stuypulse.robot.commands.feeder">FeederSetIdle</a> - Class in <a href="com/stuypulse/robot/commands/feeder/package-summary.html">com.stuypulse.robot.commands.feeder</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/stuypulse/robot/commands/feeder/FeederSetIdle.html#%3Cinit%3E()" class="member-name-link">FeederSetIdle()</a> - Constructor for class com.stuypulse.robot.commands.feeder.<a href="com/stuypulse/robot/commands/feeder/FeederSetIdle.html" title="class in com.stuypulse.robot.commands.feeder">FeederSetIdle</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/stuypulse/robot/commands/feeder/FeederSetReverse.html" class="type-name-link" title="class in com.stuypulse.robot.commands.feeder">FeederSetReverse</a> - Class in <a href="com/stuypulse/robot/commands/feeder/package-summary.html">com.stuypulse.robot.commands.feeder</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/stuypulse/robot/commands/feeder/FeederSetReverse.html#%3Cinit%3E()" class="member-name-link">FeederSetReverse()</a> - Constructor for class com.stuypulse.robot.commands.feeder.<a href="com/stuypulse/robot/commands/feeder/FeederSetReverse.html" title="class in com.stuypulse.robot.commands.feeder">FeederSetReverse</a></dt>
@@ -711,10 +715,6 @@ loadScripts(document, 'script');</script>
 <dt><a href="com/stuypulse/robot/commands/feeder/FeederSetState.html" class="type-name-link" title="class in com.stuypulse.robot.commands.feeder">FeederSetState</a> - Class in <a href="com/stuypulse/robot/commands/feeder/package-summary.html">com.stuypulse.robot.commands.feeder</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/stuypulse/robot/commands/feeder/FeederSetState.html#%3Cinit%3E(com.stuypulse.robot.subsystems.feeder.Feeder.FeederState)" class="member-name-link">FeederSetState(Feeder.FeederState)</a> - Constructor for class com.stuypulse.robot.commands.feeder.<a href="com/stuypulse/robot/commands/feeder/FeederSetState.html" title="class in com.stuypulse.robot.commands.feeder">FeederSetState</a></dt>
-<dd>&nbsp;</dd>
-<dt><a href="com/stuypulse/robot/commands/feeder/FeederSetStop.html" class="type-name-link" title="class in com.stuypulse.robot.commands.feeder">FeederSetStop</a> - Class in <a href="com/stuypulse/robot/commands/feeder/package-summary.html">com.stuypulse.robot.commands.feeder</a></dt>
-<dd>&nbsp;</dd>
-<dt><a href="com/stuypulse/robot/commands/feeder/FeederSetStop.html#%3Cinit%3E()" class="member-name-link">FeederSetStop()</a> - Constructor for class com.stuypulse.robot.commands.feeder.<a href="com/stuypulse/robot/commands/feeder/FeederSetStop.html" title="class in com.stuypulse.robot.commands.feeder">FeederSetStop</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/stuypulse/robot/subsystems/feeder/FeederSim.html#feederSim" class="member-name-link">feederSim</a> - Variable in class com.stuypulse.robot.subsystems.feeder.<a href="com/stuypulse/robot/subsystems/feeder/FeederSim.html" title="class in com.stuypulse.robot.subsystems.feeder">FeederSim</a></dt>
 <dd>&nbsp;</dd>
@@ -1413,6 +1413,8 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Returns the value of the <code>id</code> record component.</div>
 </dd>
+<dt><a href="com/stuypulse/robot/subsystems/feeder/Feeder.FeederState.html#IDLE" class="member-name-link">IDLE</a> - Enum constant in enum class com.stuypulse.robot.subsystems.feeder.<a href="com/stuypulse/robot/subsystems/feeder/Feeder.FeederState.html" title="enum class in com.stuypulse.robot.subsystems.feeder">Feeder.FeederState</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/stuypulse/robot/subsystems/handoff/Handoff.HandoffState.html#IDLE" class="member-name-link">IDLE</a> - Enum constant in enum class com.stuypulse.robot.subsystems.handoff.<a href="com/stuypulse/robot/subsystems/handoff/Handoff.HandoffState.html" title="enum class in com.stuypulse.robot.subsystems.handoff">Handoff.HandoffState</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/stuypulse/robot/subsystems/intake/Intake.IntakeState.html#IDLE" class="member-name-link">IDLE</a> - Enum constant in enum class com.stuypulse.robot.subsystems.intake.<a href="com/stuypulse/robot/subsystems/intake/Intake.IntakeState.html" title="enum class in com.stuypulse.robot.subsystems.intake">Intake.IntakeState</a></dt>
@@ -3171,8 +3173,6 @@ loadScripts(document, 'script');</script>
 <dt><a href="com/stuypulse/robot/constants/Settings.Intake.Pivot.html#STEP_VOLTAGE" class="member-name-link">STEP_VOLTAGE</a> - Static variable in interface com.stuypulse.robot.constants.<a href="com/stuypulse/robot/constants/Settings.Intake.Pivot.html" title="interface in com.stuypulse.robot.constants">Settings.Intake.Pivot</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/stuypulse/robot/constants/Settings.Shooter.html#STEP_VOLTAGE" class="member-name-link">STEP_VOLTAGE</a> - Static variable in interface com.stuypulse.robot.constants.<a href="com/stuypulse/robot/constants/Settings.Shooter.html" title="interface in com.stuypulse.robot.constants">Settings.Shooter</a></dt>
-<dd>&nbsp;</dd>
-<dt><a href="com/stuypulse/robot/subsystems/feeder/Feeder.FeederState.html#STOP" class="member-name-link">STOP</a> - Enum constant in enum class com.stuypulse.robot.subsystems.feeder.<a href="com/stuypulse/robot/subsystems/feeder/Feeder.FeederState.html" title="enum class in com.stuypulse.robot.subsystems.feeder">Feeder.FeederState</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/stuypulse/robot/subsystems/feeder/Feeder.html#stopMotors()" class="member-name-link">stopMotors()</a> - Method in class com.stuypulse.robot.subsystems.feeder.<a href="com/stuypulse/robot/subsystems/feeder/Feeder.html" title="class in com.stuypulse.robot.subsystems.feeder">Feeder</a></dt>
 <dd>&nbsp;</dd>

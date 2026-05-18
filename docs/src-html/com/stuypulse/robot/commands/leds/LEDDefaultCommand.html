@@ -74,7 +74,7 @@
 <span class="source-line-no">061</span><span id="line-61">        switch (feeder.getState()) {</span>
 <span class="source-line-no">062</span><span id="line-62">            case FORWARD -&gt; leds.applyFeed(Settings.LED.FEEDER_FORWARD);</span>
 <span class="source-line-no">063</span><span id="line-63">            case REVERSE -&gt; leds.applyFeed(Settings.LED.FEEDER_REVERSE);</span>
-<span class="source-line-no">064</span><span id="line-64">            case STOP -&gt; leds.applyFeed(LEDPattern.kOff);</span>
+<span class="source-line-no">064</span><span id="line-64">            case IDLE -&gt; leds.applyFeed(LEDPattern.kOff);</span>
 <span class="source-line-no">065</span><span id="line-65">        }</span>
 <span class="source-line-no">066</span><span id="line-66">        switch (intake.getState()) {</span>
 <span class="source-line-no">067</span><span id="line-67">            case INTAKE -&gt; leds.applyIntake(Settings.LED.INTAKING);</span>

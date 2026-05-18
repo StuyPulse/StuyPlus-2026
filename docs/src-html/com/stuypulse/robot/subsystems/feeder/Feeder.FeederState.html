@@ -45,7 +45,7 @@
 <span class="source-line-no">032</span><span id="line-32">    }</span>
 <span class="source-line-no">033</span><span id="line-33"></span>
 <span class="source-line-no">034</span><span id="line-34">    public enum FeederState {</span>
-<span class="source-line-no">035</span><span id="line-35">        STOP(0),</span>
+<span class="source-line-no">035</span><span id="line-35">        IDLE(0),</span>
 <span class="source-line-no">036</span><span id="line-36">        REVERSE(Settings.Feeder.FEEDER_REVERSE_DUTY_CYCLE),</span>
 <span class="source-line-no">037</span><span id="line-37">        FORWARD(Settings.Feeder.FEEDER_FORWARD_DUTY_CYCLE);</span>
 <span class="source-line-no">038</span><span id="line-38"></span>
@@ -61,7 +61,7 @@
 <span class="source-line-no">048</span><span id="line-48">    }</span>
 <span class="source-line-no">049</span><span id="line-49"></span>
 <span class="source-line-no">050</span><span id="line-50">    protected Feeder() {</span>
-<span class="source-line-no">051</span><span id="line-51">        this.state = FeederState.STOP;</span>
+<span class="source-line-no">051</span><span id="line-51">        this.state = FeederState.IDLE;</span>
 <span class="source-line-no">052</span><span id="line-52">    }</span>
 <span class="source-line-no">053</span><span id="line-53"></span>
 <span class="source-line-no">054</span><span id="line-54">    public void setState(FeederState state) {</span>

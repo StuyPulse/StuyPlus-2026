@@ -70,11 +70,11 @@
 <span class="source-line-no">057</span><span id="line-57">        Shooter shooter = Shooter.getInstance();</span>
 <span class="source-line-no">058</span><span id="line-58">        if (!(swerve.isAlignedToTarget(Field.getHubPose()))</span>
 <span class="source-line-no">059</span><span id="line-59">                &amp;&amp; shooter.getState() == ShooterState.SHOOT) {</span>
-<span class="source-line-no">060</span><span id="line-60">            setState(FeederState.STOP);</span>
+<span class="source-line-no">060</span><span id="line-60">            setState(FeederState.IDLE);</span>
 <span class="source-line-no">061</span><span id="line-61">        }</span>
 <span class="source-line-no">062</span><span id="line-62">        if (!(swerve.isAlignedToTarget(Field.getFerryZonePose(swerve.getPose().getTranslation())))</span>
 <span class="source-line-no">063</span><span id="line-63">                &amp;&amp; shooter.getState() == ShooterState.FERRY) {</span>
-<span class="source-line-no">064</span><span id="line-64">            setState(FeederState.STOP);</span>
+<span class="source-line-no">064</span><span id="line-64">            setState(FeederState.IDLE);</span>
 <span class="source-line-no">065</span><span id="line-65">        }</span>
 <span class="source-line-no">066</span><span id="line-66">        // Apply</span>
 <span class="source-line-no">067</span><span id="line-67">        feederMotor.setControl(controller.withOutput(getState().getTargetDutyCycle()));</span>

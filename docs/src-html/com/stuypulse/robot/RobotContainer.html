@@ -20,7 +20,7 @@
 <span class="source-line-no">007</span><span id="line-7"></span>
 <span class="source-line-no">008</span><span id="line-8">import com.stuypulse.robot.commands.auton.DoNothingAuton;</span>
 <span class="source-line-no">009</span><span id="line-9">import com.stuypulse.robot.commands.feeder.FeederSetForward;</span>
-<span class="source-line-no">010</span><span id="line-10">import com.stuypulse.robot.commands.feeder.FeederSetStop;</span>
+<span class="source-line-no">010</span><span id="line-10">import com.stuypulse.robot.commands.feeder.FeederSetIdle;</span>
 <span class="source-line-no">011</span><span id="line-11">import com.stuypulse.robot.commands.handoff.HandoffSetForward;</span>
 <span class="source-line-no">012</span><span id="line-12">import com.stuypulse.robot.commands.handoff.HandoffSetIdle;</span>
 <span class="source-line-no">013</span><span id="line-13">import com.stuypulse.robot.commands.intake.IntakeDigest;</span>
@@ -149,7 +149,7 @@
 <span class="source-line-no">136</span><span id="line-136">                .onTrue(</span>
 <span class="source-line-no">137</span><span id="line-137">                        new HandoffSetIdle()</span>
 <span class="source-line-no">138</span><span id="line-138">                                .alongWith(</span>
-<span class="source-line-no">139</span><span id="line-139">                                        new FeederSetStop(),</span>
+<span class="source-line-no">139</span><span id="line-139">                                        new FeederSetIdle(),</span>
 <span class="source-line-no">140</span><span id="line-140">                                        new IntakeSetIntake(),</span>
 <span class="source-line-no">141</span><span id="line-141">                                        Commands.runOnce(</span>
 <span class="source-line-no">142</span><span id="line-142">                                                () -&gt; new SwerveDriveXMode()</span>
