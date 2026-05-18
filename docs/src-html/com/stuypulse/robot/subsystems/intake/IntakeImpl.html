@@ -139,7 +139,7 @@
 <span class="source-line-no">126</span><span id="line-126">    </span>
 <span class="source-line-no">127</span><span id="line-127">    @Override</span>
 <span class="source-line-no">128</span><span id="line-128">    public boolean limitSwitchHit() {</span>
-<span class="source-line-no">129</span><span id="line-129">        return pivotLimitSwitch.get();</span>
+<span class="source-line-no">129</span><span id="line-129">        return !pivotLimitSwitch.get();</span>
 <span class="source-line-no">130</span><span id="line-130">    }</span>
 <span class="source-line-no">131</span><span id="line-131">    </span>
 <span class="source-line-no">132</span><span id="line-132">    @Override</span>
@@ -210,11 +210,11 @@
 <span class="source-line-no">197</span><span id="line-197">        final boolean pivotStalling = pivotStalling();</span>
 <span class="source-line-no">198</span><span id="line-198">        final IntakeState currentState = getState();</span>
 <span class="source-line-no">199</span><span id="line-199">        // State</span>
-<span class="source-line-no">200</span><span id="line-200">        if (currentState == IntakeState.HOMING_DOWN &amp;&amp; pivotStalling) {</span>
+<span class="source-line-no">200</span><span id="line-200">        if (currentState == IntakeState.HOMING_DOWN &amp;&amp; (pivotStalling || limitSwitchHit())) {</span>
 <span class="source-line-no">201</span><span id="line-201">            seedPivotAngle(Settings.Intake.Pivot.DEPLOY_ANGLE);</span>
 <span class="source-line-no">202</span><span id="line-202">            setState(IntakeState.DOWN);</span>
 <span class="source-line-no">203</span><span id="line-203">        }</span>
-<span class="source-line-no">204</span><span id="line-204">        if ((currentState == IntakeState.DOWN) &amp;&amp; pivotStalling) {</span>
+<span class="source-line-no">204</span><span id="line-204">        if ((currentState == IntakeState.DOWN) &amp;&amp; (pivotStalling || limitSwitchHit())) {</span>
 <span class="source-line-no">205</span><span id="line-205">            seedPivotAngle(Settings.Intake.Pivot.DEPLOY_ANGLE);</span>
 <span class="source-line-no">206</span><span id="line-206">        }</span>
 <span class="source-line-no">207</span><span id="line-207">        // Output</span>
