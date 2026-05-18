@@ -1,17 +1,4 @@
-#include "subsystems/feeder/Feeder.hpp"
-#include <ctre/phoenix6/TalonFX.hpp>
-#include "constants/Ports.hpp"
-#include "constants/Settings.hpp"
-#include <telemetrykit/TelemetryKit.h>
-
-class FeederImpl : public Feeder
-{
-public:
-    void Periodic() override {}
-
-private:
-    ctre::phoenix6::hardware::TalonFX feederMotor{Ports::Feeder::FEEDER_MOTOR, Settings::CANBus};
-};
+#include "subsystems/feeder/FeederImpl.hpp"
 
 void FeederImpl::Periodic() {
     // Control

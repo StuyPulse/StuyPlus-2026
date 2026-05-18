@@ -1,20 +1,25 @@
 #pragma once
-
 #include <frc2/command/SubsystemBase.h>
+#include <units/angular_velocity.h>
 #include "FeederState.hpp"
 
-class Feeder : public frc2::SubsystemBase {
-    public:
-        static Feeder& getInstance();
+class Feeder : public frc2::SubsystemBase
+{
+public:
+    static Feeder &getInstance();
 
-        FeederState getState();
-        void setState(FeederState state);
-        virtual void Periodic();
+    void setState(FeederState state);
+    FeederState getState() const;
 
-    protected:
-        Feeder();
+    virtual units::angular_velocity::revolutions_per_minute_t getCurrentAngularVelocity() = 0;
 
-    private:
-        static Feeder* instance;
-        FeederState state;
+    void Periodic() override;
+
+protected:
+    Feeder();
+
+    virtual void stopMotors() = 0;
+
+private:
+    FeederState state;
 };

@@ -1,34 +1,25 @@
 #include "subsystems/feeder/Feeder.hpp"
-#include "subsystems/feeder/FeederState.hpp"
+#include <frc/RobotBase.h>
 #include "FeederImpl.cpp"
 #include "FeederSim.cpp"
-#include <frc/RobotBase.h>
+#include "FeederState.cpp"
 
-static Feeder* initInstance()
-{
-    if (frc::RobotBase::IsReal())
-    {
-        return new FeederImpl();
-    }
-    else
-    {
-        return new FeederSim();
-    }
-}
-
-Feeder* instance = initInstance();
 Feeder& Feeder::getInstance() {
+    static std::unique_ptr<Feeder> instance = frc::RobotBase::IsReal()
+        ? std::unique_ptr<Feeder>(new FeederImpl())
+        : std::unique_ptr<Feeder>(new FeederSim());
     return *instance;
 }
 
 Feeder::Feeder() : state(FeederState::IDLE) {}
 
-void Feeder::setState(FeederState state)
-{
-    this -> state = state;
+void Feeder::setState(FeederState newState) {
+    state = newState;
 }
 
-FeederState Feeder::getState()
-{
+FeederState Feeder::getState() const {
     return state;
+}
+
+void Feeder::Periodic() {
 }
