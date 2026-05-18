@@ -84,7 +84,7 @@ public interface Motors {
 		// TODO: get values after motor pinion swap
 		TalonFXConfig LEADER_CONFIG = new TalonFXConfig()
 				.withStatorCurrentLimitAmps(80)
-				.withRampRate(0.25)
+				// .withRampRate(0.25)
 				.withNeutralMode(NeutralModeValue.Coast)
 				.withInvertedValue(InvertedValue.CounterClockwise_Positive);
 	}
@@ -108,7 +108,7 @@ public interface Motors {
 		TalonFXConfig SHOOTER_MOTOR_LEFT = new TalonFXConfig()
 				.withPIDConstants(Gains.Shooter.kP, Gains.Shooter.kI, Gains.Shooter.kD, 0)
 				.withStatorCurrentLimitAmps(80)
-				.withRampRate(0.25)
+				// .withRampRate(0.25)
 				.withNeutralMode(NeutralModeValue.Coast)
 				.withFFConstants(Gains.Shooter.kS, Gains.Shooter.kV, Gains.Shooter.kA, 0)
 				.withInvertedValue(InvertedValue.CounterClockwise_Positive);
@@ -116,7 +116,7 @@ public interface Motors {
 		TalonFXConfig SHOOTER_MOTOR_CENTER = new TalonFXConfig()
 				.withPIDConstants(Gains.Shooter.kP, Gains.Shooter.kI, Gains.Shooter.kD, 0)
 				.withStatorCurrentLimitAmps(80)
-				.withRampRate(0.25)
+				// .withRampRate(0.25)
 				.withNeutralMode(NeutralModeValue.Coast)
 				.withFFConstants(Gains.Shooter.kS, Gains.Shooter.kV, Gains.Shooter.kA, 0)
 				.withInvertedValue(InvertedValue.CounterClockwise_Positive);
@@ -124,7 +124,7 @@ public interface Motors {
 		TalonFXConfig SHOOTER_MOTOR_RIGHT = new TalonFXConfig()
 				.withPIDConstants(Gains.Shooter.kP, Gains.Shooter.kI, Gains.Shooter.kD, 0)
 				.withStatorCurrentLimitAmps(80)
-				.withRampRate(0.25)
+				// .withRampRate(0.25)
 				.withNeutralMode(NeutralModeValue.Coast)
 				.withFFConstants(Gains.Shooter.kS, Gains.Shooter.kV, Gains.Shooter.kA, 0)
 				.withInvertedValue(InvertedValue.Clockwise_Positive);
@@ -134,7 +134,7 @@ public interface Motors {
 
 		TalonFXConfig HANDOFF_MOTOR_CONFIG = new TalonFXConfig()
 				.withStatorCurrentLimitAmps(80)
-				.withRampRate(0.25)
+				// .withRampRate(0.25)
 				.withNeutralMode(NeutralModeValue.Coast)
 				.withInvertedValue(InvertedValue.CounterClockwise_Positive);
 	}
