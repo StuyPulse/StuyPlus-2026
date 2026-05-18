@@ -5,7 +5,8 @@
 /***************************************************************/
 package com.stuypulse.robot.subsystems.intake;
 
-import static edu.wpi.first.units.Units.*;
+import java.util.Optional;
+import java.util.function.BooleanSupplier;
 
 import com.ctre.phoenix6.controls.ControlRequest;
 import com.ctre.phoenix6.controls.DutyCycleOut;
@@ -23,14 +24,21 @@ import com.stuypulse.robot.util.LoggedSignals;
 import com.stuypulse.robot.util.SysId;
 import com.stuypulse.stuylib.streams.booleans.BStream;
 import com.stuypulse.stuylib.streams.booleans.filters.BDebounce;
+
 import dev.doglog.DogLog;
-import edu.wpi.first.units.measure.*;
+import static edu.wpi.first.units.Units.Amps;
+import static edu.wpi.first.units.Units.Seconds;
+import static edu.wpi.first.units.Units.Volts;
+import edu.wpi.first.units.measure.Angle;
+import edu.wpi.first.units.measure.AngularVelocity;
+import edu.wpi.first.units.measure.Voltage;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
-import java.util.Optional;
-import java.util.function.BooleanSupplier;
 
 public class IntakeImpl extends Intake {
 
+    private final DigitalInput pivotLimitSwitch;
+    
     private final TalonFX pivotMotor;
 
     private final TalonFX rollerMotorLeft;
@@ -60,6 +68,8 @@ public class IntakeImpl extends Intake {
     private final BStream rightRollerStalling;
 
     public IntakeImpl() {
+
+        pivotLimitSwitch = new DigitalInput(Ports.Intake.PIVOT_LIMIT_SWITCH);
         pivotMotor = new TalonFX(Ports.Intake.INTAKE_PIVOT_MOTOR, Settings.CANBUS);
         Motors.Intake.PIVOT_CONFIG.configure(pivotMotor);
         // zero it at the up pos
@@ -113,6 +123,12 @@ public class IntakeImpl extends Intake {
     /** ****************** */
     /** Pivot Commands ** */
     /** ****************** */
+    
+    @Override
+    public boolean limitSwitchHit() {
+        return pivotLimitSwitch.get();
+    }
+    
     @Override
     public Angle getRelativePosition() {
         return pivotMotor.getPosition().getValue();

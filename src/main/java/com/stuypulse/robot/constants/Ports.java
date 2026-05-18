@@ -49,6 +49,8 @@ public interface Ports {
 
     public interface Intake {
 
+        int PIVOT_LIMIT_SWITCH = 0;
+
         int INTAKE_ROLLER_MOTOR_LEFT = 22;
 
         int INTAKE_ROLLER_MOTOR_RIGHT = 17;

@@ -5,15 +5,19 @@
 /***************************************************************/
 package com.stuypulse.robot.subsystems.intake;
 
-import static edu.wpi.first.units.Units.*;
-
 import com.stuypulse.robot.Robot;
 import com.stuypulse.robot.commands.intake.IntakeSeedPivotDeployed;
 import com.stuypulse.robot.commands.intake.IntakeSeedPivotNinety;
 import com.stuypulse.robot.commands.intake.IntakeSeedPivotStowed;
 import com.stuypulse.robot.constants.Settings;
+
 import dev.doglog.DogLog;
-import edu.wpi.first.units.measure.*;
+import static edu.wpi.first.units.Units.Degrees;
+import static edu.wpi.first.units.Units.RPM;
+import static edu.wpi.first.units.Units.Rotations;
+import edu.wpi.first.units.measure.Angle;
+import edu.wpi.first.units.measure.AngularVelocity;
+import edu.wpi.first.units.measure.Voltage;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
@@ -39,6 +43,8 @@ public abstract class Intake extends SubsystemBase {
     public static Intake getInstance() {
         return instance;
     }
+
+    public abstract boolean limitSwitchHit();
 
     public enum IntakeState {
 
@@ -146,6 +152,7 @@ public abstract class Intake extends SubsystemBase {
         final IntakeState currentState = getState();
         // Logging
         DogLog.log("Intake/State", currentState.name());
+        DogLog.forceNt.log("Intake/Pivot/Limit Switch Hit", limitSwitchHit());
         DogLog.forceNt.log("States/Intake", currentState.name());
         DogLog.log("Intake/Pivot/Target Angle", currentState.getTargetAngle().in(Degrees));
         DogLog.forceNt.log("Intake/Pivot/Current Angle", getRelativePosition().in(Degrees));
