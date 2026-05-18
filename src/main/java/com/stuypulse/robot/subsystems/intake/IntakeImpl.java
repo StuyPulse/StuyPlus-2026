@@ -126,7 +126,7 @@ public class IntakeImpl extends Intake {
     
     @Override
     public boolean limitSwitchHit() {
-        return pivotLimitSwitch.get();
+        return !pivotLimitSwitch.get();
     }
     
     @Override
@@ -197,11 +197,11 @@ public class IntakeImpl extends Intake {
         final boolean pivotStalling = pivotStalling();
         final IntakeState currentState = getState();
         // State
-        if (currentState == IntakeState.HOMING_DOWN && pivotStalling) {
+        if (currentState == IntakeState.HOMING_DOWN && (pivotStalling || limitSwitchHit())) {
             seedPivotAngle(Settings.Intake.Pivot.DEPLOY_ANGLE);
             setState(IntakeState.DOWN);
         }
-        if ((currentState == IntakeState.DOWN) && pivotStalling) {
+        if ((currentState == IntakeState.DOWN) && (pivotStalling || limitSwitchHit())) {
             seedPivotAngle(Settings.Intake.Pivot.DEPLOY_ANGLE);
         }
         // Output

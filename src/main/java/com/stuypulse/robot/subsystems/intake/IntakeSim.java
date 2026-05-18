@@ -92,7 +92,7 @@ public class IntakeSim extends Intake {
 
     @Override
     public boolean limitSwitchHit() {
-        return false;
+        return true;
     }
     
     @Override
