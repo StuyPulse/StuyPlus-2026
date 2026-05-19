@@ -14,15 +14,15 @@ public class Gains {
 
     public interface Shooter {
 
-        double kP = 0.9;
+        double kP = 20;
 
         double kI = 0;
 
-        double kD = 0;
+        double kD = 10.2;
 
-        double kS = 0;
+        double kS = 2;
 
-        double kV = 0;
+        double kV = 0.01;
 
         double kA = 0;
     }
