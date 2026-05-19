@@ -111,8 +111,8 @@ public class IntakeSim extends Intake {
     }
 
     @Override
-    public boolean limitSwitchHit() {
-        return true;
+    public Trigger limitSwitchHit() {
+        return new Trigger(() -> false);
     }
     
     @Override

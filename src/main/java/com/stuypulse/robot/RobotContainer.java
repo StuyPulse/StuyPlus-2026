@@ -116,7 +116,7 @@ public class RobotContainer {
     // Subsystem automatic logic
 
     private void configureIntakeLogic() {
-        intake.pivotStalling()
+        intake.pivotStalling().or(intake.limitSwitchHit())
                 .onTrue(IntakeCommands.zeroPivotDeployed());
     }
 

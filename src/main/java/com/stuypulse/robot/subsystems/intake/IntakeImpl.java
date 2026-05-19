@@ -143,8 +143,8 @@ public class IntakeImpl extends Intake {
     /** ****************** */
     
     @Override
-    public boolean limitSwitchHit() {
-        return !pivotLimitSwitch.get();
+    public Trigger limitSwitchHit() {
+        return new Trigger(() -> !pivotLimitSwitch.get());
     }
     
     @Override

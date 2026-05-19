@@ -43,7 +43,7 @@ public abstract class Intake extends SubsystemBase {
         return instance;
     }
 
-    public abstract boolean limitSwitchHit();
+    public abstract Trigger limitSwitchHit();
 
     public enum IntakeState {
 
@@ -153,7 +153,7 @@ public abstract class Intake extends SubsystemBase {
         final IntakeState currentState = getState();
         // Logging
         DogLog.log("Intake/State", currentState.name());
-        DogLog.forceNt.log("Intake/Pivot/Limit Switch Hit", limitSwitchHit());
+        DogLog.forceNt.log("Intake/Pivot/Limit Switch Hit", limitSwitchHit().getAsBoolean());
         DogLog.forceNt.log("States/Intake", currentState.name());
         DogLog.log("Intake/Pivot/Target Angle", currentState.getTargetAngle().in(Degrees));
         DogLog.forceNt.log("Intake/Pivot/Current Angle", getRelativePosition().in(Degrees));
