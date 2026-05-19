@@ -24,114 +24,118 @@
 <span class="source-line-no">011</span><span id="line-11">import com.ctre.phoenix6.controls.VelocityTorqueCurrentFOC;</span>
 <span class="source-line-no">012</span><span id="line-12">import com.ctre.phoenix6.hardware.TalonFX;</span>
 <span class="source-line-no">013</span><span id="line-13">import com.ctre.phoenix6.signals.MotorAlignmentValue;</span>
-<span class="source-line-no">014</span><span id="line-14">import com.stuypulse.robot.constants.Motors;</span>
-<span class="source-line-no">015</span><span id="line-15">import com.stuypulse.robot.constants.Ports;</span>
-<span class="source-line-no">016</span><span id="line-16">import com.stuypulse.robot.constants.Settings;</span>
-<span class="source-line-no">017</span><span id="line-17">import com.stuypulse.robot.util.LoggedSignals;</span>
-<span class="source-line-no">018</span><span id="line-18">import com.stuypulse.robot.util.SysId;</span>
-<span class="source-line-no">019</span><span id="line-19">import edu.wpi.first.units.measure.AngularVelocity;</span>
-<span class="source-line-no">020</span><span id="line-20">import edu.wpi.first.units.measure.Voltage;</span>
-<span class="source-line-no">021</span><span id="line-21">import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;</span>
-<span class="source-line-no">022</span><span id="line-22">import java.util.Optional;</span>
-<span class="source-line-no">023</span><span id="line-23"></span>
-<span class="source-line-no">024</span><span id="line-24">public class ShooterImpl extends Shooter {</span>
-<span class="source-line-no">025</span><span id="line-25"></span>
-<span class="source-line-no">026</span><span id="line-26">    private final TalonFX shooterMotorLeft;</span>
-<span class="source-line-no">027</span><span id="line-27"></span>
-<span class="source-line-no">028</span><span id="line-28">    private final TalonFX shooterMotorCenter;</span>
-<span class="source-line-no">029</span><span id="line-29"></span>
-<span class="source-line-no">030</span><span id="line-30">    private final TalonFX shooterMotorRight;</span>
-<span class="source-line-no">031</span><span id="line-31"></span>
-<span class="source-line-no">032</span><span id="line-32">    private final VelocityTorqueCurrentFOC shooterController;</span>
-<span class="source-line-no">033</span><span id="line-33"></span>
-<span class="source-line-no">034</span><span id="line-34">    private final Follower shooterFollowerController;</span>
-<span class="source-line-no">035</span><span id="line-35"></span>
-<span class="source-line-no">036</span><span id="line-36">    private final LoggedSignals signals;</span>
-<span class="source-line-no">037</span><span id="line-37"></span>
-<span class="source-line-no">038</span><span id="line-38">    private Optional&lt;Voltage&gt; voltageOverride;</span>
-<span class="source-line-no">039</span><span id="line-39"></span>
-<span class="source-line-no">040</span><span id="line-40">    public ShooterImpl() {</span>
-<span class="source-line-no">041</span><span id="line-41">        // leader</span>
-<span class="source-line-no">042</span><span id="line-42">        shooterMotorRight = new TalonFX(Ports.Shooter.SHOOTER_MOTOR_RIGHT, Settings.CANBUS);</span>
-<span class="source-line-no">043</span><span id="line-43">        shooterMotorCenter = new TalonFX(Ports.Shooter.SHOOTER_MOTOR_CENTER, Settings.CANBUS);</span>
-<span class="source-line-no">044</span><span id="line-44">        shooterMotorLeft = new TalonFX(Ports.Shooter.SHOOTER_MOTOR_LEFT, Settings.CANBUS);</span>
-<span class="source-line-no">045</span><span id="line-45">        shooterController = new VelocityTorqueCurrentFOC(getState().getTargetAngularVelocity());</span>
-<span class="source-line-no">046</span><span id="line-46">        signals = new LoggedSignals(LoggedSignals.SignalLocation.CANIVORE, "Shooter/")</span>
-<span class="source-line-no">047</span><span id="line-47">                .withMotor(</span>
-<span class="source-line-no">048</span><span id="line-48">                        "Right Motor",</span>
-<span class="source-line-no">049</span><span id="line-49">                        shooterMotorRight.getSupplyCurrent(),</span>
-<span class="source-line-no">050</span><span id="line-50">                        shooterMotorRight.getStatorCurrent(),</span>
-<span class="source-line-no">051</span><span id="line-51">                        shooterMotorRight.getVelocity())</span>
-<span class="source-line-no">052</span><span id="line-52">                .withMotor(</span>
-<span class="source-line-no">053</span><span id="line-53">                        "Center Motor",</span>
-<span class="source-line-no">054</span><span id="line-54">                        shooterMotorCenter.getSupplyCurrent(),</span>
-<span class="source-line-no">055</span><span id="line-55">                        shooterMotorCenter.getStatorCurrent(),</span>
-<span class="source-line-no">056</span><span id="line-56">                        shooterMotorCenter.getVelocity())</span>
-<span class="source-line-no">057</span><span id="line-57">                .withMotor(</span>
-<span class="source-line-no">058</span><span id="line-58">                        "Left Motor",</span>
-<span class="source-line-no">059</span><span id="line-59">                        shooterMotorLeft.getSupplyCurrent(),</span>
-<span class="source-line-no">060</span><span id="line-60">                        shooterMotorLeft.getStatorCurrent(),</span>
-<span class="source-line-no">061</span><span id="line-61">                        shooterMotorLeft.getVelocity());</span>
-<span class="source-line-no">062</span><span id="line-62">        // configure</span>
-<span class="source-line-no">063</span><span id="line-63">        Motors.Shooter.SHOOTER_MOTOR_RIGHT.configure(shooterMotorRight);</span>
-<span class="source-line-no">064</span><span id="line-64">        Motors.Shooter.SHOOTER_MOTOR_CENTER.configure(shooterMotorCenter);</span>
-<span class="source-line-no">065</span><span id="line-65">        Motors.Shooter.SHOOTER_MOTOR_LEFT.configure(shooterMotorLeft);</span>
-<span class="source-line-no">066</span><span id="line-66">        // Set center and left to follow right</span>
-<span class="source-line-no">067</span><span id="line-67">        shooterFollowerController = new Follower(shooterMotorRight.getDeviceID(), MotorAlignmentValue.Opposed);</span>
-<span class="source-line-no">068</span><span id="line-68">        shooterMotorCenter.setControl(shooterFollowerController);</span>
-<span class="source-line-no">069</span><span id="line-69">        shooterMotorLeft.setControl(shooterFollowerController);</span>
-<span class="source-line-no">070</span><span id="line-70">        voltageOverride = Optional.empty();</span>
-<span class="source-line-no">071</span><span id="line-71">    }</span>
-<span class="source-line-no">072</span><span id="line-72"></span>
-<span class="source-line-no">073</span><span id="line-73">    @Override</span>
-<span class="source-line-no">074</span><span id="line-74">    public void setVoltageOverride(Voltage voltage) {</span>
-<span class="source-line-no">075</span><span id="line-75">        this.voltageOverride = Optional.of(voltage);</span>
-<span class="source-line-no">076</span><span id="line-76">    }</span>
-<span class="source-line-no">077</span><span id="line-77"></span>
-<span class="source-line-no">078</span><span id="line-78">    @Override</span>
-<span class="source-line-no">079</span><span id="line-79">    public AngularVelocity getCurrentAngularVelocity() {</span>
-<span class="source-line-no">080</span><span id="line-80">        return shooterMotorRight.getVelocity().getValue();</span>
-<span class="source-line-no">081</span><span id="line-81">    }</span>
-<span class="source-line-no">082</span><span id="line-82"></span>
-<span class="source-line-no">083</span><span id="line-83">    @Override</span>
-<span class="source-line-no">084</span><span id="line-84">    protected void stopMotors() {</span>
-<span class="source-line-no">085</span><span id="line-85">        shooterMotorRight.stopMotor();</span>
-<span class="source-line-no">086</span><span id="line-86">        shooterMotorCenter.stopMotor();</span>
-<span class="source-line-no">087</span><span id="line-87">        shooterMotorLeft.stopMotor();</span>
-<span class="source-line-no">088</span><span id="line-88">        shooterMotorCenter.setControl(shooterFollowerController);</span>
-<span class="source-line-no">089</span><span id="line-89">        shooterMotorLeft.setControl(shooterFollowerController);</span>
-<span class="source-line-no">090</span><span id="line-90">    }</span>
-<span class="source-line-no">091</span><span id="line-91"></span>
-<span class="source-line-no">092</span><span id="line-92">    @Override</span>
-<span class="source-line-no">093</span><span id="line-93">    public void periodic() {</span>
-<span class="source-line-no">094</span><span id="line-94">        if (!Settings.EnabledSubsystems.SHOOTER.get()) {</span>
-<span class="source-line-no">095</span><span id="line-95">            stopMotors();</span>
-<span class="source-line-no">096</span><span id="line-96">            return;</span>
-<span class="source-line-no">097</span><span id="line-97">        }</span>
-<span class="source-line-no">098</span><span id="line-98">        if (voltageOverride.isPresent()) {</span>
-<span class="source-line-no">099</span><span id="line-99">            shooterMotorRight.setVoltage(voltageOverride.get().in(Volts));</span>
-<span class="source-line-no">100</span><span id="line-100">            return;</span>
-<span class="source-line-no">101</span><span id="line-101">        }</span>
-<span class="source-line-no">102</span><span id="line-102">        final AngularVelocity targetAngularVelocity = getState().getTargetAngularVelocity();</span>
-<span class="source-line-no">103</span><span id="line-103">        final VelocityTorqueCurrentFOC shooterControl = shooterController.withVelocity(targetAngularVelocity);</span>
-<span class="source-line-no">104</span><span id="line-104">        shooterMotorRight.setControl(shooterControl);</span>
-<span class="source-line-no">105</span><span id="line-105">        this.signals.logAll();</span>
-<span class="source-line-no">106</span><span id="line-106">        super.periodic();</span>
-<span class="source-line-no">107</span><span id="line-107">    }</span>
-<span class="source-line-no">108</span><span id="line-108"></span>
-<span class="source-line-no">109</span><span id="line-109">    @Override</span>
-<span class="source-line-no">110</span><span id="line-110">    public SysIdRoutine getShooterSysIdRoutine() {</span>
-<span class="source-line-no">111</span><span id="line-111">        return SysId.getRoutine(</span>
-<span class="source-line-no">112</span><span id="line-112">                Settings.Shooter.RAMP_RATE,</span>
-<span class="source-line-no">113</span><span id="line-113">                Settings.Shooter.STEP_VOLTAGE,</span>
-<span class="source-line-no">114</span><span id="line-114">                "Shooter",</span>
-<span class="source-line-no">115</span><span id="line-115">                this::setVoltageOverride,</span>
-<span class="source-line-no">116</span><span id="line-116">                () -&gt; shooterMotorRight.getPosition().getValue(),</span>
-<span class="source-line-no">117</span><span id="line-117">                () -&gt; shooterMotorRight.getVelocity().getValue(),</span>
-<span class="source-line-no">118</span><span id="line-118">                () -&gt; shooterMotorRight.getMotorVoltage().getValue(),</span>
-<span class="source-line-no">119</span><span id="line-119">                getInstance());</span>
-<span class="source-line-no">120</span><span id="line-120">    }</span>
-<span class="source-line-no">121</span><span id="line-121">}</span>
+<span class="source-line-no">014</span><span id="line-14">import com.stuypulse.robot.constants.Gains;</span>
+<span class="source-line-no">015</span><span id="line-15">import com.stuypulse.robot.constants.Motors;</span>
+<span class="source-line-no">016</span><span id="line-16">import com.stuypulse.robot.constants.Ports;</span>
+<span class="source-line-no">017</span><span id="line-17">import com.stuypulse.robot.constants.Settings;</span>
+<span class="source-line-no">018</span><span id="line-18">import com.stuypulse.robot.util.LoggedSignals;</span>
+<span class="source-line-no">019</span><span id="line-19">import com.stuypulse.robot.util.SysId;</span>
+<span class="source-line-no">020</span><span id="line-20">import edu.wpi.first.units.measure.AngularVelocity;</span>
+<span class="source-line-no">021</span><span id="line-21">import edu.wpi.first.units.measure.Voltage;</span>
+<span class="source-line-no">022</span><span id="line-22">import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;</span>
+<span class="source-line-no">023</span><span id="line-23">import java.util.Optional;</span>
+<span class="source-line-no">024</span><span id="line-24"></span>
+<span class="source-line-no">025</span><span id="line-25">public class ShooterImpl extends Shooter {</span>
+<span class="source-line-no">026</span><span id="line-26"></span>
+<span class="source-line-no">027</span><span id="line-27">    private final TalonFX shooterMotorLeft;</span>
+<span class="source-line-no">028</span><span id="line-28"></span>
+<span class="source-line-no">029</span><span id="line-29">    private final TalonFX shooterMotorCenter;</span>
+<span class="source-line-no">030</span><span id="line-30"></span>
+<span class="source-line-no">031</span><span id="line-31">    private final TalonFX shooterMotorRight;</span>
+<span class="source-line-no">032</span><span id="line-32"></span>
+<span class="source-line-no">033</span><span id="line-33">    private final VelocityTorqueCurrentFOC shooterController;</span>
+<span class="source-line-no">034</span><span id="line-34"></span>
+<span class="source-line-no">035</span><span id="line-35">    private final Follower shooterFollowerController;</span>
+<span class="source-line-no">036</span><span id="line-36"></span>
+<span class="source-line-no">037</span><span id="line-37">    private final LoggedSignals signals;</span>
+<span class="source-line-no">038</span><span id="line-38"></span>
+<span class="source-line-no">039</span><span id="line-39">    private Optional&lt;Voltage&gt; voltageOverride;</span>
+<span class="source-line-no">040</span><span id="line-40"></span>
+<span class="source-line-no">041</span><span id="line-41">    public ShooterImpl() {</span>
+<span class="source-line-no">042</span><span id="line-42">        // leader</span>
+<span class="source-line-no">043</span><span id="line-43">        shooterMotorRight = new TalonFX(Ports.Shooter.SHOOTER_MOTOR_RIGHT, Settings.CANBUS);</span>
+<span class="source-line-no">044</span><span id="line-44">        shooterMotorCenter = new TalonFX(Ports.Shooter.SHOOTER_MOTOR_CENTER, Settings.CANBUS);</span>
+<span class="source-line-no">045</span><span id="line-45">        shooterMotorLeft = new TalonFX(Ports.Shooter.SHOOTER_MOTOR_LEFT, Settings.CANBUS);</span>
+<span class="source-line-no">046</span><span id="line-46">        shooterController = new VelocityTorqueCurrentFOC(getState().getTargetAngularVelocity());</span>
+<span class="source-line-no">047</span><span id="line-47">        signals = new LoggedSignals(LoggedSignals.SignalLocation.CANIVORE, "Shooter/")</span>
+<span class="source-line-no">048</span><span id="line-48">                .withMotor(</span>
+<span class="source-line-no">049</span><span id="line-49">                        "Right Motor",</span>
+<span class="source-line-no">050</span><span id="line-50">                        shooterMotorRight.getSupplyCurrent(),</span>
+<span class="source-line-no">051</span><span id="line-51">                        shooterMotorRight.getStatorCurrent(),</span>
+<span class="source-line-no">052</span><span id="line-52">                        shooterMotorRight.getVelocity())</span>
+<span class="source-line-no">053</span><span id="line-53">                .withMotor(</span>
+<span class="source-line-no">054</span><span id="line-54">                        "Center Motor",</span>
+<span class="source-line-no">055</span><span id="line-55">                        shooterMotorCenter.getSupplyCurrent(),</span>
+<span class="source-line-no">056</span><span id="line-56">                        shooterMotorCenter.getStatorCurrent(),</span>
+<span class="source-line-no">057</span><span id="line-57">                        shooterMotorCenter.getVelocity())</span>
+<span class="source-line-no">058</span><span id="line-58">                .withMotor(</span>
+<span class="source-line-no">059</span><span id="line-59">                        "Left Motor",</span>
+<span class="source-line-no">060</span><span id="line-60">                        shooterMotorLeft.getSupplyCurrent(),</span>
+<span class="source-line-no">061</span><span id="line-61">                        shooterMotorLeft.getStatorCurrent(),</span>
+<span class="source-line-no">062</span><span id="line-62">                        shooterMotorLeft.getVelocity());</span>
+<span class="source-line-no">063</span><span id="line-63">        // configure</span>
+<span class="source-line-no">064</span><span id="line-64">        Motors.Shooter.SHOOTER_MOTOR_RIGHT.configure(shooterMotorRight);</span>
+<span class="source-line-no">065</span><span id="line-65">        Motors.Shooter.SHOOTER_MOTOR_CENTER.configure(shooterMotorCenter);</span>
+<span class="source-line-no">066</span><span id="line-66">        Motors.Shooter.SHOOTER_MOTOR_LEFT.configure(shooterMotorLeft);</span>
+<span class="source-line-no">067</span><span id="line-67">        // Set center and left to follow right</span>
+<span class="source-line-no">068</span><span id="line-68">        shooterFollowerController = new Follower(shooterMotorRight.getDeviceID(), MotorAlignmentValue.Opposed);</span>
+<span class="source-line-no">069</span><span id="line-69">        shooterMotorCenter.setControl(shooterFollowerController);</span>
+<span class="source-line-no">070</span><span id="line-70">        shooterMotorLeft.setControl(shooterFollowerController);</span>
+<span class="source-line-no">071</span><span id="line-71">        voltageOverride = Optional.empty();</span>
+<span class="source-line-no">072</span><span id="line-72">    }</span>
+<span class="source-line-no">073</span><span id="line-73"></span>
+<span class="source-line-no">074</span><span id="line-74">    @Override</span>
+<span class="source-line-no">075</span><span id="line-75">    public void setVoltageOverride(Voltage voltage) {</span>
+<span class="source-line-no">076</span><span id="line-76">        this.voltageOverride = Optional.of(voltage);</span>
+<span class="source-line-no">077</span><span id="line-77">    }</span>
+<span class="source-line-no">078</span><span id="line-78"></span>
+<span class="source-line-no">079</span><span id="line-79">    @Override</span>
+<span class="source-line-no">080</span><span id="line-80">    public AngularVelocity getCurrentAngularVelocity() {</span>
+<span class="source-line-no">081</span><span id="line-81">        return shooterMotorRight.getVelocity().getValue();</span>
+<span class="source-line-no">082</span><span id="line-82">    }</span>
+<span class="source-line-no">083</span><span id="line-83"></span>
+<span class="source-line-no">084</span><span id="line-84">    @Override</span>
+<span class="source-line-no">085</span><span id="line-85">    protected void stopMotors() {</span>
+<span class="source-line-no">086</span><span id="line-86">        shooterMotorRight.stopMotor();</span>
+<span class="source-line-no">087</span><span id="line-87">        shooterMotorCenter.stopMotor();</span>
+<span class="source-line-no">088</span><span id="line-88">        shooterMotorLeft.stopMotor();</span>
+<span class="source-line-no">089</span><span id="line-89">        shooterMotorCenter.setControl(shooterFollowerController);</span>
+<span class="source-line-no">090</span><span id="line-90">        shooterMotorLeft.setControl(shooterFollowerController);</span>
+<span class="source-line-no">091</span><span id="line-91">    }</span>
+<span class="source-line-no">092</span><span id="line-92"></span>
+<span class="source-line-no">093</span><span id="line-93">    @Override</span>
+<span class="source-line-no">094</span><span id="line-94">    public void periodic() {</span>
+<span class="source-line-no">095</span><span id="line-95">        if (!Settings.EnabledSubsystems.SHOOTER.get()) {</span>
+<span class="source-line-no">096</span><span id="line-96">            stopMotors();</span>
+<span class="source-line-no">097</span><span id="line-97">            return;</span>
+<span class="source-line-no">098</span><span id="line-98">        }</span>
+<span class="source-line-no">099</span><span id="line-99">        if (voltageOverride.isPresent()) {</span>
+<span class="source-line-no">100</span><span id="line-100">            shooterMotorRight.setVoltage(voltageOverride.get().in(Volts));</span>
+<span class="source-line-no">101</span><span id="line-101">            return;</span>
+<span class="source-line-no">102</span><span id="line-102">        }</span>
+<span class="source-line-no">103</span><span id="line-103"></span>
+<span class="source-line-no">104</span><span id="line-104">        Motors.Shooter.SHOOTER_MOTOR_RIGHT.updateGainsConfig(shooterMotorRight, 0, Gains.Shooter.kP, Gains.Shooter.kI, Gains.Shooter.kD, Gains.Shooter.kS, Gains.Shooter.kV, Gains.Shooter.kA);</span>
+<span class="source-line-no">105</span><span id="line-105"></span>
+<span class="source-line-no">106</span><span id="line-106">        final AngularVelocity targetAngularVelocity = getState().getTargetAngularVelocity();</span>
+<span class="source-line-no">107</span><span id="line-107">        final VelocityTorqueCurrentFOC shooterControl = shooterController.withVelocity(targetAngularVelocity);</span>
+<span class="source-line-no">108</span><span id="line-108">        shooterMotorRight.setControl(shooterControl);</span>
+<span class="source-line-no">109</span><span id="line-109">        this.signals.logAll();</span>
+<span class="source-line-no">110</span><span id="line-110">        super.periodic();</span>
+<span class="source-line-no">111</span><span id="line-111">    }</span>
+<span class="source-line-no">112</span><span id="line-112"></span>
+<span class="source-line-no">113</span><span id="line-113">    @Override</span>
+<span class="source-line-no">114</span><span id="line-114">    public SysIdRoutine getShooterSysIdRoutine() {</span>
+<span class="source-line-no">115</span><span id="line-115">        return SysId.getRoutine(</span>
+<span class="source-line-no">116</span><span id="line-116">                Settings.Shooter.RAMP_RATE,</span>
+<span class="source-line-no">117</span><span id="line-117">                Settings.Shooter.STEP_VOLTAGE,</span>
+<span class="source-line-no">118</span><span id="line-118">                "Shooter",</span>
+<span class="source-line-no">119</span><span id="line-119">                this::setVoltageOverride,</span>
+<span class="source-line-no">120</span><span id="line-120">                () -&gt; shooterMotorRight.getPosition().getValue(),</span>
+<span class="source-line-no">121</span><span id="line-121">                () -&gt; shooterMotorRight.getVelocity().getValue(),</span>
+<span class="source-line-no">122</span><span id="line-122">                () -&gt; shooterMotorRight.getMotorVoltage().getValue(),</span>
+<span class="source-line-no">123</span><span id="line-123">                getInstance());</span>
+<span class="source-line-no">124</span><span id="line-124">    }</span>
+<span class="source-line-no">125</span><span id="line-125">}</span>
 
 
 

@@ -119,27 +119,27 @@
 <span class="source-line-no">106</span><span id="line-106">                // .withFFConstants(Gains.Shooter.kS, Gains.Shooter.kV, Gains.Shooter.kA, 0)</span>
 <span class="source-line-no">107</span><span id="line-107">                // .withInvertedValue(InvertedValue.Clockwise_Positive);</span>
 <span class="source-line-no">108</span><span id="line-108">                TalonFXConfig SHOOTER_MOTOR_LEFT = new TalonFXConfig()</span>
-<span class="source-line-no">109</span><span id="line-109">                                .withPIDConstants(Gains.Shooter.kP, Gains.Shooter.kI, Gains.Shooter.kD, 0)</span>
+<span class="source-line-no">109</span><span id="line-109">                                .withPIDConstants(Gains.Shooter.kP.get(), Gains.Shooter.kI.get(), Gains.Shooter.kD.get(), 0)</span>
 <span class="source-line-no">110</span><span id="line-110">                                .withStatorCurrentLimitAmps(80)</span>
 <span class="source-line-no">111</span><span id="line-111">                                // .withRampRate(0.25)</span>
 <span class="source-line-no">112</span><span id="line-112">                                .withNeutralMode(NeutralModeValue.Coast)</span>
-<span class="source-line-no">113</span><span id="line-113">                                .withFFConstants(Gains.Shooter.kS, Gains.Shooter.kV, Gains.Shooter.kA, 0)</span>
+<span class="source-line-no">113</span><span id="line-113">                                .withFFConstants(Gains.Shooter.kS.get(), Gains.Shooter.kV.get(), Gains.Shooter.kA.get(), 0)</span>
 <span class="source-line-no">114</span><span id="line-114">                                .withInvertedValue(InvertedValue.CounterClockwise_Positive);</span>
 <span class="source-line-no">115</span><span id="line-115"></span>
 <span class="source-line-no">116</span><span id="line-116">                TalonFXConfig SHOOTER_MOTOR_CENTER = new TalonFXConfig()</span>
-<span class="source-line-no">117</span><span id="line-117">                                .withPIDConstants(Gains.Shooter.kP, Gains.Shooter.kI, Gains.Shooter.kD, 0)</span>
+<span class="source-line-no">117</span><span id="line-117">                                .withPIDConstants(Gains.Shooter.kP.get(), Gains.Shooter.kI.get(), Gains.Shooter.kD.get(), 0)</span>
 <span class="source-line-no">118</span><span id="line-118">                                .withStatorCurrentLimitAmps(80)</span>
 <span class="source-line-no">119</span><span id="line-119">                                // .withRampRate(0.25)</span>
 <span class="source-line-no">120</span><span id="line-120">                                .withNeutralMode(NeutralModeValue.Coast)</span>
-<span class="source-line-no">121</span><span id="line-121">                                .withFFConstants(Gains.Shooter.kS, Gains.Shooter.kV, Gains.Shooter.kA, 0)</span>
+<span class="source-line-no">121</span><span id="line-121">                                .withFFConstants(Gains.Shooter.kS.get(), Gains.Shooter.kV.get(), Gains.Shooter.kA.get(), 0)</span>
 <span class="source-line-no">122</span><span id="line-122">                                .withInvertedValue(InvertedValue.CounterClockwise_Positive);</span>
 <span class="source-line-no">123</span><span id="line-123"></span>
 <span class="source-line-no">124</span><span id="line-124">                TalonFXConfig SHOOTER_MOTOR_RIGHT = new TalonFXConfig()</span>
-<span class="source-line-no">125</span><span id="line-125">                                .withPIDConstants(Gains.Shooter.kP, Gains.Shooter.kI, Gains.Shooter.kD, 0)</span>
+<span class="source-line-no">125</span><span id="line-125">                                .withPIDConstants(Gains.Shooter.kP.get(), Gains.Shooter.kI.get(), Gains.Shooter.kD.get(), 0)</span>
 <span class="source-line-no">126</span><span id="line-126">                                .withStatorCurrentLimitAmps(80)</span>
 <span class="source-line-no">127</span><span id="line-127">                                // .withRampRate(0.25)</span>
 <span class="source-line-no">128</span><span id="line-128">                                .withNeutralMode(NeutralModeValue.Coast)</span>
-<span class="source-line-no">129</span><span id="line-129">                                .withFFConstants(Gains.Shooter.kS, Gains.Shooter.kV, Gains.Shooter.kA, 0)</span>
+<span class="source-line-no">129</span><span id="line-129">                                .withFFConstants(Gains.Shooter.kS.get(), Gains.Shooter.kV.get(), Gains.Shooter.kA.get(), 0)</span>
 <span class="source-line-no">130</span><span id="line-130">                                .withInvertedValue(InvertedValue.Clockwise_Positive);</span>
 <span class="source-line-no">131</span><span id="line-131">        }</span>
 <span class="source-line-no">132</span><span id="line-132"></span>
