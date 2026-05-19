@@ -35,6 +35,7 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           cp assets/javadoc/favicon.ico build/docs/javadoc/
+          cp assets/javadoc/javadocs.js build/docs/javadoc/
           cp assets/logos/StuyPlusLogo.png build/docs/javadoc/
           git fetch origin docs
           git checkout docs
