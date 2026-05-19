@@ -71,40 +71,42 @@
 <span class="source-line-no">058</span><span id="line-58"></span>
 <span class="source-line-no">059</span><span id="line-59">    public enum ShooterState {</span>
 <span class="source-line-no">060</span><span id="line-60"></span>
-<span class="source-line-no">061</span><span id="line-61">        // SOTM(() -&gt; 0.0), // TODO: Make actual suppliers</span>
+<span class="source-line-no">061</span><span id="line-61">        // SOTM(() -&gt; 0.0), </span>
 <span class="source-line-no">062</span><span id="line-62">        // FOTM(() -&gt; 0.0),</span>
 <span class="source-line-no">063</span><span id="line-63">        IDLE(() -&gt; 0.0),</span>
-<span class="source-line-no">064</span><span id="line-64">        SHOOT(() -&gt; InterpolationCalculator.interpolateShotInfo().targetRPM()),</span>
-<span class="source-line-no">065</span><span id="line-65">        FERRY(() -&gt; InterpolationCalculator.interpolateFerryingInfo().targetRPM()),</span>
-<span class="source-line-no">066</span><span id="line-66">        MANUAL_HUB(() -&gt; Settings.Shooter.MANUAL_HUB_RPM.in(RPM));</span>
-<span class="source-line-no">067</span><span id="line-67"></span>
-<span class="source-line-no">068</span><span id="line-68">        private DoubleSupplier RPMSupplier;</span>
+<span class="source-line-no">064</span><span id="line-64">        SHOOT(Settings.Shooter.SHOOT_TUNING_RPM), //TODO:Replace with interpolated RPM after data is gathered</span>
+<span class="source-line-no">065</span><span id="line-65">        FERRY(Settings.Shooter.FERRY_TUNING_RPM),</span>
+<span class="source-line-no">066</span><span id="line-66">        // SHOOT(() -&gt; InterpolationCalculator.interpolateShotInfo().targetRPM()),</span>
+<span class="source-line-no">067</span><span id="line-67">        // FERRY(() -&gt; InterpolationCalculator.interpolateFerryingInfo().targetRPM()),</span>
+<span class="source-line-no">068</span><span id="line-68">        MANUAL_HUB(() -&gt; Settings.Shooter.MANUAL_HUB_RPM.in(RPM));</span>
 <span class="source-line-no">069</span><span id="line-69"></span>
-<span class="source-line-no">070</span><span id="line-70">        private ShooterState(DoubleSupplier RPMSupplier) {</span>
-<span class="source-line-no">071</span><span id="line-71">            this.RPMSupplier = RPMSupplier;</span>
-<span class="source-line-no">072</span><span id="line-72">        }</span>
-<span class="source-line-no">073</span><span id="line-73"></span>
-<span class="source-line-no">074</span><span id="line-74">        public AngularVelocity getTargetAngularVelocity() {</span>
-<span class="source-line-no">075</span><span id="line-75">            return RPM.of(RPMSupplier.getAsDouble());</span>
-<span class="source-line-no">076</span><span id="line-76">        }</span>
-<span class="source-line-no">077</span><span id="line-77">    }</span>
-<span class="source-line-no">078</span><span id="line-78"></span>
-<span class="source-line-no">079</span><span id="line-79">    public abstract AngularVelocity getCurrentAngularVelocity();</span>
+<span class="source-line-no">070</span><span id="line-70">        private DoubleSupplier RPMSupplier;</span>
+<span class="source-line-no">071</span><span id="line-71"></span>
+<span class="source-line-no">072</span><span id="line-72">        private ShooterState(DoubleSupplier RPMSupplier) {</span>
+<span class="source-line-no">073</span><span id="line-73">            this.RPMSupplier = RPMSupplier;</span>
+<span class="source-line-no">074</span><span id="line-74">        }</span>
+<span class="source-line-no">075</span><span id="line-75"></span>
+<span class="source-line-no">076</span><span id="line-76">        public AngularVelocity getTargetAngularVelocity() {</span>
+<span class="source-line-no">077</span><span id="line-77">            return RPM.of(RPMSupplier.getAsDouble());</span>
+<span class="source-line-no">078</span><span id="line-78">        }</span>
+<span class="source-line-no">079</span><span id="line-79">    }</span>
 <span class="source-line-no">080</span><span id="line-80"></span>
-<span class="source-line-no">081</span><span id="line-81">    protected abstract void stopMotors();</span>
+<span class="source-line-no">081</span><span id="line-81">    public abstract AngularVelocity getCurrentAngularVelocity();</span>
 <span class="source-line-no">082</span><span id="line-82"></span>
-<span class="source-line-no">083</span><span id="line-83">    public abstract SysIdRoutine getShooterSysIdRoutine();</span>
+<span class="source-line-no">083</span><span id="line-83">    protected abstract void stopMotors();</span>
 <span class="source-line-no">084</span><span id="line-84"></span>
-<span class="source-line-no">085</span><span id="line-85">    public abstract void setVoltageOverride(Voltage voltage);</span>
+<span class="source-line-no">085</span><span id="line-85">    public abstract SysIdRoutine getShooterSysIdRoutine();</span>
 <span class="source-line-no">086</span><span id="line-86"></span>
-<span class="source-line-no">087</span><span id="line-87">    @Override</span>
-<span class="source-line-no">088</span><span id="line-88">    public void periodic() {</span>
-<span class="source-line-no">089</span><span id="line-89">        final ShooterState currentState = getState();</span>
-<span class="source-line-no">090</span><span id="line-90">        DogLog.log("Shooter/Target RPM", currentState.getTargetAngularVelocity().in(RPM));</span>
-<span class="source-line-no">091</span><span id="line-91">        DogLog.log("Shooter/State", currentState.name());</span>
-<span class="source-line-no">092</span><span id="line-92">        DogLog.log("States/Shooter", currentState.name());</span>
-<span class="source-line-no">093</span><span id="line-93">    }</span>
-<span class="source-line-no">094</span><span id="line-94">}</span>
+<span class="source-line-no">087</span><span id="line-87">    public abstract void setVoltageOverride(Voltage voltage);</span>
+<span class="source-line-no">088</span><span id="line-88"></span>
+<span class="source-line-no">089</span><span id="line-89">    @Override</span>
+<span class="source-line-no">090</span><span id="line-90">    public void periodic() {</span>
+<span class="source-line-no">091</span><span id="line-91">        final ShooterState currentState = getState();</span>
+<span class="source-line-no">092</span><span id="line-92">        DogLog.log("Shooter/Target RPM", currentState.getTargetAngularVelocity().in(RPM));</span>
+<span class="source-line-no">093</span><span id="line-93">        DogLog.log("Shooter/State", currentState.name());</span>
+<span class="source-line-no">094</span><span id="line-94">        DogLog.log("States/Shooter", currentState.name());</span>
+<span class="source-line-no">095</span><span id="line-95">    }</span>
+<span class="source-line-no">096</span><span id="line-96">}</span>
 
 
 

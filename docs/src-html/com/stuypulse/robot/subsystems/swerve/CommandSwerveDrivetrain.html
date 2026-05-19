@@ -611,9 +611,13 @@
 <span class="source-line-no">598</span><span id="line-598">                        DogLog.log("Swerve/Field Relative Rotation", getPose().getRotation().getDegrees());</span>
 <span class="source-line-no">599</span><span id="line-599">                        DogLog.log("Swerve/Velocity Field Relative Y (m per s)", getFieldRelativeSpeeds().y);</span>
 <span class="source-line-no">600</span><span id="line-600">                        DogLog.log("Swerve/Angular Velocity (rad per s)", getChassisSpeeds().omegaRadiansPerSecond);</span>
-<span class="source-line-no">601</span><span id="line-601">                }</span>
-<span class="source-line-no">602</span><span id="line-602">        }</span>
-<span class="source-line-no">603</span><span id="line-603">}</span>
+<span class="source-line-no">601</span><span id="line-601"></span>
+<span class="source-line-no">602</span><span id="line-602">                        //Distance in meters</span>
+<span class="source-line-no">603</span><span id="line-603">                        DogLog.forceNt.log("Swerve/Distance From Hub", pose.getTranslation().getDistance(Field.getHubPose().getTranslation()));</span>
+<span class="source-line-no">604</span><span id="line-604">                        DogLog.forceNt.log("Swerve/Distance From Ferry Zone", pose.getTranslation().getDistance(Field.getFerryZonePose(pose.getTranslation()).getTranslation()));</span>
+<span class="source-line-no">605</span><span id="line-605">                }</span>
+<span class="source-line-no">606</span><span id="line-606">        }</span>
+<span class="source-line-no">607</span><span id="line-607">}</span>
 
 
 
