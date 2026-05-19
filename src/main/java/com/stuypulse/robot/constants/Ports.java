@@ -31,7 +31,7 @@ public interface Ports {
         int SHOOTER_MOTOR_LEFT = 30;
 
         // TODO: get after champs
-        int SHOOTER_MOTOR_CENTER = 100;
+        int SHOOTER_MOTOR_CENTER = 54;
 
         int SHOOTER_MOTOR_RIGHT = 47;
     }
