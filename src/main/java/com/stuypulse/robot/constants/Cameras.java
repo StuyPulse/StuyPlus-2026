@@ -9,8 +9,9 @@ import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.util.Units;
 
-public class Cameras {
+import com.stuypulse.robot.util.vision.Camera;
 
+public class Cameras {
         public static final Camera[] LimelightCameras = new Camera[] {
                 new Camera("limelight",
                                 new Pose3d(
@@ -22,21 +23,4 @@ public class Cameras {
                                         Units.degreesToRadians(28),
                                         Units.degreesToRadians(180))))
         };
-
-        public record Camera(String name, Pose3d location) {
-        }
-        // public static class Camera {
-        // private String name;
-        // private Pose3d location;
-        // public Camera(String name, Pose3d location) {
-        // this.name = name;
-        // this.location = location;
-        // }
-        // public String getName(){
-        // return name;
-        // }
-        // public Pose3d getLocation() {
-        // return location;
-        // }
-        // }
 }
