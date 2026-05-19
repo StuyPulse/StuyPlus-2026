@@ -83,7 +83,7 @@ public interface Settings {
 
             Angle STOW_ANGLE = Degrees.of(-102);
 
-            Angle DEPLOY_ANGLE = Degrees.of(0);
+            Angle DEPLOY_ANGLE = Degrees.of(22);
 
             Angle AGITATE_UP_ANGLE = Degrees.of(-42);
 
@@ -92,7 +92,7 @@ public interface Settings {
             // misc
             Angle ANGLE_TOLERANCE = Degrees.of(0.5);
 
-            Angle PUSHDOWN_THRESHOLD = Degrees.of(-20);
+            Angle PUSHDOWN_THRESHOLD = Degrees.of(20);
 
             DoubleSubscriber PUSHDOWN_CURRENT = DogLog.tunable("Intake/Pivot/Pushdown Current Tuning Amps", 30.0);
 

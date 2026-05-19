@@ -51,7 +51,7 @@ public class Gains {
 
         Current kA = Amps.of(0);
 
-        Current kG = Amps.of(-13);
+        Current kG = Amps.of(-12);
 
         public interface Digestion {
 
