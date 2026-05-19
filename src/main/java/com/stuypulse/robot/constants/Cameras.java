@@ -12,16 +12,15 @@ import edu.wpi.first.math.util.Units;
 public class Cameras {
 
         public static final Camera[] LimelightCameras = new Camera[] {
-                        new Camera(
-                                        "limelight",
-                                        new Pose3d(
-                                                        Units.inchesToMeters(-12.109),
-                                                        Units.inchesToMeters(-7.129),
-                                                        Units.inchesToMeters(8.375), // TODO: get actual camera info
-                                                        new Rotation3d(
-                                                                        Units.degreesToRadians(180),
-                                                                        Units.degreesToRadians(28),
-                                                                        Units.degreesToRadians(180))))
+                new Camera("limelight",
+                                new Pose3d(
+                                        Units.inchesToMeters(-12.109),
+                                        Units.inchesToMeters(-7.129),
+                                        Units.inchesToMeters(8.375), // TODO: get actual camera info
+                                new Rotation3d(
+                                        Units.degreesToRadians(180),
+                                        Units.degreesToRadians(28),
+                                        Units.degreesToRadians(180))))
         };
 
         public record Camera(String name, Pose3d location) {
