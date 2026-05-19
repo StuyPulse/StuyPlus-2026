@@ -7,6 +7,26 @@ package com.stuypulse.robot.subsystems.intake;
 
 import java.util.Optional;
 
+import java.util.Optional;
+
+import com.stuypulse.robot.constants.Motors;
+import com.stuypulse.robot.constants.Ports;
+import com.stuypulse.robot.constants.Settings;
+import com.stuypulse.robot.util.SysId;
+import com.stuypulse.robot.util.simulation.TalonFXSimulation;
+
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.system.plant.DCMotor;
+import edu.wpi.first.math.system.plant.LinearSystemId;
+import edu.wpi.first.units.measure.Voltage;
+import edu.wpi.first.wpilibj.simulation.DCMotorSim;
+import edu.wpi.first.wpilibj.simulation.SingleJointedArmSim;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
+import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
+
 import com.ctre.phoenix6.controls.DutyCycleOut;
 import com.ctre.phoenix6.controls.Follower;
 import com.ctre.phoenix6.controls.PositionTorqueCurrentFOC;
@@ -91,13 +111,22 @@ public class IntakeSim extends Intake {
     }
 
     @Override
-    public boolean limitSwitchHit() {
-        return true;
+    public Trigger limitSwitchHit() {
+        return new Trigger(() -> false);
     }
     
     @Override
     public Angle getRelativePosition() {
         return Radians.of(pivotSim.getAngleRads() + zeroOffset.getRadians());
+    }
+
+    private void setZeroOffset(Rotation2d offset) {
+        zeroOffset = offset;
+    }
+
+    @Override
+    public Trigger pivotStalling() {
+        return new Trigger(() -> false);
     }
 
     @Override

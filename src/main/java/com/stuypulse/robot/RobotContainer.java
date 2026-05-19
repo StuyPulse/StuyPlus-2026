@@ -6,32 +6,50 @@
 package com.stuypulse.robot;
 
 import com.stuypulse.robot.commands.auton.DoNothingAuton;
-import com.stuypulse.robot.commands.feeder.FeederSetForward;
-import com.stuypulse.robot.commands.feeder.FeederSetIdle;
-import com.stuypulse.robot.commands.handoff.HandoffSetForward;
-import com.stuypulse.robot.commands.handoff.HandoffSetIdle;
-import com.stuypulse.robot.commands.intake.IntakeDigest;
-import com.stuypulse.robot.commands.intake.IntakeSetIdle;
-import com.stuypulse.robot.commands.intake.IntakeSetIntake;
-import com.stuypulse.robot.commands.intake.IntakeSetOuttake;
-import com.stuypulse.robot.commands.leds.LEDDefaultCommand;
-import com.stuypulse.robot.commands.shooter.ShooterSetFerry;
-import com.stuypulse.robot.commands.shooter.ShooterSetManual;
-import com.stuypulse.robot.commands.shooter.ShooterSetShoot;
+import com.stuypulse.robot.commands.auton.LBDisrupt;
+import com.stuypulse.robot.commands.auton.LBFerry;
+import com.stuypulse.robot.commands.auton.LBMid;
+import com.stuypulse.robot.commands.auton.LBStraight;
+import com.stuypulse.robot.commands.auton.LTDisrupt;
+import com.stuypulse.robot.commands.auton.LBMidlineSweep;
+import com.stuypulse.robot.commands.auton.LBOuttake;
+import com.stuypulse.robot.commands.auton.OutpostOnly;
+import com.stuypulse.robot.commands.auton.RBDisrupt;
+import com.stuypulse.robot.commands.auton.RBFerry;
+import com.stuypulse.robot.commands.auton.RBMid;
+import com.stuypulse.robot.commands.auton.RBStraight;
+import com.stuypulse.robot.commands.auton.RTDisrupt;
+import com.stuypulse.robot.commands.auton.RBMidlineSweep;
+import com.stuypulse.robot.commands.auton.RBOuttake;
+import com.stuypulse.robot.commands.auton.TwoMeterPath;
+import com.stuypulse.robot.commands.feeder.FeederCommands;
+import com.stuypulse.robot.commands.handoff.HandoffCommands;
 import com.stuypulse.robot.commands.swerve.SwerveDriveDrive;
 import com.stuypulse.robot.commands.swerve.SwerveDriveResetRotation;
+import com.stuypulse.robot.commands.swerve.SwerveDriveRotate;
 import com.stuypulse.robot.commands.swerve.SwerveDriveXMode;
 import com.stuypulse.robot.commands.swerve.driveAligned.SwerveDriveAlignToFerryZone;
 import com.stuypulse.robot.commands.swerve.driveAligned.SwerveDriveAlignToHub;
+import com.stuypulse.robot.commands.intake.IntakeCommands;
+// import com.stuypulse.robot.commands.intake.IntakeAgitateWhileOuttaking;
+import com.stuypulse.robot.commands.leds.LEDDefaultCommand;
+import com.stuypulse.robot.commands.shooter.ShooterCommands;
+// import com.stuypulse.robot.commands.intake.IntakeSetIntake;
+// import com.stuypulse.robot.commands.intake.IntakeSetOuttake;
 import com.stuypulse.robot.constants.Field;
 import com.stuypulse.robot.constants.Ports;
+import com.stuypulse.robot.constants.Settings;
 import com.stuypulse.robot.subsystems.feeder.Feeder;
 import com.stuypulse.robot.subsystems.handoff.Handoff;
+import com.stuypulse.robot.subsystems.handoff.Handoff.HandoffState;
 import com.stuypulse.robot.subsystems.intake.Intake;
 import com.stuypulse.robot.subsystems.leds.LEDController;
 import com.stuypulse.robot.subsystems.shooter.Shooter;
+import com.stuypulse.robot.subsystems.shooter.Shooter.ShooterState;
 import com.stuypulse.robot.subsystems.swerve.CommandSwerveDrivetrain;
 import com.stuypulse.robot.subsystems.vision.LimelightVision;
+
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -79,6 +97,11 @@ public class RobotContainer {
         configureDefaultCommands();
         configureButtonBindings();
         configureAutons();
+
+        configureIntakeLogic();
+        configureFeederLogic();
+        configureHandoffLogic();
+
         SmartDashboard.putData("Field", Field.FIELD2D);
     }
 
@@ -88,6 +111,48 @@ public class RobotContainer {
     private void configureDefaultCommands() {
         swerve.setDefaultCommand(new SwerveDriveDrive(driver));
         leds.setDefaultCommand(new LEDDefaultCommand());
+    }
+
+    // Subsystem automatic logic
+
+    private void configureIntakeLogic() {
+        intake.pivotStalling().or(intake.limitSwitchHit())
+                .onTrue(IntakeCommands.zeroPivotDeployed());
+    }
+
+    private void configureFeederLogic() {
+        swerve.notAlignedToHub().and(() -> shooter.getState() == ShooterState.SHOOT)
+                .whileTrue(FeederCommands.setIdle().repeatedly());
+
+        swerve.notAlignedToFerryZone().and(() -> shooter.getState() == ShooterState.FERRY)
+                .whileTrue(FeederCommands.setIdle().repeatedly());
+    }
+
+    private void configureHandoffLogic() {
+        Trigger cannotShoot = swerve.notAlignedToHub().and(() -> shooter.getState() == ShooterState.SHOOT);
+        Trigger cannotFerry = swerve.notAlignedToFerryZone().and(() -> shooter.getState() == ShooterState.FERRY);
+
+        cannotShoot
+                .whileTrue(HandoffCommands.setIdle().repeatedly());
+
+        cannotFerry
+                .whileTrue(HandoffCommands.setIdle().repeatedly());
+
+        handoff.handoffStalling()
+                .whileTrue(HandoffCommands.setReverse().repeatedly())
+                .onFalse(Commands.either(HandoffCommands.setIdle(),
+                        HandoffCommands.setForward(),
+                        cannotShoot.or(cannotFerry)));
+    }
+
+    private boolean isMoving(double axis, double db) {
+        return MathUtil.applyDeadband(axis, Settings.Driver.Drive.DEADBAND) != 0.0;
+    }
+
+    private boolean joysticksMoving() {
+        return isMoving(driver.getLeftX(), Settings.Driver.Drive.DEADBAND) ||
+                isMoving(driver.getLeftY(), Settings.Driver.Drive.DEADBAND) ||
+                isMoving(driver.getRightX(), Settings.Driver.Turn.DEADBAND);
     }
 
     /***************/
@@ -101,48 +166,60 @@ public class RobotContainer {
         // Trigger buttons did not work for some reason so I had to do this
         Trigger leftTrigger = new Trigger(() -> driver.getLeftTriggerAxis() > 0.5);
         Trigger rightTrigger = new Trigger(() -> driver.getRightTriggerAxis() > 0.5);
-        leftTrigger.onTrue(new IntakeSetIntake());
-        driver.leftBumper().whileTrue(new IntakeSetOuttake());
-        driver.leftBumper().onFalse(new IntakeSetIntake());
-        rightTrigger.onTrue(
-                new SwerveDriveAlignToHub()
-                        .andThen(new SwerveDriveXMode())
-                        .andThen(new ShooterSetShoot())
-                        .andThen(new HandoffSetForward())
-                        .alongWith(new FeederSetForward(), new IntakeDigest()));
-        // Top Left Paddle
-        driver.a().onTrue(new IntakeSetIdle());
-        driver.povUp().onTrue(new SwerveDriveResetRotation());
-        driver
-                .rightBumper()
-                .onTrue(
-                        new SwerveDriveAlignToFerryZone()
-                                .andThen(new SwerveDriveXMode())
-                                .andThen(new ShooterSetFerry())
-                                .andThen(new HandoffSetForward())
-                                .alongWith(new FeederSetForward(), new IntakeDigest()));
-        // Bottom Right Paddle
-        // Manual shooting possibly from in front of the hub
-        driver
-                .y()
-                .onTrue(
-                        new SwerveDriveXMode()
-                                .andThen(new ShooterSetManual())
-                                .andThen(new HandoffSetForward())
-                                .alongWith(new FeederSetForward(), new IntakeDigest()));
-        // Top Right Paddle
-        driver
-                .b()
-                .onTrue(
-                        new HandoffSetIdle()
-                                .alongWith(
-                                        new FeederSetIdle(),
-                                        new IntakeSetIntake(),
-                                        Commands.runOnce(
-                                                () -> new SwerveDriveXMode()
-                                                        .cancel())));
-        // Bottom Left Paddle
-        driver.x().whileTrue(new SwerveDriveXMode());
+
+        Trigger isShooting = new Trigger(() -> handoff.getState() == HandoffState.FORWARD);
+
+        //Move joysticks or top right paddle pressed
+        Trigger cancelShooting = new Trigger(this::joysticksMoving).or(driver.b());
+
+        //This way X Mode will cancel when stopping shooting
+        isShooting 
+            .whileTrue(new SwerveDriveXMode());
+
+        rightTrigger.onTrue(new SwerveDriveAlignToHub()
+            .andThen(ShooterCommands.setShoot())
+            .andThen(HandoffCommands.setForward()
+                .alongWith(FeederCommands.setForward(), IntakeCommands.agitateFastOnce().repeatedly()))
+            .until(cancelShooting));
+
+        driver.rightBumper().onTrue(new SwerveDriveAlignToFerryZone()
+            .andThen(ShooterCommands.setFerry())
+            .andThen(HandoffCommands.setForward()
+                .alongWith(FeederCommands.setForward(), IntakeCommands.agitateFastOnce().repeatedly()))
+            .until(cancelShooting));
+
+        //Bottom Right Paddle
+        driver.y().onTrue(ShooterCommands.setManual()
+            .andThen(HandoffCommands.setForward()
+                .alongWith(FeederCommands.setForward(), IntakeCommands.agitateFastOnce().repeatedly()))
+            .until(cancelShooting));
+
+            
+        //Only trigger button press when not shooting
+
+        leftTrigger.and(isShooting.negate())
+            .onTrue(IntakeCommands.setIntake());
+
+        driver.leftBumper().and(isShooting.negate())
+            .whileTrue(IntakeCommands.setOuttake());
+        driver.leftBumper().and(isShooting.negate())
+            .onFalse(IntakeCommands.setIntake());
+
+        //Top Left Paddle
+        driver.a().and(isShooting.negate())
+            .onTrue(IntakeCommands.setIdle());
+    
+        //Bottom Left Paddle
+        driver.x().and(isShooting.negate())
+            .whileTrue(new SwerveDriveXMode());
+
+        driver.povUp()
+            .onTrue(new SwerveDriveResetRotation());
+
+        //Stop shooting when joysticks move or top right paddle pressed
+        cancelShooting.and(isShooting)
+            .onTrue(HandoffCommands.setIdle()
+                .alongWith(FeederCommands.setIdle(), IntakeCommands.setIntake()));
     }
 
     /**************/

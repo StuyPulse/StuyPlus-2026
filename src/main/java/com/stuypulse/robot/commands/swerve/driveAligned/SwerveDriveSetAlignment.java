@@ -15,6 +15,7 @@ import com.stuypulse.stuylib.streams.booleans.BStream;
 import com.stuypulse.stuylib.streams.booleans.filters.BDebounceRC;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import java.util.function.Supplier;
 
@@ -41,7 +42,9 @@ public class SwerveDriveSetAlignment extends Command {
 
     public Rotation2d getTargetAngle() {
         Pose2d currentPose = swerve.getPose();
-        double atan = Math.atan2(pose.get().getY() - currentPose.getY(), pose.get().getX() - currentPose.getX());
+        Pose2d targetPose = pose.get();
+
+        double atan = Math.atan2(targetPose.getY() - currentPose.getY(), targetPose.getX() - currentPose.getX());
         return new Rotation2d((atan));
     }
 
@@ -63,5 +66,10 @@ public class SwerveDriveSetAlignment extends Command {
                 .withVelocityY(0)
                 .withHeadingPID(Alignment.akP, Alignment.akI, Alignment.akD);
         swerve.setControl(request);
+
+        SmartDashboard.putBoolean("ALIGNED", isAligned.get());
+        SmartDashboard.putNumber("A_TARGET", getTargetAngle().getDegrees());
+
+
     }
 }

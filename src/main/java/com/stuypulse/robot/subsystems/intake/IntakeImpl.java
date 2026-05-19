@@ -8,6 +8,24 @@ package com.stuypulse.robot.subsystems.intake;
 import java.util.Optional;
 import java.util.function.BooleanSupplier;
 
+import java.util.Optional;
+import java.util.function.BooleanSupplier;
+
+import com.stuypulse.robot.constants.Motors;
+import com.stuypulse.robot.constants.Ports;
+import com.stuypulse.robot.constants.Settings;
+import com.stuypulse.robot.constants.Settings.EnabledSubsystems;
+import com.stuypulse.robot.util.LoggedSignals;
+import com.stuypulse.robot.util.SysId;
+
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.units.measure.*;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
+import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
+
 import com.ctre.phoenix6.controls.ControlRequest;
 import com.ctre.phoenix6.controls.DutyCycleOut;
 import com.ctre.phoenix6.controls.Follower;
@@ -125,8 +143,8 @@ public class IntakeImpl extends Intake {
     /** ****************** */
     
     @Override
-    public boolean limitSwitchHit() {
-        return !pivotLimitSwitch.get();
+    public Trigger limitSwitchHit() {
+        return new Trigger(() -> !pivotLimitSwitch.get());
     }
     
     @Override
@@ -139,8 +157,9 @@ public class IntakeImpl extends Intake {
         pivotMotor.setPosition(angle);
     }
 
-    private boolean pivotStalling() {
-        return pivotStalling.getAsBoolean();
+    @Override
+    public Trigger pivotStalling() {
+        return new Trigger(pivotStalling);
     }
 
     /** ******************* */
@@ -194,16 +213,8 @@ public class IntakeImpl extends Intake {
             return;
         }
         // Input
-        final boolean pivotStalling = pivotStalling();
+
         final IntakeState currentState = getState();
-        // State
-        if (currentState == IntakeState.HOMING_DOWN && (pivotStalling || limitSwitchHit())) {
-            seedPivotAngle(Settings.Intake.Pivot.DEPLOY_ANGLE);
-            setState(IntakeState.DOWN);
-        }
-        if ((currentState == IntakeState.DOWN) && (pivotStalling || limitSwitchHit())) {
-            seedPivotAngle(Settings.Intake.Pivot.DEPLOY_ANGLE);
-        }
         // Output
         final ControlRequest pivotControl = getPivotControl(currentState);
         final DutyCycleOut rollerControl = rollerController.withOutput(currentState.getTargetDutyCycle());

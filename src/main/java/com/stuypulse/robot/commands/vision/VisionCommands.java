@@ -1,0 +1,40 @@
+package com.stuypulse.robot.commands.vision;
+
+import com.stuypulse.robot.constants.Field;
+import com.stuypulse.robot.subsystems.vision.LimelightVision;
+import com.stuypulse.robot.subsystems.vision.LimelightVision.MegaTagMode;
+
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
+
+public class VisionCommands {
+    private static final LimelightVision vision;
+
+    static {
+        vision = LimelightVision.getInstance();
+    }
+
+    public static Command setIMUMode(int mode) {
+        return Commands.runOnce(() -> vision.setIMUMode(mode)).ignoringDisable(true).withName("VisionSetIMUMode");
+    }
+
+    public static Command setMegaTagMode(MegaTagMode mode) {
+        return Commands.runOnce(() -> vision.setMegaTagMode(mode)).ignoringDisable(true).withName("VisionSetMegaTagMode");
+    }
+
+    public static Command setPipeline(int pipelineIndex) {
+        return Commands.runOnce(() -> vision.setPipeline(pipelineIndex)).ignoringDisable(true).withName("VisionSetPipeline");
+    }
+
+    public static Command enable() {
+        return Commands.runOnce(vision::enable).ignoringDisable(true).withName("VisionSetEnabled");
+    }
+    
+    public static Command disable() {
+        return Commands.runOnce(vision::disable).ignoringDisable(true).withName("VisionSetDisabled");
+    }
+
+    public static Command whitelistAllTags() {
+        return Commands.runOnce(() -> vision.setTagWhitelist(Field.ALL_TAGS)).ignoringDisable(true).withName("VisionWhitelistAllTags");
+    }
+}

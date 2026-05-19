@@ -6,9 +6,7 @@
 package com.stuypulse.robot.subsystems.intake;
 
 import com.stuypulse.robot.Robot;
-import com.stuypulse.robot.commands.intake.IntakeSeedPivotDeployed;
-import com.stuypulse.robot.commands.intake.IntakeSeedPivotNinety;
-import com.stuypulse.robot.commands.intake.IntakeSeedPivotStowed;
+import com.stuypulse.robot.commands.intake.IntakeCommands;
 import com.stuypulse.robot.constants.Settings;
 
 import dev.doglog.DogLog;
@@ -20,6 +18,7 @@ import edu.wpi.first.units.measure.AngularVelocity;
 import edu.wpi.first.units.measure.Voltage;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 
 public abstract class Intake extends SubsystemBase {
@@ -35,16 +34,16 @@ public abstract class Intake extends SubsystemBase {
             instance = new IntakeSim();
         }
         // Elastic Commands
-        SmartDashboard.putData("Intake/Seed Pivot Angle Stowed", new IntakeSeedPivotStowed());
-        SmartDashboard.putData("Intake/Set Pivot Angle Deployed", new IntakeSeedPivotDeployed());
-        SmartDashboard.putData("Intake/Seed Pivot Angle 90", new IntakeSeedPivotNinety());
+        SmartDashboard.putData("Intake/Zero Pivot Stowed", IntakeCommands.zeroPivotStowed());
+        SmartDashboard.putData("Intake/Zero Pivot Deployed", IntakeCommands.zeroPivotDeployed());
+        SmartDashboard.putData("Intake/Zero Pivot Ninety", IntakeCommands.zeroPivotNinety());
     }
 
     public static Intake getInstance() {
         return instance;
     }
 
-    public abstract boolean limitSwitchHit();
+    public abstract Trigger limitSwitchHit();
 
     public enum IntakeState {
 
@@ -126,6 +125,8 @@ public abstract class Intake extends SubsystemBase {
     // Pivot Commands
     public abstract Angle getRelativePosition();
 
+    public abstract Trigger pivotStalling();
+
     public abstract void seedPivotAngle(Angle angle);
 
     public boolean atTargetAngle() {
@@ -152,7 +153,7 @@ public abstract class Intake extends SubsystemBase {
         final IntakeState currentState = getState();
         // Logging
         DogLog.log("Intake/State", currentState.name());
-        DogLog.forceNt.log("Intake/Pivot/Limit Switch Hit", limitSwitchHit());
+        DogLog.forceNt.log("Intake/Pivot/Limit Switch Hit", limitSwitchHit().getAsBoolean());
         DogLog.forceNt.log("States/Intake", currentState.name());
         DogLog.log("Intake/Pivot/Target Angle", currentState.getTargetAngle().in(Degrees));
         DogLog.forceNt.log("Intake/Pivot/Current Angle", getRelativePosition().in(Degrees));

@@ -9,6 +9,7 @@ import com.stuypulse.robot.Robot;
 import com.stuypulse.robot.constants.Settings;
 import dev.doglog.DogLog;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
 
 public abstract class Handoff extends SubsystemBase {
     private static final Handoff instance;
@@ -56,6 +57,8 @@ public abstract class Handoff extends SubsystemBase {
     }
 
     protected abstract void stopMotors();
+
+    public abstract Trigger handoffStalling();
 
     @Override
     public void periodic() {

@@ -1,8 +1,8 @@
 package com.stuypulse.robot.commands.auton;
 
 import com.pathplanner.lib.path.PathPlannerPath;
+import com.stuypulse.robot.commands.intake.IntakeCommands;
 // import com.stuypulse.robot.commands.intake.IntakeAgitateWhileOuttaking;
-import com.stuypulse.robot.commands.intake.IntakeSetHomingDown;
 // import com.stuypulse.robot.commands.intake.IntakeSetIntake;
 import com.stuypulse.robot.commands.swerve.SwerveResetPose;
 import com.stuypulse.robot.subsystems.swerve.CommandSwerveDrivetrain;
@@ -22,7 +22,7 @@ public class LBFerry extends SequentialCommandGroup {
                                                                                                         * ().repeatedly(
                                                                                                         * ))
                                                                                                         */
-                CommandSwerveDrivetrain.getInstance().followPathCommand(paths[2]).alongWith(new IntakeSetHomingDown()),
+                CommandSwerveDrivetrain.getInstance().followPathCommand(paths[2]).alongWith(IntakeCommands.setHomingDown()),
                 CommandSwerveDrivetrain.getInstance().followPathCommand(paths[3]));
     }
 }
