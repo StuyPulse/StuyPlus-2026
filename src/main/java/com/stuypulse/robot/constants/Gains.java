@@ -8,23 +8,26 @@ package com.stuypulse.robot.constants;
 import static edu.wpi.first.units.Units.Amps;
 
 import com.pathplanner.lib.config.PIDConstants;
+
+import dev.doglog.DogLog;
+import edu.wpi.first.networktables.DoubleSubscriber;
 import edu.wpi.first.units.measure.Current;
 
 public class Gains {
 
     public interface Shooter {
 
-        double kP = 20;
+        DoubleSubscriber kP = DogLog.tunable("Shooter/kP", 20.0);
 
-        double kI = 0;
+        DoubleSubscriber kI = DogLog.tunable("Shooter/kI", 0.0);
 
-        double kD = 10.2;
+        DoubleSubscriber kD = DogLog.tunable("Shooter/kD", 10.2);
 
-        double kS = 2;
+        DoubleSubscriber kS = DogLog.tunable("Shooter/kS", 2.0);
 
-        double kV = 0.01;
+        DoubleSubscriber kV = DogLog.tunable("Shooter/kV", 0.01);
 
-        double kA = 0;
+        DoubleSubscriber kA = DogLog.tunable("Shooter/kA", 0.0);
     }
 
     // public interface Feeder {
