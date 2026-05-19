@@ -68,11 +68,13 @@ File: [`src/main/java/com/stuypulse/robot/subsystems/intake`](https://github.com
 Our intake is made up of 3 sets of rollers, all connected by belts, which are stowed and deployed with a pivot attached to the roller plate.
 
 It contains the following states:
-- `IDLE`: Intake brought up, rollers do not run
-- `INTAKE`: Intake brought down, rollers run forward on a duty cycle
-- `OUTTAKE`: Intake brought down, rollers run backward on a duty cycle
-- `DOWN`: Intake brought down, rollers do not run
-- `HOMING_DOWN`: Intake pushed down, rollers do not run
+- `IDLE`: The intake is stowed and rollers are off.
+- `DOWN`: The intake is deployed but rollers are off.
+- `INTAKE`: The intake is deployed and rollers are running to take in gamepieces.
+- `OUTTAKE`: The intake is deployed and rollers are running in reverse to expel gamepieces.
+- `DIGEST`: The intake is brought up once to an angle between stowed and deployed to dislodge gamepieces. Rollers do not run.
+- `AGITATE`: The intake is brought up repeatedly to an angle between stowed and deployed to dislodge gamepieces. Rollers do not run.
+- `HOMING_DOWN`: The intake is pushed against the bumpers to re-zero the pivot.
 
 Based on an angle and a duty cycle, in the `periodic` method, we use PID to control our pivot and a duty cycle to control the percentage of power given to the rollers.
 
@@ -87,8 +89,8 @@ Our feeder is of indexer type, having three lanes for  the [shooter](#shooter)'s
 
 It contains the following states:
 - `IDLE`: Feeder is stopped
-- `FORWARD`: Motors run forward on a duty cycle to feed fuel to the shooter
-- `REVERSE`: Motors run backward on a duty cycle to work with the intake to outtake fuel from the robot
+- `FORWARD`: Motors run forward to feed fuel to the shooter
+- `REVERSE`: Motors run backward to work with the intake to outtake fuel from the robot
 
 In the `periodic` method, we use `DutyCycleOut` to control the percentage of power given to both feeder motors. The feeder is set to only run when aligned to the hub if in `SHOOT` state. For SOTM/FOTM, it still feeds while moving if needed.
 
@@ -97,17 +99,13 @@ File: [`src/main/java/com/stuypulse/robot/subsystems/shooter`](https://github.co
 
 Our shooter is made up of 3 shooter motors (`Left`, `Center`, `Right`).
 
-The `Center` and `Right` motors follow the `Left` motor.
-
-> [!IMPORTANT]
-> SOTM (Shoot on the move) and FOTM (Ferry on the move) are low priority.
+The `Center` and `Left` motors follow the `Right` motor.
 
 It contains the following states:
 - `IDLE`: Shooter doesn't run.
 - `SHOOT`: Shooter wheels spin at it's target RPM, interpolated based on distance to hub.
-- `SOTM`: Shoot on the move. Shooter RPM is interpolated based on distance to hub.
-- `FOTM`: Ferry on the move. Shooter RPM is interpolated based on distance to hub.
 - `FERRY`: Shooter wheels spin at it's target RPM, interpolated based on distance to ferry zone.
+- `MANUAL_HUB`: Shooter wheels spin at a predetermined constant rate without interpolation.
 
 In the `periodic` method, the shooter RPM is controlled via `VelocityTorqueCurrentFOC` control request.
 
@@ -130,7 +128,7 @@ Files:
 
 This uses Limelights from [Limelight Vision](https://limelightvision.io/) to use the AprilTags to estimate the pose of the robot. It works in combination with odometry to estimate the pose using gyros and encoders when using megatag 2.
 
-All of the math and code is mostly done within the Limelight itself via LimelightOS. You mainly just need to connect it to your robot and determine the protocol  it sends to.
+All of the math and code is mostly done within the Limelight itself via LimelightOS. You mainly just need to connect it to your robot and determine the protocol it sends to.
 
 [`LimelightHelpers.java`](https://github.com/StuyPulse/StuyPlus-2026/blob/main/src/main/java/com/stuypulse/robot/util/vision/LimelightHelpers.java) is a wrapper class for the vision `NetworkTables` from the Limelight that abstracts many functions for you such as setting pipelines and the pose estimation. You can find the latest version of `LimelightHelpers.java` [here](https://github.com/LimelightVision/limelightlib-wpijava/releases).
 
