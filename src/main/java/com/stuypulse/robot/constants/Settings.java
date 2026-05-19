@@ -27,6 +27,7 @@ import com.ctre.phoenix6.CANBus;
 import dev.doglog.DogLog;
 
 import com.pathplanner.lib.path.PathConstraints;
+import com.stuypulse.stuylib.network.SmartNumber;
 
 /*-
  * File containing tunable settings for every subsystem on the robot.
@@ -234,6 +235,9 @@ public interface Settings {
 
         // TODO: Test for manual shooting RPM
         AngularVelocity MANUAL_HUB_RPM = RPM.of(3000);
+
+        SmartNumber SHOOT_TUNING_RPM = new SmartNumber("Shooter/Shoot Tuning RPM", 0);
+        SmartNumber FERRY_TUNING_RPM = new SmartNumber("Shooter/Ferry Tuning RPM", 0);
 
         public interface RPMInterpolation {
 

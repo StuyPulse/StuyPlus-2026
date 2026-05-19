@@ -598,6 +598,10 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
                         DogLog.log("Swerve/Field Relative Rotation", getPose().getRotation().getDegrees());
                         DogLog.log("Swerve/Velocity Field Relative Y (m per s)", getFieldRelativeSpeeds().y);
                         DogLog.log("Swerve/Angular Velocity (rad per s)", getChassisSpeeds().omegaRadiansPerSecond);
+
+                        //Distance in meters
+                        DogLog.forceNt.log("Swerve/Distance From Hub", pose.getTranslation().getDistance(Field.getHubPose().getTranslation()));
+                        DogLog.forceNt.log("Swerve/Distance From Ferry Zone", pose.getTranslation().getDistance(Field.getFerryZonePose(pose.getTranslation()).getTranslation()));
                 }
         }
 }
