@@ -117,7 +117,7 @@
     line-height: var(--line-height);
     top: calc(var(--line-height) * 2);
     position: relative;
-    text-align: left;
+    text-align: right;
     padding-right: 0.4em;
   }
 }
