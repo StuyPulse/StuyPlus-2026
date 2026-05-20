@@ -9,18 +9,18 @@ import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.util.Units;
 
-import com.stuypulse.robot.util.vision.Camera;
-
 public class Cameras {
-        public static final Camera[] LimelightCameras = new Camera[] {
-                new Camera("limelight",
-                                new Pose3d(
-                                        Units.inchesToMeters(0),
-                                        Units.inchesToMeters(0),
-                                        Units.inchesToMeters(26.1), 
-                                new Rotation3d(
-                                        Units.degreesToRadians(180),
-                                        Units.degreesToRadians(9.764),
-                                        Units.degreesToRadians(0))))
-        };
+    public static final Camera[] LimelightCameras = new Camera[] {
+            new Camera("limelight",
+                    new Pose3d(
+                            Units.inchesToMeters(0),
+                            Units.inchesToMeters(0),
+                            Units.inchesToMeters(26.1),
+                            new Rotation3d(
+                                    Units.degreesToRadians(180),
+                                    Units.degreesToRadians(9.764),
+                                    Units.degreesToRadians(0))))
+    };
+
+    public static record Camera(String name, Pose3d location) {};
 }
