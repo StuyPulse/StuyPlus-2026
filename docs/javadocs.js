@@ -11,14 +11,18 @@ const placeFavicon = () => {
 
 const syntaxHighlight = () => {
     // import highlight.js + css
-    const script = document.createElement("script");
-    script.setAttribute("src", "https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/highlight.min.js");
-    script.setAttribute("defer", "");
-    document.head.appendChild(script);
     const link = document.createElement("link");
     link.setAttribute("rel", "stylesheet");
     link.setAttribute("href", "https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/default.min.css");
     document.head.appendChild(link);
+
+    const script = document.createElement("script");
+    script.src = "https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/highlight.min.js";
+    script.onload = () => {
+        syntaxHighlight();
+    };
+    script.onerror = () => console.error("highlight.js failed to load 🤤");
+    document.head.appendChild(script);
 
     // get all lines of code and highlight them
     const codeBlocks = document.querySelectorAll('.source-container > pre > [id*="line-"]');
