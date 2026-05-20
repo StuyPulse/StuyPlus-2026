@@ -7,9 +7,9 @@ package com.stuypulse.robot.commands.swerve;
 
 import com.ctre.phoenix6.swerve.SwerveRequest;
 import com.stuypulse.robot.subsystems.swerve.CommandSwerveDrivetrain;
-import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 
-public class SwerveDriveXMode extends Command {
+public class SwerveDriveXMode extends InstantCommand {
     private CommandSwerveDrivetrain swerve;
 
     public SwerveDriveXMode() {
@@ -20,12 +20,6 @@ public class SwerveDriveXMode extends Command {
     @Override
     public void initialize() {
         SwerveRequest request = new SwerveRequest.SwerveDriveBrake();
-        swerve.setControl(request);
-    }
-
-    @Override
-    public void end(boolean interrupted) {
-        SwerveRequest request = new SwerveRequest.FieldCentric();
         swerve.setControl(request);
     }
 }
