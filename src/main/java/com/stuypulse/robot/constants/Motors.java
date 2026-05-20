@@ -86,7 +86,8 @@ public interface Motors {
 				.withStatorCurrentLimitAmps(80)
 				// .withRampRate(0.25)
 				.withNeutralMode(NeutralModeValue.Coast)
-				.withInvertedValue(InvertedValue.Clockwise_Positive);
+				.withInvertedValue(InvertedValue.Clockwise_Positive)
+				.withSensorToMechanismRatio(Settings.Feeder.GEAR_RATIO);
 	}
 
 	public interface Shooter {

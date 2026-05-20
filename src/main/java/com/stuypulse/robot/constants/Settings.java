@@ -147,7 +147,7 @@ public interface Settings {
         double FEEDER_FORWARD_DUTY_CYCLE = 1;
 
         // TODO: get from mec
-        double GEAR_RATIO = 1;
+        double GEAR_RATIO = 34/14; // (34/14) : 1
 
         MomentOfInertia J = KilogramSquareMeters.of(0.001);
     }
