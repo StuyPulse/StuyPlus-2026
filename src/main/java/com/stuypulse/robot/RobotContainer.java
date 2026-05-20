@@ -139,8 +139,7 @@ public class RobotContainer {
                                         new FeederSetIdle(),
                                         new IntakeSetIntake(),
                                         Commands.runOnce(
-                                                () -> new SwerveDriveXMode()
-                                                        .cancel())));
+                                                () -> new SwerveDriveXMode().cancel())));
         // Bottom Left Paddle
         driver.x().whileTrue(new SwerveDriveXMode());
     }
