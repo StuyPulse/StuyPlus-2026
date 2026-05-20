@@ -114,6 +114,10 @@
     margin-left: var(--margin);
     text-transform: uppercase;
     cursor: pointer;
+
+    position: fixed;
+    display: flex;
+    justify-self: right;
   }
 
   --line-height: 1.5em;
