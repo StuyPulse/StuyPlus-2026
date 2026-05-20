@@ -30,6 +30,7 @@ const syntaxHighlight = () => {
 
         pre.outerHTML = 
         `
+        <button class="back-button">BACK</button>
         <div class="code-wrapper">
             <div class="line-numbers">
                 ${lineNumbers}
@@ -40,8 +41,15 @@ const syntaxHighlight = () => {
             </pre>
         <div>
         `
-        // pre.innerHTML = `<code class="language-java" hljs>${source}</code>`;
         hljs.highlightAll();
+
+        const backButton = document.querySelector(".back-button");
+        backButton.addEventListener("click", () => {
+            const currentURL = new URL(window.location.href);
+            currentURL.pathname = currentURL.pathname.replace("/src-html", "");
+            currentURL.hash = "";
+            window.location.href = currentURL.toString();
+        });
     };
 
     script.onerror = () => console.error("highlight.js failed to load 🤤");
