@@ -101,6 +101,21 @@
 }
 
 .source-page {
+  .back-button {
+    background: var(--primary-color);
+    border-radius: 5px;
+    padding: 5px 16px;
+    color: var(--secondary-color);
+    font-family: "monospace", Arial, Helvetica, sans-serif;
+    border: none;
+    font-size: 1.2em;
+    --margin: 10px;
+    margin-top: var(--margin);
+    margin-left: var(--margin);
+    text-transform: uppercase;
+    cursor: pointer;
+  }
+
   --line-height: 1.5em;
   .code-wrapper {
     display: flex;
