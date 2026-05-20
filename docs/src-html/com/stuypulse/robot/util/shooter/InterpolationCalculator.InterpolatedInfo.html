@@ -19,82 +19,86 @@
 <span class="source-line-no">006</span><span id="line-6">package com.stuypulse.robot.util.shooter;</span>
 <span class="source-line-no">007</span><span id="line-7"></span>
 <span class="source-line-no">008</span><span id="line-8">import com.stuypulse.robot.constants.Field;</span>
-<span class="source-line-no">009</span><span id="line-9">import com.stuypulse.robot.constants.Settings.Shooter.FerryRPMInterpolation;</span>
-<span class="source-line-no">010</span><span id="line-10">import com.stuypulse.robot.constants.Settings.Shooter.FerryTOFInterpolation;</span>
-<span class="source-line-no">011</span><span id="line-11">import com.stuypulse.robot.constants.Settings.Shooter.RPMInterpolation;</span>
-<span class="source-line-no">012</span><span id="line-12">import com.stuypulse.robot.constants.Settings.Shooter.TOFInterpolation;</span>
-<span class="source-line-no">013</span><span id="line-13">import com.stuypulse.robot.subsystems.swerve.CommandSwerveDrivetrain;</span>
-<span class="source-line-no">014</span><span id="line-14">import dev.doglog.DogLog;</span>
-<span class="source-line-no">015</span><span id="line-15">import edu.wpi.first.math.geometry.Pose2d;</span>
-<span class="source-line-no">016</span><span id="line-16">import edu.wpi.first.math.geometry.Translation2d;</span>
-<span class="source-line-no">017</span><span id="line-17">import edu.wpi.first.math.interpolation.InterpolatingDoubleTreeMap;</span>
-<span class="source-line-no">018</span><span id="line-18"></span>
-<span class="source-line-no">019</span><span id="line-19">public class InterpolationCalculator {</span>
+<span class="source-line-no">009</span><span id="line-9">import com.stuypulse.robot.constants.Settings;</span>
+<span class="source-line-no">010</span><span id="line-10">import com.stuypulse.robot.constants.Settings.Shooter.FerryRPMInterpolation;</span>
+<span class="source-line-no">011</span><span id="line-11">import com.stuypulse.robot.constants.Settings.Shooter.FerryTOFInterpolation;</span>
+<span class="source-line-no">012</span><span id="line-12">import com.stuypulse.robot.constants.Settings.Shooter.RPMInterpolation;</span>
+<span class="source-line-no">013</span><span id="line-13">import com.stuypulse.robot.constants.Settings.Shooter.TOFInterpolation;</span>
+<span class="source-line-no">014</span><span id="line-14">import com.stuypulse.robot.subsystems.swerve.CommandSwerveDrivetrain;</span>
+<span class="source-line-no">015</span><span id="line-15">import static edu.wpi.first.units.Units.RPM;</span>
+<span class="source-line-no">016</span><span id="line-16">import dev.doglog.DogLog;</span>
+<span class="source-line-no">017</span><span id="line-17">import edu.wpi.first.math.geometry.Pose2d;</span>
+<span class="source-line-no">018</span><span id="line-18">import edu.wpi.first.math.geometry.Translation2d;</span>
+<span class="source-line-no">019</span><span id="line-19">import edu.wpi.first.math.interpolation.InterpolatingDoubleTreeMap;</span>
 <span class="source-line-no">020</span><span id="line-20"></span>
-<span class="source-line-no">021</span><span id="line-21">    public static InterpolatingDoubleTreeMap shootingDistanceRPMInterpolator;</span>
+<span class="source-line-no">021</span><span id="line-21">public class InterpolationCalculator {</span>
 <span class="source-line-no">022</span><span id="line-22"></span>
-<span class="source-line-no">023</span><span id="line-23">    public static InterpolatingDoubleTreeMap shootingDistanceTOFInterpolator;</span>
+<span class="source-line-no">023</span><span id="line-23">    public static InterpolatingDoubleTreeMap shootingDistanceRPMInterpolator;</span>
 <span class="source-line-no">024</span><span id="line-24"></span>
-<span class="source-line-no">025</span><span id="line-25">    public static InterpolatingDoubleTreeMap ferryingDistanceRPMInterpolator;</span>
+<span class="source-line-no">025</span><span id="line-25">    public static InterpolatingDoubleTreeMap shootingDistanceTOFInterpolator;</span>
 <span class="source-line-no">026</span><span id="line-26"></span>
-<span class="source-line-no">027</span><span id="line-27">    public static InterpolatingDoubleTreeMap ferryingDistanceTOFInterpolator;</span>
+<span class="source-line-no">027</span><span id="line-27">    public static InterpolatingDoubleTreeMap ferryingDistanceRPMInterpolator;</span>
 <span class="source-line-no">028</span><span id="line-28"></span>
-<span class="source-line-no">029</span><span id="line-29">    public record InterpolatedInfo(double targetRPM, double flightTimeSeconds) {</span>
-<span class="source-line-no">030</span><span id="line-30">    }</span>
-<span class="source-line-no">031</span><span id="line-31"></span>
-<span class="source-line-no">032</span><span id="line-32">    static {</span>
-<span class="source-line-no">033</span><span id="line-33">        shootingDistanceRPMInterpolator = new InterpolatingDoubleTreeMap();</span>
-<span class="source-line-no">034</span><span id="line-34">        for (double[] pair : RPMInterpolation.distanceRPMInterpolationValues) {</span>
-<span class="source-line-no">035</span><span id="line-35">            shootingDistanceRPMInterpolator.put(pair[0], pair[1]);</span>
-<span class="source-line-no">036</span><span id="line-36">        }</span>
-<span class="source-line-no">037</span><span id="line-37">        shootingDistanceTOFInterpolator = new InterpolatingDoubleTreeMap();</span>
-<span class="source-line-no">038</span><span id="line-38">        for (double[] pair : TOFInterpolation.distanceTOFInterpolationValues) {</span>
-<span class="source-line-no">039</span><span id="line-39">            shootingDistanceTOFInterpolator.put(pair[0], pair[1]);</span>
-<span class="source-line-no">040</span><span id="line-40">        }</span>
-<span class="source-line-no">041</span><span id="line-41">        ferryingDistanceRPMInterpolator = new InterpolatingDoubleTreeMap();</span>
-<span class="source-line-no">042</span><span id="line-42">        for (double[] pair : FerryRPMInterpolation.ferryDistanceRPMInterpolation) {</span>
-<span class="source-line-no">043</span><span id="line-43">            ferryingDistanceRPMInterpolator.put(pair[0], pair[1]);</span>
-<span class="source-line-no">044</span><span id="line-44">        }</span>
-<span class="source-line-no">045</span><span id="line-45">        ferryingDistanceTOFInterpolator = new InterpolatingDoubleTreeMap();</span>
-<span class="source-line-no">046</span><span id="line-46">        for (double[] pair : FerryTOFInterpolation.FerryTOFInterpolationInterpolation) {</span>
-<span class="source-line-no">047</span><span id="line-47">            ferryingDistanceTOFInterpolator.put(pair[0], pair[1]);</span>
-<span class="source-line-no">048</span><span id="line-48">        }</span>
-<span class="source-line-no">049</span><span id="line-49">    }</span>
-<span class="source-line-no">050</span><span id="line-50"></span>
-<span class="source-line-no">051</span><span id="line-51">    public static InterpolatedInfo interpolateShotInfo() {</span>
-<span class="source-line-no">052</span><span id="line-52">        CommandSwerveDrivetrain swerve = CommandSwerveDrivetrain.getInstance();</span>
-<span class="source-line-no">053</span><span id="line-53">        return interpolateShotInfo(swerve.getPose(), Field.getHubPose());</span>
-<span class="source-line-no">054</span><span id="line-54">    }</span>
-<span class="source-line-no">055</span><span id="line-55"></span>
-<span class="source-line-no">056</span><span id="line-56">    public static InterpolatedInfo interpolateShotInfo(Pose2d shooterPose, Pose2d targetPose) {</span>
-<span class="source-line-no">057</span><span id="line-57">        Translation2d hubPose = targetPose.getTranslation();</span>
-<span class="source-line-no">058</span><span id="line-58">        Translation2d currentPose = shooterPose.getTranslation();</span>
-<span class="source-line-no">059</span><span id="line-59">        double distanceMeters = currentPose.getDistance(hubPose);</span>
-<span class="source-line-no">060</span><span id="line-60">        double targetRPM = shootingDistanceRPMInterpolator.get(distanceMeters);</span>
-<span class="source-line-no">061</span><span id="line-61">        double flightTime = shootingDistanceTOFInterpolator.get(distanceMeters);</span>
-<span class="source-line-no">062</span><span id="line-62">        DogLog.log("InterpolationTesting/Interpolated RPM", targetRPM);</span>
-<span class="source-line-no">063</span><span id="line-63">        DogLog.log("InterpolationTesting/Interpolated TOF", flightTime);</span>
-<span class="source-line-no">064</span><span id="line-64">        return new InterpolatedInfo(targetRPM, flightTime);</span>
-<span class="source-line-no">065</span><span id="line-65">    }</span>
-<span class="source-line-no">066</span><span id="line-66"></span>
-<span class="source-line-no">067</span><span id="line-67">    public static InterpolatedInfo interpolateFerryingInfo() {</span>
-<span class="source-line-no">068</span><span id="line-68">        CommandSwerveDrivetrain swerve = CommandSwerveDrivetrain.getInstance();</span>
-<span class="source-line-no">069</span><span id="line-69">        Pose2d shooterPose = swerve.getPose();</span>
-<span class="source-line-no">070</span><span id="line-70">        Pose2d ferryPose = Field.getFerryZonePose(swerve.getPose().getTranslation());</span>
-<span class="source-line-no">071</span><span id="line-71">        return interpolateFerryingInfo(shooterPose, ferryPose);</span>
-<span class="source-line-no">072</span><span id="line-72">    }</span>
-<span class="source-line-no">073</span><span id="line-73"></span>
-<span class="source-line-no">074</span><span id="line-74">    public static InterpolatedInfo interpolateFerryingInfo(Pose2d shooterPose, Pose2d targetPose) {</span>
-<span class="source-line-no">075</span><span id="line-75">        Translation2d currentPose = shooterPose.getTranslation();</span>
-<span class="source-line-no">076</span><span id="line-76">        Translation2d ferryPose = targetPose.getTranslation();</span>
-<span class="source-line-no">077</span><span id="line-77">        double distanceMeters = currentPose.getDistance(ferryPose);</span>
-<span class="source-line-no">078</span><span id="line-78">        double targetRPM = ferryingDistanceRPMInterpolator.get(distanceMeters);</span>
-<span class="source-line-no">079</span><span id="line-79">        double flightTime = ferryingDistanceTOFInterpolator.get(distanceMeters);</span>
-<span class="source-line-no">080</span><span id="line-80">        DogLog.log("Shooter/Interpolated Ferry RPM", targetRPM);</span>
-<span class="source-line-no">081</span><span id="line-81">        DogLog.log("Shooter/Interpolated Ferry TOF", flightTime);</span>
-<span class="source-line-no">082</span><span id="line-82">        return new InterpolatedInfo(targetRPM, flightTime);</span>
-<span class="source-line-no">083</span><span id="line-83">    }</span>
-<span class="source-line-no">084</span><span id="line-84">}</span>
+<span class="source-line-no">029</span><span id="line-29">    public static InterpolatingDoubleTreeMap ferryingDistanceTOFInterpolator;</span>
+<span class="source-line-no">030</span><span id="line-30"></span>
+<span class="source-line-no">031</span><span id="line-31">    public record InterpolatedInfo(double targetRPM, double flightTimeSeconds) {</span>
+<span class="source-line-no">032</span><span id="line-32">    }</span>
+<span class="source-line-no">033</span><span id="line-33"></span>
+<span class="source-line-no">034</span><span id="line-34">    static {</span>
+<span class="source-line-no">035</span><span id="line-35">        shootingDistanceRPMInterpolator = new InterpolatingDoubleTreeMap();</span>
+<span class="source-line-no">036</span><span id="line-36">        for (double[] pair : RPMInterpolation.distanceRPMInterpolationValues) {</span>
+<span class="source-line-no">037</span><span id="line-37">            shootingDistanceRPMInterpolator.put(pair[0], pair[1]);</span>
+<span class="source-line-no">038</span><span id="line-38">        }</span>
+<span class="source-line-no">039</span><span id="line-39">        shootingDistanceTOFInterpolator = new InterpolatingDoubleTreeMap();</span>
+<span class="source-line-no">040</span><span id="line-40">        for (double[] pair : TOFInterpolation.distanceTOFInterpolationValues) {</span>
+<span class="source-line-no">041</span><span id="line-41">            shootingDistanceTOFInterpolator.put(pair[0], pair[1]);</span>
+<span class="source-line-no">042</span><span id="line-42">        }</span>
+<span class="source-line-no">043</span><span id="line-43">        ferryingDistanceRPMInterpolator = new InterpolatingDoubleTreeMap();</span>
+<span class="source-line-no">044</span><span id="line-44">        for (double[] pair : FerryRPMInterpolation.ferryDistanceRPMInterpolation) {</span>
+<span class="source-line-no">045</span><span id="line-45">            ferryingDistanceRPMInterpolator.put(pair[0], pair[1]);</span>
+<span class="source-line-no">046</span><span id="line-46">        }</span>
+<span class="source-line-no">047</span><span id="line-47">        ferryingDistanceTOFInterpolator = new InterpolatingDoubleTreeMap();</span>
+<span class="source-line-no">048</span><span id="line-48">        for (double[] pair : FerryTOFInterpolation.FerryTOFInterpolationInterpolation) {</span>
+<span class="source-line-no">049</span><span id="line-49">            ferryingDistanceTOFInterpolator.put(pair[0], pair[1]);</span>
+<span class="source-line-no">050</span><span id="line-50">        }</span>
+<span class="source-line-no">051</span><span id="line-51">    }</span>
+<span class="source-line-no">052</span><span id="line-52"></span>
+<span class="source-line-no">053</span><span id="line-53">    public static InterpolatedInfo interpolateShotInfo() {</span>
+<span class="source-line-no">054</span><span id="line-54">        CommandSwerveDrivetrain swerve = CommandSwerveDrivetrain.getInstance();</span>
+<span class="source-line-no">055</span><span id="line-55">        return interpolateShotInfo(swerve.getPose(), Field.getHubPose());</span>
+<span class="source-line-no">056</span><span id="line-56">    }</span>
+<span class="source-line-no">057</span><span id="line-57"></span>
+<span class="source-line-no">058</span><span id="line-58">    public static InterpolatedInfo interpolateShotInfo(Pose2d shooterPose, Pose2d targetPose) {</span>
+<span class="source-line-no">059</span><span id="line-59">        Translation2d hubPose = targetPose.getTranslation();</span>
+<span class="source-line-no">060</span><span id="line-60">        Translation2d currentPose = shooterPose.getTranslation();</span>
+<span class="source-line-no">061</span><span id="line-61">        double distanceMeters = currentPose.getDistance(hubPose);</span>
+<span class="source-line-no">062</span><span id="line-62">        double targetRPM = shootingDistanceRPMInterpolator.get(distanceMeters);</span>
+<span class="source-line-no">063</span><span id="line-63">        double flightTime = shootingDistanceTOFInterpolator.get(distanceMeters);</span>
+<span class="source-line-no">064</span><span id="line-64">        DogLog.log("InterpolationTesting/Interpolated RPM", targetRPM);</span>
+<span class="source-line-no">065</span><span id="line-65">        DogLog.log("InterpolationTesting/Interpolated TOF", flightTime);</span>
+<span class="source-line-no">066</span><span id="line-66">        // if (targetRPM &lt; Settings.Shooter.MIN_SHOOTER_VELOCITY.in(RPM))</span>
+<span class="source-line-no">067</span><span id="line-67">        //     targetRPM = Settings.Shooter.MIN_SHOOTER_VELOCITY.in(RPM);</span>
+<span class="source-line-no">068</span><span id="line-68">        return new InterpolatedInfo(targetRPM, flightTime);</span>
+<span class="source-line-no">069</span><span id="line-69">    }</span>
+<span class="source-line-no">070</span><span id="line-70"></span>
+<span class="source-line-no">071</span><span id="line-71">    public static InterpolatedInfo interpolateFerryingInfo() {</span>
+<span class="source-line-no">072</span><span id="line-72">        CommandSwerveDrivetrain swerve = CommandSwerveDrivetrain.getInstance();</span>
+<span class="source-line-no">073</span><span id="line-73">        Pose2d shooterPose = swerve.getPose();</span>
+<span class="source-line-no">074</span><span id="line-74">        Pose2d ferryPose = Field.getFerryZonePose(swerve.getPose().getTranslation());</span>
+<span class="source-line-no">075</span><span id="line-75">        return interpolateFerryingInfo(shooterPose, ferryPose);</span>
+<span class="source-line-no">076</span><span id="line-76">    }</span>
+<span class="source-line-no">077</span><span id="line-77"></span>
+<span class="source-line-no">078</span><span id="line-78">    public static InterpolatedInfo interpolateFerryingInfo(Pose2d shooterPose, Pose2d targetPose) {</span>
+<span class="source-line-no">079</span><span id="line-79">        Translation2d currentPose = shooterPose.getTranslation();</span>
+<span class="source-line-no">080</span><span id="line-80">        Translation2d ferryPose = targetPose.getTranslation();</span>
+<span class="source-line-no">081</span><span id="line-81">        double distanceMeters = currentPose.getDistance(ferryPose);</span>
+<span class="source-line-no">082</span><span id="line-82">        double targetRPM = ferryingDistanceRPMInterpolator.get(distanceMeters);</span>
+<span class="source-line-no">083</span><span id="line-83">        double flightTime = ferryingDistanceTOFInterpolator.get(distanceMeters);</span>
+<span class="source-line-no">084</span><span id="line-84">        DogLog.log("Shooter/Interpolated Ferry RPM", targetRPM);</span>
+<span class="source-line-no">085</span><span id="line-85">        DogLog.log("Shooter/Interpolated Ferry TOF", flightTime);</span>
+<span class="source-line-no">086</span><span id="line-86">        return new InterpolatedInfo(targetRPM, flightTime);</span>
+<span class="source-line-no">087</span><span id="line-87">    }</span>
+<span class="source-line-no">088</span><span id="line-88">}</span>
 
 
 
