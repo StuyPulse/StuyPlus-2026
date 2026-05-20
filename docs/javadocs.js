@@ -10,6 +10,9 @@ const placeFavicon = () => {
 }
 
 const syntaxHighlight = () => {
+    const isSourcePage = document.querySelector("body.source-page") !== null;
+    if (!isSourcePage) return;
+
     // import highlight.js + css
     const link = document.createElement("link");
     link.setAttribute("rel", "stylesheet");

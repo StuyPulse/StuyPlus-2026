@@ -109,6 +109,7 @@
 
   code.language-java.hljs {
     line-height: var(--line-height);
+    padding: 3px 5px;
   }
 
   .line-numbers {
