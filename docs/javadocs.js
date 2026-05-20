@@ -21,7 +21,7 @@ const syntaxHighlight = () => {
     script.src = "https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/highlight.min.js";
     script.onload = () => {
         const pre = document.querySelector('.source-container > pre');
-        const lines = pre.querySelectorAll('> [id*="line-"]');
+        const lines = pre.querySelectorAll(':scope > [id*="line-"]');
         const source = Array.from(lines).map(line => line.textContent).join("\n");
 
         pre.innerHTML = `<code class="language-java" hljs>${source}</code>`;
