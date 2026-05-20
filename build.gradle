@@ -161,14 +161,14 @@ tasks.javadoc {
     options.addBooleanOption('private', true)
     options.addBooleanOption("-allow-script-in-comments", true)
     options.addStringOption("doctitle", "StuyPlus 2026")
-    options.stylesheetFile = file("${projectDir}/assets/javadoc/betterjdocs.css")
+    options.stylesheetFile = file("${projectDir}/assets/javadoc/betterjdocs.css?t=" + System.currentTimeMillis())
 
     doLast { // Copy the javadocs.js file to every single HTML file in the javadoc directory.
         fileTree(destinationDir).matching {
             include "**/*.html"
         }.each { File html ->
             def text = html.getText("UTF-8")
-            def newText = text.replace("</body>", '<script src="/StuyPlus-2026/javadocs.js"></script></body>')
+            def newText = text.replace("</body>", '<script src="/StuyPlus-2026/javadocs.js?t=' + System.currentTimeMillis() + '"></script></body>')
             html.write(newText, "UTF-8")
         }
     }
