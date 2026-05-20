@@ -27,5 +27,6 @@
   ],
   "java.test.defaultConfig": "WPIlibUnitTests",
   "wpilib.selectDefaultSimulateExtension": true,
-  "wpilib.skipTests": true
+  "wpilib.skipTests": true,
+  "java.compile.nullAnalysis.mode": "automatic"
 }

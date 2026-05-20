@@ -236,8 +236,10 @@ public interface Settings {
         // TODO: Test for manual shooting RPM
         AngularVelocity MANUAL_HUB_RPM = RPM.of(3000);
 
-        SmartNumber SHOOT_TUNING_RPM = new SmartNumber("Shooter/Shoot Tuning RPM", 0);
-        SmartNumber FERRY_TUNING_RPM = new SmartNumber("Shooter/Ferry Tuning RPM", 0);
+        AngularVelocity MIN_SHOOTER_VELOCITY = RPM.of(1740);
+
+        DoubleSubscriber SHOOT_TUNING_RPM = DogLog.tunable("Shooter/Shoot Tuning RPM", 0.0);
+        DoubleSubscriber FERRY_TUNING_RPM = DogLog.tunable("Shooter/Ferry Tuning RPM", 0.0);
 
         public interface RPMInterpolation {
 
