@@ -100,6 +100,28 @@
   margin: 0 !important;
 }
 
+.source-page {
+  --line-height: 1.5em;
+  .code-wrapper {
+    display: flex;
+    flex-direction: row;
+  }
+
+  code.language-java.hljs {
+    line-height: var(--line-height);
+  }
+
+  .line-numbers {
+    display: flex;
+    flex-direction: column;
+    line-height: var(--line-height);
+    top: calc(var(--line-height) * 2);
+    position: relative;
+    text-align: left;
+    padding-right: 0.4em;
+  }
+}
+
 /*
  * MAIN STYLE SHEET FROM https://github.com/xMrAfonso/BetterJDocs
  * Javadoc style sheet starts here.
