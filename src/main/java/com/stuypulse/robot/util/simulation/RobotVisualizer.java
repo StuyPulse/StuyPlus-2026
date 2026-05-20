@@ -52,7 +52,7 @@ public class RobotVisualizer {
      * 
      * @see #createSpokes(MechanismObject2d, String, double, double, Color8Bit)
      */
-    private static final Color8Bit SPOKE_COLOR = new Color8Bit(Color.kWhite);
+    private static Color8Bit SPOKE_COLOR;
 
     /**
      * Sendable main canvas object for every drawn mechanism
@@ -119,6 +119,7 @@ public class RobotVisualizer {
      * <p>Uses specific internal logic, viewing the source code is recommended to better understand how everything is setup.</p>
      */
     private RobotVisualizer() {
+        SPOKE_COLOR = new Color8Bit(Color.kWhite);
         canvas = new Mechanism2d(CANVAS_WIDTH, CANVAS_HEIGHT);
         // Silhouette
         bumperRoot = canvas.getRoot("Bumper Root", 10, 5);
@@ -192,9 +193,11 @@ public class RobotVisualizer {
             Color8Bit color) {
         MechanismLigament2d[] spokes = new MechanismLigament2d[NUM_SPOKES];
         double spacing = 360 / NUM_SPOKES;
-        for (int i = 0; i < NUM_SPOKES; i++)
-            spokes[i] = target.append(
-                    new MechanismLigament2d(name.trim() + " " + i, length, spacing * i, width, color));
+        for (int i = 0; i < NUM_SPOKES; i++) {
+            MechanismLigament2d spoke = new MechanismLigament2d(name.trim() + " " + i, length, spacing * i, width, color);
+            target.append(spoke);
+            spokes[i] = spoke;
+        }
         return spokes;
     }
 
@@ -216,7 +219,7 @@ public class RobotVisualizer {
             String name,
             double length,
             double width) {
-        return this.createSpokes(target, name, length, width, SPOKE_COLOR);
+        return createSpokes(target, name, length, width, SPOKE_COLOR);
     }
 
     /**
