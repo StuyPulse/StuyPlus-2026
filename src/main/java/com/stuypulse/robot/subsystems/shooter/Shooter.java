@@ -86,6 +86,10 @@ public abstract class Shooter extends SubsystemBase {
 
     public abstract void setVoltageOverride(Voltage voltage);
 
+    public boolean shooterSpunUp() {
+        return getCurrentAngularVelocity().gte(Settings.Shooter.MIN_SHOOTER_VELOCITY);
+    }
+
     @Override
     public void periodic() {
         final ShooterState currentState = getState();

@@ -61,6 +61,11 @@ public class HandoffImpl extends Handoff {
                 && shooter.getState() == ShooterState.FERRY) {
             setState(HandoffState.IDLE);
         }
+
+        if (!Shooter.getInstance().shooterSpunUp()) {
+            setState(HandoffState.IDLE);
+        }
+
         // Control
         final double dutyCycle = handoffStalling.get()
                 ? Handoff.HandoffState.REVERSE.getHandoffDutyCycle()
