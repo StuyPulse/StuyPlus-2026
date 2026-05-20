@@ -13,7 +13,7 @@ const syntaxHighlight = () => {
     // import highlight.js + css
     const link = document.createElement("link");
     link.setAttribute("rel", "stylesheet");
-    link.setAttribute("href", "https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/default.min.css");
+    link.setAttribute("href", "https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/github-dark.min.css");
     document.head.appendChild(link);
     
     // get all lines of code and highlight them
