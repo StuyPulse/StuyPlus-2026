@@ -9,4 +9,26 @@ const placeFavicon = () => {
     document.head.appendChild(link);
 }
 
+const syntaxHighlight = () => {
+    // import highlight.js + css
+    const script = document.createElement("script");
+    script.setAttribute("src", "https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/highlight.min.js");
+    script.setAttribute("defer", "");
+    document.head.appendChild(script);
+    const link = document.createElement("link");
+    link.setAttribute("rel", "stylesheet");
+    link.setAttribute("href", "https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/default.min.css");
+    document.head.appendChild(link);
+
+    // get all lines of code and highlight them
+    const codeBlocks = document.querySelectorAll('.source-container > pre > [id*="line-"]');
+    codeBlocks.forEach((line) => {
+        const rawLine = line.textContent;
+        const highlightedLine = hljs.highlight(rawLine, { language: 'java' }).value;
+
+        line.innerHTML = highlightedLine;
+    });
+}
+
 placeFavicon();
+syntaxHighlight();
