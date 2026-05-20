@@ -27,6 +27,7 @@ const syntaxHighlight = () => {
 
         line.innerHTML = highlightedLine;
     });
+    
     };
     script.onerror = () => console.error("highlight.js failed to load 🤤");
     document.head.appendChild(script);
