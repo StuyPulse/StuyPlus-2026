@@ -107,7 +107,7 @@
     flex-direction: column;
   }
 
-  code.language-java.hlfs {
+  code.language-java.hljs {
     line-height: var(--line-height);
   }
 
