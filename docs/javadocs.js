@@ -23,8 +23,21 @@ const syntaxHighlight = () => {
         const pre = document.querySelector('.source-container > pre');
         const lines = pre.querySelectorAll(':scope > [id*="line-"]');
         const source = Array.from(lines).map(line => line.textContent).join("\n");
+        const lineNumbers = Array.from(lines).map((_, i) => `<span>${i + 1}</span>`).join("\n");
 
-        pre.innerHTML = `<code class="language-java" hljs>${source}</code>`;
+        pre.outerHTML = 
+        `
+        <div class="code-wrapper">
+            <div class="line-numbers">
+                ${lineNumbers}
+            </div>
+
+            <pre>
+                <code class="language-java" hlfs>${source}</code>
+            </pre>
+        <div>
+        `
+        // pre.innerHTML = `<code class="language-java" hljs>${source}</code>`;
         hljs.highlightAll();
     };
 
