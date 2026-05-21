@@ -212,7 +212,7 @@ public interface Settings {
 
         double J_KG_METERS_SQUARED = 1;
 
-        double GEAR_RATIO = 1/3; // 1:3
+        double GEAR_RATIO = 1.0 / 3.0; // 1:3
     }
 
     public interface Shooter {
