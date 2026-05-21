@@ -49,11 +49,13 @@ const syntaxHighlight = () => {
                 </div>
 
                 <pre>
-                    <code class="language-java" hlfs>${source}</code>
+                    <code class="language-java" hlfs></code>
                 </pre>
             <div>
             `
-            hljs.highlightAll();
+            const codeBlock = document.querySelector(".code-wrapper > pre > code");
+            codeBlock.textContent = source;
+            hljs.highlightElement(codeBlock);
 
             const backButton = document.querySelector(".back-button");
             backButton.addEventListener("click", () => {
