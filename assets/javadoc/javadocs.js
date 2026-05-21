@@ -1,5 +1,8 @@
 // hella tuff javascript code to make javadocs look way nicer
 
+let hljsCSSLink = null;
+let hljsScript = null;
+
 const placeFavicon = () => {
     const link = document.createElement("link");
     link.setAttribute("rel", "icon");
@@ -13,48 +16,68 @@ const syntaxHighlight = () => {
     const isSourcePage = document.querySelector("body.source-page") !== null;
     if (!isSourcePage) return;
 
+    const isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches;
+    const theme = isLightMode ? "github" : "github-dark";
+
     // import highlight.js + css
-    const link = document.createElement("link");
-    link.setAttribute("rel", "stylesheet");
-    link.setAttribute("href", "https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/github-dark.min.css");
-    document.head.appendChild(link);
+    if (!hljsCSSLink) {
+        const link = document.createElement("link");
+        link.setAttribute("rel", "stylesheet");
+        link.setAttribute("href", `https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/${theme}.min.css`);
+        document.head.appendChild(link);
+        hljsCSSLink = link;
+    } else {
+        hljsCSSLink.href = `https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/${theme}.min.css`;
+    }
     
     // get all lines of code and highlight them
-    const script = document.createElement("script");
-    script.src = "https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/highlight.min.js";
-    script.onload = () => {
-        const pre = document.querySelector('.source-container > pre');
-        const lines = pre.querySelectorAll(':scope > [id*="line-"]');
-        const source = Array.from(lines).map(line => line.textContent).join("\n");
-        const lineNumbers = Array.from(lines).map((_, i) => `<span>${i + 1}</span>`).join("\n");
+    if (!hljsScript) {
+        const script = document.createElement("script");
+        script.src = "https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/highlight.min.js";
+        script.onload = () => {
+            const pre = document.querySelector('.source-container > pre');
+            const lines = pre.querySelectorAll(':scope > [id*="line-"]');
+            const source = Array.from(lines).map(line => line.textContent).join("\n");
+            const lineNumbers = Array.from(lines).map((_, i) => `<span>${i + 1}</span>`).join("\n");
 
-        pre.outerHTML = 
-        `
-        <button class="back-button">BACK</button>
-        <div class="code-wrapper">
-            <div class="line-numbers">
-                ${lineNumbers}
-            </div>
+            pre.outerHTML = 
+            `
+            <button class="back-button">BACK</button>
+            <div class="code-wrapper">
+                <div class="line-numbers">
+                    ${lineNumbers}
+                </div>
 
-            <pre>
-                <code class="language-java" hlfs>${source}</code>
-            </pre>
-        <div>
-        `
-        hljs.highlightAll();
+                <pre>
+                    <code class="language-java" hlfs></code>
+                </pre>
+            <div>
+            `
+            const codeBlock = document.querySelector(".code-wrapper > pre > code");
+            codeBlock.textContent = source;
+            hljs.highlightElement(codeBlock);
 
-        const backButton = document.querySelector(".back-button");
-        backButton.addEventListener("click", () => {
-            const currentURL = new URL(window.location.href);
-            currentURL.pathname = currentURL.pathname.replace("/src-html", "");
-            currentURL.hash = "";
-            window.location.href = currentURL.toString();
-        });
-    };
+            const backButton = document.querySelector(".back-button");
+            backButton.addEventListener("click", () => {
+                const currentURL = new URL(window.location.href);
+                currentURL.pathname = currentURL.pathname.replace("/src-html", "");
+                currentURL.hash = "";
+                window.location.href = currentURL.toString();
+            });
+        };
 
-    script.onerror = () => console.error("highlight.js failed to load 🤤");
-    document.head.appendChild(script);
+        script.onerror = () => console.error("highlight.js failed to load 🤤");
+        document.head.appendChild(script);
+        hljsScript = script;
+    }
+}
+
+const detectThemeChange = () => {
+    window.matchMedia('(prefers-color-scheme: light)').addEventListener('change', e => {
+        syntaxHighlight();
+    });
 }
 
 placeFavicon();
 syntaxHighlight();
+detectThemeChange();
