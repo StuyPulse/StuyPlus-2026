@@ -137,7 +137,8 @@ public interface Motors {
 				.withStatorCurrentLimitAmps(80)
 				// .withRampRate(0.25)
 				.withNeutralMode(NeutralModeValue.Coast)
-				.withInvertedValue(InvertedValue.CounterClockwise_Positive);
+				.withInvertedValue(InvertedValue.CounterClockwise_Positive)
+				.withSensorToMechanismRatio(Settings.Handoff.GEAR_RATIO);
 	}
 
 	public static class TalonFXConfig {

@@ -31,7 +31,7 @@ public class HandoffSim extends Handoff {
                 LinearSystemId.createDCMotorSystem(
                         DCMotor.getKrakenX60(1),
                         Settings.Handoff.J_KG_METERS_SQUARED,
-                        Settings.Handoff.SIM_GEAR_RATIO),
+                        Settings.Handoff.GEAR_RATIO),
                 DCMotor.getKrakenX60(1));
         handoffMotor = new TalonFXSimulation(Ports.Handoff.HANDOFF_MOTOR, handoffSim);
         handoffMotor.configure(Motors.Handoff.HANDOFF_MOTOR_CONFIG);
