@@ -74,18 +74,23 @@
 <span class="source-line-no">061</span><span id="line-61">                &amp;&amp; shooter.getState() == ShooterState.FERRY) {</span>
 <span class="source-line-no">062</span><span id="line-62">            setState(HandoffState.IDLE);</span>
 <span class="source-line-no">063</span><span id="line-63">        }</span>
-<span class="source-line-no">064</span><span id="line-64">        // Control</span>
-<span class="source-line-no">065</span><span id="line-65">        final double dutyCycle = handoffStalling.get()</span>
-<span class="source-line-no">066</span><span id="line-66">                ? Handoff.HandoffState.REVERSE.getHandoffDutyCycle()</span>
-<span class="source-line-no">067</span><span id="line-67">                : getState().getHandoffDutyCycle();</span>
-<span class="source-line-no">068</span><span id="line-68">        final DutyCycleOut handoffControl = handoffController.withOutput(dutyCycle);</span>
-<span class="source-line-no">069</span><span id="line-69">        // Apply</span>
-<span class="source-line-no">070</span><span id="line-70">        handoffMotor.setControl(handoffControl);</span>
-<span class="source-line-no">071</span><span id="line-71">        // Logging</span>
-<span class="source-line-no">072</span><span id="line-72">        this.signals.logAll();</span>
-<span class="source-line-no">073</span><span id="line-73">        super.periodic();</span>
-<span class="source-line-no">074</span><span id="line-74">    }</span>
-<span class="source-line-no">075</span><span id="line-75">}</span>
+<span class="source-line-no">064</span><span id="line-64"></span>
+<span class="source-line-no">065</span><span id="line-65">        if (!Shooter.getInstance().shooterSpunUp()) {</span>
+<span class="source-line-no">066</span><span id="line-66">            setState(HandoffState.IDLE);</span>
+<span class="source-line-no">067</span><span id="line-67">        }</span>
+<span class="source-line-no">068</span><span id="line-68"></span>
+<span class="source-line-no">069</span><span id="line-69">        // Control</span>
+<span class="source-line-no">070</span><span id="line-70">        final double dutyCycle = handoffStalling.get()</span>
+<span class="source-line-no">071</span><span id="line-71">                ? Handoff.HandoffState.REVERSE.getHandoffDutyCycle()</span>
+<span class="source-line-no">072</span><span id="line-72">                : getState().getHandoffDutyCycle();</span>
+<span class="source-line-no">073</span><span id="line-73">        final DutyCycleOut handoffControl = handoffController.withOutput(dutyCycle);</span>
+<span class="source-line-no">074</span><span id="line-74">        // Apply</span>
+<span class="source-line-no">075</span><span id="line-75">        handoffMotor.setControl(handoffControl);</span>
+<span class="source-line-no">076</span><span id="line-76">        // Logging</span>
+<span class="source-line-no">077</span><span id="line-77">        this.signals.logAll();</span>
+<span class="source-line-no">078</span><span id="line-78">        super.periodic();</span>
+<span class="source-line-no">079</span><span id="line-79">    }</span>
+<span class="source-line-no">080</span><span id="line-80">}</span>
 
 
 
