@@ -87,7 +87,7 @@ public abstract class Shooter extends SubsystemBase {
     public abstract void setVoltageOverride(Voltage voltage);
 
     public boolean shooterSpunUp() {
-        return getCurrentAngularVelocity().gte(Settings.Shooter.MIN_SHOOTER_VELOCITY);
+        return getCurrentAngularVelocity().gte(getState().getTargetAngularVelocity());
     }
 
     @Override
@@ -95,6 +95,7 @@ public abstract class Shooter extends SubsystemBase {
         final ShooterState currentState = getState();
         DogLog.log("Shooter/Target RPM", currentState.getTargetAngularVelocity().in(RPM));
         DogLog.log("Shooter/State", currentState.name());
-        DogLog.log("States/Shooter", currentState.name());
+        DogLog.forceNt.log("States/Shooter", currentState.name());
+        DogLog.forceNt.log("Shooter/At Target RPM", shooterSpunUp());
     }
 }

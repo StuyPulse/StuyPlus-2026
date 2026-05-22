@@ -11,7 +11,7 @@ import edu.wpi.first.math.util.Units;
 
 public class Cameras {
     public static final Camera[] LimelightCameras = new Camera[] {
-            new Camera("limelight",
+            new Camera("shooter_front_facing",
                     new Pose3d(
                             Units.inchesToMeters(0),
                             Units.inchesToMeters(0),
