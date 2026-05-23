@@ -8,7 +8,7 @@
         "layouts": [
           {
             "title": "Enabled Subsystems",
-            "x": 950.0,
+            "x": 1000.0,
             "y": 0.0,
             "width": 300.0,
             "height": 400.0,
@@ -244,11 +244,11 @@
             "title": "Intake State",
             "x": 800.0,
             "y": 0.0,
-            "width": 150.0,
+            "width": 200.0,
             "height": 100.0,
             "type": "Text Display",
             "properties": {
-              "topic": "/Robot/Intake/Intake State",
+              "topic": "/Robot/States/Intake",
               "period": 0.06,
               "data_type": "string",
               "show_submit_button": false
@@ -258,7 +258,7 @@
             "title": "Pivot At Target Angle",
             "x": 800.0,
             "y": 300.0,
-            "width": 150.0,
+            "width": 200.0,
             "height": 100.0,
             "type": "Boolean Box",
             "properties": {
@@ -275,7 +275,7 @@
             "title": "Pivot Angle (deg)",
             "x": 800.0,
             "y": 200.0,
-            "width": 150.0,
+            "width": 200.0,
             "height": 100.0,
             "type": "Text Display",
             "properties": {
@@ -289,13 +289,13 @@
             "title": "Roller Duty Cycle",
             "x": 800.0,
             "y": 100.0,
-            "width": 150.0,
+            "width": 200.0,
             "height": 100.0,
             "type": "Text Display",
             "properties": {
-              "topic": "/Robot/Intake/Pivot State",
+              "topic": "/Robot/Intake/Rollers/Target Duty Cycle",
               "period": 0.06,
-              "data_type": "string",
+              "data_type": "double",
               "show_submit_button": false
             }
           },
@@ -331,7 +331,7 @@
             "title": "Pipeline",
             "x": 1200.0,
             "y": 550.0,
-            "width": 150.0,
+            "width": 100.0,
             "height": 150.0,
             "type": "Text Display",
             "properties": {
@@ -478,7 +478,7 @@
           {
             "title": "Pivot At Target Angle",
             "x": 1300.0,
-            "y": 150.0,
+            "y": 100.0,
             "width": 200.0,
             "height": 150.0,
             "type": "Boolean Box",
@@ -543,10 +543,10 @@
             "x": 1300.0,
             "y": 0.0,
             "width": 200.0,
-            "height": 150.0,
+            "height": 100.0,
             "type": "Text Display",
             "properties": {
-              "topic": "/Robot/Intake/State",
+              "topic": "/Robot/States/Intake",
               "period": 0.06,
               "data_type": "string",
               "show_submit_button": false
@@ -588,7 +588,7 @@
           {
             "title": "Intake Pivot Stalling",
             "x": 1300.0,
-            "y": 300.0,
+            "y": 250.0,
             "width": 200.0,
             "height": 150.0,
             "type": "Boolean Box",
@@ -605,7 +605,7 @@
           {
             "title": "Intake Rollers Stalling",
             "x": 1300.0,
-            "y": 450.0,
+            "y": 400.0,
             "width": 200.0,
             "height": 150.0,
             "type": "Boolean Box",
@@ -620,10 +620,10 @@
           },
           {
             "title": "Shooter State",
-            "x": 1550.0,
-            "y": 0.0,
+            "x": 1650.0,
+            "y": 250.0,
             "width": 200.0,
-            "height": 150.0,
+            "height": 100.0,
             "type": "Text Display",
             "properties": {
               "topic": "/Robot/States/Shooter",
@@ -634,8 +634,8 @@
           },
           {
             "title": "Shooter At Target RPM",
-            "x": 1550.0,
-            "y": 150.0,
+            "x": 1650.0,
+            "y": 350.0,
             "width": 200.0,
             "height": 150.0,
             "type": "Boolean Box",
@@ -647,6 +647,51 @@
               "false_color": 4294198070,
               "true_icon": "None",
               "false_icon": "None"
+            }
+          },
+          {
+            "title": "Handoff Stalling",
+            "x": 1650.0,
+            "y": 100.0,
+            "width": 200.0,
+            "height": 150.0,
+            "type": "Boolean Box",
+            "properties": {
+              "topic": "/Robot/Handoff/Stalling",
+              "period": 0.06,
+              "data_type": "boolean",
+              "true_color": 4283215696,
+              "false_color": 4294198070,
+              "true_icon": "None",
+              "false_icon": "None"
+            }
+          },
+          {
+            "title": "Handoff State",
+            "x": 1650.0,
+            "y": 0.0,
+            "width": 200.0,
+            "height": 100.0,
+            "type": "Text Display",
+            "properties": {
+              "topic": "/Robot/Handoff/State",
+              "period": 0.06,
+              "data_type": "string",
+              "show_submit_button": false
+            }
+          },
+          {
+            "title": "Feeder State",
+            "x": 1500.0,
+            "y": 0.0,
+            "width": 150.0,
+            "height": 100.0,
+            "type": "Text Display",
+            "properties": {
+              "topic": "/Robot/Feeder/State",
+              "period": 0.06,
+              "data_type": "string",
+              "show_submit_button": false
             }
           }
         ]
@@ -791,7 +836,7 @@
             "height": 150.0,
             "type": "Text Display",
             "properties": {
-              "topic": "/Robot/Intake/Intake State",
+              "topic": "/Robot/States/Intake",
               "period": 0.06,
               "data_type": "string",
               "show_submit_button": false
@@ -805,7 +850,7 @@
             "height": 150.0,
             "type": "Text Display",
             "properties": {
-              "topic": "/Robot/Intake/Pivot Angle (deg)",
+              "topic": "/Robot/Intake/Pivot/Current Angle",
               "period": 0.06,
               "data_type": "double",
               "show_submit_button": false
@@ -833,10 +878,10 @@
             "x": 1050.0,
             "y": 150.0,
             "width": 150.0,
-            "height": 100.0,
+            "height": 150.0,
             "type": "Text Display",
             "properties": {
-              "topic": "/Robot/Intake/Roller Duty Cycle",
+              "topic": "/Robot/Intake/Rollers/Target Duty Cycle",
               "period": 0.06,
               "data_type": "double",
               "show_submit_button": false
@@ -982,7 +1027,7 @@
             ]
           },
           {
-            "title": "Robot",
+            "title": "Robot Stats",
             "x": 1500.0,
             "y": 0.0,
             "width": 300.0,
@@ -1094,7 +1139,7 @@
             "height": 150.0,
             "type": "Text Display",
             "properties": {
-              "topic": "/Robot/Intake/State",
+              "topic": "/Robot/States/Intake",
               "period": 0.06,
               "data_type": "string",
               "show_submit_button": false

@@ -92,7 +92,7 @@ It contains the following states:
 - `FORWARD`: Motors run forward to feed fuel to the shooter
 - `REVERSE`: Motors run backward to work with the intake to outtake fuel from the robot
 
-In the `periodic` method, we use `DutyCycleOut` to control the percentage of power given to both feeder motors. The feeder is set to only run when aligned to the hub if in `SHOOT` state. For SOTM/FOTM, it still feeds while moving if needed.
+In the `periodic` method, we use `VoltageOut` to directly control the amount of voltage given to the feeder motor. The feeder is set to only run when aligned to the hub if in `SHOOT` state. For SOTM/FOTM, it still feeds while moving if needed.
 
 ## Shooter
 File: [`src/main/java/com/stuypulse/robot/subsystems/shooter`](https://github.com/StuyPulse/StuyPlus-2026/tree/main/src/main/java/com/stuypulse/robot/subsystems/shooter)
@@ -119,7 +119,7 @@ It contains the following states:
 - `FORWARD`: The handoff runs forward
 - `REVERSE`: The handoff runs backward
 
-In the `periodic` method, the handoff motors use DutyCycleOut to control the handoff.
+In the `periodic` method, the handoff motors use `VoltageOut` to control the handoff.
 
 ## Vision
 Files: 

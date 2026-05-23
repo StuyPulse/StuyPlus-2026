@@ -50,6 +50,11 @@ public class HandoffImpl extends Handoff {
     }
 
     @Override
+    protected boolean handoffStalling() {
+        return handoffStalling.get();
+    };
+
+    @Override
     public void periodic() {
         // States
         final Shooter shooter = Shooter.getInstance();

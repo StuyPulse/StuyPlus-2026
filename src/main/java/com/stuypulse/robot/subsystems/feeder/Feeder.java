@@ -70,6 +70,6 @@ public abstract class Feeder extends SubsystemBase {
         DogLog.log("Feeder/Target Voltage", currentState.getTargetVoltage());
         DogLog.log("Feeder/Current RPM", getCurrentAngularVelocity().in(RPM));
         DogLog.log("Feeder/State", currentState.name());
-        DogLog.log("States/Feeder", currentState.name());
+        DogLog.forceNt.log("States/Feeder", currentState.name());
     }
 }

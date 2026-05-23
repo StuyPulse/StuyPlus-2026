@@ -57,12 +57,14 @@ public abstract class Handoff extends SubsystemBase {
     }
 
     protected abstract void stopMotors();
+    protected abstract boolean handoffStalling();
 
     @Override
     public void periodic() {
         final HandoffState currentState = getState();
         DogLog.log("Handoff/State", currentState.name());
-        DogLog.log("States/Handoff", currentState.name());
-        DogLog.log("Shooter/Handoff Target Voltage", currentState.getTargetVoltage());
+        DogLog.forceNt.log("States/Handoff", currentState.name());
+        DogLog.log("Handoff/Handoff Target Voltage", currentState.getTargetVoltage());
+        DogLog.forceNt.log("Handoff/Stalling", handoffStalling());
     }
 }

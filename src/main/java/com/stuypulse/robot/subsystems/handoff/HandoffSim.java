@@ -44,6 +44,11 @@ public class HandoffSim extends Handoff {
     }
 
     @Override
+    protected boolean handoffStalling() {
+        return false; // sim doesn't stall
+    };
+
+    @Override
     public void periodic() {
         if (!Settings.EnabledSubsystems.HANDOFF.get()) {
             stopMotors();
