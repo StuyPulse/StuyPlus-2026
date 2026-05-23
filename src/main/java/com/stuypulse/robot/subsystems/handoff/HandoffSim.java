@@ -5,7 +5,7 @@
 /***************************************************************/
 package com.stuypulse.robot.subsystems.handoff;
 
-import com.ctre.phoenix6.controls.DutyCycleOut;
+import com.ctre.phoenix6.controls.VoltageOut;
 import com.stuypulse.robot.constants.Field;
 import com.stuypulse.robot.constants.Motors;
 import com.stuypulse.robot.constants.Ports;
@@ -24,7 +24,7 @@ public class HandoffSim extends Handoff {
 
     private final DCMotorSim handoffSim;
 
-    private final DutyCycleOut handoffMotorController;
+    private final VoltageOut handoffMotorController;
 
     public HandoffSim() {
         handoffSim = new DCMotorSim(
@@ -35,7 +35,7 @@ public class HandoffSim extends Handoff {
                 DCMotor.getKrakenX60(1));
         handoffMotor = new TalonFXSimulation(Ports.Handoff.HANDOFF_MOTOR, handoffSim);
         handoffMotor.configure(Motors.Handoff.HANDOFF_MOTOR_CONFIG);
-        handoffMotorController = new DutyCycleOut(getState().getHandoffDutyCycle()).withEnableFOC(true);
+        handoffMotorController = new VoltageOut(getState().getTargetVoltage()).withEnableFOC(true);
     }
 
     @Override
@@ -59,7 +59,7 @@ public class HandoffSim extends Handoff {
                 && shooter.getState() == ShooterState.FERRY) {
             setState(HandoffState.IDLE);
         }
-        handoffMotor.setControl(handoffMotorController.withOutput(getState().getHandoffDutyCycle()));
+        handoffMotor.setControl(handoffMotorController.withOutput(getState().getTargetVoltage()));
         handoffMotor.update(Settings.DT);
         super.periodic();
     }

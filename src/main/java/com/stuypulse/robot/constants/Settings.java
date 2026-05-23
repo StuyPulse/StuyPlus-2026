@@ -142,9 +142,9 @@ public interface Settings {
 
     public interface Feeder {
 
-        double FEEDER_REVERSE_DUTY_CYCLE = -1;
+        Voltage REVERSE_VOLTAGE = Volts.of(-10.0); // TODO: get
 
-        double FEEDER_FORWARD_DUTY_CYCLE = 1;
+        Voltage FORWARD_VOLTAGE = Volts.of(10.0);
 
         // TODO: get from mec
         double GEAR_RATIO = 34/14; // (34/14) : 1
@@ -198,12 +198,11 @@ public interface Settings {
     }
 
     public interface Handoff {
+        Voltage IDLE_VOLTAGE = Volts.of(0.0);
 
-        double IDLE_DUTY_CYCLE = 0.0;
+        Voltage FORWARD_VOLTAGE = Volts.of(10.0);
 
-        double FORWARD_DUTY_CYCLE = 1.0;
-
-        double REVERSE_DUTY_CYCLE = -1.0;
+        Voltage REVERSE_VOLTAGE = Volts.of(-10.0);
 
         double STALL_CURRENT = 67;
 

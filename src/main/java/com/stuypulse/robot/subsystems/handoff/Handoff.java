@@ -8,6 +8,7 @@ package com.stuypulse.robot.subsystems.handoff;
 import com.stuypulse.robot.Robot;
 import com.stuypulse.robot.constants.Settings;
 import dev.doglog.DogLog;
+import edu.wpi.first.units.measure.Voltage;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public abstract class Handoff extends SubsystemBase {
@@ -40,18 +41,18 @@ public abstract class Handoff extends SubsystemBase {
     }
 
     public enum HandoffState {
-        IDLE(Settings.Handoff.IDLE_DUTY_CYCLE),
-        FORWARD(Settings.Handoff.FORWARD_DUTY_CYCLE),
-        REVERSE(Settings.Handoff.REVERSE_DUTY_CYCLE);
+        IDLE(Settings.Handoff.IDLE_VOLTAGE),
+        FORWARD(Settings.Handoff.FORWARD_VOLTAGE),
+        REVERSE(Settings.Handoff.REVERSE_VOLTAGE);
 
-        private double handoffMotorDutyCycle;
+        private Voltage targetVoltage;
 
-        private HandoffState(double handoffMotorDutyCycle) {
-            this.handoffMotorDutyCycle = handoffMotorDutyCycle;
+        private HandoffState(Voltage targetVoltage) {
+            this.targetVoltage = targetVoltage;
         }
 
-        public double getHandoffDutyCycle() {
-            return handoffMotorDutyCycle;
+        public Voltage getTargetVoltage() {
+            return targetVoltage;
         }
     }
 
@@ -62,6 +63,6 @@ public abstract class Handoff extends SubsystemBase {
         final HandoffState currentState = getState();
         DogLog.log("Handoff/State", currentState.name());
         DogLog.log("States/Handoff", currentState.name());
-        DogLog.log("Shooter/Handoff Target Duty Cycle", currentState.getHandoffDutyCycle());
+        DogLog.log("Shooter/Handoff Target Voltage", currentState.getTargetVoltage());
     }
 }

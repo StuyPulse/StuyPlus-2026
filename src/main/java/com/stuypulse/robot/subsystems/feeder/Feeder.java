@@ -32,18 +32,18 @@ public abstract class Feeder extends SubsystemBase {
     }
 
     public enum FeederState {
-        IDLE(0),
-        REVERSE(Settings.Feeder.FEEDER_REVERSE_DUTY_CYCLE),
-        FORWARD(Settings.Feeder.FEEDER_FORWARD_DUTY_CYCLE);
+        IDLE(Volts.of(0.0)),
+        REVERSE(Settings.Feeder.REVERSE_VOLTAGE),
+        FORWARD(Settings.Feeder.FORWARD_VOLTAGE);
 
-        private double targetDutyCycle;
+        private Voltage targetVoltage;
 
-        private FeederState(double targetDutyCycle) {
-            this.targetDutyCycle = targetDutyCycle;
+        private FeederState(Voltage targetVoltage) {
+            this.targetVoltage = targetVoltage;
         }
 
-        public double getTargetDutyCycle() {
-            return this.targetDutyCycle;
+        public Voltage getTargetVoltage() {
+            return this.targetVoltage;
         }
     }
 
@@ -67,7 +67,7 @@ public abstract class Feeder extends SubsystemBase {
     public void periodic() {
         final FeederState currentState = getState();
         // Logging
-        DogLog.log("Feeder/Target Duty Cycle", currentState.getTargetDutyCycle());
+        DogLog.log("Feeder/Target Voltage", currentState.getTargetVoltage());
         DogLog.log("Feeder/Current RPM", getCurrentAngularVelocity().in(RPM));
         DogLog.log("Feeder/State", currentState.name());
         DogLog.log("States/Feeder", currentState.name());

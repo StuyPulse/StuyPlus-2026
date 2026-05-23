@@ -5,7 +5,7 @@
 /***************************************************************/
 package com.stuypulse.robot.subsystems.feeder;
 
-import com.ctre.phoenix6.controls.DutyCycleOut;
+import com.ctre.phoenix6.controls.VoltageOut;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.stuypulse.robot.constants.Field;
 import com.stuypulse.robot.constants.Motors;
@@ -22,14 +22,14 @@ public class FeederImpl extends Feeder {
 
     private final TalonFX feederMotor;
 
-    private final DutyCycleOut controller;
+    private final VoltageOut controller;
 
     private final LoggedSignals signals;
 
     public FeederImpl() {
         feederMotor = new TalonFX(Ports.Feeder.FEEDER_MOTOR, Settings.CANBUS);
         Motors.Feeder.LEADER_CONFIG.configure(feederMotor);
-        controller = new DutyCycleOut(getState().getTargetDutyCycle()).withEnableFOC(true);
+        controller = new VoltageOut(getState().getTargetVoltage()).withEnableFOC(true);
         this.signals = new LoggedSignals(LoggedSignals.SignalLocation.CANIVORE, "Feeder/",
                 feederMotor.getSupplyCurrent(),
                 feederMotor.getStatorCurrent(),
@@ -67,7 +67,7 @@ public class FeederImpl extends Feeder {
             setState(FeederState.IDLE);
         }
         // Apply
-        feederMotor.setControl(controller.withOutput(getState().getTargetDutyCycle()));
+        feederMotor.setControl(controller.withOutput(getState().getTargetVoltage()));
         // Logging
         this.signals.logAll();
         super.periodic();

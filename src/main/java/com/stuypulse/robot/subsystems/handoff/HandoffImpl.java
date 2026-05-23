@@ -5,7 +5,7 @@
 /***************************************************************/
 package com.stuypulse.robot.subsystems.handoff;
 
-import com.ctre.phoenix6.controls.DutyCycleOut;
+import com.ctre.phoenix6.controls.VoltageOut;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.stuypulse.robot.constants.Field;
 import com.stuypulse.robot.constants.Motors;
@@ -18,11 +18,13 @@ import com.stuypulse.robot.util.LoggedSignals;
 import com.stuypulse.stuylib.streams.booleans.BStream;
 import com.stuypulse.stuylib.streams.booleans.filters.BDebounce;
 
+import edu.wpi.first.units.measure.Voltage;
+
 public class HandoffImpl extends Handoff {
 
     private final TalonFX handoffMotor;
 
-    private final DutyCycleOut handoffController;
+    private final VoltageOut handoffController;
 
     private final LoggedSignals signals;
 
@@ -30,7 +32,7 @@ public class HandoffImpl extends Handoff {
 
     public HandoffImpl() {
         handoffMotor = new TalonFX(Ports.Handoff.HANDOFF_MOTOR, Settings.CANBUS);
-        handoffController = new DutyCycleOut(getState().getHandoffDutyCycle()).withEnableFOC(true);
+        handoffController = new VoltageOut(getState().getTargetVoltage()).withEnableFOC(true);
         signals = new LoggedSignals(LoggedSignals.SignalLocation.CANIVORE, "Handoff/",
                 handoffMotor.getSupplyCurrent(),
                 handoffMotor.getStatorCurrent(),
@@ -67,10 +69,10 @@ public class HandoffImpl extends Handoff {
         }
 
         // Control
-        final double dutyCycle = handoffStalling.get()
-                ? Handoff.HandoffState.REVERSE.getHandoffDutyCycle()
-                : getState().getHandoffDutyCycle();
-        final DutyCycleOut handoffControl = handoffController.withOutput(dutyCycle);
+        final Voltage voltage = handoffStalling.get()
+                ? Handoff.HandoffState.REVERSE.getTargetVoltage()
+                : getState().getTargetVoltage();
+        final VoltageOut handoffControl = handoffController.withOutput(voltage);
         // Apply
         handoffMotor.setControl(handoffControl);
         // Logging
