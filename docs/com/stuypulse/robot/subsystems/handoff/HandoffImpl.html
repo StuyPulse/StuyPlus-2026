@@ -84,7 +84,7 @@ loadScripts(document, 'script');</script>
 <dd><code>edu.wpi.first.util.sendable.Sendable</code>, <code>edu.wpi.first.wpilibj2.command.Subsystem</code></dd>
 </dl>
 <hr>
-<div class="type-signature"><span class="modifiers">public class </span><span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/handoff/HandoffImpl.html#line-21">HandoffImpl</a></span>
+<div class="type-signature"><span class="modifiers">public class </span><span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/handoff/HandoffImpl.html#line-23">HandoffImpl</a></span>
 <span class="extends-implements">extends <a href="Handoff.html" title="class in com.stuypulse.robot.subsystems.handoff">Handoff</a></span></div>
 </section>
 <section class="summary">
@@ -107,7 +107,7 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Field</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color"><code>private final com.ctre.phoenix6.controls.DutyCycleOut</code></div>
+<div class="col-first even-row-color"><code>private final com.ctre.phoenix6.controls.VoltageOut</code></div>
 <div class="col-second even-row-color"><code><a href="#handoffController" class="member-name-link">handoffController</a></code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code>private final com.ctre.phoenix6.hardware.TalonFX</code></div>
@@ -181,25 +181,25 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="handoffMotor">
 <h3>handoffMotor</h3>
-<div class="member-signature"><span class="modifiers">private final</span>&nbsp;<span class="return-type">com.ctre.phoenix6.hardware.TalonFX</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/handoff/HandoffImpl.html#line-23">handoffMotor</a></span></div>
+<div class="member-signature"><span class="modifiers">private final</span>&nbsp;<span class="return-type">com.ctre.phoenix6.hardware.TalonFX</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/handoff/HandoffImpl.html#line-25">handoffMotor</a></span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="handoffController">
 <h3>handoffController</h3>
-<div class="member-signature"><span class="modifiers">private final</span>&nbsp;<span class="return-type">com.ctre.phoenix6.controls.DutyCycleOut</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/handoff/HandoffImpl.html#line-25">handoffController</a></span></div>
+<div class="member-signature"><span class="modifiers">private final</span>&nbsp;<span class="return-type">com.ctre.phoenix6.controls.VoltageOut</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/handoff/HandoffImpl.html#line-27">handoffController</a></span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="signals">
 <h3>signals</h3>
-<div class="member-signature"><span class="modifiers">private final</span>&nbsp;<span class="return-type"><a href="../../util/LoggedSignals.html" title="class in com.stuypulse.robot.util">LoggedSignals</a></span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/handoff/HandoffImpl.html#line-27">signals</a></span></div>
+<div class="member-signature"><span class="modifiers">private final</span>&nbsp;<span class="return-type"><a href="../../util/LoggedSignals.html" title="class in com.stuypulse.robot.util">LoggedSignals</a></span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/handoff/HandoffImpl.html#line-29">signals</a></span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="handoffStalling">
 <h3>handoffStalling</h3>
-<div class="member-signature"><span class="modifiers">private final</span>&nbsp;<span class="return-type">com.stuypulse.stuylib.streams.booleans.BStream</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/handoff/HandoffImpl.html#line-29">handoffStalling</a></span></div>
+<div class="member-signature"><span class="modifiers">private final</span>&nbsp;<span class="return-type">com.stuypulse.stuylib.streams.booleans.BStream</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/handoff/HandoffImpl.html#line-31">handoffStalling</a></span></div>
 </section>
 </li>
 </ul>
@@ -213,7 +213,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="&lt;init&gt;()">
 <h3>HandoffImpl</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/handoff/HandoffImpl.html#line-31">HandoffImpl</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/handoff/HandoffImpl.html#line-33">HandoffImpl</a></span>()</div>
 </section>
 </li>
 </ul>
@@ -227,7 +227,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="stopMotors()">
 <h3>stopMotors</h3>
-<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/handoff/HandoffImpl.html#line-45">stopMotors</a></span>()</div>
+<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/handoff/HandoffImpl.html#line-47">stopMotors</a></span>()</div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="Handoff.html#stopMotors()">stopMotors</a></code>&nbsp;in class&nbsp;<code><a href="Handoff.html" title="class in com.stuypulse.robot.subsystems.handoff">Handoff</a></code></dd>
@@ -237,7 +237,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="periodic()">
 <h3>periodic</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/handoff/HandoffImpl.html#line-50">periodic</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/handoff/HandoffImpl.html#line-52">periodic</a></span>()</div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code>periodic</code>&nbsp;in interface&nbsp;<code>edu.wpi.first.wpilibj2.command.Subsystem</code></dd>

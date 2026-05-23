@@ -86,7 +86,7 @@ loadScripts(document, 'script');</script>
 <dd><a href="Handoff.html" title="class in com.stuypulse.robot.subsystems.handoff">Handoff</a></dd>
 </dl>
 <hr>
-<div class="type-signature"><span class="modifiers">public static enum </span><span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/handoff/Handoff.html#line-42">Handoff.HandoffState</a></span>
+<div class="type-signature"><span class="modifiers">public static enum </span><span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/handoff/Handoff.html#line-43">Handoff.HandoffState</a></span>
 <span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Enum.html" title="class or interface in java.lang" class="external-link">Enum</a>&lt;<a href="Handoff.HandoffState.html" title="enum class in com.stuypulse.robot.subsystems.handoff">Handoff.HandoffState</a>&gt;</span></div>
 </section>
 <section class="summary">
@@ -126,8 +126,8 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Field</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color"><code>private double</code></div>
-<div class="col-second even-row-color"><code><a href="#handoffMotorDutyCycle" class="member-name-link">handoffMotorDutyCycle</a></code></div>
+<div class="col-first even-row-color"><code>private edu.wpi.first.units.measure.Voltage</code></div>
+<div class="col-second even-row-color"><code><a href="#targetVoltage" class="member-name-link">targetVoltage</a></code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 </div>
 </section>
@@ -142,7 +142,7 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-second">Constructor</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color"><code>private </code></div>
-<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(double)" class="member-name-link">HandoffState</a><wbr>(double&nbsp;handoffMotorDutyCycle)</code></div>
+<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(edu.wpi.first.units.measure.Voltage)" class="member-name-link">HandoffState</a><wbr>(edu.wpi.first.units.measure.Voltage&nbsp;targetVoltage)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 </div>
 </section>
@@ -158,8 +158,8 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>double</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getHandoffDutyCycle()" class="member-name-link">getHandoffDutyCycle</a>()</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>edu.wpi.first.units.measure.Voltage</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getTargetVoltage()" class="member-name-link">getTargetVoltage</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="Handoff.HandoffState.html" title="enum class in com.stuypulse.robot.subsystems.handoff">Handoff.HandoffState</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#valueOf(java.lang.String)" class="member-name-link">valueOf</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</code></div>
@@ -195,19 +195,19 @@ the order they are declared.</div>
 <li>
 <section class="detail" id="IDLE">
 <h3>IDLE</h3>
-<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="Handoff.HandoffState.html" title="enum class in com.stuypulse.robot.subsystems.handoff">Handoff.HandoffState</a></span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/handoff/Handoff.HandoffState.html#line-43">IDLE</a></span></div>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="Handoff.HandoffState.html" title="enum class in com.stuypulse.robot.subsystems.handoff">Handoff.HandoffState</a></span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/handoff/Handoff.HandoffState.html#line-44">IDLE</a></span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="FORWARD">
 <h3>FORWARD</h3>
-<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="Handoff.HandoffState.html" title="enum class in com.stuypulse.robot.subsystems.handoff">Handoff.HandoffState</a></span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/handoff/Handoff.HandoffState.html#line-44">FORWARD</a></span></div>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="Handoff.HandoffState.html" title="enum class in com.stuypulse.robot.subsystems.handoff">Handoff.HandoffState</a></span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/handoff/Handoff.HandoffState.html#line-45">FORWARD</a></span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="REVERSE">
 <h3>REVERSE</h3>
-<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="Handoff.HandoffState.html" title="enum class in com.stuypulse.robot.subsystems.handoff">Handoff.HandoffState</a></span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/handoff/Handoff.HandoffState.html#line-45">REVERSE</a></span></div>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="Handoff.HandoffState.html" title="enum class in com.stuypulse.robot.subsystems.handoff">Handoff.HandoffState</a></span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/handoff/Handoff.HandoffState.html#line-46">REVERSE</a></span></div>
 </section>
 </li>
 </ul>
@@ -219,9 +219,9 @@ the order they are declared.</div>
 <h2>Field Details</h2>
 <ul class="member-list">
 <li>
-<section class="detail" id="handoffMotorDutyCycle">
-<h3>handoffMotorDutyCycle</h3>
-<div class="member-signature"><span class="modifiers">private</span>&nbsp;<span class="return-type">double</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/handoff/Handoff.HandoffState.html#line-47">handoffMotorDutyCycle</a></span></div>
+<section class="detail" id="targetVoltage">
+<h3>targetVoltage</h3>
+<div class="member-signature"><span class="modifiers">private</span>&nbsp;<span class="return-type">edu.wpi.first.units.measure.Voltage</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/handoff/Handoff.HandoffState.html#line-48">targetVoltage</a></span></div>
 </section>
 </li>
 </ul>
@@ -233,9 +233,9 @@ the order they are declared.</div>
 <h2>Constructor Details</h2>
 <ul class="member-list">
 <li>
-<section class="detail" id="&lt;init&gt;(double)">
+<section class="detail" id="&lt;init&gt;(edu.wpi.first.units.measure.Voltage)">
 <h3>HandoffState</h3>
-<div class="member-signature"><span class="modifiers">private</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/handoff/Handoff.HandoffState.html#line-49">HandoffState</a></span><wbr><span class="parameters">(double&nbsp;handoffMotorDutyCycle)</span></div>
+<div class="member-signature"><span class="modifiers">private</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/handoff/Handoff.HandoffState.html#line-50">HandoffState</a></span><wbr><span class="parameters">(edu.wpi.first.units.measure.Voltage&nbsp;targetVoltage)</span></div>
 </section>
 </li>
 </ul>
@@ -249,7 +249,7 @@ the order they are declared.</div>
 <li>
 <section class="detail" id="values()">
 <h3>values</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="Handoff.HandoffState.html" title="enum class in com.stuypulse.robot.subsystems.handoff">Handoff.HandoffState</a>[]</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/handoff/Handoff.HandoffState.html#line-42">values</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="Handoff.HandoffState.html" title="enum class in com.stuypulse.robot.subsystems.handoff">Handoff.HandoffState</a>[]</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/handoff/Handoff.HandoffState.html#line-43">values</a></span>()</div>
 <div class="block">Returns an array containing the constants of this enum class, in
 the order they are declared.</div>
 <dl class="notes">
@@ -261,7 +261,7 @@ the order they are declared.</div>
 <li>
 <section class="detail" id="valueOf(java.lang.String)">
 <h3>valueOf</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="Handoff.HandoffState.html" title="enum class in com.stuypulse.robot.subsystems.handoff">Handoff.HandoffState</a></span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/handoff/Handoff.HandoffState.html#line-42">valueOf</a></span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</span></div>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="Handoff.HandoffState.html" title="enum class in com.stuypulse.robot.subsystems.handoff">Handoff.HandoffState</a></span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/handoff/Handoff.HandoffState.html#line-43">valueOf</a></span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</span></div>
 <div class="block">Returns the enum constant of this class with the specified name.
 The string must match <i>exactly</i> an identifier used to declare an
 enum constant in this class.  (Extraneous whitespace characters are 
@@ -278,9 +278,9 @@ not permitted.)</div>
 </section>
 </li>
 <li>
-<section class="detail" id="getHandoffDutyCycle()">
-<h3>getHandoffDutyCycle</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">double</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/handoff/Handoff.HandoffState.html#line-53">getHandoffDutyCycle</a></span>()</div>
+<section class="detail" id="getTargetVoltage()">
+<h3>getTargetVoltage</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">edu.wpi.first.units.measure.Voltage</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/handoff/Handoff.HandoffState.html#line-54">getTargetVoltage</a></span>()</div>
 </section>
 </li>
 </ul>

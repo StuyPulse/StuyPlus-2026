@@ -673,13 +673,9 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="com/stuypulse/robot/constants/Settings.LED.html#FEEDER_FORWARD" class="member-name-link">FEEDER_FORWARD</a> - Static variable in interface com.stuypulse.robot.constants.<a href="com/stuypulse/robot/constants/Settings.LED.html" title="interface in com.stuypulse.robot.constants">Settings.LED</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="com/stuypulse/robot/constants/Settings.Feeder.html#FEEDER_FORWARD_DUTY_CYCLE" class="member-name-link">FEEDER_FORWARD_DUTY_CYCLE</a> - Static variable in interface com.stuypulse.robot.constants.<a href="com/stuypulse/robot/constants/Settings.Feeder.html" title="interface in com.stuypulse.robot.constants">Settings.Feeder</a></dt>
-<dd>&nbsp;</dd>
 <dt><a href="com/stuypulse/robot/constants/Ports.Feeder.html#FEEDER_MOTOR" class="member-name-link">FEEDER_MOTOR</a> - Static variable in interface com.stuypulse.robot.constants.<a href="com/stuypulse/robot/constants/Ports.Feeder.html" title="interface in com.stuypulse.robot.constants">Ports.Feeder</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/stuypulse/robot/constants/Settings.LED.html#FEEDER_REVERSE" class="member-name-link">FEEDER_REVERSE</a> - Static variable in interface com.stuypulse.robot.constants.<a href="com/stuypulse/robot/constants/Settings.LED.html" title="interface in com.stuypulse.robot.constants">Settings.LED</a></dt>
-<dd>&nbsp;</dd>
-<dt><a href="com/stuypulse/robot/constants/Settings.Feeder.html#FEEDER_REVERSE_DUTY_CYCLE" class="member-name-link">FEEDER_REVERSE_DUTY_CYCLE</a> - Static variable in interface com.stuypulse.robot.constants.<a href="com/stuypulse/robot/constants/Settings.Feeder.html" title="interface in com.stuypulse.robot.constants">Settings.Feeder</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/stuypulse/robot/subsystems/feeder/Feeder.FeederState.html" class="type-name-link" title="enum class in com.stuypulse.robot.subsystems.feeder">Feeder.FeederState</a> - Enum Class in <a href="com/stuypulse/robot/subsystems/feeder/package-summary.html">com.stuypulse.robot.subsystems.feeder</a></dt>
 <dd>&nbsp;</dd>
@@ -725,7 +721,7 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Spokes of the feeder</div>
 </dd>
-<dt><a href="com/stuypulse/robot/subsystems/feeder/Feeder.FeederState.html#%3Cinit%3E(double)" class="member-name-link">FeederState(double)</a> - Constructor for enum class com.stuypulse.robot.subsystems.feeder.<a href="com/stuypulse/robot/subsystems/feeder/Feeder.FeederState.html" title="enum class in com.stuypulse.robot.subsystems.feeder">Feeder.FeederState</a></dt>
+<dt><a href="com/stuypulse/robot/subsystems/feeder/Feeder.FeederState.html#%3Cinit%3E(edu.wpi.first.units.measure.Voltage)" class="member-name-link">FeederState(Voltage)</a> - Constructor for enum class com.stuypulse.robot.subsystems.feeder.<a href="com/stuypulse/robot/subsystems/feeder/Feeder.FeederState.html" title="enum class in com.stuypulse.robot.subsystems.feeder">Feeder.FeederState</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/stuypulse/robot/subsystems/leds/LEDController.html#feederView" class="member-name-link">feederView</a> - Variable in class com.stuypulse.robot.subsystems.leds.<a href="com/stuypulse/robot/subsystems/leds/LEDController.html" title="class in com.stuypulse.robot.subsystems.leds">LEDController</a></dt>
 <dd>&nbsp;</dd>
@@ -789,7 +785,9 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="com/stuypulse/robot/subsystems/handoff/Handoff.HandoffState.html#FORWARD" class="member-name-link">FORWARD</a> - Enum constant in enum class com.stuypulse.robot.subsystems.handoff.<a href="com/stuypulse/robot/subsystems/handoff/Handoff.HandoffState.html" title="enum class in com.stuypulse.robot.subsystems.handoff">Handoff.HandoffState</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="com/stuypulse/robot/constants/Settings.Handoff.html#FORWARD_DUTY_CYCLE" class="member-name-link">FORWARD_DUTY_CYCLE</a> - Static variable in interface com.stuypulse.robot.constants.<a href="com/stuypulse/robot/constants/Settings.Handoff.html" title="interface in com.stuypulse.robot.constants">Settings.Handoff</a></dt>
+<dt><a href="com/stuypulse/robot/constants/Settings.Feeder.html#FORWARD_VOLTAGE" class="member-name-link">FORWARD_VOLTAGE</a> - Static variable in interface com.stuypulse.robot.constants.<a href="com/stuypulse/robot/constants/Settings.Feeder.html" title="interface in com.stuypulse.robot.constants">Settings.Feeder</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/stuypulse/robot/constants/Settings.Handoff.html#FORWARD_VOLTAGE" class="member-name-link">FORWARD_VOLTAGE</a> - Static variable in interface com.stuypulse.robot.constants.<a href="com/stuypulse/robot/constants/Settings.Handoff.html" title="interface in com.stuypulse.robot.constants">Settings.Handoff</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/stuypulse/robot/util/vision/LimelightHelpers.RewindStats.html#frameCount" class="member-name-link">frameCount</a> - Variable in class com.stuypulse.robot.util.vision.<a href="com/stuypulse/robot/util/vision/LimelightHelpers.RewindStats.html" title="class in com.stuypulse.robot.util.vision">LimelightHelpers.RewindStats</a></dt>
 <dd>&nbsp;</dd>
@@ -1020,8 +1018,6 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="com/stuypulse/robot/subsystems/swerve/CommandSwerveDrivetrain.html#getFieldRelativeSpeeds()" class="member-name-link">getFieldRelativeSpeeds()</a> - Method in class com.stuypulse.robot.subsystems.swerve.<a href="com/stuypulse/robot/subsystems/swerve/CommandSwerveDrivetrain.html" title="class in com.stuypulse.robot.subsystems.swerve">CommandSwerveDrivetrain</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="com/stuypulse/robot/subsystems/handoff/Handoff.HandoffState.html#getHandoffDutyCycle()" class="member-name-link">getHandoffDutyCycle()</a> - Method in enum class com.stuypulse.robot.subsystems.handoff.<a href="com/stuypulse/robot/subsystems/handoff/Handoff.HandoffState.html" title="enum class in com.stuypulse.robot.subsystems.handoff">Handoff.HandoffState</a></dt>
-<dd>&nbsp;</dd>
 <dt><a href="com/stuypulse/robot/util/vision/LimelightHelpers.html#getHeartbeat(java.lang.String)" class="member-name-link">getHeartbeat(String)</a> - Static method in class com.stuypulse.robot.util.vision.<a href="com/stuypulse/robot/util/vision/LimelightHelpers.html" title="class in com.stuypulse.robot.util.vision">LimelightHelpers</a></dt>
 <dd>
 <div class="block">Gets the Limelight heartbeat value.</div>
@@ -1216,8 +1212,6 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Gets the number of targets currently detected.</div>
 </dd>
-<dt><a href="com/stuypulse/robot/subsystems/feeder/Feeder.FeederState.html#getTargetDutyCycle()" class="member-name-link">getTargetDutyCycle()</a> - Method in enum class com.stuypulse.robot.subsystems.feeder.<a href="com/stuypulse/robot/subsystems/feeder/Feeder.FeederState.html" title="enum class in com.stuypulse.robot.subsystems.feeder">Feeder.FeederState</a></dt>
-<dd>&nbsp;</dd>
 <dt><a href="com/stuypulse/robot/subsystems/intake/Intake.IntakeState.html#getTargetDutyCycle()" class="member-name-link">getTargetDutyCycle()</a> - Method in enum class com.stuypulse.robot.subsystems.intake.<a href="com/stuypulse/robot/subsystems/intake/Intake.IntakeState.html" title="enum class in com.stuypulse.robot.subsystems.intake">Intake.IntakeState</a></dt>
 <dd>
 <div class="block">Gets the target position of the pivot.</div>
@@ -1250,6 +1244,10 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Gets the target's 3D pose with respect to the robot's coordinate system.</div>
 </dd>
+<dt><a href="com/stuypulse/robot/subsystems/feeder/Feeder.FeederState.html#getTargetVoltage()" class="member-name-link">getTargetVoltage()</a> - Method in enum class com.stuypulse.robot.subsystems.feeder.<a href="com/stuypulse/robot/subsystems/feeder/Feeder.FeederState.html" title="enum class in com.stuypulse.robot.subsystems.feeder">Feeder.FeederState</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/stuypulse/robot/subsystems/handoff/Handoff.HandoffState.html#getTargetVoltage()" class="member-name-link">getTargetVoltage()</a> - Method in enum class com.stuypulse.robot.subsystems.handoff.<a href="com/stuypulse/robot/subsystems/handoff/Handoff.HandoffState.html" title="enum class in com.stuypulse.robot.subsystems.handoff">Handoff.HandoffState</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/stuypulse/robot/util/vision/LimelightHelpers.html#getTV(java.lang.String)" class="member-name-link">getTV(String)</a> - Static method in class com.stuypulse.robot.util.vision.<a href="com/stuypulse/robot/util/vision/LimelightHelpers.html" title="class in com.stuypulse.robot.util.vision">LimelightHelpers</a></dt>
 <dd>
 <div class="block">Does the Limelight have a valid target?</div>
@@ -1323,8 +1321,6 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="com/stuypulse/robot/subsystems/handoff/HandoffSim.html#handoffMotorController" class="member-name-link">handoffMotorController</a> - Variable in class com.stuypulse.robot.subsystems.handoff.<a href="com/stuypulse/robot/subsystems/handoff/HandoffSim.html" title="class in com.stuypulse.robot.subsystems.handoff">HandoffSim</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="com/stuypulse/robot/subsystems/handoff/Handoff.HandoffState.html#handoffMotorDutyCycle" class="member-name-link">handoffMotorDutyCycle</a> - Variable in enum class com.stuypulse.robot.subsystems.handoff.<a href="com/stuypulse/robot/subsystems/handoff/Handoff.HandoffState.html" title="enum class in com.stuypulse.robot.subsystems.handoff">Handoff.HandoffState</a></dt>
-<dd>&nbsp;</dd>
 <dt><a href="com/stuypulse/robot/commands/handoff/HandoffSetForward.html" class="type-name-link" title="class in com.stuypulse.robot.commands.handoff">HandoffSetForward</a> - Class in <a href="com/stuypulse/robot/commands/handoff/package-summary.html">com.stuypulse.robot.commands.handoff</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/stuypulse/robot/commands/handoff/HandoffSetForward.html#%3Cinit%3E()" class="member-name-link">HandoffSetForward()</a> - Constructor for class com.stuypulse.robot.commands.handoff.<a href="com/stuypulse/robot/commands/handoff/HandoffSetForward.html" title="class in com.stuypulse.robot.commands.handoff">HandoffSetForward</a></dt>
@@ -1351,7 +1347,7 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="com/stuypulse/robot/commands/handoff/HandoffSetState.html#handoffState" class="member-name-link">handoffState</a> - Variable in class com.stuypulse.robot.commands.handoff.<a href="com/stuypulse/robot/commands/handoff/HandoffSetState.html" title="class in com.stuypulse.robot.commands.handoff">HandoffSetState</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="com/stuypulse/robot/subsystems/handoff/Handoff.HandoffState.html#%3Cinit%3E(double)" class="member-name-link">HandoffState(double)</a> - Constructor for enum class com.stuypulse.robot.subsystems.handoff.<a href="com/stuypulse/robot/subsystems/handoff/Handoff.HandoffState.html" title="enum class in com.stuypulse.robot.subsystems.handoff">Handoff.HandoffState</a></dt>
+<dt><a href="com/stuypulse/robot/subsystems/handoff/Handoff.HandoffState.html#%3Cinit%3E(edu.wpi.first.units.measure.Voltage)" class="member-name-link">HandoffState(Voltage)</a> - Constructor for enum class com.stuypulse.robot.subsystems.handoff.<a href="com/stuypulse/robot/subsystems/handoff/Handoff.HandoffState.html" title="enum class in com.stuypulse.robot.subsystems.handoff">Handoff.HandoffState</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/stuypulse/robot/subsystems/leds/LEDController.html#handoffView" class="member-name-link">handoffView</a> - Variable in class com.stuypulse.robot.subsystems.leds.<a href="com/stuypulse/robot/subsystems/leds/LEDController.html" title="class in com.stuypulse.robot.subsystems.leds">LEDController</a></dt>
 <dd>&nbsp;</dd>
@@ -1426,9 +1422,9 @@ loadScripts(document, 'script');</script>
 </dd>
 <dt><a href="com/stuypulse/robot/subsystems/shooter/Shooter.ShooterState.html#IDLE" class="member-name-link">IDLE</a> - Enum constant in enum class com.stuypulse.robot.subsystems.shooter.<a href="com/stuypulse/robot/subsystems/shooter/Shooter.ShooterState.html" title="enum class in com.stuypulse.robot.subsystems.shooter">Shooter.ShooterState</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="com/stuypulse/robot/constants/Settings.Handoff.html#IDLE_DUTY_CYCLE" class="member-name-link">IDLE_DUTY_CYCLE</a> - Static variable in interface com.stuypulse.robot.constants.<a href="com/stuypulse/robot/constants/Settings.Handoff.html" title="interface in com.stuypulse.robot.constants">Settings.Handoff</a></dt>
-<dd>&nbsp;</dd>
 <dt><a href="com/stuypulse/robot/constants/Settings.Intake.Roller.html#IDLE_DUTY_CYCLE" class="member-name-link">IDLE_DUTY_CYCLE</a> - Static variable in interface com.stuypulse.robot.constants.<a href="com/stuypulse/robot/constants/Settings.Intake.Roller.html" title="interface in com.stuypulse.robot.constants">Settings.Intake.Roller</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/stuypulse/robot/constants/Settings.Handoff.html#IDLE_VOLTAGE" class="member-name-link">IDLE_VOLTAGE</a> - Static variable in interface com.stuypulse.robot.constants.<a href="com/stuypulse/robot/constants/Settings.Handoff.html" title="interface in com.stuypulse.robot.constants">Settings.Handoff</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/stuypulse/robot/util/vision/LimelightHelpers.IMUData.html#%3Cinit%3E()" class="member-name-link">IMUData()</a> - Constructor for class com.stuypulse.robot.util.vision.<a href="com/stuypulse/robot/util/vision/LimelightHelpers.IMUData.html" title="class in com.stuypulse.robot.util.vision">LimelightHelpers.IMUData</a></dt>
 <dd>&nbsp;</dd>
@@ -2614,7 +2610,9 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="com/stuypulse/robot/subsystems/handoff/Handoff.HandoffState.html#REVERSE" class="member-name-link">REVERSE</a> - Enum constant in enum class com.stuypulse.robot.subsystems.handoff.<a href="com/stuypulse/robot/subsystems/handoff/Handoff.HandoffState.html" title="enum class in com.stuypulse.robot.subsystems.handoff">Handoff.HandoffState</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="com/stuypulse/robot/constants/Settings.Handoff.html#REVERSE_DUTY_CYCLE" class="member-name-link">REVERSE_DUTY_CYCLE</a> - Static variable in interface com.stuypulse.robot.constants.<a href="com/stuypulse/robot/constants/Settings.Handoff.html" title="interface in com.stuypulse.robot.constants">Settings.Handoff</a></dt>
+<dt><a href="com/stuypulse/robot/constants/Settings.Feeder.html#REVERSE_VOLTAGE" class="member-name-link">REVERSE_VOLTAGE</a> - Static variable in interface com.stuypulse.robot.constants.<a href="com/stuypulse/robot/constants/Settings.Feeder.html" title="interface in com.stuypulse.robot.constants">Settings.Feeder</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/stuypulse/robot/constants/Settings.Handoff.html#REVERSE_VOLTAGE" class="member-name-link">REVERSE_VOLTAGE</a> - Static variable in interface com.stuypulse.robot.constants.<a href="com/stuypulse/robot/constants/Settings.Handoff.html" title="interface in com.stuypulse.robot.constants">Settings.Handoff</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/stuypulse/robot/util/vision/LimelightHelpers.LimelightResults.html#rewindStats" class="member-name-link">rewindStats</a> - Variable in class com.stuypulse.robot.util.vision.<a href="com/stuypulse/robot/util/vision/LimelightHelpers.LimelightResults.html" title="class in com.stuypulse.robot.util.vision">LimelightHelpers.LimelightResults</a></dt>
 <dd>&nbsp;</dd>
@@ -3364,8 +3362,6 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">The target angle of the intake pivot.</div>
 </dd>
-<dt><a href="com/stuypulse/robot/subsystems/feeder/Feeder.FeederState.html#targetDutyCycle" class="member-name-link">targetDutyCycle</a> - Variable in enum class com.stuypulse.robot.subsystems.feeder.<a href="com/stuypulse/robot/subsystems/feeder/Feeder.FeederState.html" title="enum class in com.stuypulse.robot.subsystems.feeder">Feeder.FeederState</a></dt>
-<dd>&nbsp;</dd>
 <dt><a href="com/stuypulse/robot/subsystems/intake/Intake.IntakeState.html#targetDutyCycle" class="member-name-link">targetDutyCycle</a> - Variable in enum class com.stuypulse.robot.subsystems.intake.<a href="com/stuypulse/robot/subsystems/intake/Intake.IntakeState.html" title="enum class in com.stuypulse.robot.subsystems.intake">Intake.IntakeState</a></dt>
 <dd>
 <div class="block">The target percentage of voltage of the intake rollers.</div>
@@ -3401,6 +3397,10 @@ loadScripts(document, 'script');</script>
 <dt><a href="com/stuypulse/robot/util/vision/LimelightHelpers.LimelightResults.html#targets_Fiducials" class="member-name-link">targets_Fiducials</a> - Variable in class com.stuypulse.robot.util.vision.<a href="com/stuypulse/robot/util/vision/LimelightHelpers.LimelightResults.html" title="class in com.stuypulse.robot.util.vision">LimelightHelpers.LimelightResults</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/stuypulse/robot/util/vision/LimelightHelpers.LimelightResults.html#targets_Retro" class="member-name-link">targets_Retro</a> - Variable in class com.stuypulse.robot.util.vision.<a href="com/stuypulse/robot/util/vision/LimelightHelpers.LimelightResults.html" title="class in com.stuypulse.robot.util.vision">LimelightHelpers.LimelightResults</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/stuypulse/robot/subsystems/feeder/Feeder.FeederState.html#targetVoltage" class="member-name-link">targetVoltage</a> - Variable in enum class com.stuypulse.robot.subsystems.feeder.<a href="com/stuypulse/robot/subsystems/feeder/Feeder.FeederState.html" title="enum class in com.stuypulse.robot.subsystems.feeder">Feeder.FeederState</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/stuypulse/robot/subsystems/handoff/Handoff.HandoffState.html#targetVoltage" class="member-name-link">targetVoltage</a> - Variable in enum class com.stuypulse.robot.subsystems.handoff.<a href="com/stuypulse/robot/subsystems/handoff/Handoff.HandoffState.html" title="enum class in com.stuypulse.robot.subsystems.handoff">Handoff.HandoffState</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/stuypulse/robot/Robot.html#teleopExit()" class="member-name-link">teleopExit()</a> - Method in class com.stuypulse.robot.<a href="com/stuypulse/robot/Robot.html" title="class in com.stuypulse.robot">Robot</a></dt>
 <dd>

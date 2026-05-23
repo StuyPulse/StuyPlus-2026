@@ -18,7 +18,7 @@
 <span class="source-line-no">005</span><span id="line-5">/***************************************************************/</span>
 <span class="source-line-no">006</span><span id="line-6">package com.stuypulse.robot.subsystems.handoff;</span>
 <span class="source-line-no">007</span><span id="line-7"></span>
-<span class="source-line-no">008</span><span id="line-8">import com.ctre.phoenix6.controls.DutyCycleOut;</span>
+<span class="source-line-no">008</span><span id="line-8">import com.ctre.phoenix6.controls.VoltageOut;</span>
 <span class="source-line-no">009</span><span id="line-9">import com.ctre.phoenix6.hardware.TalonFX;</span>
 <span class="source-line-no">010</span><span id="line-10">import com.stuypulse.robot.constants.Field;</span>
 <span class="source-line-no">011</span><span id="line-11">import com.stuypulse.robot.constants.Motors;</span>
@@ -31,66 +31,68 @@
 <span class="source-line-no">018</span><span id="line-18">import com.stuypulse.stuylib.streams.booleans.BStream;</span>
 <span class="source-line-no">019</span><span id="line-19">import com.stuypulse.stuylib.streams.booleans.filters.BDebounce;</span>
 <span class="source-line-no">020</span><span id="line-20"></span>
-<span class="source-line-no">021</span><span id="line-21">public class HandoffImpl extends Handoff {</span>
+<span class="source-line-no">021</span><span id="line-21">import edu.wpi.first.units.measure.Voltage;</span>
 <span class="source-line-no">022</span><span id="line-22"></span>
-<span class="source-line-no">023</span><span id="line-23">    private final TalonFX handoffMotor;</span>
+<span class="source-line-no">023</span><span id="line-23">public class HandoffImpl extends Handoff {</span>
 <span class="source-line-no">024</span><span id="line-24"></span>
-<span class="source-line-no">025</span><span id="line-25">    private final DutyCycleOut handoffController;</span>
+<span class="source-line-no">025</span><span id="line-25">    private final TalonFX handoffMotor;</span>
 <span class="source-line-no">026</span><span id="line-26"></span>
-<span class="source-line-no">027</span><span id="line-27">    private final LoggedSignals signals;</span>
+<span class="source-line-no">027</span><span id="line-27">    private final VoltageOut handoffController;</span>
 <span class="source-line-no">028</span><span id="line-28"></span>
-<span class="source-line-no">029</span><span id="line-29">    private final BStream handoffStalling;</span>
+<span class="source-line-no">029</span><span id="line-29">    private final LoggedSignals signals;</span>
 <span class="source-line-no">030</span><span id="line-30"></span>
-<span class="source-line-no">031</span><span id="line-31">    public HandoffImpl() {</span>
-<span class="source-line-no">032</span><span id="line-32">        handoffMotor = new TalonFX(Ports.Handoff.HANDOFF_MOTOR, Settings.CANBUS);</span>
-<span class="source-line-no">033</span><span id="line-33">        handoffController = new DutyCycleOut(getState().getHandoffDutyCycle()).withEnableFOC(true);</span>
-<span class="source-line-no">034</span><span id="line-34">        signals = new LoggedSignals(LoggedSignals.SignalLocation.CANIVORE, "Handoff/",</span>
-<span class="source-line-no">035</span><span id="line-35">                handoffMotor.getSupplyCurrent(),</span>
-<span class="source-line-no">036</span><span id="line-36">                handoffMotor.getStatorCurrent(),</span>
-<span class="source-line-no">037</span><span id="line-37">                handoffMotor.getVelocity());</span>
-<span class="source-line-no">038</span><span id="line-38">        // Configuring</span>
-<span class="source-line-no">039</span><span id="line-39">        Motors.Handoff.HANDOFF_MOTOR_CONFIG.configure(handoffMotor);</span>
-<span class="source-line-no">040</span><span id="line-40">        handoffStalling = BStream.create(</span>
-<span class="source-line-no">041</span><span id="line-41">                () -&gt; Math.abs(handoffMotor.getStatorCurrent().getValueAsDouble()) &gt; Settings.Handoff.STALL_CURRENT)</span>
-<span class="source-line-no">042</span><span id="line-42">                .filtered(new BDebounce.Rising(Settings.Handoff.STALL_DEBOUNCE));</span>
-<span class="source-line-no">043</span><span id="line-43">    }</span>
-<span class="source-line-no">044</span><span id="line-44"></span>
-<span class="source-line-no">045</span><span id="line-45">    @Override</span>
-<span class="source-line-no">046</span><span id="line-46">    protected void stopMotors() {</span>
-<span class="source-line-no">047</span><span id="line-47">        handoffMotor.stopMotor();</span>
-<span class="source-line-no">048</span><span id="line-48">    }</span>
-<span class="source-line-no">049</span><span id="line-49"></span>
-<span class="source-line-no">050</span><span id="line-50">    @Override</span>
-<span class="source-line-no">051</span><span id="line-51">    public void periodic() {</span>
-<span class="source-line-no">052</span><span id="line-52">        // States</span>
-<span class="source-line-no">053</span><span id="line-53">        final Shooter shooter = Shooter.getInstance();</span>
-<span class="source-line-no">054</span><span id="line-54">        final CommandSwerveDrivetrain swerve = CommandSwerveDrivetrain.getInstance();</span>
-<span class="source-line-no">055</span><span id="line-55">        if (!(swerve.isAlignedToTarget(Field.getHubPose()))</span>
-<span class="source-line-no">056</span><span id="line-56">                &amp;&amp; shooter.getState() == ShooterState.SHOOT) {</span>
-<span class="source-line-no">057</span><span id="line-57">            setState(HandoffState.IDLE);</span>
-<span class="source-line-no">058</span><span id="line-58">        }</span>
-<span class="source-line-no">059</span><span id="line-59">        // TODO: consider relaxing tolerances for ferrying</span>
-<span class="source-line-no">060</span><span id="line-60">        if (!(swerve.isAlignedToTarget(Field.getFerryZonePose(swerve.getPose().getTranslation())))</span>
-<span class="source-line-no">061</span><span id="line-61">                &amp;&amp; shooter.getState() == ShooterState.FERRY) {</span>
-<span class="source-line-no">062</span><span id="line-62">            setState(HandoffState.IDLE);</span>
-<span class="source-line-no">063</span><span id="line-63">        }</span>
-<span class="source-line-no">064</span><span id="line-64"></span>
-<span class="source-line-no">065</span><span id="line-65">        if (!Shooter.getInstance().shooterSpunUp()) {</span>
-<span class="source-line-no">066</span><span id="line-66">            setState(HandoffState.IDLE);</span>
-<span class="source-line-no">067</span><span id="line-67">        }</span>
-<span class="source-line-no">068</span><span id="line-68"></span>
-<span class="source-line-no">069</span><span id="line-69">        // Control</span>
-<span class="source-line-no">070</span><span id="line-70">        final double dutyCycle = handoffStalling.get()</span>
-<span class="source-line-no">071</span><span id="line-71">                ? Handoff.HandoffState.REVERSE.getHandoffDutyCycle()</span>
-<span class="source-line-no">072</span><span id="line-72">                : getState().getHandoffDutyCycle();</span>
-<span class="source-line-no">073</span><span id="line-73">        final DutyCycleOut handoffControl = handoffController.withOutput(dutyCycle);</span>
-<span class="source-line-no">074</span><span id="line-74">        // Apply</span>
-<span class="source-line-no">075</span><span id="line-75">        handoffMotor.setControl(handoffControl);</span>
-<span class="source-line-no">076</span><span id="line-76">        // Logging</span>
-<span class="source-line-no">077</span><span id="line-77">        this.signals.logAll();</span>
-<span class="source-line-no">078</span><span id="line-78">        super.periodic();</span>
-<span class="source-line-no">079</span><span id="line-79">    }</span>
-<span class="source-line-no">080</span><span id="line-80">}</span>
+<span class="source-line-no">031</span><span id="line-31">    private final BStream handoffStalling;</span>
+<span class="source-line-no">032</span><span id="line-32"></span>
+<span class="source-line-no">033</span><span id="line-33">    public HandoffImpl() {</span>
+<span class="source-line-no">034</span><span id="line-34">        handoffMotor = new TalonFX(Ports.Handoff.HANDOFF_MOTOR, Settings.CANBUS);</span>
+<span class="source-line-no">035</span><span id="line-35">        handoffController = new VoltageOut(getState().getTargetVoltage()).withEnableFOC(true);</span>
+<span class="source-line-no">036</span><span id="line-36">        signals = new LoggedSignals(LoggedSignals.SignalLocation.CANIVORE, "Handoff/",</span>
+<span class="source-line-no">037</span><span id="line-37">                handoffMotor.getSupplyCurrent(),</span>
+<span class="source-line-no">038</span><span id="line-38">                handoffMotor.getStatorCurrent(),</span>
+<span class="source-line-no">039</span><span id="line-39">                handoffMotor.getVelocity());</span>
+<span class="source-line-no">040</span><span id="line-40">        // Configuring</span>
+<span class="source-line-no">041</span><span id="line-41">        Motors.Handoff.HANDOFF_MOTOR_CONFIG.configure(handoffMotor);</span>
+<span class="source-line-no">042</span><span id="line-42">        handoffStalling = BStream.create(</span>
+<span class="source-line-no">043</span><span id="line-43">                () -&gt; Math.abs(handoffMotor.getStatorCurrent().getValueAsDouble()) &gt; Settings.Handoff.STALL_CURRENT)</span>
+<span class="source-line-no">044</span><span id="line-44">                .filtered(new BDebounce.Rising(Settings.Handoff.STALL_DEBOUNCE));</span>
+<span class="source-line-no">045</span><span id="line-45">    }</span>
+<span class="source-line-no">046</span><span id="line-46"></span>
+<span class="source-line-no">047</span><span id="line-47">    @Override</span>
+<span class="source-line-no">048</span><span id="line-48">    protected void stopMotors() {</span>
+<span class="source-line-no">049</span><span id="line-49">        handoffMotor.stopMotor();</span>
+<span class="source-line-no">050</span><span id="line-50">    }</span>
+<span class="source-line-no">051</span><span id="line-51"></span>
+<span class="source-line-no">052</span><span id="line-52">    @Override</span>
+<span class="source-line-no">053</span><span id="line-53">    public void periodic() {</span>
+<span class="source-line-no">054</span><span id="line-54">        // States</span>
+<span class="source-line-no">055</span><span id="line-55">        final Shooter shooter = Shooter.getInstance();</span>
+<span class="source-line-no">056</span><span id="line-56">        final CommandSwerveDrivetrain swerve = CommandSwerveDrivetrain.getInstance();</span>
+<span class="source-line-no">057</span><span id="line-57">        if (!(swerve.isAlignedToTarget(Field.getHubPose()))</span>
+<span class="source-line-no">058</span><span id="line-58">                &amp;&amp; shooter.getState() == ShooterState.SHOOT) {</span>
+<span class="source-line-no">059</span><span id="line-59">            setState(HandoffState.IDLE);</span>
+<span class="source-line-no">060</span><span id="line-60">        }</span>
+<span class="source-line-no">061</span><span id="line-61">        // TODO: consider relaxing tolerances for ferrying</span>
+<span class="source-line-no">062</span><span id="line-62">        if (!(swerve.isAlignedToTarget(Field.getFerryZonePose(swerve.getPose().getTranslation())))</span>
+<span class="source-line-no">063</span><span id="line-63">                &amp;&amp; shooter.getState() == ShooterState.FERRY) {</span>
+<span class="source-line-no">064</span><span id="line-64">            setState(HandoffState.IDLE);</span>
+<span class="source-line-no">065</span><span id="line-65">        }</span>
+<span class="source-line-no">066</span><span id="line-66"></span>
+<span class="source-line-no">067</span><span id="line-67">        if (!Shooter.getInstance().shooterSpunUp()) {</span>
+<span class="source-line-no">068</span><span id="line-68">            setState(HandoffState.IDLE);</span>
+<span class="source-line-no">069</span><span id="line-69">        }</span>
+<span class="source-line-no">070</span><span id="line-70"></span>
+<span class="source-line-no">071</span><span id="line-71">        // Control</span>
+<span class="source-line-no">072</span><span id="line-72">        final Voltage voltage = handoffStalling.get()</span>
+<span class="source-line-no">073</span><span id="line-73">                ? Handoff.HandoffState.REVERSE.getTargetVoltage()</span>
+<span class="source-line-no">074</span><span id="line-74">                : getState().getTargetVoltage();</span>
+<span class="source-line-no">075</span><span id="line-75">        final VoltageOut handoffControl = handoffController.withOutput(voltage);</span>
+<span class="source-line-no">076</span><span id="line-76">        // Apply</span>
+<span class="source-line-no">077</span><span id="line-77">        handoffMotor.setControl(handoffControl);</span>
+<span class="source-line-no">078</span><span id="line-78">        // Logging</span>
+<span class="source-line-no">079</span><span id="line-79">        this.signals.logAll();</span>
+<span class="source-line-no">080</span><span id="line-80">        super.periodic();</span>
+<span class="source-line-no">081</span><span id="line-81">    }</span>
+<span class="source-line-no">082</span><span id="line-82">}</span>
 
 
 

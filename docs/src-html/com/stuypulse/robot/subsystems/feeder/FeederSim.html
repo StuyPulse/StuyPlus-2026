@@ -20,7 +20,7 @@
 <span class="source-line-no">007</span><span id="line-7"></span>
 <span class="source-line-no">008</span><span id="line-8">import static edu.wpi.first.units.Units.*;</span>
 <span class="source-line-no">009</span><span id="line-9"></span>
-<span class="source-line-no">010</span><span id="line-10">import com.ctre.phoenix6.controls.DutyCycleOut;</span>
+<span class="source-line-no">010</span><span id="line-10">import com.ctre.phoenix6.controls.VoltageOut;</span>
 <span class="source-line-no">011</span><span id="line-11">import com.stuypulse.robot.constants.Motors;</span>
 <span class="source-line-no">012</span><span id="line-12">import com.stuypulse.robot.constants.Ports;</span>
 <span class="source-line-no">013</span><span id="line-13">import com.stuypulse.robot.constants.Settings;</span>
@@ -37,7 +37,7 @@
 <span class="source-line-no">024</span><span id="line-24"></span>
 <span class="source-line-no">025</span><span id="line-25">    private final DCMotorSim feederSim;</span>
 <span class="source-line-no">026</span><span id="line-26"></span>
-<span class="source-line-no">027</span><span id="line-27">    private final DutyCycleOut feederController;</span>
+<span class="source-line-no">027</span><span id="line-27">    private final VoltageOut feederController;</span>
 <span class="source-line-no">028</span><span id="line-28"></span>
 <span class="source-line-no">029</span><span id="line-29">    public FeederSim() {</span>
 <span class="source-line-no">030</span><span id="line-30">        feederSim = new DCMotorSim(</span>
@@ -48,7 +48,7 @@
 <span class="source-line-no">035</span><span id="line-35">                DCMotor.getKrakenX60(2));</span>
 <span class="source-line-no">036</span><span id="line-36">        feederMotor = new TalonFXSimulation(Ports.Feeder.FEEDER_MOTOR, feederSim);</span>
 <span class="source-line-no">037</span><span id="line-37">        feederMotor.configure(Motors.Feeder.LEADER_CONFIG);</span>
-<span class="source-line-no">038</span><span id="line-38">        feederController = new DutyCycleOut(0).withEnableFOC(true);</span>
+<span class="source-line-no">038</span><span id="line-38">        feederController = new VoltageOut(0).withEnableFOC(true);</span>
 <span class="source-line-no">039</span><span id="line-39">    }</span>
 <span class="source-line-no">040</span><span id="line-40"></span>
 <span class="source-line-no">041</span><span id="line-41">    @Override</span>
@@ -68,7 +68,7 @@
 <span class="source-line-no">055</span><span id="line-55">            return;</span>
 <span class="source-line-no">056</span><span id="line-56">        }</span>
 <span class="source-line-no">057</span><span id="line-57">        // apply control to leader before grabbing state to update other motors</span>
-<span class="source-line-no">058</span><span id="line-58">        feederMotor.setControl(feederController.withOutput(getState().getTargetDutyCycle()));</span>
+<span class="source-line-no">058</span><span id="line-58">        feederMotor.setControl(feederController.withOutput(getState().getTargetVoltage()));</span>
 <span class="source-line-no">059</span><span id="line-59">        feederMotor.update(Settings.DT);</span>
 <span class="source-line-no">060</span><span id="line-60">        RobotVisualizer.getInstance().updateFeeder(getCurrentAngularVelocity());</span>
 <span class="source-line-no">061</span><span id="line-61">        // Logging</span>

@@ -155,9 +155,9 @@
 <span class="source-line-no">142</span><span id="line-142"></span>
 <span class="source-line-no">143</span><span id="line-143">    public interface Feeder {</span>
 <span class="source-line-no">144</span><span id="line-144"></span>
-<span class="source-line-no">145</span><span id="line-145">        double FEEDER_REVERSE_DUTY_CYCLE = -1;</span>
+<span class="source-line-no">145</span><span id="line-145">        Voltage REVERSE_VOLTAGE = Volts.of(-10.0); // TODO: get</span>
 <span class="source-line-no">146</span><span id="line-146"></span>
-<span class="source-line-no">147</span><span id="line-147">        double FEEDER_FORWARD_DUTY_CYCLE = 1;</span>
+<span class="source-line-no">147</span><span id="line-147">        Voltage FORWARD_VOLTAGE = Volts.of(10.0);</span>
 <span class="source-line-no">148</span><span id="line-148"></span>
 <span class="source-line-no">149</span><span id="line-149">        // TODO: get from mec</span>
 <span class="source-line-no">150</span><span id="line-150">        double GEAR_RATIO = 34/14; // (34/14) : 1</span>
@@ -211,158 +211,157 @@
 <span class="source-line-no">198</span><span id="line-198">    }</span>
 <span class="source-line-no">199</span><span id="line-199"></span>
 <span class="source-line-no">200</span><span id="line-200">    public interface Handoff {</span>
-<span class="source-line-no">201</span><span id="line-201"></span>
-<span class="source-line-no">202</span><span id="line-202">        double IDLE_DUTY_CYCLE = 0.0;</span>
-<span class="source-line-no">203</span><span id="line-203"></span>
-<span class="source-line-no">204</span><span id="line-204">        double FORWARD_DUTY_CYCLE = 1.0;</span>
-<span class="source-line-no">205</span><span id="line-205"></span>
-<span class="source-line-no">206</span><span id="line-206">        double REVERSE_DUTY_CYCLE = -1.0;</span>
-<span class="source-line-no">207</span><span id="line-207"></span>
-<span class="source-line-no">208</span><span id="line-208">        double STALL_CURRENT = 67;</span>
-<span class="source-line-no">209</span><span id="line-209"></span>
-<span class="source-line-no">210</span><span id="line-210">        // TODO: get and maybe convert to wpilib units</span>
-<span class="source-line-no">211</span><span id="line-211">        double STALL_DEBOUNCE = 67;</span>
-<span class="source-line-no">212</span><span id="line-212"></span>
-<span class="source-line-no">213</span><span id="line-213">        double J_KG_METERS_SQUARED = 1;</span>
-<span class="source-line-no">214</span><span id="line-214"></span>
-<span class="source-line-no">215</span><span id="line-215">        double GEAR_RATIO = 1.0 / 3.0; // 1:3</span>
-<span class="source-line-no">216</span><span id="line-216">    }</span>
-<span class="source-line-no">217</span><span id="line-217"></span>
-<span class="source-line-no">218</span><span id="line-218">    public interface Shooter {</span>
-<span class="source-line-no">219</span><span id="line-219"></span>
-<span class="source-line-no">220</span><span id="line-220">        Time SHOOT_TIME_AUTO = Seconds.of(1.5);</span>
-<span class="source-line-no">221</span><span id="line-221"></span>
-<span class="source-line-no">222</span><span id="line-222">        Velocity&lt;VoltageUnit&gt; RAMP_RATE = Volts.of(1).per(Second);</span>
-<span class="source-line-no">223</span><span id="line-223"></span>
-<span class="source-line-no">224</span><span id="line-224">        Voltage STEP_VOLTAGE = Volts.of(7);</span>
-<span class="source-line-no">225</span><span id="line-225"></span>
-<span class="source-line-no">226</span><span id="line-226">        Distance WHEEL_RADIUS = Inches.of(4);</span>
-<span class="source-line-no">227</span><span id="line-227"></span>
-<span class="source-line-no">228</span><span id="line-228">        // Sim</span>
-<span class="source-line-no">229</span><span id="line-229">        MomentOfInertia J = KilogramSquareMeters.of(0.1);</span>
-<span class="source-line-no">230</span><span id="line-230"></span>
-<span class="source-line-no">231</span><span id="line-231">        double GEAR_RATIO = 0.1;</span>
-<span class="source-line-no">232</span><span id="line-232"></span>
-<span class="source-line-no">233</span><span id="line-233">        // TODO: get</span>
-<span class="source-line-no">234</span><span id="line-234">        Distance FLYWHEEL_RADIUS = Inches.of(3);</span>
-<span class="source-line-no">235</span><span id="line-235"></span>
-<span class="source-line-no">236</span><span id="line-236">        // TODO: Test for manual shooting RPM</span>
-<span class="source-line-no">237</span><span id="line-237">        AngularVelocity MANUAL_HUB_RPM = RPM.of(3000);</span>
-<span class="source-line-no">238</span><span id="line-238"></span>
-<span class="source-line-no">239</span><span id="line-239">        AngularVelocity MIN_SHOOTER_VELOCITY = RPM.of(1740);</span>
-<span class="source-line-no">240</span><span id="line-240"></span>
-<span class="source-line-no">241</span><span id="line-241">        DoubleSubscriber SHOOT_TUNING_RPM = DogLog.tunable("Shooter/Shoot Tuning RPM", 0.0);</span>
-<span class="source-line-no">242</span><span id="line-242">        DoubleSubscriber FERRY_TUNING_RPM = DogLog.tunable("Shooter/Ferry Tuning RPM", 0.0);</span>
-<span class="source-line-no">243</span><span id="line-243"></span>
-<span class="source-line-no">244</span><span id="line-244">        public interface RPMInterpolation {</span>
-<span class="source-line-no">245</span><span id="line-245"></span>
-<span class="source-line-no">246</span><span id="line-246">            double[][] distanceRPMInterpolationValues = { { 1.0, 1000.0 }, { 2.0, 1500.0 }, { 3.0, 2000.0 }, { 4.0, 2500.0 }, { 5.0, 3000.0 } };</span>
-<span class="source-line-no">247</span><span id="line-247">        }</span>
-<span class="source-line-no">248</span><span id="line-248"></span>
-<span class="source-line-no">249</span><span id="line-249">        // These values are placeholders and should be replaced with actual data from testing</span>
-<span class="source-line-no">250</span><span id="line-250">        public interface TOFInterpolation {</span>
-<span class="source-line-no">251</span><span id="line-251"></span>
-<span class="source-line-no">252</span><span id="line-252">            double[][] distanceTOFInterpolationValues = { { 1.0, 0.5 }, { 2.0, 0.75 }, { 3.0, 1.0 }, { 4.0, 1.25 }, { 5.0, 1.5 } };</span>
-<span class="source-line-no">253</span><span id="line-253">        }</span>
-<span class="source-line-no">254</span><span id="line-254"></span>
-<span class="source-line-no">255</span><span id="line-255">        // These values are placeholders and should be replaced with actual data from testing</span>
-<span class="source-line-no">256</span><span id="line-256">        public interface FerryRPMInterpolation {</span>
-<span class="source-line-no">257</span><span id="line-257"></span>
-<span class="source-line-no">258</span><span id="line-258">            double[][] ferryDistanceRPMInterpolation = { { 1.0, 1000.0 }, { 2.0, 1500.0 }, { 3.0, 2000.0 }, { 4.0, 2500.0 }, { 5.0, 3000.0 } };</span>
-<span class="source-line-no">259</span><span id="line-259">        }</span>
-<span class="source-line-no">260</span><span id="line-260"></span>
-<span class="source-line-no">261</span><span id="line-261">        // These values are placeholders and should be replaced with actual data from testing</span>
-<span class="source-line-no">262</span><span id="line-262">        public interface FerryTOFInterpolation {</span>
-<span class="source-line-no">263</span><span id="line-263"></span>
-<span class="source-line-no">264</span><span id="line-264">            double[][] FerryTOFInterpolationInterpolation = { { 1.0, 0.5 }, { 2.0, 0.75 }, { 3.0, 1.0 }, { 4.0, 1.25 }, { 5.0, 1.5 } };</span>
-<span class="source-line-no">265</span><span id="line-265">        }</span>
-<span class="source-line-no">266</span><span id="line-266">        // These values are placeholders and should be replaced with actual data from testing</span>
-<span class="source-line-no">267</span><span id="line-267">    }</span>
-<span class="source-line-no">268</span><span id="line-268"></span>
-<span class="source-line-no">269</span><span id="line-269">    public interface Swerve {</span>
-<span class="source-line-no">270</span><span id="line-270"></span>
-<span class="source-line-no">271</span><span id="line-271">        double MODULE_VELOCITY_DEADBAND_M_PER_S = 0.1;</span>
-<span class="source-line-no">272</span><span id="line-272"></span>
-<span class="source-line-no">273</span><span id="line-273">        double ROTATIONAL_DEADBAND_RAD_PER_S = 0.1;</span>
-<span class="source-line-no">274</span><span id="line-274"></span>
-<span class="source-line-no">275</span><span id="line-275">        public interface Constraints {</span>
-<span class="source-line-no">276</span><span id="line-276"></span>
-<span class="source-line-no">277</span><span id="line-277">            double MAX_VELOCITY_M_PER_S = 4.3;</span>
-<span class="source-line-no">278</span><span id="line-278"></span>
-<span class="source-line-no">279</span><span id="line-279">            // TODO: revert to 15.0</span>
-<span class="source-line-no">280</span><span id="line-280">            double MAX_ACCEL_M_PER_S_SQUARED = 2.0;</span>
-<span class="source-line-no">281</span><span id="line-281"></span>
-<span class="source-line-no">282</span><span id="line-282">            double MAX_ANGULAR_VEL_RAD_PER_S = Units.degreesToRadians(400.0);</span>
-<span class="source-line-no">283</span><span id="line-283"></span>
-<span class="source-line-no">284</span><span id="line-284">            // TODO: revert to 900</span>
-<span class="source-line-no">285</span><span id="line-285">            double MAX_ANGULAR_ACCEL_RAD_PER_S = Units.degreesToRadians(300.0);</span>
-<span class="source-line-no">286</span><span id="line-286"></span>
-<span class="source-line-no">287</span><span id="line-287">            PathConstraints DEFAULT_CONSTRAINTS = new PathConstraints(MAX_VELOCITY_M_PER_S, MAX_ACCEL_M_PER_S_SQUARED, MAX_ANGULAR_VEL_RAD_PER_S, MAX_ANGULAR_ACCEL_RAD_PER_S);</span>
-<span class="source-line-no">288</span><span id="line-288">        }</span>
-<span class="source-line-no">289</span><span id="line-289"></span>
-<span class="source-line-no">290</span><span id="line-290">        public interface Alignment {</span>
-<span class="source-line-no">291</span><span id="line-291"></span>
-<span class="source-line-no">292</span><span id="line-292">            public interface Constraints {</span>
-<span class="source-line-no">293</span><span id="line-293"></span>
-<span class="source-line-no">294</span><span id="line-294">                double DEFAULT_MAX_VELOCITY = 4.3;</span>
-<span class="source-line-no">295</span><span id="line-295"></span>
-<span class="source-line-no">296</span><span id="line-296">                double DEFAULT_MAX_ACCELERATION = 15.0;</span>
-<span class="source-line-no">297</span><span id="line-297"></span>
-<span class="source-line-no">298</span><span id="line-298">                double DEFAULT_MAX_ANGULAR_VELOCITY = Units.degreesToRadians(400.0);</span>
-<span class="source-line-no">299</span><span id="line-299"></span>
-<span class="source-line-no">300</span><span id="line-300">                double DEFAULT_MAX_ANGULAR_ACCELERATION = Units.degreesToRadians(900.0);</span>
-<span class="source-line-no">301</span><span id="line-301">            }</span>
-<span class="source-line-no">302</span><span id="line-302"></span>
-<span class="source-line-no">303</span><span id="line-303">            public interface Tolerances {</span>
-<span class="source-line-no">304</span><span id="line-304"></span>
-<span class="source-line-no">305</span><span id="line-305">                Distance X_TOLERANCE = Inches.of(2.0);</span>
-<span class="source-line-no">306</span><span id="line-306"></span>
-<span class="source-line-no">307</span><span id="line-307">                Distance Y_TOLERANCE = Inches.of(2.0);</span>
-<span class="source-line-no">308</span><span id="line-308"></span>
-<span class="source-line-no">309</span><span id="line-309">                Rotation2d THETA_TOLERANCE = Rotation2d.fromDegrees(1);</span>
-<span class="source-line-no">310</span><span id="line-310"></span>
-<span class="source-line-no">311</span><span id="line-311">                Pose2d POSE_TOLERANCE = new Pose2d(X_TOLERANCE.in(Meters), Y_TOLERANCE.in(Meters), THETA_TOLERANCE);</span>
-<span class="source-line-no">312</span><span id="line-312"></span>
-<span class="source-line-no">313</span><span id="line-313">                LinearVelocity MAX_VELOCITY_WHEN_ALIGNED = MetersPerSecond.of(0.15);</span>
-<span class="source-line-no">314</span><span id="line-314"></span>
-<span class="source-line-no">315</span><span id="line-315">                Time ALIGNMENT_DEBOUNCE = Seconds.of(0.15);</span>
-<span class="source-line-no">316</span><span id="line-316">            }</span>
-<span class="source-line-no">317</span><span id="line-317"></span>
-<span class="source-line-no">318</span><span id="line-318">            public interface Targets {</span>
-<span class="source-line-no">319</span><span id="line-319"></span>
-<span class="source-line-no">320</span><span id="line-320">                // TODO: Get actual angle</span>
-<span class="source-line-no">321</span><span id="line-321">                Rotation2d HUB_LEFT_CORNER = Rotation2d.fromDegrees(45);</span>
-<span class="source-line-no">322</span><span id="line-322"></span>
-<span class="source-line-no">323</span><span id="line-323">                Rotation2d HUB_RIGHT_CORNER = Rotation2d.fromDegrees(-45);</span>
-<span class="source-line-no">324</span><span id="line-324">            }</span>
-<span class="source-line-no">325</span><span id="line-325">        }</span>
-<span class="source-line-no">326</span><span id="line-326">    }</span>
-<span class="source-line-no">327</span><span id="line-327"></span>
-<span class="source-line-no">328</span><span id="line-328">    public interface Driver {</span>
-<span class="source-line-no">329</span><span id="line-329"></span>
-<span class="source-line-no">330</span><span id="line-330">        double BUZZ_TIME = 1.0;</span>
-<span class="source-line-no">331</span><span id="line-331"></span>
-<span class="source-line-no">332</span><span id="line-332">        double BUZZ_INTENSITY = 1.0;</span>
-<span class="source-line-no">333</span><span id="line-333"></span>
-<span class="source-line-no">334</span><span id="line-334">        public interface Drive {</span>
-<span class="source-line-no">335</span><span id="line-335"></span>
-<span class="source-line-no">336</span><span id="line-336">            double DEADBAND = 0.05;</span>
-<span class="source-line-no">337</span><span id="line-337"></span>
-<span class="source-line-no">338</span><span id="line-338">            double RC = 0.05;</span>
-<span class="source-line-no">339</span><span id="line-339"></span>
-<span class="source-line-no">340</span><span id="line-340">            double POWER = 2.0;</span>
-<span class="source-line-no">341</span><span id="line-341">        }</span>
-<span class="source-line-no">342</span><span id="line-342"></span>
-<span class="source-line-no">343</span><span id="line-343">        public interface Turn {</span>
-<span class="source-line-no">344</span><span id="line-344"></span>
-<span class="source-line-no">345</span><span id="line-345">            double DEADBAND = 0.05;</span>
-<span class="source-line-no">346</span><span id="line-346"></span>
-<span class="source-line-no">347</span><span id="line-347">            double RC = 0.05;</span>
-<span class="source-line-no">348</span><span id="line-348"></span>
-<span class="source-line-no">349</span><span id="line-349">            double POWER = 2.0;</span>
-<span class="source-line-no">350</span><span id="line-350">        }</span>
-<span class="source-line-no">351</span><span id="line-351">    }</span>
-<span class="source-line-no">352</span><span id="line-352">}</span>
+<span class="source-line-no">201</span><span id="line-201">        Voltage IDLE_VOLTAGE = Volts.of(0.0);</span>
+<span class="source-line-no">202</span><span id="line-202"></span>
+<span class="source-line-no">203</span><span id="line-203">        Voltage FORWARD_VOLTAGE = Volts.of(10.0);</span>
+<span class="source-line-no">204</span><span id="line-204"></span>
+<span class="source-line-no">205</span><span id="line-205">        Voltage REVERSE_VOLTAGE = Volts.of(-10.0);</span>
+<span class="source-line-no">206</span><span id="line-206"></span>
+<span class="source-line-no">207</span><span id="line-207">        double STALL_CURRENT = 67;</span>
+<span class="source-line-no">208</span><span id="line-208"></span>
+<span class="source-line-no">209</span><span id="line-209">        // TODO: get and maybe convert to wpilib units</span>
+<span class="source-line-no">210</span><span id="line-210">        double STALL_DEBOUNCE = 67;</span>
+<span class="source-line-no">211</span><span id="line-211"></span>
+<span class="source-line-no">212</span><span id="line-212">        double J_KG_METERS_SQUARED = 1;</span>
+<span class="source-line-no">213</span><span id="line-213"></span>
+<span class="source-line-no">214</span><span id="line-214">        double GEAR_RATIO = 1.0 / 3.0; // 1:3</span>
+<span class="source-line-no">215</span><span id="line-215">    }</span>
+<span class="source-line-no">216</span><span id="line-216"></span>
+<span class="source-line-no">217</span><span id="line-217">    public interface Shooter {</span>
+<span class="source-line-no">218</span><span id="line-218"></span>
+<span class="source-line-no">219</span><span id="line-219">        Time SHOOT_TIME_AUTO = Seconds.of(1.5);</span>
+<span class="source-line-no">220</span><span id="line-220"></span>
+<span class="source-line-no">221</span><span id="line-221">        Velocity&lt;VoltageUnit&gt; RAMP_RATE = Volts.of(1).per(Second);</span>
+<span class="source-line-no">222</span><span id="line-222"></span>
+<span class="source-line-no">223</span><span id="line-223">        Voltage STEP_VOLTAGE = Volts.of(7);</span>
+<span class="source-line-no">224</span><span id="line-224"></span>
+<span class="source-line-no">225</span><span id="line-225">        Distance WHEEL_RADIUS = Inches.of(4);</span>
+<span class="source-line-no">226</span><span id="line-226"></span>
+<span class="source-line-no">227</span><span id="line-227">        // Sim</span>
+<span class="source-line-no">228</span><span id="line-228">        MomentOfInertia J = KilogramSquareMeters.of(0.1);</span>
+<span class="source-line-no">229</span><span id="line-229"></span>
+<span class="source-line-no">230</span><span id="line-230">        double GEAR_RATIO = 0.1;</span>
+<span class="source-line-no">231</span><span id="line-231"></span>
+<span class="source-line-no">232</span><span id="line-232">        // TODO: get</span>
+<span class="source-line-no">233</span><span id="line-233">        Distance FLYWHEEL_RADIUS = Inches.of(3);</span>
+<span class="source-line-no">234</span><span id="line-234"></span>
+<span class="source-line-no">235</span><span id="line-235">        // TODO: Test for manual shooting RPM</span>
+<span class="source-line-no">236</span><span id="line-236">        AngularVelocity MANUAL_HUB_RPM = RPM.of(3000);</span>
+<span class="source-line-no">237</span><span id="line-237"></span>
+<span class="source-line-no">238</span><span id="line-238">        AngularVelocity MIN_SHOOTER_VELOCITY = RPM.of(1740);</span>
+<span class="source-line-no">239</span><span id="line-239"></span>
+<span class="source-line-no">240</span><span id="line-240">        DoubleSubscriber SHOOT_TUNING_RPM = DogLog.tunable("Shooter/Shoot Tuning RPM", 0.0);</span>
+<span class="source-line-no">241</span><span id="line-241">        DoubleSubscriber FERRY_TUNING_RPM = DogLog.tunable("Shooter/Ferry Tuning RPM", 0.0);</span>
+<span class="source-line-no">242</span><span id="line-242"></span>
+<span class="source-line-no">243</span><span id="line-243">        public interface RPMInterpolation {</span>
+<span class="source-line-no">244</span><span id="line-244"></span>
+<span class="source-line-no">245</span><span id="line-245">            double[][] distanceRPMInterpolationValues = { { 1.0, 1000.0 }, { 2.0, 1500.0 }, { 3.0, 2000.0 }, { 4.0, 2500.0 }, { 5.0, 3000.0 } };</span>
+<span class="source-line-no">246</span><span id="line-246">        }</span>
+<span class="source-line-no">247</span><span id="line-247"></span>
+<span class="source-line-no">248</span><span id="line-248">        // These values are placeholders and should be replaced with actual data from testing</span>
+<span class="source-line-no">249</span><span id="line-249">        public interface TOFInterpolation {</span>
+<span class="source-line-no">250</span><span id="line-250"></span>
+<span class="source-line-no">251</span><span id="line-251">            double[][] distanceTOFInterpolationValues = { { 1.0, 0.5 }, { 2.0, 0.75 }, { 3.0, 1.0 }, { 4.0, 1.25 }, { 5.0, 1.5 } };</span>
+<span class="source-line-no">252</span><span id="line-252">        }</span>
+<span class="source-line-no">253</span><span id="line-253"></span>
+<span class="source-line-no">254</span><span id="line-254">        // These values are placeholders and should be replaced with actual data from testing</span>
+<span class="source-line-no">255</span><span id="line-255">        public interface FerryRPMInterpolation {</span>
+<span class="source-line-no">256</span><span id="line-256"></span>
+<span class="source-line-no">257</span><span id="line-257">            double[][] ferryDistanceRPMInterpolation = { { 1.0, 1000.0 }, { 2.0, 1500.0 }, { 3.0, 2000.0 }, { 4.0, 2500.0 }, { 5.0, 3000.0 } };</span>
+<span class="source-line-no">258</span><span id="line-258">        }</span>
+<span class="source-line-no">259</span><span id="line-259"></span>
+<span class="source-line-no">260</span><span id="line-260">        // These values are placeholders and should be replaced with actual data from testing</span>
+<span class="source-line-no">261</span><span id="line-261">        public interface FerryTOFInterpolation {</span>
+<span class="source-line-no">262</span><span id="line-262"></span>
+<span class="source-line-no">263</span><span id="line-263">            double[][] FerryTOFInterpolationInterpolation = { { 1.0, 0.5 }, { 2.0, 0.75 }, { 3.0, 1.0 }, { 4.0, 1.25 }, { 5.0, 1.5 } };</span>
+<span class="source-line-no">264</span><span id="line-264">        }</span>
+<span class="source-line-no">265</span><span id="line-265">        // These values are placeholders and should be replaced with actual data from testing</span>
+<span class="source-line-no">266</span><span id="line-266">    }</span>
+<span class="source-line-no">267</span><span id="line-267"></span>
+<span class="source-line-no">268</span><span id="line-268">    public interface Swerve {</span>
+<span class="source-line-no">269</span><span id="line-269"></span>
+<span class="source-line-no">270</span><span id="line-270">        double MODULE_VELOCITY_DEADBAND_M_PER_S = 0.1;</span>
+<span class="source-line-no">271</span><span id="line-271"></span>
+<span class="source-line-no">272</span><span id="line-272">        double ROTATIONAL_DEADBAND_RAD_PER_S = 0.1;</span>
+<span class="source-line-no">273</span><span id="line-273"></span>
+<span class="source-line-no">274</span><span id="line-274">        public interface Constraints {</span>
+<span class="source-line-no">275</span><span id="line-275"></span>
+<span class="source-line-no">276</span><span id="line-276">            double MAX_VELOCITY_M_PER_S = 4.3;</span>
+<span class="source-line-no">277</span><span id="line-277"></span>
+<span class="source-line-no">278</span><span id="line-278">            // TODO: revert to 15.0</span>
+<span class="source-line-no">279</span><span id="line-279">            double MAX_ACCEL_M_PER_S_SQUARED = 2.0;</span>
+<span class="source-line-no">280</span><span id="line-280"></span>
+<span class="source-line-no">281</span><span id="line-281">            double MAX_ANGULAR_VEL_RAD_PER_S = Units.degreesToRadians(400.0);</span>
+<span class="source-line-no">282</span><span id="line-282"></span>
+<span class="source-line-no">283</span><span id="line-283">            // TODO: revert to 900</span>
+<span class="source-line-no">284</span><span id="line-284">            double MAX_ANGULAR_ACCEL_RAD_PER_S = Units.degreesToRadians(300.0);</span>
+<span class="source-line-no">285</span><span id="line-285"></span>
+<span class="source-line-no">286</span><span id="line-286">            PathConstraints DEFAULT_CONSTRAINTS = new PathConstraints(MAX_VELOCITY_M_PER_S, MAX_ACCEL_M_PER_S_SQUARED, MAX_ANGULAR_VEL_RAD_PER_S, MAX_ANGULAR_ACCEL_RAD_PER_S);</span>
+<span class="source-line-no">287</span><span id="line-287">        }</span>
+<span class="source-line-no">288</span><span id="line-288"></span>
+<span class="source-line-no">289</span><span id="line-289">        public interface Alignment {</span>
+<span class="source-line-no">290</span><span id="line-290"></span>
+<span class="source-line-no">291</span><span id="line-291">            public interface Constraints {</span>
+<span class="source-line-no">292</span><span id="line-292"></span>
+<span class="source-line-no">293</span><span id="line-293">                double DEFAULT_MAX_VELOCITY = 4.3;</span>
+<span class="source-line-no">294</span><span id="line-294"></span>
+<span class="source-line-no">295</span><span id="line-295">                double DEFAULT_MAX_ACCELERATION = 15.0;</span>
+<span class="source-line-no">296</span><span id="line-296"></span>
+<span class="source-line-no">297</span><span id="line-297">                double DEFAULT_MAX_ANGULAR_VELOCITY = Units.degreesToRadians(400.0);</span>
+<span class="source-line-no">298</span><span id="line-298"></span>
+<span class="source-line-no">299</span><span id="line-299">                double DEFAULT_MAX_ANGULAR_ACCELERATION = Units.degreesToRadians(900.0);</span>
+<span class="source-line-no">300</span><span id="line-300">            }</span>
+<span class="source-line-no">301</span><span id="line-301"></span>
+<span class="source-line-no">302</span><span id="line-302">            public interface Tolerances {</span>
+<span class="source-line-no">303</span><span id="line-303"></span>
+<span class="source-line-no">304</span><span id="line-304">                Distance X_TOLERANCE = Inches.of(2.0);</span>
+<span class="source-line-no">305</span><span id="line-305"></span>
+<span class="source-line-no">306</span><span id="line-306">                Distance Y_TOLERANCE = Inches.of(2.0);</span>
+<span class="source-line-no">307</span><span id="line-307"></span>
+<span class="source-line-no">308</span><span id="line-308">                Rotation2d THETA_TOLERANCE = Rotation2d.fromDegrees(1);</span>
+<span class="source-line-no">309</span><span id="line-309"></span>
+<span class="source-line-no">310</span><span id="line-310">                Pose2d POSE_TOLERANCE = new Pose2d(X_TOLERANCE.in(Meters), Y_TOLERANCE.in(Meters), THETA_TOLERANCE);</span>
+<span class="source-line-no">311</span><span id="line-311"></span>
+<span class="source-line-no">312</span><span id="line-312">                LinearVelocity MAX_VELOCITY_WHEN_ALIGNED = MetersPerSecond.of(0.15);</span>
+<span class="source-line-no">313</span><span id="line-313"></span>
+<span class="source-line-no">314</span><span id="line-314">                Time ALIGNMENT_DEBOUNCE = Seconds.of(0.15);</span>
+<span class="source-line-no">315</span><span id="line-315">            }</span>
+<span class="source-line-no">316</span><span id="line-316"></span>
+<span class="source-line-no">317</span><span id="line-317">            public interface Targets {</span>
+<span class="source-line-no">318</span><span id="line-318"></span>
+<span class="source-line-no">319</span><span id="line-319">                // TODO: Get actual angle</span>
+<span class="source-line-no">320</span><span id="line-320">                Rotation2d HUB_LEFT_CORNER = Rotation2d.fromDegrees(45);</span>
+<span class="source-line-no">321</span><span id="line-321"></span>
+<span class="source-line-no">322</span><span id="line-322">                Rotation2d HUB_RIGHT_CORNER = Rotation2d.fromDegrees(-45);</span>
+<span class="source-line-no">323</span><span id="line-323">            }</span>
+<span class="source-line-no">324</span><span id="line-324">        }</span>
+<span class="source-line-no">325</span><span id="line-325">    }</span>
+<span class="source-line-no">326</span><span id="line-326"></span>
+<span class="source-line-no">327</span><span id="line-327">    public interface Driver {</span>
+<span class="source-line-no">328</span><span id="line-328"></span>
+<span class="source-line-no">329</span><span id="line-329">        double BUZZ_TIME = 1.0;</span>
+<span class="source-line-no">330</span><span id="line-330"></span>
+<span class="source-line-no">331</span><span id="line-331">        double BUZZ_INTENSITY = 1.0;</span>
+<span class="source-line-no">332</span><span id="line-332"></span>
+<span class="source-line-no">333</span><span id="line-333">        public interface Drive {</span>
+<span class="source-line-no">334</span><span id="line-334"></span>
+<span class="source-line-no">335</span><span id="line-335">            double DEADBAND = 0.05;</span>
+<span class="source-line-no">336</span><span id="line-336"></span>
+<span class="source-line-no">337</span><span id="line-337">            double RC = 0.05;</span>
+<span class="source-line-no">338</span><span id="line-338"></span>
+<span class="source-line-no">339</span><span id="line-339">            double POWER = 2.0;</span>
+<span class="source-line-no">340</span><span id="line-340">        }</span>
+<span class="source-line-no">341</span><span id="line-341"></span>
+<span class="source-line-no">342</span><span id="line-342">        public interface Turn {</span>
+<span class="source-line-no">343</span><span id="line-343"></span>
+<span class="source-line-no">344</span><span id="line-344">            double DEADBAND = 0.05;</span>
+<span class="source-line-no">345</span><span id="line-345"></span>
+<span class="source-line-no">346</span><span id="line-346">            double RC = 0.05;</span>
+<span class="source-line-no">347</span><span id="line-347"></span>
+<span class="source-line-no">348</span><span id="line-348">            double POWER = 2.0;</span>
+<span class="source-line-no">349</span><span id="line-349">        }</span>
+<span class="source-line-no">350</span><span id="line-350">    }</span>
+<span class="source-line-no">351</span><span id="line-351">}</span>
 
 
 
