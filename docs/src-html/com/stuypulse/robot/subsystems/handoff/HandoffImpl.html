@@ -63,36 +63,41 @@
 <span class="source-line-no">050</span><span id="line-50">    }</span>
 <span class="source-line-no">051</span><span id="line-51"></span>
 <span class="source-line-no">052</span><span id="line-52">    @Override</span>
-<span class="source-line-no">053</span><span id="line-53">    public void periodic() {</span>
-<span class="source-line-no">054</span><span id="line-54">        // States</span>
-<span class="source-line-no">055</span><span id="line-55">        final Shooter shooter = Shooter.getInstance();</span>
-<span class="source-line-no">056</span><span id="line-56">        final CommandSwerveDrivetrain swerve = CommandSwerveDrivetrain.getInstance();</span>
-<span class="source-line-no">057</span><span id="line-57">        if (!(swerve.isAlignedToTarget(Field.getHubPose()))</span>
-<span class="source-line-no">058</span><span id="line-58">                &amp;&amp; shooter.getState() == ShooterState.SHOOT) {</span>
-<span class="source-line-no">059</span><span id="line-59">            setState(HandoffState.IDLE);</span>
-<span class="source-line-no">060</span><span id="line-60">        }</span>
-<span class="source-line-no">061</span><span id="line-61">        // TODO: consider relaxing tolerances for ferrying</span>
-<span class="source-line-no">062</span><span id="line-62">        if (!(swerve.isAlignedToTarget(Field.getFerryZonePose(swerve.getPose().getTranslation())))</span>
-<span class="source-line-no">063</span><span id="line-63">                &amp;&amp; shooter.getState() == ShooterState.FERRY) {</span>
+<span class="source-line-no">053</span><span id="line-53">    protected boolean handoffStalling() {</span>
+<span class="source-line-no">054</span><span id="line-54">        return handoffStalling.get();</span>
+<span class="source-line-no">055</span><span id="line-55">    };</span>
+<span class="source-line-no">056</span><span id="line-56"></span>
+<span class="source-line-no">057</span><span id="line-57">    @Override</span>
+<span class="source-line-no">058</span><span id="line-58">    public void periodic() {</span>
+<span class="source-line-no">059</span><span id="line-59">        // States</span>
+<span class="source-line-no">060</span><span id="line-60">        final Shooter shooter = Shooter.getInstance();</span>
+<span class="source-line-no">061</span><span id="line-61">        final CommandSwerveDrivetrain swerve = CommandSwerveDrivetrain.getInstance();</span>
+<span class="source-line-no">062</span><span id="line-62">        if (!(swerve.isAlignedToTarget(Field.getHubPose()))</span>
+<span class="source-line-no">063</span><span id="line-63">                &amp;&amp; shooter.getState() == ShooterState.SHOOT) {</span>
 <span class="source-line-no">064</span><span id="line-64">            setState(HandoffState.IDLE);</span>
 <span class="source-line-no">065</span><span id="line-65">        }</span>
-<span class="source-line-no">066</span><span id="line-66"></span>
-<span class="source-line-no">067</span><span id="line-67">        if (!Shooter.getInstance().shooterSpunUp()) {</span>
-<span class="source-line-no">068</span><span id="line-68">            setState(HandoffState.IDLE);</span>
-<span class="source-line-no">069</span><span id="line-69">        }</span>
-<span class="source-line-no">070</span><span id="line-70"></span>
-<span class="source-line-no">071</span><span id="line-71">        // Control</span>
-<span class="source-line-no">072</span><span id="line-72">        final Voltage voltage = handoffStalling.get()</span>
-<span class="source-line-no">073</span><span id="line-73">                ? Handoff.HandoffState.REVERSE.getTargetVoltage()</span>
-<span class="source-line-no">074</span><span id="line-74">                : getState().getTargetVoltage();</span>
-<span class="source-line-no">075</span><span id="line-75">        final VoltageOut handoffControl = handoffController.withOutput(voltage);</span>
-<span class="source-line-no">076</span><span id="line-76">        // Apply</span>
-<span class="source-line-no">077</span><span id="line-77">        handoffMotor.setControl(handoffControl);</span>
-<span class="source-line-no">078</span><span id="line-78">        // Logging</span>
-<span class="source-line-no">079</span><span id="line-79">        this.signals.logAll();</span>
-<span class="source-line-no">080</span><span id="line-80">        super.periodic();</span>
-<span class="source-line-no">081</span><span id="line-81">    }</span>
-<span class="source-line-no">082</span><span id="line-82">}</span>
+<span class="source-line-no">066</span><span id="line-66">        // TODO: consider relaxing tolerances for ferrying</span>
+<span class="source-line-no">067</span><span id="line-67">        if (!(swerve.isAlignedToTarget(Field.getFerryZonePose(swerve.getPose().getTranslation())))</span>
+<span class="source-line-no">068</span><span id="line-68">                &amp;&amp; shooter.getState() == ShooterState.FERRY) {</span>
+<span class="source-line-no">069</span><span id="line-69">            setState(HandoffState.IDLE);</span>
+<span class="source-line-no">070</span><span id="line-70">        }</span>
+<span class="source-line-no">071</span><span id="line-71"></span>
+<span class="source-line-no">072</span><span id="line-72">        if (!Shooter.getInstance().shooterSpunUp()) {</span>
+<span class="source-line-no">073</span><span id="line-73">            setState(HandoffState.IDLE);</span>
+<span class="source-line-no">074</span><span id="line-74">        }</span>
+<span class="source-line-no">075</span><span id="line-75"></span>
+<span class="source-line-no">076</span><span id="line-76">        // Control</span>
+<span class="source-line-no">077</span><span id="line-77">        final Voltage voltage = handoffStalling.get()</span>
+<span class="source-line-no">078</span><span id="line-78">                ? Handoff.HandoffState.REVERSE.getTargetVoltage()</span>
+<span class="source-line-no">079</span><span id="line-79">                : getState().getTargetVoltage();</span>
+<span class="source-line-no">080</span><span id="line-80">        final VoltageOut handoffControl = handoffController.withOutput(voltage);</span>
+<span class="source-line-no">081</span><span id="line-81">        // Apply</span>
+<span class="source-line-no">082</span><span id="line-82">        handoffMotor.setControl(handoffControl);</span>
+<span class="source-line-no">083</span><span id="line-83">        // Logging</span>
+<span class="source-line-no">084</span><span id="line-84">        this.signals.logAll();</span>
+<span class="source-line-no">085</span><span id="line-85">        super.periodic();</span>
+<span class="source-line-no">086</span><span id="line-86">    }</span>
+<span class="source-line-no">087</span><span id="line-87">}</span>
 
 
 

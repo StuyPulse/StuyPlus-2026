@@ -83,7 +83,7 @@
 <span class="source-line-no">070</span><span id="line-70">        DogLog.log("Feeder/Target Voltage", currentState.getTargetVoltage());</span>
 <span class="source-line-no">071</span><span id="line-71">        DogLog.log("Feeder/Current RPM", getCurrentAngularVelocity().in(RPM));</span>
 <span class="source-line-no">072</span><span id="line-72">        DogLog.log("Feeder/State", currentState.name());</span>
-<span class="source-line-no">073</span><span id="line-73">        DogLog.log("States/Feeder", currentState.name());</span>
+<span class="source-line-no">073</span><span id="line-73">        DogLog.forceNt.log("States/Feeder", currentState.name());</span>
 <span class="source-line-no">074</span><span id="line-74">    }</span>
 <span class="source-line-no">075</span><span id="line-75">}</span>
 
