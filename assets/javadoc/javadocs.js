@@ -12,6 +12,27 @@ const placeFavicon = () => {
     document.head.appendChild(link);
 }
 
+const goToLineNumberByHash = () => {
+    const lineHashRegex = /^#line-\d+$/;
+    if (!hljsScript) {
+        console.warn("highlight.js not loaded yet .line-numbers container not created yet 🤤.");
+        return;
+    }
+
+    const hash = window.location.hash;
+    if (!lineHashRegex.test(hash)) {
+        return;
+    }
+
+    // The hash exactly matches the id already so we can just scroll to it cuz querySelector is so tuff
+    const targetElement =  document.querySelector(hash);
+    if (targetElement) {
+        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        const behavior = prefersReducedMotion ? "auto" : "smooth";
+        targetElement.scrollIntoView({ behavior, block: "start" });
+    }
+}
+
 const syntaxHighlight = () => {
     const isSourcePage = document.querySelector("body.source-page") !== null;
     if (!isSourcePage) return;
@@ -38,7 +59,7 @@ const syntaxHighlight = () => {
             const pre = document.querySelector('.source-container > pre');
             const lines = pre.querySelectorAll(':scope > [id*="line-"]');
             const source = Array.from(lines).map(line => line.textContent).join("\n");
-            const lineNumbers = Array.from(lines).map((_, i) => `<span>${i + 1}</span>`).join("\n");
+            const lineNumbers = Array.from(lines).map((_, i) => `<span id="line-${i + 1}">${i + 1}</span>`).join("\n");
 
             pre.outerHTML = 
             `
@@ -64,6 +85,8 @@ const syntaxHighlight = () => {
                 currentURL.hash = "";
                 window.location.href = currentURL.toString();
             });
+
+            goToLineNumberByHash();
         };
 
         script.onerror = () => console.error("highlight.js failed to load 🤤");
@@ -72,12 +95,11 @@ const syntaxHighlight = () => {
     }
 }
 
-const detectThemeChange = () => {
-    window.matchMedia('(prefers-color-scheme: light)').addEventListener('change', e => {
-        syntaxHighlight();
-    });
+const createListeners = () => {
+    window.matchMedia('(prefers-color-scheme: light)').addEventListener('change', syntaxHighlight);
+    window.addEventListener("hashchange", goToLineNumberByHash);
 }
 
 placeFavicon();
 syntaxHighlight();
-detectThemeChange();
+createListeners();
