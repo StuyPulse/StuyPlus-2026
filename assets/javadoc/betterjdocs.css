@@ -80,14 +80,17 @@
 }
 
 .package-index-page .title::after {
-  --size: 50px;
+  --size: 75px;
   content: "";
-  position: relative;
+  position: absolute;
   width: var(--size);
   height: var(--size);
   background-image: url("/StuyPlus-2026/StuyPlusLogo.png");
   background-size: contain;
   background-repeat: no-repeat;
+  right: 0;
+  align-self: flex-start;
+  top: -0.5rem;
 }
 
 .result-item > .ui-menu-item-wrapper.ui-state-active {
@@ -95,6 +98,48 @@
   border: var(--primary-color) solid 1px !important;
   text-shadow: 0px 0px 2px var(--primary-color);
   margin: 0 !important;
+}
+
+.source-page {
+  .back-button {
+    background: var(--primary-color);
+    border-radius: 5px;
+    padding: 5px 16px;
+    color: var(--secondary-color);
+    font-family: "monospace", Arial, Helvetica, sans-serif;
+    border: none;
+    font-size: 1.2em;
+    --margin: 10px;
+    margin-top: var(--margin);
+    margin-left: var(--margin);
+    text-transform: uppercase;
+    cursor: pointer;
+
+    position: fixed;
+    display: flex;
+    justify-self: right;
+  }
+
+  --line-height: 1.5em;
+  .code-wrapper {
+    display: flex;
+    flex-direction: row;
+  }
+
+  code.language-java.hljs {
+    line-height: var(--line-height);
+    padding: 3px 5px;
+  }
+
+  .line-numbers {
+    display: flex;
+    flex-direction: column;
+    line-height: var(--line-height);
+    top: calc(var(--line-height) * 2);
+    position: relative;
+    text-align: right;
+    padding-right: 0.4em;
+  }
 }
 
 /*

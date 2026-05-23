@@ -1,12 +1,8 @@
-/**
- * ********************** PROJECT RON ************************
- */
+/************************* PROJECT RON *************************/
 /* Copyright (c) 2026 StuyPulse Robotics. All rights reserved. */
 /* Use of this source code is governed by an MIT-style license */
 /* that can be found in the repository LICENSE file.           */
-/**
- * ***********************************************************
- */
+/***************************************************************/
 package com.stuypulse.robot.commands.swerve;
 
 import com.stuypulse.robot.subsystems.swerve.CommandSwerveDrivetrain;
@@ -22,7 +18,8 @@ public class SwerveDriveDriveWithRobotRelativeSpeeds extends Command {
 
     private double angularVelocity;
 
-    public SwerveDriveDriveWithRobotRelativeSpeeds(double velocityX, double velocityY, double angularVelocity) {
+    public SwerveDriveDriveWithRobotRelativeSpeeds(
+            double velocityX, double velocityY, double angularVelocity) {
         this.swerve = CommandSwerveDrivetrain.getInstance();
         this.velocityX = velocityX;
         this.velocityY = velocityY;
@@ -32,6 +29,11 @@ public class SwerveDriveDriveWithRobotRelativeSpeeds extends Command {
 
     @Override
     public void execute() {
-        swerve.setControl(swerve.getRobotCentricSwerveRequest().withVelocityX(velocityX).withVelocityY(velocityY).withRotationalRate(angularVelocity));
+        swerve.setControl(
+                swerve
+                        .getRobotCentricSwerveRequest()
+                        .withVelocityX(velocityX)
+                        .withVelocityY(velocityY)
+                        .withRotationalRate(angularVelocity));
     }
 }

@@ -1,30 +1,26 @@
-/**
- * ********************** PROJECT RON ************************
- */
+/************************* PROJECT RON *************************/
 /* Copyright (c) 2026 StuyPulse Robotics. All rights reserved. */
 /* Use of this source code is governed by an MIT-style license */
 /* that can be found in the repository LICENSE file.           */
-/**
- * ***********************************************************
- */
+/***************************************************************/
 package com.stuypulse.robot.subsystems.shooter;
 
 import static edu.wpi.first.units.Units.RPM;
-import java.util.function.DoubleSupplier;
+
+import com.ctre.phoenix6.hardware.TalonFX;
 import com.stuypulse.robot.Robot;
 import com.stuypulse.robot.constants.Settings;
 import com.stuypulse.robot.util.shooter.InterpolationCalculator;
+import dev.doglog.DogLog;
 import edu.wpi.first.units.measure.AngularVelocity;
 import edu.wpi.first.units.measure.Voltage;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
-import com.ctre.phoenix6.hardware.TalonFX;
-import dev.doglog.DogLog;
+import java.util.function.DoubleSupplier;
 
 public abstract class Shooter extends SubsystemBase {
 
-    private final static Shooter instance;
+    private static final Shooter instance;
 
     private ShooterState state;
 
@@ -62,11 +58,13 @@ public abstract class Shooter extends SubsystemBase {
 
     public enum ShooterState {
 
-        // SOTM(() -> 0.0), // TODO: Make actual suppliers
+        // SOTM(() -> 0.0), 
         // FOTM(() -> 0.0),
         IDLE(() -> 0.0),
-        SHOOT(() -> InterpolationCalculator.interpolateShotInfo().targetRPM()),
-        FERRY(() -> InterpolationCalculator.interpolateFerryingInfo().targetRPM()),
+        SHOOT(Settings.Shooter.SHOOT_TUNING_RPM), //TODO:Replace with interpolated RPM after data is gathered
+        FERRY(Settings.Shooter.FERRY_TUNING_RPM),
+        // SHOOT(() -> InterpolationCalculator.interpolateShotInfo().targetRPM()),
+        // FERRY(() -> InterpolationCalculator.interpolateFerryingInfo().targetRPM()),
         MANUAL_HUB(() -> Settings.Shooter.MANUAL_HUB_RPM.in(RPM));
 
         private DoubleSupplier RPMSupplier;
@@ -88,11 +86,16 @@ public abstract class Shooter extends SubsystemBase {
 
     public abstract void setVoltageOverride(Voltage voltage);
 
+    public boolean shooterSpunUp() {
+        return getCurrentAngularVelocity().gte(getState().getTargetAngularVelocity());
+    }
+
     @Override
     public void periodic() {
         final ShooterState currentState = getState();
         DogLog.log("Shooter/Target RPM", currentState.getTargetAngularVelocity().in(RPM));
         DogLog.log("Shooter/State", currentState.name());
-        DogLog.log("States/Shooter", currentState.name());
+        DogLog.forceNt.log("States/Shooter", currentState.name());
+        DogLog.forceNt.log("Shooter/At Target RPM", shooterSpunUp());
     }
 }

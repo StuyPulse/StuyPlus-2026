@@ -27,6 +27,7 @@ import com.ctre.phoenix6.CANBus;
 import dev.doglog.DogLog;
 
 import com.pathplanner.lib.path.PathConstraints;
+import com.stuypulse.stuylib.network.SmartNumber;
 
 /*-
  * File containing tunable settings for every subsystem on the robot.
@@ -82,7 +83,7 @@ public interface Settings {
 
             Angle STOW_ANGLE = Degrees.of(-102);
 
-            Angle DEPLOY_ANGLE = Degrees.of(0);
+            Angle DEPLOY_ANGLE = Degrees.of(22);
 
             Angle AGITATE_UP_ANGLE = Degrees.of(-42);
 
@@ -91,7 +92,7 @@ public interface Settings {
             // misc
             Angle ANGLE_TOLERANCE = Degrees.of(0.5);
 
-            Angle PUSHDOWN_THRESHOLD = Degrees.of(-20);
+            Angle PUSHDOWN_THRESHOLD = Degrees.of(20);
 
             DoubleSubscriber PUSHDOWN_CURRENT = DogLog.tunable("Intake/Pivot/Pushdown Current Tuning Amps", 30.0);
 
@@ -118,7 +119,7 @@ public interface Settings {
             Distance PIVOT_ARM_LENGTH = Meters.of(0.1439822);
 
             // mass in kg
-            MomentOfInertia J = KilogramSquareMeters.of(SingleJointedArmSim.estimateMOI(PIVOT_ARM_LENGTH.in(Meters), 30));
+            MomentOfInertia MOI = KilogramSquareMeters.of(SingleJointedArmSim.estimateMOI(PIVOT_ARM_LENGTH.in(Meters), 1));
         }
 
         public interface Roller {
@@ -141,12 +142,12 @@ public interface Settings {
 
     public interface Feeder {
 
-        double FEEDER_REVERSE_DUTY_CYCLE = -1;
+        Voltage REVERSE_VOLTAGE = Volts.of(-10.0); // TODO: get
 
-        double FEEDER_FORWARD_DUTY_CYCLE = 1;
+        Voltage FORWARD_VOLTAGE = Volts.of(10.0);
 
         // TODO: get from mec
-        double GEAR_RATIO = 1;
+        double GEAR_RATIO = 34/14; // (34/14) : 1
 
         MomentOfInertia J = KilogramSquareMeters.of(0.001);
     }
@@ -197,12 +198,11 @@ public interface Settings {
     }
 
     public interface Handoff {
+        Voltage IDLE_VOLTAGE = Volts.of(0.0);
 
-        double IDLE_DUTY_CYCLE = 0.0;
+        Voltage FORWARD_VOLTAGE = Volts.of(10.0);
 
-        double FORWARD_DUTY_CYCLE = 1.0;
-
-        double REVERSE_DUTY_CYCLE = -1.0;
+        Voltage REVERSE_VOLTAGE = Volts.of(-10.0);
 
         double STALL_CURRENT = 67;
 
@@ -211,7 +211,7 @@ public interface Settings {
 
         double J_KG_METERS_SQUARED = 1;
 
-        double SIM_GEAR_RATIO = 1;
+        double GEAR_RATIO = 1.0 / 3.0; // 1:3
     }
 
     public interface Shooter {
@@ -234,6 +234,11 @@ public interface Settings {
 
         // TODO: Test for manual shooting RPM
         AngularVelocity MANUAL_HUB_RPM = RPM.of(3000);
+
+        AngularVelocity MIN_SHOOTER_VELOCITY = RPM.of(1740);
+
+        DoubleSubscriber SHOOT_TUNING_RPM = DogLog.tunable("Shooter/Shoot Tuning RPM", 0.0);
+        DoubleSubscriber FERRY_TUNING_RPM = DogLog.tunable("Shooter/Ferry Tuning RPM", 0.0);
 
         public interface RPMInterpolation {
 

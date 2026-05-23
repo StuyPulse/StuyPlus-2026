@@ -1,25 +1,22 @@
-/**
- * ********************** PROJECT RON ************************
- */
+/************************* PROJECT RON *************************/
 /* Copyright (c) 2026 StuyPulse Robotics. All rights reserved. */
 /* Use of this source code is governed by an MIT-style license */
 /* that can be found in the repository LICENSE file.           */
-/**
- * ***********************************************************
- */
+/***************************************************************/
 package com.stuypulse.robot.util.shooter;
 
 import com.stuypulse.robot.constants.Field;
+import com.stuypulse.robot.constants.Settings;
 import com.stuypulse.robot.constants.Settings.Shooter.FerryRPMInterpolation;
 import com.stuypulse.robot.constants.Settings.Shooter.FerryTOFInterpolation;
 import com.stuypulse.robot.constants.Settings.Shooter.RPMInterpolation;
 import com.stuypulse.robot.constants.Settings.Shooter.TOFInterpolation;
 import com.stuypulse.robot.subsystems.swerve.CommandSwerveDrivetrain;
+import static edu.wpi.first.units.Units.RPM;
+import dev.doglog.DogLog;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.interpolation.InterpolatingDoubleTreeMap;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import dev.doglog.DogLog;
 
 public class InterpolationCalculator {
 
@@ -66,6 +63,8 @@ public class InterpolationCalculator {
         double flightTime = shootingDistanceTOFInterpolator.get(distanceMeters);
         DogLog.log("InterpolationTesting/Interpolated RPM", targetRPM);
         DogLog.log("InterpolationTesting/Interpolated TOF", flightTime);
+        // if (targetRPM < Settings.Shooter.MIN_SHOOTER_VELOCITY.in(RPM))
+        //     targetRPM = Settings.Shooter.MIN_SHOOTER_VELOCITY.in(RPM);
         return new InterpolatedInfo(targetRPM, flightTime);
     }
 

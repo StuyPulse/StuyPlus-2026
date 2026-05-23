@@ -1,12 +1,8 @@
-/**
- * ********************** PROJECT RON ************************
- */
+/************************* PROJECT RON *************************/
 /* Copyright (c) 2026 StuyPulse Robotics. All rights reserved. */
 /* Use of this source code is governed by an MIT-style license */
 /* that can be found in the repository LICENSE file.           */
-/**
- * ***********************************************************
- */
+/***************************************************************/
 package com.stuypulse.robot.util;
 
 import com.stuypulse.stuylib.math.Vector2D;
@@ -34,7 +30,12 @@ public class TranslationMotionProfile implements VFilter {
     // Number of times to apply filter (helps accuracy)
     private final int mSteps;
 
-    public TranslationMotionProfile(Number velLimit, Number accelLimit, Vector2D startingTranslation, Vector2D startingVelocity, int steps) {
+    public TranslationMotionProfile(
+            Number velLimit,
+            Number accelLimit,
+            Vector2D startingTranslation,
+            Vector2D startingVelocity,
+            int steps) {
         mTimer = new StopWatch();
         mVelLimit = velLimit;
         mAccelLimit = accelLimit;
@@ -43,7 +44,8 @@ public class TranslationMotionProfile implements VFilter {
         mSteps = steps;
     }
 
-    public TranslationMotionProfile(Number velLimit, Number accelLimit, Vector2D startingTranslation, Vector2D startingVelocity) {
+    public TranslationMotionProfile(
+            Number velLimit, Number accelLimit, Vector2D startingTranslation, Vector2D startingVelocity) {
         this(velLimit, accelLimit, startingTranslation, startingVelocity, kDefaultSteps);
     }
 
@@ -67,7 +69,7 @@ public class TranslationMotionProfile implements VFilter {
                 } else {
                     // the position it would end up if it attempted to come to a full stop
                     Vector2D windA = // windup caused by acceleration
-                    mVelocity.mul(0.5 * (dt + windup));
+                            mVelocity.mul(0.5 * (dt + windup));
                     // where the robot will end up
                     Vector2D future = mOutput.add(windA);
                     // Calculate acceleration needed to come to stop at target throughout windup
@@ -95,7 +97,8 @@ public class TranslationMotionProfile implements VFilter {
         }
         // Field.FIELD2D.getObject("Translation Motion Profile").setPose(!Robot.isBlue()
         // ? new Pose2d(mOutput.x, mOutput.y, new Rotation2d())
-        // : Field.transformToOppositeAlliance(new Pose2d(mOutput.x, mOutput.y, new Rotation2d())));
+        // : Field.transformToOppositeAlliance(new Pose2d(mOutput.x, mOutput.y, new
+        // Rotation2d())));
         return mOutput;
     }
 }

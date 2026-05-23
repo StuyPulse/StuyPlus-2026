@@ -1,20 +1,15 @@
-/**
- * ********************** PROJECT RON ************************
- */
+/************************* PROJECT RON *************************/
 /* Copyright (c) 2026 StuyPulse Robotics. All rights reserved. */
 /* Use of this source code is governed by an MIT-style license */
 /* that can be found in the repository LICENSE file.           */
-/**
- * ***********************************************************
- */
+/***************************************************************/
 package com.stuypulse.robot;
 
 import com.stuypulse.robot.commands.auton.DoNothingAuton;
 import com.stuypulse.robot.commands.feeder.FeederSetForward;
-import com.stuypulse.robot.commands.feeder.FeederSetStop;
+import com.stuypulse.robot.commands.feeder.FeederSetIdle;
 import com.stuypulse.robot.commands.handoff.HandoffSetForward;
 import com.stuypulse.robot.commands.handoff.HandoffSetIdle;
-import com.stuypulse.robot.commands.intake.IntakeAgitateFastOnce;
 import com.stuypulse.robot.commands.intake.IntakeDigest;
 import com.stuypulse.robot.commands.intake.IntakeSetIdle;
 import com.stuypulse.robot.commands.intake.IntakeSetIntake;
@@ -49,6 +44,14 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
 
+/**
+ * <h2>Robot Container Class</h2>
+ * 
+ * This class is where the bulk of the robot should be declared. Since Command-based is a
+ * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
+ * periodic methods (other than the scheduler calls). Instead, the structure of the robot (including
+ * subsystems, commands, and trigger mappings) should be declared here.
+ */
 public class RobotContainer {
 
     // Gamepads
@@ -73,6 +76,8 @@ public class RobotContainer {
     private static SendableChooser<Command> autonChooser = new SendableChooser<>();
 
     // Robot container
+
+    /** The container for the robot. Contains subsystems, OI devices, and commands. */
     public RobotContainer() {
         swerve.configureAutoBuilder();
         configureDefaultCommands();
@@ -90,29 +95,21 @@ public class RobotContainer {
         SmartDashboard.putData("Tests/Vision Enable Disable Test", visionEnableDisableTest);
     }
 
-    /**
-     * ************
-     */
-    /**
-     * DEFAULTS **
-     */
-    /**
-     * ************
-     */
+    /** ************ */
+    /** DEFAULTS ** */
+    /** ************ */
     private void configureDefaultCommands() {
         swerve.setDefaultCommand(new SwerveDriveDrive(driver));
         leds.setDefaultCommand(new LEDDefaultCommand());
     }
 
+    /***************/
+    /*** BUTTONS ***/
+    /***************/
+
     /**
-     * ***********
-     */
-    /**
-     * BUTTONS **
-     */
-    /**
-     * ***********
-     */
+     * This method is used to configure button bindings for controlling the robot.
+   */
     private void configureButtonBindings() {
         // Trigger buttons did not work for some reason so I had to do this
         Trigger leftTrigger = new Trigger(() -> driver.getLeftTriggerAxis() > 0.5);
@@ -120,30 +117,54 @@ public class RobotContainer {
         leftTrigger.onTrue(new IntakeSetIntake());
         driver.leftBumper().whileTrue(new IntakeSetOuttake());
         driver.leftBumper().onFalse(new IntakeSetIntake());
-        rightTrigger.onTrue(new SwerveDriveAlignToHub().andThen(new SwerveDriveXMode()).andThen(new ShooterSetShoot()).andThen(new HandoffSetForward()).alongWith(new FeederSetForward(), new IntakeDigest()));
+        rightTrigger.onTrue(
+                new SwerveDriveAlignToHub()
+                        .andThen(new SwerveDriveXMode())
+                        .andThen(new ShooterSetShoot())
+                        .andThen(new HandoffSetForward())
+                        .alongWith(new FeederSetForward(), new IntakeDigest()));
         // Top Left Paddle
         driver.a().onTrue(new IntakeSetIdle());
         driver.povUp().onTrue(new SwerveDriveResetRotation());
-        driver.rightBumper().onTrue(new SwerveDriveAlignToFerryZone().andThen(new SwerveDriveXMode()).andThen(new ShooterSetFerry()).andThen(new HandoffSetForward()).alongWith(new FeederSetForward(), new IntakeDigest()));
+        driver
+                .rightBumper()
+                .onTrue(
+                        new SwerveDriveAlignToFerryZone()
+                                .andThen(new SwerveDriveXMode())
+                                .andThen(new ShooterSetFerry())
+                                .andThen(new HandoffSetForward())
+                                .alongWith(new FeederSetForward(), new IntakeDigest()));
         // Bottom Right Paddle
         // Manual shooting possibly from in front of the hub
-        driver.y().onTrue(new SwerveDriveXMode().andThen(new ShooterSetManual()).andThen(new HandoffSetForward()).alongWith(new FeederSetForward(), new IntakeDigest()));
+        driver
+                .y()
+                .onTrue(
+                        new SwerveDriveXMode()
+                                .andThen(new ShooterSetManual())
+                                .andThen(new HandoffSetForward())
+                                .alongWith(new FeederSetForward(), new IntakeDigest()));
         // Top Right Paddle
-        driver.b().onTrue(new HandoffSetIdle().alongWith(new FeederSetStop(), new IntakeSetIntake(), Commands.runOnce(() -> new SwerveDriveXMode().cancel())));
+        driver
+                .b()
+                .onTrue(
+                        new HandoffSetIdle()
+                                .alongWith(
+                                        new FeederSetIdle(),
+                                        new IntakeSetIntake(),
+                                        Commands.runOnce(
+                                                () -> new SwerveDriveXMode().cancel())));
         // Bottom Left Paddle
         driver.x().whileTrue(new SwerveDriveXMode());
     }
 
+    /**************/
+    /*** AUTONS ***/
+    /**************/
+
     /**
-     * **********
+     * This method is used to configure the autonomous commands.
      */
-    /**
-     * AUTONS **
-     */
-    /**
-     * **********
-     */
-    public void configureAutons() {
+     public void configureAutons() {
         autonChooser.addOption("Do Nothing", new DoNothingAuton());
         // AutonConfig LBFerry = new AutonConfig("LB Ferry", LBFerry::new,
         // "LB to N Ferry",
@@ -174,7 +195,8 @@ public class RobotContainer {
         // "RB Return Mid",
         // "RB to Outpost Mid");
         // RBMid.register(autonChooser);
-        // AutonConfig TwoMeterPath = new AutonConfig("Two Meter Path", TwoMeterPath::new,
+        // AutonConfig TwoMeterPath = new AutonConfig("Two Meter Path",
+        // TwoMeterPath::new,
         // "2 meter path");
         // TwoMeterPath.register(autonChooser);
         // AutonConfig OutpostOnly = new AutonConfig("Outpost Only", OutpostOnly::new,
@@ -188,11 +210,13 @@ public class RobotContainer {
         // "LB to N Outtake",
         // "N to LB Outtake");
         // LBOuttake.register(autonChooser);
-        // AutonConfig LBMidlineSweep = new AutonConfig("LB Midline Sweep", LBMidlineSweep::new,
+        // AutonConfig LBMidlineSweep = new AutonConfig("LB Midline Sweep",
+        // LBMidlineSweep::new,
         // "LB to N Midline",
         // "LN Sweep Midline");
         // LBMidlineSweep.register(autonChooser);
-        // AutonConfig RBMidlineSweep = new AutonConfig("RB Midline Sweep", RBMidlineSweep::new,
+        // AutonConfig RBMidlineSweep = new AutonConfig("RB Midline Sweep",
+        // RBMidlineSweep::new,
         // "RB to N Midline",
         // "RN Sweep Midline");
         // RBMidlineSweep.register(autonChooser);
@@ -224,25 +248,53 @@ public class RobotContainer {
         // "RT Around Disrupt",
         // "RT Back Push Disrupt");
         // RT_Disrupt.register(autonChooser);
-        // autonChooser.addOption("SysID Module Translation Dynamic Forwards", swerve.sysIdDynamic(Direction.kForward));
-        // autonChooser.addOption("SysID Module Translation Dynamic Backwards", swerve.sysIdDynamic(Direction.kReverse));
-        // autonChooser.addOption("SysID Module Translation Quasi Forwards", swerve.sysIdQuasistatic(Direction.kForward));
-        // autonChooser.addOption("SysID Module Translation Quasi Backwards", swerve.sysIdQuasistatic(Direction.kReverse));
-        // autonChooser.addOption("SysID Rotation Translation Dynamic Forwards", swerve.sysidRotationDynamic(Direction.kForward));
-        // autonChooser.addOption("SysID Rotation Translation Dynamic Backwards", swerve.sysidRotationDynamic(Direction.kReverse));
-        // autonChooser.addOption("SysID Rotation Translation Quasi Forwards", swerve.sysidRotationQuasiStatic(Direction.kForward));
-        // autonChooser.addOption("SysID Rotation Translation Quasi Backwards", swerve.sysidRotationQuasiStatic(Direction.kReverse));
-        autonChooser.addOption("Intake Pivot SysID  Quasi Forwards", intake.getIntakeSysIdRoutine().quasistatic(Direction.kForward));
-        autonChooser.addOption("Intake Pivot SysID  Quasi Reverse", intake.getIntakeSysIdRoutine().quasistatic(Direction.kReverse));
-        autonChooser.addOption("Intake Pivot SysID  Dynamic Forwards", intake.getIntakeSysIdRoutine().dynamic(Direction.kForward));
-        autonChooser.addOption("Intake Pivot SysID  Dynamic Reverse", intake.getIntakeSysIdRoutine().dynamic(Direction.kReverse));
-        autonChooser.addOption("Shooter SysID Quasi Forwards ", shooter.getShooterSysIdRoutine().quasistatic(Direction.kForward));
-        autonChooser.addOption("Shooter SysID Quasi Reverse ", shooter.getShooterSysIdRoutine().quasistatic(Direction.kReverse));
-        autonChooser.addOption("Shooter SysID Dynamic Forward ", shooter.getShooterSysIdRoutine().dynamic(Direction.kForward));
-        autonChooser.addOption("Shooter SysID Dynamic Reverse ", shooter.getShooterSysIdRoutine().dynamic(Direction.kReverse));
+        // autonChooser.addOption("SysID Module Translation Dynamic Forwards",
+        // swerve.sysIdDynamic(Direction.kForward));
+        // autonChooser.addOption("SysID Module Translation Dynamic Backwards",
+        // swerve.sysIdDynamic(Direction.kReverse));
+        // autonChooser.addOption("SysID Module Translation Quasi Forwards",
+        // swerve.sysIdQuasistatic(Direction.kForward));
+        // autonChooser.addOption("SysID Module Translation Quasi Backwards",
+        // swerve.sysIdQuasistatic(Direction.kReverse));
+        // autonChooser.addOption("SysID Rotation Translation Dynamic Forwards",
+        // swerve.sysidRotationDynamic(Direction.kForward));
+        // autonChooser.addOption("SysID Rotation Translation Dynamic Backwards",
+        // swerve.sysidRotationDynamic(Direction.kReverse));
+        // autonChooser.addOption("SysID Rotation Translation Quasi Forwards",
+        // swerve.sysidRotationQuasiStatic(Direction.kForward));
+        // autonChooser.addOption("SysID Rotation Translation Quasi Backwards",
+        // swerve.sysidRotationQuasiStatic(Direction.kReverse));
+        autonChooser.addOption(
+                "Intake Pivot SysID  Quasi Forwards",
+                intake.getIntakeSysIdRoutine().quasistatic(Direction.kForward));
+        autonChooser.addOption(
+                "Intake Pivot SysID  Quasi Reverse",
+                intake.getIntakeSysIdRoutine().quasistatic(Direction.kReverse));
+        autonChooser.addOption(
+                "Intake Pivot SysID  Dynamic Forwards",
+                intake.getIntakeSysIdRoutine().dynamic(Direction.kForward));
+        autonChooser.addOption(
+                "Intake Pivot SysID  Dynamic Reverse",
+                intake.getIntakeSysIdRoutine().dynamic(Direction.kReverse));
+        autonChooser.addOption(
+                "Shooter SysID Quasi Forwards ",
+                shooter.getShooterSysIdRoutine().quasistatic(Direction.kForward));
+        autonChooser.addOption(
+                "Shooter SysID Quasi Reverse ",
+                shooter.getShooterSysIdRoutine().quasistatic(Direction.kReverse));
+        autonChooser.addOption(
+                "Shooter SysID Dynamic Forward ",
+                shooter.getShooterSysIdRoutine().dynamic(Direction.kForward));
+        autonChooser.addOption(
+                "Shooter SysID Dynamic Reverse ",
+                shooter.getShooterSysIdRoutine().dynamic(Direction.kReverse));
         SmartDashboard.putData("Autonomous", autonChooser);
     }
 
+    /**
+     * Use this to pass the autonomous command to the main {@link Robot} class.
+     * @return The command to run in autonomous
+     */
     public Command getAutonomousCommand() {
         return autonChooser.getSelected();
     }

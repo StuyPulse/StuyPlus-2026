@@ -5,8 +5,11 @@
       "/SmartDashboard/Autonomous": "String Chooser",
       "/SmartDashboard/Command Scheduler": "Scheduler",
       "/SmartDashboard/Field": "Field2d",
+      "/SmartDashboard/Intake/Seed Pivot Angle 90": "Command",
+      "/SmartDashboard/Intake/Seed Pivot Angle Stowed": "Command",
       "/SmartDashboard/Intake/Set Pivot 0": "Command",
       "/SmartDashboard/Intake/Set Pivot 0 at Bottom": "Command",
+      "/SmartDashboard/Intake/Set Pivot Angle Deployed": "Command",
       "/SmartDashboard/PathPlanner": "Alerts",
       "/SmartDashboard/Run pre-match Tests": "Command",
       "/SmartDashboard/Set Pivot 0": "Command",
@@ -36,29 +39,12 @@
   },
   "NetworkTables": {
     "transitory": {
-      "SmartDashboard": {
-        "Shooter": {
-          "open": true
-        },
-        "Swerve": {
-          "Pose": {
-            "open": true
-          }
-        },
+      "Robot": {
         "open": true
       }
     }
   },
   "NetworkTables Info": {
-    "Clients": {
-      "open": true
-    },
-    "Server": {
-      "Subscribers": {
-        "open": true
-      },
-      "open": true
-    },
     "visible": true
   }
 }
