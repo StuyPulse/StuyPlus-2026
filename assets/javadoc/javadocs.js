@@ -13,6 +13,9 @@ const placeFavicon = () => {
 }
 
 const goToLineNumberByHash = () => {
+    const isSourcePage = document.querySelector("body.source-page") !== null;
+    if (!isSourcePage) return;
+
     const lineHashRegex = /^#line-\d+$/;
     if (!hljsScript) {
         console.warn("highlight.js not loaded yet .line-numbers container not created yet 🤤.");
