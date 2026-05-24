@@ -108,6 +108,7 @@ function indexFilesLoaded() {
 
 // Workaround for scroll position not being included in browser history (8249133)
 document.addEventListener("DOMContentLoaded", function(e) {
+    var timeoutID;
     var contentDiv = document.querySelector("div.flex-content");
     window.addEventListener("popstate", function(e) {
         if (e.state !== null) {
@@ -118,7 +119,6 @@ document.addEventListener("DOMContentLoaded", function(e) {
         history.replaceState(contentDiv.scrollTop, document.title);
     });
     contentDiv.addEventListener("scroll", function(e) {
-        var timeoutID;
         if (!timeoutID) {
             timeoutID = setTimeout(function() {
                 history.replaceState(contentDiv.scrollTop, document.title);
