@@ -10,11 +10,7 @@ import com.stuypulse.robot.constants.Gains;
 import com.stuypulse.robot.constants.Settings.Driver.Drive;
 import com.stuypulse.robot.constants.Settings.Swerve;
 import com.stuypulse.robot.subsystems.swerve.CommandSwerveDrivetrain;
-import com.stuypulse.stuylib.math.Vector2D;
-import com.stuypulse.stuylib.streams.vectors.VStream;
-import com.stuypulse.stuylib.streams.vectors.filters.VDeadZone;
-import com.stuypulse.stuylib.streams.vectors.filters.VLowPassFilter;
-import com.stuypulse.stuylib.streams.vectors.filters.VRateLimit;
+import com.stuypulse.robot.util.DriveInputProcessor;
 import dev.doglog.DogLog;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -28,33 +24,30 @@ public class SwerveDriveRotate extends Command {
 
     private CommandXboxController driver;
 
-    private final VStream speed;
+    private final DriveInputProcessor speed;
 
     public SwerveDriveRotate(CommandXboxController driver, Rotation2d rotation) {
         this.swerve = CommandSwerveDrivetrain.getInstance();
         this.rotation = rotation;
         this.driver = driver;
-        speed = VStream.create(this::getDriverInputAsVelocity)
-                .filtered(
-                        new VDeadZone(Drive.DEADBAND),
-                        x -> x.clamp(1),
-                        x -> x.pow(Drive.POWER),
-                        x -> x.mul(Swerve.Constraints.MAX_VELOCITY_M_PER_S),
-                        new VRateLimit(Swerve.Constraints.MAX_ACCEL_M_PER_S_SQUARED),
-                        new VLowPassFilter(Drive.RC));
+        this.speed = new DriveInputProcessor(
+                driver, 
+                Drive.DEADBAND, 
+                Drive.POWER, 
+                Swerve.Constraints.MAX_VELOCITY_M_PER_S, 
+                Swerve.Constraints.MAX_ACCEL_M_PER_S_SQUARED, 
+                Drive.RC);
         addRequirements(swerve);
-    }
-
-    private Vector2D getDriverInputAsVelocity() {
-        return new Vector2D(-driver.getLeftY(), -driver.getLeftX());
     }
 
     @Override
     public void execute() {
+        speed.update();
+
         SwerveRequest request = new SwerveRequest.FieldCentricFacingAngle()
                 .withTargetDirection(rotation)
-                .withVelocityX(speed.get().x)
-                .withVelocityY(speed.get().y)
+                .withVelocityX(speed.get().getX())
+                .withVelocityY(speed.get().getY())
                 .withHeadingPID(
                         Gains.Swerve.Alignment.akP, Gains.Swerve.Alignment.akI, Gains.Swerve.Alignment.akD);
         swerve.setControl(request);
