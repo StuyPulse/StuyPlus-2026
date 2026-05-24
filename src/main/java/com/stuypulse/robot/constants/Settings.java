@@ -27,7 +27,6 @@ import com.ctre.phoenix6.CANBus;
 import dev.doglog.DogLog;
 
 import com.pathplanner.lib.path.PathConstraints;
-import com.stuypulse.stuylib.network.SmartNumber;
 
 /*-
  * File containing tunable settings for every subsystem on the robot.
