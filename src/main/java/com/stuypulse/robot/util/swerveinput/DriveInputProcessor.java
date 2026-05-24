@@ -1,4 +1,4 @@
-package com.stuypulse.robot.util;
+package com.stuypulse.robot.util.swerveinput;
 
 import com.stuypulse.robot.constants.Settings;
 
@@ -67,6 +67,10 @@ public class DriveInputProcessor {
         this.filteredSpeed = Translation2d.kZero;
     }
 
+    /**
+     * Get the driver input from the controller as a Translation2d, representing as a velocity vector
+     * @return Translation2d representing the driver input as a velocity vector
+     */
     private Translation2d getDriverInputAsVelocity() {
             return new Translation2d(-controller.getLeftY(), -controller.getLeftX());
     }

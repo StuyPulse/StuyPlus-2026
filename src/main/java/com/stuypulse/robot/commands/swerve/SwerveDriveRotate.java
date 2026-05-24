@@ -10,7 +10,7 @@ import com.stuypulse.robot.constants.Gains;
 import com.stuypulse.robot.constants.Settings.Driver.Drive;
 import com.stuypulse.robot.constants.Settings.Swerve;
 import com.stuypulse.robot.subsystems.swerve.CommandSwerveDrivetrain;
-import com.stuypulse.robot.util.DriveInputProcessor;
+import com.stuypulse.robot.util.swerveinput.DriveInputProcessor;
 import dev.doglog.DogLog;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj2.command.Command;
