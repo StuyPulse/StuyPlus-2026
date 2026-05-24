@@ -23,7 +23,7 @@ import static edu.wpi.first.units.Units.*;
  * </ul>
  * 
  * <p>To use within a command, create an instance of this class and call the {@link #update()} method in the {@link edu.wpi.first.wpilibj2.command.Command#execute()} method of the command.</p>
- * <p>To get the processed speed, call the {@link #getFilteredSpeed()} method.</p>
+ * <p>To get the processed speed, call the {@link #get()} method.</p>
  */
 public class DriveInputProcessor {
     private CommandXboxController controller;
@@ -158,10 +158,10 @@ public class DriveInputProcessor {
     }
 
     /**
-     * Getter for the filtered speed.
+     * Get the filtered speed.
      * @return A Translation2d representing the filtered speed
      */
-    public Translation2d getFilteredSpeed() {
+    public Translation2d get() {
         return filteredSpeed;
     }
 }
