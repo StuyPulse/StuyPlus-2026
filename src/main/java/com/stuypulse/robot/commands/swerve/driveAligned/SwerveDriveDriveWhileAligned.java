@@ -1,41 +1,48 @@
 /************************* PROJECT RON *************************/
-/************************* PROJECT RON *************************/
 /* Copyright (c) 2026 StuyPulse Robotics. All rights reserved. */
 /* Use of this source code is governed by an MIT-style license */
 /* that can be found in the repository LICENSE file.           */
 /***************************************************************/
-/***************************************************************/
 package com.stuypulse.robot.commands.swerve.driveAligned;
 
 import com.ctre.phoenix6.swerve.SwerveRequest;
-import com.stuypulse.robot.constants.Settings;
 import com.stuypulse.robot.constants.Gains.Swerve.Alignment;
+import com.stuypulse.robot.constants.Settings.Driver.Drive;
+import com.stuypulse.robot.constants.Settings.Swerve;
 import com.stuypulse.robot.subsystems.swerve.CommandSwerveDrivetrain;
+import com.stuypulse.stuylib.math.Vector2D;
+import com.stuypulse.stuylib.streams.vectors.VStream;
+import com.stuypulse.stuylib.streams.vectors.filters.VDeadZone;
+import com.stuypulse.stuylib.streams.vectors.filters.VLowPassFilter;
+import com.stuypulse.stuylib.streams.vectors.filters.VRateLimit;
 import dev.doglog.DogLog;
-import edu.wpi.first.math.MathUtil;
-import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import java.util.function.Supplier;
 
-// WARNING: I don't know if this refactoring actually works.
 public class SwerveDriveDriveWhileAligned extends Command {
 
     protected static final CommandSwerveDrivetrain swerve;
 
     private final CommandXboxController driver;
 
+    private final VStream speed;
+
     private final Supplier<Pose2d> targetPose;
 
-    private final SlewRateLimiter slewRateLimiter;
-
     public SwerveDriveDriveWhileAligned(CommandXboxController driver, Supplier<Pose2d> targetPose) {
+        this.speed = VStream.create(this::getDriverInputAsVelocity)
+                .filtered(
+                        new VDeadZone(Drive.DEADBAND),
+                        x -> x.clamp(1),
+                        x -> x.pow(Drive.POWER),
+                        x -> x.mul(Swerve.Constraints.MAX_VELOCITY_M_PER_S),
+                        new VRateLimit(Swerve.Constraints.MAX_ACCEL_M_PER_S_SQUARED),
+                        new VLowPassFilter(Drive.RC));
         this.driver = driver;
         this.targetPose = targetPose;
-        this.slewRateLimiter = new SlewRateLimiter(Settings.Swerve.Constraints.MAX_ACCEL_M_PER_S_SQUARED);
         addRequirements(swerve);
     }
 
@@ -43,25 +50,8 @@ public class SwerveDriveDriveWhileAligned extends Command {
         swerve = CommandSwerveDrivetrain.getInstance();
     }
 
-    private Translation2d applyVectorMagnitudeReduction(Translation2d inputVector, double reductionFactor) {
-        double magnitude = inputVector.getNorm();
-        double reducedMagnitude = magnitude * reductionFactor;
-
-        if (magnitude < 1e-6) {
-            return new Translation2d(0, 0);
-        }
-
-        double scale = reducedMagnitude / magnitude;
-        return inputVector.times(scale);
-    }
-
-    private Translation2d getDriverInputAsVelocity() {
-        Translation2d inputVector = new Translation2d(-driver.getLeftY(), -driver.getLeftX());
-        Translation2d deadzonedVector = applyVectorMagnitudeReduction(inputVector, MathUtil.applyDeadband(inputVector.getNorm(), Settings.Driver.Drive.DEADBAND, 1.0));
-        
-        double poweredMagnitude = MathUtil.copyDirectionPow(deadzonedVector.getNorm(), Settings.Driver.Drive.POWER);
-        Translation2d poweredVector = deadzonedVector.times(poweredMagnitude / (deadzonedVector.getNorm() + 1e-6));
-        return poweredVector;
+    private Vector2D getDriverInputAsVelocity() {
+        return new Vector2D(-driver.getLeftY(), -driver.getLeftX());
     }
 
     public Rotation2d getTargetAngle() {
@@ -74,14 +64,10 @@ public class SwerveDriveDriveWhileAligned extends Command {
 
     @Override
     public void execute() {
-        Translation2d driverInput = getDriverInputAsVelocity();
-        double limitedDriveMagnitude = slewRateLimiter.calculate(driverInput.getNorm());
-        Translation2d limitedDrive = applyVectorMagnitudeReduction(driverInput, limitedDriveMagnitude / (driverInput.getNorm() + 1e-6));
-
         swerve.setControl(
                 new SwerveRequest.FieldCentricFacingAngle()
-                        .withVelocityX(limitedDrive.getX())
-                        .withVelocityY(limitedDrive.getY())
+                        .withVelocityX(speed.get().x)
+                        .withVelocityY(speed.get().y)
                         .withTargetDirection(getTargetAngle())
                         .withHeadingPID(Alignment.akP, Alignment.akI, Alignment.akD));
         DogLog.log("Swerve/targetAngle", getTargetAngle().getDegrees());
