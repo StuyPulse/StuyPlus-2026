@@ -46,6 +46,7 @@ public abstract class Intake extends SubsystemBase {
 
     public abstract boolean limitSwitchHit();
 
+    /** Enum representing the different possible states of the intake. */
     public enum IntakeState {
 
         /** The intake is stowed and rollers are off. */

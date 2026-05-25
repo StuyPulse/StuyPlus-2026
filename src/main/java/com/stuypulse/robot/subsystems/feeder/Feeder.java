@@ -31,17 +31,30 @@ public abstract class Feeder extends SubsystemBase {
         return instance;
     }
 
+    /** Enum representing the different possible states of the feeder. */
     public enum FeederState {
+        /** Feeder is stopped. */
         IDLE(Volts.of(0.0)),
-        REVERSE(Settings.Feeder.REVERSE_VOLTAGE),
-        FORWARD(Settings.Feeder.FORWARD_VOLTAGE);
+        /** Motors run forward to feed to the shooter. */
+        FORWARD(Settings.Feeder.FORWARD_VOLTAGE),
+        /** Motors run backward to work with the intake to outtake fuel from the robot. */
+        REVERSE(Settings.Feeder.REVERSE_VOLTAGE);
 
+        /** The target voltage of the feeder motors. */
         private Voltage targetVoltage;
 
+        /**
+         * Constructs a FeederState with the given target voltage.
+         * @param targetVoltage the target voltage of the feeder motors in the corresponding state.
+         */
         private FeederState(Voltage targetVoltage) {
             this.targetVoltage = targetVoltage;
         }
 
+        /** 
+         * Gets the target voltage of the feeder motors in the corresponding state.
+         * @return the target voltage of the feeder motors
+         */
         public Voltage getTargetVoltage() {
             return this.targetVoltage;
         }

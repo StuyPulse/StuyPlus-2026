@@ -40,17 +40,30 @@ public abstract class Handoff extends SubsystemBase {
         return this.state;
     }
 
+    /** Enum representing the different possible states of the handoff. */
     public enum HandoffState {
+        /** Handoff is stopped. */
         IDLE(Settings.Handoff.IDLE_VOLTAGE),
+        /** The handoff runs forward. */
         FORWARD(Settings.Handoff.FORWARD_VOLTAGE),
+        /** The handoff runs backward. */
         REVERSE(Settings.Handoff.REVERSE_VOLTAGE);
 
+        /** The target voltage of the handoff motor. */
         private Voltage targetVoltage;
 
+        /**
+         * Constructs a HandoffState with the given target voltage.
+         * @param targetVoltage the target voltage of the handoff motor in the corresponding state.
+         */
         private HandoffState(Voltage targetVoltage) {
             this.targetVoltage = targetVoltage;
         }
 
+        /**
+         * Gets the target voltage of the handoff motor in the corresponding state.
+         * @return the target voltage of the handoff motor
+         */
         public Voltage getTargetVoltage() {
             return targetVoltage;
         }
