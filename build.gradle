@@ -12,7 +12,7 @@ allprojects {
 
 // Set this to the latest version of StuyLib.
 // You can check here: https://github.com/StuyPulse/StuyLib/releases.
-final String STUYLIB_VERSION = '2026.1.1-SNAPSHOT'
+final String STUYLIB_VERSION = '61cedd1b41'
 
 def ROBOT_MAIN_CLASS = "com.stuypulse.robot.Main"
 
