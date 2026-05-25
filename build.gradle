@@ -16,14 +16,8 @@ final String STUYLIB_VERSION = '2026.1.1-SNAPSHOT'
 
 def ROBOT_MAIN_CLASS = "com.stuypulse.robot.Main"
 
-java {
-    toolchain {
-        languageVersion = JavaLanguageVersion.of(17)
-    }
-
-    sourceCompatibility = JavaVersion.VERSION_17
-    targetCompatibility = JavaVersion.VERSION_17
-}
+sourceCompatibility = JavaVersion.VERSION_17
+targetCompatibility = JavaVersion.VERSION_17
 
 // Define my targets (RoboRIO) and artifacts (deployable files)
 // This is added by GradleRIO's backing project DeployUtils.
@@ -42,13 +36,22 @@ deploy {
                 // getTargetTypeClass is a shortcut to get the class type using a string
 
                 frcJava(getArtifactTypeClass('FRCJavaArtifact')) {
-                    // Enable VisualVM connection
-                    jvmArgs.add("-Dcom.sun.management.jmxremote=true")
-                    jvmArgs.add("-Dcom.sun.management.jmxremote.port=1198")
-                    jvmArgs.add("-Dcom.sun.management.jmxremote.local.only=false")
-                    jvmArgs.add("-Dcom.sun.management.jmxremote.ssl=false")
-                    jvmArgs.add("-Dcom.sun.management.jmxremote.authenticate=false")
-                    jvmArgs.add("-Djava.rmi.server.hostname=10.5.16.2") 
+                    // jvmArgs.add("-Dcom.sun.management.jmxremote=true")
+                    // jvmArgs.add("-Dcom.sun.management.jmxremote.port=1198")
+                    // jvmArgs.add("-Dcom.sun.management.jmxremote.local.only=false")
+                    // jvmArgs.add("-Dcom.sun.management.jmxremote.ssl=false")
+                    // jvmArgs.add("-Dcom.sun.management.jmxremote.authenticate=false")
+                    // jvmArgs.add("-Djava.rmi.server.hostname=10.6.94.2") // Replace TE.AM with team number
+                
+                    jvmArgs.add("-XX:+UnlockExperimentalVMOptions")
+                    jvmArgs.add("-XX:GCTimeRatio=5")
+                    jvmArgs.add("-XX:+UseSerialGC")
+                    jvmArgs.add("-XX:MaxGCPauseMillis=50")
+
+                    final MAX_JAVA_HEAP_SIZE_MB = 100;
+                    jvmArgs.add("-Xmx" + MAX_JAVA_HEAP_SIZE_MB + "M")
+                    jvmArgs.add("-Xms" + MAX_JAVA_HEAP_SIZE_MB + "M")
+                    jvmArgs.add("-XX:+AlwaysPreTouch")
                 }
 
                 // Static files artifact
@@ -72,7 +75,6 @@ def includeDesktopSupport = false
 // Defining my dependencies. In this case, WPILib (+ friends), and vendor libraries.
 // Also defines JUnit 5.
 dependencies {
-    annotationProcessor wpi.java.deps.wpilibAnnotations()
     implementation wpi.java.deps.wpilib()
     implementation wpi.java.vendor.java()
 
@@ -90,16 +92,9 @@ dependencies {
     nativeRelease wpi.java.vendor.jniRelease(wpi.platforms.desktop)
     simulationRelease wpi.sim.enableRelease()
 
-    testImplementation 'org.junit.jupiter:junit-jupiter:5.10.1'
-    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+    testImplementation 'junit:junit:4.13.1'
 
     implementation "com.github.StuyPulse:StuyLib:${STUYLIB_VERSION}";
-    compileOnly "com.github.javaparser:javaparser-core:3.24.0";
-}
-
-test {
-    useJUnitPlatform()
-    systemProperty 'junit.jupiter.extensions.autodetection.enabled', 'true'
 }
 
 // Simulation configuration (e.g. environment variables).
@@ -110,9 +105,10 @@ spotless {
     enforceCheck = false
     java {
         targetExclude(
-            "src/main/java/com/stuypulse/robot/commands/auton/*.java"
+            "src/main/java/com/stuypulse/robot/commands/autons/*.java",
+            "src/main/java/com/stuypulse/robot/commands/TurretHoodAlignToTarget.java"
         )
-        licenseHeader("""/************************* PROJECT RON *************************/
+        licenseHeader("""/************************ PROJECT TRIBECBOT *************************/
 /* Copyright (c) 2026 StuyPulse Robotics. All rights reserved. */
 /* Use of this source code is governed by an MIT-style license */
 /* that can be found in the repository LICENSE file.           */
@@ -120,19 +116,16 @@ spotless {
 """).updateYearWithLatest(false)
 
         importOrder(
-            'java',
-            'com.stuypulse.constants',
-            'com.stuypulse.subsystems',
-            'com.stuypulse.commands',
-            'com.stuypulse.commands.auton',
-            'com.stuypulse.util',
-            'com.stuypulse',
-            'edu.wpi',
-            'com.ctre',
-            'com.revrobotics',
-            'com.stuypulse.stuylib'
+            'com.stuypulse.stuylib', 
+            'com.stuypulse.constants', 
+            'com.stuypulse.subsystems', 
+            'com.stuypulse.commands', 
+            'com.stuypulse.commands.auton', 
+            'com.stuypulse.util', 
+            'com.stuypulse', 
+            'edu.wpi', 
+            'com.revrobotics'
         )
-        googleJavaFormat().aosp()
         removeUnusedImports()
     }
 }
@@ -154,34 +147,4 @@ wpi.java.configureTestTasks(test)
 // Configure string concat to always inline compile
 tasks.withType(JavaCompile) {
     options.compilerArgs.add '-XDstringConcat=inline'
-}
-
-tasks.javadoc {
-    options.addBooleanOption("linksource", true)
-    options.addBooleanOption('private', true)
-    options.addBooleanOption("-allow-script-in-comments", true)
-    options.addStringOption("doctitle", "StuyPlus 2026")
-    options.stylesheetFile = file("${projectDir}/assets/javadoc/betterjdocs.css")
-}
-
-tasks.register("runDogLogAST", JavaExec) {
-    classpath = sourceSets.main.runtimeClasspath + configurations.compileClasspath
-    mainClass = "tools.DogLogASTParser.Main"
-}
-
-tasks.register("runPathplannerSearch", JavaExec) {
-    classpath = sourceSets.main.runtimeClasspath
-    mainClass = "tools.PathplannerSearch.Main"
-
-    def rawArgs = (project.findProperty("args") ?: "").trim()
-    if (rawArgs) {
-        int lastSpace = rawArgs.lastIndexOf(' ')
-        if (lastSpace == -1) {
-            args rawArgs
-        } else {
-            def searchTerm = rawArgs.substring(0, lastSpace)
-            def secondParam = rawArgs.substring(lastSpace + 1)
-            args searchTerm, secondParam
-        }
-    } // makes it so that if ur search term has spaces, the 2nd param is only checked by the last space.
 }
