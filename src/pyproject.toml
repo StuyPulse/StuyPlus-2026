@@ -13,7 +13,7 @@ robotpy_version = "2026.2.2"
 components = [
     #"all",
     # "apriltag",
-    # "commands2",
+    "commands2",
     # "cscore",
     # "romi",
     # "sim",
