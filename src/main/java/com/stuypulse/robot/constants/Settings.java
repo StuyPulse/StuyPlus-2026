@@ -200,7 +200,7 @@ public interface Settings {
     public interface Handoff {
         Voltage IDLE_VOLTAGE = Volts.of(0.0);
 
-        Voltage FORWARD_VOLTAGE = Volts.of(10.0);
+        Voltage FORWARD_VOLTAGE = Volts.of(12.0);
 
         Voltage REVERSE_VOLTAGE = Volts.of(-10.0);
 
@@ -233,7 +233,7 @@ public interface Settings {
         Distance FLYWHEEL_RADIUS = Inches.of(3);
 
         // TODO: Test for manual shooting RPM
-        AngularVelocity MANUAL_HUB_RPM = RPM.of(3000);
+        DoubleSubscriber MANUAL_HUB_RPM = DogLog.tunable("shooter/manual hub tuning rpm", 3000.0);
 
         AngularVelocity MIN_SHOOTER_VELOCITY = RPM.of(1740);
 

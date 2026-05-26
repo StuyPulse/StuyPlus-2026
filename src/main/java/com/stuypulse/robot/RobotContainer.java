@@ -110,8 +110,7 @@ public class RobotContainer {
                         .andThen(new ShooterSetShoot())
                         .andThen(new HandoffSetForward())
                         .alongWith(new FeederSetForward(), new IntakeDigest()));
-        // Top Left Paddle
-        driver.a().onTrue(new IntakeSetIdle());
+        driver.y().onTrue(new IntakeSetIdle());
         driver.povUp().onTrue(new SwerveDriveResetRotation());
         driver
                 .rightBumper()
@@ -121,15 +120,14 @@ public class RobotContainer {
                                 .andThen(new ShooterSetFerry())
                                 .andThen(new HandoffSetForward())
                                 .alongWith(new FeederSetForward(), new IntakeDigest()));
-        // Bottom Right Paddle
-        // Manual shooting possibly from in front of the hub
+        // Manual shooting possibly from in front of the tower
         driver
-                .y()
-                .onTrue(
+                .a()
+                .whileTrue(
                         new SwerveDriveXMode()
                                 .andThen(new ShooterSetManual())
-                                .andThen(new HandoffSetForward())
-                                .alongWith(new FeederSetForward(), new IntakeDigest()));
+                                .andThen(new HandoffSetForward().repeatedly())
+                                .alongWith(new FeederSetForward().repeatedly(), new IntakeSetIntake()));
         // Top Right Paddle
         driver
                 .b()

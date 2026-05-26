@@ -148,20 +148,27 @@ public class LimelightVision extends SubsystemBase {
             }
             boolean notNull = false;
             boolean withinAngularVelocityTolerance = false;
-            boolean withinInvalidPositionTolerance = false;
+            boolean poseAtOrigin = false;
             // Adding to pose estimator
+            SmartDashboard.putBoolean("Vision/Pose Not Estimate Null", poseEstimate != null);
             if (poseEstimate != null && poseEstimate.tagCount > 0) {
                 notNull = true;
+                SmartDashboard.putNumber("Vision/Pose Estimate X", poseEstimate.pose.getX());
+                SmartDashboard.putNumber("Vision/Pose Estimate Y", poseEstimate.pose.getY());
+                SmartDashboard.putNumber("Vision/Pose Estimate Theta", poseEstimate.pose.getRotation().getDegrees());
+                SmartDashboard.putNumber("Vision/Tag Count", poseEstimate.tagCount);
                 if (poseEstimate.pose.equals(Settings.Vision.INVALID_POSITION)) {
-                    withinInvalidPositionTolerance = false;
+                    poseAtOrigin = true;
                 }
                 if (CommandSwerveDrivetrain.getInstance().getChassisSpeeds().omegaRadiansPerSecond < Settings.Vision.MAX_ANGULAR_VELOCITY_RAD_SEC) {
                     withinAngularVelocityTolerance = true;
                 }
-                Boolean isValidPose = notNull && withinAngularVelocityTolerance && withinInvalidPositionTolerance;
+                Boolean isValidPose = notNull && withinAngularVelocityTolerance && !poseAtOrigin;
+                SmartDashboard.putBoolean("Vision/Pose at Origin?", poseAtOrigin);
+                SmartDashboard.putBoolean("Vision/Within Angular Velocity", withinAngularVelocityTolerance);
                 DogLog.log("Vision/isValidPose", isValidPose);
                 DogLog.log("Vision/isWithinAngularVel", withinAngularVelocityTolerance);
-                DogLog.log("Vision/isWithinPos", withinInvalidPositionTolerance);
+                DogLog.log("Vision/poseAtOrigin", poseAtOrigin);
                 Pose2d robotPose = poseEstimate.pose;
                 double timestamp = poseEstimate.timestampSeconds;
                 if (megaTagMode == MegaTagMode.MEGATAG1 && isValidPose) {

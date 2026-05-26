@@ -71,7 +71,7 @@ public abstract class Shooter extends SubsystemBase {
         // SHOOT(() -> InterpolationCalculator.interpolateShotInfo().targetRPM()),
         // FERRY(() -> InterpolationCalculator.interpolateFerryingInfo().targetRPM()),
         /** Shooter wheels spin at a predetermined constant rate without interpolation. */
-        MANUAL_HUB(() -> Settings.Shooter.MANUAL_HUB_RPM.in(RPM));
+        MANUAL_HUB(Settings.Shooter.MANUAL_HUB_RPM);
 
         /** The supplier for the target RPM of the shooter in the corresponding state. */
         private DoubleSupplier RPMSupplier;
@@ -102,7 +102,7 @@ public abstract class Shooter extends SubsystemBase {
     public abstract void setVoltageOverride(Voltage voltage);
 
     public boolean shooterSpunUp() {
-        return getCurrentAngularVelocity().gte(getState().getTargetAngularVelocity());
+        return getCurrentAngularVelocity().gte(getState().getTargetAngularVelocity().minus(RPM.of(100)));
     }
 
     @Override
