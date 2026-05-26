@@ -86,10 +86,9 @@ loadScripts(document, 'script');</script>
 <dd><a href="TunerConstants.html" title="class in com.stuypulse.robot.subsystems.swerve">TunerConstants</a></dd>
 </dl>
 <hr>
-<div class="type-signature"><span class="modifiers">public static class </span><span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/swerve/TunerConstants.html#line-286">TunerConstants.TunerSwerveDrivetrain</a></span>
+<div class="type-signature"><span class="modifiers">public static class </span><span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/swerve/TunerConstants.html#line-216">TunerConstants.TunerSwerveDrivetrain</a></span>
 <span class="extends-implements">extends com.ctre.phoenix6.swerve.SwerveDrivetrain&lt;com.ctre.phoenix6.hardware.TalonFX,<wbr>com.ctre.phoenix6.hardware.TalonFX,<wbr>com.ctre.phoenix6.hardware.CANcoder&gt;</span></div>
-<div class="block">Swerve Drive class utilizing CTR Electronics' Phoenix 6 API with the selected
- device types.</div>
+<div class="block">Swerve Drive class utilizing CTR Electronics' Phoenix 6 API with the selected device types.</div>
 </section>
 <section class="summary">
 <ul class="summary-list">
@@ -165,15 +164,13 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="&lt;init&gt;(com.ctre.phoenix6.swerve.SwerveDrivetrainConstants,com.ctre.phoenix6.swerve.SwerveModuleConstants...)">
 <h3>TunerSwerveDrivetrain</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/swerve/TunerConstants.TunerSwerveDrivetrain.html#line-300">TunerSwerveDrivetrain</a></span><wbr><span class="parameters">(com.ctre.phoenix6.swerve.SwerveDrivetrainConstants&nbsp;drivetrainConstants,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/swerve/TunerConstants.TunerSwerveDrivetrain.html#line-227">TunerSwerveDrivetrain</a></span><wbr><span class="parameters">(com.ctre.phoenix6.swerve.SwerveDrivetrainConstants&nbsp;drivetrainConstants,
  com.ctre.phoenix6.swerve.SwerveModuleConstants&lt;?,<wbr>?,<wbr>?&gt;...&nbsp;modules)</span></div>
 <div class="block">Constructs a CTRE SwerveDrivetrain using the specified constants.
-
  <p>
- This constructs the underlying hardware devices, so users should not
- construct the devices
- themselves. If they need the devices, they can access them through getters in
- the classes.</div>
+ This constructs the underlying hardware devices, so users should not construct
+ the devices themselves. If they need the devices, they can access them through
+ getters in the classes.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>drivetrainConstants</code> - Drivetrain-wide constants for the swerve drive</dd>
@@ -184,23 +181,20 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="&lt;init&gt;(com.ctre.phoenix6.swerve.SwerveDrivetrainConstants,double,com.ctre.phoenix6.swerve.SwerveModuleConstants...)">
 <h3>TunerSwerveDrivetrain</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/swerve/TunerConstants.TunerSwerveDrivetrain.html#line-322">TunerSwerveDrivetrain</a></span><wbr><span class="parameters">(com.ctre.phoenix6.swerve.SwerveDrivetrainConstants&nbsp;drivetrainConstants,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/swerve/TunerConstants.TunerSwerveDrivetrain.html#line-250">TunerSwerveDrivetrain</a></span><wbr><span class="parameters">(com.ctre.phoenix6.swerve.SwerveDrivetrainConstants&nbsp;drivetrainConstants,
  double&nbsp;odometryUpdateFrequency,
  com.ctre.phoenix6.swerve.SwerveModuleConstants&lt;?,<wbr>?,<wbr>?&gt;...&nbsp;modules)</span></div>
 <div class="block">Constructs a CTRE SwerveDrivetrain using the specified constants.
-
  <p>
- This constructs the underlying hardware devices, so users should not
- construct the devices
- themselves. If they need the devices, they can access them through getters in
- the classes.</div>
+ This constructs the underlying hardware devices, so users should not construct
+ the devices themselves. If they need the devices, they can access them through
+ getters in the classes.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>drivetrainConstants</code> - Drivetrain-wide constants for the swerve drive</dd>
 <dd><code>odometryUpdateFrequency</code> - The frequency to run the odometry loop. If
-                                unspecified or set
-                                to 0 Hz, this is 250 Hz on CAN FD, and 100 Hz
-                                on CAN 2.0.</dd>
+                                unspecified or set to 0 Hz, this is 250 Hz on
+                                CAN FD, and 100 Hz on CAN 2.0.</dd>
 <dd><code>modules</code> - Constants for each specific module</dd>
 </dl>
 </section>
@@ -208,34 +202,28 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="&lt;init&gt;(com.ctre.phoenix6.swerve.SwerveDrivetrainConstants,double,edu.wpi.first.math.Matrix,edu.wpi.first.math.Matrix,com.ctre.phoenix6.swerve.SwerveModuleConstants...)">
 <h3>TunerSwerveDrivetrain</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/swerve/TunerConstants.TunerSwerveDrivetrain.html#line-360">TunerSwerveDrivetrain</a></span><wbr><span class="parameters">(com.ctre.phoenix6.swerve.SwerveDrivetrainConstants&nbsp;drivetrainConstants,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/swerve/TunerConstants.TunerSwerveDrivetrain.html#line-280">TunerSwerveDrivetrain</a></span><wbr><span class="parameters">(com.ctre.phoenix6.swerve.SwerveDrivetrainConstants&nbsp;drivetrainConstants,
  double&nbsp;odometryUpdateFrequency,
  edu.wpi.first.math.Matrix&lt;edu.wpi.first.math.numbers.N3,<wbr>edu.wpi.first.math.numbers.N1&gt;&nbsp;odometryStandardDeviation,
  edu.wpi.first.math.Matrix&lt;edu.wpi.first.math.numbers.N3,<wbr>edu.wpi.first.math.numbers.N1&gt;&nbsp;visionStandardDeviation,
  com.ctre.phoenix6.swerve.SwerveModuleConstants&lt;?,<wbr>?,<wbr>?&gt;...&nbsp;modules)</span></div>
 <div class="block">Constructs a CTRE SwerveDrivetrain using the specified constants.
-
  <p>
- This constructs the underlying hardware devices, so users should not
- construct the devices
- themselves. If they need the devices, they can access them through getters in
- the classes.</div>
+ This constructs the underlying hardware devices, so users should not construct
+ the devices themselves. If they need the devices, they can access them through
+ getters in the classes.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
-<dd><code>drivetrainConstants</code> - Drivetrain-wide constants for the swerve
-                                  drive</dd>
+<dd><code>drivetrainConstants</code> - Drivetrain-wide constants for the swerve drive</dd>
 <dd><code>odometryUpdateFrequency</code> - The frequency to run the odometry loop. If
-                                  unspecified or set
-                                  to 0 Hz, this is 250 Hz on CAN FD, and 100
-                                  Hz on CAN 2.0.</dd>
-<dd><code>odometryStandardDeviation</code> - The standard deviation for odometry
-                                  calculation in the form
-                                  [x, y, theta]áµ€, with units in meters and
-                                  radians</dd>
-<dd><code>visionStandardDeviation</code> - The standard deviation for vision
-                                  calculation in the form [x,
-                                  y, theta]áµ€, with units in meters and
-                                  radians</dd>
+                                  unspecified or set to 0 Hz, this is 250 Hz on
+                                  CAN FD, and 100 Hz on CAN 2.0.</dd>
+<dd><code>odometryStandardDeviation</code> - The standard deviation for odometry calculation
+                                  in the form [x, y, theta]ᵀ, with units in meters
+                                  and radians</dd>
+<dd><code>visionStandardDeviation</code> - The standard deviation for vision calculation
+                                  in the form [x, y, theta]ᵀ, with units in meters
+                                  and radians</dd>
 <dd><code>modules</code> - Constants for each specific module</dd>
 </dl>
 </section>
