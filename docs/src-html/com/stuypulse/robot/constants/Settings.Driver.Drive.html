@@ -213,7 +213,7 @@
 <span class="source-line-no">200</span><span id="line-200">    public interface Handoff {</span>
 <span class="source-line-no">201</span><span id="line-201">        Voltage IDLE_VOLTAGE = Volts.of(0.0);</span>
 <span class="source-line-no">202</span><span id="line-202"></span>
-<span class="source-line-no">203</span><span id="line-203">        Voltage FORWARD_VOLTAGE = Volts.of(10.0);</span>
+<span class="source-line-no">203</span><span id="line-203">        Voltage FORWARD_VOLTAGE = Volts.of(12.0);</span>
 <span class="source-line-no">204</span><span id="line-204"></span>
 <span class="source-line-no">205</span><span id="line-205">        Voltage REVERSE_VOLTAGE = Volts.of(-10.0);</span>
 <span class="source-line-no">206</span><span id="line-206"></span>
@@ -246,7 +246,7 @@
 <span class="source-line-no">233</span><span id="line-233">        Distance FLYWHEEL_RADIUS = Inches.of(3);</span>
 <span class="source-line-no">234</span><span id="line-234"></span>
 <span class="source-line-no">235</span><span id="line-235">        // TODO: Test for manual shooting RPM</span>
-<span class="source-line-no">236</span><span id="line-236">        AngularVelocity MANUAL_HUB_RPM = RPM.of(3000);</span>
+<span class="source-line-no">236</span><span id="line-236">        DoubleSubscriber MANUAL_HUB_RPM = DogLog.tunable("shooter/manual hub tuning rpm", 3000.0);</span>
 <span class="source-line-no">237</span><span id="line-237"></span>
 <span class="source-line-no">238</span><span id="line-238">        AngularVelocity MIN_SHOOTER_VELOCITY = RPM.of(1740);</span>
 <span class="source-line-no">239</span><span id="line-239"></span>
