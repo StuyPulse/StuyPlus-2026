@@ -101,7 +101,7 @@ public class ShooterImpl extends Shooter {
             return;
         }
 
-        // Motors.Shooter.SHOOTER_MOTOR_RIGHT.updateGainsConfig(shooterMotorRight, 0, Gains.Shooter.kP, Gains.Shooter.kI, Gains.Shooter.kD, Gains.Shooter.kS, Gains.Shooter.kV, Gains.Shooter.kA);
+        Motors.Shooter.SHOOTER_MOTOR_RIGHT.updateGainsConfig(shooterMotorRight, 0, Gains.Shooter.kP, Gains.Shooter.kI, Gains.Shooter.kD, Gains.Shooter.kS, Gains.Shooter.kV, Gains.Shooter.kA);
 
         final AngularVelocity targetAngularVelocity = getState().getTargetAngularVelocity();
         final VelocityTorqueCurrentFOC shooterControl = shooterController.withVelocity(targetAngularVelocity);

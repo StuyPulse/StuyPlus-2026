@@ -91,41 +91,23 @@ public interface Motors {
 	}
 
 	public interface Shooter {
-
-		// TalonFXConfig SHOOTER_MOTOR_CONFIG = new TalonFXConfig()
-		// .withPIDConstants(Gains.Shooter.kP, Gains.Shooter.kI, Gains.Shooter.kD, 0)
-		// .withStatorCurrentLimitAmps(80)
-		// .withRampRate(0.25)
-		// .withNeutralMode(NeutralModeValue.Coast)
-		// .withFFConstants(Gains.Shooter.kS, Gains.Shooter.kV, Gains.Shooter.kA, 0)
-		// .withInvertedValue(InvertedValue.CounterClockwise_Positive);
-		// TalonFXConfig SHOOTER_MOTOR_RIGHT = new TalonFXConfig()
-		// .withPIDConstants(Gains.Shooter.kP, Gains.Shooter.kI, Gains.Shooter.kD, 0)
-		// .withStatorCurrentLimitAmps(80)
-		// .withRampRate(0.25)
-		// .withNeutralMode(NeutralModeValue.Coast)
-		// .withFFConstants(Gains.Shooter.kS, Gains.Shooter.kV, Gains.Shooter.kA, 0)
-		// .withInvertedValue(InvertedValue.Clockwise_Positive);
 		TalonFXConfig SHOOTER_MOTOR_LEFT = new TalonFXConfig()
 				.withPIDConstants(Gains.Shooter.kP.get(), Gains.Shooter.kI.get(), Gains.Shooter.kD.get(), 0)
-				.withStatorCurrentLimitAmps(80)
-				// .withRampRate(0.25)
+				.withSupplyCurrentLimitAmps(80)
 				.withNeutralMode(NeutralModeValue.Coast)
 				.withFFConstants(Gains.Shooter.kS.get(), Gains.Shooter.kV.get(), Gains.Shooter.kA.get(), 0)
 				.withInvertedValue(InvertedValue.CounterClockwise_Positive);
 
 		TalonFXConfig SHOOTER_MOTOR_CENTER = new TalonFXConfig()
 				.withPIDConstants(Gains.Shooter.kP.get(), Gains.Shooter.kI.get(), Gains.Shooter.kD.get(), 0)
-				.withStatorCurrentLimitAmps(80)
-				// .withRampRate(0.25)
+				.withSupplyCurrentLimitAmps(80)
 				.withNeutralMode(NeutralModeValue.Coast)
 				.withFFConstants(Gains.Shooter.kS.get(), Gains.Shooter.kV.get(), Gains.Shooter.kA.get(), 0)
 				.withInvertedValue(InvertedValue.CounterClockwise_Positive);
 
 		TalonFXConfig SHOOTER_MOTOR_RIGHT = new TalonFXConfig()
 				.withPIDConstants(Gains.Shooter.kP.get(), Gains.Shooter.kI.get(), Gains.Shooter.kD.get(), 0)
-				.withStatorCurrentLimitAmps(80)
-				// .withRampRate(0.25)
+				.withSupplyCurrentLimitAmps(80)
 				.withNeutralMode(NeutralModeValue.Coast)
 				.withFFConstants(Gains.Shooter.kS.get(), Gains.Shooter.kV.get(), Gains.Shooter.kA.get(), 0)
 				.withInvertedValue(InvertedValue.Clockwise_Positive);

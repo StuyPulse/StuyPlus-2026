@@ -1288,7 +1288,7 @@
             "height": 150.0,
             "type": "Text Display",
             "properties": {
-              "topic": "/Robot/Shooter/Target RPM",
+              "topic": "/Tunable/Shooter/Manual Shot Tuning RPM",
               "period": 0.06,
               "data_type": "double",
               "show_submit_button": false

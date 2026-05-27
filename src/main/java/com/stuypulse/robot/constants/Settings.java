@@ -233,7 +233,7 @@ public interface Settings {
         Distance FLYWHEEL_RADIUS = Inches.of(3);
 
         // TODO: Test for manual shooting RPM
-        DoubleSubscriber MANUAL_HUB_RPM = DogLog.tunable("shooter/manual hub tuning rpm", 3000.0);
+        DoubleSubscriber MANUAL_HUB_RPM = DogLog.tunable("Shooter/Manual Shot Tuning RPM", 3000.0);
 
         AngularVelocity MIN_SHOOTER_VELOCITY = RPM.of(1740);
 

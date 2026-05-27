@@ -22,6 +22,7 @@ import dev.doglog.DogLogOptions;
 import edu.wpi.first.wpilibj.DataLogManager;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
+import edu.wpi.first.wpilibj.PowerDistribution;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -72,6 +73,7 @@ public class Robot extends TimedRobot {
             .withNtTunables(true)
             .withLogExtras(true)
             .withNtPublish(true));
+        DogLog.setPdh(new PowerDistribution());
     }
 
     /**
