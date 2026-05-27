@@ -4,20 +4,10 @@
 #include "HandoffSim.cpp"
 #include <frc/RobotBase.h>
 
-static Handoff* initInstance()
-{
-    if (frc::RobotBase::IsReal())
-    {
-        return new HandoffImpl();
-    }
-    else
-    {
-        return new HandoffSim();
-    }
-}
-
-Handoff* instance = initInstance();
 Handoff& Handoff::getInstance() {
+    static Handoff* instance = frc::RobotBase::IsReal()
+        ? static_cast<Handoff*>(new HandoffImpl())
+        : static_cast<Handoff*>(new HandoffSim());
     return *instance;
 }
 

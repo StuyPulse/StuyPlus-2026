@@ -5,9 +5,9 @@
 #include "FeederState.cpp"
 
 Feeder& Feeder::getInstance() {
-    static std::unique_ptr<Feeder> instance = frc::RobotBase::IsReal()
-        ? std::unique_ptr<Feeder>(new FeederImpl())
-        : std::unique_ptr<Feeder>(new FeederSim());
+    static Feeder* instance = frc::RobotBase::IsReal()
+        ? static_cast<Feeder*>(new FeederImpl())
+        : static_cast<Feeder*>(new FeederSim());
     return *instance;
 }
 

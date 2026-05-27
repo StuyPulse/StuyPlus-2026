@@ -1,17 +1,8 @@
-#include "subsystems/handoff/Handoff.hpp"
+#include "subsystems/handoff/HandoffImpl.hpp"
 #include <ctre/phoenix6/TalonFX.hpp>
 #include "constants/Ports.hpp"
 #include "constants/Settings.hpp"
 #include <telemetrykit/TelemetryKit.h>
-
-class HandoffImpl : public Handoff
-{
-public:
-    void Periodic() override {}
-
-private:
-    ctre::phoenix6::hardware::TalonFX handoffMotor{Ports::Handoff::HANDOFF_MOTOR, Settings::CANBus};
-};
 
 void HandoffImpl::Periodic() {
     // Control
