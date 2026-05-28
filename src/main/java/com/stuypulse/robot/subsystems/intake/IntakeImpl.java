@@ -162,11 +162,22 @@ public class IntakeImpl extends Intake {
     }
 
     @Override
-    protected void stopMotors() {
-        pivotMotor.stopMotor();
-        // until rollers are fixed
-        rollerMotorLeft.stopMotor();
-        rollerMotorRight.stopMotor();
+    protected void stopMotors(IntakeMotorType motorType) {
+        switch (motorType) {
+            case PIVOT:
+                pivotMotor.stopMotor();
+                break;
+            case ROLLER:
+                // until rollers are fixed
+                rollerMotorLeft.stopMotor();
+                rollerMotorRight.stopMotor();
+                break;
+            case BOTH:
+                pivotMotor.stopMotor();
+                rollerMotorLeft.stopMotor();
+                rollerMotorRight.stopMotor();
+                break;
+        }
         // re-add the follow control after stopMotor removes it
         rollerMotorRight.setControl(followerController);
     }
@@ -186,7 +197,7 @@ public class IntakeImpl extends Intake {
     @Override
     public void periodic() {
         if (!EnabledSubsystems.INTAKE.get()) {
-            stopMotors();
+            stopMotors(IntakeMotorType.BOTH);
             return;
         }
         if (pivotVoltageOverride.isPresent()) {
@@ -208,8 +219,17 @@ public class IntakeImpl extends Intake {
         final ControlRequest pivotControl = getPivotControl(currentState);
         final DutyCycleOut rollerControl = rollerController.withOutput(currentState.getTargetDutyCycle());
         // Apply
-        pivotMotor.setControl(pivotControl);
-        rollerMotorLeft.setControl(rollerControl);
+        if (EnabledSubsystems.INTAKE_PIVOT.get()) {
+            pivotMotor.setControl(pivotControl);
+        } else {
+            stopMotors(IntakeMotorType.PIVOT);
+        }
+
+        if (EnabledSubsystems.INTAKE_ROLLERS.get()) {
+            rollerMotorLeft.setControl(rollerControl);
+        } else {
+            stopMotors(IntakeMotorType.ROLLER);
+        }
         // Logging
         this.pivotSignals.logAll();
         // until rollers are fixed

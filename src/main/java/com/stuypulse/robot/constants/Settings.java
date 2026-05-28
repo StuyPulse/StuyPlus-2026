@@ -27,7 +27,6 @@ import com.ctre.phoenix6.CANBus;
 import dev.doglog.DogLog;
 
 import com.pathplanner.lib.path.PathConstraints;
-import com.stuypulse.stuylib.network.SmartNumber;
 
 /*-
  * File containing tunable settings for every subsystem on the robot.
@@ -48,7 +47,9 @@ public interface Settings {
 
         BooleanSubscriber FEEDER = DogLog.tunable("Enabled Subsystems/Feeder", false);
 
-        BooleanSubscriber INTAKE = DogLog.tunable("Enabled Subsystems/Intake", true);
+        BooleanSubscriber INTAKE = DogLog.tunable("Enabled Subsystems/Intake/Intake", true);
+        BooleanSubscriber INTAKE_ROLLERS = DogLog.tunable("Enabled Subsystems/Intake/Rollers", true);
+        BooleanSubscriber INTAKE_PIVOT = DogLog.tunable("Enabled Subsystems/Intake/Pivot", true);
 
         BooleanSubscriber LED = DogLog.tunable("Enabled Subsystems/LED", false);
 

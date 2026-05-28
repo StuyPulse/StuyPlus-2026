@@ -111,10 +111,24 @@ public class IntakeSim extends Intake {
     }
 
     @Override
-    protected void stopMotors() {
-        pivotMotor.stopMotor();
-        rollerMotorLeft.stopMotor();
-        rollerMotorRight.stopMotor();
+    protected void stopMotors(IntakeMotorType motorType) {
+        switch (motorType) {
+            case PIVOT:
+                pivotMotor.stopMotor();
+                break;
+            case ROLLER:
+                rollerMotorLeft.stopMotor();
+                rollerMotorRight.stopMotor();
+                // re-add the follow control after stopMotor removes it
+                rollerMotorRight.setControl(followerController);
+                break;
+            case BOTH:
+                pivotMotor.stopMotor();
+                rollerMotorLeft.stopMotor();
+                rollerMotorRight.stopMotor();
+                break;
+            }
+
         // re-add the follow control after stopMotor removes it
         rollerMotorRight.setControl(followerController);
     }
@@ -127,7 +141,7 @@ public class IntakeSim extends Intake {
     @Override
     public void periodic() {
         if (!Settings.EnabledSubsystems.INTAKE.get()) {
-            stopMotors();
+            stopMotors(IntakeMotorType.BOTH);
             return;
         }
         if (pivotVoltageOverride.isPresent()) {
