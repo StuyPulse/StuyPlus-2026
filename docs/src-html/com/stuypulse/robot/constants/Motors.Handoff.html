@@ -106,248 +106,252 @@
 <span class="source-line-no">093</span><span id="line-93">        public interface Shooter {</span>
 <span class="source-line-no">094</span><span id="line-94">                TalonFXConfig SHOOTER_MOTOR_LEFT = new TalonFXConfig()</span>
 <span class="source-line-no">095</span><span id="line-95">                                .withPIDConstants(Gains.Shooter.kP.get(), Gains.Shooter.kI.get(), Gains.Shooter.kD.get(), 0)</span>
-<span class="source-line-no">096</span><span id="line-96">                                .withSupplyCurrentLimitAmps(80)</span>
-<span class="source-line-no">097</span><span id="line-97">                                .withNeutralMode(NeutralModeValue.Coast)</span>
-<span class="source-line-no">098</span><span id="line-98">                                .withFFConstants(Gains.Shooter.kS.get(), Gains.Shooter.kV.get(), Gains.Shooter.kA.get(), 0)</span>
-<span class="source-line-no">099</span><span id="line-99">                                .withInvertedValue(InvertedValue.CounterClockwise_Positive);</span>
-<span class="source-line-no">100</span><span id="line-100"></span>
-<span class="source-line-no">101</span><span id="line-101">                TalonFXConfig SHOOTER_MOTOR_CENTER = new TalonFXConfig()</span>
-<span class="source-line-no">102</span><span id="line-102">                                .withPIDConstants(Gains.Shooter.kP.get(), Gains.Shooter.kI.get(), Gains.Shooter.kD.get(), 0)</span>
-<span class="source-line-no">103</span><span id="line-103">                                .withSupplyCurrentLimitAmps(80)</span>
-<span class="source-line-no">104</span><span id="line-104">                                .withNeutralMode(NeutralModeValue.Coast)</span>
-<span class="source-line-no">105</span><span id="line-105">                                .withFFConstants(Gains.Shooter.kS.get(), Gains.Shooter.kV.get(), Gains.Shooter.kA.get(), 0)</span>
-<span class="source-line-no">106</span><span id="line-106">                                .withInvertedValue(InvertedValue.CounterClockwise_Positive);</span>
-<span class="source-line-no">107</span><span id="line-107"></span>
-<span class="source-line-no">108</span><span id="line-108">                TalonFXConfig SHOOTER_MOTOR_RIGHT = new TalonFXConfig()</span>
-<span class="source-line-no">109</span><span id="line-109">                                .withPIDConstants(Gains.Shooter.kP.get(), Gains.Shooter.kI.get(), Gains.Shooter.kD.get(), 0)</span>
-<span class="source-line-no">110</span><span id="line-110">                                .withSupplyCurrentLimitAmps(80)</span>
-<span class="source-line-no">111</span><span id="line-111">                                .withNeutralMode(NeutralModeValue.Coast)</span>
-<span class="source-line-no">112</span><span id="line-112">                                .withFFConstants(Gains.Shooter.kS.get(), Gains.Shooter.kV.get(), Gains.Shooter.kA.get(), 0)</span>
-<span class="source-line-no">113</span><span id="line-113">                                .withInvertedValue(InvertedValue.Clockwise_Positive);</span>
-<span class="source-line-no">114</span><span id="line-114">        }</span>
-<span class="source-line-no">115</span><span id="line-115"></span>
-<span class="source-line-no">116</span><span id="line-116">        public interface Handoff {</span>
-<span class="source-line-no">117</span><span id="line-117"></span>
-<span class="source-line-no">118</span><span id="line-118">                TalonFXConfig HANDOFF_MOTOR_CONFIG = new TalonFXConfig()</span>
-<span class="source-line-no">119</span><span id="line-119">                                .withStatorCurrentLimitAmps(80)</span>
-<span class="source-line-no">120</span><span id="line-120">                                // .withRampRate(0.25)</span>
-<span class="source-line-no">121</span><span id="line-121">                                .withNeutralMode(NeutralModeValue.Coast)</span>
-<span class="source-line-no">122</span><span id="line-122">                                .withInvertedValue(InvertedValue.CounterClockwise_Positive)</span>
-<span class="source-line-no">123</span><span id="line-123">                                .withSensorToMechanismRatio(Settings.Handoff.GEAR_RATIO);</span>
-<span class="source-line-no">124</span><span id="line-124">        }</span>
-<span class="source-line-no">125</span><span id="line-125"></span>
-<span class="source-line-no">126</span><span id="line-126">        public static class TalonFXConfig {</span>
-<span class="source-line-no">127</span><span id="line-127"></span>
-<span class="source-line-no">128</span><span id="line-128">                private final TalonFXConfiguration configuration = new TalonFXConfiguration();</span>
-<span class="source-line-no">129</span><span id="line-129"></span>
-<span class="source-line-no">130</span><span id="line-130">                private final Slot0Configs slot0Configs = new Slot0Configs();</span>
-<span class="source-line-no">131</span><span id="line-131"></span>
-<span class="source-line-no">132</span><span id="line-132">                private final Slot1Configs slot1Configs = new Slot1Configs();</span>
-<span class="source-line-no">133</span><span id="line-133"></span>
-<span class="source-line-no">134</span><span id="line-134">                private final Slot2Configs slot2Configs = new Slot2Configs();</span>
-<span class="source-line-no">135</span><span id="line-135"></span>
-<span class="source-line-no">136</span><span id="line-136">                private final MotorOutputConfigs motorOutputConfigs = new MotorOutputConfigs();</span>
-<span class="source-line-no">137</span><span id="line-137"></span>
-<span class="source-line-no">138</span><span id="line-138">                private final ClosedLoopRampsConfigs closedLoopRampsConfigs = new ClosedLoopRampsConfigs();</span>
-<span class="source-line-no">139</span><span id="line-139"></span>
-<span class="source-line-no">140</span><span id="line-140">                private final OpenLoopRampsConfigs openLoopRampsConfigs = new OpenLoopRampsConfigs();</span>
-<span class="source-line-no">141</span><span id="line-141"></span>
-<span class="source-line-no">142</span><span id="line-142">                private final CurrentLimitsConfigs currentLimitsConfigs = new CurrentLimitsConfigs();</span>
-<span class="source-line-no">143</span><span id="line-143"></span>
-<span class="source-line-no">144</span><span id="line-144">                private final FeedbackConfigs feedbackConfigs = new FeedbackConfigs();</span>
-<span class="source-line-no">145</span><span id="line-145"></span>
-<span class="source-line-no">146</span><span id="line-146">                private final MotionMagicConfigs motionMagicConfigs = new MotionMagicConfigs();</span>
-<span class="source-line-no">147</span><span id="line-147"></span>
-<span class="source-line-no">148</span><span id="line-148">                private final double[] lastKP = new double[3];</span>
-<span class="source-line-no">149</span><span id="line-149">                private final double[] lastKI = new double[3];</span>
-<span class="source-line-no">150</span><span id="line-150">                private final double[] lastKD = new double[3];</span>
-<span class="source-line-no">151</span><span id="line-151">                private final double[] lastKS = new double[3];</span>
-<span class="source-line-no">152</span><span id="line-152">                private final double[] lastKV = new double[3];</span>
-<span class="source-line-no">153</span><span id="line-153">                private final double[] lastKA = new double[3];</span>
-<span class="source-line-no">154</span><span id="line-154"></span>
-<span class="source-line-no">155</span><span id="line-155">                public void updateGainsConfig(</span>
-<span class="source-line-no">156</span><span id="line-156">                                TalonFX motor,</span>
-<span class="source-line-no">157</span><span id="line-157">                                int slot,</span>
-<span class="source-line-no">158</span><span id="line-158">                                DoubleSubscriber kP,</span>
-<span class="source-line-no">159</span><span id="line-159">                                DoubleSubscriber kI,</span>
-<span class="source-line-no">160</span><span id="line-160">                                DoubleSubscriber kD,</span>
-<span class="source-line-no">161</span><span id="line-161">                                DoubleSubscriber kS,</span>
-<span class="source-line-no">162</span><span id="line-162">                                DoubleSubscriber kV,</span>
-<span class="source-line-no">163</span><span id="line-163">                                DoubleSubscriber kA) {</span>
-<span class="source-line-no">164</span><span id="line-164">                        if (slot != 0 &amp;&amp; slot != 1 &amp;&amp; slot != 2) {</span>
-<span class="source-line-no">165</span><span id="line-165">                                return;</span>
-<span class="source-line-no">166</span><span id="line-166">                        }</span>
-<span class="source-line-no">167</span><span id="line-167"></span>
-<span class="source-line-no">168</span><span id="line-168">                        final double currentKP = kP.get();</span>
-<span class="source-line-no">169</span><span id="line-169">                        final double currentKI = kI.get();</span>
-<span class="source-line-no">170</span><span id="line-170">                        final double currentKD = kD.get();</span>
-<span class="source-line-no">171</span><span id="line-171">                        final double currentKS = kS.get();</span>
-<span class="source-line-no">172</span><span id="line-172">                        final double currentKV = kV.get();</span>
-<span class="source-line-no">173</span><span id="line-173">                        final double currentKA = kA.get();</span>
-<span class="source-line-no">174</span><span id="line-174"></span>
-<span class="source-line-no">175</span><span id="line-175">                        final boolean changed = currentKP != lastKP[slot]</span>
-<span class="source-line-no">176</span><span id="line-176">                                        || currentKI != lastKI[slot]</span>
-<span class="source-line-no">177</span><span id="line-177">                                        || currentKD != lastKD[slot]</span>
-<span class="source-line-no">178</span><span id="line-178">                                        || currentKS != lastKS[slot]</span>
-<span class="source-line-no">179</span><span id="line-179">                                        || currentKV != lastKV[slot]</span>
-<span class="source-line-no">180</span><span id="line-180">                                        || currentKA != lastKA[slot];</span>
-<span class="source-line-no">181</span><span id="line-181"></span>
-<span class="source-line-no">182</span><span id="line-182">                        if (!changed) {</span>
-<span class="source-line-no">183</span><span id="line-183">                                return;</span>
-<span class="source-line-no">184</span><span id="line-184">                        }</span>
+<span class="source-line-no">096</span><span id="line-96">                                .withSupplyCurrentLimitAmps(200)</span>
+<span class="source-line-no">097</span><span id="line-97">                                .withStatorCurrentLimitAmps(200)</span>
+<span class="source-line-no">098</span><span id="line-98">                                .withNeutralMode(NeutralModeValue.Coast)</span>
+<span class="source-line-no">099</span><span id="line-99">                                .withFFConstants(Gains.Shooter.kS.get(), Gains.Shooter.kV.get(), Gains.Shooter.kA.get(), 0)</span>
+<span class="source-line-no">100</span><span id="line-100">                                .withInvertedValue(InvertedValue.CounterClockwise_Positive);</span>
+<span class="source-line-no">101</span><span id="line-101"></span>
+<span class="source-line-no">102</span><span id="line-102">                TalonFXConfig SHOOTER_MOTOR_CENTER = new TalonFXConfig()</span>
+<span class="source-line-no">103</span><span id="line-103">                                .withPIDConstants(Gains.Shooter.kP.get(), Gains.Shooter.kI.get(), Gains.Shooter.kD.get(), 0)</span>
+<span class="source-line-no">104</span><span id="line-104">                                .withSupplyCurrentLimitAmps(200)</span>
+<span class="source-line-no">105</span><span id="line-105">                                .withStatorCurrentLimitAmps(200)</span>
+<span class="source-line-no">106</span><span id="line-106">                                .withNeutralMode(NeutralModeValue.Coast)</span>
+<span class="source-line-no">107</span><span id="line-107">                                .withFFConstants(Gains.Shooter.kS.get(), Gains.Shooter.kV.get(), Gains.Shooter.kA.get(), 0)</span>
+<span class="source-line-no">108</span><span id="line-108">                                .withInvertedValue(InvertedValue.CounterClockwise_Positive);</span>
+<span class="source-line-no">109</span><span id="line-109"></span>
+<span class="source-line-no">110</span><span id="line-110">                TalonFXConfig SHOOTER_MOTOR_RIGHT = new TalonFXConfig()</span>
+<span class="source-line-no">111</span><span id="line-111">                                .withPIDConstants(Gains.Shooter.kP.get(), Gains.Shooter.kI.get(), Gains.Shooter.kD.get(), 0)</span>
+<span class="source-line-no">112</span><span id="line-112">                                .withSupplyCurrentLimitAmps(200)</span>
+<span class="source-line-no">113</span><span id="line-113">                                .withStatorCurrentLimitAmps(200)</span>
+<span class="source-line-no">114</span><span id="line-114">                                .withNeutralMode(NeutralModeValue.Coast)</span>
+<span class="source-line-no">115</span><span id="line-115">                                .withFFConstants(Gains.Shooter.kS.get(), Gains.Shooter.kV.get(), Gains.Shooter.kA.get(), 0)</span>
+<span class="source-line-no">116</span><span id="line-116">                                .withInvertedValue(InvertedValue.Clockwise_Positive);</span>
+<span class="source-line-no">117</span><span id="line-117">        }</span>
+<span class="source-line-no">118</span><span id="line-118"></span>
+<span class="source-line-no">119</span><span id="line-119">        public interface Handoff {</span>
+<span class="source-line-no">120</span><span id="line-120"></span>
+<span class="source-line-no">121</span><span id="line-121">                TalonFXConfig HANDOFF_MOTOR_CONFIG = new TalonFXConfig()</span>
+<span class="source-line-no">122</span><span id="line-122">                                .withStatorCurrentLimitAmps(80)</span>
+<span class="source-line-no">123</span><span id="line-123">                                // .withRampRate(0.25)</span>
+<span class="source-line-no">124</span><span id="line-124">                                .withNeutralMode(NeutralModeValue.Coast)</span>
+<span class="source-line-no">125</span><span id="line-125">                                .withInvertedValue(InvertedValue.CounterClockwise_Positive)</span>
+<span class="source-line-no">126</span><span id="line-126">                                .withSensorToMechanismRatio(Settings.Handoff.GEAR_RATIO);</span>
+<span class="source-line-no">127</span><span id="line-127">        }</span>
+<span class="source-line-no">128</span><span id="line-128"></span>
+<span class="source-line-no">129</span><span id="line-129">        public static class TalonFXConfig {</span>
+<span class="source-line-no">130</span><span id="line-130"></span>
+<span class="source-line-no">131</span><span id="line-131">                private final TalonFXConfiguration configuration = new TalonFXConfiguration();</span>
+<span class="source-line-no">132</span><span id="line-132"></span>
+<span class="source-line-no">133</span><span id="line-133">                private final Slot0Configs slot0Configs = new Slot0Configs();</span>
+<span class="source-line-no">134</span><span id="line-134"></span>
+<span class="source-line-no">135</span><span id="line-135">                private final Slot1Configs slot1Configs = new Slot1Configs();</span>
+<span class="source-line-no">136</span><span id="line-136"></span>
+<span class="source-line-no">137</span><span id="line-137">                private final Slot2Configs slot2Configs = new Slot2Configs();</span>
+<span class="source-line-no">138</span><span id="line-138"></span>
+<span class="source-line-no">139</span><span id="line-139">                private final MotorOutputConfigs motorOutputConfigs = new MotorOutputConfigs();</span>
+<span class="source-line-no">140</span><span id="line-140"></span>
+<span class="source-line-no">141</span><span id="line-141">                private final ClosedLoopRampsConfigs closedLoopRampsConfigs = new ClosedLoopRampsConfigs();</span>
+<span class="source-line-no">142</span><span id="line-142"></span>
+<span class="source-line-no">143</span><span id="line-143">                private final OpenLoopRampsConfigs openLoopRampsConfigs = new OpenLoopRampsConfigs();</span>
+<span class="source-line-no">144</span><span id="line-144"></span>
+<span class="source-line-no">145</span><span id="line-145">                private final CurrentLimitsConfigs currentLimitsConfigs = new CurrentLimitsConfigs();</span>
+<span class="source-line-no">146</span><span id="line-146"></span>
+<span class="source-line-no">147</span><span id="line-147">                private final FeedbackConfigs feedbackConfigs = new FeedbackConfigs();</span>
+<span class="source-line-no">148</span><span id="line-148"></span>
+<span class="source-line-no">149</span><span id="line-149">                private final MotionMagicConfigs motionMagicConfigs = new MotionMagicConfigs();</span>
+<span class="source-line-no">150</span><span id="line-150"></span>
+<span class="source-line-no">151</span><span id="line-151">                private final double[] lastKP = new double[3];</span>
+<span class="source-line-no">152</span><span id="line-152">                private final double[] lastKI = new double[3];</span>
+<span class="source-line-no">153</span><span id="line-153">                private final double[] lastKD = new double[3];</span>
+<span class="source-line-no">154</span><span id="line-154">                private final double[] lastKS = new double[3];</span>
+<span class="source-line-no">155</span><span id="line-155">                private final double[] lastKV = new double[3];</span>
+<span class="source-line-no">156</span><span id="line-156">                private final double[] lastKA = new double[3];</span>
+<span class="source-line-no">157</span><span id="line-157"></span>
+<span class="source-line-no">158</span><span id="line-158">                /* </span>
+<span class="source-line-no">159</span><span id="line-159">                public void updateGainsConfig(</span>
+<span class="source-line-no">160</span><span id="line-160">                                TalonFX motor,</span>
+<span class="source-line-no">161</span><span id="line-161">                                int slot,</span>
+<span class="source-line-no">162</span><span id="line-162">                                DoubleSubscriber kP,</span>
+<span class="source-line-no">163</span><span id="line-163">                                DoubleSubscriber kI,</span>
+<span class="source-line-no">164</span><span id="line-164">                                DoubleSubscriber kD,</span>
+<span class="source-line-no">165</span><span id="line-165">                                DoubleSubscriber kS,</span>
+<span class="source-line-no">166</span><span id="line-166">                                DoubleSubscriber kV,</span>
+<span class="source-line-no">167</span><span id="line-167">                                DoubleSubscriber kA) {</span>
+<span class="source-line-no">168</span><span id="line-168">                        if (slot != 0 &amp;&amp; slot != 1 &amp;&amp; slot != 2) {</span>
+<span class="source-line-no">169</span><span id="line-169">                                return;</span>
+<span class="source-line-no">170</span><span id="line-170">                        }</span>
+<span class="source-line-no">171</span><span id="line-171"></span>
+<span class="source-line-no">172</span><span id="line-172">                        final double currentKP = kP.get();</span>
+<span class="source-line-no">173</span><span id="line-173">                        final double currentKI = kI.get();</span>
+<span class="source-line-no">174</span><span id="line-174">                        final double currentKD = kD.get();</span>
+<span class="source-line-no">175</span><span id="line-175">                        final double currentKS = kS.get();</span>
+<span class="source-line-no">176</span><span id="line-176">                        final double currentKV = kV.get();</span>
+<span class="source-line-no">177</span><span id="line-177">                        final double currentKA = kA.get();</span>
+<span class="source-line-no">178</span><span id="line-178"></span>
+<span class="source-line-no">179</span><span id="line-179">                        final boolean changed = currentKP != lastKP[slot]</span>
+<span class="source-line-no">180</span><span id="line-180">                                        || currentKI != lastKI[slot]</span>
+<span class="source-line-no">181</span><span id="line-181">                                        || currentKD != lastKD[slot]</span>
+<span class="source-line-no">182</span><span id="line-182">                                        || currentKS != lastKS[slot]</span>
+<span class="source-line-no">183</span><span id="line-183">                                        || currentKV != lastKV[slot]</span>
+<span class="source-line-no">184</span><span id="line-184">                                        || currentKA != lastKA[slot];</span>
 <span class="source-line-no">185</span><span id="line-185"></span>
-<span class="source-line-no">186</span><span id="line-186">                        final SlotConfigs gainConfig = new SlotConfigs()</span>
-<span class="source-line-no">187</span><span id="line-187">                                        .withKP(currentKP)</span>
-<span class="source-line-no">188</span><span id="line-188">                                        .withKI(currentKI)</span>
-<span class="source-line-no">189</span><span id="line-189">                                        .withKD(currentKD)</span>
-<span class="source-line-no">190</span><span id="line-190">                                        .withKS(currentKS)</span>
-<span class="source-line-no">191</span><span id="line-191">                                        .withKV(currentKV)</span>
-<span class="source-line-no">192</span><span id="line-192">                                        .withKA(currentKA);</span>
-<span class="source-line-no">193</span><span id="line-193"></span>
-<span class="source-line-no">194</span><span id="line-194">                        gainConfig.SlotNumber = slot;</span>
-<span class="source-line-no">195</span><span id="line-195"></span>
-<span class="source-line-no">196</span><span id="line-196">                        motor.getConfigurator().apply(gainConfig);</span>
+<span class="source-line-no">186</span><span id="line-186">                        if (!changed) {</span>
+<span class="source-line-no">187</span><span id="line-187">                                return;</span>
+<span class="source-line-no">188</span><span id="line-188">                        }</span>
+<span class="source-line-no">189</span><span id="line-189"></span>
+<span class="source-line-no">190</span><span id="line-190">                        final SlotConfigs gainConfig = new SlotConfigs()</span>
+<span class="source-line-no">191</span><span id="line-191">                                        .withKP(currentKP)</span>
+<span class="source-line-no">192</span><span id="line-192">                                        .withKI(currentKI)</span>
+<span class="source-line-no">193</span><span id="line-193">                                        .withKD(currentKD)</span>
+<span class="source-line-no">194</span><span id="line-194">                                        .withKS(currentKS)</span>
+<span class="source-line-no">195</span><span id="line-195">                                        .withKV(currentKV)</span>
+<span class="source-line-no">196</span><span id="line-196">                                        .withKA(currentKA);</span>
 <span class="source-line-no">197</span><span id="line-197"></span>
-<span class="source-line-no">198</span><span id="line-198">                        lastKP[slot] = currentKP;</span>
-<span class="source-line-no">199</span><span id="line-199">                        lastKI[slot] = currentKI;</span>
-<span class="source-line-no">200</span><span id="line-200">                        lastKD[slot] = currentKD;</span>
-<span class="source-line-no">201</span><span id="line-201">                        lastKS[slot] = currentKS;</span>
-<span class="source-line-no">202</span><span id="line-202">                        lastKV[slot] = currentKV;</span>
-<span class="source-line-no">203</span><span id="line-203">                        lastKA[slot] = currentKA;</span>
-<span class="source-line-no">204</span><span id="line-204"></span>
-<span class="source-line-no">205</span><span id="line-205">                        switch (slot) {</span>
-<span class="source-line-no">206</span><span id="line-206">                                case 0:</span>
-<span class="source-line-no">207</span><span id="line-207">                                        motor.getConfigurator().refresh(this.getConfiguration().Slot0);</span>
-<span class="source-line-no">208</span><span id="line-208">                                        break;</span>
-<span class="source-line-no">209</span><span id="line-209">                                case 1:</span>
-<span class="source-line-no">210</span><span id="line-210">                                        motor.getConfigurator().refresh(this.getConfiguration().Slot1);</span>
-<span class="source-line-no">211</span><span id="line-211">                                        break;</span>
-<span class="source-line-no">212</span><span id="line-212">                                case 2:</span>
-<span class="source-line-no">213</span><span id="line-213">                                        motor.getConfigurator().refresh(this.getConfiguration().Slot2);</span>
-<span class="source-line-no">214</span><span id="line-214">                                        break;</span>
-<span class="source-line-no">215</span><span id="line-215">                        }</span>
-<span class="source-line-no">216</span><span id="line-216">                }</span>
-<span class="source-line-no">217</span><span id="line-217"></span>
-<span class="source-line-no">218</span><span id="line-218">                public TalonFXConfiguration getConfiguration() {</span>
-<span class="source-line-no">219</span><span id="line-219">                        return this.configuration;</span>
-<span class="source-line-no">220</span><span id="line-220">                }</span>
+<span class="source-line-no">198</span><span id="line-198">                        gainConfig.SlotNumber = slot;</span>
+<span class="source-line-no">199</span><span id="line-199"></span>
+<span class="source-line-no">200</span><span id="line-200">                        motor.getConfigurator().apply(gainConfig);</span>
+<span class="source-line-no">201</span><span id="line-201"></span>
+<span class="source-line-no">202</span><span id="line-202">                        lastKP[slot] = currentKP;</span>
+<span class="source-line-no">203</span><span id="line-203">                        lastKI[slot] = currentKI;</span>
+<span class="source-line-no">204</span><span id="line-204">                        lastKD[slot] = currentKD;</span>
+<span class="source-line-no">205</span><span id="line-205">                        lastKS[slot] = currentKS;</span>
+<span class="source-line-no">206</span><span id="line-206">                        lastKV[slot] = currentKV;</span>
+<span class="source-line-no">207</span><span id="line-207">                        lastKA[slot] = currentKA;</span>
+<span class="source-line-no">208</span><span id="line-208"></span>
+<span class="source-line-no">209</span><span id="line-209">                        switch (slot) {</span>
+<span class="source-line-no">210</span><span id="line-210">                                case 0:</span>
+<span class="source-line-no">211</span><span id="line-211">                                        motor.getConfigurator().refresh(this.getConfiguration().Slot0);</span>
+<span class="source-line-no">212</span><span id="line-212">                                        break;</span>
+<span class="source-line-no">213</span><span id="line-213">                                case 1:</span>
+<span class="source-line-no">214</span><span id="line-214">                                        motor.getConfigurator().refresh(this.getConfiguration().Slot1);</span>
+<span class="source-line-no">215</span><span id="line-215">                                        break;</span>
+<span class="source-line-no">216</span><span id="line-216">                                case 2:</span>
+<span class="source-line-no">217</span><span id="line-217">                                        motor.getConfigurator().refresh(this.getConfiguration().Slot2);</span>
+<span class="source-line-no">218</span><span id="line-218">                                        break;</span>
+<span class="source-line-no">219</span><span id="line-219">                        }</span>
+<span class="source-line-no">220</span><span id="line-220">                }*/</span>
 <span class="source-line-no">221</span><span id="line-221"></span>
-<span class="source-line-no">222</span><span id="line-222">                public void configure(TalonFX motor) {</span>
-<span class="source-line-no">223</span><span id="line-223">                        motor.getConfigurator().apply(configuration);</span>
+<span class="source-line-no">222</span><span id="line-222">                public TalonFXConfiguration getConfiguration() {</span>
+<span class="source-line-no">223</span><span id="line-223">                        return this.configuration;</span>
 <span class="source-line-no">224</span><span id="line-224">                }</span>
 <span class="source-line-no">225</span><span id="line-225"></span>
-<span class="source-line-no">226</span><span id="line-226">                // SLOT 0 CONFIGS</span>
-<span class="source-line-no">227</span><span id="line-227">                public TalonFXConfig withPIDConstants(double kP, double kI, double kD, int slot) {</span>
-<span class="source-line-no">228</span><span id="line-228">                        switch (slot) {</span>
-<span class="source-line-no">229</span><span id="line-229">                                case 0:</span>
-<span class="source-line-no">230</span><span id="line-230">                                        configuration.withSlot0(slot0Configs.withKP(kP).withKI(kI).withKD(kD));</span>
-<span class="source-line-no">231</span><span id="line-231">                                        break;</span>
-<span class="source-line-no">232</span><span id="line-232">                                case 1:</span>
-<span class="source-line-no">233</span><span id="line-233">                                        configuration.withSlot1(slot1Configs.withKP(kP).withKI(kI).withKD(kD));</span>
-<span class="source-line-no">234</span><span id="line-234">                                        break;</span>
-<span class="source-line-no">235</span><span id="line-235">                                case 2:</span>
-<span class="source-line-no">236</span><span id="line-236">                                        configuration.withSlot2(slot2Configs.withKP(kP).withKI(kI).withKD(kD));</span>
-<span class="source-line-no">237</span><span id="line-237">                                        break;</span>
-<span class="source-line-no">238</span><span id="line-238">                        }</span>
-<span class="source-line-no">239</span><span id="line-239">                        return this;</span>
-<span class="source-line-no">240</span><span id="line-240">                }</span>
-<span class="source-line-no">241</span><span id="line-241"></span>
-<span class="source-line-no">242</span><span id="line-242">                public TalonFXConfig withFFConstants(double kS, double kV, double kA, int slot) {</span>
-<span class="source-line-no">243</span><span id="line-243">                        return withFFConstants(kS, kV, kA, 0, slot);</span>
+<span class="source-line-no">226</span><span id="line-226">                public void configure(TalonFX motor) {</span>
+<span class="source-line-no">227</span><span id="line-227">                        motor.getConfigurator().apply(configuration);</span>
+<span class="source-line-no">228</span><span id="line-228">                }</span>
+<span class="source-line-no">229</span><span id="line-229"></span>
+<span class="source-line-no">230</span><span id="line-230">                // SLOT 0 CONFIGS</span>
+<span class="source-line-no">231</span><span id="line-231">                public TalonFXConfig withPIDConstants(double kP, double kI, double kD, int slot) {</span>
+<span class="source-line-no">232</span><span id="line-232">                        switch (slot) {</span>
+<span class="source-line-no">233</span><span id="line-233">                                case 0:</span>
+<span class="source-line-no">234</span><span id="line-234">                                        configuration.withSlot0(slot0Configs.withKP(kP).withKI(kI).withKD(kD));</span>
+<span class="source-line-no">235</span><span id="line-235">                                        break;</span>
+<span class="source-line-no">236</span><span id="line-236">                                case 1:</span>
+<span class="source-line-no">237</span><span id="line-237">                                        configuration.withSlot1(slot1Configs.withKP(kP).withKI(kI).withKD(kD));</span>
+<span class="source-line-no">238</span><span id="line-238">                                        break;</span>
+<span class="source-line-no">239</span><span id="line-239">                                case 2:</span>
+<span class="source-line-no">240</span><span id="line-240">                                        configuration.withSlot2(slot2Configs.withKP(kP).withKI(kI).withKD(kD));</span>
+<span class="source-line-no">241</span><span id="line-241">                                        break;</span>
+<span class="source-line-no">242</span><span id="line-242">                        }</span>
+<span class="source-line-no">243</span><span id="line-243">                        return this;</span>
 <span class="source-line-no">244</span><span id="line-244">                }</span>
 <span class="source-line-no">245</span><span id="line-245"></span>
-<span class="source-line-no">246</span><span id="line-246">                public TalonFXConfig withFFConstants(double kS, double kV, double kA, double kG, int slot) {</span>
-<span class="source-line-no">247</span><span id="line-247">                        switch (slot) {</span>
-<span class="source-line-no">248</span><span id="line-248">                                case 0:</span>
-<span class="source-line-no">249</span><span id="line-249">                                        configuration.withSlot0(slot0Configs.withKS(kS).withKV(kV).withKA(kA).withKG(kG));</span>
-<span class="source-line-no">250</span><span id="line-250">                                        break;</span>
-<span class="source-line-no">251</span><span id="line-251">                                case 1:</span>
-<span class="source-line-no">252</span><span id="line-252">                                        configuration.withSlot1(slot1Configs.withKS(kS).withKV(kV).withKA(kA).withKG(kG));</span>
-<span class="source-line-no">253</span><span id="line-253">                                        break;</span>
-<span class="source-line-no">254</span><span id="line-254">                                case 2:</span>
-<span class="source-line-no">255</span><span id="line-255">                                        configuration.withSlot2(slot2Configs.withKS(kS).withKV(kV).withKA(kA).withKG(kG));</span>
-<span class="source-line-no">256</span><span id="line-256">                                        break;</span>
-<span class="source-line-no">257</span><span id="line-257">                        }</span>
-<span class="source-line-no">258</span><span id="line-258">                        return this;</span>
-<span class="source-line-no">259</span><span id="line-259">                }</span>
-<span class="source-line-no">260</span><span id="line-260"></span>
-<span class="source-line-no">261</span><span id="line-261">                public TalonFXConfig withGravityType(GravityTypeValue gravityType) {</span>
-<span class="source-line-no">262</span><span id="line-262">                        configuration.withSlot0(slot0Configs.withGravityType(gravityType));</span>
-<span class="source-line-no">263</span><span id="line-263">                        configuration.withSlot1(slot1Configs.withGravityType(gravityType));</span>
-<span class="source-line-no">264</span><span id="line-264">                        configuration.withSlot2(slot2Configs.withGravityType(gravityType));</span>
-<span class="source-line-no">265</span><span id="line-265">                        return this;</span>
-<span class="source-line-no">266</span><span id="line-266">                }</span>
-<span class="source-line-no">267</span><span id="line-267"></span>
-<span class="source-line-no">268</span><span id="line-268">                // MOTOR OUTPUT CONFIGS</span>
-<span class="source-line-no">269</span><span id="line-269">                public TalonFXConfig withInvertedValue(InvertedValue invertedValue) {</span>
-<span class="source-line-no">270</span><span id="line-270">                        configuration.withMotorOutput(motorOutputConfigs.withInverted(invertedValue));</span>
-<span class="source-line-no">271</span><span id="line-271">                        return this;</span>
-<span class="source-line-no">272</span><span id="line-272">                }</span>
-<span class="source-line-no">273</span><span id="line-273"></span>
-<span class="source-line-no">274</span><span id="line-274">                public TalonFXConfig withNeutralMode(NeutralModeValue neutralMode) {</span>
-<span class="source-line-no">275</span><span id="line-275">                        configuration.withMotorOutput(motorOutputConfigs.withNeutralMode(neutralMode));</span>
-<span class="source-line-no">276</span><span id="line-276">                        return this;</span>
-<span class="source-line-no">277</span><span id="line-277">                }</span>
-<span class="source-line-no">278</span><span id="line-278"></span>
-<span class="source-line-no">279</span><span id="line-279">                // RAMP RATE CONFIGS</span>
-<span class="source-line-no">280</span><span id="line-280">                public TalonFXConfig withRampRate(double rampRate) {</span>
-<span class="source-line-no">281</span><span id="line-281">                        closedLoopRampsConfigs</span>
-<span class="source-line-no">282</span><span id="line-282">                                        .withDutyCycleClosedLoopRampPeriod(rampRate)</span>
-<span class="source-line-no">283</span><span id="line-283">                                        .withTorqueClosedLoopRampPeriod(rampRate)</span>
-<span class="source-line-no">284</span><span id="line-284">                                        .withVoltageClosedLoopRampPeriod(rampRate);</span>
-<span class="source-line-no">285</span><span id="line-285">                        openLoopRampsConfigs</span>
-<span class="source-line-no">286</span><span id="line-286">                                        .withDutyCycleOpenLoopRampPeriod(rampRate)</span>
-<span class="source-line-no">287</span><span id="line-287">                                        .withTorqueOpenLoopRampPeriod(rampRate)</span>
-<span class="source-line-no">288</span><span id="line-288">                                        .withVoltageOpenLoopRampPeriod(rampRate);</span>
-<span class="source-line-no">289</span><span id="line-289">                        configuration.withClosedLoopRamps(closedLoopRampsConfigs);</span>
-<span class="source-line-no">290</span><span id="line-290">                        configuration.withOpenLoopRamps(openLoopRampsConfigs);</span>
-<span class="source-line-no">291</span><span id="line-291">                        return this;</span>
-<span class="source-line-no">292</span><span id="line-292">                }</span>
-<span class="source-line-no">293</span><span id="line-293"></span>
-<span class="source-line-no">294</span><span id="line-294">                // CURRENT LIMIT CONFIGS</span>
-<span class="source-line-no">295</span><span id="line-295">                public TalonFXConfig withStatorCurrentLimitAmps(double currentLimitAmps) {</span>
-<span class="source-line-no">296</span><span id="line-296">                        currentLimitsConfigs</span>
-<span class="source-line-no">297</span><span id="line-297">                                        .withStatorCurrentLimit(currentLimitAmps)</span>
-<span class="source-line-no">298</span><span id="line-298">                                        .withStatorCurrentLimitEnable(true);</span>
-<span class="source-line-no">299</span><span id="line-299">                        configuration.withCurrentLimits(currentLimitsConfigs);</span>
-<span class="source-line-no">300</span><span id="line-300">                        return this;</span>
-<span class="source-line-no">301</span><span id="line-301">                }</span>
-<span class="source-line-no">302</span><span id="line-302"></span>
-<span class="source-line-no">303</span><span id="line-303">                public TalonFXConfig withSupplyCurrentLimitAmps(double currentLimitAmps) {</span>
-<span class="source-line-no">304</span><span id="line-304">                        currentLimitsConfigs</span>
-<span class="source-line-no">305</span><span id="line-305">                                        .withSupplyCurrentLimit(currentLimitAmps)</span>
-<span class="source-line-no">306</span><span id="line-306">                                        .withSupplyCurrentLimitEnable(true);</span>
-<span class="source-line-no">307</span><span id="line-307">                        configuration.withCurrentLimits(currentLimitsConfigs);</span>
-<span class="source-line-no">308</span><span id="line-308">                        return this;</span>
-<span class="source-line-no">309</span><span id="line-309">                }</span>
-<span class="source-line-no">310</span><span id="line-310"></span>
-<span class="source-line-no">311</span><span id="line-311">                // MOTION MAGIC CONFIGS</span>
-<span class="source-line-no">312</span><span id="line-312">                public TalonFXConfig withMotionProfile(double maxVelocity, double maxAcceleration) {</span>
-<span class="source-line-no">313</span><span id="line-313">                        motionMagicConfigs</span>
-<span class="source-line-no">314</span><span id="line-314">                                        .withMotionMagicCruiseVelocity(maxVelocity)</span>
-<span class="source-line-no">315</span><span id="line-315">                                        .withMotionMagicAcceleration(maxAcceleration);</span>
-<span class="source-line-no">316</span><span id="line-316">                        configuration.withMotionMagic(motionMagicConfigs);</span>
-<span class="source-line-no">317</span><span id="line-317">                        return this;</span>
-<span class="source-line-no">318</span><span id="line-318">                }</span>
-<span class="source-line-no">319</span><span id="line-319"></span>
-<span class="source-line-no">320</span><span id="line-320">                // FEEDBACK CONFIGS</span>
-<span class="source-line-no">321</span><span id="line-321">                public TalonFXConfig withRemoteSensor(</span>
-<span class="source-line-no">322</span><span id="line-322">                                int ID, FeedbackSensorSourceValue source, double rotorToSensorRatio) {</span>
-<span class="source-line-no">323</span><span id="line-323">                        feedbackConfigs</span>
-<span class="source-line-no">324</span><span id="line-324">                                        .withFeedbackRemoteSensorID(ID)</span>
-<span class="source-line-no">325</span><span id="line-325">                                        .withFeedbackSensorSource(source)</span>
-<span class="source-line-no">326</span><span id="line-326">                                        .withRotorToSensorRatio(rotorToSensorRatio);</span>
-<span class="source-line-no">327</span><span id="line-327">                        configuration.withFeedback(feedbackConfigs);</span>
-<span class="source-line-no">328</span><span id="line-328">                        return this;</span>
-<span class="source-line-no">329</span><span id="line-329">                }</span>
-<span class="source-line-no">330</span><span id="line-330"></span>
-<span class="source-line-no">331</span><span id="line-331">                public TalonFXConfig withSensorToMechanismRatio(double sensorToMechanismRatio) {</span>
-<span class="source-line-no">332</span><span id="line-332">                        configuration.withFeedback(</span>
-<span class="source-line-no">333</span><span id="line-333">                                        feedbackConfigs.withSensorToMechanismRatio(sensorToMechanismRatio));</span>
-<span class="source-line-no">334</span><span id="line-334">                        return this;</span>
-<span class="source-line-no">335</span><span id="line-335">                }</span>
-<span class="source-line-no">336</span><span id="line-336">        }</span>
-<span class="source-line-no">337</span><span id="line-337">}</span>
+<span class="source-line-no">246</span><span id="line-246">                public TalonFXConfig withFFConstants(double kS, double kV, double kA, int slot) {</span>
+<span class="source-line-no">247</span><span id="line-247">                        return withFFConstants(kS, kV, kA, 0, slot);</span>
+<span class="source-line-no">248</span><span id="line-248">                }</span>
+<span class="source-line-no">249</span><span id="line-249"></span>
+<span class="source-line-no">250</span><span id="line-250">                public TalonFXConfig withFFConstants(double kS, double kV, double kA, double kG, int slot) {</span>
+<span class="source-line-no">251</span><span id="line-251">                        switch (slot) {</span>
+<span class="source-line-no">252</span><span id="line-252">                                case 0:</span>
+<span class="source-line-no">253</span><span id="line-253">                                        configuration.withSlot0(slot0Configs.withKS(kS).withKV(kV).withKA(kA).withKG(kG));</span>
+<span class="source-line-no">254</span><span id="line-254">                                        break;</span>
+<span class="source-line-no">255</span><span id="line-255">                                case 1:</span>
+<span class="source-line-no">256</span><span id="line-256">                                        configuration.withSlot1(slot1Configs.withKS(kS).withKV(kV).withKA(kA).withKG(kG));</span>
+<span class="source-line-no">257</span><span id="line-257">                                        break;</span>
+<span class="source-line-no">258</span><span id="line-258">                                case 2:</span>
+<span class="source-line-no">259</span><span id="line-259">                                        configuration.withSlot2(slot2Configs.withKS(kS).withKV(kV).withKA(kA).withKG(kG));</span>
+<span class="source-line-no">260</span><span id="line-260">                                        break;</span>
+<span class="source-line-no">261</span><span id="line-261">                        }</span>
+<span class="source-line-no">262</span><span id="line-262">                        return this;</span>
+<span class="source-line-no">263</span><span id="line-263">                }</span>
+<span class="source-line-no">264</span><span id="line-264"></span>
+<span class="source-line-no">265</span><span id="line-265">                public TalonFXConfig withGravityType(GravityTypeValue gravityType) {</span>
+<span class="source-line-no">266</span><span id="line-266">                        configuration.withSlot0(slot0Configs.withGravityType(gravityType));</span>
+<span class="source-line-no">267</span><span id="line-267">                        configuration.withSlot1(slot1Configs.withGravityType(gravityType));</span>
+<span class="source-line-no">268</span><span id="line-268">                        configuration.withSlot2(slot2Configs.withGravityType(gravityType));</span>
+<span class="source-line-no">269</span><span id="line-269">                        return this;</span>
+<span class="source-line-no">270</span><span id="line-270">                }</span>
+<span class="source-line-no">271</span><span id="line-271"></span>
+<span class="source-line-no">272</span><span id="line-272">                // MOTOR OUTPUT CONFIGS</span>
+<span class="source-line-no">273</span><span id="line-273">                public TalonFXConfig withInvertedValue(InvertedValue invertedValue) {</span>
+<span class="source-line-no">274</span><span id="line-274">                        configuration.withMotorOutput(motorOutputConfigs.withInverted(invertedValue));</span>
+<span class="source-line-no">275</span><span id="line-275">                        return this;</span>
+<span class="source-line-no">276</span><span id="line-276">                }</span>
+<span class="source-line-no">277</span><span id="line-277"></span>
+<span class="source-line-no">278</span><span id="line-278">                public TalonFXConfig withNeutralMode(NeutralModeValue neutralMode) {</span>
+<span class="source-line-no">279</span><span id="line-279">                        configuration.withMotorOutput(motorOutputConfigs.withNeutralMode(neutralMode));</span>
+<span class="source-line-no">280</span><span id="line-280">                        return this;</span>
+<span class="source-line-no">281</span><span id="line-281">                }</span>
+<span class="source-line-no">282</span><span id="line-282"></span>
+<span class="source-line-no">283</span><span id="line-283">                // RAMP RATE CONFIGS</span>
+<span class="source-line-no">284</span><span id="line-284">                public TalonFXConfig withRampRate(double rampRate) {</span>
+<span class="source-line-no">285</span><span id="line-285">                        closedLoopRampsConfigs</span>
+<span class="source-line-no">286</span><span id="line-286">                                        .withDutyCycleClosedLoopRampPeriod(rampRate)</span>
+<span class="source-line-no">287</span><span id="line-287">                                        .withTorqueClosedLoopRampPeriod(rampRate)</span>
+<span class="source-line-no">288</span><span id="line-288">                                        .withVoltageClosedLoopRampPeriod(rampRate);</span>
+<span class="source-line-no">289</span><span id="line-289">                        openLoopRampsConfigs</span>
+<span class="source-line-no">290</span><span id="line-290">                                        .withDutyCycleOpenLoopRampPeriod(rampRate)</span>
+<span class="source-line-no">291</span><span id="line-291">                                        .withTorqueOpenLoopRampPeriod(rampRate)</span>
+<span class="source-line-no">292</span><span id="line-292">                                        .withVoltageOpenLoopRampPeriod(rampRate);</span>
+<span class="source-line-no">293</span><span id="line-293">                        configuration.withClosedLoopRamps(closedLoopRampsConfigs);</span>
+<span class="source-line-no">294</span><span id="line-294">                        configuration.withOpenLoopRamps(openLoopRampsConfigs);</span>
+<span class="source-line-no">295</span><span id="line-295">                        return this;</span>
+<span class="source-line-no">296</span><span id="line-296">                }</span>
+<span class="source-line-no">297</span><span id="line-297"></span>
+<span class="source-line-no">298</span><span id="line-298">                // CURRENT LIMIT CONFIGS</span>
+<span class="source-line-no">299</span><span id="line-299">                public TalonFXConfig withStatorCurrentLimitAmps(double currentLimitAmps) {</span>
+<span class="source-line-no">300</span><span id="line-300">                        currentLimitsConfigs</span>
+<span class="source-line-no">301</span><span id="line-301">                                        .withStatorCurrentLimit(currentLimitAmps)</span>
+<span class="source-line-no">302</span><span id="line-302">                                        .withStatorCurrentLimitEnable(true);</span>
+<span class="source-line-no">303</span><span id="line-303">                        configuration.withCurrentLimits(currentLimitsConfigs);</span>
+<span class="source-line-no">304</span><span id="line-304">                        return this;</span>
+<span class="source-line-no">305</span><span id="line-305">                }</span>
+<span class="source-line-no">306</span><span id="line-306"></span>
+<span class="source-line-no">307</span><span id="line-307">                public TalonFXConfig withSupplyCurrentLimitAmps(double currentLimitAmps) {</span>
+<span class="source-line-no">308</span><span id="line-308">                        currentLimitsConfigs</span>
+<span class="source-line-no">309</span><span id="line-309">                                        .withSupplyCurrentLimit(currentLimitAmps)</span>
+<span class="source-line-no">310</span><span id="line-310">                                        .withSupplyCurrentLimitEnable(true);</span>
+<span class="source-line-no">311</span><span id="line-311">                        configuration.withCurrentLimits(currentLimitsConfigs);</span>
+<span class="source-line-no">312</span><span id="line-312">                        return this;</span>
+<span class="source-line-no">313</span><span id="line-313">                }</span>
+<span class="source-line-no">314</span><span id="line-314"></span>
+<span class="source-line-no">315</span><span id="line-315">                // MOTION MAGIC CONFIGS</span>
+<span class="source-line-no">316</span><span id="line-316">                public TalonFXConfig withMotionProfile(double maxVelocity, double maxAcceleration) {</span>
+<span class="source-line-no">317</span><span id="line-317">                        motionMagicConfigs</span>
+<span class="source-line-no">318</span><span id="line-318">                                        .withMotionMagicCruiseVelocity(maxVelocity)</span>
+<span class="source-line-no">319</span><span id="line-319">                                        .withMotionMagicAcceleration(maxAcceleration);</span>
+<span class="source-line-no">320</span><span id="line-320">                        configuration.withMotionMagic(motionMagicConfigs);</span>
+<span class="source-line-no">321</span><span id="line-321">                        return this;</span>
+<span class="source-line-no">322</span><span id="line-322">                }</span>
+<span class="source-line-no">323</span><span id="line-323"></span>
+<span class="source-line-no">324</span><span id="line-324">                // FEEDBACK CONFIGS</span>
+<span class="source-line-no">325</span><span id="line-325">                public TalonFXConfig withRemoteSensor(</span>
+<span class="source-line-no">326</span><span id="line-326">                                int ID, FeedbackSensorSourceValue source, double rotorToSensorRatio) {</span>
+<span class="source-line-no">327</span><span id="line-327">                        feedbackConfigs</span>
+<span class="source-line-no">328</span><span id="line-328">                                        .withFeedbackRemoteSensorID(ID)</span>
+<span class="source-line-no">329</span><span id="line-329">                                        .withFeedbackSensorSource(source)</span>
+<span class="source-line-no">330</span><span id="line-330">                                        .withRotorToSensorRatio(rotorToSensorRatio);</span>
+<span class="source-line-no">331</span><span id="line-331">                        configuration.withFeedback(feedbackConfigs);</span>
+<span class="source-line-no">332</span><span id="line-332">                        return this;</span>
+<span class="source-line-no">333</span><span id="line-333">                }</span>
+<span class="source-line-no">334</span><span id="line-334"></span>
+<span class="source-line-no">335</span><span id="line-335">                public TalonFXConfig withSensorToMechanismRatio(double sensorToMechanismRatio) {</span>
+<span class="source-line-no">336</span><span id="line-336">                        configuration.withFeedback(</span>
+<span class="source-line-no">337</span><span id="line-337">                                        feedbackConfigs.withSensorToMechanismRatio(sensorToMechanismRatio));</span>
+<span class="source-line-no">338</span><span id="line-338">                        return this;</span>
+<span class="source-line-no">339</span><span id="line-339">                }</span>
+<span class="source-line-no">340</span><span id="line-340">        }</span>
+<span class="source-line-no">341</span><span id="line-341">}</span>
 
 
 
