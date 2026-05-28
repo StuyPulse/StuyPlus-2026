@@ -5,8 +5,10 @@
 /***************************************************************/
 package com.stuypulse.robot.subsystems.shooter;
 
+import static edu.wpi.first.units.Units.Hertz;
 import static edu.wpi.first.units.Units.Volts;
 
+import com.ctre.phoenix6.StatusSignal;
 import com.ctre.phoenix6.controls.Follower;
 import com.ctre.phoenix6.controls.VelocityTorqueCurrentFOC;
 import com.ctre.phoenix6.hardware.TalonFX;
@@ -44,6 +46,8 @@ public class ShooterImpl extends Shooter {
         shooterMotorCenter = new TalonFX(Ports.Shooter.SHOOTER_MOTOR_CENTER, Settings.CANBUS);
         shooterMotorLeft = new TalonFX(Ports.Shooter.SHOOTER_MOTOR_LEFT, Settings.CANBUS);
         shooterController = new VelocityTorqueCurrentFOC(getState().getTargetAngularVelocity());
+
+        shooterMotorRight.getTorqueCurrent().setUpdateFrequency(Hertz.of(1000)); // TODO: test effect on CANBus usage (SystemStats/CANBus/Utilization)
         signals = new LoggedSignals(LoggedSignals.SignalLocation.CANIVORE, "Shooter/")
                 .withMotor(
                         "Right Motor",
