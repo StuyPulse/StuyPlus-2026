@@ -68,18 +68,18 @@ public class IntakeImpl extends Intake {
     private final BStream rightRollerStalling;
 
     public IntakeImpl() {
-
         pivotLimitSwitch = new DigitalInput(Ports.Intake.PIVOT_LIMIT_SWITCH);
         pivotMotor = new TalonFX(Ports.Intake.INTAKE_PIVOT_MOTOR, Settings.CANBUS);
         Motors.Intake.PIVOT_CONFIG.configure(pivotMotor);
+
         // zero it at the up pos
         pivotMotor.setPosition(Settings.Intake.Pivot.INITIAL_ANGLE);
         pivotSignals = new LoggedSignals(LoggedSignals.SignalLocation.CANIVORE, "Intake/Pivot/",
                 pivotMotor.getSupplyCurrent(),
                 pivotMotor.getStatorCurrent(),
                 pivotMotor.getVelocity());
-        // until rollers are fixed
-        // leader
+
+            // leader
         rollerMotorLeft = new TalonFX(Ports.Intake.INTAKE_ROLLER_MOTOR_LEFT, Settings.CANBUS);
         rollerMotorRight = new TalonFX(Ports.Intake.INTAKE_ROLLER_MOTOR_RIGHT, Settings.CANBUS);
         Motors.Intake.LEFT_ROLLER_CONFIG.configure(rollerMotorLeft);
@@ -102,7 +102,7 @@ public class IntakeImpl extends Intake {
         followerController = new Follower(Ports.Intake.INTAKE_ROLLER_MOTOR_LEFT, MotorAlignmentValue.Opposed);
         rollerMotorRight.setControl(followerController);
         pivotStalling = () -> pivotMotor.getStatorCurrent().getValue().gt(Settings.Intake.Pivot.STALL_CURRENT);
-        // until rollers are fixed
+
         leftRollerStalling = BStream.create(
                 () -> rollerMotorLeft.getStatorCurrent().getValueAsDouble() > Settings.Intake.Roller.STALL_CURRENT
                         .in(Amps))
@@ -162,24 +162,16 @@ public class IntakeImpl extends Intake {
     }
 
     @Override
-    protected void stopMotors(IntakeMotorType motorType) {
-        switch (motorType) {
-            case PIVOT:
-                pivotMotor.stopMotor();
-                break;
-            case ROLLER:
-                // until rollers are fixed
-                rollerMotorLeft.stopMotor();
-                rollerMotorRight.stopMotor();
-                break;
-            case BOTH:
-                pivotMotor.stopMotor();
-                rollerMotorLeft.stopMotor();
-                rollerMotorRight.stopMotor();
-                break;
-        }
+    protected void stopRollerMotors() {
+        rollerMotorLeft.stopMotor();
+        rollerMotorRight.stopMotor();
         // re-add the follow control after stopMotor removes it
         rollerMotorRight.setControl(followerController);
+    }
+
+    @Override
+    protected void stopPivotMotor() {
+        pivotMotor.stopMotor();
     }
 
     private ControlRequest getPivotControl(IntakeState currentState) {
@@ -197,16 +189,18 @@ public class IntakeImpl extends Intake {
     @Override
     public void periodic() {
         if (!EnabledSubsystems.INTAKE.get()) {
-            stopMotors(IntakeMotorType.BOTH);
+            stopAllMotors();
             return;
         }
         if (pivotVoltageOverride.isPresent()) {
             pivotMotor.setVoltage(pivotVoltageOverride.get().in(Volts));
             return;
         }
+
         // Input
         final boolean pivotStalling = pivotStalling();
         final IntakeState currentState = getState();
+
         // State
         if (currentState == IntakeState.HOMING_DOWN && (pivotStalling || limitSwitchHit())) {
             seedPivotAngle(Settings.Intake.Pivot.DEPLOY_ANGLE);
@@ -215,25 +209,28 @@ public class IntakeImpl extends Intake {
         if ((currentState == IntakeState.DOWN) && (pivotStalling || limitSwitchHit())) {
             seedPivotAngle(Settings.Intake.Pivot.DEPLOY_ANGLE);
         }
+
         // Output
         final ControlRequest pivotControl = getPivotControl(currentState);
         final DutyCycleOut rollerControl = rollerController.withOutput(currentState.getTargetDutyCycle());
+
         // Apply
         if (EnabledSubsystems.INTAKE_PIVOT.get()) {
             pivotMotor.setControl(pivotControl);
         } else {
-            stopMotors(IntakeMotorType.PIVOT);
+            stopPivotMotor();
         }
 
         if (EnabledSubsystems.INTAKE_ROLLERS.get()) {
             rollerMotorLeft.setControl(rollerControl);
         } else {
-            stopMotors(IntakeMotorType.ROLLER);
+            stopRollerMotors();
         }
+
         // Logging
         this.pivotSignals.logAll();
-        // until rollers are fixed
         this.rollerSignals.logAll();
+
         DogLog.forceNt.log("Intake/Rollers/Stalling", leftRollerStalling() || rightRollerStalling());
         DogLog.forceNt.log(
                 "Intake/Pivot/Pushing Down", pivotMotor.getAppliedControl() == pushdownController);

@@ -144,11 +144,13 @@ public abstract class Intake extends SubsystemBase {
     // Roller Commands
     public abstract AngularVelocity getRollerVelocity();
 
-    protected enum IntakeMotorType {
-        PIVOT, ROLLER, BOTH
-    }
-
-    protected abstract void stopMotors(IntakeMotorType motorType);
+    // Stop Commands
+    protected abstract void stopRollerMotors();
+    protected abstract void stopPivotMotor();
+    protected void stopAllMotors() {
+        stopRollerMotors();
+        stopPivotMotor();
+    };
 
     // Sysid
     public abstract SysIdRoutine getIntakeSysIdRoutine();
