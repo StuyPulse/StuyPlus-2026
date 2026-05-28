@@ -153,18 +153,20 @@ public class IntakeSim extends Intake {
 
         if (EnabledSubsystems.INTAKE_ROLLERS.get()) {
             rollerMotorLeft.setControl(rollerController.withOutput(getState().getTargetDutyCycle()));
-            rollerMotorLeft.update(Settings.DT);
-            rollerMotorRight.update(Settings.DT);
         } else {
             stopMotors(IntakeMotorType.ROLLER);
         }
 
         if (EnabledSubsystems.INTAKE_PIVOT.get()) {
             pivotMotor.setControl(pivotController.withPosition(getState().getTargetAngle().times(-1)).withSlot(0)); // cooked inversion
-            pivotMotor.update(Settings.DT);
         } else {
             stopMotors(IntakeMotorType.PIVOT);
         }
+        
+        rollerMotorLeft.update(Settings.DT);
+        rollerMotorRight.update(Settings.DT);
+        pivotMotor.update(Settings.DT);
+        
         // all current measured in amps
         DogLog.log("Intake/Pivot/Stator Current", pivotMotor.getStatorCurrent().getValueAsDouble());
         DogLog.log("Intake/Pivot/Supply Current", pivotMotor.getSupplyCurrent().getValueAsDouble());
