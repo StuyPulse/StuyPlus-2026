@@ -399,19 +399,6 @@
                 }
               },
               {
-                "title": "Intake Pivot",
-                "x": 0.0,
-                "y": 0.0,
-                "width": 150.0,
-                "height": 150.0,
-                "type": "Toggle Switch",
-                "properties": {
-                  "topic": "/Tunable/Enabled Subsystems/Intake/Pivot",
-                  "period": 0.06,
-                  "data_type": "boolean"
-                }
-              },
-              {
                 "title": "Intake Rollers",
                 "x": 0.0,
                 "y": 0.0,
@@ -425,14 +412,14 @@
                 }
               },
               {
-                "title": "Vision",
+                "title": "Intake Pivot",
                 "x": 0.0,
                 "y": 0.0,
-                "width": 166.0,
-                "height": 166.0,
+                "width": 150.0,
+                "height": 150.0,
                 "type": "Toggle Switch",
                 "properties": {
-                  "topic": "/Tunable/Enabled Subsystems/Vision",
+                  "topic": "/Tunable/Enabled Subsystems/Intake/Pivot",
                   "period": 0.06,
                   "data_type": "boolean"
                 }
@@ -498,6 +485,19 @@
                 "type": "Toggle Switch",
                 "properties": {
                   "topic": "/Tunable/Enabled Subsystems/Shooter",
+                  "period": 0.06,
+                  "data_type": "boolean"
+                }
+              },
+              {
+                "title": "Vision",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 166.0,
+                "height": 166.0,
+                "type": "Toggle Switch",
+                "properties": {
+                  "topic": "/Tunable/Enabled Subsystems/Vision",
                   "period": 0.06,
                   "data_type": "boolean"
                 }
@@ -1438,6 +1438,34 @@
             "type": "Text Display",
             "properties": {
               "topic": "/Robot/SystemStats/CANBus/Utilization",
+              "period": 0.06,
+              "data_type": "double",
+              "show_submit_button": false
+            }
+          },
+          {
+            "title": "Distance From Hub",
+            "x": 650.0,
+            "y": 0.0,
+            "width": 200.0,
+            "height": 100.0,
+            "type": "Text Display",
+            "properties": {
+              "topic": "/Robot/Swerve/Distance From Hub",
+              "period": 0.06,
+              "data_type": "double",
+              "show_submit_button": false
+            }
+          },
+          {
+            "title": "Distance From Ferry Zone",
+            "x": 650.0,
+            "y": 100.0,
+            "width": 200.0,
+            "height": 100.0,
+            "type": "Text Display",
+            "properties": {
+              "topic": "/Robot/Swerve/Distance From Ferry Zone",
               "period": 0.06,
               "data_type": "double",
               "show_submit_button": false
