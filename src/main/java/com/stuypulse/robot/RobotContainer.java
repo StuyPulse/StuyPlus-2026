@@ -10,6 +10,7 @@ import com.stuypulse.robot.commands.feeder.FeederSetForward;
 import com.stuypulse.robot.commands.feeder.FeederSetIdle;
 import com.stuypulse.robot.commands.handoff.HandoffSetForward;
 import com.stuypulse.robot.commands.handoff.HandoffSetIdle;
+import com.stuypulse.robot.commands.intake.IntakeAgitateFastOnce;
 import com.stuypulse.robot.commands.intake.IntakeDigest;
 import com.stuypulse.robot.commands.intake.IntakeSetIdle;
 import com.stuypulse.robot.commands.intake.IntakeSetIntake;
@@ -109,7 +110,7 @@ public class RobotContainer {
                         .andThen(new SwerveDriveXMode())
                         .andThen(new ShooterSetShoot())
                         .andThen(new HandoffSetForward())
-                        .alongWith(new FeederSetForward(), new IntakeDigest()));
+                        .alongWith(new FeederSetForward(), new IntakeAgitateFastOnce().repeatedly()));
         driver.y().onTrue(new IntakeSetIdle());
         driver.povUp().onTrue(new SwerveDriveResetRotation());
         driver
@@ -119,7 +120,7 @@ public class RobotContainer {
                                 .andThen(new SwerveDriveXMode())
                                 .andThen(new ShooterSetFerry())
                                 .andThen(new HandoffSetForward())
-                                .alongWith(new FeederSetForward(), new IntakeDigest()));
+                                .alongWith(new FeederSetForward(), new IntakeAgitateFastOnce().repeatedly()));
         // Manual shooting possibly from in front of the tower
         driver
                 .a()
@@ -127,7 +128,7 @@ public class RobotContainer {
                         new SwerveDriveXMode()
                                 .andThen(new ShooterSetManual())
                                 .andThen(new HandoffSetForward().repeatedly())
-                                .alongWith(new FeederSetForward().repeatedly(), new IntakeSetIntake()));
+                                .alongWith(new FeederSetForward().repeatedly(), new IntakeAgitateFastOnce().repeatedly()));
         // Top Right Paddle
         driver
                 .b()
@@ -233,46 +234,22 @@ public class RobotContainer {
         // "RT Around Disrupt",
         // "RT Back Push Disrupt");
         // RT_Disrupt.register(autonChooser);
-        // autonChooser.addOption("SysID Module Translation Dynamic Forwards",
-        // swerve.sysIdDynamic(Direction.kForward));
-        // autonChooser.addOption("SysID Module Translation Dynamic Backwards",
-        // swerve.sysIdDynamic(Direction.kReverse));
-        // autonChooser.addOption("SysID Module Translation Quasi Forwards",
-        // swerve.sysIdQuasistatic(Direction.kForward));
-        // autonChooser.addOption("SysID Module Translation Quasi Backwards",
-        // swerve.sysIdQuasistatic(Direction.kReverse));
-        // autonChooser.addOption("SysID Rotation Translation Dynamic Forwards",
-        // swerve.sysidRotationDynamic(Direction.kForward));
-        // autonChooser.addOption("SysID Rotation Translation Dynamic Backwards",
-        // swerve.sysidRotationDynamic(Direction.kReverse));
-        // autonChooser.addOption("SysID Rotation Translation Quasi Forwards",
-        // swerve.sysidRotationQuasiStatic(Direction.kForward));
-        // autonChooser.addOption("SysID Rotation Translation Quasi Backwards",
-        // swerve.sysidRotationQuasiStatic(Direction.kReverse));
-        autonChooser.addOption(
-                "Intake Pivot SysID  Quasi Forwards",
-                intake.getIntakeSysIdRoutine().quasistatic(Direction.kForward));
-        autonChooser.addOption(
-                "Intake Pivot SysID  Quasi Reverse",
-                intake.getIntakeSysIdRoutine().quasistatic(Direction.kReverse));
-        autonChooser.addOption(
-                "Intake Pivot SysID  Dynamic Forwards",
-                intake.getIntakeSysIdRoutine().dynamic(Direction.kForward));
-        autonChooser.addOption(
-                "Intake Pivot SysID  Dynamic Reverse",
-                intake.getIntakeSysIdRoutine().dynamic(Direction.kReverse));
-        autonChooser.addOption(
-                "Shooter SysID Quasi Forwards ",
-                shooter.getShooterSysIdRoutine().quasistatic(Direction.kForward));
-        autonChooser.addOption(
-                "Shooter SysID Quasi Reverse ",
-                shooter.getShooterSysIdRoutine().quasistatic(Direction.kReverse));
-        autonChooser.addOption(
-                "Shooter SysID Dynamic Forward ",
-                shooter.getShooterSysIdRoutine().dynamic(Direction.kForward));
-        autonChooser.addOption(
-                "Shooter SysID Dynamic Reverse ",
-                shooter.getShooterSysIdRoutine().dynamic(Direction.kReverse));
+        autonChooser.addOption("SysID Module Translation Dynamic Forwards",
+        swerve.sysIdDynamic(Direction.kForward));
+        autonChooser.addOption("SysID Module Translation Dynamic Backwards",
+        swerve.sysIdDynamic(Direction.kReverse));
+        autonChooser.addOption("SysID Module Translation Quasi Forwards",
+        swerve.sysIdQuasistatic(Direction.kForward));
+        autonChooser.addOption("SysID Module Translation Quasi Backwards",
+        swerve.sysIdQuasistatic(Direction.kReverse));
+        autonChooser.addOption("SysID Rotation Translation Dynamic Forwards",
+        swerve.sysidRotationDynamic(Direction.kForward));
+        autonChooser.addOption("SysID Rotation Translation Dynamic Backwards",
+        swerve.sysidRotationDynamic(Direction.kReverse));
+        autonChooser.addOption("SysID Rotation Translation Quasi Forwards",
+        swerve.sysidRotationQuasiStatic(Direction.kForward));
+        autonChooser.addOption("SysID Rotation Translation Quasi Backwards",
+        swerve.sysidRotationQuasiStatic(Direction.kReverse));
         SmartDashboard.putData("Autonomous", autonChooser);
     }
 
