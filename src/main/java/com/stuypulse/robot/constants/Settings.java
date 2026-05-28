@@ -89,6 +89,8 @@ public interface Settings {
 
             Angle DIGEST_ANGLE = Degrees.of(-92);
 
+            Angle AGITATE_DOWN_ANGLE = Degrees.of(-15);
+
             // misc
             Angle ANGLE_TOLERANCE = Degrees.of(0.5);
 
@@ -243,11 +245,14 @@ public interface Settings {
         public interface RPMInterpolation {
 
             double[][] distanceRPMInterpolationValues = {
-                { 1.0, 1000.0 },
-                { 2.0, 1500.0 },
-                { 3.0, 2000.0 },
-                { 4.0, 2500.0 },
-                { 5.0, 3000.0 } };
+                {1.46, 3150},
+                {3.0, 4000.0},
+                {3.13, 4050},
+                {3.45, 4150},
+                //TODO: These numbers don't make sense
+                // { 4.895367348608047, 3250.0 },
+                // { 6.1322461808798705, 3487.0 } 
+            };
         }
 
         // These values are placeholders and should be replaced with actual data from testing
@@ -325,7 +330,7 @@ public interface Settings {
 
                 Distance Y_TOLERANCE = Inches.of(2.0);
 
-                Rotation2d THETA_TOLERANCE = Rotation2d.fromDegrees(1);
+                Rotation2d THETA_TOLERANCE = Rotation2d.fromDegrees(5);
 
                 Pose2d POSE_TOLERANCE = new Pose2d(X_TOLERANCE.in(Meters), Y_TOLERANCE.in(Meters), THETA_TOLERANCE);
 

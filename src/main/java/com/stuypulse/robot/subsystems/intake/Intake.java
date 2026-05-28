@@ -49,6 +49,7 @@ public abstract class Intake extends SubsystemBase {
     /** Enum representing the different possible states of the intake. */
     public enum IntakeState {
 
+        AGITATE_DOWN(Settings.Intake.Pivot.AGITATE_DOWN_ANGLE, Settings.Intake.Roller.INTAKE_DUTY_CYCLE),
         /** The intake is stowed and rollers are off. */
         IDLE(Settings.Intake.Pivot.STOW_ANGLE, 0),
         /** The intake is deployed but rollers are off. */
@@ -65,7 +66,8 @@ public abstract class Intake extends SubsystemBase {
          * to dislodge
          * gamepieces. Rollers do not run.
          */
-        AGITATE(Settings.Intake.Pivot.AGITATE_UP_ANGLE, 0),
+        AGITATE(Settings.Intake.Pivot.AGITATE_UP_ANGLE, Settings.Intake.Roller.INTAKE_DUTY_CYCLE),
+        
         /**
          * The intake is brought up once to an angle between stowed and deployed to
          * dislodge gamepieces.

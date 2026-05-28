@@ -42,7 +42,7 @@ public class Gains {
     public interface Intake {
 
         // pivot gains
-        double kP = 300;
+        double kP = 150;//300
 
         double kI = 0;
 

@@ -12,6 +12,7 @@ import java.util.function.DoubleSupplier;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.stuypulse.robot.Robot;
 import com.stuypulse.robot.constants.Settings;
+import com.stuypulse.robot.util.shooter.InterpolationCalculator;
 
 import dev.doglog.DogLog;
 import edu.wpi.first.units.measure.AngularVelocity;
@@ -65,11 +66,11 @@ public abstract class Shooter extends SubsystemBase {
         /** Shooter doesn't run. */
         IDLE(() -> 0.0),
         /** Shooter wheels spin at it's target RPM, interpolated based on distance to hub. */
-        SHOOT(Settings.Shooter.SHOOT_TUNING_RPM), //TODO:Replace with interpolated RPM after data is gathered
+        // SHOOT(Settings.Shooter.SHOOT_TUNING_RPM), //TODO:Replace with interpolated RPM after data is gathered
         /** Shooter wheels spin at it's target RPM, interpolated based on distance to ferry zone. */
-        FERRY(Settings.Shooter.FERRY_TUNING_RPM),
-        // SHOOT(() -> InterpolationCalculator.interpolateShotInfo().targetRPM()),
-        // FERRY(() -> InterpolationCalculator.interpolateFerryingInfo().targetRPM()),
+        // FERRY(Settings.Shooter.FERRY_TUNING_RPM),
+        SHOOT(() -> InterpolationCalculator.interpolateShotInfo().targetRPM()),
+        FERRY(() -> InterpolationCalculator.interpolateFerryingInfo().targetRPM()),
         /** Shooter wheels spin at a predetermined constant rate without interpolation. */
         MANUAL_HUB(Settings.Shooter.MANUAL_HUB_RPM);
 
@@ -102,7 +103,7 @@ public abstract class Shooter extends SubsystemBase {
     public abstract void setVoltageOverride(Voltage voltage);
 
     public boolean shooterSpunUp() {
-        return getCurrentAngularVelocity().gte(getState().getTargetAngularVelocity().minus(RPM.of(100)));
+        return true;//getCurrentAngularVelocity().gte(getState().getTargetAngularVelocity().minus(RPM.of(100)));
     }
 
     @Override

@@ -9,6 +9,7 @@ import static edu.wpi.first.units.Units.Hertz;
 import static edu.wpi.first.units.Units.Volts;
 
 import com.ctre.phoenix6.StatusSignal;
+import com.ctre.phoenix6.configs.Slot0Configs;
 import com.ctre.phoenix6.controls.Follower;
 import com.ctre.phoenix6.controls.VelocityTorqueCurrentFOC;
 import com.ctre.phoenix6.hardware.TalonFX;
@@ -21,6 +22,7 @@ import com.stuypulse.robot.util.LoggedSignals;
 import com.stuypulse.robot.util.SysId;
 import edu.wpi.first.units.measure.AngularVelocity;
 import edu.wpi.first.units.measure.Voltage;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import java.util.Optional;
 
@@ -105,7 +107,7 @@ public class ShooterImpl extends Shooter {
             return;
         }
 
-        Motors.Shooter.SHOOTER_MOTOR_RIGHT.updateGainsConfig(shooterMotorRight, 0, Gains.Shooter.kP, Gains.Shooter.kI, Gains.Shooter.kD, Gains.Shooter.kS, Gains.Shooter.kV, Gains.Shooter.kA);
+        // Motors.Shooter.SHOOTER_MOTOR_RIGHT.updateGainsConfig(shooterMotorRight, 0, Gains.Shooter.kP, Gains.Shooter.kI, Gains.Shooter.kD, Gains.Shooter.kS, Gains.Shooter.kV, Gains.Shooter.kA);
 
         final AngularVelocity targetAngularVelocity = getState().getTargetAngularVelocity();
         final VelocityTorqueCurrentFOC shooterControl = shooterController.withVelocity(targetAngularVelocity);

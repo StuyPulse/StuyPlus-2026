@@ -12,6 +12,7 @@ import com.stuypulse.robot.commands.handoff.HandoffSetForward;
 import com.stuypulse.robot.commands.handoff.HandoffSetIdle;
 import com.stuypulse.robot.commands.intake.IntakeAgitateFastOnce;
 import com.stuypulse.robot.commands.intake.IntakeDigest;
+import com.stuypulse.robot.commands.intake.IntakeSetHomingDown;
 import com.stuypulse.robot.commands.intake.IntakeSetIdle;
 import com.stuypulse.robot.commands.intake.IntakeSetIntake;
 import com.stuypulse.robot.commands.intake.IntakeSetOuttake;
@@ -128,7 +129,8 @@ public class RobotContainer {
                         new SwerveDriveXMode()
                                 .andThen(new ShooterSetManual())
                                 .andThen(new HandoffSetForward().repeatedly())
-                                .alongWith(new FeederSetForward().repeatedly(), new IntakeAgitateFastOnce().repeatedly()));
+                                .alongWith(new FeederSetForward().repeatedly(), new IntakeAgitateFastOnce().repeatedly())
+                                .andThen(new IntakeSetHomingDown()));
         // Top Right Paddle
         driver
                 .b()

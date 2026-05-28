@@ -52,7 +52,7 @@ public class SwerveDriveSetAlignment extends Command {
 
     @Override
     public boolean isFinished() {
-        return isAligned.get();
+        return true;//isAligned.get();
     }
 
     @Override
