@@ -25,33 +25,33 @@
                 "height": 166.0,
                 "type": "Toggle Switch",
                 "properties": {
-                  "topic": "/Tunable/Enabled Subsystems/Intake",
+                  "topic": "/Tunable/Enabled Subsystems/Intake/Intake",
                   "period": 0.06,
                   "data_type": "boolean"
                 }
               },
               {
-                "title": "Feeder",
+                "title": "Intake Pivot",
                 "x": 0.0,
                 "y": 0.0,
                 "width": 150.0,
                 "height": 150.0,
                 "type": "Toggle Switch",
                 "properties": {
-                  "topic": "/Tunable/Enabled Subsystems/Feeder",
+                  "topic": "/Tunable/Enabled Subsystems/Intake/Pivot",
                   "period": 0.06,
                   "data_type": "boolean"
                 }
               },
               {
-                "title": "Shooter",
+                "title": "Intake Rollers",
                 "x": 0.0,
                 "y": 0.0,
                 "width": 150.0,
                 "height": 150.0,
                 "type": "Toggle Switch",
                 "properties": {
-                  "topic": "/Tunable/Enabled Subsystems/Shooter",
+                  "topic": "/Tunable/Enabled Subsystems/Intake/Rollers",
                   "period": 0.06,
                   "data_type": "boolean"
                 }
@@ -104,6 +104,32 @@
                 "type": "Toggle Switch",
                 "properties": {
                   "topic": "/Tunable/Enabled Subsystems/LED",
+                  "period": 0.06,
+                  "data_type": "boolean"
+                }
+              },
+              {
+                "title": "Feeder",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 150.0,
+                "height": 150.0,
+                "type": "Toggle Switch",
+                "properties": {
+                  "topic": "/Tunable/Enabled Subsystems/Feeder",
+                  "period": 0.06,
+                  "data_type": "boolean"
+                }
+              },
+              {
+                "title": "Shooter",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 150.0,
+                "height": 150.0,
+                "type": "Toggle Switch",
+                "properties": {
+                  "topic": "/Tunable/Enabled Subsystems/Shooter",
                   "period": 0.06,
                   "data_type": "boolean"
                 }
@@ -367,46 +393,33 @@
                 "height": 166.0,
                 "type": "Toggle Switch",
                 "properties": {
-                  "topic": "/Tunable/Enabled Subsystems/Intake",
+                  "topic": "/Tunable/Enabled Subsystems/Intake/Intake",
                   "period": 0.06,
                   "data_type": "boolean"
                 }
               },
               {
-                "title": "Feeder",
+                "title": "Intake Rollers",
                 "x": 0.0,
                 "y": 0.0,
                 "width": 150.0,
                 "height": 150.0,
                 "type": "Toggle Switch",
                 "properties": {
-                  "topic": "/Tunable/Enabled Subsystems/Feeder",
+                  "topic": "/Tunable/Enabled Subsystems/Intake/Rollers",
                   "period": 0.06,
                   "data_type": "boolean"
                 }
               },
               {
-                "title": "Shooter",
+                "title": "Intake Pivot",
                 "x": 0.0,
                 "y": 0.0,
                 "width": 150.0,
                 "height": 150.0,
                 "type": "Toggle Switch",
                 "properties": {
-                  "topic": "/Tunable/Enabled Subsystems/Shooter",
-                  "period": 0.06,
-                  "data_type": "boolean"
-                }
-              },
-              {
-                "title": "Vision",
-                "x": 0.0,
-                "y": 0.0,
-                "width": 166.0,
-                "height": 166.0,
-                "type": "Toggle Switch",
-                "properties": {
-                  "topic": "/Tunable/Enabled Subsystems/Vision",
+                  "topic": "/Tunable/Enabled Subsystems/Intake/Pivot",
                   "period": 0.06,
                   "data_type": "boolean"
                 }
@@ -446,6 +459,45 @@
                 "type": "Toggle Switch",
                 "properties": {
                   "topic": "/Tunable/Enabled Subsystems/LED",
+                  "period": 0.06,
+                  "data_type": "boolean"
+                }
+              },
+              {
+                "title": "Feeder",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 150.0,
+                "height": 150.0,
+                "type": "Toggle Switch",
+                "properties": {
+                  "topic": "/Tunable/Enabled Subsystems/Feeder",
+                  "period": 0.06,
+                  "data_type": "boolean"
+                }
+              },
+              {
+                "title": "Shooter",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 150.0,
+                "height": 150.0,
+                "type": "Toggle Switch",
+                "properties": {
+                  "topic": "/Tunable/Enabled Subsystems/Shooter",
+                  "period": 0.06,
+                  "data_type": "boolean"
+                }
+              },
+              {
+                "title": "Vision",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 166.0,
+                "height": 166.0,
+                "type": "Toggle Switch",
+                "properties": {
+                  "topic": "/Tunable/Enabled Subsystems/Vision",
                   "period": 0.06,
                   "data_type": "boolean"
                 }
@@ -706,7 +758,7 @@
             "x": 1200.0,
             "y": 0.0,
             "width": 300.0,
-            "height": 350.0,
+            "height": 400.0,
             "type": "List Layout",
             "properties": {
               "label_position": "LEFT"
@@ -720,33 +772,33 @@
                 "height": 166.0,
                 "type": "Toggle Switch",
                 "properties": {
-                  "topic": "/Tunable/Enabled Subsystems/Intake",
+                  "topic": "/Tunable/Enabled Subsystems/Intake/Intake",
                   "period": 0.06,
                   "data_type": "boolean"
                 }
               },
               {
-                "title": "Feeder",
+                "title": "Intake Pivot",
                 "x": 0.0,
                 "y": 0.0,
                 "width": 150.0,
                 "height": 150.0,
                 "type": "Toggle Switch",
                 "properties": {
-                  "topic": "/Tunable/Enabled Subsystems/Feeder",
+                  "topic": "/Tunable/Enabled Subsystems/Intake/Pivot",
                   "period": 0.06,
                   "data_type": "boolean"
                 }
               },
               {
-                "title": "Shooter",
+                "title": "Intake Rollers",
                 "x": 0.0,
                 "y": 0.0,
                 "width": 150.0,
                 "height": 150.0,
                 "type": "Toggle Switch",
                 "properties": {
-                  "topic": "/Tunable/Enabled Subsystems/Shooter",
+                  "topic": "/Tunable/Enabled Subsystems/Intake/Rollers",
                   "period": 0.06,
                   "data_type": "boolean"
                 }
@@ -799,6 +851,32 @@
                 "type": "Toggle Switch",
                 "properties": {
                   "topic": "/Tunable/Enabled Subsystems/LED",
+                  "period": 0.06,
+                  "data_type": "boolean"
+                }
+              },
+              {
+                "title": "Feeder",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 150.0,
+                "height": 150.0,
+                "type": "Toggle Switch",
+                "properties": {
+                  "topic": "/Tunable/Enabled Subsystems/Feeder",
+                  "period": 0.06,
+                  "data_type": "boolean"
+                }
+              },
+              {
+                "title": "Shooter",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 150.0,
+                "height": 150.0,
+                "type": "Toggle Switch",
+                "properties": {
+                  "topic": "/Tunable/Enabled Subsystems/Shooter",
                   "period": 0.06,
                   "data_type": "boolean"
                 }
@@ -923,11 +1001,72 @@
       "grid_layout": {
         "layouts": [
           {
+            "title": "Robot Stats",
+            "x": 1200.0,
+            "y": 500.0,
+            "width": 300.0,
+            "height": 300.0,
+            "type": "List Layout",
+            "properties": {
+              "label_position": "TOP"
+            },
+            "children": [
+              {
+                "title": "CANBus Utilization",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 150.0,
+                "height": 150.0,
+                "type": "Text Display",
+                "properties": {
+                  "topic": "/Robot/SystemStats/CANBus/Utilization",
+                  "period": 0.06,
+                  "data_type": "double",
+                  "show_submit_button": false
+                }
+              },
+              {
+                "title": "BrownedOut",
+                "x": 1500.0,
+                "y": 300.0,
+                "width": 300.0,
+                "height": 100.0,
+                "type": "Boolean Box",
+                "properties": {
+                  "topic": "/Robot/SystemStats/BrownedOut",
+                  "period": 0.06,
+                  "data_type": "boolean",
+                  "true_color": 4283215696,
+                  "false_color": 4294198070,
+                  "true_icon": "None",
+                  "false_icon": "None"
+                }
+              },
+              {
+                "title": "Radio Connected",
+                "x": 1500.0,
+                "y": 350.0,
+                "width": 300.0,
+                "height": 100.0,
+                "type": "Boolean Box",
+                "properties": {
+                  "topic": "/Robot/RadioStatus/Connected",
+                  "period": 0.06,
+                  "data_type": "boolean",
+                  "true_color": 4283215696,
+                  "false_color": 4294198070,
+                  "true_icon": "None",
+                  "false_icon": "None"
+                }
+              }
+            ]
+          },
+          {
             "title": "Enabled Subsystems",
             "x": 1050.0,
             "y": 0.0,
             "width": 300.0,
-            "height": 350.0,
+            "height": 400.0,
             "type": "List Layout",
             "properties": {
               "label_position": "LEFT"
@@ -941,33 +1080,33 @@
                 "height": 166.0,
                 "type": "Toggle Switch",
                 "properties": {
-                  "topic": "/Tunable/Enabled Subsystems/Intake",
+                  "topic": "/Tunable/Enabled Subsystems/Intake/Intake",
                   "period": 0.06,
                   "data_type": "boolean"
                 }
               },
               {
-                "title": "Feeder",
+                "title": "Intake Pivot",
                 "x": 0.0,
                 "y": 0.0,
                 "width": 150.0,
                 "height": 150.0,
                 "type": "Toggle Switch",
                 "properties": {
-                  "topic": "/Tunable/Enabled Subsystems/Feeder",
+                  "topic": "/Tunable/Enabled Subsystems/Intake/Pivot",
                   "period": 0.06,
                   "data_type": "boolean"
                 }
               },
               {
-                "title": "Shooter",
+                "title": "Intake Rollers",
                 "x": 0.0,
                 "y": 0.0,
                 "width": 150.0,
                 "height": 150.0,
                 "type": "Toggle Switch",
                 "properties": {
-                  "topic": "/Tunable/Enabled Subsystems/Shooter",
+                  "topic": "/Tunable/Enabled Subsystems/Intake/Rollers",
                   "period": 0.06,
                   "data_type": "boolean"
                 }
@@ -1038,51 +1177,29 @@
             },
             "children": [
               {
-                "title": "CANBus Utilization",
+                "title": "Feeder",
                 "x": 0.0,
                 "y": 0.0,
                 "width": 150.0,
                 "height": 150.0,
-                "type": "Text Display",
+                "type": "Toggle Switch",
                 "properties": {
-                  "topic": "/Robot/SystemStats/CANBus/Utilization",
+                  "topic": "/Tunable/Enabled Subsystems/Feeder",
                   "period": 0.06,
-                  "data_type": "double",
-                  "show_submit_button": false
+                  "data_type": "boolean"
                 }
               },
               {
-                "title": "BrownedOut",
-                "x": 1500.0,
-                "y": 300.0,
-                "width": 300.0,
-                "height": 100.0,
-                "type": "Boolean Box",
+                "title": "Shooter",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 150.0,
+                "height": 150.0,
+                "type": "Toggle Switch",
                 "properties": {
-                  "topic": "/Robot/SystemStats/BrownedOut",
+                  "topic": "/Tunable/Enabled Subsystems/Shooter",
                   "period": 0.06,
-                  "data_type": "boolean",
-                  "true_color": 4283215696,
-                  "false_color": 4294198070,
-                  "true_icon": "None",
-                  "false_icon": "None"
-                }
-              },
-              {
-                "title": "Radio Connected",
-                "x": 1500.0,
-                "y": 350.0,
-                "width": 300.0,
-                "height": 100.0,
-                "type": "Boolean Box",
-                "properties": {
-                  "topic": "/Robot/RadioStatus/Connected",
-                  "period": 0.06,
-                  "data_type": "boolean",
-                  "true_color": 4283215696,
-                  "false_color": 4294198070,
-                  "true_icon": "None",
-                  "false_icon": "None"
+                  "data_type": "boolean"
                 }
               }
             ]
@@ -1334,6 +1451,34 @@
             "type": "Text Display",
             "properties": {
               "topic": "/Robot/Swerve/Distance From Hub",
+              "period": 0.06,
+              "data_type": "double",
+              "show_submit_button": false
+            }
+          },
+          {
+            "title": "Distance From Hub",
+            "x": 650.0,
+            "y": 0.0,
+            "width": 200.0,
+            "height": 100.0,
+            "type": "Text Display",
+            "properties": {
+              "topic": "/Robot/Swerve/Distance From Hub",
+              "period": 0.06,
+              "data_type": "double",
+              "show_submit_button": false
+            }
+          },
+          {
+            "title": "Distance From Ferry Zone",
+            "x": 650.0,
+            "y": 100.0,
+            "width": 200.0,
+            "height": 100.0,
+            "type": "Text Display",
+            "properties": {
+              "topic": "/Robot/Swerve/Distance From Ferry Zone",
               "period": 0.06,
               "data_type": "double",
               "show_submit_button": false

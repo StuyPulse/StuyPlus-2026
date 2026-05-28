@@ -15,6 +15,7 @@ import com.ctre.phoenix6.signals.MotorAlignmentValue;
 import com.stuypulse.robot.constants.Motors;
 import com.stuypulse.robot.constants.Ports;
 import com.stuypulse.robot.constants.Settings;
+import com.stuypulse.robot.constants.Settings.EnabledSubsystems;
 import com.stuypulse.robot.util.SysId;
 import com.stuypulse.robot.util.simulation.RobotVisualizer;
 import com.stuypulse.robot.util.simulation.TalonFXSimulation;
@@ -111,10 +112,24 @@ public class IntakeSim extends Intake {
     }
 
     @Override
-    protected void stopMotors() {
-        pivotMotor.stopMotor();
-        rollerMotorLeft.stopMotor();
-        rollerMotorRight.stopMotor();
+    protected void stopMotors(IntakeMotorType motorType) {
+        switch (motorType) {
+            case PIVOT:
+                pivotMotor.stopMotor();
+                break;
+            case ROLLER:
+                rollerMotorLeft.stopMotor();
+                rollerMotorRight.stopMotor();
+                // re-add the follow control after stopMotor removes it
+                rollerMotorRight.setControl(followerController);
+                break;
+            case BOTH:
+                pivotMotor.stopMotor();
+                rollerMotorLeft.stopMotor();
+                rollerMotorRight.stopMotor();
+                break;
+            }
+
         // re-add the follow control after stopMotor removes it
         rollerMotorRight.setControl(followerController);
     }
@@ -127,7 +142,7 @@ public class IntakeSim extends Intake {
     @Override
     public void periodic() {
         if (!Settings.EnabledSubsystems.INTAKE.get()) {
-            stopMotors();
+            stopMotors(IntakeMotorType.BOTH);
             return;
         }
         if (pivotVoltageOverride.isPresent()) {
@@ -135,11 +150,23 @@ public class IntakeSim extends Intake {
             pivotMotor.update(Settings.DT);
             return;
         }
-        rollerMotorLeft.setControl(rollerController.withOutput(getState().getTargetDutyCycle()));
+
+        if (EnabledSubsystems.INTAKE_ROLLERS.get()) {
+            rollerMotorLeft.setControl(rollerController.withOutput(getState().getTargetDutyCycle()));
+        } else {
+            stopMotors(IntakeMotorType.ROLLER);
+        }
+
+        if (EnabledSubsystems.INTAKE_PIVOT.get()) {
+            pivotMotor.setControl(pivotController.withPosition(getState().getTargetAngle().times(-1)).withSlot(0)); // cooked inversion
+        } else {
+            stopMotors(IntakeMotorType.PIVOT);
+        }
+        
         rollerMotorLeft.update(Settings.DT);
         rollerMotorRight.update(Settings.DT);
-        pivotMotor.setControl(pivotController.withPosition(getState().getTargetAngle().times(-1)).withSlot(0)); // cooked inversion
         pivotMotor.update(Settings.DT);
+        
         // all current measured in amps
         DogLog.log("Intake/Pivot/Stator Current", pivotMotor.getStatorCurrent().getValueAsDouble());
         DogLog.log("Intake/Pivot/Supply Current", pivotMotor.getSupplyCurrent().getValueAsDouble());
