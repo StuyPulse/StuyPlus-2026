@@ -15,6 +15,7 @@ import com.ctre.phoenix6.signals.MotorAlignmentValue;
 import com.stuypulse.robot.constants.Motors;
 import com.stuypulse.robot.constants.Ports;
 import com.stuypulse.robot.constants.Settings;
+import com.stuypulse.robot.constants.Settings.EnabledSubsystems;
 import com.stuypulse.robot.util.SysId;
 import com.stuypulse.robot.util.simulation.RobotVisualizer;
 import com.stuypulse.robot.util.simulation.TalonFXSimulation;
@@ -149,11 +150,21 @@ public class IntakeSim extends Intake {
             pivotMotor.update(Settings.DT);
             return;
         }
-        rollerMotorLeft.setControl(rollerController.withOutput(getState().getTargetDutyCycle()));
-        rollerMotorLeft.update(Settings.DT);
-        rollerMotorRight.update(Settings.DT);
-        pivotMotor.setControl(pivotController.withPosition(getState().getTargetAngle().times(-1)).withSlot(0)); // cooked inversion
-        pivotMotor.update(Settings.DT);
+
+        if (EnabledSubsystems.INTAKE_ROLLERS.get()) {
+            rollerMotorLeft.setControl(rollerController.withOutput(getState().getTargetDutyCycle()));
+            rollerMotorLeft.update(Settings.DT);
+            rollerMotorRight.update(Settings.DT);
+        } else {
+            stopMotors(IntakeMotorType.ROLLER);
+        }
+
+        if (EnabledSubsystems.INTAKE_PIVOT.get()) {
+            pivotMotor.setControl(pivotController.withPosition(getState().getTargetAngle().times(-1)).withSlot(0)); // cooked inversion
+            pivotMotor.update(Settings.DT);
+        } else {
+            stopMotors(IntakeMotorType.PIVOT);
+        }
         // all current measured in amps
         DogLog.log("Intake/Pivot/Stator Current", pivotMotor.getStatorCurrent().getValueAsDouble());
         DogLog.log("Intake/Pivot/Supply Current", pivotMotor.getSupplyCurrent().getValueAsDouble());
