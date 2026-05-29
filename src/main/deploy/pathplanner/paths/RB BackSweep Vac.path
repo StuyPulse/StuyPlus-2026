@@ -1,0 +1,126 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 8.151169771197234,
+        "y": 3.920009438682679
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 8.157752058315138,
+        "y": 5.001199963609898
+      },
+      "isLocked": false,
+      "linkedName": "RB Vac 2"
+    },
+    {
+      "anchor": {
+        "x": 6.917090668213246,
+        "y": 3.920009438682679
+      },
+      "prevControl": {
+        "x": 6.9059896668599245,
+        "y": 4.847521228838715
+      },
+      "nextControl": {
+        "x": 6.926664904021107,
+        "y": 3.1200620906113543
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 6.268236728984716,
+        "y": 2.293835459879913
+      },
+      "prevControl": {
+        "x": 6.876642630313681,
+        "y": 2.4234716885896583
+      },
+      "nextControl": {
+        "x": 5.564979189410479,
+        "y": 2.1439886963246
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 3.3533307177947598,
+        "y": 2.1844298694505095
+      },
+      "prevControl": {
+        "x": 3.731413300582241,
+        "y": 2.1800915438500725
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "RB Vac 3"
+    }
+  ],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0.5,
+      "rotationDegrees": 180.0
+    },
+    {
+      "waypointRelativePos": 1.0219469572368423,
+      "rotationDegrees": -90.0
+    },
+    {
+      "waypointRelativePos": 2.281301398026315,
+      "rotationDegrees": 180.0
+    }
+  ],
+  "constraintZones": [
+    {
+      "name": "Constraints Zone",
+      "minWaypointRelativePos": 0.0,
+      "maxWaypointRelativePos": 0.9620876160477453,
+      "constraints": {
+        "maxVelocity": 1.2,
+        "maxAcceleration": 3.0,
+        "maxAngularVelocity": 540.0,
+        "maxAngularAcceleration": 720.0,
+        "nominalVoltage": 12.0,
+        "unlimited": false
+      }
+    },
+    {
+      "name": "Constraints Zone",
+      "minWaypointRelativePos": 2.3627735411140565,
+      "maxWaypointRelativePos": 2.747036637931034,
+      "constraints": {
+        "maxVelocity": 1.8,
+        "maxAcceleration": 3.0,
+        "maxAngularVelocity": 540.0,
+        "maxAngularAcceleration": 720.0,
+        "nominalVoltage": 12.0,
+        "unlimited": false
+      }
+    }
+  ],
+  "pointTowardsZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 3.0,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 3.0,
+    "rotation": 179.1503477874982
+  },
+  "reversed": false,
+  "folder": "Vac",
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": 90.0
+  },
+  "useDefaultConstraints": true
+}

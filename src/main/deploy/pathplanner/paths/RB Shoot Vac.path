@@ -1,0 +1,54 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 3.3533307177947598,
+        "y": 2.1844298694505095
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 2.333225811954149,
+        "y": 2.066397493631732
+      },
+      "isLocked": false,
+      "linkedName": "RB Vac 3"
+    },
+    {
+      "anchor": {
+        "x": 3.2109139601528387,
+        "y": 3.084657364446871
+      },
+      "prevControl": {
+        "x": 2.2899422875727797,
+        "y": 2.8709324963609903
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": null
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 3.0,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 36.87101165617824
+  },
+  "reversed": false,
+  "folder": "Vac",
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": 179.1503477874982
+  },
+  "useDefaultConstraints": true
+}

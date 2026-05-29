@@ -1,0 +1,31 @@
+{
+  "version": "2025.0",
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "LB to N Dumpy"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "LB Dumpy Back Sweep"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "LB Dumpy Return"
+          }
+        }
+      ]
+    }
+  },
+  "resetOdom": true,
+  "folder": "Dumpy",
+  "choreoAuto": false
+}

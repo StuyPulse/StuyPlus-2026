@@ -1,0 +1,63 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 6.919144748263888,
+        "y": 2.2844453848379636
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 6.669197148889828,
+        "y": 2.2793270289354917
+      },
+      "isLocked": false,
+      "linkedName": "Dumpy 2"
+    },
+    {
+      "anchor": {
+        "x": 2.94012839988426,
+        "y": 2.520708912037037
+      },
+      "prevControl": {
+        "x": 4.00283291257278,
+        "y": 2.12618660161936
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "Dumpy 3"
+    }
+  ],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0.46571751644736836,
+      "rotationDegrees": 0.0
+    },
+    {
+      "waypointRelativePos": 0.635546875,
+      "rotationDegrees": 0.0
+    }
+  ],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 3.0,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 42.00886424482532
+  },
+  "reversed": false,
+  "folder": "Dumpy",
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": -90.0
+  },
+  "useDefaultConstraints": true
+}

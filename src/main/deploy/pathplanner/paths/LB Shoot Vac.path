@@ -1,0 +1,54 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 3.353,
+        "y": 5.816
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 2.3328948416957234,
+        "y": 5.934030193859505
+      },
+      "isLocked": false,
+      "linkedName": "LB Vac 3"
+    },
+    {
+      "anchor": {
+        "x": 3.2109139601528387,
+        "y": 4.915
+      },
+      "prevControl": {
+        "x": 2.289942063514131,
+        "y": 5.1287239025821405
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": null
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 3.0,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": -36.871
+  },
+  "reversed": false,
+  "folder": "Vac",
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": 179.1503477874982
+  },
+  "useDefaultConstraints": true
+}

@@ -4,13 +4,17 @@
   "holonomicMode": true,
   "pathFolders": [
     "Disrupt",
+    "Dumpy",
     "Ferry",
-    "Shooting"
+    "BC Dots",
+    "Vac"
   ],
   "autoFolders": [
+    "BC Dots",
     "Disrupt",
+    "Dumpy",
     "Ferry",
-    "Shooting"
+    "Vac"
   ],
   "defaultMaxVel": 3.0,
   "defaultMaxAccel": 3.0,

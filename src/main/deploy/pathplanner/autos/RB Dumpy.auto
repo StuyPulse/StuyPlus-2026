@@ -7,31 +7,25 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Shooting LB to N"
+            "pathName": "RB Dumpy RB to N"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Shooting N to LB"
+            "pathName": "RB Dumpy Back Sweep"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Shooting LB to N Hook"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "Shooting N to LB Final"
+            "pathName": "RB Dumpy Return"
           }
         }
       ]
     }
   },
   "resetOdom": true,
-  "folder": "Shooting",
+  "folder": "Dumpy",
   "choreoAuto": false
 }

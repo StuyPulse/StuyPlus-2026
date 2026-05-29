@@ -1,0 +1,68 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 6.895399040211063,
+        "y": 6.505
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 8.249305688227802,
+        "y": 6.534769889465065
+      },
+      "isLocked": false,
+      "linkedName": "LB Vac 1"
+    },
+    {
+      "anchor": {
+        "x": 8.151169771197234,
+        "y": 4.08
+      },
+      "prevControl": {
+        "x": 8.151169771197234,
+        "y": 4.692406515721458
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "LB Vac 2"
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [
+    {
+      "name": "Constraints Zone",
+      "minWaypointRelativePos": 0.2492539787798408,
+      "maxWaypointRelativePos": 0.9678174734748,
+      "constraints": {
+        "maxVelocity": 1.8,
+        "maxAcceleration": 3.0,
+        "maxAngularVelocity": 540.0,
+        "maxAngularAcceleration": 720.0,
+        "nominalVoltage": 12.0,
+        "unlimited": false
+      }
+    }
+  ],
+  "pointTowardsZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 3.0,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 2.0,
+    "rotation": -90.0
+  },
+  "reversed": false,
+  "folder": "Vac",
+  "idealStartingState": {
+    "velocity": 0.0,
+    "rotation": -34.0
+  },
+  "useDefaultConstraints": true
+}

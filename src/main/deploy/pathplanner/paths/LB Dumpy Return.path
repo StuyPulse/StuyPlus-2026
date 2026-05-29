@@ -1,0 +1,63 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 6.919144748263888,
+        "y": 5.716
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 6.669197137926725,
+        "y": 5.721117820506984
+      },
+      "isLocked": false,
+      "linkedName": "LB Dumpy 2"
+    },
+    {
+      "anchor": {
+        "x": 2.94012839988426,
+        "y": 5.479
+      },
+      "prevControl": {
+        "x": 4.0028337686351865,
+        "y": 5.873520004478611
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": null
+    }
+  ],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0.46571751644736836,
+      "rotationDegrees": 0.0
+    },
+    {
+      "waypointRelativePos": 0.635546875,
+      "rotationDegrees": 0.0
+    }
+  ],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 3.0,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": -42.00900000000001
+  },
+  "reversed": false,
+  "folder": "Dumpy",
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": 90.0
+  },
+  "useDefaultConstraints": true
+}
