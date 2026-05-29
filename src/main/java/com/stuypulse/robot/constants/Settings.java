@@ -243,6 +243,8 @@ public interface Settings {
         DoubleSubscriber SHOOT_TUNING_RPM = DogLog.tunable("Shooter/Shoot Tuning RPM", 0.0);
         DoubleSubscriber FERRY_TUNING_RPM = DogLog.tunable("Shooter/Ferry Tuning RPM", 0.0);
 
+        AngularVelocity SHOOTER_SPUN_UP_TOLERANCE = RPM.of(100);
+
         public interface RPMInterpolation {
 
             double[][] distanceRPMInterpolationValues = {
