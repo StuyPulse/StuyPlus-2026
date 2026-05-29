@@ -157,32 +157,34 @@
 <span class="source-line-no">144</span><span id="line-144">    // Roller Commands</span>
 <span class="source-line-no">145</span><span id="line-145">    public abstract AngularVelocity getRollerVelocity();</span>
 <span class="source-line-no">146</span><span id="line-146"></span>
-<span class="source-line-no">147</span><span id="line-147">    protected enum IntakeMotorType {</span>
-<span class="source-line-no">148</span><span id="line-148">        PIVOT, ROLLER, BOTH</span>
-<span class="source-line-no">149</span><span id="line-149">    }</span>
-<span class="source-line-no">150</span><span id="line-150"></span>
-<span class="source-line-no">151</span><span id="line-151">    protected abstract void stopMotors(IntakeMotorType motorType);</span>
-<span class="source-line-no">152</span><span id="line-152"></span>
-<span class="source-line-no">153</span><span id="line-153">    // Sysid</span>
-<span class="source-line-no">154</span><span id="line-154">    public abstract SysIdRoutine getIntakeSysIdRoutine();</span>
-<span class="source-line-no">155</span><span id="line-155"></span>
-<span class="source-line-no">156</span><span id="line-156">    public abstract void setPivotVoltageOverride(Voltage voltage);</span>
+<span class="source-line-no">147</span><span id="line-147">    // Stop Commands</span>
+<span class="source-line-no">148</span><span id="line-148">    protected abstract void stopRollerMotors();</span>
+<span class="source-line-no">149</span><span id="line-149">    protected abstract void stopPivotMotor();</span>
+<span class="source-line-no">150</span><span id="line-150">    protected void stopAllMotors() {</span>
+<span class="source-line-no">151</span><span id="line-151">        stopRollerMotors();</span>
+<span class="source-line-no">152</span><span id="line-152">        stopPivotMotor();</span>
+<span class="source-line-no">153</span><span id="line-153">    };</span>
+<span class="source-line-no">154</span><span id="line-154"></span>
+<span class="source-line-no">155</span><span id="line-155">    // Sysid</span>
+<span class="source-line-no">156</span><span id="line-156">    public abstract SysIdRoutine getIntakeSysIdRoutine();</span>
 <span class="source-line-no">157</span><span id="line-157"></span>
-<span class="source-line-no">158</span><span id="line-158">    @Override</span>
-<span class="source-line-no">159</span><span id="line-159">    public void periodic() {</span>
-<span class="source-line-no">160</span><span id="line-160">        final IntakeState currentState = getState();</span>
-<span class="source-line-no">161</span><span id="line-161">        // Logging</span>
-<span class="source-line-no">162</span><span id="line-162">        DogLog.log("Intake/State", currentState.name());</span>
-<span class="source-line-no">163</span><span id="line-163">        DogLog.forceNt.log("Intake/Pivot/Limit Switch Hit", limitSwitchHit());</span>
-<span class="source-line-no">164</span><span id="line-164">        DogLog.forceNt.log("States/Intake", currentState.name());</span>
-<span class="source-line-no">165</span><span id="line-165">        DogLog.log("Intake/Pivot/Target Angle", currentState.getTargetAngle().in(Degrees));</span>
-<span class="source-line-no">166</span><span id="line-166">        DogLog.forceNt.log("Intake/Pivot/Current Angle", getRelativePosition().in(Degrees));</span>
-<span class="source-line-no">167</span><span id="line-167">        DogLog.forceNt.log("Intake/Pivot/At Target Angle", atTargetAngle());</span>
-<span class="source-line-no">168</span><span id="line-168">        DogLog.log("Intake/Pivot/Above Threshold", isPivotAboveThreshold());</span>
-<span class="source-line-no">169</span><span id="line-169">        DogLog.forceNt.log("Intake/Rollers/Target Duty Cycle", currentState.getTargetDutyCycle());</span>
-<span class="source-line-no">170</span><span id="line-170">        DogLog.log("Intake/Rollers/RPM", getRollerVelocity().in(RPM));</span>
-<span class="source-line-no">171</span><span id="line-171">    }</span>
-<span class="source-line-no">172</span><span id="line-172">}</span>
+<span class="source-line-no">158</span><span id="line-158">    public abstract void setPivotVoltageOverride(Voltage voltage);</span>
+<span class="source-line-no">159</span><span id="line-159"></span>
+<span class="source-line-no">160</span><span id="line-160">    @Override</span>
+<span class="source-line-no">161</span><span id="line-161">    public void periodic() {</span>
+<span class="source-line-no">162</span><span id="line-162">        final IntakeState currentState = getState();</span>
+<span class="source-line-no">163</span><span id="line-163">        // Logging</span>
+<span class="source-line-no">164</span><span id="line-164">        DogLog.log("Intake/State", currentState.name());</span>
+<span class="source-line-no">165</span><span id="line-165">        DogLog.forceNt.log("Intake/Pivot/Limit Switch Hit", limitSwitchHit());</span>
+<span class="source-line-no">166</span><span id="line-166">        DogLog.forceNt.log("States/Intake", currentState.name());</span>
+<span class="source-line-no">167</span><span id="line-167">        DogLog.log("Intake/Pivot/Target Angle", currentState.getTargetAngle().in(Degrees));</span>
+<span class="source-line-no">168</span><span id="line-168">        DogLog.forceNt.log("Intake/Pivot/Current Angle", getRelativePosition().in(Degrees));</span>
+<span class="source-line-no">169</span><span id="line-169">        DogLog.forceNt.log("Intake/Pivot/At Target Angle", atTargetAngle());</span>
+<span class="source-line-no">170</span><span id="line-170">        DogLog.log("Intake/Pivot/Above Threshold", isPivotAboveThreshold());</span>
+<span class="source-line-no">171</span><span id="line-171">        DogLog.forceNt.log("Intake/Rollers/Target Duty Cycle", currentState.getTargetDutyCycle());</span>
+<span class="source-line-no">172</span><span id="line-172">        DogLog.log("Intake/Rollers/RPM", getRollerVelocity().in(RPM));</span>
+<span class="source-line-no">173</span><span id="line-173">    }</span>
+<span class="source-line-no">174</span><span id="line-174">}</span>
 
 
 

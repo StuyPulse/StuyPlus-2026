@@ -100,12 +100,9 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Class</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color"><code>protected static enum&nbsp;</code></div>
-<div class="col-second even-row-color"><code><a href="Intake.IntakeMotorType.html" class="type-name-link" title="enum class in com.stuypulse.robot.subsystems.intake">Intake.IntakeMotorType</a></code></div>
-<div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code>static enum&nbsp;</code></div>
-<div class="col-second odd-row-color"><code><a href="Intake.IntakeState.html" class="type-name-link" title="enum class in com.stuypulse.robot.subsystems.intake">Intake.IntakeState</a></code></div>
-<div class="col-last odd-row-color">
+<div class="col-first even-row-color"><code>static enum&nbsp;</code></div>
+<div class="col-second even-row-color"><code><a href="Intake.IntakeState.html" class="type-name-link" title="enum class in com.stuypulse.robot.subsystems.intake">Intake.IntakeState</a></code></div>
+<div class="col-last even-row-color">
 <div class="block">Enum representing the different possible states of the intake.</div>
 </div>
 </div>
@@ -191,8 +188,14 @@ loadScripts(document, 'script');</script>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setState(com.stuypulse.robot.subsystems.intake.Intake.IntakeState)" class="member-name-link">setState</a><wbr>(<a href="Intake.IntakeState.html" title="enum class in com.stuypulse.robot.subsystems.intake">Intake.IntakeState</a>&nbsp;state)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#stopAllMotors()" class="member-name-link">stopAllMotors</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>protected abstract void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#stopPivotMotor()" class="member-name-link">stopPivotMotor</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>protected abstract void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#stopMotors(com.stuypulse.robot.subsystems.intake.Intake.IntakeMotorType)" class="member-name-link">stopMotors</a><wbr>(<a href="Intake.IntakeMotorType.html" title="enum class in com.stuypulse.robot.subsystems.intake">Intake.IntakeMotorType</a>&nbsp;motorType)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#stopRollerMotors()" class="member-name-link">stopRollerMotors</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
 </div>
 </div>
@@ -306,27 +309,39 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
-<section class="detail" id="stopMotors(com.stuypulse.robot.subsystems.intake.Intake.IntakeMotorType)">
-<h3>stopMotors</h3>
-<div class="member-signature"><span class="modifiers">protected abstract</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/intake/Intake.html#line-151">stopMotors</a></span><wbr><span class="parameters">(<a href="Intake.IntakeMotorType.html" title="enum class in com.stuypulse.robot.subsystems.intake">Intake.IntakeMotorType</a>&nbsp;motorType)</span></div>
+<section class="detail" id="stopRollerMotors()">
+<h3>stopRollerMotors</h3>
+<div class="member-signature"><span class="modifiers">protected abstract</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/intake/Intake.html#line-148">stopRollerMotors</a></span>()</div>
+</section>
+</li>
+<li>
+<section class="detail" id="stopPivotMotor()">
+<h3>stopPivotMotor</h3>
+<div class="member-signature"><span class="modifiers">protected abstract</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/intake/Intake.html#line-149">stopPivotMotor</a></span>()</div>
+</section>
+</li>
+<li>
+<section class="detail" id="stopAllMotors()">
+<h3>stopAllMotors</h3>
+<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/intake/Intake.html#line-150">stopAllMotors</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getIntakeSysIdRoutine()">
 <h3>getIntakeSysIdRoutine</h3>
-<div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type">edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/intake/Intake.html#line-154">getIntakeSysIdRoutine</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type">edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/intake/Intake.html#line-156">getIntakeSysIdRoutine</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="setPivotVoltageOverride(edu.wpi.first.units.measure.Voltage)">
 <h3>setPivotVoltageOverride</h3>
-<div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/intake/Intake.html#line-156">setPivotVoltageOverride</a></span><wbr><span class="parameters">(edu.wpi.first.units.measure.Voltage&nbsp;voltage)</span></div>
+<div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/intake/Intake.html#line-158">setPivotVoltageOverride</a></span><wbr><span class="parameters">(edu.wpi.first.units.measure.Voltage&nbsp;voltage)</span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="periodic()">
 <h3>periodic</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/intake/Intake.html#line-158">periodic</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/intake/Intake.html#line-160">periodic</a></span>()</div>
 </section>
 </li>
 </ul>
