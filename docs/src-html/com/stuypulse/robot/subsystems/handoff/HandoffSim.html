@@ -63,25 +63,27 @@
 <span class="source-line-no">050</span><span id="line-50"></span>
 <span class="source-line-no">051</span><span id="line-51">    @Override</span>
 <span class="source-line-no">052</span><span id="line-52">    public void periodic() {</span>
-<span class="source-line-no">053</span><span id="line-53">        if (!Settings.EnabledSubsystems.HANDOFF.get()) {</span>
-<span class="source-line-no">054</span><span id="line-54">            stopMotors();</span>
-<span class="source-line-no">055</span><span id="line-55">            return;</span>
-<span class="source-line-no">056</span><span id="line-56">        }</span>
-<span class="source-line-no">057</span><span id="line-57">        Shooter shooter = Shooter.getInstance();</span>
-<span class="source-line-no">058</span><span id="line-58">        CommandSwerveDrivetrain swerve = CommandSwerveDrivetrain.getInstance();</span>
-<span class="source-line-no">059</span><span id="line-59">        if (!(swerve.isAlignedToTarget(Field.getHubPose()))</span>
-<span class="source-line-no">060</span><span id="line-60">                &amp;&amp; shooter.getState() == ShooterState.SHOOT) {</span>
-<span class="source-line-no">061</span><span id="line-61">            setState(HandoffState.IDLE);</span>
-<span class="source-line-no">062</span><span id="line-62">        }</span>
-<span class="source-line-no">063</span><span id="line-63">        if (!(swerve.isAlignedToTarget(Field.getFerryZonePose(swerve.getPose().getTranslation())))</span>
-<span class="source-line-no">064</span><span id="line-64">                &amp;&amp; shooter.getState() == ShooterState.FERRY) {</span>
-<span class="source-line-no">065</span><span id="line-65">            setState(HandoffState.IDLE);</span>
-<span class="source-line-no">066</span><span id="line-66">        }</span>
-<span class="source-line-no">067</span><span id="line-67">        handoffMotor.setControl(handoffMotorController.withOutput(getState().getTargetVoltage()));</span>
-<span class="source-line-no">068</span><span id="line-68">        handoffMotor.update(Settings.DT);</span>
-<span class="source-line-no">069</span><span id="line-69">        super.periodic();</span>
-<span class="source-line-no">070</span><span id="line-70">    }</span>
-<span class="source-line-no">071</span><span id="line-71">}</span>
+<span class="source-line-no">053</span><span id="line-53">        if (Settings.EnabledSubsystems.HANDOFF.get()) {</span>
+<span class="source-line-no">054</span><span id="line-54">            Shooter shooter = Shooter.getInstance();</span>
+<span class="source-line-no">055</span><span id="line-55">            CommandSwerveDrivetrain swerve = CommandSwerveDrivetrain.getInstance();</span>
+<span class="source-line-no">056</span><span id="line-56">            if (!(swerve.isAlignedToTarget(Field.getHubPose()))</span>
+<span class="source-line-no">057</span><span id="line-57">                    &amp;&amp; shooter.getState() == ShooterState.SHOOT) {</span>
+<span class="source-line-no">058</span><span id="line-58">                setState(HandoffState.IDLE);</span>
+<span class="source-line-no">059</span><span id="line-59">            }</span>
+<span class="source-line-no">060</span><span id="line-60">            if (!(swerve.isAlignedToTarget(Field.getFerryZonePose(swerve.getPose().getTranslation())))</span>
+<span class="source-line-no">061</span><span id="line-61">                    &amp;&amp; shooter.getState() == ShooterState.FERRY) {</span>
+<span class="source-line-no">062</span><span id="line-62">                setState(HandoffState.IDLE);</span>
+<span class="source-line-no">063</span><span id="line-63">            }</span>
+<span class="source-line-no">064</span><span id="line-64">            </span>
+<span class="source-line-no">065</span><span id="line-65">            handoffMotor.setControl(handoffMotorController.withOutput(getState().getTargetVoltage()));</span>
+<span class="source-line-no">066</span><span id="line-66">        } else {</span>
+<span class="source-line-no">067</span><span id="line-67">            stopMotors();</span>
+<span class="source-line-no">068</span><span id="line-68">        }</span>
+<span class="source-line-no">069</span><span id="line-69"></span>
+<span class="source-line-no">070</span><span id="line-70">        handoffMotor.update(Settings.DT);</span>
+<span class="source-line-no">071</span><span id="line-71">        super.periodic();</span>
+<span class="source-line-no">072</span><span id="line-72">    }</span>
+<span class="source-line-no">073</span><span id="line-73">}</span>
 
 
 
