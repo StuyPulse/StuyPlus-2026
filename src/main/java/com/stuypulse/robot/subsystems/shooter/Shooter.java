@@ -103,7 +103,7 @@ public abstract class Shooter extends SubsystemBase {
     public abstract void setVoltageOverride(Voltage voltage);
 
     public boolean shooterSpunUp() {
-        return true;//getCurrentAngularVelocity().gte(getState().getTargetAngularVelocity().minus(RPM.of(100)));
+        return getCurrentAngularVelocity().gte(getState().getTargetAngularVelocity().minus(RPM.of(100)));
     }
 
     @Override

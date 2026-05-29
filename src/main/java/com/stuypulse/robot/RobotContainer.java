@@ -20,6 +20,7 @@ import com.stuypulse.robot.commands.leds.LEDDefaultCommand;
 import com.stuypulse.robot.commands.shooter.ShooterSetFerry;
 import com.stuypulse.robot.commands.shooter.ShooterSetManual;
 import com.stuypulse.robot.commands.shooter.ShooterSetShoot;
+import com.stuypulse.robot.commands.shooter.ShooterWaitForSpinUp;
 import com.stuypulse.robot.commands.swerve.SwerveDriveDrive;
 import com.stuypulse.robot.commands.swerve.SwerveDriveResetRotation;
 import com.stuypulse.robot.commands.swerve.SwerveDriveXMode;
@@ -107,40 +108,40 @@ public class RobotContainer {
         driver.leftBumper().whileTrue(new IntakeSetOuttake());
         driver.leftBumper().onFalse(new IntakeSetIntake());
         rightTrigger.onTrue(
-                new SwerveDriveAlignToHub()
-                        .andThen(new SwerveDriveXMode())
-                        .andThen(new ShooterSetShoot())
-                        .andThen(new HandoffSetForward())
-                        .alongWith(new FeederSetForward(), new IntakeAgitateFastOnce().repeatedly()));
+            new SwerveDriveAlignToHub()
+                .andThen(new SwerveDriveXMode())
+                .andThen(new ShooterWaitForSpinUp())
+                .andThen(new ShooterSetShoot())
+                .andThen(new HandoffSetForward())
+                .alongWith(new FeederSetForward(), new IntakeAgitateFastOnce().repeatedly()));
         driver.y().onTrue(new IntakeSetIdle());
         driver.povUp().onTrue(new SwerveDriveResetRotation());
-        driver
-                .rightBumper()
-                .onTrue(
-                        new SwerveDriveAlignToFerryZone()
-                                .andThen(new SwerveDriveXMode())
-                                .andThen(new ShooterSetFerry())
-                                .andThen(new HandoffSetForward())
-                                .alongWith(new FeederSetForward(), new IntakeAgitateFastOnce().repeatedly()));
+        driver.rightBumper()
+            .onTrue(
+                new SwerveDriveAlignToFerryZone()
+                    .andThen(new SwerveDriveXMode())
+                    .andThen(new ShooterWaitForSpinUp())
+                    .andThen(new ShooterSetFerry())
+                    .andThen(new HandoffSetForward())
+                    .alongWith(new FeederSetForward(), new IntakeAgitateFastOnce().repeatedly()));
         // Manual shooting possibly from in front of the tower
-        driver
-                .a()
-                .whileTrue(
-                        new SwerveDriveXMode()
-                                .andThen(new ShooterSetManual())
-                                .andThen(new HandoffSetForward().repeatedly())
-                                .alongWith(new FeederSetForward().repeatedly(), new IntakeAgitateFastOnce().repeatedly())
-                                .andThen(new IntakeSetHomingDown()));
+        driver.a()
+            .whileTrue(
+                new SwerveDriveXMode()
+                    .andThen(new ShooterWaitForSpinUp())
+                    .andThen(new ShooterSetManual())
+                    .andThen(new HandoffSetForward().repeatedly())
+                    .alongWith(new FeederSetForward().repeatedly(), new IntakeAgitateFastOnce().repeatedly())
+                    .andThen(new IntakeSetHomingDown()));
         // Top Right Paddle
-        driver
-                .b()
-                .onTrue(
-                        new HandoffSetIdle()
-                                .alongWith(
-                                        new FeederSetIdle(),
-                                        new IntakeSetIntake(),
-                                        Commands.runOnce(
-                                                () -> new SwerveDriveXMode().cancel())));
+        driver.b()
+            .onTrue(
+                new HandoffSetIdle()
+                    .alongWith(
+                        new FeederSetIdle(),
+                        new IntakeSetIntake(),
+                        Commands.runOnce(
+                                () -> new SwerveDriveXMode().cancel())));
         // Bottom Left Paddle
         driver.x().whileTrue(new SwerveDriveXMode());
     }

@@ -69,10 +69,6 @@ public class HandoffImpl extends Handoff {
             setState(HandoffState.IDLE);
         }
 
-        if (!Shooter.getInstance().shooterSpunUp()) {
-            setState(HandoffState.IDLE);
-        }
-
         // Control
         final Voltage voltage = handoffStalling.get()
                 ? Handoff.HandoffState.REVERSE.getTargetVoltage()
