@@ -50,21 +50,23 @@ public class HandoffSim extends Handoff {
 
     @Override
     public void periodic() {
-        if (!Settings.EnabledSubsystems.HANDOFF.get()) {
+        if (Settings.EnabledSubsystems.HANDOFF.get()) {
+            Shooter shooter = Shooter.getInstance();
+            CommandSwerveDrivetrain swerve = CommandSwerveDrivetrain.getInstance();
+            if (!(swerve.isAlignedToTarget(Field.getHubPose()))
+                    && shooter.getState() == ShooterState.SHOOT) {
+                setState(HandoffState.IDLE);
+            }
+            if (!(swerve.isAlignedToTarget(Field.getFerryZonePose(swerve.getPose().getTranslation())))
+                    && shooter.getState() == ShooterState.FERRY) {
+                setState(HandoffState.IDLE);
+            }
+            
+            handoffMotor.setControl(handoffMotorController.withOutput(getState().getTargetVoltage()));
+        } else {
             stopMotors();
-            return;
         }
-        Shooter shooter = Shooter.getInstance();
-        CommandSwerveDrivetrain swerve = CommandSwerveDrivetrain.getInstance();
-        if (!(swerve.isAlignedToTarget(Field.getHubPose()))
-                && shooter.getState() == ShooterState.SHOOT) {
-            setState(HandoffState.IDLE);
-        }
-        if (!(swerve.isAlignedToTarget(Field.getFerryZonePose(swerve.getPose().getTranslation())))
-                && shooter.getState() == ShooterState.FERRY) {
-            setState(HandoffState.IDLE);
-        }
-        handoffMotor.setControl(handoffMotorController.withOutput(getState().getTargetVoltage()));
+
         handoffMotor.update(Settings.DT);
         super.periodic();
     }

@@ -131,44 +131,45 @@ public class IntakeSim extends Intake {
 
     @Override
     public void periodic() {
-        if (!Settings.EnabledSubsystems.INTAKE.get()) {
-            stopAllMotors();
-            return;
-        }
-        if (pivotVoltageOverride.isPresent()) {
-            pivotMotor.setControl(new VoltageOut(pivotVoltageOverride.get()));
-            return;
-        }
-        
-        if (EnabledSubsystems.INTAKE_PIVOT.get()) {
-            pivotMotor.setControl(pivotController.withPosition(getState().getTargetAngle().times(-1)).withSlot(0)); // cooked inversion
-        } else {
-            stopPivotMotor();
-        }
+        if (Settings.EnabledSubsystems.INTAKE.get()) {
+            if (pivotVoltageOverride.isPresent()) {
+                pivotMotor.setControl(new VoltageOut(pivotVoltageOverride.get()));
+                return;
+            }
+            
+            if (EnabledSubsystems.INTAKE_PIVOT.get()) {
+                pivotMotor.setControl(pivotController.withPosition(getState().getTargetAngle().times(-1)).withSlot(0)); // cooked inversion
+            } else {
+                stopPivotMotor();
+            }
 
-        if (EnabledSubsystems.INTAKE_ROLLERS.get()) {
-            rollerMotorLeft.setControl(rollerController.withOutput(getState().getTargetDutyCycle()));
-        } else {
-            stopRollerMotors();
-        }
-        
+            if (EnabledSubsystems.INTAKE_ROLLERS.get()) {
+                rollerMotorLeft.setControl(rollerController.withOutput(getState().getTargetDutyCycle()));
+            } else {
+                stopRollerMotors();
+            }
+            
+            
+            // all current measured in amps
+            DogLog.log("Intake/Pivot/Stator Current", pivotMotor.getStatorCurrent().getValueAsDouble());
+            DogLog.log("Intake/Pivot/Supply Current", pivotMotor.getSupplyCurrent().getValueAsDouble());
+            DogLog.log("Intake/Pivot/Voltage", pivotMotor.getMotorVoltage().getValueAsDouble());
+            DogLog.log("Intake/Rollers/Left Current", rollerMotorLeft.getStatorCurrent().getValueAsDouble());
+            DogLog.log(
+                "Intake/Rollers/Right Current", rollerMotorRight.getStatorCurrent().getValueAsDouble());
+                DogLog.log("Intake/Rollers/Left Voltage", rollerMotorLeft.getMotorVoltage().getValueAsDouble());
+                DogLog.log("Intake/Rollers/Right Voltage", rollerMotorRight.getMotorVoltage().getValueAsDouble());
+                DogLog.log("Intake/Rollers/Left Stalling", false);
+                // TODO: implement
+                DogLog.log("Intake/Rollers/Right Stalling", false);
+                
+            } else {
+                stopAllMotors();
+            }
+            
         rollerMotorLeft.update(Settings.DT);
         rollerMotorRight.update(Settings.DT);
         pivotMotor.update(Settings.DT);
-        
-        // all current measured in amps
-        DogLog.log("Intake/Pivot/Stator Current", pivotMotor.getStatorCurrent().getValueAsDouble());
-        DogLog.log("Intake/Pivot/Supply Current", pivotMotor.getSupplyCurrent().getValueAsDouble());
-        DogLog.log("Intake/Pivot/Voltage", pivotMotor.getMotorVoltage().getValueAsDouble());
-        DogLog.log("Intake/Rollers/Left Current", rollerMotorLeft.getStatorCurrent().getValueAsDouble());
-        DogLog.log(
-                "Intake/Rollers/Right Current", rollerMotorRight.getStatorCurrent().getValueAsDouble());
-        DogLog.log("Intake/Rollers/Left Voltage", rollerMotorLeft.getMotorVoltage().getValueAsDouble());
-        DogLog.log("Intake/Rollers/Right Voltage", rollerMotorRight.getMotorVoltage().getValueAsDouble());
-        DogLog.log("Intake/Rollers/Left Stalling", false);
-        // TODO: implement
-        DogLog.log("Intake/Rollers/Right Stalling", false);
-
         RobotVisualizer.getInstance().updateIntake(Radians.of(getRelativePosition().in(Radians)), getRollerVelocity());
         super.periodic();
     }

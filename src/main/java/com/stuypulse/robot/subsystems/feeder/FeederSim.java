@@ -50,15 +50,16 @@ public class FeederSim extends Feeder {
 
     @Override
     public void periodic() {
-        if (!Settings.EnabledSubsystems.FEEDER.get()) {
+        if (Settings.EnabledSubsystems.FEEDER.get()) {
+            // apply control to leader before grabbing state to update other motors
+            feederMotor.setControl(feederController.withOutput(getState().getTargetVoltage()));
+            // Logging
+        } else {
             stopMotors();
-            return;
         }
-        // apply control to leader before grabbing state to update other motors
-        feederMotor.setControl(feederController.withOutput(getState().getTargetVoltage()));
+        
         feederMotor.update(Settings.DT);
         RobotVisualizer.getInstance().updateFeeder(getCurrentAngularVelocity());
-        // Logging
         super.periodic();
     }
 }

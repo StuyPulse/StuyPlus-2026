@@ -82,14 +82,15 @@ public class ShooterSim extends Shooter {
 
     @Override
     public void periodic() {
-        if (!Settings.EnabledSubsystems.SHOOTER.get()) {
+        if (Settings.EnabledSubsystems.SHOOTER.get()) {
+            shooterMotorRight.setControl(
+                    shooterController.withVelocity(
+                            getState().getTargetAngularVelocity().in(RotationsPerSecond)));
+            // leader first
+        } else {
             stopMotors();
-            return;
         }
-        shooterMotorRight.setControl(
-                shooterController.withVelocity(
-                        getState().getTargetAngularVelocity().in(RotationsPerSecond)));
-        // leader first
+        
         shooterMotorRight.update(Settings.DT);
         shooterMotorCenter.update(Settings.DT);
         shooterMotorLeft.update(Settings.DT);
