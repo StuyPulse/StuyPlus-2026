@@ -6,10 +6,12 @@
 package com.stuypulse.robot;
 
 import com.ctre.phoenix6.SignalLogger;
+import com.stuypulse.robot.commands.shooter.ShooterSetShoot;
 import com.stuypulse.robot.commands.vision.SetIMUMode;
 import com.stuypulse.robot.commands.vision.SetMegaTagMode;
 import com.stuypulse.robot.commands.vision.SetVisionEnabled;
 import com.stuypulse.robot.commands.vision.WhitelistAllTags;
+import com.stuypulse.robot.subsystems.shooter.Shooter;
 import com.stuypulse.robot.subsystems.swerve.CommandSwerveDrivetrain;
 import com.stuypulse.robot.subsystems.vision.LimelightVision;
 import com.stuypulse.robot.subsystems.vision.LimelightVision.MegaTagMode;
@@ -188,6 +190,7 @@ public class Robot extends TimedRobot {
         CommandScheduler.getInstance().schedule(new SetMegaTagMode(MegaTagMode.MEGATAG2));
         CommandScheduler.getInstance().schedule(new SetIMUMode(4));
         CommandScheduler.getInstance().schedule(new WhitelistAllTags());
+        CommandScheduler.getInstance().schedule(new ShooterSetShoot()); // start at SHOOT state
         if (auto != null) {
             auto.cancel();
         }
