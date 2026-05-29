@@ -76,16 +76,14 @@
 <span class="source-line-no">063</span><span id="line-63">                &amp;&amp; shooter.getState() == ShooterState.FERRY) {</span>
 <span class="source-line-no">064</span><span id="line-64">            setState(FeederState.IDLE);</span>
 <span class="source-line-no">065</span><span id="line-65">        }</span>
-<span class="source-line-no">066</span><span id="line-66">        if (!Shooter.getInstance().shooterSpunUp()) {</span>
-<span class="source-line-no">067</span><span id="line-67">            setState(FeederState.IDLE);</span>
-<span class="source-line-no">068</span><span id="line-68">        }</span>
-<span class="source-line-no">069</span><span id="line-69">        // Apply</span>
-<span class="source-line-no">070</span><span id="line-70">        feederMotor.setControl(controller.withOutput(getState().getTargetVoltage()));</span>
-<span class="source-line-no">071</span><span id="line-71">        // Logging</span>
-<span class="source-line-no">072</span><span id="line-72">        this.signals.logAll();</span>
-<span class="source-line-no">073</span><span id="line-73">        super.periodic();</span>
-<span class="source-line-no">074</span><span id="line-74">    }</span>
-<span class="source-line-no">075</span><span id="line-75">}</span>
+<span class="source-line-no">066</span><span id="line-66"></span>
+<span class="source-line-no">067</span><span id="line-67">        // Apply</span>
+<span class="source-line-no">068</span><span id="line-68">        feederMotor.setControl(controller.withOutput(getState().getTargetVoltage()));</span>
+<span class="source-line-no">069</span><span id="line-69">        // Logging</span>
+<span class="source-line-no">070</span><span id="line-70">        this.signals.logAll();</span>
+<span class="source-line-no">071</span><span id="line-71">        super.periodic();</span>
+<span class="source-line-no">072</span><span id="line-72">    }</span>
+<span class="source-line-no">073</span><span id="line-73">}</span>
 
 
 

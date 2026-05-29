@@ -33,249 +33,250 @@
 <span class="source-line-no">020</span><span id="line-20">import com.stuypulse.robot.commands.shooter.ShooterSetFerry;</span>
 <span class="source-line-no">021</span><span id="line-21">import com.stuypulse.robot.commands.shooter.ShooterSetManual;</span>
 <span class="source-line-no">022</span><span id="line-22">import com.stuypulse.robot.commands.shooter.ShooterSetShoot;</span>
-<span class="source-line-no">023</span><span id="line-23">import com.stuypulse.robot.commands.swerve.SwerveDriveDrive;</span>
-<span class="source-line-no">024</span><span id="line-24">import com.stuypulse.robot.commands.swerve.SwerveDriveResetRotation;</span>
-<span class="source-line-no">025</span><span id="line-25">import com.stuypulse.robot.commands.swerve.SwerveDriveXMode;</span>
-<span class="source-line-no">026</span><span id="line-26">import com.stuypulse.robot.commands.swerve.driveAligned.SwerveDriveAlignToFerryZone;</span>
-<span class="source-line-no">027</span><span id="line-27">import com.stuypulse.robot.commands.swerve.driveAligned.SwerveDriveAlignToHub;</span>
-<span class="source-line-no">028</span><span id="line-28">import com.stuypulse.robot.constants.Field;</span>
-<span class="source-line-no">029</span><span id="line-29">import com.stuypulse.robot.constants.Ports;</span>
-<span class="source-line-no">030</span><span id="line-30">import com.stuypulse.robot.subsystems.feeder.Feeder;</span>
-<span class="source-line-no">031</span><span id="line-31">import com.stuypulse.robot.subsystems.handoff.Handoff;</span>
-<span class="source-line-no">032</span><span id="line-32">import com.stuypulse.robot.subsystems.intake.Intake;</span>
-<span class="source-line-no">033</span><span id="line-33">import com.stuypulse.robot.subsystems.leds.LEDController;</span>
-<span class="source-line-no">034</span><span id="line-34">import com.stuypulse.robot.subsystems.shooter.Shooter;</span>
-<span class="source-line-no">035</span><span id="line-35">import com.stuypulse.robot.subsystems.swerve.CommandSwerveDrivetrain;</span>
-<span class="source-line-no">036</span><span id="line-36">import com.stuypulse.robot.subsystems.vision.LimelightVision;</span>
-<span class="source-line-no">037</span><span id="line-37">import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;</span>
-<span class="source-line-no">038</span><span id="line-38">import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;</span>
-<span class="source-line-no">039</span><span id="line-39">import edu.wpi.first.wpilibj2.command.Command;</span>
-<span class="source-line-no">040</span><span id="line-40">import edu.wpi.first.wpilibj2.command.Commands;</span>
-<span class="source-line-no">041</span><span id="line-41">import edu.wpi.first.wpilibj2.command.button.CommandXboxController;</span>
-<span class="source-line-no">042</span><span id="line-42">import edu.wpi.first.wpilibj2.command.button.Trigger;</span>
-<span class="source-line-no">043</span><span id="line-43">import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;</span>
-<span class="source-line-no">044</span><span id="line-44"></span>
-<span class="source-line-no">045</span><span id="line-45">/**</span>
-<span class="source-line-no">046</span><span id="line-46"> * &lt;h2&gt;Robot Container Class&lt;/h2&gt;</span>
-<span class="source-line-no">047</span><span id="line-47"> * </span>
-<span class="source-line-no">048</span><span id="line-48"> * This class is where the bulk of the robot should be declared. Since Command-based is a</span>
-<span class="source-line-no">049</span><span id="line-49"> * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}</span>
-<span class="source-line-no">050</span><span id="line-50"> * periodic methods (other than the scheduler calls). Instead, the structure of the robot (including</span>
-<span class="source-line-no">051</span><span id="line-51"> * subsystems, commands, and trigger mappings) should be declared here.</span>
-<span class="source-line-no">052</span><span id="line-52"> */</span>
-<span class="source-line-no">053</span><span id="line-53">public class RobotContainer {</span>
-<span class="source-line-no">054</span><span id="line-54"></span>
-<span class="source-line-no">055</span><span id="line-55">    // Gamepads</span>
-<span class="source-line-no">056</span><span id="line-56">    public final CommandXboxController driver = new CommandXboxController(Ports.Gamepad.DRIVER);</span>
-<span class="source-line-no">057</span><span id="line-57"></span>
-<span class="source-line-no">058</span><span id="line-58">    // Subsystem</span>
-<span class="source-line-no">059</span><span id="line-59">    private final Feeder feeder = Feeder.getInstance();</span>
-<span class="source-line-no">060</span><span id="line-60"></span>
-<span class="source-line-no">061</span><span id="line-61">    private final Intake intake = Intake.getInstance();</span>
-<span class="source-line-no">062</span><span id="line-62"></span>
-<span class="source-line-no">063</span><span id="line-63">    private final Shooter shooter = Shooter.getInstance();</span>
-<span class="source-line-no">064</span><span id="line-64"></span>
-<span class="source-line-no">065</span><span id="line-65">    private final CommandSwerveDrivetrain swerve = CommandSwerveDrivetrain.getInstance();</span>
-<span class="source-line-no">066</span><span id="line-66"></span>
-<span class="source-line-no">067</span><span id="line-67">    private final LimelightVision vision = LimelightVision.getInstance();</span>
-<span class="source-line-no">068</span><span id="line-68"></span>
-<span class="source-line-no">069</span><span id="line-69">    private final LEDController leds = LEDController.getInstance();</span>
-<span class="source-line-no">070</span><span id="line-70"></span>
-<span class="source-line-no">071</span><span id="line-71">    private final Handoff handoff = Handoff.getInstance();</span>
-<span class="source-line-no">072</span><span id="line-72"></span>
-<span class="source-line-no">073</span><span id="line-73">    // Autons</span>
-<span class="source-line-no">074</span><span id="line-74">    private static SendableChooser&lt;Command&gt; autonChooser = new SendableChooser&lt;&gt;();</span>
-<span class="source-line-no">075</span><span id="line-75"></span>
-<span class="source-line-no">076</span><span id="line-76">    // Robot container</span>
-<span class="source-line-no">077</span><span id="line-77"></span>
-<span class="source-line-no">078</span><span id="line-78">    /** The container for the robot. Contains subsystems, OI devices, and commands. */</span>
-<span class="source-line-no">079</span><span id="line-79">    public RobotContainer() {</span>
-<span class="source-line-no">080</span><span id="line-80">        swerve.configureAutoBuilder();</span>
-<span class="source-line-no">081</span><span id="line-81">        configureDefaultCommands();</span>
-<span class="source-line-no">082</span><span id="line-82">        configureButtonBindings();</span>
-<span class="source-line-no">083</span><span id="line-83">        configureAutons();</span>
-<span class="source-line-no">084</span><span id="line-84">        SmartDashboard.putData("Field", Field.FIELD2D);</span>
-<span class="source-line-no">085</span><span id="line-85">    }</span>
-<span class="source-line-no">086</span><span id="line-86"></span>
-<span class="source-line-no">087</span><span id="line-87">    /** ************ */</span>
-<span class="source-line-no">088</span><span id="line-88">    /** DEFAULTS ** */</span>
-<span class="source-line-no">089</span><span id="line-89">    /** ************ */</span>
-<span class="source-line-no">090</span><span id="line-90">    private void configureDefaultCommands() {</span>
-<span class="source-line-no">091</span><span id="line-91">        swerve.setDefaultCommand(new SwerveDriveDrive(driver));</span>
-<span class="source-line-no">092</span><span id="line-92">        leds.setDefaultCommand(new LEDDefaultCommand());</span>
-<span class="source-line-no">093</span><span id="line-93">    }</span>
-<span class="source-line-no">094</span><span id="line-94"></span>
-<span class="source-line-no">095</span><span id="line-95">    /***************/</span>
-<span class="source-line-no">096</span><span id="line-96">    /*** BUTTONS ***/</span>
-<span class="source-line-no">097</span><span id="line-97">    /***************/</span>
-<span class="source-line-no">098</span><span id="line-98"></span>
-<span class="source-line-no">099</span><span id="line-99">    /**</span>
-<span class="source-line-no">100</span><span id="line-100">     * This method is used to configure button bindings for controlling the robot.</span>
-<span class="source-line-no">101</span><span id="line-101">   */</span>
-<span class="source-line-no">102</span><span id="line-102">    private void configureButtonBindings() {</span>
-<span class="source-line-no">103</span><span id="line-103">        // Trigger buttons did not work for some reason so I had to do this</span>
-<span class="source-line-no">104</span><span id="line-104">        Trigger leftTrigger = new Trigger(() -&gt; driver.getLeftTriggerAxis() &gt; 0.5);</span>
-<span class="source-line-no">105</span><span id="line-105">        Trigger rightTrigger = new Trigger(() -&gt; driver.getRightTriggerAxis() &gt; 0.5);</span>
-<span class="source-line-no">106</span><span id="line-106">        leftTrigger.onTrue(new IntakeSetIntake());</span>
-<span class="source-line-no">107</span><span id="line-107">        driver.leftBumper().whileTrue(new IntakeSetOuttake());</span>
-<span class="source-line-no">108</span><span id="line-108">        driver.leftBumper().onFalse(new IntakeSetIntake());</span>
-<span class="source-line-no">109</span><span id="line-109">        rightTrigger.onTrue(</span>
-<span class="source-line-no">110</span><span id="line-110">                new SwerveDriveAlignToHub()</span>
-<span class="source-line-no">111</span><span id="line-111">                        .andThen(new SwerveDriveXMode())</span>
-<span class="source-line-no">112</span><span id="line-112">                        .andThen(new ShooterSetShoot())</span>
-<span class="source-line-no">113</span><span id="line-113">                        .andThen(new HandoffSetForward())</span>
-<span class="source-line-no">114</span><span id="line-114">                        .alongWith(new FeederSetForward(), new IntakeAgitateFastOnce().repeatedly()));</span>
-<span class="source-line-no">115</span><span id="line-115">        driver.y().onTrue(new IntakeSetIdle());</span>
-<span class="source-line-no">116</span><span id="line-116">        driver.povUp().onTrue(new SwerveDriveResetRotation());</span>
-<span class="source-line-no">117</span><span id="line-117">        driver</span>
-<span class="source-line-no">118</span><span id="line-118">                .rightBumper()</span>
-<span class="source-line-no">119</span><span id="line-119">                .onTrue(</span>
-<span class="source-line-no">120</span><span id="line-120">                        new SwerveDriveAlignToFerryZone()</span>
-<span class="source-line-no">121</span><span id="line-121">                                .andThen(new SwerveDriveXMode())</span>
-<span class="source-line-no">122</span><span id="line-122">                                .andThen(new ShooterSetFerry())</span>
-<span class="source-line-no">123</span><span id="line-123">                                .andThen(new HandoffSetForward())</span>
-<span class="source-line-no">124</span><span id="line-124">                                .alongWith(new FeederSetForward(), new IntakeAgitateFastOnce().repeatedly()));</span>
-<span class="source-line-no">125</span><span id="line-125">        // Manual shooting possibly from in front of the tower</span>
-<span class="source-line-no">126</span><span id="line-126">        driver</span>
-<span class="source-line-no">127</span><span id="line-127">                .a()</span>
-<span class="source-line-no">128</span><span id="line-128">                .whileTrue(</span>
-<span class="source-line-no">129</span><span id="line-129">                        new SwerveDriveXMode()</span>
-<span class="source-line-no">130</span><span id="line-130">                                .andThen(new ShooterSetManual())</span>
-<span class="source-line-no">131</span><span id="line-131">                                .andThen(new HandoffSetForward().repeatedly())</span>
-<span class="source-line-no">132</span><span id="line-132">                                .alongWith(new FeederSetForward().repeatedly(), new IntakeAgitateFastOnce().repeatedly())</span>
-<span class="source-line-no">133</span><span id="line-133">                                .andThen(new IntakeSetHomingDown()));</span>
-<span class="source-line-no">134</span><span id="line-134">        // Top Right Paddle</span>
-<span class="source-line-no">135</span><span id="line-135">        driver</span>
-<span class="source-line-no">136</span><span id="line-136">                .b()</span>
-<span class="source-line-no">137</span><span id="line-137">                .onTrue(</span>
-<span class="source-line-no">138</span><span id="line-138">                        new HandoffSetIdle()</span>
-<span class="source-line-no">139</span><span id="line-139">                                .alongWith(</span>
-<span class="source-line-no">140</span><span id="line-140">                                        new FeederSetIdle(),</span>
-<span class="source-line-no">141</span><span id="line-141">                                        new IntakeSetIntake(),</span>
-<span class="source-line-no">142</span><span id="line-142">                                        Commands.runOnce(</span>
-<span class="source-line-no">143</span><span id="line-143">                                                () -&gt; new SwerveDriveXMode().cancel())));</span>
-<span class="source-line-no">144</span><span id="line-144">        // Bottom Left Paddle</span>
-<span class="source-line-no">145</span><span id="line-145">        driver.x().whileTrue(new SwerveDriveXMode());</span>
-<span class="source-line-no">146</span><span id="line-146">    }</span>
-<span class="source-line-no">147</span><span id="line-147"></span>
-<span class="source-line-no">148</span><span id="line-148">    /**************/</span>
-<span class="source-line-no">149</span><span id="line-149">    /*** AUTONS ***/</span>
-<span class="source-line-no">150</span><span id="line-150">    /**************/</span>
-<span class="source-line-no">151</span><span id="line-151"></span>
-<span class="source-line-no">152</span><span id="line-152">    /**</span>
-<span class="source-line-no">153</span><span id="line-153">     * This method is used to configure the autonomous commands.</span>
-<span class="source-line-no">154</span><span id="line-154">     */</span>
-<span class="source-line-no">155</span><span id="line-155">     public void configureAutons() {</span>
-<span class="source-line-no">156</span><span id="line-156">        autonChooser.addOption("Do Nothing", new DoNothingAuton());</span>
-<span class="source-line-no">157</span><span id="line-157">        // AutonConfig LBFerry = new AutonConfig("LB Ferry", LBFerry::new,</span>
-<span class="source-line-no">158</span><span id="line-158">        // "LB to N Ferry",</span>
-<span class="source-line-no">159</span><span id="line-159">        // "N to LT Ferry",</span>
-<span class="source-line-no">160</span><span id="line-160">        // "LT Hub Ferry",</span>
-<span class="source-line-no">161</span><span id="line-161">        // "N to Depot Ferry");</span>
-<span class="source-line-no">162</span><span id="line-162">        // LBFerry.register(autonChooser);</span>
-<span class="source-line-no">163</span><span id="line-163">        // AutonConfig RBFerry = new AutonConfig("RB Ferry", RBFerry::new,</span>
-<span class="source-line-no">164</span><span id="line-164">        // "RB to N Ferry",</span>
-<span class="source-line-no">165</span><span id="line-165">        // "N to RT Ferry",</span>
-<span class="source-line-no">166</span><span id="line-166">        // "RT Hub Ferry",</span>
-<span class="source-line-no">167</span><span id="line-167">        // "N to Outpost Ferry");</span>
-<span class="source-line-no">168</span><span id="line-168">        // RBFerry.register(autonChooser);</span>
-<span class="source-line-no">169</span><span id="line-169">        // AutonConfig LBMid = new AutonConfig("LB Mid", LBMid::new,</span>
-<span class="source-line-no">170</span><span id="line-170">        // "LB to N Mid",</span>
-<span class="source-line-no">171</span><span id="line-171">        // "LB Return Mid");</span>
-<span class="source-line-no">172</span><span id="line-172">        // LBMid.register(autonChooser);</span>
-<span class="source-line-no">173</span><span id="line-173">        // AutonConfig LBStraight = new AutonConfig("LB Straight", LBStraight::new,</span>
-<span class="source-line-no">174</span><span id="line-174">        // "LB to N Straight",</span>
-<span class="source-line-no">175</span><span id="line-175">        // "N to LB Straight");</span>
-<span class="source-line-no">176</span><span id="line-176">        // LBStraight.register(autonChooser);</span>
-<span class="source-line-no">177</span><span id="line-177">        // AutonConfig RBStraight = new AutonConfig("RB Straight", RBStraight::new,</span>
-<span class="source-line-no">178</span><span id="line-178">        // "RB to N Straight",</span>
-<span class="source-line-no">179</span><span id="line-179">        // "N to RB Straight");</span>
-<span class="source-line-no">180</span><span id="line-180">        // RBStraight.register(autonChooser);</span>
-<span class="source-line-no">181</span><span id="line-181">        // AutonConfig RBMid = new AutonConfig("RB Mid", RBMid::new,</span>
-<span class="source-line-no">182</span><span id="line-182">        // "RB to N Mid",</span>
-<span class="source-line-no">183</span><span id="line-183">        // "RB Return Mid",</span>
-<span class="source-line-no">184</span><span id="line-184">        // "RB to Outpost Mid");</span>
-<span class="source-line-no">185</span><span id="line-185">        // RBMid.register(autonChooser);</span>
-<span class="source-line-no">186</span><span id="line-186">        // AutonConfig TwoMeterPath = new AutonConfig("Two Meter Path",</span>
-<span class="source-line-no">187</span><span id="line-187">        // TwoMeterPath::new,</span>
-<span class="source-line-no">188</span><span id="line-188">        // "2 meter path");</span>
-<span class="source-line-no">189</span><span id="line-189">        // TwoMeterPath.register(autonChooser);</span>
-<span class="source-line-no">190</span><span id="line-190">        // AutonConfig OutpostOnly = new AutonConfig("Outpost Only", OutpostOnly::new,</span>
-<span class="source-line-no">191</span><span id="line-191">        // "Outpost");</span>
-<span class="source-line-no">192</span><span id="line-192">        // OutpostOnly.register(autonChooser);</span>
-<span class="source-line-no">193</span><span id="line-193">        // AutonConfig RBOuttake = new AutonConfig("RB Outtake", RBOuttake::new,</span>
-<span class="source-line-no">194</span><span id="line-194">        // "RB to N Outtake",</span>
-<span class="source-line-no">195</span><span id="line-195">        // "N to RB Outtake");</span>
-<span class="source-line-no">196</span><span id="line-196">        // RBOuttake.register(autonChooser);</span>
-<span class="source-line-no">197</span><span id="line-197">        // AutonConfig LBOuttake = new AutonConfig("LB Outtake", LBOuttake::new,</span>
-<span class="source-line-no">198</span><span id="line-198">        // "LB to N Outtake",</span>
-<span class="source-line-no">199</span><span id="line-199">        // "N to LB Outtake");</span>
-<span class="source-line-no">200</span><span id="line-200">        // LBOuttake.register(autonChooser);</span>
-<span class="source-line-no">201</span><span id="line-201">        // AutonConfig LBMidlineSweep = new AutonConfig("LB Midline Sweep",</span>
-<span class="source-line-no">202</span><span id="line-202">        // LBMidlineSweep::new,</span>
-<span class="source-line-no">203</span><span id="line-203">        // "LB to N Midline",</span>
-<span class="source-line-no">204</span><span id="line-204">        // "LN Sweep Midline");</span>
-<span class="source-line-no">205</span><span id="line-205">        // LBMidlineSweep.register(autonChooser);</span>
-<span class="source-line-no">206</span><span id="line-206">        // AutonConfig RBMidlineSweep = new AutonConfig("RB Midline Sweep",</span>
-<span class="source-line-no">207</span><span id="line-207">        // RBMidlineSweep::new,</span>
-<span class="source-line-no">208</span><span id="line-208">        // "RB to N Midline",</span>
-<span class="source-line-no">209</span><span id="line-209">        // "RN Sweep Midline");</span>
-<span class="source-line-no">210</span><span id="line-210">        // RBMidlineSweep.register(autonChooser);</span>
-<span class="source-line-no">211</span><span id="line-211">        // AutonConfig LBDisrupt = new AutonConfig("LB Disrupt", LBDisrupt::new,</span>
-<span class="source-line-no">212</span><span id="line-212">        // "LB to CN Disrupt",</span>
-<span class="source-line-no">213</span><span id="line-213">        // "LN Circle Disrupt",</span>
+<span class="source-line-no">023</span><span id="line-23">import com.stuypulse.robot.commands.shooter.ShooterWaitForSpinUp;</span>
+<span class="source-line-no">024</span><span id="line-24">import com.stuypulse.robot.commands.swerve.SwerveDriveDrive;</span>
+<span class="source-line-no">025</span><span id="line-25">import com.stuypulse.robot.commands.swerve.SwerveDriveResetRotation;</span>
+<span class="source-line-no">026</span><span id="line-26">import com.stuypulse.robot.commands.swerve.SwerveDriveXMode;</span>
+<span class="source-line-no">027</span><span id="line-27">import com.stuypulse.robot.commands.swerve.driveAligned.SwerveDriveAlignToFerryZone;</span>
+<span class="source-line-no">028</span><span id="line-28">import com.stuypulse.robot.commands.swerve.driveAligned.SwerveDriveAlignToHub;</span>
+<span class="source-line-no">029</span><span id="line-29">import com.stuypulse.robot.constants.Field;</span>
+<span class="source-line-no">030</span><span id="line-30">import com.stuypulse.robot.constants.Ports;</span>
+<span class="source-line-no">031</span><span id="line-31">import com.stuypulse.robot.subsystems.feeder.Feeder;</span>
+<span class="source-line-no">032</span><span id="line-32">import com.stuypulse.robot.subsystems.handoff.Handoff;</span>
+<span class="source-line-no">033</span><span id="line-33">import com.stuypulse.robot.subsystems.intake.Intake;</span>
+<span class="source-line-no">034</span><span id="line-34">import com.stuypulse.robot.subsystems.leds.LEDController;</span>
+<span class="source-line-no">035</span><span id="line-35">import com.stuypulse.robot.subsystems.shooter.Shooter;</span>
+<span class="source-line-no">036</span><span id="line-36">import com.stuypulse.robot.subsystems.swerve.CommandSwerveDrivetrain;</span>
+<span class="source-line-no">037</span><span id="line-37">import com.stuypulse.robot.subsystems.vision.LimelightVision;</span>
+<span class="source-line-no">038</span><span id="line-38">import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;</span>
+<span class="source-line-no">039</span><span id="line-39">import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;</span>
+<span class="source-line-no">040</span><span id="line-40">import edu.wpi.first.wpilibj2.command.Command;</span>
+<span class="source-line-no">041</span><span id="line-41">import edu.wpi.first.wpilibj2.command.Commands;</span>
+<span class="source-line-no">042</span><span id="line-42">import edu.wpi.first.wpilibj2.command.button.CommandXboxController;</span>
+<span class="source-line-no">043</span><span id="line-43">import edu.wpi.first.wpilibj2.command.button.Trigger;</span>
+<span class="source-line-no">044</span><span id="line-44">import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;</span>
+<span class="source-line-no">045</span><span id="line-45"></span>
+<span class="source-line-no">046</span><span id="line-46">/**</span>
+<span class="source-line-no">047</span><span id="line-47"> * &lt;h2&gt;Robot Container Class&lt;/h2&gt;</span>
+<span class="source-line-no">048</span><span id="line-48"> * </span>
+<span class="source-line-no">049</span><span id="line-49"> * This class is where the bulk of the robot should be declared. Since Command-based is a</span>
+<span class="source-line-no">050</span><span id="line-50"> * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}</span>
+<span class="source-line-no">051</span><span id="line-51"> * periodic methods (other than the scheduler calls). Instead, the structure of the robot (including</span>
+<span class="source-line-no">052</span><span id="line-52"> * subsystems, commands, and trigger mappings) should be declared here.</span>
+<span class="source-line-no">053</span><span id="line-53"> */</span>
+<span class="source-line-no">054</span><span id="line-54">public class RobotContainer {</span>
+<span class="source-line-no">055</span><span id="line-55"></span>
+<span class="source-line-no">056</span><span id="line-56">    // Gamepads</span>
+<span class="source-line-no">057</span><span id="line-57">    public final CommandXboxController driver = new CommandXboxController(Ports.Gamepad.DRIVER);</span>
+<span class="source-line-no">058</span><span id="line-58"></span>
+<span class="source-line-no">059</span><span id="line-59">    // Subsystem</span>
+<span class="source-line-no">060</span><span id="line-60">    private final Feeder feeder = Feeder.getInstance();</span>
+<span class="source-line-no">061</span><span id="line-61"></span>
+<span class="source-line-no">062</span><span id="line-62">    private final Intake intake = Intake.getInstance();</span>
+<span class="source-line-no">063</span><span id="line-63"></span>
+<span class="source-line-no">064</span><span id="line-64">    private final Shooter shooter = Shooter.getInstance();</span>
+<span class="source-line-no">065</span><span id="line-65"></span>
+<span class="source-line-no">066</span><span id="line-66">    private final CommandSwerveDrivetrain swerve = CommandSwerveDrivetrain.getInstance();</span>
+<span class="source-line-no">067</span><span id="line-67"></span>
+<span class="source-line-no">068</span><span id="line-68">    private final LimelightVision vision = LimelightVision.getInstance();</span>
+<span class="source-line-no">069</span><span id="line-69"></span>
+<span class="source-line-no">070</span><span id="line-70">    private final LEDController leds = LEDController.getInstance();</span>
+<span class="source-line-no">071</span><span id="line-71"></span>
+<span class="source-line-no">072</span><span id="line-72">    private final Handoff handoff = Handoff.getInstance();</span>
+<span class="source-line-no">073</span><span id="line-73"></span>
+<span class="source-line-no">074</span><span id="line-74">    // Autons</span>
+<span class="source-line-no">075</span><span id="line-75">    private static SendableChooser&lt;Command&gt; autonChooser = new SendableChooser&lt;&gt;();</span>
+<span class="source-line-no">076</span><span id="line-76"></span>
+<span class="source-line-no">077</span><span id="line-77">    // Robot container</span>
+<span class="source-line-no">078</span><span id="line-78"></span>
+<span class="source-line-no">079</span><span id="line-79">    /** The container for the robot. Contains subsystems, OI devices, and commands. */</span>
+<span class="source-line-no">080</span><span id="line-80">    public RobotContainer() {</span>
+<span class="source-line-no">081</span><span id="line-81">        swerve.configureAutoBuilder();</span>
+<span class="source-line-no">082</span><span id="line-82">        configureDefaultCommands();</span>
+<span class="source-line-no">083</span><span id="line-83">        configureButtonBindings();</span>
+<span class="source-line-no">084</span><span id="line-84">        configureAutons();</span>
+<span class="source-line-no">085</span><span id="line-85">        SmartDashboard.putData("Field", Field.FIELD2D);</span>
+<span class="source-line-no">086</span><span id="line-86">    }</span>
+<span class="source-line-no">087</span><span id="line-87"></span>
+<span class="source-line-no">088</span><span id="line-88">    /** ************ */</span>
+<span class="source-line-no">089</span><span id="line-89">    /** DEFAULTS ** */</span>
+<span class="source-line-no">090</span><span id="line-90">    /** ************ */</span>
+<span class="source-line-no">091</span><span id="line-91">    private void configureDefaultCommands() {</span>
+<span class="source-line-no">092</span><span id="line-92">        swerve.setDefaultCommand(new SwerveDriveDrive(driver));</span>
+<span class="source-line-no">093</span><span id="line-93">        leds.setDefaultCommand(new LEDDefaultCommand());</span>
+<span class="source-line-no">094</span><span id="line-94">    }</span>
+<span class="source-line-no">095</span><span id="line-95"></span>
+<span class="source-line-no">096</span><span id="line-96">    /***************/</span>
+<span class="source-line-no">097</span><span id="line-97">    /*** BUTTONS ***/</span>
+<span class="source-line-no">098</span><span id="line-98">    /***************/</span>
+<span class="source-line-no">099</span><span id="line-99"></span>
+<span class="source-line-no">100</span><span id="line-100">    /**</span>
+<span class="source-line-no">101</span><span id="line-101">     * This method is used to configure button bindings for controlling the robot.</span>
+<span class="source-line-no">102</span><span id="line-102">   */</span>
+<span class="source-line-no">103</span><span id="line-103">    private void configureButtonBindings() {</span>
+<span class="source-line-no">104</span><span id="line-104">        // Trigger buttons did not work for some reason so I had to do this</span>
+<span class="source-line-no">105</span><span id="line-105">        Trigger leftTrigger = new Trigger(() -&gt; driver.getLeftTriggerAxis() &gt; 0.5);</span>
+<span class="source-line-no">106</span><span id="line-106">        Trigger rightTrigger = new Trigger(() -&gt; driver.getRightTriggerAxis() &gt; 0.5);</span>
+<span class="source-line-no">107</span><span id="line-107">        leftTrigger.onTrue(new IntakeSetIntake());</span>
+<span class="source-line-no">108</span><span id="line-108">        driver.leftBumper().whileTrue(new IntakeSetOuttake());</span>
+<span class="source-line-no">109</span><span id="line-109">        driver.leftBumper().onFalse(new IntakeSetIntake());</span>
+<span class="source-line-no">110</span><span id="line-110">        rightTrigger.onTrue(</span>
+<span class="source-line-no">111</span><span id="line-111">            new SwerveDriveAlignToHub()</span>
+<span class="source-line-no">112</span><span id="line-112">                .andThen(new SwerveDriveXMode())</span>
+<span class="source-line-no">113</span><span id="line-113">                .andThen(new ShooterWaitForSpinUp())</span>
+<span class="source-line-no">114</span><span id="line-114">                .andThen(new ShooterSetShoot())</span>
+<span class="source-line-no">115</span><span id="line-115">                .andThen(new HandoffSetForward())</span>
+<span class="source-line-no">116</span><span id="line-116">                .alongWith(new FeederSetForward(), new IntakeAgitateFastOnce().repeatedly()));</span>
+<span class="source-line-no">117</span><span id="line-117">        driver.y().onTrue(new IntakeSetIdle());</span>
+<span class="source-line-no">118</span><span id="line-118">        driver.povUp().onTrue(new SwerveDriveResetRotation());</span>
+<span class="source-line-no">119</span><span id="line-119">        driver.rightBumper()</span>
+<span class="source-line-no">120</span><span id="line-120">            .onTrue(</span>
+<span class="source-line-no">121</span><span id="line-121">                new SwerveDriveAlignToFerryZone()</span>
+<span class="source-line-no">122</span><span id="line-122">                    .andThen(new SwerveDriveXMode())</span>
+<span class="source-line-no">123</span><span id="line-123">                    .andThen(new ShooterWaitForSpinUp())</span>
+<span class="source-line-no">124</span><span id="line-124">                    .andThen(new ShooterSetFerry())</span>
+<span class="source-line-no">125</span><span id="line-125">                    .andThen(new HandoffSetForward())</span>
+<span class="source-line-no">126</span><span id="line-126">                    .alongWith(new FeederSetForward(), new IntakeAgitateFastOnce().repeatedly()));</span>
+<span class="source-line-no">127</span><span id="line-127">        // Manual shooting possibly from in front of the tower</span>
+<span class="source-line-no">128</span><span id="line-128">        driver.a()</span>
+<span class="source-line-no">129</span><span id="line-129">            .whileTrue(</span>
+<span class="source-line-no">130</span><span id="line-130">                new SwerveDriveXMode()</span>
+<span class="source-line-no">131</span><span id="line-131">                    .andThen(new ShooterWaitForSpinUp())</span>
+<span class="source-line-no">132</span><span id="line-132">                    .andThen(new ShooterSetManual())</span>
+<span class="source-line-no">133</span><span id="line-133">                    .andThen(new HandoffSetForward().repeatedly())</span>
+<span class="source-line-no">134</span><span id="line-134">                    .alongWith(new FeederSetForward().repeatedly(), new IntakeAgitateFastOnce().repeatedly())</span>
+<span class="source-line-no">135</span><span id="line-135">                    .andThen(new IntakeSetHomingDown()));</span>
+<span class="source-line-no">136</span><span id="line-136">        // Top Right Paddle</span>
+<span class="source-line-no">137</span><span id="line-137">        driver.b()</span>
+<span class="source-line-no">138</span><span id="line-138">            .onTrue(</span>
+<span class="source-line-no">139</span><span id="line-139">                new HandoffSetIdle()</span>
+<span class="source-line-no">140</span><span id="line-140">                    .alongWith(</span>
+<span class="source-line-no">141</span><span id="line-141">                        new FeederSetIdle(),</span>
+<span class="source-line-no">142</span><span id="line-142">                        new IntakeSetIntake(),</span>
+<span class="source-line-no">143</span><span id="line-143">                        Commands.runOnce(</span>
+<span class="source-line-no">144</span><span id="line-144">                                () -&gt; new SwerveDriveXMode().cancel())));</span>
+<span class="source-line-no">145</span><span id="line-145">        // Bottom Left Paddle</span>
+<span class="source-line-no">146</span><span id="line-146">        driver.x().whileTrue(new SwerveDriveXMode());</span>
+<span class="source-line-no">147</span><span id="line-147">    }</span>
+<span class="source-line-no">148</span><span id="line-148"></span>
+<span class="source-line-no">149</span><span id="line-149">    /**************/</span>
+<span class="source-line-no">150</span><span id="line-150">    /*** AUTONS ***/</span>
+<span class="source-line-no">151</span><span id="line-151">    /**************/</span>
+<span class="source-line-no">152</span><span id="line-152"></span>
+<span class="source-line-no">153</span><span id="line-153">    /**</span>
+<span class="source-line-no">154</span><span id="line-154">     * This method is used to configure the autonomous commands.</span>
+<span class="source-line-no">155</span><span id="line-155">     */</span>
+<span class="source-line-no">156</span><span id="line-156">     public void configureAutons() {</span>
+<span class="source-line-no">157</span><span id="line-157">        autonChooser.addOption("Do Nothing", new DoNothingAuton());</span>
+<span class="source-line-no">158</span><span id="line-158">        // AutonConfig LBFerry = new AutonConfig("LB Ferry", LBFerry::new,</span>
+<span class="source-line-no">159</span><span id="line-159">        // "LB to N Ferry",</span>
+<span class="source-line-no">160</span><span id="line-160">        // "N to LT Ferry",</span>
+<span class="source-line-no">161</span><span id="line-161">        // "LT Hub Ferry",</span>
+<span class="source-line-no">162</span><span id="line-162">        // "N to Depot Ferry");</span>
+<span class="source-line-no">163</span><span id="line-163">        // LBFerry.register(autonChooser);</span>
+<span class="source-line-no">164</span><span id="line-164">        // AutonConfig RBFerry = new AutonConfig("RB Ferry", RBFerry::new,</span>
+<span class="source-line-no">165</span><span id="line-165">        // "RB to N Ferry",</span>
+<span class="source-line-no">166</span><span id="line-166">        // "N to RT Ferry",</span>
+<span class="source-line-no">167</span><span id="line-167">        // "RT Hub Ferry",</span>
+<span class="source-line-no">168</span><span id="line-168">        // "N to Outpost Ferry");</span>
+<span class="source-line-no">169</span><span id="line-169">        // RBFerry.register(autonChooser);</span>
+<span class="source-line-no">170</span><span id="line-170">        // AutonConfig LBMid = new AutonConfig("LB Mid", LBMid::new,</span>
+<span class="source-line-no">171</span><span id="line-171">        // "LB to N Mid",</span>
+<span class="source-line-no">172</span><span id="line-172">        // "LB Return Mid");</span>
+<span class="source-line-no">173</span><span id="line-173">        // LBMid.register(autonChooser);</span>
+<span class="source-line-no">174</span><span id="line-174">        // AutonConfig LBStraight = new AutonConfig("LB Straight", LBStraight::new,</span>
+<span class="source-line-no">175</span><span id="line-175">        // "LB to N Straight",</span>
+<span class="source-line-no">176</span><span id="line-176">        // "N to LB Straight");</span>
+<span class="source-line-no">177</span><span id="line-177">        // LBStraight.register(autonChooser);</span>
+<span class="source-line-no">178</span><span id="line-178">        // AutonConfig RBStraight = new AutonConfig("RB Straight", RBStraight::new,</span>
+<span class="source-line-no">179</span><span id="line-179">        // "RB to N Straight",</span>
+<span class="source-line-no">180</span><span id="line-180">        // "N to RB Straight");</span>
+<span class="source-line-no">181</span><span id="line-181">        // RBStraight.register(autonChooser);</span>
+<span class="source-line-no">182</span><span id="line-182">        // AutonConfig RBMid = new AutonConfig("RB Mid", RBMid::new,</span>
+<span class="source-line-no">183</span><span id="line-183">        // "RB to N Mid",</span>
+<span class="source-line-no">184</span><span id="line-184">        // "RB Return Mid",</span>
+<span class="source-line-no">185</span><span id="line-185">        // "RB to Outpost Mid");</span>
+<span class="source-line-no">186</span><span id="line-186">        // RBMid.register(autonChooser);</span>
+<span class="source-line-no">187</span><span id="line-187">        // AutonConfig TwoMeterPath = new AutonConfig("Two Meter Path",</span>
+<span class="source-line-no">188</span><span id="line-188">        // TwoMeterPath::new,</span>
+<span class="source-line-no">189</span><span id="line-189">        // "2 meter path");</span>
+<span class="source-line-no">190</span><span id="line-190">        // TwoMeterPath.register(autonChooser);</span>
+<span class="source-line-no">191</span><span id="line-191">        // AutonConfig OutpostOnly = new AutonConfig("Outpost Only", OutpostOnly::new,</span>
+<span class="source-line-no">192</span><span id="line-192">        // "Outpost");</span>
+<span class="source-line-no">193</span><span id="line-193">        // OutpostOnly.register(autonChooser);</span>
+<span class="source-line-no">194</span><span id="line-194">        // AutonConfig RBOuttake = new AutonConfig("RB Outtake", RBOuttake::new,</span>
+<span class="source-line-no">195</span><span id="line-195">        // "RB to N Outtake",</span>
+<span class="source-line-no">196</span><span id="line-196">        // "N to RB Outtake");</span>
+<span class="source-line-no">197</span><span id="line-197">        // RBOuttake.register(autonChooser);</span>
+<span class="source-line-no">198</span><span id="line-198">        // AutonConfig LBOuttake = new AutonConfig("LB Outtake", LBOuttake::new,</span>
+<span class="source-line-no">199</span><span id="line-199">        // "LB to N Outtake",</span>
+<span class="source-line-no">200</span><span id="line-200">        // "N to LB Outtake");</span>
+<span class="source-line-no">201</span><span id="line-201">        // LBOuttake.register(autonChooser);</span>
+<span class="source-line-no">202</span><span id="line-202">        // AutonConfig LBMidlineSweep = new AutonConfig("LB Midline Sweep",</span>
+<span class="source-line-no">203</span><span id="line-203">        // LBMidlineSweep::new,</span>
+<span class="source-line-no">204</span><span id="line-204">        // "LB to N Midline",</span>
+<span class="source-line-no">205</span><span id="line-205">        // "LN Sweep Midline");</span>
+<span class="source-line-no">206</span><span id="line-206">        // LBMidlineSweep.register(autonChooser);</span>
+<span class="source-line-no">207</span><span id="line-207">        // AutonConfig RBMidlineSweep = new AutonConfig("RB Midline Sweep",</span>
+<span class="source-line-no">208</span><span id="line-208">        // RBMidlineSweep::new,</span>
+<span class="source-line-no">209</span><span id="line-209">        // "RB to N Midline",</span>
+<span class="source-line-no">210</span><span id="line-210">        // "RN Sweep Midline");</span>
+<span class="source-line-no">211</span><span id="line-211">        // RBMidlineSweep.register(autonChooser);</span>
+<span class="source-line-no">212</span><span id="line-212">        // AutonConfig LBDisrupt = new AutonConfig("LB Disrupt", LBDisrupt::new,</span>
+<span class="source-line-no">213</span><span id="line-213">        // "LB to CN Disrupt",</span>
 <span class="source-line-no">214</span><span id="line-214">        // "LN Circle Disrupt",</span>
-<span class="source-line-no">215</span><span id="line-215">        // "LB Disrupt Return");</span>
-<span class="source-line-no">216</span><span id="line-216">        // LBDisrupt.register(autonChooser);</span>
-<span class="source-line-no">217</span><span id="line-217">        // AutonConfig RBDisrupt = new AutonConfig("RB Disrupt", RBDisrupt::new,</span>
-<span class="source-line-no">218</span><span id="line-218">        // "RB to CN Disrupt",</span>
-<span class="source-line-no">219</span><span id="line-219">        // "RN Circle Disrupt",</span>
+<span class="source-line-no">215</span><span id="line-215">        // "LN Circle Disrupt",</span>
+<span class="source-line-no">216</span><span id="line-216">        // "LB Disrupt Return");</span>
+<span class="source-line-no">217</span><span id="line-217">        // LBDisrupt.register(autonChooser);</span>
+<span class="source-line-no">218</span><span id="line-218">        // AutonConfig RBDisrupt = new AutonConfig("RB Disrupt", RBDisrupt::new,</span>
+<span class="source-line-no">219</span><span id="line-219">        // "RB to CN Disrupt",</span>
 <span class="source-line-no">220</span><span id="line-220">        // "RN Circle Disrupt",</span>
-<span class="source-line-no">221</span><span id="line-221">        // "RB Disrupt Return");</span>
-<span class="source-line-no">222</span><span id="line-222">        // RBDisrupt.register(autonChooser);</span>
-<span class="source-line-no">223</span><span id="line-223">        // AutonConfig LT_Disrupt = new AutonConfig("LT Disrupt", LTDisrupt::new,</span>
-<span class="source-line-no">224</span><span id="line-224">        // "LT to N Disrupt",</span>
-<span class="source-line-no">225</span><span id="line-225">        // "LT Circle Disrupt",</span>
+<span class="source-line-no">221</span><span id="line-221">        // "RN Circle Disrupt",</span>
+<span class="source-line-no">222</span><span id="line-222">        // "RB Disrupt Return");</span>
+<span class="source-line-no">223</span><span id="line-223">        // RBDisrupt.register(autonChooser);</span>
+<span class="source-line-no">224</span><span id="line-224">        // AutonConfig LT_Disrupt = new AutonConfig("LT Disrupt", LTDisrupt::new,</span>
+<span class="source-line-no">225</span><span id="line-225">        // "LT to N Disrupt",</span>
 <span class="source-line-no">226</span><span id="line-226">        // "LT Circle Disrupt",</span>
-<span class="source-line-no">227</span><span id="line-227">        // "LT Side Push Disrupt",</span>
-<span class="source-line-no">228</span><span id="line-228">        // "LT Around Disrupt",</span>
-<span class="source-line-no">229</span><span id="line-229">        // "LT Back Push Disrupt");</span>
-<span class="source-line-no">230</span><span id="line-230">        // LT_Disrupt.register(autonChooser);</span>
-<span class="source-line-no">231</span><span id="line-231">        // AutonConfig RT_Disrupt = new AutonConfig("RT Disrupt", RTDisrupt::new,</span>
-<span class="source-line-no">232</span><span id="line-232">        // "RT to N Disrupt",</span>
-<span class="source-line-no">233</span><span id="line-233">        // "RT Circle Disrupt",</span>
+<span class="source-line-no">227</span><span id="line-227">        // "LT Circle Disrupt",</span>
+<span class="source-line-no">228</span><span id="line-228">        // "LT Side Push Disrupt",</span>
+<span class="source-line-no">229</span><span id="line-229">        // "LT Around Disrupt",</span>
+<span class="source-line-no">230</span><span id="line-230">        // "LT Back Push Disrupt");</span>
+<span class="source-line-no">231</span><span id="line-231">        // LT_Disrupt.register(autonChooser);</span>
+<span class="source-line-no">232</span><span id="line-232">        // AutonConfig RT_Disrupt = new AutonConfig("RT Disrupt", RTDisrupt::new,</span>
+<span class="source-line-no">233</span><span id="line-233">        // "RT to N Disrupt",</span>
 <span class="source-line-no">234</span><span id="line-234">        // "RT Circle Disrupt",</span>
-<span class="source-line-no">235</span><span id="line-235">        // "RT Side Push Disrupt",</span>
-<span class="source-line-no">236</span><span id="line-236">        // "RT Around Disrupt",</span>
-<span class="source-line-no">237</span><span id="line-237">        // "RT Back Push Disrupt");</span>
-<span class="source-line-no">238</span><span id="line-238">        // RT_Disrupt.register(autonChooser);</span>
-<span class="source-line-no">239</span><span id="line-239">        autonChooser.addOption("SysID Module Translation Dynamic Forwards",</span>
-<span class="source-line-no">240</span><span id="line-240">        swerve.sysIdDynamic(Direction.kForward));</span>
-<span class="source-line-no">241</span><span id="line-241">        autonChooser.addOption("SysID Module Translation Dynamic Backwards",</span>
-<span class="source-line-no">242</span><span id="line-242">        swerve.sysIdDynamic(Direction.kReverse));</span>
-<span class="source-line-no">243</span><span id="line-243">        autonChooser.addOption("SysID Module Translation Quasi Forwards",</span>
-<span class="source-line-no">244</span><span id="line-244">        swerve.sysIdQuasistatic(Direction.kForward));</span>
-<span class="source-line-no">245</span><span id="line-245">        autonChooser.addOption("SysID Module Translation Quasi Backwards",</span>
-<span class="source-line-no">246</span><span id="line-246">        swerve.sysIdQuasistatic(Direction.kReverse));</span>
-<span class="source-line-no">247</span><span id="line-247">        autonChooser.addOption("SysID Rotation Translation Dynamic Forwards",</span>
-<span class="source-line-no">248</span><span id="line-248">        swerve.sysidRotationDynamic(Direction.kForward));</span>
-<span class="source-line-no">249</span><span id="line-249">        autonChooser.addOption("SysID Rotation Translation Dynamic Backwards",</span>
-<span class="source-line-no">250</span><span id="line-250">        swerve.sysidRotationDynamic(Direction.kReverse));</span>
-<span class="source-line-no">251</span><span id="line-251">        autonChooser.addOption("SysID Rotation Translation Quasi Forwards",</span>
-<span class="source-line-no">252</span><span id="line-252">        swerve.sysidRotationQuasiStatic(Direction.kForward));</span>
-<span class="source-line-no">253</span><span id="line-253">        autonChooser.addOption("SysID Rotation Translation Quasi Backwards",</span>
-<span class="source-line-no">254</span><span id="line-254">        swerve.sysidRotationQuasiStatic(Direction.kReverse));</span>
-<span class="source-line-no">255</span><span id="line-255">        SmartDashboard.putData("Autonomous", autonChooser);</span>
-<span class="source-line-no">256</span><span id="line-256">    }</span>
-<span class="source-line-no">257</span><span id="line-257"></span>
-<span class="source-line-no">258</span><span id="line-258">    /**</span>
-<span class="source-line-no">259</span><span id="line-259">     * Use this to pass the autonomous command to the main {@link Robot} class.</span>
-<span class="source-line-no">260</span><span id="line-260">     * @return The command to run in autonomous</span>
-<span class="source-line-no">261</span><span id="line-261">     */</span>
-<span class="source-line-no">262</span><span id="line-262">    public Command getAutonomousCommand() {</span>
-<span class="source-line-no">263</span><span id="line-263">        return autonChooser.getSelected();</span>
-<span class="source-line-no">264</span><span id="line-264">    }</span>
-<span class="source-line-no">265</span><span id="line-265">}</span>
+<span class="source-line-no">235</span><span id="line-235">        // "RT Circle Disrupt",</span>
+<span class="source-line-no">236</span><span id="line-236">        // "RT Side Push Disrupt",</span>
+<span class="source-line-no">237</span><span id="line-237">        // "RT Around Disrupt",</span>
+<span class="source-line-no">238</span><span id="line-238">        // "RT Back Push Disrupt");</span>
+<span class="source-line-no">239</span><span id="line-239">        // RT_Disrupt.register(autonChooser);</span>
+<span class="source-line-no">240</span><span id="line-240">        autonChooser.addOption("SysID Module Translation Dynamic Forwards",</span>
+<span class="source-line-no">241</span><span id="line-241">        swerve.sysIdDynamic(Direction.kForward));</span>
+<span class="source-line-no">242</span><span id="line-242">        autonChooser.addOption("SysID Module Translation Dynamic Backwards",</span>
+<span class="source-line-no">243</span><span id="line-243">        swerve.sysIdDynamic(Direction.kReverse));</span>
+<span class="source-line-no">244</span><span id="line-244">        autonChooser.addOption("SysID Module Translation Quasi Forwards",</span>
+<span class="source-line-no">245</span><span id="line-245">        swerve.sysIdQuasistatic(Direction.kForward));</span>
+<span class="source-line-no">246</span><span id="line-246">        autonChooser.addOption("SysID Module Translation Quasi Backwards",</span>
+<span class="source-line-no">247</span><span id="line-247">        swerve.sysIdQuasistatic(Direction.kReverse));</span>
+<span class="source-line-no">248</span><span id="line-248">        autonChooser.addOption("SysID Rotation Translation Dynamic Forwards",</span>
+<span class="source-line-no">249</span><span id="line-249">        swerve.sysidRotationDynamic(Direction.kForward));</span>
+<span class="source-line-no">250</span><span id="line-250">        autonChooser.addOption("SysID Rotation Translation Dynamic Backwards",</span>
+<span class="source-line-no">251</span><span id="line-251">        swerve.sysidRotationDynamic(Direction.kReverse));</span>
+<span class="source-line-no">252</span><span id="line-252">        autonChooser.addOption("SysID Rotation Translation Quasi Forwards",</span>
+<span class="source-line-no">253</span><span id="line-253">        swerve.sysidRotationQuasiStatic(Direction.kForward));</span>
+<span class="source-line-no">254</span><span id="line-254">        autonChooser.addOption("SysID Rotation Translation Quasi Backwards",</span>
+<span class="source-line-no">255</span><span id="line-255">        swerve.sysidRotationQuasiStatic(Direction.kReverse));</span>
+<span class="source-line-no">256</span><span id="line-256">        SmartDashboard.putData("Autonomous", autonChooser);</span>
+<span class="source-line-no">257</span><span id="line-257">    }</span>
+<span class="source-line-no">258</span><span id="line-258"></span>
+<span class="source-line-no">259</span><span id="line-259">    /**</span>
+<span class="source-line-no">260</span><span id="line-260">     * Use this to pass the autonomous command to the main {@link Robot} class.</span>
+<span class="source-line-no">261</span><span id="line-261">     * @return The command to run in autonomous</span>
+<span class="source-line-no">262</span><span id="line-262">     */</span>
+<span class="source-line-no">263</span><span id="line-263">    public Command getAutonomousCommand() {</span>
+<span class="source-line-no">264</span><span id="line-264">        return autonChooser.getSelected();</span>
+<span class="source-line-no">265</span><span id="line-265">    }</span>
+<span class="source-line-no">266</span><span id="line-266">}</span>
 
 
 
