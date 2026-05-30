@@ -179,6 +179,8 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="com/stuypulse/robot/util/PathUtil.AutonConfig.html#auton" class="member-name-link">auton</a> - Variable in class com.stuypulse.robot.util.<a href="com/stuypulse/robot/util/PathUtil.AutonConfig.html" title="class in com.stuypulse.robot.util">PathUtil.AutonConfig</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="tools/PathplannerFlip/PathplannerAutonFlip.html#AUTON_DIR" class="member-name-link">AUTON_DIR</a> - Static variable in class tools.PathplannerFlip.<a href="tools/PathplannerFlip/PathplannerAutonFlip.html" title="class in tools.PathplannerFlip">PathplannerAutonFlip</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/stuypulse/robot/RobotContainer.html#autonChooser" class="member-name-link">autonChooser</a> - Static variable in class com.stuypulse.robot.<a href="com/stuypulse/robot/RobotContainer.html" title="class in com.stuypulse.robot">RobotContainer</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/stuypulse/robot/util/PathUtil.AutonConfig.html#%3Cinit%3E(java.lang.String,java.util.function.Function,java.lang.String...)" class="member-name-link">AutonConfig(String, Function&lt;PathPlannerPath[], Command&gt;, String...)</a> - Constructor for class com.stuypulse.robot.util.<a href="com/stuypulse/robot/util/PathUtil.AutonConfig.html" title="class in com.stuypulse.robot.util">PathUtil.AutonConfig</a></dt>
@@ -211,6 +213,8 @@ loadScripts(document, 'script');</script>
 <dt><a href="com/stuypulse/robot/commands/auton/BCDot.html" class="type-name-link" title="class in com.stuypulse.robot.commands.auton">BCDot</a> - Class in <a href="com/stuypulse/robot/commands/auton/package-summary.html">com.stuypulse.robot.commands.auton</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/stuypulse/robot/commands/auton/BCDot.html#%3Cinit%3E(com.pathplanner.lib.path.PathPlannerPath...)" class="member-name-link">BCDot(PathPlannerPath...)</a> - Constructor for class com.stuypulse.robot.commands.auton.<a href="com/stuypulse/robot/commands/auton/BCDot.html" title="class in com.stuypulse.robot.commands.auton">BCDot</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="tools/PathplannerFlip/PathplannerAutonFlip.html#blankPathObject" class="member-name-link">blankPathObject</a> - Static variable in class tools.PathplannerFlip.<a href="tools/PathplannerFlip/PathplannerAutonFlip.html" title="class in tools.PathplannerFlip">PathplannerAutonFlip</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/stuypulse/robot/util/simulation/SimulationConstants.Drivetrain.html#BLUE_BUMPER_WEIGHT" class="member-name-link">BLUE_BUMPER_WEIGHT</a> - Static variable in interface com.stuypulse.robot.util.simulation.<a href="com/stuypulse/robot/util/simulation/SimulationConstants.Drivetrain.html" title="interface in com.stuypulse.robot.util.simulation">SimulationConstants.Drivetrain</a></dt>
 <dd>&nbsp;</dd>
@@ -767,7 +771,7 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">This interface stores information about the field elements.</div>
 </dd>
-<dt><a href="tools/PathplannerFlip/PathplannerFlip.html#FIELD_HEIGHT" class="member-name-link">FIELD_HEIGHT</a> - Static variable in class tools.PathplannerFlip.<a href="tools/PathplannerFlip/PathplannerFlip.html" title="class in tools.PathplannerFlip">PathplannerFlip</a></dt>
+<dt><a href="tools/PathplannerFlip/PathplannerPathFlip.html#FIELD_HEIGHT" class="member-name-link">FIELD_HEIGHT</a> - Static variable in class tools.PathplannerFlip.<a href="tools/PathplannerFlip/PathplannerPathFlip.html" title="class in tools.PathplannerFlip">PathplannerPathFlip</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/stuypulse/robot/constants/Field.NamedTags.html" class="type-name-link" title="enum class in com.stuypulse.robot.constants">Field.NamedTags</a> - Enum Class in <a href="com/stuypulse/robot/constants/package-summary.html">com.stuypulse.robot.constants</a></dt>
 <dd>
@@ -779,6 +783,8 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="tools/DogLogASTParser/DogLogRewriter.html#fileChanged" class="member-name-link">fileChanged</a> - Variable in class tools.DogLogASTParser.<a href="tools/DogLogASTParser/DogLogRewriter.html" title="class in tools.DogLogASTParser">DogLogRewriter</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="tools/PathplannerFlip/PathplannerPathFlip.html#fileValid(java.io.File)" class="member-name-link">fileValid(File)</a> - Static method in class tools.PathplannerFlip.<a href="tools/PathplannerFlip/PathplannerPathFlip.html" title="class in tools.PathplannerFlip">PathplannerPathFlip</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/stuypulse/robot/util/PathUtil.html#findClosestMatch(java.util.List,java.lang.String)" class="member-name-link">findClosestMatch(List&lt;String&gt;, String)</a> - Static method in class com.stuypulse.robot.util.<a href="com/stuypulse/robot/util/PathUtil.html" title="class in com.stuypulse.robot.util">PathUtil</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/stuypulse/robot/util/shooter/InterpolationCalculator.InterpolatedInfo.html#flightTimeSeconds" class="member-name-link">flightTimeSeconds</a> - Variable in record class com.stuypulse.robot.util.shooter.<a href="com/stuypulse/robot/util/shooter/InterpolationCalculator.InterpolatedInfo.html" title="class in com.stuypulse.robot.util.shooter">InterpolationCalculator.InterpolatedInfo</a></dt>
@@ -789,7 +795,11 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Returns the value of the <code>flightTimeSeconds</code> record component.</div>
 </dd>
-<dt><a href="tools/PathplannerFlip/PathplannerFlip.html#flipWaypoint(com.fasterxml.jackson.databind.node.ObjectNode,java.lang.String)" class="member-name-link">flipWaypoint(ObjectNode, String)</a> - Static method in class tools.PathplannerFlip.<a href="tools/PathplannerFlip/PathplannerFlip.html" title="class in tools.PathplannerFlip">PathplannerFlip</a></dt>
+<dt><a href="tools/PathplannerFlip/PathplannerAutonFlip.html#flipAutons(java.lang.String...)" class="member-name-link">flipAutons(String...)</a> - Static method in class tools.PathplannerFlip.<a href="tools/PathplannerFlip/PathplannerAutonFlip.html" title="class in tools.PathplannerFlip">PathplannerAutonFlip</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="tools/PathplannerFlip/PathplannerPathFlip.html#flipPaths(java.lang.String...)" class="member-name-link">flipPaths(String...)</a> - Static method in class tools.PathplannerFlip.<a href="tools/PathplannerFlip/PathplannerPathFlip.html" title="class in tools.PathplannerFlip">PathplannerPathFlip</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="tools/PathplannerFlip/PathplannerPathFlip.html#flipWaypoint(com.fasterxml.jackson.databind.node.ObjectNode,java.lang.String)" class="member-name-link">flipWaypoint(ObjectNode, String)</a> - Static method in class tools.PathplannerFlip.<a href="tools/PathplannerFlip/PathplannerPathFlip.html" title="class in tools.PathplannerFlip">PathplannerPathFlip</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/stuypulse/robot/util/vision/LimelightHelpers.html#Flush()" class="member-name-link">Flush()</a> - Static method in class com.stuypulse.robot.util.vision.<a href="com/stuypulse/robot/util/vision/LimelightHelpers.html" title="class in com.stuypulse.robot.util.vision">LimelightHelpers</a></dt>
 <dd>&nbsp;</dd>
@@ -2169,7 +2179,9 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Entry Point</div>
 </dd>
-<dt><a href="tools/PathplannerFlip/PathplannerFlip.html#main(java.lang.String%5B%5D)" class="member-name-link">main(String[])</a> - Static method in class tools.PathplannerFlip.<a href="tools/PathplannerFlip/PathplannerFlip.html" title="class in tools.PathplannerFlip">PathplannerFlip</a></dt>
+<dt><a href="tools/PathplannerFlip/PathplannerAutonFlip.html#main(java.lang.String%5B%5D)" class="member-name-link">main(String[])</a> - Static method in class tools.PathplannerFlip.<a href="tools/PathplannerFlip/PathplannerAutonFlip.html" title="class in tools.PathplannerFlip">PathplannerAutonFlip</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="tools/PathplannerFlip/PathplannerPathFlip.html#main(java.lang.String%5B%5D)" class="member-name-link">main(String[])</a> - Static method in class tools.PathplannerFlip.<a href="tools/PathplannerFlip/PathplannerPathFlip.html" title="class in tools.PathplannerFlip">PathplannerPathFlip</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="tools/PathplannerSearch/Main.html#main(java.lang.String%5B%5D)" class="member-name-link">main(String[])</a> - Static method in class tools.PathplannerSearch.<a href="tools/PathplannerSearch/Main.html" title="class in tools.PathplannerSearch">Main</a></dt>
 <dd>&nbsp;</dd>
@@ -2223,6 +2235,8 @@ loadScripts(document, 'script');</script>
 <dt><a href="com/stuypulse/robot/util/simulation/MapleSimSwerveDrivetrain.TalonFXMotorControllerWithRemoteCanCoderSim.html" class="type-name-link" title="class in com.stuypulse.robot.util.simulation">MapleSimSwerveDrivetrain.TalonFXMotorControllerWithRemoteCanCoderSim</a> - Class in <a href="com/stuypulse/robot/util/simulation/package-summary.html">com.stuypulse.robot.util.simulation</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/stuypulse/robot/util/vision/LimelightHelpers.html#mapper" class="member-name-link">mapper</a> - Static variable in class com.stuypulse.robot.util.vision.<a href="com/stuypulse/robot/util/vision/LimelightHelpers.html" title="class in com.stuypulse.robot.util.vision">LimelightHelpers</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="tools/PathplannerFlip/PathplannerPathFlip.html#mapper" class="member-name-link">mapper</a> - Static variable in class tools.PathplannerFlip.<a href="tools/PathplannerFlip/PathplannerPathFlip.html" title="class in tools.PathplannerFlip">PathplannerPathFlip</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/stuypulse/robot/constants/Settings.Swerve.Constraints.html#MAX_ACCEL_M_PER_S_SQUARED" class="member-name-link">MAX_ACCEL_M_PER_S_SQUARED</a> - Static variable in interface com.stuypulse.robot.constants.<a href="com/stuypulse/robot/constants/Settings.Swerve.Constraints.html" title="interface in com.stuypulse.robot.constants">Settings.Swerve.Constraints</a></dt>
 <dd>&nbsp;</dd>
@@ -2397,11 +2411,19 @@ loadScripts(document, 'script');</script>
 </dd>
 <dt><a href="tools/PathplannerSearch/PathplannerSearch.SearchType.html#PATH" class="member-name-link">PATH</a> - Enum constant in enum class tools.PathplannerSearch.<a href="tools/PathplannerSearch/PathplannerSearch.SearchType.html" title="enum class in tools.PathplannerSearch">PathplannerSearch.SearchType</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="tools/PathplannerFlip/PathplannerFlip.html#PATH_DIR" class="member-name-link">PATH_DIR</a> - Static variable in class tools.PathplannerFlip.<a href="tools/PathplannerFlip/PathplannerFlip.html" title="class in tools.PathplannerFlip">PathplannerFlip</a></dt>
+<dt><a href="tools/PathplannerFlip/PathplannerPathFlip.html#PATH_DIR" class="member-name-link">PATH_DIR</a> - Static variable in class tools.PathplannerFlip.<a href="tools/PathplannerFlip/PathplannerPathFlip.html" title="class in tools.PathplannerFlip">PathplannerPathFlip</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="tools/PathplannerFlip/PathplannerFlip.html" class="type-name-link" title="class in tools.PathplannerFlip">PathplannerFlip</a> - Class in <a href="tools/PathplannerFlip/package-summary.html">tools.PathplannerFlip</a></dt>
+<dt><a href="tools/PathplannerFlip/PathplannerAutonFlip.html" class="type-name-link" title="class in tools.PathplannerFlip">PathplannerAutonFlip</a> - Class in <a href="tools/PathplannerFlip/package-summary.html">tools.PathplannerFlip</a></dt>
+<dd>
+<div class="block">Flip autons of your choice across the y coordinate axis</div>
+</dd>
+<dt><a href="tools/PathplannerFlip/PathplannerAutonFlip.html#%3Cinit%3E()" class="member-name-link">PathplannerAutonFlip()</a> - Constructor for class tools.PathplannerFlip.<a href="tools/PathplannerFlip/PathplannerAutonFlip.html" title="class in tools.PathplannerFlip">PathplannerAutonFlip</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="tools/PathplannerFlip/PathplannerFlip.html#%3Cinit%3E()" class="member-name-link">PathplannerFlip()</a> - Constructor for class tools.PathplannerFlip.<a href="tools/PathplannerFlip/PathplannerFlip.html" title="class in tools.PathplannerFlip">PathplannerFlip</a></dt>
+<dt><a href="tools/PathplannerFlip/PathplannerPathFlip.html" class="type-name-link" title="class in tools.PathplannerFlip">PathplannerPathFlip</a> - Class in <a href="tools/PathplannerFlip/package-summary.html">tools.PathplannerFlip</a></dt>
+<dd>
+<div class="block">Flip paths of your choice across the y coordinate axis</div>
+</dd>
+<dt><a href="tools/PathplannerFlip/PathplannerPathFlip.html#%3Cinit%3E()" class="member-name-link">PathplannerPathFlip()</a> - Constructor for class tools.PathplannerFlip.<a href="tools/PathplannerFlip/PathplannerPathFlip.html" title="class in tools.PathplannerFlip">PathplannerPathFlip</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="tools/PathplannerSearch/PathplannerSearch.html" class="type-name-link" title="class in tools.PathplannerSearch">PathplannerSearch</a> - Class in <a href="tools/PathplannerSearch/package-summary.html">tools.PathplannerSearch</a></dt>
 <dd>
@@ -3970,6 +3992,8 @@ the order they are declared.</div>
 <dt><a href="com/stuypulse/robot/commands/swerve/PIDtoPose/SwerveDrivePIDToPose.html#withTolerance(double,double,edu.wpi.first.math.geometry.Rotation2d)" class="member-name-link">withTolerance(double, double, Rotation2d)</a> - Method in class com.stuypulse.robot.commands.swerve.PIDtoPose.<a href="com/stuypulse/robot/commands/swerve/PIDtoPose/SwerveDrivePIDToPose.html" title="class in com.stuypulse.robot.commands.swerve.PIDtoPose">SwerveDrivePIDToPose</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/stuypulse/robot/commands/swerve/PIDtoPose/SwerveDrivePIDToPose.html#withTranslationalConstraints(double,double)" class="member-name-link">withTranslationalConstraints(double, double)</a> - Method in class com.stuypulse.robot.commands.swerve.PIDtoPose.<a href="com/stuypulse/robot/commands/swerve/PIDtoPose/SwerveDrivePIDToPose.html" title="class in com.stuypulse.robot.commands.swerve.PIDtoPose">SwerveDrivePIDToPose</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="tools/PathplannerFlip/PathplannerAutonFlip.html#writeAuton(com.fasterxml.jackson.databind.node.ObjectNode,java.lang.String,java.lang.String%5B%5D)" class="member-name-link">writeAuton(ObjectNode, String, String[])</a> - Static method in class tools.PathplannerFlip.<a href="tools/PathplannerFlip/PathplannerAutonFlip.html" title="class in tools.PathplannerFlip">PathplannerAutonFlip</a></dt>
 <dd>&nbsp;</dd>
 </dl>
 <h2 class="title" id="I:X">X</h2>
