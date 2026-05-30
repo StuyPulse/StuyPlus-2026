@@ -16,8 +16,9 @@
     "Disrupt",
     "Ferry",
     "Mid(Line)",
-    "Shooting",
+    "BC Dot",
     "Outtake",
+    "Shooting",
     "Straight"
   ],
   "defaultMaxVel": 3.0,

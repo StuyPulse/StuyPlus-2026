@@ -1,0 +1,19 @@
+{
+  "version": "2025.0",
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "RB to BC Right"
+          }
+        }
+      ]
+    }
+  },
+  "resetOdom": true,
+  "folder": "BC Dot",
+  "choreoAuto": false
+}

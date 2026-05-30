@@ -7,6 +7,10 @@ package com.stuypulse.robot;
 
 import com.stuypulse.robot.commands.auton.BCDot;
 import com.stuypulse.robot.commands.auton.DoNothingAuton;
+import com.stuypulse.robot.commands.auton.shooting.FrontHubShootPreloads;
+import com.stuypulse.robot.commands.auton.shooting.RBOnePointFiveSpiralAngled;
+import com.stuypulse.robot.commands.auton.shooting.RBOneSweepAngled;
+import com.stuypulse.robot.commands.auton.shooting.RBTwoSweepAngled;
 import com.stuypulse.robot.commands.feeder.FeederSetForward;
 import com.stuypulse.robot.commands.feeder.FeederSetIdle;
 import com.stuypulse.robot.commands.handoff.HandoffSetForward;
@@ -251,22 +255,51 @@ public class RobotContainer {
         // "RT Back Push Disrupt");
         // RT_Disrupt.register(autonChooser);
 
-        AutonConfig LBToBCCenter = new AutonConfig("LB To BC Center", BCDot::new,
+        // DOT
+        AutonConfig LB_ToBCCenter = new AutonConfig("LB To BC Center", BCDot::new,
             "LB to BC Center"
         );
-        LBToBCCenter.register(autonChooser);
-        AutonConfig LBToBCLeft = new AutonConfig("LB To BC Left", BCDot::new,
+        LB_ToBCCenter.register(autonChooser);
+        AutonConfig LB_ToBCLeft = new AutonConfig("LB To BC Left", BCDot::new,
             "LB to BC Left"
         );
-        LBToBCLeft.register(autonChooser);
-        AutonConfig RBToBCCenter = new AutonConfig("RB To BC Center", BCDot::new,
+        LB_ToBCLeft.register(autonChooser);
+        AutonConfig RB_ToBCCenter = new AutonConfig("RB To BC Center", BCDot::new,
             "RB to BC Center"
         );
-        RBToBCCenter.register(autonChooser);
-        AutonConfig RBToBCRight = new AutonConfig("RB To BC Right", BCDot::new,
+        RB_ToBCCenter.register(autonChooser);
+        AutonConfig RB_ToBCRight = new AutonConfig("RB To BC Right", BCDot::new,
             "RB to BC Right"
         );
-        RBToBCRight.register(autonChooser);
+        RB_ToBCRight.register(autonChooser);
+
+        // SHOOT
+        AutonConfig frontHubShootPreloads = new AutonConfig("Front Hub Shoot Preloads", FrontHubShootPreloads::new,
+            "Front Hub Shoot Preloads"
+        );
+        frontHubShootPreloads.register(autonChooser);
+        AutonConfig RB_OneSweepAngled = new AutonConfig("RB 1 Sweep Angled", RBOneSweepAngled::new,
+            "RB to Mid Neutral LF",
+            "Mid Neutral LF to RB Shoot"
+        );
+        RB_OneSweepAngled.register(autonChooser);
+        AutonConfig RB_TwoSweepAngled = new AutonConfig("RB 2 Sweep Angled", RBTwoSweepAngled::new, 
+            "RB to Mid Neutral LF",
+            "Mid Neutral LF to RB Shoot",
+            "RB Shoot to RB Start",
+            "RB to Mid Neutral LF",
+            "Mid Neutral LF to RB Shoot"
+        );
+        RB_TwoSweepAngled.register(autonChooser);
+        AutonConfig RB_OnePointFiveSpiralAngled = new AutonConfig("RB 1.5 Spiral Angled", RBOnePointFiveSpiralAngled::new, 
+            "RB to Mid Neutral LF",
+            "Mid Neutral LF Spiral",
+            "Mid Neutral LF to RB Shoot",
+            "RB Shoot to RB Start",
+            "RB to Mid Neutral LF"
+        );
+        RB_OnePointFiveSpiralAngled.register(autonChooser);
+
 
         // autonChooser.addOption("SysID Module Translation Dynamic Forwards",
         // swerve.sysIdDynamic(Direction.kForward));

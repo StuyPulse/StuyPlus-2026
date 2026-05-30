@@ -48,11 +48,11 @@
     },
     {
       "anchor": {
-        "x": 3.0,
+        "x": 2.8,
         "y": 2.25
       },
       "prevControl": {
-        "x": 3.9999999999999996,
+        "x": 3.7999999999999994,
         "y": 2.25
       },
       "nextControl": null,
@@ -71,6 +71,10 @@
     },
     {
       "waypointRelativePos": 1.9377049180327874,
+      "rotationDegrees": 180.0
+    },
+    {
+      "waypointRelativePos": 2.903743315508021,
       "rotationDegrees": 180.0
     }
   ],
@@ -101,7 +105,7 @@
   },
   "goalEndState": {
     "velocity": 0.0,
-    "rotation": 180.0
+    "rotation": 50.0
   },
   "reversed": false,
   "folder": "Shooting",
