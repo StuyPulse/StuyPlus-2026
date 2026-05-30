@@ -10,10 +10,11 @@ import com.stuypulse.robot.commands.auton.BC_Dots.LBCenterDotDot;
 import com.stuypulse.robot.commands.auton.BC_Dots.LeftDot;
 import com.stuypulse.robot.commands.auton.BC_Dots.RBCenterDotDot;
 import com.stuypulse.robot.commands.auton.BC_Dots.RightDot;
+import com.stuypulse.robot.commands.auton.depot.CenterDepot;
 import com.stuypulse.robot.commands.auton.shooting.FrontHubShootPreloads;
 import com.stuypulse.robot.commands.auton.shooting.LBDumpy;
 import com.stuypulse.robot.commands.auton.shooting.RBDumpy;
-import com.stuypulse.robot.commands.auton.depot.centerDepot;
+// import com.stuypulse.robot.commands.auton.depot.centerDepot;
 import com.stuypulse.robot.commands.auton.shooting.LBOnePointFiveSpiralAngled;
 import com.stuypulse.robot.commands.auton.shooting.LBOneSweepAngled;
 import com.stuypulse.robot.commands.auton.shooting.LBTwoSweepAngled;
@@ -283,21 +284,21 @@ public class RobotContainer {
         );
         LB_OnePointFiveSpiralAngled.register(autonChooser);
 
-        AutonConfig LB_Dumpy = new AutonConfig("LB Dumpy", LBDumpy::new,
-            "LB to N Dumpy",
-            "LB Intake Dumpy",
-            "LB Backsweep Dumpy",
-            "LB Shoot Dumpy");
-        LB_Dumpy.register(autonChooser);
+        // AutonConfig LB_Dumpy = new AutonConfig("LB Dumpy", LBDumpy::new,
+        //     "LB to N Dumpy",
+        //     "LB Intake Dumpy",
+        //     "LB Backsweep Dumpy",
+        //     "LB Shoot Dumpy");
+        // LB_Dumpy.register(autonChooser);
 
-        AutonConfig RB_Dumpy = new AutonConfig("RB Dumpy", RBDumpy::new,
-            "RB to N Dumpy",
-            "RB Intake Dumpy",
-            "RB Backsweep Dumpy",
-            "RB Shoot Dumpy");
-        RB_Dumpy.register(autonChooser);
+        // AutonConfig RB_Dumpy = new AutonConfig("RB Dumpy", RBDumpy::new,
+        //     "RB to N Dumpy",
+        //     "RB Intake Dumpy",
+        //     "RB Backsweep Dumpy",
+        //     "RB Shoot Dumpy");
+        // RB_Dumpy.register(autonChooser);
 
-        AutonConfig centerDepot = new AutonConfig("Center Depot", centerDepot::new,
+        AutonConfig centerDepot = new AutonConfig("Center Depot", CenterDepot::new,
             "RB Depot",
             "Tower shoot");
         centerDepot.register(autonChooser);

@@ -1,6 +1,7 @@
 package com.stuypulse.robot.commands.auton.BC_Dots;
 
 import com.pathplanner.lib.path.PathPlannerPath;
+import com.stuypulse.robot.commands.intake.IntakeSetIntake;
 import com.stuypulse.robot.commands.swerve.SwerveDriveXMode;
 import com.stuypulse.robot.commands.swerve.SwerveResetPose;
 import com.stuypulse.robot.constants.Settings;
