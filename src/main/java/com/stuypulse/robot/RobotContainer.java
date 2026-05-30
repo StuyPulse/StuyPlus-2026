@@ -14,6 +14,7 @@ import com.stuypulse.robot.commands.auton.depot.CenterDepot;
 import com.stuypulse.robot.commands.auton.shooting.FrontHubShootPreloads;
 import com.stuypulse.robot.commands.auton.shooting.LBDumpy;
 import com.stuypulse.robot.commands.auton.shooting.RBDumpy;
+import com.stuypulse.robot.commands.compound.StopShooting;
 // import com.stuypulse.robot.commands.auton.depot.centerDepot;
 import com.stuypulse.robot.commands.auton.shooting.LBOnePointFiveSpiralAngled;
 import com.stuypulse.robot.commands.auton.shooting.LBOneSweepAngled;
@@ -124,25 +125,32 @@ public class RobotContainer {
         driver.leftBumper().whileTrue(new IntakeSetOuttake());
         driver.leftBumper().onFalse(new IntakeSetIntake());
 
-        rightTrigger.onTrue(
+        rightTrigger.whileTrue(
             new SwerveDriveAlignToHub()
                 .andThen(new SwerveDriveXMode())
                 .andThen(new ShooterWaitForSpinUp())
                 .andThen(new ShooterSetShoot())
                 .andThen(new HandoffSetForward())
                 .alongWith(new FeederSetForward(), new IntakeAgitateFastOnce().repeatedly()));
+        rightTrigger.onFalse(
+            new StopShooting()
+        );
 
         // Top Left Paddle
         driver.y().onTrue(new IntakeSetIdle());
         
         driver.rightBumper()
-            .onTrue(
+            .whileTrue(
                 new SwerveDriveAlignToFerryZone()
                     .andThen(new SwerveDriveXMode())
                     .andThen(new ShooterWaitForSpinUp())
                     .andThen(new ShooterSetFerry())
                     .andThen(new HandoffSetForward())
                     .alongWith(new FeederSetForward(), new IntakeAgitateFastOnce().repeatedly()));
+        driver.rightBumper()
+            .onFalse(
+                new StopShooting()
+            );
         // Manual shooting possibly from in front of the tower
         driver.a()
             .whileTrue(
@@ -151,15 +159,11 @@ public class RobotContainer {
                     .andThen(new ShooterWaitForSpinUp())
                     .andThen(new HandoffSetForward().repeatedly())
                     .alongWith(new FeederSetForward().repeatedly(), new IntakeAgitateFastOnce().repeatedly()));
-        // Top Right Paddle
-        driver.b()
-            .onTrue(
-                new HandoffSetIdle()
-                    .alongWith(
-                        new FeederSetIdle(),
-                        new IntakeSetHomingDown(),
-                        Commands.runOnce(
-                                () -> new SwerveDriveXMode().cancel())));
+        driver.a()
+            .onFalse(
+                new StopShooting()
+            );
+
         // Bottom Left Paddle
         driver.x().whileTrue(new SwerveDriveXMode());
 
