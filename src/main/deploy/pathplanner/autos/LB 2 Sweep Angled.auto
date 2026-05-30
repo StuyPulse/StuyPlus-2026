@@ -38,6 +38,6 @@
     }
   },
   "resetOdom": true,
-  "folder": "Shooting",
+  "folder": null,
   "choreoAuto": false
 }

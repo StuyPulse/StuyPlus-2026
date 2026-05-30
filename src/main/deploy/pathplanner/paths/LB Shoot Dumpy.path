@@ -8,20 +8,20 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.332806169728393,
-        "y": 5.9340404535561735
+        "x": 2.3132296215429404,
+        "y": 6.032075884734353
       },
       "isLocked": false,
       "linkedName": "LB Dumpy 3"
     },
     {
       "anchor": {
-        "x": 3.211,
-        "y": 4.915
+        "x": 2.5995591111717613,
+        "y": 4.471275984807133
       },
       "prevControl": {
-        "x": 2.2904620441896997,
-        "y": 5.128623200782578
+        "x": 1.8309274927219796,
+        "y": 4.812607464519651
       },
       "nextControl": null,
       "isLocked": false,
@@ -42,7 +42,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -36.871
+    "rotation": -20.871
   },
   "reversed": false,
   "folder": "Dumpy",
