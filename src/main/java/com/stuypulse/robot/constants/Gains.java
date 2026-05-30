@@ -107,7 +107,7 @@ public class Gains {
 
             double kD = 0.0;
 
-            double akP = 0.88624;
+            double akP = 8.8624;
 
             double akI = 0.0;
 
