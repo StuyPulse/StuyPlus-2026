@@ -24,7 +24,7 @@ public abstract class Shooter extends SubsystemBase {
 
     private static final Shooter instance;
 
-    protected AngularVelocity bonusVelocity;
+    private static AngularVelocity bonusVelocity;
 
     private ShooterState state;
 
@@ -94,7 +94,7 @@ public abstract class Shooter extends SubsystemBase {
          * @return the target angular velocity of the shooter
          */
         public AngularVelocity getTargetAngularVelocity() {
-            return RPM.of(RPMSupplier.getAsDouble());
+            return RPM.of(RPMSupplier.getAsDouble()).plus(bonusVelocity); // adding here allows target RPM readings to be accurate
         }
     }
 
@@ -119,6 +119,7 @@ public abstract class Shooter extends SubsystemBase {
         final ShooterState currentState = getState();
         DogLog.log("Shooter/Bonus Velocity", bonusVelocity);
         DogLog.log("Shooter/Target RPM", currentState.getTargetAngularVelocity().in(RPM));
+        DogLog.log("Shooter/Current RPM", getCurrentAngularVelocity().in(RPM));
         DogLog.log("Shooter/State", currentState.name());
         DogLog.forceNt.log("States/Shooter", currentState.name());
         DogLog.forceNt.log("Shooter/At Target RPM", shooterSpunUp());

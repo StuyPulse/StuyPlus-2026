@@ -92,8 +92,12 @@ public final class LoggedSignals {
     }
 
     public void logAll() {
-        for (int i = 0; i < signals.size(); i++)
-            DogLog.log(keys.get(i), signals.get(i).getValueAsDouble());
+        for (int i = 0; i < signals.size(); i++) {
+            String key = keys.get(i);
+            if (key != null) {
+                DogLog.log(key, signals.get(i).getValueAsDouble());
+            }
+        }
     }
 
     private String getLogKey(String motorName, BaseStatusSignal signal) {
