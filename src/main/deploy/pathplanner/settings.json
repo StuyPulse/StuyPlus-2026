@@ -3,23 +3,15 @@
   "robotLength": 0.9,
   "holonomicMode": true,
   "pathFolders": [
+    "BC Dot",
     "Disrupt",
     "Ferry",
-    "Mid",
-    "Midline",
-    "BC Dot",
-    "Outtake",
-    "Shooting",
-    "Straight"
+    "Dumpy"
   ],
   "autoFolders": [
     "Disrupt",
     "Ferry",
-    "Mid(Line)",
-    "BC Dot",
-    "Outtake",
-    "Shooting",
-    "Straight"
+    "Dumpy"
   ],
   "defaultMaxVel": 3.0,
   "defaultMaxAccel": 3.0,

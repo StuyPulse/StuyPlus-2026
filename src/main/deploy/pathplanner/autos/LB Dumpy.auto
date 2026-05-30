@@ -7,25 +7,31 @@
         {
           "type": "path",
           "data": {
-            "pathName": "RB to N Mid"
+            "pathName": "LB to N Dumpy"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "RB Return Mid"
+            "pathName": "LB Intake Dumpy"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "RB to Outpost Mid"
+            "pathName": "LB Backsweep Dumpy"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "LB Shoot Dumpy"
           }
         }
       ]
     }
   },
   "resetOdom": true,
-  "folder": "Mid(Line)",
+  "folder": "Dumpy",
   "choreoAuto": false
 }

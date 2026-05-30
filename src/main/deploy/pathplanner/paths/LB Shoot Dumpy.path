@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.55,
-        "y": 5.8
+        "x": 3.353,
+        "y": 5.816
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.8,
-        "y": 5.8
+        "x": 2.332806169728393,
+        "y": 5.9340404535561735
       },
       "isLocked": false,
-      "linkedName": "Left Bump Facing Depot"
+      "linkedName": "LB Dumpy 3"
     },
     {
       "anchor": {
-        "x": 8.25,
-        "y": 5.8
+        "x": 3.211,
+        "y": 4.915
       },
       "prevControl": {
-        "x": 8.0,
-        "y": 5.8
+        "x": 2.2904620441896997,
+        "y": 5.128623200782578
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Left Neutral Across Midline"
+      "linkedName": null
     }
   ],
   "rotationTargets": [],
@@ -41,14 +41,14 @@
     "unlimited": false
   },
   "goalEndState": {
-    "velocity": 0.0,
-    "rotation": 0.0
+    "velocity": 0,
+    "rotation": -36.871
   },
   "reversed": false,
-  "folder": "Midline",
+  "folder": "Dumpy",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 0.0
+    "rotation": 179.15
   },
   "useDefaultConstraints": true
 }

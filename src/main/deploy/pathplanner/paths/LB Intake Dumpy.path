@@ -3,39 +3,39 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.482433303766376,
-        "y": 5.583732373544397
+        "x": 6.895,
+        "y": 6.505
       },
       "prevControl": null,
       "nextControl": {
-        "x": 4.482433303766374,
-        "y": 5.583732373544397
+        "x": 8.248672608807675,
+        "y": 6.534773615229252
       },
       "isLocked": false,
-      "linkedName": "LB Outtake 0"
+      "linkedName": "LB Dumpy 1"
     },
     {
       "anchor": {
-        "x": 7.608978802765646,
-        "y": 5.583732373544397
+        "x": 8.151,
+        "y": 4.08
       },
       "prevControl": {
-        "x": 6.608978802765646,
-        "y": 5.583732373544397
+        "x": 8.151,
+        "y": 4.692
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "LB Outtake 1"
+      "linkedName": "LB Dumpy 2"
     }
   ],
   "rotationTargets": [],
   "constraintZones": [
     {
       "name": "Constraints Zone",
-      "minWaypointRelativePos": 0.11514630305039784,
-      "maxWaypointRelativePos": 0.4156270722811671,
+      "minWaypointRelativePos": 0.25,
+      "maxWaypointRelativePos": 0.97,
       "constraints": {
-        "maxVelocity": 1.2,
+        "maxVelocity": 1.8,
         "maxAcceleration": 3.0,
         "maxAngularVelocity": 540.0,
         "maxAngularAcceleration": 720.0,
@@ -55,14 +55,14 @@
     "unlimited": false
   },
   "goalEndState": {
-    "velocity": 0,
-    "rotation": 0.0
+    "velocity": 2.0,
+    "rotation": -90.0
   },
   "reversed": false,
-  "folder": "Outtake",
+  "folder": "Dumpy",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 0.0
+    "rotation": -34.0
   },
   "useDefaultConstraints": true
 }

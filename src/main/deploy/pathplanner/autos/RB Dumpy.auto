@@ -7,37 +7,31 @@
         {
           "type": "path",
           "data": {
-            "pathName": "RB to Mid Neutral LF"
+            "pathName": "RB to N Dumpy"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Mid Neutral LF Spiral"
+            "pathName": "RB Intake Dumpy"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Mid Neutral LF to RB Shoot"
+            "pathName": "RB Backsweep Dumpy"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "RB Shoot to RB Start"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "RB to Mid Neutral LF"
+            "pathName": "RB Shoot Dumpy"
           }
         }
       ]
     }
   },
   "resetOdom": true,
-  "folder": "Shooting",
+  "folder": "Dumpy",
   "choreoAuto": false
 }
