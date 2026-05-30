@@ -194,7 +194,7 @@ public class Robot extends TimedRobot {
         if (auto != null) {
             auto.cancel();
         }
-        // CommandScheduler.getInstance().schedule(new SetVisionEnabled());
+        CommandScheduler.getInstance().schedule(new SetVisionEnabled());
         Boolean autonWon = DriverStation.getGameSpecificMessage()
                 .equals(String.valueOf(alliance.name().charAt(0)).toUpperCase());
         DogLog.log("Auton Won", autonWon);
