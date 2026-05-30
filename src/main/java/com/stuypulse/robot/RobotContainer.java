@@ -252,19 +252,19 @@ public class RobotContainer {
         // RT_Disrupt.register(autonChooser);
 
         AutonConfig LBToBCCenter = new AutonConfig("LB To BC Center", BCDot::new,
-            "LB To BC Center"
+            "LB to BC Center"
         );
         LBToBCCenter.register(autonChooser);
         AutonConfig LBToBCLeft = new AutonConfig("LB To BC Left", BCDot::new,
-            "LB To BC Left"
+            "LB to BC Left"
         );
         LBToBCLeft.register(autonChooser);
         AutonConfig RBToBCCenter = new AutonConfig("RB To BC Center", BCDot::new,
-            "RB To BC Center"
+            "RB to BC Center"
         );
         RBToBCCenter.register(autonChooser);
         AutonConfig RBToBCRight = new AutonConfig("RB To BC Right", BCDot::new,
-            "RB To BC Right"
+            "RB to BC Right"
         );
         RBToBCRight.register(autonChooser);
 
