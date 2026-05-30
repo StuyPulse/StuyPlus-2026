@@ -17,6 +17,7 @@ import com.stuypulse.robot.commands.intake.IntakeSetIdle;
 import com.stuypulse.robot.commands.intake.IntakeSetIntake;
 import com.stuypulse.robot.commands.intake.IntakeSetOuttake;
 import com.stuypulse.robot.commands.leds.LEDDefaultCommand;
+import com.stuypulse.robot.commands.shooter.ShooterAddToBonusVelocity;
 import com.stuypulse.robot.commands.shooter.ShooterSetFerry;
 import com.stuypulse.robot.commands.shooter.ShooterSetManual;
 import com.stuypulse.robot.commands.shooter.ShooterSetShoot;
@@ -104,9 +105,11 @@ public class RobotContainer {
         // Trigger buttons did not work for some reason so I had to do this
         Trigger leftTrigger = new Trigger(() -> driver.getLeftTriggerAxis() > 0.5);
         Trigger rightTrigger = new Trigger(() -> driver.getRightTriggerAxis() > 0.5);
+
         leftTrigger.onTrue(new IntakeSetIntake());
         driver.leftBumper().whileTrue(new IntakeSetOuttake());
         driver.leftBumper().onFalse(new IntakeSetIntake());
+
         rightTrigger.onTrue(
             new SwerveDriveAlignToHub()
                 .andThen(new SwerveDriveXMode())
@@ -114,8 +117,8 @@ public class RobotContainer {
                 .andThen(new ShooterSetShoot())
                 .andThen(new HandoffSetForward())
                 .alongWith(new FeederSetForward(), new IntakeAgitateFastOnce().repeatedly()));
+
         driver.y().onTrue(new IntakeSetIdle());
-        driver.povUp().onTrue(new SwerveDriveResetRotation());
         driver.rightBumper()
             .onTrue(
                 new SwerveDriveAlignToFerryZone()
@@ -128,22 +131,29 @@ public class RobotContainer {
         driver.a()
             .whileTrue(
                 new SwerveDriveXMode()
-                    .andThen(new ShooterWaitForSpinUp())
                     .andThen(new ShooterSetManual())
+                    .andThen(new ShooterWaitForSpinUp())
                     .andThen(new HandoffSetForward().repeatedly())
-                    .alongWith(new FeederSetForward().repeatedly(), new IntakeAgitateFastOnce().repeatedly())
-                    .andThen(new IntakeSetHomingDown()));
+                    .alongWith(new FeederSetForward().repeatedly(), new IntakeAgitateFastOnce().repeatedly()));
         // Top Right Paddle
         driver.b()
             .onTrue(
                 new HandoffSetIdle()
                     .alongWith(
                         new FeederSetIdle(),
-                        new IntakeSetIntake(),
+                        new IntakeSetHomingDown(),
                         Commands.runOnce(
                                 () -> new SwerveDriveXMode().cancel())));
         // Bottom Left Paddle
         driver.x().whileTrue(new SwerveDriveXMode());
+
+        driver.povLeft().onTrue(new SwerveDriveResetRotation());
+        
+        driver.povUp()
+            .onTrue(new ShooterAddToBonusVelocity(50));
+        driver.povDown()
+            .onTrue(new ShooterAddToBonusVelocity(-50));
+
     }
 
     /**************/

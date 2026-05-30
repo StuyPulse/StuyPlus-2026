@@ -110,7 +110,7 @@ public class ShooterImpl extends Shooter {
         // Motors.Shooter.SHOOTER_MOTOR_RIGHT.updateGainsConfig(shooterMotorRight, 0, Gains.Shooter.kP, Gains.Shooter.kI, Gains.Shooter.kD, Gains.Shooter.kS, Gains.Shooter.kV, Gains.Shooter.kA);
 
         final AngularVelocity targetAngularVelocity = getState().getTargetAngularVelocity();
-        final VelocityTorqueCurrentFOC shooterControl = shooterController.withVelocity(targetAngularVelocity);
+        final VelocityTorqueCurrentFOC shooterControl = shooterController.withVelocity(targetAngularVelocity.plus(bonusVelocity));
         shooterMotorRight.setControl(shooterControl);
         this.signals.logAll();
         super.periodic();

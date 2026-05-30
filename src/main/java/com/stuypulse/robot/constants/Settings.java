@@ -248,10 +248,10 @@ public interface Settings {
         public interface RPMInterpolation {
 
             double[][] distanceRPMInterpolationValues = {
-                {1.46, 3150},
-                {3.0, 4000.0},
-                {3.13, 4050},
-                {3.45, 4150},
+                {1.46, 2600},
+                {3.0, 3733.0},
+                {3.13, 3800},
+                {3.45, 3933},
                 //TODO: These numbers don't make sense
                 // { 4.895367348608047, 3250.0 },
                 // { 6.1322461808798705, 3487.0 } 
@@ -273,11 +273,11 @@ public interface Settings {
         public interface FerryRPMInterpolation {
 
             double[][] ferryDistanceRPMInterpolation = {
-                { 1.0, 1000.0 },
-                { 2.0, 1500.0 },
-                { 3.0, 2000.0 },
-                { 4.0, 2500.0 },
-                { 5.0, 3000.0 } };
+                { 1.0, 2300.0 },
+                { 2.0, 2800.0 },
+                { 3.0, 3300.0 },
+                { 4.0, 3800.0 },
+                { 5.0, 5500.0 } };
         }
 
         // These values are placeholders and should be replaced with actual data from testing
@@ -304,7 +304,7 @@ public interface Settings {
             double MAX_VELOCITY_M_PER_S = 4.3;
 
             // TODO: revert to 15.0
-            double MAX_ACCEL_M_PER_S_SQUARED = 2.0;
+            double MAX_ACCEL_M_PER_S_SQUARED = 20.0;
 
             double MAX_ANGULAR_VEL_RAD_PER_S = Units.degreesToRadians(400.0);
 

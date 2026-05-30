@@ -24,6 +24,8 @@ public abstract class Shooter extends SubsystemBase {
 
     private static final Shooter instance;
 
+    protected AngularVelocity bonusVelocity;
+
     private ShooterState state;
 
     static {
@@ -40,6 +42,8 @@ public abstract class Shooter extends SubsystemBase {
 
     protected Shooter() {
         setState(ShooterState.SHOOT);
+
+        bonusVelocity = RPM.of(0);
     }
 
     public void setState(ShooterState state) {
@@ -94,6 +98,10 @@ public abstract class Shooter extends SubsystemBase {
         }
     }
 
+    public void addToBonusVelocity(double velocity) {
+        bonusVelocity = bonusVelocity.plus(RPM.of(velocity));
+    }
+
     public abstract AngularVelocity getCurrentAngularVelocity();
 
     protected abstract void stopMotors();
@@ -109,6 +117,7 @@ public abstract class Shooter extends SubsystemBase {
     @Override
     public void periodic() {
         final ShooterState currentState = getState();
+        DogLog.log("Shooter/Bonus Velocity", bonusVelocity);
         DogLog.log("Shooter/Target RPM", currentState.getTargetAngularVelocity().in(RPM));
         DogLog.log("Shooter/State", currentState.name());
         DogLog.forceNt.log("States/Shooter", currentState.name());
