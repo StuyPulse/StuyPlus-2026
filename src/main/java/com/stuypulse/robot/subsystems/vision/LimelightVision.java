@@ -176,6 +176,7 @@ public class LimelightVision extends SubsystemBase {
                 } else if (megaTagMode == MegaTagMode.MEGATAG2 && isValidPose) {
                     CommandSwerveDrivetrain.getInstance().addVisionMeasurement(robotPose, timestamp, Settings.Vision.MT2_STDEVS);
                 }
+                DogLog.log("Vision/Pose", robotPose);
                 DogLog.log("Vision/Pose X Component", robotPose.getX());
                 DogLog.log("Vision/Pose Y Component", robotPose.getY());
                 DogLog.log("Vision/Pose Theta (Degrees)", robotPose.getRotation().getDegrees());

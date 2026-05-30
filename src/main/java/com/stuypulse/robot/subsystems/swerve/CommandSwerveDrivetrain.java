@@ -566,6 +566,7 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
                 DogLog.log("Swerve/Pose/X", getPose().getX());
                 DogLog.log("Swerve/Pose/Y", getPose().getY());
                 DogLog.log("Swerve/Pose/Theta", getPose().getRotation().getDegrees());
+                DogLog.log("Swerve/Pose2D", Robot.isBlue() ? pose : Field.transformToOppositeAlliance(pose));
                 for (int i = 0; i < 4; i++) {
                         DogLog.log(
                                         "Swerve/Modules/Module " + i + "/Speed (m per s)",
