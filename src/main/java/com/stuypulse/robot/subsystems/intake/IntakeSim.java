@@ -131,22 +131,21 @@ public class IntakeSim extends Intake {
 
     @Override
     public void periodic() {
+        if (!Settings.EnabledSubsystems.INTAKE.get()) {
+            stopAllMotors();
+
+            return;
+        }
+
         if (pivotVoltageOverride.isPresent()) {
             pivotMotor.setControl(new VoltageOut(pivotVoltageOverride.get()));
             return;
         }
         
-        if (EnabledSubsystems.INTAKE_PIVOT.get()) {
-            pivotMotor.setControl(pivotController.withPosition(getState().getTargetAngle().times(-1)).withSlot(0)); // cooked inversion
-        } else {
-            stopPivotMotor();
-        }
+        pivotMotor.setControl(pivotController.withPosition(getState().getTargetAngle().times(-1)).withSlot(0)); // cooked inversion
 
-        if (EnabledSubsystems.INTAKE_ROLLERS.get()) {
-            rollerMotorLeft.setControl(rollerController.withOutput(getState().getTargetDutyCycle()));
-        } else {
-            stopRollerMotors();
-        }
+
+        rollerMotorLeft.setControl(rollerController.withOutput(getState().getTargetDutyCycle()));
         
         
         // all current measured in amps

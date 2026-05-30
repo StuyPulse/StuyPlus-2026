@@ -47,21 +47,23 @@ public interface Settings {
 
     public interface EnabledSubsystems {
 
-        BooleanSubscriber FEEDER = DogLog.tunable("Enabled Subsystems/Feeder", false);
+        BooleanSubscriber FEEDER = DogLog.tunable("Enabled Subsystems/Feeder", true);
 
-        BooleanSubscriber INTAKE_ROLLERS = DogLog.tunable("Enabled Subsystems/Intake/Rollers", true);
+        BooleanSubscriber INTAKE = DogLog.tunable("Enabled Subsystems/Intake", true);
 
-        BooleanSubscriber INTAKE_PIVOT = DogLog.tunable("Enabled Subsystems/Intake/Pivot", true);
+        // BooleanSubscriber INTAKE_ROLLERS = DogLog.tunable("Enabled Subsystems/Intake/Rollers", true);
+
+        // BooleanSubscriber INTAKE_PIVOT = DogLog.tunable("Enabled Subsystems/Intake/Pivot", true);
 
         BooleanSubscriber LED = DogLog.tunable("Enabled Subsystems/LED", false);
 
-        BooleanSubscriber HANDOFF = DogLog.tunable("Enabled Subsystems/Handoff", false);
+        BooleanSubscriber HANDOFF = DogLog.tunable("Enabled Subsystems/Handoff", true);
 
-        BooleanSubscriber SHOOTER = DogLog.tunable("Enabled Subsystems/Shooter", false);
+        BooleanSubscriber SHOOTER = DogLog.tunable("Enabled Subsystems/Shooter", true);
 
-        BooleanSubscriber VISION = DogLog.tunable("Enabled Subsystems/Vision", false);
+        BooleanSubscriber VISION = DogLog.tunable("Enabled Subsystems/Vision", true);
 
-        BooleanSubscriber SWERVE = DogLog.tunable("Enabled Subsystems/Swerve", false);
+        BooleanSubscriber SWERVE = DogLog.tunable("Enabled Subsystems/Swerve", true);
     }
 
     public interface Vision {
@@ -86,20 +88,20 @@ public interface Settings {
 
             Angle STOW_ANGLE = Degrees.of(-102);
 
-            Angle DEPLOY_ANGLE = Degrees.of(22);
+            Angle DEPLOY_ANGLE = Degrees.of(-22);
 
             Angle AGITATE_UP_ANGLE = Degrees.of(-42);
 
             Angle DIGEST_ANGLE = Degrees.of(-92);
 
-            Angle AGITATE_DOWN_ANGLE = Degrees.of(-15);
+            Angle AGITATE_DOWN_ANGLE = Degrees.of(-22);
 
             // misc
             Angle ANGLE_TOLERANCE = Degrees.of(0.5);
 
-            Angle PUSHDOWN_THRESHOLD = Degrees.of(20);
+            Angle PUSHDOWN_THRESHOLD = Degrees.of(-30);
 
-            DoubleSubscriber PUSHDOWN_CURRENT = DogLog.tunable("Intake/Pivot/Pushdown Current Tuning Amps", 30.0);
+            DoubleSubscriber PUSHDOWN_CURRENT = DogLog.tunable("Intake/Pivot/Pushdown Current Tuning Amps", 5.0);
 
             // amps
             Current STALL_CURRENT = Amps.of(25);

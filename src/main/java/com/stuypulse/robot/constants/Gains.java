@@ -42,7 +42,7 @@ public class Gains {
     public interface Intake {
 
         // pivot gains
-        double kP = 150;//300
+        double kP = 300;//300
 
         double kI = 0;
 
@@ -58,12 +58,12 @@ public class Gains {
 
         public interface Digestion {
 
-            double kP = 200;
+            double kP = 250;
 
             double kI = 0;
 
             // TODO: tune
-            double kD = 55;
+            double kD = 75;
         }
     }
 

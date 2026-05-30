@@ -177,17 +177,23 @@ public class IntakeImpl extends Intake {
     private ControlRequest getPivotControl(IntakeState currentState) {
         boolean pivotAboveThreshold = isPivotAboveThreshold();
         return switch (currentState) {
-            case INTAKE, OUTTAKE, DOWN -> pivotAboveThreshold
+            case INTAKE, OUTTAKE, DOWN -> (pivotAboveThreshold) // Hardcoding pushdown disabled temporarily - AZ
                     ? pushdownController.withOutput(Settings.Intake.Pivot.PUSHDOWN_CURRENT.getAsDouble())
                     : positionController.withPosition(currentState.getTargetAngle()).withSlot(0);
             case HOMING_DOWN -> homingController;
-            case DIGEST -> positionController.withPosition(currentState.getTargetAngle()).withSlot(1);
+            case AGITATE, AGITATE_DOWN -> positionController.withPosition(currentState.getTargetAngle()).withSlot(1);
             default -> positionController.withPosition(currentState.getTargetAngle()).withSlot(0);
         };
     }
 
     @Override
     public void periodic() {
+        if (!Settings.EnabledSubsystems.INTAKE.get()) {
+            stopAllMotors();
+
+            return;
+        }
+
         if (pivotVoltageOverride.isPresent()) {
             pivotMotor.setVoltage(pivotVoltageOverride.get().in(Volts));
             return;
@@ -198,11 +204,15 @@ public class IntakeImpl extends Intake {
         final IntakeState currentState = getState();
 
         // State
+        if (limitSwitchHit()) {
+            seedPivotAngle(Settings.Intake.Pivot.DEPLOY_ANGLE);
+        }
+
         if (currentState == IntakeState.HOMING_DOWN && (pivotStalling || limitSwitchHit())) {
             seedPivotAngle(Settings.Intake.Pivot.DEPLOY_ANGLE);
-            setState(IntakeState.DOWN);
+            setState(IntakeState.INTAKE);
         }
-        if ((currentState == IntakeState.DOWN) && (pivotStalling || limitSwitchHit())) {
+        if ((currentState == IntakeState.DOWN) && pivotStalling) {
             seedPivotAngle(Settings.Intake.Pivot.DEPLOY_ANGLE);
         }
 
@@ -211,17 +221,9 @@ public class IntakeImpl extends Intake {
         final DutyCycleOut rollerControl = rollerController.withOutput(currentState.getTargetDutyCycle());
 
         // Apply
-        if (EnabledSubsystems.INTAKE_PIVOT.get()) {
-            pivotMotor.setControl(pivotControl);
-        } else {
-            stopPivotMotor();
-        }
+        pivotMotor.setControl(pivotControl);
 
-        if (EnabledSubsystems.INTAKE_ROLLERS.get()) {
-            rollerMotorLeft.setControl(rollerControl);
-        } else {
-            stopRollerMotors();
-        }
+        rollerMotorLeft.setControl(rollerControl);
 
         // Logging
         this.pivotSignals.logAll();

@@ -56,6 +56,11 @@ public class HandoffImpl extends Handoff {
 
     @Override
     public void periodic() {
+        if (!Settings.EnabledSubsystems.HANDOFF.get()) {
+            stopMotors();
+            return;
+        }
+
         // States
         final Shooter shooter = Shooter.getInstance();
         final CommandSwerveDrivetrain swerve = CommandSwerveDrivetrain.getInstance();

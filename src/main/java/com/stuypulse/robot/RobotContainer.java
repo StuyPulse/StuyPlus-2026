@@ -27,6 +27,7 @@ import com.stuypulse.robot.commands.intake.IntakeSetIntake;
 import com.stuypulse.robot.commands.intake.IntakeSetOuttake;
 import com.stuypulse.robot.commands.leds.LEDDefaultCommand;
 import com.stuypulse.robot.commands.shooter.ShooterAddToBonusVelocity;
+import com.stuypulse.robot.commands.shooter.ShooterResetBonusVelocity;
 import com.stuypulse.robot.commands.shooter.ShooterSetFerry;
 import com.stuypulse.robot.commands.shooter.ShooterSetManual;
 import com.stuypulse.robot.commands.shooter.ShooterSetShoot;
@@ -129,7 +130,9 @@ public class RobotContainer {
                 .andThen(new HandoffSetForward())
                 .alongWith(new FeederSetForward(), new IntakeAgitateFastOnce().repeatedly()));
 
+        // Top Left Paddle
         driver.y().onTrue(new IntakeSetIdle());
+        
         driver.rightBumper()
             .onTrue(
                 new SwerveDriveAlignToFerryZone()
@@ -164,6 +167,8 @@ public class RobotContainer {
             .onTrue(new ShooterAddToBonusVelocity(50));
         driver.povDown()
             .onTrue(new ShooterAddToBonusVelocity(-50));
+        driver.povRight()
+            .onTrue(new ShooterResetBonusVelocity());
 
     }
 

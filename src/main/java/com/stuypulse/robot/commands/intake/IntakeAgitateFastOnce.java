@@ -12,10 +12,10 @@ public class IntakeAgitateFastOnce extends SequentialCommandGroup {
 
     public IntakeAgitateFastOnce() {
         addCommands(
-                new IntakeSetDown(),
+                new IntakeSetAgitateDown(),
                 new WaitCommand(0.25),
                 new IntakeSetAgitateFastUp(),
                 new WaitCommand(0.25),
-                new IntakeSetDown());
+                new IntakeSetAgitateDown());
     }
 }
