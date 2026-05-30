@@ -184,23 +184,6 @@ public class RobotContainer {
         // "RT Hub Ferry",
         // "N to Outpost Ferry");
         // RBFerry.register(autonChooser);
-        // AutonConfig LBMid = new AutonConfig("LB Mid", LBMid::new,
-        // "LB to N Mid",
-        // "LB Return Mid");
-        // LBMid.register(autonChooser);
-        // AutonConfig LBStraight = new AutonConfig("LB Straight", LBStraight::new,
-        // "LB to N Straight",
-        // "N to LB Straight");
-        // LBStraight.register(autonChooser);
-        // AutonConfig RBStraight = new AutonConfig("RB Straight", RBStraight::new,
-        // "RB to N Straight",
-        // "N to RB Straight");
-        // RBStraight.register(autonChooser);
-        // AutonConfig RBMid = new AutonConfig("RB Mid", RBMid::new,
-        // "RB to N Mid",
-        // "RB Return Mid",
-        // "RB to Outpost Mid");
-        // RBMid.register(autonChooser);
         // AutonConfig TwoMeterPath = new AutonConfig("Two Meter Path",
         // TwoMeterPath::new,
         // "2 meter path");
@@ -216,16 +199,6 @@ public class RobotContainer {
         // "LB to N Outtake",
         // "N to LB Outtake");
         // LBOuttake.register(autonChooser);
-        // AutonConfig LBMidlineSweep = new AutonConfig("LB Midline Sweep",
-        // LBMidlineSweep::new,
-        // "LB to N Midline",
-        // "LN Sweep Midline");
-        // LBMidlineSweep.register(autonChooser);
-        // AutonConfig RBMidlineSweep = new AutonConfig("RB Midline Sweep",
-        // RBMidlineSweep::new,
-        // "RB to N Midline",
-        // "RN Sweep Midline");
-        // RBMidlineSweep.register(autonChooser);
         // AutonConfig LBDisrupt = new AutonConfig("LB Disrupt", LBDisrupt::new,
         // "LB to CN Disrupt",
         // "LN Circle Disrupt",
@@ -254,24 +227,36 @@ public class RobotContainer {
         // "RT Around Disrupt",
         // "RT Back Push Disrupt");
         // RT_Disrupt.register(autonChooser);
+        AutonConfig LB_Dumpy = new AutonConfig("LB Dumpy", LBDumpy::new,
+            "LB to N Dumpy",
+            "LB Intake Dumpy",
+            "LB Backsweep Dumpy",
+            "LB Shoot Dumpy");
+        LB_Dumpy.register(autonChooser);
+
+        AutonConfig RB_Dumpy = new AutonConfig("RB Dumpy", RBDumpy::new,
+            "RB to N Dumpy",
+            "RB Intake Dumpy",
+            "RB Backsweep Dumpy",
+            "RB Shoot Dumpy");
+        RB_Dumpy.register(autonChooser);
 
         // DOT
-        AutonConfig LB_ToBCCenter = new AutonConfig("LB To BC Center", BCDot::new,
-            "LB to BC Center"
-        );
-        LB_ToBCCenter.register(autonChooser);
-        AutonConfig LB_ToBCLeft = new AutonConfig("LB To BC Left", BCDot::new,
-            "LB to BC Left"
-        );
-        LB_ToBCLeft.register(autonChooser);
-        AutonConfig RB_ToBCCenter = new AutonConfig("RB To BC Center", BCDot::new,
-            "RB to BC Center"
-        );
-        RB_ToBCCenter.register(autonChooser);
-        AutonConfig RB_ToBCRight = new AutonConfig("RB To BC Right", BCDot::new,
-            "RB to BC Right"
-        );
-        RB_ToBCRight.register(autonChooser);
+        AutonConfig LB_Center_Dot = new AutonConfig("LBCenterDot", LBCenterDot::new,
+            "LB to BC Center");
+        Left_Dot.register(autonChooser);
+
+        AutonConfig Left_Dot = new AutonConfig("Left Dot", LeftDot::new,
+            "LB to BC Left");
+        Left_Dot.register(autonChooser);
+        
+        AutonConfig RB_Center_Dot = new AutonConfig("RB Center Dot", RightDot::new,
+            "RB to BC Center");
+        RB_Center_Dot.register(autonChooser);
+
+        AutonConfig Right_Dot = new AutonConfig("Right Dot", RightDot::new,
+            "RB to BC Right");
+        Right_Dot.register(autonChooser);
 
         // SHOOT
         AutonConfig frontHubShootPreloads = new AutonConfig("Front Hub Shoot Preloads", FrontHubShootPreloads::new,
@@ -300,6 +285,19 @@ public class RobotContainer {
         );
         RB_OnePointFiveSpiralAngled.register(autonChooser);
 
+        AutonConfig LB_Dumpy = new AutonConfig("LB Dumpy", LBDumpy::new,
+            "LB to N Dumpy",
+            "LB Intake Dumpy",
+            "LB Backsweep Dumpy",
+            "LB Shoot Dumpy");
+        LB_Dumpy.register(autonChooser);
+
+        AutonConfig RB_Dumpy = new AutonConfig("RB Dumpy", RBDumpy::new,
+            "RB to N Dumpy",
+            "RB Intake Dumpy",
+            "RB Backsweep Dumpy",
+            "RB Shoot Dumpy");
+        RB_Dumpy.register(autonChooser);
 
         // autonChooser.addOption("SysID Module Translation Dynamic Forwards",
         // swerve.sysIdDynamic(Direction.kForward));
