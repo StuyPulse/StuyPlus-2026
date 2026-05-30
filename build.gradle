@@ -173,17 +173,10 @@ tasks.register("runPathplannerSearch", JavaExec) {
     classpath = sourceSets.main.runtimeClasspath
     mainClass = "tools.PathplannerSearch.Main"
 
-    def rawArgs = (project.findProperty("args") ?: "").trim()
+    def rawArgs = (project.findProperty("args") ?: "").trim() // Puts all args in a single string, consistently formatted regardless of how it was passed in
     if (rawArgs) {
-        int lastSpace = rawArgs.lastIndexOf(' ')
-        if (lastSpace == -1) {
-            args rawArgs
-        } else {
-            def searchTerm = rawArgs.substring(0, lastSpace)
-            def secondParam = rawArgs.substring(lastSpace + 1)
-            args searchTerm, secondParam
-        }
-    } // makes it so that if ur search term has spaces, the 2nd param is only checked by the last space.
+        args rawArgs
+    }
 }
 
 tasks.register("runPathplannerPathFlip", JavaExec) {
