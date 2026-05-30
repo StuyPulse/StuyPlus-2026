@@ -186,12 +186,22 @@ tasks.register("runPathplannerSearch", JavaExec) {
     } // makes it so that if ur search term has spaces, the 2nd param is only checked by the last space.
 }
 
-tasks.register("runPathplannerFlip", JavaExec) {
+tasks.register("runPathplannerPathFlip", JavaExec) {
     classpath = sourceSets.main.runtimeClasspath
-    mainClass = "tools.PathplannerFlip.PathplannerFlip"
+    mainClass = "tools.PathplannerFlip.PathplannerPathFlip"
 
     def rawArgs = (project.findProperty("args") ?: "").trim()
     if (rawArgs) {
         args rawArgs
-    } // makes it so that if ur search term has spaces, the 2nd param is only checked by the last space.
+    }
+}
+
+tasks.register("runPathplannerAutonFlip", JavaExec) {
+    classpath = sourceSets.main.runtimeClasspath
+    mainClass = "tools.PathplannerFlip.PathplannerAutonFlip"
+
+    def rawArgs = (project.findProperty("args") ?: "").trim()
+    if (rawArgs) {
+        args rawArgs
+    }
 }
