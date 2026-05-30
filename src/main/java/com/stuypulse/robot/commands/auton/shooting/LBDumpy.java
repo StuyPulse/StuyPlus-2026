@@ -16,22 +16,23 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 
 public class LBDumpy extends SequentialCommandGroup {
-    // public LBDumpy(PathPlannerPath... paths) {
-    //     addCommands(
-    //         new SwerveResetPose(paths[0].getStartingHolonomicPose().get()),
-    //         new IntakeSetIntake(),
-    //         CommandSwerveDrivetrain.getInstance().followPathCommand(paths[0]),
-    //         CommandSwerveDrivetrain.getInstance().followPathCommand(paths[1]),
-    //         CommandSwerveDrivetrain.getInstance().followPathCommand(paths[2]),
-    //         CommandSwerveDrivetrain.getInstance().followPathCommand(paths[3]),
-    //         new SwerveDriveXMode(),
-    //         new ShooterWaitForSpinUp(),
-    //         new ShooterSetShoot(),
-    //         new HandoffSetForward(),
-    //         new ParallelDeadlineGroup(
-    //             new WaitCommand(7),
-    //             new FeederSetForward(), 
-    //             new IntakeAgitateFastOnce().repeatedly()
-    //     )
-    // }
+    public LBDumpy(PathPlannerPath... paths) {
+        addCommands(
+            new SwerveResetPose(paths[0].getStartingHolonomicPose().get()),
+            new IntakeSetIntake(),
+            CommandSwerveDrivetrain.getInstance().followPathCommand(paths[0]),
+            CommandSwerveDrivetrain.getInstance().followPathCommand(paths[1]),
+            CommandSwerveDrivetrain.getInstance().followPathCommand(paths[2]),
+            CommandSwerveDrivetrain.getInstance().followPathCommand(paths[3]),
+            new SwerveDriveXMode(),
+            new ShooterWaitForSpinUp(),
+            new ShooterSetShoot(),
+            new HandoffSetForward(),
+            new ParallelDeadlineGroup(
+                new WaitCommand(7),
+                new FeederSetForward(), 
+                new IntakeAgitateFastOnce().repeatedly()
+            )
+        );
+    }
 }

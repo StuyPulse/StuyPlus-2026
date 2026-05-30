@@ -284,12 +284,12 @@ public class RobotContainer {
         );
         LB_OnePointFiveSpiralAngled.register(autonChooser);
 
-        // AutonConfig LB_Dumpy = new AutonConfig("LB Dumpy", LBDumpy::new,
-        //     "LB to N Dumpy",
-        //     "LB Intake Dumpy",
-        //     "LB Backsweep Dumpy",
-        //     "LB Shoot Dumpy");
-        // LB_Dumpy.register(autonChooser);
+        AutonConfig LB_Dumpy = new AutonConfig("LB Dumpy", LBDumpy::new,
+            "LB to N Dumpy",
+            "LB Intake Dumpy",
+            "LB Backsweep Dumpy",
+            "LB Shoot Dumpy");
+        LB_Dumpy.register(autonChooser);
 
         // AutonConfig RB_Dumpy = new AutonConfig("RB Dumpy", RBDumpy::new,
         //     "RB to N Dumpy",
