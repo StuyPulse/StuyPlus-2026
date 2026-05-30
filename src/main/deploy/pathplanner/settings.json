@@ -3,18 +3,20 @@
   "robotLength": 0.9,
   "holonomicMode": true,
   "pathFolders": [
-    "BC Dot",
+    "BC Dots",
     "Disrupt",
     "Dumpy",
     "Ferry",
-    "Shoot"
+    "Depot",
+    "Preloads"
   ],
   "autoFolders": [
+    "BC Dots",
     "Disrupt",
     "Dumpy",
     "Ferry",
-    "BC Dots",
-    "Shooting"
+    "Depot",
+    "Preloads"
   ],
   "defaultMaxVel": 3.0,
   "defaultMaxAccel": 3.0,

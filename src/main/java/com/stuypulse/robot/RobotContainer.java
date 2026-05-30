@@ -13,6 +13,7 @@ import com.stuypulse.robot.commands.auton.BC_Dots.RightDot;
 import com.stuypulse.robot.commands.auton.shooting.FrontHubShootPreloads;
 import com.stuypulse.robot.commands.auton.shooting.LBDumpy;
 import com.stuypulse.robot.commands.auton.shooting.RBDumpy;
+import com.stuypulse.robot.commands.auton.depot.centerDepot;
 import com.stuypulse.robot.commands.auton.shooting.LBOnePointFiveSpiralAngled;
 import com.stuypulse.robot.commands.auton.shooting.LBOneSweepAngled;
 import com.stuypulse.robot.commands.auton.shooting.LBTwoSweepAngled;
@@ -295,6 +296,11 @@ public class RobotContainer {
             "RB Backsweep Dumpy",
             "RB Shoot Dumpy");
         RB_Dumpy.register(autonChooser);
+
+        AutonConfig centerDepot = new AutonConfig("Center Depot", centerDepot::new,
+            "RB Depot",
+            "Tower shoot");
+        centerDepot.register(autonChooser);
 
         // autonChooser.addOption("SysID Module Translation Dynamic Forwards",
         // swerve.sysIdDynamic(Direction.kForward));

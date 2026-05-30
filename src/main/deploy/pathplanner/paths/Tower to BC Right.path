@@ -3,32 +3,53 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.55,
+        "x": 2.0,
         "y": 4.0
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.55,
+        "x": 3.0,
         "y": 4.0
+      },
+      "isLocked": false,
+      "linkedName": "Front Hub Preload 1"
+    },
+    {
+      "anchor": {
+        "x": 4.1280958310589515,
+        "y": 2.339
+      },
+      "prevControl": {
+        "x": 2.8069416058293655,
+        "y": 2.7353149954997944
+      },
+      "nextControl": {
+        "x": 5.464252092521087,
+        "y": 1.9381847487325965
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 2.0,
-        "y": 4.0
+        "x": 8.265,
+        "y": 0.6
       },
       "prevControl": {
-        "x": 3.0,
-        "y": 4.0
+        "x": 8.057782833981541,
+        "y": 3.029038766603195
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Front Hub Preload 1"
+      "linkedName": "BC Dot Right"
     }
   ],
-  "rotationTargets": [],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 1.553676672149123,
+      "rotationDegrees": -1.0
+    }
+  ],
   "constraintZones": [],
   "pointTowardsZones": [],
   "eventMarkers": [],
@@ -42,7 +63,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 0.0
+    "rotation": 180.0
   },
   "reversed": false,
   "folder": "Preloads",

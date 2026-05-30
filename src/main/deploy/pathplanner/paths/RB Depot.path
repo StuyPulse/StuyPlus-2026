@@ -3,29 +3,45 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.55,
-        "y": 4.0
+        "x": 3.5326980417576417,
+        "y": 4.213519605167395
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.55,
-        "y": 4.0
+        "x": 2.5586192799308587,
+        "y": 5.522746486080787
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 2.0,
-        "y": 4.0
+        "x": 1.4231747520924307,
+        "y": 6.6276731372816595
       },
       "prevControl": {
-        "x": 3.0,
-        "y": 4.0
+        "x": 2.143635996633915,
+        "y": 6.198378366084424
+      },
+      "nextControl": {
+        "x": 0.7027135075509462,
+        "y": 7.056967908478895
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 0.8692154521470161,
+        "y": 5.2204100709607
+      },
+      "prevControl": {
+        "x": 0.836977205012737,
+        "y": 6.192219938364267
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Front Hub Preload 1"
+      "linkedName": "Depot 1"
     }
   ],
   "rotationTargets": [],
@@ -42,13 +58,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 0.0
+    "rotation": -160.0
   },
   "reversed": false,
-  "folder": "Preloads",
+  "folder": "Depot",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 0.0
+    "rotation": 180.0
   },
   "useDefaultConstraints": true
 }

@@ -44,7 +44,12 @@
       "linkedName": "BC Dot Center"
     }
   ],
-  "rotationTargets": [],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 1.5670401589912282,
+      "rotationDegrees": 0.0
+    }
+  ],
   "constraintZones": [],
   "pointTowardsZones": [],
   "eventMarkers": [],
@@ -58,10 +63,10 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 0.0
+    "rotation": 180.0
   },
   "reversed": false,
-  "folder": "BC Dot",
+  "folder": "BC Dots",
   "idealStartingState": {
     "velocity": 0,
     "rotation": 0.0

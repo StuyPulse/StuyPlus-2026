@@ -7,13 +7,19 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Front Hub Shoot Preloads"
+            "pathName": "RB Depot"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Tower shoot"
           }
         }
       ]
     }
   },
   "resetOdom": true,
-  "folder": "Preloads",
+  "folder": "Depot",
   "choreoAuto": false
 }

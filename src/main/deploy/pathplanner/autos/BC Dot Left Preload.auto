@@ -9,6 +9,12 @@
           "data": {
             "pathName": "Front Hub Shoot Preloads"
           }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Tower to BC Left"
+          }
         }
       ]
     }

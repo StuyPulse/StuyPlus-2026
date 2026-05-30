@@ -17,34 +17,39 @@
     {
       "anchor": {
         "x": 5.6,
-        "y": 5.6
+        "y": 5.4
       },
       "prevControl": {
-        "x": 5.293484934621944,
-        "y": 5.401105741898807
+        "x": 5.234609337815993,
+        "y": 5.399725777333736
       },
       "nextControl": {
-        "x": 6.796919567189835,
-        "y": 6.376667956041245
+        "x": 7.026824592445625,
+        "y": 5.4010708200414665
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 8.265,
-        "y": 7.5
+        "x": 8.310790233806404,
+        "y": 7.388625420760553
       },
       "prevControl": {
-        "x": 7.33765776009096,
-        "y": 7.265790221716885
+        "x": 8.246912129275836,
+        "y": 5.16750244495997
       },
       "nextControl": null,
       "isLocked": false,
       "linkedName": "BC Dot Left"
     }
   ],
-  "rotationTargets": [],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 1.35901521381579,
+      "rotationDegrees": 0.0
+    }
+  ],
   "constraintZones": [],
   "pointTowardsZones": [],
   "eventMarkers": [],
@@ -58,10 +63,10 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 0.0
+    "rotation": 180.0
   },
   "reversed": false,
-  "folder": "BC Dot",
+  "folder": "BC Dots",
   "idealStartingState": {
     "velocity": 0,
     "rotation": 0.0
