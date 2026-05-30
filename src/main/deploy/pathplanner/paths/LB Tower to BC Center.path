@@ -3,51 +3,51 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.55,
-        "y": 5.4
+        "x": 2.0,
+        "y": 4.0
       },
       "prevControl": null,
       "nextControl": {
-        "x": 4.549999999999999,
-        "y": 5.4
+        "x": 2.651120360262009,
+        "y": 5.085173990174674
       },
       "isLocked": false,
-      "linkedName": "LB Start Facing NZ"
+      "linkedName": "Front Hub Preload 1"
     },
     {
       "anchor": {
-        "x": 5.6,
-        "y": 5.4
+        "x": 4.612741653020378,
+        "y": 5.540648312409026
       },
       "prevControl": {
-        "x": 5.234609337815993,
-        "y": 5.399725777333736
+        "x": 3.58824855576783,
+        "y": 5.543241334606988
       },
       "nextControl": {
-        "x": 7.026824592445625,
-        "y": 5.4010708200414665
+        "x": 5.7300430551415875,
+        "y": 5.537820389658463
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 8.310790233806404,
-        "y": 7.388625420760553
+        "x": 8.265,
+        "y": 4.0
       },
       "prevControl": {
-        "x": 8.246912129275836,
-        "y": 5.16750244495997
+        "x": 7.348878729985444,
+        "y": 4.256852995360263
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "BC Dot Left"
+      "linkedName": "BC Dot Center"
     }
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 1.35901521381579,
-      "rotationDegrees": 0.0
+      "waypointRelativePos": 1.6821546052631575,
+      "rotationDegrees": -1.0
     }
   ],
   "constraintZones": [],
@@ -59,17 +59,17 @@
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0,
     "nominalVoltage": 12.0,
-    "unlimited": true
+    "unlimited": false
   },
   "goalEndState": {
     "velocity": 0,
     "rotation": 180.0
   },
   "reversed": false,
-  "folder": "BC Dots",
+  "folder": "Preloads",
   "idealStartingState": {
     "velocity": 0,
     "rotation": 0.0
   },
-  "useDefaultConstraints": false
+  "useDefaultConstraints": true
 }

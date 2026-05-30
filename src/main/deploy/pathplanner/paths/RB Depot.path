@@ -3,53 +3,48 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.55,
-        "y": 5.4
+        "x": 3.4876193481623,
+        "y": 6.122183406113537
       },
       "prevControl": null,
       "nextControl": {
-        "x": 4.549999999999999,
-        "y": 5.4
-      },
-      "isLocked": false,
-      "linkedName": "LB Start Facing NZ"
-    },
-    {
-      "anchor": {
-        "x": 5.6,
-        "y": 5.4
-      },
-      "prevControl": {
-        "x": 5.234609337815993,
-        "y": 5.399725777333736
-      },
-      "nextControl": {
-        "x": 7.026824592445625,
-        "y": 5.4010708200414665
+        "x": 2.4876193481622986,
+        "y": 6.122183406113537
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 8.310790233806404,
-        "y": 7.388625420760553
+        "x": 1.4231747520924307,
+        "y": 6.6276731372816595
       },
       "prevControl": {
-        "x": 8.246912129275836,
-        "y": 5.16750244495997
+        "x": 2.143635996633915,
+        "y": 6.198378366084424
+      },
+      "nextControl": {
+        "x": 0.7027135075509462,
+        "y": 7.056967908478895
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 0.8692154521470161,
+        "y": 5.2204100709607
+      },
+      "prevControl": {
+        "x": 0.836977205012737,
+        "y": 6.192219938364267
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "BC Dot Left"
+      "linkedName": null
     }
   ],
-  "rotationTargets": [
-    {
-      "waypointRelativePos": 1.35901521381579,
-      "rotationDegrees": 0.0
-    }
-  ],
+  "rotationTargets": [],
   "constraintZones": [],
   "pointTowardsZones": [],
   "eventMarkers": [],
@@ -59,17 +54,17 @@
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0,
     "nominalVoltage": 12.0,
-    "unlimited": true
+    "unlimited": false
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 180.0
+    "rotation": -160.0
   },
   "reversed": false,
-  "folder": "BC Dots",
+  "folder": "Depot",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 0.0
+    "rotation": 180.0
   },
-  "useDefaultConstraints": false
+  "useDefaultConstraints": true
 }

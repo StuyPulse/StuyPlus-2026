@@ -7,13 +7,13 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Front Hub Shoot Preloads"
+            "pathName": "LB to BC Left"
           }
         }
       ]
     }
   },
   "resetOdom": true,
-  "folder": "Preloads",
+  "folder": "BC Dots",
   "choreoAuto": false
 }
