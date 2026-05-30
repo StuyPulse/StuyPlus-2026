@@ -4,12 +4,12 @@
     {
       "anchor": {
         "x": 2.8,
-        "y": 2.25
+        "y": 5.75
       },
       "prevControl": null,
       "nextControl": {
         "x": 2.9909603375056837,
-        "y": 2.4113510133210054
+        "y": 5.588648986678995
       },
       "isLocked": false,
       "linkedName": "Right Bump Shoot"
@@ -17,11 +17,11 @@
     {
       "anchor": {
         "x": 3.6,
-        "y": 2.25
+        "y": 5.75
       },
       "prevControl": {
         "x": 2.9354320628527675,
-        "y": 2.30623414570271
+        "y": 5.69376585429729
       },
       "nextControl": null,
       "isLocked": false,
@@ -42,13 +42,13 @@
   },
   "goalEndState": {
     "velocity": 1.0,
-    "rotation": 90.0
+    "rotation": -90.0
   },
   "reversed": false,
   "folder": "Shoot",
   "idealStartingState": {
     "velocity": 0.0,
-    "rotation": 50.0
+    "rotation": -50.0
   },
   "useDefaultConstraints": true
 }

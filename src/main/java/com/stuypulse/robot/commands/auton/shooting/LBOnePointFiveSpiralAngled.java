@@ -16,13 +16,14 @@ import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 
-public class RBTwoSweepAngled extends SequentialCommandGroup {
-    public RBTwoSweepAngled(PathPlannerPath... paths) {
+public class LBOnePointFiveSpiralAngled extends SequentialCommandGroup {
+    public LBOnePointFiveSpiralAngled(PathPlannerPath... paths) {
         addCommands(
             new SwerveResetPose(paths[0].getStartingHolonomicPose().get()),
             new IntakeSetIntake(),
             CommandSwerveDrivetrain.getInstance().followPathCommand(paths[0]),
             CommandSwerveDrivetrain.getInstance().followPathCommand(paths[1]),
+            CommandSwerveDrivetrain.getInstance().followPathCommand(paths[2]),
             new SwerveDriveAlignToHub(),
             new SwerveDriveXMode(),
             new ShooterWaitForSpinUp(),
@@ -33,19 +34,8 @@ public class RBTwoSweepAngled extends SequentialCommandGroup {
                 new FeederSetForward(), 
                 new IntakeAgitateFastOnce().repeatedly()
             ),
-            CommandSwerveDrivetrain.getInstance().followPathCommand(paths[2]),
             CommandSwerveDrivetrain.getInstance().followPathCommand(paths[3]),
-            CommandSwerveDrivetrain.getInstance().followPathCommand(paths[4]),
-            new SwerveDriveAlignToHub(),
-            new SwerveDriveXMode(),
-            new ShooterWaitForSpinUp(),
-            new ShooterSetShoot(),
-            new HandoffSetForward(),
-            new ParallelDeadlineGroup(
-                new WaitCommand(6.5), // shoot for 6-7 seconds
-                new FeederSetForward(), 
-                new IntakeAgitateFastOnce().repeatedly()
-            )
+            CommandSwerveDrivetrain.getInstance().followPathCommand(paths[4])
         );
     }
 }

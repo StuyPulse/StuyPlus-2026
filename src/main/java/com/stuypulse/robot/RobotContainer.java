@@ -5,18 +5,22 @@
 /***************************************************************/
 package com.stuypulse.robot;
 
-import com.stuypulse.robot.commands.auton.BCDot;
 import com.stuypulse.robot.commands.auton.DoNothingAuton;
+import com.stuypulse.robot.commands.auton.BC_Dots.LBCenterDotDot;
+import com.stuypulse.robot.commands.auton.BC_Dots.LeftDot;
+import com.stuypulse.robot.commands.auton.BC_Dots.RBCenterDotDot;
+import com.stuypulse.robot.commands.auton.BC_Dots.RightDot;
 import com.stuypulse.robot.commands.auton.shooting.FrontHubShootPreloads;
-import com.stuypulse.robot.commands.auton.shooting.RBOnePointFiveSpiralAngled;
-import com.stuypulse.robot.commands.auton.shooting.RBOneSweepAngled;
-import com.stuypulse.robot.commands.auton.shooting.RBTwoSweepAngled;
+import com.stuypulse.robot.commands.auton.shooting.LBDumpy;
+import com.stuypulse.robot.commands.auton.shooting.RBDumpy;
+import com.stuypulse.robot.commands.auton.shooting.LBOnePointFiveSpiralAngled;
+import com.stuypulse.robot.commands.auton.shooting.LBOneSweepAngled;
+import com.stuypulse.robot.commands.auton.shooting.LBTwoSweepAngled;
 import com.stuypulse.robot.commands.feeder.FeederSetForward;
 import com.stuypulse.robot.commands.feeder.FeederSetIdle;
 import com.stuypulse.robot.commands.handoff.HandoffSetForward;
 import com.stuypulse.robot.commands.handoff.HandoffSetIdle;
 import com.stuypulse.robot.commands.intake.IntakeAgitateFastOnce;
-import com.stuypulse.robot.commands.intake.IntakeDigest;
 import com.stuypulse.robot.commands.intake.IntakeSetHomingDown;
 import com.stuypulse.robot.commands.intake.IntakeSetIdle;
 import com.stuypulse.robot.commands.intake.IntakeSetIntake;
@@ -227,63 +231,51 @@ public class RobotContainer {
         // "RT Around Disrupt",
         // "RT Back Push Disrupt");
         // RT_Disrupt.register(autonChooser);
-        AutonConfig LB_Dumpy = new AutonConfig("LB Dumpy", LBDumpy::new,
-            "LB to N Dumpy",
-            "LB Intake Dumpy",
-            "LB Backsweep Dumpy",
-            "LB Shoot Dumpy");
-        LB_Dumpy.register(autonChooser);
-
-        AutonConfig RB_Dumpy = new AutonConfig("RB Dumpy", RBDumpy::new,
-            "RB to N Dumpy",
-            "RB Intake Dumpy",
-            "RB Backsweep Dumpy",
-            "RB Shoot Dumpy");
-        RB_Dumpy.register(autonChooser);
 
         // DOT
-        AutonConfig LB_Center_Dot = new AutonConfig("LBCenterDot", LBCenterDot::new,
-            "LB to BC Center");
-        Left_Dot.register(autonChooser);
-
-        AutonConfig Left_Dot = new AutonConfig("Left Dot", LeftDot::new,
-            "LB to BC Left");
-        Left_Dot.register(autonChooser);
-        
-        AutonConfig RB_Center_Dot = new AutonConfig("RB Center Dot", RightDot::new,
-            "RB to BC Center");
-        RB_Center_Dot.register(autonChooser);
-
-        AutonConfig Right_Dot = new AutonConfig("Right Dot", RightDot::new,
-            "RB to BC Right");
-        Right_Dot.register(autonChooser);
+        AutonConfig LB_ToBCCenter = new AutonConfig("LB To BC Center", LBCenterDotDot::new,
+            "LB to BC Center"
+        );
+        LB_ToBCCenter.register(autonChooser);
+        AutonConfig LB_ToBCLeft = new AutonConfig("LB To BC Left", LeftDot::new,
+            "LB to BC Left"
+        );
+        LB_ToBCLeft.register(autonChooser);
+        AutonConfig RB_ToBCCenter = new AutonConfig("RB To BC Center", RBCenterDotDot::new,
+            "RB to BC Center"
+        );
+        RB_ToBCCenter.register(autonChooser);
+        AutonConfig RB_ToBCRight = new AutonConfig("RB To BC Right", RightDot::new,
+            "RB to BC Right"
+        );
+        RB_ToBCRight.register(autonChooser);
 
         // SHOOT
         AutonConfig frontHubShootPreloads = new AutonConfig("Front Hub Shoot Preloads", FrontHubShootPreloads::new,
             "Front Hub Shoot Preloads"
         );
         frontHubShootPreloads.register(autonChooser);
-        AutonConfig RB_OneSweepAngled = new AutonConfig("RB 1 Sweep Angled", RBOneSweepAngled::new,
-            "RB to Mid Neutral LF",
-            "Mid Neutral LF to RB Shoot"
+        AutonConfig LB_OneSweepAngled = new AutonConfig("LB 1 Sweep Angled", LBOneSweepAngled::new,
+            "LB to Mid Neutral RF",
+            "Mid Neutral RF to LB Shoot"
         );
-        RB_OneSweepAngled.register(autonChooser);
-        AutonConfig RB_TwoSweepAngled = new AutonConfig("RB 2 Sweep Angled", RBTwoSweepAngled::new, 
-            "RB to Mid Neutral LF",
-            "Mid Neutral LF to RB Shoot",
-            "RB Shoot to RB Start",
-            "RB to Mid Neutral LF",
-            "Mid Neutral LF to RB Shoot"
+        LB_OneSweepAngled.register(autonChooser);
+        AutonConfig LB_TwoSweepAngled = new AutonConfig("LB 2 Sweep Angled", LBTwoSweepAngled::new, 
+            "LB to Mid Neutral RF",
+            "Mid Neutral RF to LB Shoot",
+            "LB Shoot to LB Start",
+            "LB to Mid Neutral RF",
+            "Mid Neutral RF to LB Shoot"
         );
-        RB_TwoSweepAngled.register(autonChooser);
-        AutonConfig RB_OnePointFiveSpiralAngled = new AutonConfig("RB 1.5 Spiral Angled", RBOnePointFiveSpiralAngled::new, 
-            "RB to Mid Neutral LF",
-            "Mid Neutral LF Spiral",
-            "Mid Neutral LF to RB Shoot",
-            "RB Shoot to RB Start",
-            "RB to Mid Neutral LF"
+        LB_TwoSweepAngled.register(autonChooser);
+        AutonConfig LB_OnePointFiveSpiralAngled = new AutonConfig("LB 1.5 Spiral Angled", LBOnePointFiveSpiralAngled::new, 
+            "LB to Mid Neutral RF",
+            "Mid Neutral RF Spiral",
+            "Mid Neutral RF to LB Shoot",
+            "LB Shoot to LB Start",
+            "LB to Mid Neutral RF"
         );
-        RB_OnePointFiveSpiralAngled.register(autonChooser);
+        LB_OnePointFiveSpiralAngled.register(autonChooser);
 
         AutonConfig LB_Dumpy = new AutonConfig("LB Dumpy", LBDumpy::new,
             "LB to N Dumpy",

@@ -1,0 +1,43 @@
+{
+  "version": "2025.0",
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "LB to Mid Neutral RF"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Mid Neutral RF to LB Shoot"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "LB Shoot to LB Start"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "LB to Mid Neutral RF"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Mid Neutral RF to LB Shoot"
+          }
+        }
+      ]
+    }
+  },
+  "resetOdom": true,
+  "folder": "Shooting",
+  "choreoAuto": false
+}

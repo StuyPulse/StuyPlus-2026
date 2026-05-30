@@ -7,13 +7,19 @@
         {
           "type": "path",
           "data": {
-            "pathName": "RB to BC Center"
+            "pathName": "LB to Mid Neutral RF"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Mid Neutral RF to LB Shoot"
           }
         }
       ]
     }
   },
   "resetOdom": true,
-  "folder": "BC Dots",
+  "folder": "Shooting",
   "choreoAuto": false
 }

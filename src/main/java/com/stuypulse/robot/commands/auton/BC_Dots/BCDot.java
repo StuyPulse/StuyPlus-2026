@@ -1,4 +1,4 @@
-package com.stuypulse.robot.commands.auton;
+package com.stuypulse.robot.commands.auton.BC_Dots;
 
 import com.pathplanner.lib.path.PathPlannerPath;
 import com.stuypulse.robot.commands.swerve.SwerveDriveXMode;
@@ -8,9 +8,9 @@ import com.stuypulse.robot.subsystems.swerve.CommandSwerveDrivetrain;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 
-public class RightDot extends SequentialCommandGroup {
+public class BCDot extends SequentialCommandGroup {
 
-    public RightDot(PathPlannerPath... paths) {
+    public BCDot(PathPlannerPath... paths) {
         addCommands(
             new WaitCommand(Settings.BATTLECRY_DOT_DELAY.get()),
             new SwerveResetPose(paths[0].getStartingHolonomicPose().get()),
@@ -18,3 +18,4 @@ public class RightDot extends SequentialCommandGroup {
             new SwerveDriveXMode());
     }
 }
+// usable for all 4 bc dot autos because they are the same code

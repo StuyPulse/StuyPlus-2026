@@ -5,13 +5,16 @@
   "pathFolders": [
     "BC Dot",
     "Disrupt",
+    "Dumpy",
     "Ferry",
-    "Dumpy"
+    "Shoot"
   ],
   "autoFolders": [
     "Disrupt",
+    "Dumpy",
     "Ferry",
-    "Dumpy"
+    "BC Dots",
+    "Shooting"
   ],
   "defaultMaxVel": 3.0,
   "defaultMaxAccel": 3.0,
