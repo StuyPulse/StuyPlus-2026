@@ -132,6 +132,7 @@ public class LimelightVision extends SubsystemBase {
             return;
         }
         for (int i = 0; i < names.length; i++) {
+            DogLog.log("Vision/" + names[i] + "/Heartbeat", LimelightHelpers.getHeartbeat(names[i]));
             if (!camerasEnabled[i].get()) {
                 DogLog.log("Vision/" + names[i] + " Has Data", false);
                 continue;
