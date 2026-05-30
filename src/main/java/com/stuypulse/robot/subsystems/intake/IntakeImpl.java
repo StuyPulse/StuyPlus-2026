@@ -188,10 +188,6 @@ public class IntakeImpl extends Intake {
 
     @Override
     public void periodic() {
-        if (!EnabledSubsystems.INTAKE.get()) {
-            stopAllMotors();
-            return;
-        }
         if (pivotVoltageOverride.isPresent()) {
             pivotMotor.setVoltage(pivotVoltageOverride.get().in(Volts));
             return;

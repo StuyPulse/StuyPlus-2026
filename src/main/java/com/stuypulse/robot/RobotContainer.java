@@ -5,6 +5,7 @@
 /***************************************************************/
 package com.stuypulse.robot;
 
+import com.stuypulse.robot.commands.auton.BCDot;
 import com.stuypulse.robot.commands.auton.DoNothingAuton;
 import com.stuypulse.robot.commands.feeder.FeederSetForward;
 import com.stuypulse.robot.commands.feeder.FeederSetIdle;
@@ -36,6 +37,8 @@ import com.stuypulse.robot.subsystems.leds.LEDController;
 import com.stuypulse.robot.subsystems.shooter.Shooter;
 import com.stuypulse.robot.subsystems.swerve.CommandSwerveDrivetrain;
 import com.stuypulse.robot.subsystems.vision.LimelightVision;
+import com.stuypulse.robot.util.PathUtil.AutonConfig;
+
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -247,22 +250,40 @@ public class RobotContainer {
         // "RT Around Disrupt",
         // "RT Back Push Disrupt");
         // RT_Disrupt.register(autonChooser);
-        autonChooser.addOption("SysID Module Translation Dynamic Forwards",
-        swerve.sysIdDynamic(Direction.kForward));
-        autonChooser.addOption("SysID Module Translation Dynamic Backwards",
-        swerve.sysIdDynamic(Direction.kReverse));
-        autonChooser.addOption("SysID Module Translation Quasi Forwards",
-        swerve.sysIdQuasistatic(Direction.kForward));
-        autonChooser.addOption("SysID Module Translation Quasi Backwards",
-        swerve.sysIdQuasistatic(Direction.kReverse));
-        autonChooser.addOption("SysID Rotation Translation Dynamic Forwards",
-        swerve.sysidRotationDynamic(Direction.kForward));
-        autonChooser.addOption("SysID Rotation Translation Dynamic Backwards",
-        swerve.sysidRotationDynamic(Direction.kReverse));
-        autonChooser.addOption("SysID Rotation Translation Quasi Forwards",
-        swerve.sysidRotationQuasiStatic(Direction.kForward));
-        autonChooser.addOption("SysID Rotation Translation Quasi Backwards",
-        swerve.sysidRotationQuasiStatic(Direction.kReverse));
+
+        AutonConfig LBToBCCenter = new AutonConfig("LB To BC Center", BCDot::new,
+            "LB To BC Center"
+        );
+        LBToBCCenter.register(autonChooser);
+        AutonConfig LBToBCLeft = new AutonConfig("LB To BC Left", BCDot::new,
+            "LB To BC Left"
+        );
+        LBToBCLeft.register(autonChooser);
+        AutonConfig RBToBCCenter = new AutonConfig("RB To BC Center", BCDot::new,
+            "RB To BC Center"
+        );
+        RBToBCCenter.register(autonChooser);
+        AutonConfig RBToBCRight = new AutonConfig("RB To BC Right", BCDot::new,
+            "RB To BC Right"
+        );
+        RBToBCRight.register(autonChooser);
+
+        // autonChooser.addOption("SysID Module Translation Dynamic Forwards",
+        // swerve.sysIdDynamic(Direction.kForward));
+        // autonChooser.addOption("SysID Module Translation Dynamic Backwards",
+        // swerve.sysIdDynamic(Direction.kReverse));
+        // autonChooser.addOption("SysID Module Translation Quasi Forwards",
+        // swerve.sysIdQuasistatic(Direction.kForward));
+        // autonChooser.addOption("SysID Module Translation Quasi Backwards",
+        // swerve.sysIdQuasistatic(Direction.kReverse));
+        // autonChooser.addOption("SysID Rotation Translation Dynamic Forwards",
+        // swerve.sysidRotationDynamic(Direction.kForward));
+        // autonChooser.addOption("SysID Rotation Translation Dynamic Backwards",
+        // swerve.sysidRotationDynamic(Direction.kReverse));
+        // autonChooser.addOption("SysID Rotation Translation Quasi Forwards",
+        // swerve.sysidRotationQuasiStatic(Direction.kForward));
+        // autonChooser.addOption("SysID Rotation Translation Quasi Backwards",
+        // swerve.sysidRotationQuasiStatic(Direction.kReverse));
         SmartDashboard.putData("Autonomous", autonChooser);
     }
 

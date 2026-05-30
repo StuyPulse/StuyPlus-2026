@@ -43,12 +43,14 @@ public interface Settings {
 
     CANBus CANBUS = new CANBus("rio");
 
+    DoubleSubscriber BATTLECRY_DOT_DELAY = DogLog.tunable("BattleCry Dot Auton Delay Seconds", 0.0);
+
     public interface EnabledSubsystems {
 
         BooleanSubscriber FEEDER = DogLog.tunable("Enabled Subsystems/Feeder", false);
 
-        BooleanSubscriber INTAKE = DogLog.tunable("Enabled Subsystems/Intake/Intake", true);
         BooleanSubscriber INTAKE_ROLLERS = DogLog.tunable("Enabled Subsystems/Intake/Rollers", true);
+
         BooleanSubscriber INTAKE_PIVOT = DogLog.tunable("Enabled Subsystems/Intake/Pivot", true);
 
         BooleanSubscriber LED = DogLog.tunable("Enabled Subsystems/LED", false);

@@ -133,7 +133,7 @@ public class Simulation {
     private void updateIntake() {
         boolean intakeEnabled = intakeSim.atTargetAngle()
                 && (intakeSim.getState() == IntakeState.DOWN)
-                && Settings.EnabledSubsystems.INTAKE.get();
+                && Settings.EnabledSubsystems.INTAKE_ROLLERS.get();
         updateIntakeEnabled(intakeEnabled);
     }
 
@@ -223,7 +223,7 @@ public class Simulation {
 
     private void updateShooting() {
         if (intakeSim.getState() == IntakeState.OUTTAKE
-                && Settings.EnabledSubsystems.INTAKE.get()
+                && Settings.EnabledSubsystems.INTAKE_ROLLERS.get()
                 && intakeMSim.obtainGamePieceFromIntake()) {
             summonFuelAtIntake();
         } else if ((shooterSim.getState() == ShooterState.SHOOT
