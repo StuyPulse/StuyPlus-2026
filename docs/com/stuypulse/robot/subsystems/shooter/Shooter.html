@@ -117,12 +117,15 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Field</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color"><code>private static final <a href="Shooter.html" title="class in com.stuypulse.robot.subsystems.shooter">Shooter</a></code></div>
-<div class="col-second even-row-color"><code><a href="#instance" class="member-name-link">instance</a></code></div>
+<div class="col-first even-row-color"><code>protected edu.wpi.first.units.measure.AngularVelocity</code></div>
+<div class="col-second even-row-color"><code><a href="#bonusVelocity" class="member-name-link">bonusVelocity</a></code></div>
 <div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code>private <a href="Shooter.ShooterState.html" title="enum class in com.stuypulse.robot.subsystems.shooter">Shooter.ShooterState</a></code></div>
-<div class="col-second odd-row-color"><code><a href="#state" class="member-name-link">state</a></code></div>
+<div class="col-first odd-row-color"><code>private static final <a href="Shooter.html" title="class in com.stuypulse.robot.subsystems.shooter">Shooter</a></code></div>
+<div class="col-second odd-row-color"><code><a href="#instance" class="member-name-link">instance</a></code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>private <a href="Shooter.ShooterState.html" title="enum class in com.stuypulse.robot.subsystems.shooter">Shooter.ShooterState</a></code></div>
+<div class="col-second even-row-color"><code><a href="#state" class="member-name-link">state</a></code></div>
+<div class="col-last even-row-color">&nbsp;</div>
 </div>
 </section>
 </li>
@@ -152,37 +155,40 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>abstract edu.wpi.first.units.measure.AngularVelocity</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getCurrentAngularVelocity()" class="member-name-link">getCurrentAngularVelocity</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="Shooter.html" title="class in com.stuypulse.robot.subsystems.shooter">Shooter</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#getInstance()" class="member-name-link">getInstance</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>abstract edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getShooterSysIdRoutine()" class="member-name-link">getShooterSysIdRoutine</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="Shooter.ShooterState.html" title="enum class in com.stuypulse.robot.subsystems.shooter">Shooter.ShooterState</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getState()" class="member-name-link">getState</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#logMotor(java.lang.String,com.ctre.phoenix6.hardware.TalonFX)" class="member-name-link">logMotor</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;motorName,
- com.ctre.phoenix6.hardware.TalonFX&nbsp;motor)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#addToBonusVelocity(double)" class="member-name-link">addToBonusVelocity</a><wbr>(double&nbsp;velocity)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>abstract edu.wpi.first.units.measure.AngularVelocity</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getCurrentAngularVelocity()" class="member-name-link">getCurrentAngularVelocity</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="Shooter.html" title="class in com.stuypulse.robot.subsystems.shooter">Shooter</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#getInstance()" class="member-name-link">getInstance</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>abstract edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getShooterSysIdRoutine()" class="member-name-link">getShooterSysIdRoutine</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="Shooter.ShooterState.html" title="enum class in com.stuypulse.robot.subsystems.shooter">Shooter.ShooterState</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getState()" class="member-name-link">getState</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#periodic()" class="member-name-link">periodic</a>()</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#logMotor(java.lang.String,com.ctre.phoenix6.hardware.TalonFX)" class="member-name-link">logMotor</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;motorName,
+ com.ctre.phoenix6.hardware.TalonFX&nbsp;motor)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setState(com.stuypulse.robot.subsystems.shooter.Shooter.ShooterState)" class="member-name-link">setState</a><wbr>(<a href="Shooter.ShooterState.html" title="enum class in com.stuypulse.robot.subsystems.shooter">Shooter.ShooterState</a>&nbsp;state)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#periodic()" class="member-name-link">periodic</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>abstract void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#setVoltageOverride(edu.wpi.first.units.measure.Voltage)" class="member-name-link">setVoltageOverride</a><wbr>(edu.wpi.first.units.measure.Voltage&nbsp;voltage)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#shooterSpunUp()" class="member-name-link">shooterSpunUp</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>protected abstract void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#stopMotors()" class="member-name-link">stopMotors</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setState(com.stuypulse.robot.subsystems.shooter.Shooter.ShooterState)" class="member-name-link">setState</a><wbr>(<a href="Shooter.ShooterState.html" title="enum class in com.stuypulse.robot.subsystems.shooter">Shooter.ShooterState</a>&nbsp;state)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>abstract void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#setVoltageOverride(edu.wpi.first.units.measure.Voltage)" class="member-name-link">setVoltageOverride</a><wbr>(edu.wpi.first.units.measure.Voltage&nbsp;voltage)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#shooterSpunUp()" class="member-name-link">shooterSpunUp</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>protected abstract void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#stopMotors()" class="member-name-link">stopMotors</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
 </div>
 </div>
 </div>
@@ -213,9 +219,15 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
+<section class="detail" id="bonusVelocity">
+<h3>bonusVelocity</h3>
+<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type">edu.wpi.first.units.measure.AngularVelocity</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/shooter/Shooter.html#line-27">bonusVelocity</a></span></div>
+</section>
+</li>
+<li>
 <section class="detail" id="state">
 <h3>state</h3>
-<div class="member-signature"><span class="modifiers">private</span>&nbsp;<span class="return-type"><a href="Shooter.ShooterState.html" title="enum class in com.stuypulse.robot.subsystems.shooter">Shooter.ShooterState</a></span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/shooter/Shooter.html#line-27">state</a></span></div>
+<div class="member-signature"><span class="modifiers">private</span>&nbsp;<span class="return-type"><a href="Shooter.ShooterState.html" title="enum class in com.stuypulse.robot.subsystems.shooter">Shooter.ShooterState</a></span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/shooter/Shooter.html#line-29">state</a></span></div>
 </section>
 </li>
 </ul>
@@ -229,7 +241,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="&lt;init&gt;()">
 <h3>Shooter</h3>
-<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/shooter/Shooter.html#line-41">Shooter</a></span>()</div>
+<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/shooter/Shooter.html#line-43">Shooter</a></span>()</div>
 </section>
 </li>
 </ul>
@@ -243,62 +255,68 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getInstance()">
 <h3>getInstance</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="Shooter.html" title="class in com.stuypulse.robot.subsystems.shooter">Shooter</a></span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/shooter/Shooter.html#line-37">getInstance</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="Shooter.html" title="class in com.stuypulse.robot.subsystems.shooter">Shooter</a></span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/shooter/Shooter.html#line-39">getInstance</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="setState(com.stuypulse.robot.subsystems.shooter.Shooter.ShooterState)">
 <h3>setState</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/shooter/Shooter.html#line-45">setState</a></span><wbr><span class="parameters">(<a href="Shooter.ShooterState.html" title="enum class in com.stuypulse.robot.subsystems.shooter">Shooter.ShooterState</a>&nbsp;state)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/shooter/Shooter.html#line-49">setState</a></span><wbr><span class="parameters">(<a href="Shooter.ShooterState.html" title="enum class in com.stuypulse.robot.subsystems.shooter">Shooter.ShooterState</a>&nbsp;state)</span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="getState()">
 <h3>getState</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="Shooter.ShooterState.html" title="enum class in com.stuypulse.robot.subsystems.shooter">Shooter.ShooterState</a></span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/shooter/Shooter.html#line-49">getState</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="Shooter.ShooterState.html" title="enum class in com.stuypulse.robot.subsystems.shooter">Shooter.ShooterState</a></span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/shooter/Shooter.html#line-53">getState</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="logMotor(java.lang.String,com.ctre.phoenix6.hardware.TalonFX)">
 <h3>logMotor</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/shooter/Shooter.html#line-53">logMotor</a></span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;motorName,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/shooter/Shooter.html#line-57">logMotor</a></span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;motorName,
  com.ctre.phoenix6.hardware.TalonFX&nbsp;motor)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="addToBonusVelocity(double)">
+<h3>addToBonusVelocity</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/shooter/Shooter.html#line-101">addToBonusVelocity</a></span><wbr><span class="parameters">(double&nbsp;velocity)</span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="getCurrentAngularVelocity()">
 <h3>getCurrentAngularVelocity</h3>
-<div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type">edu.wpi.first.units.measure.AngularVelocity</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/shooter/Shooter.html#line-97">getCurrentAngularVelocity</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type">edu.wpi.first.units.measure.AngularVelocity</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/shooter/Shooter.html#line-105">getCurrentAngularVelocity</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="stopMotors()">
 <h3>stopMotors</h3>
-<div class="member-signature"><span class="modifiers">protected abstract</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/shooter/Shooter.html#line-99">stopMotors</a></span>()</div>
+<div class="member-signature"><span class="modifiers">protected abstract</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/shooter/Shooter.html#line-107">stopMotors</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getShooterSysIdRoutine()">
 <h3>getShooterSysIdRoutine</h3>
-<div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type">edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/shooter/Shooter.html#line-101">getShooterSysIdRoutine</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type">edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/shooter/Shooter.html#line-109">getShooterSysIdRoutine</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="setVoltageOverride(edu.wpi.first.units.measure.Voltage)">
 <h3>setVoltageOverride</h3>
-<div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/shooter/Shooter.html#line-103">setVoltageOverride</a></span><wbr><span class="parameters">(edu.wpi.first.units.measure.Voltage&nbsp;voltage)</span></div>
+<div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/shooter/Shooter.html#line-111">setVoltageOverride</a></span><wbr><span class="parameters">(edu.wpi.first.units.measure.Voltage&nbsp;voltage)</span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="shooterSpunUp()">
 <h3>shooterSpunUp</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/shooter/Shooter.html#line-105">shooterSpunUp</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/shooter/Shooter.html#line-113">shooterSpunUp</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="periodic()">
 <h3>periodic</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/shooter/Shooter.html#line-109">periodic</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/shooter/Shooter.html#line-117">periodic</a></span>()</div>
 </section>
 </li>
 </ul>
