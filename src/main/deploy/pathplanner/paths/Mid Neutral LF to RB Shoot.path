@@ -4,12 +4,12 @@
     {
       "anchor": {
         "x": 7.9,
-        "y": 3.0
+        "y": 5.0
       },
       "prevControl": null,
       "nextControl": {
         "x": 7.9897441728254694,
-        "y": 3.558408186469585
+        "y": 5.558408186469585
       },
       "isLocked": false,
       "linkedName": "mid neutral left facing"
@@ -108,10 +108,10 @@
     "rotation": 50.0
   },
   "reversed": false,
-  "folder": "Shoot",
+  "folder": null,
   "idealStartingState": {
     "velocity": 1.0,
-    "rotation": 45.881
+    "rotation": -45.881
   },
   "useDefaultConstraints": true
 }

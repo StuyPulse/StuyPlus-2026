@@ -4,12 +4,12 @@
     {
       "anchor": {
         "x": 2.8,
-        "y": 5.75
+        "y": 2.25
       },
       "prevControl": null,
       "nextControl": {
         "x": 2.9909603375056837,
-        "y": 5.588648986678995
+        "y": 2.0886489866789946
       },
       "isLocked": false,
       "linkedName": "Right Bump Shoot"
@@ -45,10 +45,10 @@
     "rotation": -90.0
   },
   "reversed": false,
-  "folder": "Shoot",
+  "folder": null,
   "idealStartingState": {
     "velocity": 0.0,
-    "rotation": -50.0
+    "rotation": 50.0
   },
   "useDefaultConstraints": true
 }
