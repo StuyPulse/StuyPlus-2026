@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.4876193481623,
-        "y": 6.122183406113537
+        "x": 3.5326980417576417,
+        "y": 4.213519605167395
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.4876193481622986,
-        "y": 6.122183406113537
+        "x": 2.5586192799308587,
+        "y": 5.522746486080787
       },
       "isLocked": false,
       "linkedName": null
@@ -41,7 +41,7 @@
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "Depot 1"
     }
   ],
   "rotationTargets": [],

@@ -14,6 +14,7 @@ public class LeftDot extends SequentialCommandGroup {
         addCommands(
             new WaitCommand(Settings.BATTLECRY_DOT_DELAY.get()),
             new SwerveResetPose(paths[0].getStartingHolonomicPose().get()),
+            new IntakeSetIntake(),
             CommandSwerveDrivetrain.getInstance().followPathCommand(paths[0]),
             new SwerveDriveXMode());
     }
