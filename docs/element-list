@@ -2,7 +2,9 @@ com.stuypulse.robot
 com.stuypulse.robot.commands
 com.stuypulse.robot.commands.auton
 com.stuypulse.robot.commands.auton.BC_Dots
+com.stuypulse.robot.commands.auton.depot
 com.stuypulse.robot.commands.auton.shooting
+com.stuypulse.robot.commands.compound
 com.stuypulse.robot.commands.feeder
 com.stuypulse.robot.commands.handoff
 com.stuypulse.robot.commands.intake
@@ -23,7 +25,11 @@ com.stuypulse.robot.subsystems.vision
 com.stuypulse.robot.util
 com.stuypulse.robot.util.shooter
 com.stuypulse.robot.util.simulation
+com.stuypulse.robot.util.swerve
 com.stuypulse.robot.util.vision
 tools.DogLogASTParser
-tools.PathplannerFlip
+tools.PathplannerFlip.AutonFlip
+tools.PathplannerFlip.PathFlip
 tools.PathplannerSearch
+tools.ToolClasses
+tools.util

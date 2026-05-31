@@ -579,49 +579,50 @@
 <span class="source-line-no">566</span><span id="line-566">                DogLog.log("Swerve/Pose/X", getPose().getX());</span>
 <span class="source-line-no">567</span><span id="line-567">                DogLog.log("Swerve/Pose/Y", getPose().getY());</span>
 <span class="source-line-no">568</span><span id="line-568">                DogLog.log("Swerve/Pose/Theta", getPose().getRotation().getDegrees());</span>
-<span class="source-line-no">569</span><span id="line-569">                for (int i = 0; i &lt; 4; i++) {</span>
-<span class="source-line-no">570</span><span id="line-570">                        DogLog.log(</span>
-<span class="source-line-no">571</span><span id="line-571">                                        "Swerve/Modules/Module " + i + "/Speed (m per s)",</span>
-<span class="source-line-no">572</span><span id="line-572">                                        getModule(i).getCurrentState().speedMetersPerSecond);</span>
-<span class="source-line-no">573</span><span id="line-573">                        DogLog.log(</span>
-<span class="source-line-no">574</span><span id="line-574">                                        "Swerve/Modules/Module " + i + "/Target Speed (m per s)",</span>
-<span class="source-line-no">575</span><span id="line-575">                                        getModule(i).getTargetState().speedMetersPerSecond);</span>
-<span class="source-line-no">576</span><span id="line-576">                        DogLog.log(</span>
-<span class="source-line-no">577</span><span id="line-577">                                        "Swerve/Modules/Module " + i + "/Angle (deg)",</span>
-<span class="source-line-no">578</span><span id="line-578">                                        getModule(i).getCurrentState().angle.getDegrees() % 360);</span>
-<span class="source-line-no">579</span><span id="line-579">                        DogLog.log(</span>
-<span class="source-line-no">580</span><span id="line-580">                                        "Swerve/Modules/Module " + i + "/Target Angle (deg)",</span>
-<span class="source-line-no">581</span><span id="line-581">                                        getModule(i).getTargetState().angle.getDegrees() % 360);</span>
-<span class="source-line-no">582</span><span id="line-582">                }</span>
-<span class="source-line-no">583</span><span id="line-583">                Field.FIELD2D</span>
-<span class="source-line-no">584</span><span id="line-584">                                .getRobotObject()</span>
-<span class="source-line-no">585</span><span id="line-585">                                .setPose(Robot.isBlue() ? pose : Field.transformToOppositeAlliance(pose));</span>
-<span class="source-line-no">586</span><span id="line-586">                if (Settings.DEBUG_MODE) {</span>
-<span class="source-line-no">587</span><span id="line-587">                        for (int i = 0; i &lt; 4; i++) {</span>
-<span class="source-line-no">588</span><span id="line-588">                                DogLog.log(</span>
-<span class="source-line-no">589</span><span id="line-589">                                                "Swerve/Modules/Module " + i + "/Stator Current",</span>
-<span class="source-line-no">590</span><span id="line-590">                                                getModule(i).getDriveMotor().getStatorCurrent().getValueAsDouble());</span>
-<span class="source-line-no">591</span><span id="line-591">                                DogLog.log(</span>
-<span class="source-line-no">592</span><span id="line-592">                                                "Swerve/Modules/Module " + i + "/Supply Current",</span>
-<span class="source-line-no">593</span><span id="line-593">                                                getModule(i).getDriveMotor().getSupplyCurrent().getValueAsDouble());</span>
-<span class="source-line-no">594</span><span id="line-594">                        }</span>
-<span class="source-line-no">595</span><span id="line-595">                        DogLog.log(</span>
-<span class="source-line-no">596</span><span id="line-596">                                        "Swerve/Velocity Robot Relative X (m per s)",</span>
-<span class="source-line-no">597</span><span id="line-597">                                        getChassisSpeeds().vxMetersPerSecond);</span>
-<span class="source-line-no">598</span><span id="line-598">                        DogLog.log(</span>
-<span class="source-line-no">599</span><span id="line-599">                                        "Swerve/Velocity Robot Relative Y (m per s)",</span>
-<span class="source-line-no">600</span><span id="line-600">                                        getChassisSpeeds().vyMetersPerSecond);</span>
-<span class="source-line-no">601</span><span id="line-601">                        DogLog.log("Swerve/Velocity Field Relative X (m per s)", getFieldRelativeSpeeds().x);</span>
-<span class="source-line-no">602</span><span id="line-602">                        DogLog.log("Swerve/Field Relative Rotation", getPose().getRotation().getDegrees());</span>
-<span class="source-line-no">603</span><span id="line-603">                        DogLog.log("Swerve/Velocity Field Relative Y (m per s)", getFieldRelativeSpeeds().y);</span>
-<span class="source-line-no">604</span><span id="line-604">                        DogLog.log("Swerve/Angular Velocity (rad per s)", getChassisSpeeds().omegaRadiansPerSecond);</span>
-<span class="source-line-no">605</span><span id="line-605"></span>
-<span class="source-line-no">606</span><span id="line-606">                        //Distance in meters</span>
-<span class="source-line-no">607</span><span id="line-607">                        DogLog.forceNt.log("Swerve/Distance From Hub", pose.getTranslation().getDistance(Field.getHubPose().getTranslation()));</span>
-<span class="source-line-no">608</span><span id="line-608">                        DogLog.forceNt.log("Swerve/Distance From Ferry Zone", pose.getTranslation().getDistance(Field.getFerryZonePose(pose.getTranslation()).getTranslation()));</span>
-<span class="source-line-no">609</span><span id="line-609">                }</span>
-<span class="source-line-no">610</span><span id="line-610">        }</span>
-<span class="source-line-no">611</span><span id="line-611">}</span>
+<span class="source-line-no">569</span><span id="line-569">                DogLog.log("Swerve/Pose2D", Robot.isBlue() ? pose : Field.transformToOppositeAlliance(pose));</span>
+<span class="source-line-no">570</span><span id="line-570">                for (int i = 0; i &lt; 4; i++) {</span>
+<span class="source-line-no">571</span><span id="line-571">                        DogLog.log(</span>
+<span class="source-line-no">572</span><span id="line-572">                                        "Swerve/Modules/Module " + i + "/Speed (m per s)",</span>
+<span class="source-line-no">573</span><span id="line-573">                                        getModule(i).getCurrentState().speedMetersPerSecond);</span>
+<span class="source-line-no">574</span><span id="line-574">                        DogLog.log(</span>
+<span class="source-line-no">575</span><span id="line-575">                                        "Swerve/Modules/Module " + i + "/Target Speed (m per s)",</span>
+<span class="source-line-no">576</span><span id="line-576">                                        getModule(i).getTargetState().speedMetersPerSecond);</span>
+<span class="source-line-no">577</span><span id="line-577">                        DogLog.log(</span>
+<span class="source-line-no">578</span><span id="line-578">                                        "Swerve/Modules/Module " + i + "/Angle (deg)",</span>
+<span class="source-line-no">579</span><span id="line-579">                                        getModule(i).getCurrentState().angle.getDegrees() % 360);</span>
+<span class="source-line-no">580</span><span id="line-580">                        DogLog.log(</span>
+<span class="source-line-no">581</span><span id="line-581">                                        "Swerve/Modules/Module " + i + "/Target Angle (deg)",</span>
+<span class="source-line-no">582</span><span id="line-582">                                        getModule(i).getTargetState().angle.getDegrees() % 360);</span>
+<span class="source-line-no">583</span><span id="line-583">                }</span>
+<span class="source-line-no">584</span><span id="line-584">                Field.FIELD2D</span>
+<span class="source-line-no">585</span><span id="line-585">                                .getRobotObject()</span>
+<span class="source-line-no">586</span><span id="line-586">                                .setPose(Robot.isBlue() ? pose : Field.transformToOppositeAlliance(pose));</span>
+<span class="source-line-no">587</span><span id="line-587">                if (Settings.DEBUG_MODE) {</span>
+<span class="source-line-no">588</span><span id="line-588">                        for (int i = 0; i &lt; 4; i++) {</span>
+<span class="source-line-no">589</span><span id="line-589">                                DogLog.log(</span>
+<span class="source-line-no">590</span><span id="line-590">                                                "Swerve/Modules/Module " + i + "/Stator Current",</span>
+<span class="source-line-no">591</span><span id="line-591">                                                getModule(i).getDriveMotor().getStatorCurrent().getValueAsDouble());</span>
+<span class="source-line-no">592</span><span id="line-592">                                DogLog.log(</span>
+<span class="source-line-no">593</span><span id="line-593">                                                "Swerve/Modules/Module " + i + "/Supply Current",</span>
+<span class="source-line-no">594</span><span id="line-594">                                                getModule(i).getDriveMotor().getSupplyCurrent().getValueAsDouble());</span>
+<span class="source-line-no">595</span><span id="line-595">                        }</span>
+<span class="source-line-no">596</span><span id="line-596">                        DogLog.log(</span>
+<span class="source-line-no">597</span><span id="line-597">                                        "Swerve/Velocity Robot Relative X (m per s)",</span>
+<span class="source-line-no">598</span><span id="line-598">                                        getChassisSpeeds().vxMetersPerSecond);</span>
+<span class="source-line-no">599</span><span id="line-599">                        DogLog.log(</span>
+<span class="source-line-no">600</span><span id="line-600">                                        "Swerve/Velocity Robot Relative Y (m per s)",</span>
+<span class="source-line-no">601</span><span id="line-601">                                        getChassisSpeeds().vyMetersPerSecond);</span>
+<span class="source-line-no">602</span><span id="line-602">                        DogLog.log("Swerve/Velocity Field Relative X (m per s)", getFieldRelativeSpeeds().x);</span>
+<span class="source-line-no">603</span><span id="line-603">                        DogLog.log("Swerve/Field Relative Rotation", getPose().getRotation().getDegrees());</span>
+<span class="source-line-no">604</span><span id="line-604">                        DogLog.log("Swerve/Velocity Field Relative Y (m per s)", getFieldRelativeSpeeds().y);</span>
+<span class="source-line-no">605</span><span id="line-605">                        DogLog.log("Swerve/Angular Velocity (rad per s)", getChassisSpeeds().omegaRadiansPerSecond);</span>
+<span class="source-line-no">606</span><span id="line-606"></span>
+<span class="source-line-no">607</span><span id="line-607">                        //Distance in meters</span>
+<span class="source-line-no">608</span><span id="line-608">                        DogLog.forceNt.log("Swerve/Distance From Hub", pose.getTranslation().getDistance(Field.getHubPose().getTranslation()));</span>
+<span class="source-line-no">609</span><span id="line-609">                        DogLog.forceNt.log("Swerve/Distance From Ferry Zone", pose.getTranslation().getDistance(Field.getFerryZonePose(pose.getTranslation()).getTranslation()));</span>
+<span class="source-line-no">610</span><span id="line-610">                }</span>
+<span class="source-line-no">611</span><span id="line-611">        }</span>
+<span class="source-line-no">612</span><span id="line-612">}</span>
 
 
 

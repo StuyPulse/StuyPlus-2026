@@ -54,6 +54,7 @@ loadScripts(document, 'script');</script>
 <ul>
 <li><a href="#com.stuypulse">com.stuypulse.*</a></li>
 <li><a href="#tools.PathplannerFlip">tools.PathplannerFlip.*</a></li>
+<li><a href="#tools.util">tools.util.*</a></li>
 </ul>
 </section>
 </div>
@@ -74,7 +75,7 @@ loadScripts(document, 'script');</script>
 <div class="col-last odd-row-color"><code>0.0</code></div>
 <div class="col-first even-row-color"><code id="com.stuypulse.robot.constants.Gains.Intake.kP">public&nbsp;static&nbsp;final&nbsp;double</code></div>
 <div class="col-second even-row-color"><code><a href="com/stuypulse/robot/constants/Gains.Intake.html#kP">kP</a></code></div>
-<div class="col-last even-row-color"><code>150.0</code></div>
+<div class="col-last even-row-color"><code>300.0</code></div>
 </div>
 </li>
 <li>
@@ -85,13 +86,13 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-last">Value</div>
 <div class="col-first even-row-color"><code id="com.stuypulse.robot.constants.Gains.Intake.Digestion.kD">public&nbsp;static&nbsp;final&nbsp;double</code></div>
 <div class="col-second even-row-color"><code><a href="com/stuypulse/robot/constants/Gains.Intake.Digestion.html#kD">kD</a></code></div>
-<div class="col-last even-row-color"><code>55.0</code></div>
+<div class="col-last even-row-color"><code>75.0</code></div>
 <div class="col-first odd-row-color"><code id="com.stuypulse.robot.constants.Gains.Intake.Digestion.kI">public&nbsp;static&nbsp;final&nbsp;double</code></div>
 <div class="col-second odd-row-color"><code><a href="com/stuypulse/robot/constants/Gains.Intake.Digestion.html#kI">kI</a></code></div>
 <div class="col-last odd-row-color"><code>0.0</code></div>
 <div class="col-first even-row-color"><code id="com.stuypulse.robot.constants.Gains.Intake.Digestion.kP">public&nbsp;static&nbsp;final&nbsp;double</code></div>
 <div class="col-second even-row-color"><code><a href="com/stuypulse/robot/constants/Gains.Intake.Digestion.html#kP">kP</a></code></div>
-<div class="col-last even-row-color"><code>200.0</code></div>
+<div class="col-last even-row-color"><code>250.0</code></div>
 </div>
 </li>
 <li>
@@ -111,7 +112,7 @@ loadScripts(document, 'script');</script>
 <div class="col-last even-row-color"><code>0.0</code></div>
 <div class="col-first odd-row-color"><code id="com.stuypulse.robot.constants.Gains.Swerve.Alignment.akP">public&nbsp;static&nbsp;final&nbsp;double</code></div>
 <div class="col-second odd-row-color"><code><a href="com/stuypulse/robot/constants/Gains.Swerve.Alignment.html#akP">akP</a></code></div>
-<div class="col-last odd-row-color"><code>0.88624</code></div>
+<div class="col-last odd-row-color"><code>8.8624</code></div>
 <div class="col-first even-row-color"><code id="com.stuypulse.robot.constants.Gains.Swerve.Alignment.akS">public&nbsp;static&nbsp;final&nbsp;double</code></div>
 <div class="col-second even-row-color"><code><a href="com/stuypulse/robot/constants/Gains.Swerve.Alignment.html#akS">akS</a></code></div>
 <div class="col-last even-row-color"><code>0.33753</code></div>
@@ -650,32 +651,59 @@ loadScripts(document, 'script');</script>
 </li>
 </ul>
 </section>
-<section class="constants-summary" id="tools.PathplannerFlip">
+<section class="constants-summary" id="tools.PathplannerFlip.AutonFlip">
 <h2 title="tools.PathplannerFlip">tools.PathplannerFlip.*</h2>
 <ul class="block-list">
 <li>
-<div class="caption"><span>tools.PathplannerFlip.<a href="tools/PathplannerFlip/PathplannerAutonFlip.html" title="class in tools.PathplannerFlip">PathplannerAutonFlip</a></span></div>
+<div class="caption"><span>tools.PathplannerFlip.AutonFlip.<a href="tools/PathplannerFlip/AutonFlip/PathplannerAutonFlip.html" title="class in tools.PathplannerFlip.AutonFlip">PathplannerAutonFlip</a></span></div>
 <div class="summary-table three-column-summary">
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Constant Field</div>
 <div class="table-header col-last">Value</div>
-<div class="col-first even-row-color"><code id="tools.PathplannerFlip.PathplannerAutonFlip.AUTON_DIR">protected&nbsp;static&nbsp;final&nbsp;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second even-row-color"><code><a href="tools/PathplannerFlip/PathplannerAutonFlip.html#AUTON_DIR">AUTON_DIR</a></code></div>
+<div class="col-first even-row-color"><code id="tools.PathplannerFlip.AutonFlip.PathplannerAutonFlip.AUTON_DIR">protected&nbsp;static&nbsp;final&nbsp;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color"><code><a href="tools/PathplannerFlip/AutonFlip/PathplannerAutonFlip.html#AUTON_DIR">AUTON_DIR</a></code></div>
 <div class="col-last even-row-color"><code>"./src/main/deploy/pathplanner/autos/"</code></div>
 </div>
 </li>
+</ul>
+<ul class="block-list">
 <li>
-<div class="caption"><span>tools.PathplannerFlip.<a href="tools/PathplannerFlip/PathplannerPathFlip.html" title="class in tools.PathplannerFlip">PathplannerPathFlip</a></span></div>
+<div class="caption"><span>tools.PathplannerFlip.PathFlip.<a href="tools/PathplannerFlip/PathFlip/PathplannerPathFlip.html" title="class in tools.PathplannerFlip.PathFlip">PathplannerPathFlip</a></span></div>
 <div class="summary-table three-column-summary">
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Constant Field</div>
 <div class="table-header col-last">Value</div>
-<div class="col-first even-row-color"><code id="tools.PathplannerFlip.PathplannerPathFlip.FIELD_HEIGHT">public&nbsp;static&nbsp;final&nbsp;double</code></div>
-<div class="col-second even-row-color"><code><a href="tools/PathplannerFlip/PathplannerPathFlip.html#FIELD_HEIGHT">FIELD_HEIGHT</a></code></div>
+<div class="col-first even-row-color"><code id="tools.PathplannerFlip.PathFlip.PathplannerPathFlip.FIELD_HEIGHT">public&nbsp;static&nbsp;final&nbsp;double</code></div>
+<div class="col-second even-row-color"><code><a href="tools/PathplannerFlip/PathFlip/PathplannerPathFlip.html#FIELD_HEIGHT">FIELD_HEIGHT</a></code></div>
 <div class="col-last even-row-color"><code>8.0</code></div>
-<div class="col-first odd-row-color"><code id="tools.PathplannerFlip.PathplannerPathFlip.PATH_DIR">public&nbsp;static&nbsp;final&nbsp;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second odd-row-color"><code><a href="tools/PathplannerFlip/PathplannerPathFlip.html#PATH_DIR">PATH_DIR</a></code></div>
+<div class="col-first odd-row-color"><code id="tools.PathplannerFlip.PathFlip.PathplannerPathFlip.PATH_DIR">public&nbsp;static&nbsp;final&nbsp;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color"><code><a href="tools/PathplannerFlip/PathFlip/PathplannerPathFlip.html#PATH_DIR">PATH_DIR</a></code></div>
 <div class="col-last odd-row-color"><code>"./src/main/deploy/pathplanner/paths/"</code></div>
+</div>
+</li>
+</ul>
+</section>
+<section class="constants-summary" id="tools.util">
+<h2 title="tools.util">tools.util.*</h2>
+<ul class="block-list">
+<li>
+<div class="caption"><span>tools.util.<a href="tools/util/AnsiColors.html" title="interface in tools.util">AnsiColors</a></span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Constant Field</div>
+<div class="table-header col-last">Value</div>
+<div class="col-first even-row-color"><code id="tools.util.AnsiColors.GREEN">public&nbsp;static&nbsp;final&nbsp;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color"><code><a href="tools/util/AnsiColors.html#GREEN">GREEN</a></code></div>
+<div class="col-last even-row-color"><code>"\u001b[32m"</code></div>
+<div class="col-first odd-row-color"><code id="tools.util.AnsiColors.RED">public&nbsp;static&nbsp;final&nbsp;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color"><code><a href="tools/util/AnsiColors.html#RED">RED</a></code></div>
+<div class="col-last odd-row-color"><code>"\u001b[31m"</code></div>
+<div class="col-first even-row-color"><code id="tools.util.AnsiColors.RESET">public&nbsp;static&nbsp;final&nbsp;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color"><code><a href="tools/util/AnsiColors.html#RESET">RESET</a></code></div>
+<div class="col-last even-row-color"><code>"\u001b[0m"</code></div>
+<div class="col-first odd-row-color"><code id="tools.util.AnsiColors.YELLOW">public&nbsp;static&nbsp;final&nbsp;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color"><code><a href="tools/util/AnsiColors.html#YELLOW">YELLOW</a></code></div>
+<div class="col-last odd-row-color"><code>"\u001b[33m"</code></div>
 </div>
 </li>
 </ul>

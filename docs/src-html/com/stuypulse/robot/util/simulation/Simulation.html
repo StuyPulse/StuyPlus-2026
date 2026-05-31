@@ -146,7 +146,7 @@
 <span class="source-line-no">133</span><span id="line-133">    private void updateIntake() {</span>
 <span class="source-line-no">134</span><span id="line-134">        boolean intakeEnabled = intakeSim.atTargetAngle()</span>
 <span class="source-line-no">135</span><span id="line-135">                &amp;&amp; (intakeSim.getState() == IntakeState.DOWN)</span>
-<span class="source-line-no">136</span><span id="line-136">                &amp;&amp; Settings.EnabledSubsystems.INTAKE_ROLLERS.get();</span>
+<span class="source-line-no">136</span><span id="line-136">                &amp;&amp; Settings.EnabledSubsystems.INTAKE.get();</span>
 <span class="source-line-no">137</span><span id="line-137">        updateIntakeEnabled(intakeEnabled);</span>
 <span class="source-line-no">138</span><span id="line-138">    }</span>
 <span class="source-line-no">139</span><span id="line-139"></span>
@@ -236,7 +236,7 @@
 <span class="source-line-no">223</span><span id="line-223"></span>
 <span class="source-line-no">224</span><span id="line-224">    private void updateShooting() {</span>
 <span class="source-line-no">225</span><span id="line-225">        if (intakeSim.getState() == IntakeState.OUTTAKE</span>
-<span class="source-line-no">226</span><span id="line-226">                &amp;&amp; Settings.EnabledSubsystems.INTAKE_ROLLERS.get()</span>
+<span class="source-line-no">226</span><span id="line-226">                &amp;&amp; Settings.EnabledSubsystems.INTAKE.get()</span>
 <span class="source-line-no">227</span><span id="line-227">                &amp;&amp; intakeMSim.obtainGamePieceFromIntake()) {</span>
 <span class="source-line-no">228</span><span id="line-228">            summonFuelAtIntake();</span>
 <span class="source-line-no">229</span><span id="line-229">        } else if ((shooterSim.getState() == ShooterState.SHOOT</span>

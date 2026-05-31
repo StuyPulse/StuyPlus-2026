@@ -145,65 +145,67 @@
 <span class="source-line-no">132</span><span id="line-132">            return;</span>
 <span class="source-line-no">133</span><span id="line-133">        }</span>
 <span class="source-line-no">134</span><span id="line-134">        for (int i = 0; i &lt; names.length; i++) {</span>
-<span class="source-line-no">135</span><span id="line-135">            if (!camerasEnabled[i].get()) {</span>
-<span class="source-line-no">136</span><span id="line-136">                DogLog.log("Vision/" + names[i] + " Has Data", false);</span>
-<span class="source-line-no">137</span><span id="line-137">                continue;</span>
-<span class="source-line-no">138</span><span id="line-138">            }</span>
-<span class="source-line-no">139</span><span id="line-139">            String limelightName = names[i];</span>
-<span class="source-line-no">140</span><span id="line-140">            // Seed robot heading (used by MT2)</span>
-<span class="source-line-no">141</span><span id="line-141">            LimelightHelpers.SetRobotOrientation(limelightName, (CommandSwerveDrivetrain.getInstance().getPose().getRotation().getDegrees() + (Robot.isBlue() ? 0 : 180)) % 360, 0, 0, 0, 0, 0);</span>
-<span class="source-line-no">142</span><span id="line-142">            PoseEstimate poseEstimate;</span>
-<span class="source-line-no">143</span><span id="line-143">            // MegaTag switching</span>
-<span class="source-line-no">144</span><span id="line-144">            if (megaTagMode == MegaTagMode.MEGATAG1) {</span>
-<span class="source-line-no">145</span><span id="line-145">                poseEstimate = Robot.isBlue() ? LimelightHelpers.getBotPoseEstimate_wpiBlue(limelightName) : LimelightHelpers.getBotPoseEstimate_wpiRed(limelightName);</span>
-<span class="source-line-no">146</span><span id="line-146">            } else {</span>
-<span class="source-line-no">147</span><span id="line-147">                poseEstimate = Robot.isBlue() ? LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2(limelightName) : LimelightHelpers.getBotPoseEstimate_wpiRed_MegaTag2(limelightName);</span>
-<span class="source-line-no">148</span><span id="line-148">            }</span>
-<span class="source-line-no">149</span><span id="line-149">            boolean notNull = false;</span>
-<span class="source-line-no">150</span><span id="line-150">            boolean withinAngularVelocityTolerance = false;</span>
-<span class="source-line-no">151</span><span id="line-151">            boolean poseAtOrigin = false;</span>
-<span class="source-line-no">152</span><span id="line-152">            // Adding to pose estimator</span>
-<span class="source-line-no">153</span><span id="line-153">            SmartDashboard.putBoolean("Vision/Pose Not Estimate Null", poseEstimate != null);</span>
-<span class="source-line-no">154</span><span id="line-154">            if (poseEstimate != null &amp;&amp; poseEstimate.tagCount &gt; 0) {</span>
-<span class="source-line-no">155</span><span id="line-155">                notNull = true;</span>
-<span class="source-line-no">156</span><span id="line-156">                SmartDashboard.putNumber("Vision/Pose Estimate X", poseEstimate.pose.getX());</span>
-<span class="source-line-no">157</span><span id="line-157">                SmartDashboard.putNumber("Vision/Pose Estimate Y", poseEstimate.pose.getY());</span>
-<span class="source-line-no">158</span><span id="line-158">                SmartDashboard.putNumber("Vision/Pose Estimate Theta", poseEstimate.pose.getRotation().getDegrees());</span>
-<span class="source-line-no">159</span><span id="line-159">                SmartDashboard.putNumber("Vision/Tag Count", poseEstimate.tagCount);</span>
-<span class="source-line-no">160</span><span id="line-160">                if (poseEstimate.pose.equals(Settings.Vision.INVALID_POSITION)) {</span>
-<span class="source-line-no">161</span><span id="line-161">                    poseAtOrigin = true;</span>
-<span class="source-line-no">162</span><span id="line-162">                }</span>
-<span class="source-line-no">163</span><span id="line-163">                if (CommandSwerveDrivetrain.getInstance().getChassisSpeeds().omegaRadiansPerSecond &lt; Settings.Vision.MAX_ANGULAR_VELOCITY_RAD_SEC) {</span>
-<span class="source-line-no">164</span><span id="line-164">                    withinAngularVelocityTolerance = true;</span>
-<span class="source-line-no">165</span><span id="line-165">                }</span>
-<span class="source-line-no">166</span><span id="line-166">                Boolean isValidPose = notNull &amp;&amp; withinAngularVelocityTolerance &amp;&amp; !poseAtOrigin;</span>
-<span class="source-line-no">167</span><span id="line-167">                SmartDashboard.putBoolean("Vision/Pose at Origin?", poseAtOrigin);</span>
-<span class="source-line-no">168</span><span id="line-168">                SmartDashboard.putBoolean("Vision/Within Angular Velocity", withinAngularVelocityTolerance);</span>
-<span class="source-line-no">169</span><span id="line-169">                DogLog.log("Vision/isValidPose", isValidPose);</span>
-<span class="source-line-no">170</span><span id="line-170">                DogLog.log("Vision/isWithinAngularVel", withinAngularVelocityTolerance);</span>
-<span class="source-line-no">171</span><span id="line-171">                DogLog.log("Vision/poseAtOrigin", poseAtOrigin);</span>
-<span class="source-line-no">172</span><span id="line-172">                Pose2d robotPose = poseEstimate.pose;</span>
-<span class="source-line-no">173</span><span id="line-173">                double timestamp = poseEstimate.timestampSeconds;</span>
-<span class="source-line-no">174</span><span id="line-174">                if (megaTagMode == MegaTagMode.MEGATAG1 &amp;&amp; isValidPose) {</span>
-<span class="source-line-no">175</span><span id="line-175">                    CommandSwerveDrivetrain.getInstance().addVisionMeasurement(robotPose, timestamp, Settings.Vision.MT1_STDEVS);</span>
-<span class="source-line-no">176</span><span id="line-176">                } else if (megaTagMode == MegaTagMode.MEGATAG2 &amp;&amp; isValidPose) {</span>
-<span class="source-line-no">177</span><span id="line-177">                    CommandSwerveDrivetrain.getInstance().addVisionMeasurement(robotPose, timestamp, Settings.Vision.MT2_STDEVS);</span>
-<span class="source-line-no">178</span><span id="line-178">                }</span>
-<span class="source-line-no">179</span><span id="line-179">                DogLog.log("Vision/Pose X Component", robotPose.getX());</span>
-<span class="source-line-no">180</span><span id="line-180">                DogLog.log("Vision/Pose Y Component", robotPose.getY());</span>
-<span class="source-line-no">181</span><span id="line-181">                DogLog.log("Vision/Pose Theta (Degrees)", robotPose.getRotation().getDegrees());</span>
-<span class="source-line-no">182</span><span id="line-182">                DogLog.log("Vision/" + names[i] + " Has Data", true);</span>
-<span class="source-line-no">183</span><span id="line-183">                DogLog.log("Vision/MegaTag Mode", megaTagMode.toString());</span>
-<span class="source-line-no">184</span><span id="line-184">                // this yaw is seems to be the robot yaw passed into the LL</span>
-<span class="source-line-no">185</span><span id="line-185">                DogLog.forceNt.log("Vision/Pipeline", LimelightHelpers.getCurrentPipelineIndex(limelightName));</span>
-<span class="source-line-no">186</span><span id="line-186">                DogLog.log("Vision/Limelight Robot Yaw", LimelightHelpers.getIMUData(limelightName).robotYaw);</span>
-<span class="source-line-no">187</span><span id="line-187">                // this is just the yaw of the internal imu</span>
-<span class="source-line-no">188</span><span id="line-188">                DogLog.log("Vision/Limelight Yaw", LimelightHelpers.getIMUData(limelightName).Yaw);</span>
-<span class="source-line-no">189</span><span id="line-189">                DogLog.log("Vision/Has at least 2 tags", poseEstimate.tagCount &gt;= 2);</span>
-<span class="source-line-no">190</span><span id="line-190">            }</span>
-<span class="source-line-no">191</span><span id="line-191">        }</span>
-<span class="source-line-no">192</span><span id="line-192">    }</span>
-<span class="source-line-no">193</span><span id="line-193">}</span>
+<span class="source-line-no">135</span><span id="line-135">            DogLog.log("Vision/" + names[i] + "/Heartbeat", LimelightHelpers.getHeartbeat(names[i]));</span>
+<span class="source-line-no">136</span><span id="line-136">            if (!camerasEnabled[i].get()) {</span>
+<span class="source-line-no">137</span><span id="line-137">                DogLog.log("Vision/" + names[i] + " Has Data", false);</span>
+<span class="source-line-no">138</span><span id="line-138">                continue;</span>
+<span class="source-line-no">139</span><span id="line-139">            }</span>
+<span class="source-line-no">140</span><span id="line-140">            String limelightName = names[i];</span>
+<span class="source-line-no">141</span><span id="line-141">            // Seed robot heading (used by MT2)</span>
+<span class="source-line-no">142</span><span id="line-142">            LimelightHelpers.SetRobotOrientation(limelightName, (CommandSwerveDrivetrain.getInstance().getPose().getRotation().getDegrees() + (Robot.isBlue() ? 0 : 180)) % 360, 0, 0, 0, 0, 0);</span>
+<span class="source-line-no">143</span><span id="line-143">            PoseEstimate poseEstimate;</span>
+<span class="source-line-no">144</span><span id="line-144">            // MegaTag switching</span>
+<span class="source-line-no">145</span><span id="line-145">            if (megaTagMode == MegaTagMode.MEGATAG1) {</span>
+<span class="source-line-no">146</span><span id="line-146">                poseEstimate = Robot.isBlue() ? LimelightHelpers.getBotPoseEstimate_wpiBlue(limelightName) : LimelightHelpers.getBotPoseEstimate_wpiRed(limelightName);</span>
+<span class="source-line-no">147</span><span id="line-147">            } else {</span>
+<span class="source-line-no">148</span><span id="line-148">                poseEstimate = Robot.isBlue() ? LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2(limelightName) : LimelightHelpers.getBotPoseEstimate_wpiRed_MegaTag2(limelightName);</span>
+<span class="source-line-no">149</span><span id="line-149">            }</span>
+<span class="source-line-no">150</span><span id="line-150">            boolean notNull = false;</span>
+<span class="source-line-no">151</span><span id="line-151">            boolean withinAngularVelocityTolerance = false;</span>
+<span class="source-line-no">152</span><span id="line-152">            boolean poseAtOrigin = false;</span>
+<span class="source-line-no">153</span><span id="line-153">            // Adding to pose estimator</span>
+<span class="source-line-no">154</span><span id="line-154">            SmartDashboard.putBoolean("Vision/Pose Not Estimate Null", poseEstimate != null);</span>
+<span class="source-line-no">155</span><span id="line-155">            if (poseEstimate != null &amp;&amp; poseEstimate.tagCount &gt; 0) {</span>
+<span class="source-line-no">156</span><span id="line-156">                notNull = true;</span>
+<span class="source-line-no">157</span><span id="line-157">                SmartDashboard.putNumber("Vision/Pose Estimate X", poseEstimate.pose.getX());</span>
+<span class="source-line-no">158</span><span id="line-158">                SmartDashboard.putNumber("Vision/Pose Estimate Y", poseEstimate.pose.getY());</span>
+<span class="source-line-no">159</span><span id="line-159">                SmartDashboard.putNumber("Vision/Pose Estimate Theta", poseEstimate.pose.getRotation().getDegrees());</span>
+<span class="source-line-no">160</span><span id="line-160">                SmartDashboard.putNumber("Vision/Tag Count", poseEstimate.tagCount);</span>
+<span class="source-line-no">161</span><span id="line-161">                if (poseEstimate.pose.equals(Settings.Vision.INVALID_POSITION)) {</span>
+<span class="source-line-no">162</span><span id="line-162">                    poseAtOrigin = true;</span>
+<span class="source-line-no">163</span><span id="line-163">                }</span>
+<span class="source-line-no">164</span><span id="line-164">                if (CommandSwerveDrivetrain.getInstance().getChassisSpeeds().omegaRadiansPerSecond &lt; Settings.Vision.MAX_ANGULAR_VELOCITY_RAD_SEC) {</span>
+<span class="source-line-no">165</span><span id="line-165">                    withinAngularVelocityTolerance = true;</span>
+<span class="source-line-no">166</span><span id="line-166">                }</span>
+<span class="source-line-no">167</span><span id="line-167">                Boolean isValidPose = notNull &amp;&amp; withinAngularVelocityTolerance &amp;&amp; !poseAtOrigin;</span>
+<span class="source-line-no">168</span><span id="line-168">                SmartDashboard.putBoolean("Vision/Pose at Origin?", poseAtOrigin);</span>
+<span class="source-line-no">169</span><span id="line-169">                SmartDashboard.putBoolean("Vision/Within Angular Velocity", withinAngularVelocityTolerance);</span>
+<span class="source-line-no">170</span><span id="line-170">                DogLog.log("Vision/isValidPose", isValidPose);</span>
+<span class="source-line-no">171</span><span id="line-171">                DogLog.log("Vision/isWithinAngularVel", withinAngularVelocityTolerance);</span>
+<span class="source-line-no">172</span><span id="line-172">                DogLog.log("Vision/poseAtOrigin", poseAtOrigin);</span>
+<span class="source-line-no">173</span><span id="line-173">                Pose2d robotPose = poseEstimate.pose;</span>
+<span class="source-line-no">174</span><span id="line-174">                double timestamp = poseEstimate.timestampSeconds;</span>
+<span class="source-line-no">175</span><span id="line-175">                if (megaTagMode == MegaTagMode.MEGATAG1 &amp;&amp; isValidPose) {</span>
+<span class="source-line-no">176</span><span id="line-176">                    CommandSwerveDrivetrain.getInstance().addVisionMeasurement(robotPose, timestamp, Settings.Vision.MT1_STDEVS);</span>
+<span class="source-line-no">177</span><span id="line-177">                } else if (megaTagMode == MegaTagMode.MEGATAG2 &amp;&amp; isValidPose) {</span>
+<span class="source-line-no">178</span><span id="line-178">                    CommandSwerveDrivetrain.getInstance().addVisionMeasurement(robotPose, timestamp, Settings.Vision.MT2_STDEVS);</span>
+<span class="source-line-no">179</span><span id="line-179">                }</span>
+<span class="source-line-no">180</span><span id="line-180">                DogLog.log("Vision/Pose", robotPose);</span>
+<span class="source-line-no">181</span><span id="line-181">                DogLog.log("Vision/Pose X Component", robotPose.getX());</span>
+<span class="source-line-no">182</span><span id="line-182">                DogLog.log("Vision/Pose Y Component", robotPose.getY());</span>
+<span class="source-line-no">183</span><span id="line-183">                DogLog.log("Vision/Pose Theta (Degrees)", robotPose.getRotation().getDegrees());</span>
+<span class="source-line-no">184</span><span id="line-184">                DogLog.log("Vision/" + names[i] + " Has Data", true);</span>
+<span class="source-line-no">185</span><span id="line-185">                DogLog.log("Vision/MegaTag Mode", megaTagMode.toString());</span>
+<span class="source-line-no">186</span><span id="line-186">                // this yaw is seems to be the robot yaw passed into the LL</span>
+<span class="source-line-no">187</span><span id="line-187">                DogLog.forceNt.log("Vision/Pipeline", LimelightHelpers.getCurrentPipelineIndex(limelightName));</span>
+<span class="source-line-no">188</span><span id="line-188">                DogLog.log("Vision/Limelight Robot Yaw", LimelightHelpers.getIMUData(limelightName).robotYaw);</span>
+<span class="source-line-no">189</span><span id="line-189">                // this is just the yaw of the internal imu</span>
+<span class="source-line-no">190</span><span id="line-190">                DogLog.log("Vision/Limelight Yaw", LimelightHelpers.getIMUData(limelightName).Yaw);</span>
+<span class="source-line-no">191</span><span id="line-191">                DogLog.log("Vision/Has at least 2 tags", poseEstimate.tagCount &gt;= 2);</span>
+<span class="source-line-no">192</span><span id="line-192">            }</span>
+<span class="source-line-no">193</span><span id="line-193">        }</span>
+<span class="source-line-no">194</span><span id="line-194">    }</span>
+<span class="source-line-no">195</span><span id="line-195">}</span>
 
 
 

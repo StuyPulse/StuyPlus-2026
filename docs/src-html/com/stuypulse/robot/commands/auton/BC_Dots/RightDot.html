@@ -14,23 +14,25 @@
 <pre><span class="source-line-no">001</span><span id="line-1">package com.stuypulse.robot.commands.auton.BC_Dots;</span>
 <span class="source-line-no">002</span><span id="line-2"></span>
 <span class="source-line-no">003</span><span id="line-3">import com.pathplanner.lib.path.PathPlannerPath;</span>
-<span class="source-line-no">004</span><span id="line-4">import com.stuypulse.robot.commands.swerve.SwerveDriveXMode;</span>
-<span class="source-line-no">005</span><span id="line-5">import com.stuypulse.robot.commands.swerve.SwerveResetPose;</span>
-<span class="source-line-no">006</span><span id="line-6">import com.stuypulse.robot.constants.Settings;</span>
-<span class="source-line-no">007</span><span id="line-7">import com.stuypulse.robot.subsystems.swerve.CommandSwerveDrivetrain;</span>
-<span class="source-line-no">008</span><span id="line-8">import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;</span>
-<span class="source-line-no">009</span><span id="line-9">import edu.wpi.first.wpilibj2.command.WaitCommand;</span>
-<span class="source-line-no">010</span><span id="line-10"></span>
-<span class="source-line-no">011</span><span id="line-11">public class RightDot extends SequentialCommandGroup {</span>
-<span class="source-line-no">012</span><span id="line-12"></span>
-<span class="source-line-no">013</span><span id="line-13">    public RightDot(PathPlannerPath... paths) {</span>
-<span class="source-line-no">014</span><span id="line-14">        addCommands(</span>
-<span class="source-line-no">015</span><span id="line-15">            new WaitCommand(Settings.BATTLECRY_DOT_DELAY.get()),</span>
-<span class="source-line-no">016</span><span id="line-16">            new SwerveResetPose(paths[0].getStartingHolonomicPose().get()),</span>
-<span class="source-line-no">017</span><span id="line-17">            CommandSwerveDrivetrain.getInstance().followPathCommand(paths[0]),</span>
-<span class="source-line-no">018</span><span id="line-18">            new SwerveDriveXMode());</span>
-<span class="source-line-no">019</span><span id="line-19">    }</span>
-<span class="source-line-no">020</span><span id="line-20">}</span>
+<span class="source-line-no">004</span><span id="line-4">import com.stuypulse.robot.commands.intake.IntakeSetIntake;</span>
+<span class="source-line-no">005</span><span id="line-5">import com.stuypulse.robot.commands.swerve.SwerveDriveXMode;</span>
+<span class="source-line-no">006</span><span id="line-6">import com.stuypulse.robot.commands.swerve.SwerveResetPose;</span>
+<span class="source-line-no">007</span><span id="line-7">import com.stuypulse.robot.constants.Settings;</span>
+<span class="source-line-no">008</span><span id="line-8">import com.stuypulse.robot.subsystems.swerve.CommandSwerveDrivetrain;</span>
+<span class="source-line-no">009</span><span id="line-9">import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;</span>
+<span class="source-line-no">010</span><span id="line-10">import edu.wpi.first.wpilibj2.command.WaitCommand;</span>
+<span class="source-line-no">011</span><span id="line-11"></span>
+<span class="source-line-no">012</span><span id="line-12">public class RightDot extends SequentialCommandGroup {</span>
+<span class="source-line-no">013</span><span id="line-13"></span>
+<span class="source-line-no">014</span><span id="line-14">    public RightDot(PathPlannerPath... paths) {</span>
+<span class="source-line-no">015</span><span id="line-15">        addCommands(</span>
+<span class="source-line-no">016</span><span id="line-16">            new WaitCommand(Settings.BATTLECRY_DOT_DELAY.get()),</span>
+<span class="source-line-no">017</span><span id="line-17">            new SwerveResetPose(paths[0].getStartingHolonomicPose().get()),</span>
+<span class="source-line-no">018</span><span id="line-18">            new IntakeSetIntake(),</span>
+<span class="source-line-no">019</span><span id="line-19">            CommandSwerveDrivetrain.getInstance().followPathCommand(paths[0]),</span>
+<span class="source-line-no">020</span><span id="line-20">            new SwerveDriveXMode());</span>
+<span class="source-line-no">021</span><span id="line-21">    }</span>
+<span class="source-line-no">022</span><span id="line-22">}</span>
 
 
 
