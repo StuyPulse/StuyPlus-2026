@@ -338,7 +338,7 @@ public interface Settings {
 
                 Distance Y_TOLERANCE = Inches.of(2.0);
 
-                Rotation2d THETA_TOLERANCE = Rotation2d.fromDegrees(5);
+                Rotation2d THETA_TOLERANCE = Rotation2d.fromDegrees(8);
 
                 Pose2d POSE_TOLERANCE = new Pose2d(X_TOLERANCE.in(Meters), Y_TOLERANCE.in(Meters), THETA_TOLERANCE);
 
