@@ -4,12 +4,12 @@
     {
       "anchor": {
         "x": 6.895,
-        "y": 6.505
+        "y": 6.205
       },
       "prevControl": null,
       "nextControl": {
         "x": 8.489795283564815,
-        "y": 6.491917607060185
+        "y": 6.191917607060185
       },
       "isLocked": false,
       "linkedName": "LB Dumpy 1"
@@ -17,11 +17,11 @@
     {
       "anchor": {
         "x": 8.220792100694444,
-        "y": 4.08
+        "y": 4.58
       },
       "prevControl": {
         "x": 8.220792100694444,
-        "y": 4.692
+        "y": 5.192
       },
       "nextControl": null,
       "isLocked": false,
