@@ -24,12 +24,20 @@ public class TunableWaitCommand extends WaitCommand {
         return rawName == null ? "Tunable_Wait_" + UUID.randomUUID().toString() : rawName;
     }
 
+    /**
+     * Creates a tunable wait command based on a DogLog tunable's DoubleSubscriber
+     * @param tunable The DoubleSubscriber instance returned by creation of a {@link DogLog#tunable(String, double)}
+     */
     public TunableWaitCommand(DoubleSubscriber tunable) {
         super(tunableDefaultValue);
         this.tunable = tunable;
         SendableRegistry.setName(this, getName() + ": " + tunable.get() + " seconds");
     }
 
+    /**
+     * Creates a tunable wait command by <strong>creating</strong> a tunable at the path specified
+     * @param tunableName path & name of the {@link DogLog#tunable(String, double)} created
+     */
     public TunableWaitCommand(String tunableName) {
         this(DogLog.tunable(makeTunableName(tunableName),
                 tunableDefaultValue));
