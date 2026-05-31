@@ -27,6 +27,12 @@
           "data": {
             "pathName": "LB Shoot Dumpy"
           }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "LB Shoot to Depot"
+          }
         }
       ]
     }
