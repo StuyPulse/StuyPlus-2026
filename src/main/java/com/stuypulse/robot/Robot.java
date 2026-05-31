@@ -183,6 +183,7 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void autonomousExit() {
+        LimelightVision.getInstance().captureRewind(25);
     }
 
     /*******************/
@@ -219,6 +220,7 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void teleopExit() {
+        LimelightVision.getInstance().captureRewind(165);
     }
 
     /*****************/

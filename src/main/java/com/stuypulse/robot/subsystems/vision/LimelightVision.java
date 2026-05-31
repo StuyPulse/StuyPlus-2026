@@ -57,6 +57,7 @@ public class LimelightVision extends SubsystemBase {
             names[i] = Cameras.LimelightCameras[i].name();
             Pose3d robotRelativePose = Cameras.LimelightCameras[i].location();
             LimelightHelpers.setCameraPose_RobotSpace(names[i], robotRelativePose.getX(), robotRelativePose.getY(), robotRelativePose.getZ(), robotRelativePose.getRotation().getMeasureX().in(Degrees), robotRelativePose.getRotation().getMeasureY().in(Degrees), robotRelativePose.getRotation().getMeasureZ().in(Degrees));
+            LimelightHelpers.setRewindEnabled(names[i], true);
         }
         camerasEnabled = new BooleanSubscriber[Cameras.LimelightCameras.length];
         for (int i = 0; i < camerasEnabled.length; i++) {
@@ -124,6 +125,12 @@ public class LimelightVision extends SubsystemBase {
             data[i] = LimelightHelpers.getIMUData(Cameras.LimelightCameras[i].name());
         }
         return data;
+    }
+
+    public void captureRewind(double timeSecs) {
+        for (int i = 0; i < Cameras.LimelightCameras.length; i++) {
+            LimelightHelpers.triggerRewindCapture(names[i], timeSecs);
+        }
     }
 
     @Override
