@@ -141,7 +141,7 @@
 <span class="source-line-no">128</span><span id="line-128">        driver.leftBumper().onFalse(new IntakeSetIntake());</span>
 <span class="source-line-no">129</span><span id="line-129"></span>
 <span class="source-line-no">130</span><span id="line-130">        rightTrigger.whileTrue(</span>
-<span class="source-line-no">131</span><span id="line-131">                new WaitCommand(1.5).deadlineFor(new SwerveDriveAlignToHub())</span>
+<span class="source-line-no">131</span><span id="line-131">                new WaitCommand(1.5).raceWith(new SwerveDriveAlignToHub())</span>
 <span class="source-line-no">132</span><span id="line-132">                .andThen(new SwerveDriveXMode())</span>
 <span class="source-line-no">133</span><span id="line-133">                .andThen(new ShooterSetShoot())</span>
 <span class="source-line-no">134</span><span id="line-134">                .andThen(new ShooterWaitForSpinUp())</span>
@@ -158,7 +158,7 @@
 <span class="source-line-no">145</span><span id="line-145">        </span>
 <span class="source-line-no">146</span><span id="line-146">        driver.rightBumper()</span>
 <span class="source-line-no">147</span><span id="line-147">            .whileTrue(</span>
-<span class="source-line-no">148</span><span id="line-148">                new WaitCommand(1.5).deadlineFor(new SwerveDriveAlignToFerryZone())</span>
+<span class="source-line-no">148</span><span id="line-148">                new WaitCommand(1.5).raceWith(new SwerveDriveAlignToFerryZone())</span>
 <span class="source-line-no">149</span><span id="line-149">                    .andThen(new SwerveDriveXMode())</span>
 <span class="source-line-no">150</span><span id="line-150">                    .andThen(new ShooterSetFerry())</span>
 <span class="source-line-no">151</span><span id="line-151">                    .andThen(new ShooterWaitForSpinUp())</span>
