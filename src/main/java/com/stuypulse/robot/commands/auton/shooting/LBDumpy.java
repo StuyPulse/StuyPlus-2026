@@ -1,6 +1,7 @@
 package com.stuypulse.robot.commands.auton.shooting;
 
 import com.pathplanner.lib.path.PathPlannerPath;
+import com.stuypulse.robot.commands.compound.StopShooting;
 import com.stuypulse.robot.commands.feeder.FeederSetForward;
 import com.stuypulse.robot.commands.handoff.HandoffSetForward;
 import com.stuypulse.robot.commands.intake.IntakeAgitateFastOnce;
@@ -34,7 +35,10 @@ public class LBDumpy extends SequentialCommandGroup {
                 new WaitCommand(7),
                 new FeederSetForward(), 
                 new IntakeAgitateFastOnce().repeatedly()
-            )
+            ),
+            new StopShooting(),
+            new IntakeSetIntake(),
+            CommandSwerveDrivetrain.getInstance().followPathCommand(paths[4])
         );
     }
 }

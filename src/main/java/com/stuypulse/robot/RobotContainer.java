@@ -315,7 +315,8 @@ public class RobotContainer {
             "LB to N Dumpy",
             "LB Intake Dumpy",
             "LB Backsweep Dumpy",
-            "LB Shoot Dumpy");
+            "LB Shoot Dumpy",
+            "LB Shoot to Depot");
         LB_Dumpy.register(autonChooser);
 
         // AutonConfig RB_Dumpy = new AutonConfig("RB Dumpy", RBDumpy::new,

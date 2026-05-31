@@ -1,0 +1,73 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 2.5995591111717613,
+        "y": 4.471275984807133
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 2.5995591111717613,
+        "y": 5.471275984807133
+      },
+      "isLocked": false,
+      "linkedName": "LB Dumpy Hub Shoot"
+    },
+    {
+      "anchor": {
+        "x": 0.75,
+        "y": 5.979417587791121
+      },
+      "prevControl": {
+        "x": 1.75,
+        "y": 5.979417587791121
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "Depot Intake"
+    }
+  ],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0.48663101604278075,
+      "rotationDegrees": 180.0
+    }
+  ],
+  "constraintZones": [
+    {
+      "name": "Intake to Depot",
+      "minWaypointRelativePos": 0.7830508474576269,
+      "maxWaypointRelativePos": 0.9593220338983041,
+      "constraints": {
+        "maxVelocity": 1.0,
+        "maxAcceleration": 3.0,
+        "maxAngularVelocity": 540.0,
+        "maxAngularAcceleration": 720.0,
+        "nominalVoltage": 12.0,
+        "unlimited": false
+      }
+    }
+  ],
+  "pointTowardsZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 3.0,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": -178.4088597288055
+  },
+  "reversed": false,
+  "folder": "Depot",
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": -13.529668844720744
+  },
+  "useDefaultConstraints": true
+}
