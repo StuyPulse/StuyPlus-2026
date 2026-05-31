@@ -8,7 +8,7 @@
         "layouts": [
           {
             "title": "Enabled Subsystems",
-            "x": 1050.0,
+            "x": 1000.0,
             "y": 0.0,
             "width": 300.0,
             "height": 400.0,
@@ -18,27 +18,40 @@
             },
             "children": [
               {
-                "title": "Intake Pivot",
+                "title": "Intake",
                 "x": 0.0,
                 "y": 0.0,
-                "width": 150.0,
-                "height": 150.0,
+                "width": 166.0,
+                "height": 166.0,
                 "type": "Toggle Switch",
                 "properties": {
-                  "topic": "/Tunable/Enabled Subsystems/Intake/Pivot",
+                  "topic": "/Tunable/Enabled Subsystems/Intake",
                   "period": 0.06,
                   "data_type": "boolean"
                 }
               },
               {
-                "title": "Intake Rollers",
+                "title": "Feeder",
                 "x": 0.0,
                 "y": 0.0,
                 "width": 150.0,
                 "height": 150.0,
                 "type": "Toggle Switch",
                 "properties": {
-                  "topic": "/Tunable/Enabled Subsystems/Intake/Rollers",
+                  "topic": "/Tunable/Enabled Subsystems/Feeder",
+                  "period": 0.06,
+                  "data_type": "boolean"
+                }
+              },
+              {
+                "title": "Shooter",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 150.0,
+                "height": 150.0,
+                "type": "Toggle Switch",
+                "properties": {
+                  "topic": "/Tunable/Enabled Subsystems/Shooter",
                   "period": 0.06,
                   "data_type": "boolean"
                 }
@@ -81,32 +94,6 @@
                   "period": 0.06,
                   "data_type": "boolean"
                 }
-              },
-              {
-                "title": "Feeder",
-                "x": 0.0,
-                "y": 0.0,
-                "width": 150.0,
-                "height": 150.0,
-                "type": "Toggle Switch",
-                "properties": {
-                  "topic": "/Tunable/Enabled Subsystems/Feeder",
-                  "period": 0.06,
-                  "data_type": "boolean"
-                }
-              },
-              {
-                "title": "Shooter",
-                "x": 0.0,
-                "y": 0.0,
-                "width": 150.0,
-                "height": 150.0,
-                "type": "Toggle Switch",
-                "properties": {
-                  "topic": "/Tunable/Enabled Subsystems/Shooter",
-                  "period": 0.06,
-                  "data_type": "boolean"
-                }
               }
             ]
           }
@@ -116,7 +103,7 @@
             "title": "Field",
             "x": 0.0,
             "y": 0.0,
-            "width": 850.0,
+            "width": 800.0,
             "height": 400.0,
             "type": "Field",
             "properties": {
@@ -135,7 +122,7 @@
           },
           {
             "title": "Is Active Shift?",
-            "x": 250.0,
+            "x": 300.0,
             "y": 400.0,
             "width": 150.0,
             "height": 150.0,
@@ -154,7 +141,7 @@
             "title": "Time Left In Shift",
             "x": 0.0,
             "y": 550.0,
-            "width": 250.0,
+            "width": 300.0,
             "height": 150.0,
             "type": "Match Time",
             "properties": {
@@ -168,7 +155,7 @@
           },
           {
             "title": "Set Megatag 2",
-            "x": 550.0,
+            "x": 600.0,
             "y": 550.0,
             "width": 300.0,
             "height": 150.0,
@@ -182,7 +169,7 @@
           },
           {
             "title": "Set Megatag 1",
-            "x": 550.0,
+            "x": 600.0,
             "y": 400.0,
             "width": 300.0,
             "height": 150.0,
@@ -198,7 +185,7 @@
             "title": "Match Time",
             "x": 0.0,
             "y": 400.0,
-            "width": 250.0,
+            "width": 300.0,
             "height": 150.0,
             "type": "Match Time",
             "properties": {
@@ -212,7 +199,7 @@
           },
           {
             "title": "Autonomous",
-            "x": 250.0,
+            "x": 300.0,
             "y": 550.0,
             "width": 300.0,
             "height": 150.0,
@@ -225,7 +212,7 @@
           },
           {
             "title": "Camera Is Enabled",
-            "x": 400.0,
+            "x": 450.0,
             "y": 400.0,
             "width": 150.0,
             "height": 150.0,
@@ -242,7 +229,7 @@
           },
           {
             "title": "Intake State",
-            "x": 850.0,
+            "x": 800.0,
             "y": 0.0,
             "width": 200.0,
             "height": 100.0,
@@ -256,7 +243,7 @@
           },
           {
             "title": "Pivot At Target Angle",
-            "x": 850.0,
+            "x": 800.0,
             "y": 300.0,
             "width": 200.0,
             "height": 100.0,
@@ -273,8 +260,8 @@
           },
           {
             "title": "Pivot Angle (deg)",
-            "x": 850.0,
-            "y": 100.0,
+            "x": 800.0,
+            "y": 200.0,
             "width": 200.0,
             "height": 100.0,
             "type": "Text Display",
@@ -287,8 +274,8 @@
           },
           {
             "title": "Roller Duty Cycle",
-            "x": 850.0,
-            "y": 200.0,
+            "x": 800.0,
+            "y": 100.0,
             "width": 200.0,
             "height": 100.0,
             "type": "Text Display",
@@ -301,7 +288,7 @@
           },
           {
             "title": "Set Sunny Pipeline",
-            "x": 850.0,
+            "x": 900.0,
             "y": 400.0,
             "width": 300.0,
             "height": 150.0,
@@ -315,7 +302,7 @@
           },
           {
             "title": "Set Cloudy Pipeline",
-            "x": 850.0,
+            "x": 900.0,
             "y": 550.0,
             "width": 300.0,
             "height": 150.0,
@@ -329,9 +316,9 @@
           },
           {
             "title": "Pipeline",
-            "x": 1150.0,
+            "x": 1200.0,
             "y": 550.0,
-            "width": 200.0,
+            "width": 100.0,
             "height": 150.0,
             "type": "Text Display",
             "properties": {
@@ -342,14 +329,14 @@
             }
           },
           {
-            "title": "Dot Auton Delay Sec.",
-            "x": 1150.0,
+            "title": "LB Dumpy Delay",
+            "x": 1200.0,
             "y": 400.0,
-            "width": 200.0,
+            "width": 300.0,
             "height": 150.0,
             "type": "Text Display",
             "properties": {
-              "topic": "/Tunable/BattleCry Dot Auton Delay Seconds",
+              "topic": "/Tunable/LB Dumpy Delay",
               "period": 0.06,
               "data_type": "double",
               "show_submit_button": false
@@ -364,63 +351,24 @@
         "layouts": [
           {
             "title": "Enabled Subsystems",
-            "x": 0.0,
-            "y": 450.0,
+            "x": 1200.0,
+            "y": 100.0,
             "width": 300.0,
-            "height": 350.0,
+            "height": 300.0,
             "type": "List Layout",
             "properties": {
               "label_position": "LEFT"
             },
             "children": [
               {
-                "title": "Intake Rollers",
-                "x": 0.0,
-                "y": 0.0,
-                "width": 150.0,
-                "height": 150.0,
-                "type": "Toggle Switch",
-                "properties": {
-                  "topic": "/Tunable/Enabled Subsystems/Intake/Rollers",
-                  "period": 0.06,
-                  "data_type": "boolean"
-                }
-              },
-              {
-                "title": "Intake Pivot",
-                "x": 0.0,
-                "y": 0.0,
-                "width": 150.0,
-                "height": 150.0,
-                "type": "Toggle Switch",
-                "properties": {
-                  "topic": "/Tunable/Enabled Subsystems/Intake/Pivot",
-                  "period": 0.06,
-                  "data_type": "boolean"
-                }
-              },
-              {
-                "title": "Swerve",
+                "title": "Intake",
                 "x": 0.0,
                 "y": 0.0,
                 "width": 166.0,
                 "height": 166.0,
                 "type": "Toggle Switch",
                 "properties": {
-                  "topic": "/Tunable/Enabled Subsystems/Swerve",
-                  "period": 0.06,
-                  "data_type": "boolean"
-                }
-              },
-              {
-                "title": "Handoff",
-                "x": 0.0,
-                "y": 0.0,
-                "width": 150.0,
-                "height": 150.0,
-                "type": "Toggle Switch",
-                "properties": {
-                  "topic": "/Tunable/Enabled Subsystems/Handoff",
+                  "topic": "/Tunable/Enabled Subsystems/Intake",
                   "period": 0.06,
                   "data_type": "boolean"
                 }
@@ -460,6 +408,45 @@
                 "type": "Toggle Switch",
                 "properties": {
                   "topic": "/Tunable/Enabled Subsystems/Vision",
+                  "period": 0.06,
+                  "data_type": "boolean"
+                }
+              },
+              {
+                "title": "Swerve",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 166.0,
+                "height": 166.0,
+                "type": "Toggle Switch",
+                "properties": {
+                  "topic": "/Tunable/Enabled Subsystems/Swerve",
+                  "period": 0.06,
+                  "data_type": "boolean"
+                }
+              },
+              {
+                "title": "Handoff",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 150.0,
+                "height": 150.0,
+                "type": "Toggle Switch",
+                "properties": {
+                  "topic": "/Tunable/Enabled Subsystems/Handoff",
+                  "period": 0.06,
+                  "data_type": "boolean"
+                }
+              },
+              {
+                "title": "LED",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 150.0,
+                "height": 150.0,
+                "type": "Toggle Switch",
+                "properties": {
+                  "topic": "/Tunable/Enabled Subsystems/LED",
                   "period": 0.06,
                   "data_type": "boolean"
                 }
@@ -490,9 +477,26 @@
             }
           },
           {
+            "title": "Pivot At Target Angle",
+            "x": 1000.0,
+            "y": 100.0,
+            "width": 200.0,
+            "height": 150.0,
+            "type": "Boolean Box",
+            "properties": {
+              "topic": "/Robot/Intake/Pivot/At Target Angle",
+              "period": 0.06,
+              "data_type": "boolean",
+              "true_color": 4283215696,
+              "false_color": 4294198070,
+              "true_icon": "None",
+              "false_icon": "None"
+            }
+          },
+          {
             "title": "Shift",
-            "x": 1150.0,
-            "y": 0.0,
+            "x": 400.0,
+            "y": 450.0,
             "width": 100.0,
             "height": 150.0,
             "type": "Large Text Display",
@@ -504,8 +508,8 @@
           },
           {
             "title": "Is Active Shift?",
-            "x": 1000.0,
-            "y": 0.0,
+            "x": 50.0,
+            "y": 450.0,
             "width": 150.0,
             "height": 150.0,
             "type": "Boolean Box",
@@ -521,8 +525,8 @@
           },
           {
             "title": "Time Left In Shift",
-            "x": 1000.0,
-            "y": 150.0,
+            "x": 200.0,
+            "y": 450.0,
             "width": 200.0,
             "height": 150.0,
             "type": "Match Time",
@@ -536,9 +540,23 @@
             }
           },
           {
+            "title": "Intake State",
+            "x": 1000.0,
+            "y": 0.0,
+            "width": 200.0,
+            "height": 100.0,
+            "type": "Text Display",
+            "properties": {
+              "topic": "/Robot/States/Intake",
+              "period": 0.06,
+              "data_type": "string",
+              "show_submit_button": false
+            }
+          },
+          {
             "title": "Match Time",
-            "x": 1200.0,
-            "y": 150.0,
+            "x": 500.0,
+            "y": 450.0,
             "width": 200.0,
             "height": 150.0,
             "type": "Match Time",
@@ -553,13 +571,13 @@
           },
           {
             "title": "Auton Won",
-            "x": 1250.0,
-            "y": 0.0,
+            "x": 700.0,
+            "y": 450.0,
             "width": 150.0,
             "height": 150.0,
             "type": "Boolean Box",
             "properties": {
-              "topic": "/Robot/Auton Won",
+              "topic": "/SmartDashboard/Auton Won",
               "period": 0.06,
               "data_type": "boolean",
               "true_color": 4283215696,
@@ -569,99 +587,9 @@
             }
           },
           {
-            "title": "Shooter State",
-            "x": 400.0,
-            "y": 450.0,
-            "width": 200.0,
-            "height": 150.0,
-            "type": "Large Text Display",
-            "properties": {
-              "topic": "/Robot/States/Shooter",
-              "period": 0.06,
-              "data_type": "string"
-            }
-          },
-          {
-            "title": "Shooter At Target RPM",
-            "x": 400.0,
-            "y": 600.0,
-            "width": 200.0,
-            "height": 150.0,
-            "type": "Boolean Box",
-            "properties": {
-              "topic": "/Robot/Shooter/At Target RPM",
-              "period": 0.06,
-              "data_type": "boolean",
-              "true_color": 4283215696,
-              "false_color": 4294198070,
-              "true_icon": "None",
-              "false_icon": "None"
-            }
-          },
-          {
-            "title": "Handoff State",
-            "x": 700.0,
-            "y": 450.0,
-            "width": 200.0,
-            "height": 150.0,
-            "type": "Large Text Display",
-            "properties": {
-              "topic": "/Robot/Handoff/State",
-              "period": 0.06,
-              "data_type": "string"
-            }
-          },
-          {
-            "title": "Handoff Stalling",
-            "x": 700.0,
-            "y": 600.0,
-            "width": 200.0,
-            "height": 150.0,
-            "type": "Boolean Box",
-            "properties": {
-              "topic": "/Robot/Handoff/Stalling",
-              "period": 0.06,
-              "data_type": "boolean",
-              "true_color": 4283215696,
-              "false_color": 4294198070,
-              "true_icon": "None",
-              "false_icon": "None"
-            }
-          },
-          {
-            "title": "Intake State",
+            "title": "Intake Pivot Stalling",
             "x": 1000.0,
-            "y": 450.0,
-            "width": 200.0,
-            "height": 150.0,
-            "type": "Large Text Display",
-            "properties": {
-              "topic": "/Robot/States/Intake",
-              "period": 0.06,
-              "data_type": "string"
-            }
-          },
-          {
-            "title": "Pivot At Target Angle",
-            "x": 1200.0,
-            "y": 450.0,
-            "width": 200.0,
-            "height": 150.0,
-            "type": "Boolean Box",
-            "properties": {
-              "topic": "/Robot/Intake/Pivot/At Target Angle",
-              "period": 0.06,
-              "data_type": "boolean",
-              "true_color": 4283215696,
-              "false_color": 4294198070,
-              "true_icon": "None",
-              "false_icon": "None"
-            }
-          },
-          {
-            "title": "Pivot Stalling",
-            "x": 1000.0,
-            "y": 600.0,
+            "y": 250.0,
             "width": 200.0,
             "height": 150.0,
             "type": "Boolean Box",
@@ -676,9 +604,9 @@
             }
           },
           {
-            "title": "Rollers Stalling",
-            "x": 1200.0,
-            "y": 600.0,
+            "title": "Intake Rollers Stalling",
+            "x": 1000.0,
+            "y": 400.0,
             "width": 200.0,
             "height": 150.0,
             "type": "Boolean Box",
@@ -690,6 +618,82 @@
               "true_icon": "None",
               "false_icon": "None"
             }
+          },
+          {
+            "title": "Shooter State",
+            "x": 1650.0,
+            "y": 250.0,
+            "width": 200.0,
+            "height": 100.0,
+            "type": "Text Display",
+            "properties": {
+              "topic": "/Robot/States/Shooter",
+              "period": 0.06,
+              "data_type": "string",
+              "show_submit_button": false
+            }
+          },
+          {
+            "title": "Shooter At Target RPM",
+            "x": 1650.0,
+            "y": 350.0,
+            "width": 200.0,
+            "height": 150.0,
+            "type": "Boolean Box",
+            "properties": {
+              "topic": "/Robot/Shooter/At Target RPM",
+              "period": 0.06,
+              "data_type": "boolean",
+              "true_color": 4283215696,
+              "false_color": 4294198070,
+              "true_icon": "None",
+              "false_icon": "None"
+            }
+          },
+          {
+            "title": "Handoff Stalling",
+            "x": 1650.0,
+            "y": 100.0,
+            "width": 200.0,
+            "height": 150.0,
+            "type": "Boolean Box",
+            "properties": {
+              "topic": "/Robot/Handoff/Stalling",
+              "period": 0.06,
+              "data_type": "boolean",
+              "true_color": 4283215696,
+              "false_color": 4294198070,
+              "true_icon": "None",
+              "false_icon": "None"
+            }
+          },
+          {
+            "title": "Handoff State",
+            "x": 1650.0,
+            "y": 0.0,
+            "width": 200.0,
+            "height": 100.0,
+            "type": "Text Display",
+            "properties": {
+              "topic": "/Robot/Handoff/State",
+              "period": 0.06,
+              "data_type": "string",
+              "show_submit_button": false
+            }
+          },
+          {
+            "title": "Feeder State",
+            "x": 1200.0,
+            "y": 0.0,
+            "width": 150.0,
+            "height": 100.0,
+            "type": "Text Display",
+            "properties": {
+              "topic": "/Robot/Feeder/State",
+              "period": 0.06,
+              "data_type": "string",
+              "show_submit_button": false
+            }
           }
         ]
       }
@@ -700,37 +704,50 @@
         "layouts": [
           {
             "title": "Enabled Subsystems",
-            "x": 900.0,
+            "x": 1200.0,
             "y": 0.0,
-            "width": 350.0,
-            "height": 400.0,
+            "width": 300.0,
+            "height": 350.0,
             "type": "List Layout",
             "properties": {
               "label_position": "LEFT"
             },
             "children": [
               {
-                "title": "Intake Pivot",
+                "title": "Intake",
                 "x": 0.0,
                 "y": 0.0,
-                "width": 150.0,
-                "height": 150.0,
+                "width": 166.0,
+                "height": 166.0,
                 "type": "Toggle Switch",
                 "properties": {
-                  "topic": "/Tunable/Enabled Subsystems/Intake/Pivot",
+                  "topic": "/Tunable/Enabled Subsystems/Intake",
                   "period": 0.06,
                   "data_type": "boolean"
                 }
               },
               {
-                "title": "Intake Rollers",
+                "title": "Feeder",
                 "x": 0.0,
                 "y": 0.0,
                 "width": 150.0,
                 "height": 150.0,
                 "type": "Toggle Switch",
                 "properties": {
-                  "topic": "/Tunable/Enabled Subsystems/Intake/Rollers",
+                  "topic": "/Tunable/Enabled Subsystems/Feeder",
+                  "period": 0.06,
+                  "data_type": "boolean"
+                }
+              },
+              {
+                "title": "Shooter",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 150.0,
+                "height": 150.0,
+                "type": "Toggle Switch",
+                "properties": {
+                  "topic": "/Tunable/Enabled Subsystems/Shooter",
                   "period": 0.06,
                   "data_type": "boolean"
                 }
@@ -773,142 +790,6 @@
                   "period": 0.06,
                   "data_type": "boolean"
                 }
-              },
-              {
-                "title": "Feeder",
-                "x": 0.0,
-                "y": 0.0,
-                "width": 150.0,
-                "height": 150.0,
-                "type": "Toggle Switch",
-                "properties": {
-                  "topic": "/Tunable/Enabled Subsystems/Feeder",
-                  "period": 0.06,
-                  "data_type": "boolean"
-                }
-              },
-              {
-                "title": "Shooter",
-                "x": 0.0,
-                "y": 0.0,
-                "width": 150.0,
-                "height": 150.0,
-                "type": "Toggle Switch",
-                "properties": {
-                  "topic": "/Tunable/Enabled Subsystems/Shooter",
-                  "period": 0.06,
-                  "data_type": "boolean"
-                }
-              }
-            ]
-          },
-          {
-            "title": "Pivot Commands",
-            "x": 600.0,
-            "y": 400.0,
-            "width": 300.0,
-            "height": 300.0,
-            "type": "List Layout",
-            "properties": {
-              "label_position": "LEFT"
-            },
-            "children": [
-              {
-                "title": " ",
-                "x": 1400.0,
-                "y": 150.0,
-                "width": 300.0,
-                "height": 150.0,
-                "type": "Command",
-                "properties": {
-                  "topic": "/SmartDashboard/Intake/Seed Pivot Angle Stowed",
-                  "period": 0.06,
-                  "show_type": false,
-                  "maximize_button_space": false
-                }
-              },
-              {
-                "title": " ",
-                "x": 1400.0,
-                "y": 250.0,
-                "width": 300.0,
-                "height": 150.0,
-                "type": "Command",
-                "properties": {
-                  "topic": "/SmartDashboard/Intake/Set Pivot Angle Deployed",
-                  "period": 0.06,
-                  "show_type": false,
-                  "maximize_button_space": false
-                }
-              },
-              {
-                "title": " ",
-                "x": 1450.0,
-                "y": 300.0,
-                "width": 300.0,
-                "height": 150.0,
-                "type": "Command",
-                "properties": {
-                  "topic": "/SmartDashboard/Intake/Seed Pivot Angle 90",
-                  "period": 0.06,
-                  "show_type": false,
-                  "maximize_button_space": false
-                }
-              }
-            ]
-          },
-          {
-            "title": "Vision",
-            "x": 0.0,
-            "y": 400.0,
-            "width": 300.0,
-            "height": 300.0,
-            "type": "List Layout",
-            "properties": {
-              "label_position": "LEFT"
-            },
-            "children": [
-              {
-                "title": " ",
-                "x": 1450.0,
-                "y": 250.0,
-                "width": 300.0,
-                "height": 250.0,
-                "type": "Command",
-                "properties": {
-                  "topic": "/SmartDashboard/Vision/Set Cloudy Pipeline",
-                  "period": 0.06,
-                  "show_type": false,
-                  "maximize_button_space": false
-                }
-              },
-              {
-                "title": " ",
-                "x": 1500.0,
-                "y": 300.0,
-                "width": 300.0,
-                "height": 150.0,
-                "type": "Command",
-                "properties": {
-                  "topic": "/SmartDashboard/Vision/Set Sunny Pipeline",
-                  "period": 0.06,
-                  "show_type": false,
-                  "maximize_button_space": false
-                }
-              },
-              {
-                "title": "Pipeline",
-                "x": 50.0,
-                "y": 250.0,
-                "width": 150.0,
-                "height": 150.0,
-                "type": "Text Display",
-                "properties": {
-                  "topic": "/Robot/Vision/Pipeline",
-                  "period": 0.06,
-                  "data_type": "double",
-                  "show_submit_button": false
-                }
               }
             ]
           }
@@ -936,10 +817,24 @@
             }
           },
           {
+            "title": "Intake State",
+            "x": 900.0,
+            "y": 0.0,
+            "width": 150.0,
+            "height": 150.0,
+            "type": "Text Display",
+            "properties": {
+              "topic": "/Robot/States/Intake",
+              "period": 0.06,
+              "data_type": "string",
+              "show_submit_button": false
+            }
+          },
+          {
             "title": "Pivot Angle (deg)",
-            "x": 350.0,
-            "y": 400.0,
-            "width": 200.0,
+            "x": 900.0,
+            "y": 150.0,
+            "width": 150.0,
             "height": 150.0,
             "type": "Text Display",
             "properties": {
@@ -950,14 +845,14 @@
             }
           },
           {
-            "title": "Browned Out",
-            "x": 1000.0,
-            "y": 400.0,
+            "title": "Pivot At Target Angle",
+            "x": 1050.0,
+            "y": 0.0,
             "width": 150.0,
             "height": 150.0,
             "type": "Boolean Box",
             "properties": {
-              "topic": "/Robot/SystemStats/BrownedOut",
+              "topic": "/Robot/Intake/Pivot At Target Angle",
               "period": 0.06,
               "data_type": "boolean",
               "true_color": 4283215696,
@@ -967,17 +862,45 @@
             }
           },
           {
-            "title": "Dot Auton Delay Sec.",
-            "x": 950.0,
-            "y": 550.0,
-            "width": 250.0,
+            "title": "Roller Duty Cycle",
+            "x": 1050.0,
+            "y": 150.0,
+            "width": 150.0,
             "height": 150.0,
             "type": "Text Display",
             "properties": {
-              "topic": "/Tunable/BattleCry Dot Auton Delay Seconds",
+              "topic": "/Robot/Intake/Rollers/Target Duty Cycle",
               "period": 0.06,
               "data_type": "double",
               "show_submit_button": false
+            }
+          },
+          {
+            "title": "Set Cloudy Pipeline",
+            "x": 900.0,
+            "y": 450.0,
+            "width": 300.0,
+            "height": 150.0,
+            "type": "Command",
+            "properties": {
+              "topic": "/SmartDashboard/Vision/Set Cloudy Pipeline",
+              "period": 0.06,
+              "show_type": false,
+              "maximize_button_space": false
+            }
+          },
+          {
+            "title": "Set Sunny Pipeline",
+            "x": 900.0,
+            "y": 300.0,
+            "width": 300.0,
+            "height": 150.0,
+            "type": "Command",
+            "properties": {
+              "topic": "/SmartDashboard/Vision/Set Sunny Pipeline",
+              "period": 0.06,
+              "show_type": false,
+              "maximize_button_space": false
             }
           }
         ]
@@ -988,8 +911,99 @@
       "grid_layout": {
         "layouts": [
           {
+            "title": "Enabled Subsystems",
+            "x": 1050.0,
+            "y": 0.0,
+            "width": 300.0,
+            "height": 350.0,
+            "type": "List Layout",
+            "properties": {
+              "label_position": "LEFT"
+            },
+            "children": [
+              {
+                "title": "Intake",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 166.0,
+                "height": 166.0,
+                "type": "Toggle Switch",
+                "properties": {
+                  "topic": "/Tunable/Enabled Subsystems/Intake",
+                  "period": 0.06,
+                  "data_type": "boolean"
+                }
+              },
+              {
+                "title": "Feeder",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 150.0,
+                "height": 150.0,
+                "type": "Toggle Switch",
+                "properties": {
+                  "topic": "/Tunable/Enabled Subsystems/Feeder",
+                  "period": 0.06,
+                  "data_type": "boolean"
+                }
+              },
+              {
+                "title": "Shooter",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 150.0,
+                "height": 150.0,
+                "type": "Toggle Switch",
+                "properties": {
+                  "topic": "/Tunable/Enabled Subsystems/Shooter",
+                  "period": 0.06,
+                  "data_type": "boolean"
+                }
+              },
+              {
+                "title": "Vision",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 166.0,
+                "height": 166.0,
+                "type": "Toggle Switch",
+                "properties": {
+                  "topic": "/Tunable/Enabled Subsystems/Vision",
+                  "period": 0.06,
+                  "data_type": "boolean"
+                }
+              },
+              {
+                "title": "Swerve",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 166.0,
+                "height": 166.0,
+                "type": "Toggle Switch",
+                "properties": {
+                  "topic": "/Tunable/Enabled Subsystems/Swerve",
+                  "period": 0.06,
+                  "data_type": "boolean"
+                }
+              },
+              {
+                "title": "Handoff",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 150.0,
+                "height": 150.0,
+                "type": "Toggle Switch",
+                "properties": {
+                  "topic": "/Tunable/Enabled Subsystems/Handoff",
+                  "period": 0.06,
+                  "data_type": "boolean"
+                }
+              }
+            ]
+          },
+          {
             "title": "Robot Stats",
-            "x": 650.0,
+            "x": 1050.0,
             "y": 350.0,
             "width": 300.0,
             "height": 300.0,
@@ -1047,229 +1061,57 @@
                 }
               }
             ]
-          },
-          {
-            "title": "Enabled Subsystems",
-            "x": 650.0,
-            "y": 0.0,
-            "width": 300.0,
-            "height": 350.0,
-            "type": "List Layout",
-            "properties": {
-              "label_position": "LEFT"
-            },
-            "children": [
-              {
-                "title": "Intake Pivot",
-                "x": 0.0,
-                "y": 0.0,
-                "width": 150.0,
-                "height": 150.0,
-                "type": "Toggle Switch",
-                "properties": {
-                  "topic": "/Tunable/Enabled Subsystems/Intake/Pivot",
-                  "period": 0.06,
-                  "data_type": "boolean"
-                }
-              },
-              {
-                "title": "Intake Rollers",
-                "x": 0.0,
-                "y": 0.0,
-                "width": 150.0,
-                "height": 150.0,
-                "type": "Toggle Switch",
-                "properties": {
-                  "topic": "/Tunable/Enabled Subsystems/Intake/Rollers",
-                  "period": 0.06,
-                  "data_type": "boolean"
-                }
-              },
-              {
-                "title": "Vision",
-                "x": 0.0,
-                "y": 0.0,
-                "width": 166.0,
-                "height": 166.0,
-                "type": "Toggle Switch",
-                "properties": {
-                  "topic": "/Tunable/Enabled Subsystems/Vision",
-                  "period": 0.06,
-                  "data_type": "boolean"
-                }
-              },
-              {
-                "title": "Swerve",
-                "x": 0.0,
-                "y": 0.0,
-                "width": 166.0,
-                "height": 166.0,
-                "type": "Toggle Switch",
-                "properties": {
-                  "topic": "/Tunable/Enabled Subsystems/Swerve",
-                  "period": 0.06,
-                  "data_type": "boolean"
-                }
-              },
-              {
-                "title": "Handoff",
-                "x": 0.0,
-                "y": 0.0,
-                "width": 150.0,
-                "height": 150.0,
-                "type": "Toggle Switch",
-                "properties": {
-                  "topic": "/Tunable/Enabled Subsystems/Handoff",
-                  "period": 0.06,
-                  "data_type": "boolean"
-                }
-              },
-              {
-                "title": "Feeder",
-                "x": 0.0,
-                "y": 0.0,
-                "width": 150.0,
-                "height": 150.0,
-                "type": "Toggle Switch",
-                "properties": {
-                  "topic": "/Tunable/Enabled Subsystems/Feeder",
-                  "period": 0.06,
-                  "data_type": "boolean"
-                }
-              },
-              {
-                "title": "Shooter",
-                "x": 0.0,
-                "y": 0.0,
-                "width": 150.0,
-                "height": 150.0,
-                "type": "Toggle Switch",
-                "properties": {
-                  "topic": "/Tunable/Enabled Subsystems/Shooter",
-                  "period": 0.06,
-                  "data_type": "boolean"
-                }
-              }
-            ]
-          },
-          {
-            "title": "Vision",
-            "x": 0.0,
-            "y": 0.0,
-            "width": 300.0,
-            "height": 300.0,
-            "type": "List Layout",
-            "properties": {
-              "label_position": "LEFT"
-            },
-            "children": [
-              {
-                "title": " ",
-                "x": 1450.0,
-                "y": 250.0,
-                "width": 300.0,
-                "height": 250.0,
-                "type": "Command",
-                "properties": {
-                  "topic": "/SmartDashboard/Vision/Set Cloudy Pipeline",
-                  "period": 0.06,
-                  "show_type": false,
-                  "maximize_button_space": false
-                }
-              },
-              {
-                "title": " ",
-                "x": 1500.0,
-                "y": 300.0,
-                "width": 300.0,
-                "height": 150.0,
-                "type": "Command",
-                "properties": {
-                  "topic": "/SmartDashboard/Vision/Set Sunny Pipeline",
-                  "period": 0.06,
-                  "show_type": false,
-                  "maximize_button_space": false
-                }
-              },
-              {
-                "title": "Pipeline",
-                "x": 50.0,
-                "y": 250.0,
-                "width": 150.0,
-                "height": 150.0,
-                "type": "Text Display",
-                "properties": {
-                  "topic": "/Robot/Vision/Pipeline",
-                  "period": 0.06,
-                  "data_type": "double",
-                  "show_submit_button": false
-                }
-              }
-            ]
-          },
-          {
-            "title": "Pivot Commands",
-            "x": 0.0,
-            "y": 300.0,
-            "width": 300.0,
-            "height": 300.0,
-            "type": "List Layout",
-            "properties": {
-              "label_position": "LEFT"
-            },
-            "children": [
-              {
-                "title": " ",
-                "x": 1400.0,
-                "y": 150.0,
-                "width": 300.0,
-                "height": 150.0,
-                "type": "Command",
-                "properties": {
-                  "topic": "/SmartDashboard/Intake/Seed Pivot Angle Stowed",
-                  "period": 0.06,
-                  "show_type": false,
-                  "maximize_button_space": false
-                }
-              },
-              {
-                "title": " ",
-                "x": 1400.0,
-                "y": 250.0,
-                "width": 300.0,
-                "height": 150.0,
-                "type": "Command",
-                "properties": {
-                  "topic": "/SmartDashboard/Intake/Set Pivot Angle Deployed",
-                  "period": 0.06,
-                  "show_type": false,
-                  "maximize_button_space": false
-                }
-              },
-              {
-                "title": " ",
-                "x": 1450.0,
-                "y": 300.0,
-                "width": 300.0,
-                "height": 150.0,
-                "type": "Command",
-                "properties": {
-                  "topic": "/SmartDashboard/Intake/Seed Pivot Angle 90",
-                  "period": 0.06,
-                  "show_type": false,
-                  "maximize_button_space": false
-                }
-              }
-            ]
           }
         ],
         "containers": [
           {
-            "title": "Intake State",
+            "title": "Set Sunny Pipeline",
             "x": 0.0,
-            "y": 600.0,
+            "y": 0.0,
+            "width": 300.0,
+            "height": 150.0,
+            "type": "Command",
+            "properties": {
+              "topic": "/SmartDashboard/Vision/Set Sunny Pipeline",
+              "period": 0.06,
+              "show_type": false,
+              "maximize_button_space": false
+            }
+          },
+          {
+            "title": "Set Cloudy Pipeline",
+            "x": 0.0,
+            "y": 150.0,
+            "width": 300.0,
+            "height": 150.0,
+            "type": "Command",
+            "properties": {
+              "topic": "/SmartDashboard/Vision/Set Cloudy Pipeline",
+              "period": 0.06,
+              "show_type": false,
+              "maximize_button_space": false
+            }
+          },
+          {
+            "title": "Pipeline",
+            "x": 0.0,
+            "y": 300.0,
+            "width": 300.0,
+            "height": 150.0,
+            "type": "Text Display",
+            "properties": {
+              "topic": "/Robot/Vision/Pipeline",
+              "period": 0.06,
+              "data_type": "double",
+              "show_submit_button": false
+            }
+          },
+          {
+            "title": "Intake State",
+            "x": 300.0,
+            "y": 450.0,
             "width": 150.0,
-            "height": 100.0,
+            "height": 150.0,
             "type": "Text Display",
             "properties": {
               "topic": "/Robot/States/Intake",
@@ -1280,10 +1122,10 @@
           },
           {
             "title": "Current Angle",
-            "x": 150.0,
-            "y": 600.0,
+            "x": 450.0,
+            "y": 450.0,
             "width": 150.0,
-            "height": 100.0,
+            "height": 150.0,
             "type": "Text Display",
             "properties": {
               "topic": "/Robot/Intake/Pivot/Current Angle",
@@ -1294,10 +1136,10 @@
           },
           {
             "title": "Above Threshold",
-            "x": 150.0,
-            "y": 700.0,
+            "x": 450.0,
+            "y": 650.0,
             "width": 150.0,
-            "height": 100.0,
+            "height": 50.0,
             "type": "Boolean Box",
             "properties": {
               "topic": "/Robot/Intake/Pivot/Above Threshold",
@@ -1311,8 +1153,8 @@
           },
           {
             "title": "At Target Angle",
-            "x": 0.0,
-            "y": 700.0,
+            "x": 300.0,
+            "y": 600.0,
             "width": 150.0,
             "height": 100.0,
             "type": "Boolean Box",
@@ -1327,10 +1169,27 @@
             }
           },
           {
-            "title": "Shoot Tuning RPM",
+            "title": "Pushing Down",
             "x": 300.0,
-            "y": 600.0,
-            "width": 200.0,
+            "y": 700.0,
+            "width": 150.0,
+            "height": 100.0,
+            "type": "Boolean Box",
+            "properties": {
+              "topic": "/Robot/Intake/Pivot/Pushing Down",
+              "period": 0.06,
+              "data_type": "boolean",
+              "true_color": 4283215696,
+              "false_color": 4294198070,
+              "true_icon": "None",
+              "false_icon": "None"
+            }
+          },
+          {
+            "title": "Shoot Tuning RPM",
+            "x": 900.0,
+            "y": 0.0,
+            "width": 150.0,
             "height": 150.0,
             "type": "Text Display",
             "properties": {
@@ -1342,9 +1201,9 @@
           },
           {
             "title": "Ferry Tuning RPM",
-            "x": 300.0,
-            "y": 450.0,
-            "width": 200.0,
+            "x": 900.0,
+            "y": 150.0,
+            "width": 150.0,
             "height": 150.0,
             "type": "Text Display",
             "properties": {
@@ -1355,10 +1214,52 @@
             }
           },
           {
-            "title": "Manual Hub Target RPM",
+            "title": "Seed Pivot Angle 90",
             "x": 300.0,
             "y": 300.0,
-            "width": 200.0,
+            "width": 300.0,
+            "height": 150.0,
+            "type": "Command",
+            "properties": {
+              "topic": "/SmartDashboard/Intake/Seed Pivot Angle 90",
+              "period": 0.06,
+              "show_type": true,
+              "maximize_button_space": false
+            }
+          },
+          {
+            "title": "Seed Pivot Angle Stowed",
+            "x": 300.0,
+            "y": 0.0,
+            "width": 300.0,
+            "height": 150.0,
+            "type": "Command",
+            "properties": {
+              "topic": "/SmartDashboard/Intake/Seed Pivot Angle Stowed",
+              "period": 0.06,
+              "show_type": true,
+              "maximize_button_space": false
+            }
+          },
+          {
+            "title": "Set Pivot Angle Deployed",
+            "x": 300.0,
+            "y": 150.0,
+            "width": 300.0,
+            "height": 150.0,
+            "type": "Command",
+            "properties": {
+              "topic": "/SmartDashboard/Intake/Set Pivot Angle Deployed",
+              "period": 0.06,
+              "show_type": true,
+              "maximize_button_space": false
+            }
+          },
+          {
+            "title": "Target RPM",
+            "x": 900.0,
+            "y": 300.0,
+            "width": 150.0,
             "height": 150.0,
             "type": "Text Display",
             "properties": {
@@ -1370,8 +1271,8 @@
           },
           {
             "title": "State",
-            "x": 500.0,
-            "y": 150.0,
+            "x": 900.0,
+            "y": 450.0,
             "width": 150.0,
             "height": 150.0,
             "type": "Text Display",
@@ -1384,8 +1285,8 @@
           },
           {
             "title": "At Target RPM",
-            "x": 500.0,
-            "y": 0.0,
+            "x": 900.0,
+            "y": 600.0,
             "width": 150.0,
             "height": 150.0,
             "type": "Boolean Box",
@@ -1401,27 +1302,13 @@
           },
           {
             "title": "Distance From Hub",
-            "x": 300.0,
-            "y": 150.0,
-            "width": 200.0,
+            "x": 600.0,
+            "y": 0.0,
+            "width": 300.0,
             "height": 150.0,
             "type": "Text Display",
             "properties": {
               "topic": "/Robot/Swerve/Distance From Hub",
-              "period": 0.06,
-              "data_type": "double",
-              "show_submit_button": false
-            }
-          },
-          {
-            "title": "Distance From Ferry Zone",
-            "x": 300.0,
-            "y": 0.0,
-            "width": 200.0,
-            "height": 150.0,
-            "type": "Text Display",
-            "properties": {
-              "topic": "/Robot/Swerve/Distance From Ferry Zone",
               "period": 0.06,
               "data_type": "double",
               "show_submit_button": false
