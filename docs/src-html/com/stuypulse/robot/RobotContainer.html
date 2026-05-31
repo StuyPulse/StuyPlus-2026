@@ -142,10 +142,10 @@
 <span class="source-line-no">129</span><span id="line-129">        rightTrigger.whileTrue(</span>
 <span class="source-line-no">130</span><span id="line-130">            new SwerveDriveAlignToHub().withDeadline(new WaitCommand(1.5))</span>
 <span class="source-line-no">131</span><span id="line-131">                .andThen(new SwerveDriveXMode())</span>
-<span class="source-line-no">132</span><span id="line-132">                .andThen(new ShooterWaitForSpinUp())</span>
-<span class="source-line-no">133</span><span id="line-133">                .andThen(new ShooterSetShoot())</span>
-<span class="source-line-no">134</span><span id="line-134">                .andThen(new HandoffSetForward())</span>
-<span class="source-line-no">135</span><span id="line-135">                .alongWith(new FeederSetForward(), new IntakeAgitateFastOnce().repeatedly()));</span>
+<span class="source-line-no">132</span><span id="line-132">                .andThen(new ShooterSetShoot())</span>
+<span class="source-line-no">133</span><span id="line-133">                .andThen(new ShooterWaitForSpinUp())</span>
+<span class="source-line-no">134</span><span id="line-134">                .andThen(new HandoffSetForward()</span>
+<span class="source-line-no">135</span><span id="line-135">                .alongWith(new FeederSetForward(), new IntakeAgitateFastOnce().repeatedly())));</span>
 <span class="source-line-no">136</span><span id="line-136">        rightTrigger.onFalse(</span>
 <span class="source-line-no">137</span><span id="line-137">            new StopShooting()</span>
 <span class="source-line-no">138</span><span id="line-138">        );</span>
@@ -157,8 +157,8 @@
 <span class="source-line-no">144</span><span id="line-144">            .whileTrue(</span>
 <span class="source-line-no">145</span><span id="line-145">                new SwerveDriveAlignToFerryZone().withDeadline(new WaitCommand(1.5))</span>
 <span class="source-line-no">146</span><span id="line-146">                    .andThen(new SwerveDriveXMode())</span>
-<span class="source-line-no">147</span><span id="line-147">                    .andThen(new ShooterWaitForSpinUp())</span>
-<span class="source-line-no">148</span><span id="line-148">                    .andThen(new ShooterSetFerry())</span>
+<span class="source-line-no">147</span><span id="line-147">                    .andThen(new ShooterSetFerry())</span>
+<span class="source-line-no">148</span><span id="line-148">                    .andThen(new ShooterWaitForSpinUp())</span>
 <span class="source-line-no">149</span><span id="line-149">                    .andThen(new HandoffSetForward())</span>
 <span class="source-line-no">150</span><span id="line-150">                    .alongWith(new FeederSetForward(), new IntakeAgitateFastOnce().repeatedly()));</span>
 <span class="source-line-no">151</span><span id="line-151">        driver.rightBumper()</span>
