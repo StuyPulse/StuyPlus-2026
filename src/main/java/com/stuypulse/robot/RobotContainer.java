@@ -150,7 +150,9 @@ public class RobotContainer {
                     .andThen(new ShooterSetFerry())
                     .andThen(new ShooterWaitForSpinUp())
                     .andThen(new HandoffSetForward())
-                    .alongWith(new FeederSetForward(), new IntakeAgitateFastOnce().repeatedly()));
+                    .alongWith(new FeederSetForward(), 
+                        new IntakeAgitateFastOnce().repeatedly(),
+                        new ShooterFirstShotIncrease()));
         driver.rightBumper()
             .onFalse(
                 new StopShooting()
@@ -162,7 +164,9 @@ public class RobotContainer {
                     .andThen(new ShooterSetManual())
                     .andThen(new ShooterWaitForSpinUp())
                     .andThen(new HandoffSetForward().repeatedly())
-                    .alongWith(new FeederSetForward().repeatedly(), new IntakeAgitateFastOnce().repeatedly()));
+                    .alongWith(new FeederSetForward().repeatedly(), 
+                        new IntakeAgitateFastOnce().repeatedly(),
+                        new ShooterFirstShotIncrease()));
         driver.a()
             .onFalse(
                 new StopShooting()
@@ -174,7 +178,9 @@ public class RobotContainer {
                     .andThen(new ShooterSetShoot())
                     .andThen(new ShooterWaitForSpinUp())
                     .andThen(new HandoffSetForward().repeatedly())
-                    .alongWith(new FeederSetForward().repeatedly(), new IntakeAgitateFastOnce().repeatedly())
+                    .alongWith(new FeederSetForward().repeatedly(), 
+                        new IntakeAgitateFastOnce().repeatedly(),
+                        new ShooterFirstShotIncrease())
             );
         driver.b()
             .onFalse(

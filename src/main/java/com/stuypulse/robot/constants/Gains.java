@@ -58,7 +58,7 @@ public class Gains {
 
         public interface Digestion {
 
-            double kP = 250;
+            double kP = 325;
 
             double kI = 0;
 

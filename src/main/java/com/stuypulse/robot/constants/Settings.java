@@ -90,7 +90,7 @@ public interface Settings {
 
             Angle DEPLOY_ANGLE = Degrees.of(-22);
 
-            Angle AGITATE_UP_ANGLE = Degrees.of(-42);
+            Angle AGITATE_UP_ANGLE = Degrees.of(-62);
 
             Angle DIGEST_ANGLE = Degrees.of(-92);
 
@@ -248,7 +248,6 @@ public interface Settings {
         DoubleSubscriber FERRY_TUNING_RPM = DogLog.tunable("Shooter/Ferry Tuning RPM", 0.0);
 
         AngularVelocity SHOOTER_SPUN_UP_TOLERANCE = RPM.of(100);
-
         public interface RPMInterpolation {
 
             double[][] distanceRPMInterpolationValues = {
