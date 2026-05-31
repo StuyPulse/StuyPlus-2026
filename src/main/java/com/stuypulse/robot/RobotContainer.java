@@ -30,6 +30,7 @@ import com.stuypulse.robot.commands.intake.IntakeSetIntake;
 import com.stuypulse.robot.commands.intake.IntakeSetOuttake;
 import com.stuypulse.robot.commands.leds.LEDDefaultCommand;
 import com.stuypulse.robot.commands.shooter.ShooterAddToBonusVelocity;
+import com.stuypulse.robot.commands.shooter.ShooterFirstShotIncrease;
 import com.stuypulse.robot.commands.shooter.ShooterResetBonusVelocity;
 import com.stuypulse.robot.commands.shooter.ShooterSetFerry;
 import com.stuypulse.robot.commands.shooter.ShooterSetManual;
@@ -127,12 +128,14 @@ public class RobotContainer {
         driver.leftBumper().onFalse(new IntakeSetIntake());
 
         rightTrigger.whileTrue(
-            new SwerveDriveAlignToHub().withDeadline(new WaitCommand(1.5))
+                new WaitCommand(1.5).deadlineFor(new SwerveDriveAlignToHub())
                 .andThen(new SwerveDriveXMode())
                 .andThen(new ShooterSetShoot())
                 .andThen(new ShooterWaitForSpinUp())
                 .andThen(new HandoffSetForward()
-                .alongWith(new FeederSetForward(), new IntakeAgitateFastOnce().repeatedly())));
+                .alongWith(new FeederSetForward(),
+                    new IntakeAgitateFastOnce().repeatedly(),
+                    new ShooterFirstShotIncrease())));
         rightTrigger.onFalse(
             new StopShooting()
         );
@@ -142,7 +145,7 @@ public class RobotContainer {
         
         driver.rightBumper()
             .whileTrue(
-                new SwerveDriveAlignToFerryZone().withDeadline(new WaitCommand(1.5))
+                new WaitCommand(1.5).deadlineFor(new SwerveDriveAlignToFerryZone())
                     .andThen(new SwerveDriveXMode())
                     .andThen(new ShooterSetFerry())
                     .andThen(new ShooterWaitForSpinUp())
