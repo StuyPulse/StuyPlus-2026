@@ -17,6 +17,8 @@ import java.util.regex.Pattern;
 import tools.PathplannerSearch.Main.ARGUMENTS;
 import tools.ToolClasses.ArgumentedTool;
 
+import static tools.util.AnsiColors.*;
+
 /**
  *
  *
@@ -175,11 +177,6 @@ public final class PathplannerSearch extends ArgumentedTool<ARGUMENTS> {
      * @param matches
      */
     public static void logFiles(String searchTerm, SearchType searchType, List<String> matches) {
-        final String RESET = "\u001B[0m";
-        final String RED = "\u001B[31m";
-        final String GREEN = "\u001B[32m";
-        final String YELLOW = "\u001B[33m";
-
         String stem = switch (searchType) {
             case LINKED_WAYPOINT -> "Paths that use the linked waypoint '";
             case PATH -> "Autons that use the path '";

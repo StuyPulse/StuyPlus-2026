@@ -181,7 +181,7 @@ tasks.register("runPathplannerSearch", JavaExec) {
 
 tasks.register("runPathplannerPathFlip", JavaExec) {
     classpath = sourceSets.main.runtimeClasspath
-    mainClass = "tools.PathplannerFlip.PathplannerPathFlip"
+    mainClass = "tools.PathplannerFlip.PathFlip.Main"
 
     def rawArgs = (project.findProperty("args") ?: "").trim()
     if (rawArgs) {
@@ -191,7 +191,7 @@ tasks.register("runPathplannerPathFlip", JavaExec) {
 
 tasks.register("runPathplannerAutonFlip", JavaExec) {
     classpath = sourceSets.main.runtimeClasspath
-    mainClass = "tools.PathplannerFlip.PathplannerAutonFlip"
+    mainClass = "tools.PathplannerFlip.AutonFlip.Main"
 
     def rawArgs = (project.findProperty("args") ?: "").trim()
     if (rawArgs) {
