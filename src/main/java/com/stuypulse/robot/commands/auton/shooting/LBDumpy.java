@@ -2,6 +2,7 @@ package com.stuypulse.robot.commands.auton.shooting;
 
 import com.pathplanner.lib.path.PathPlannerPath;
 import com.stuypulse.robot.commands.compound.StopShooting;
+import com.stuypulse.robot.commands.compound.TunableWaitCommand;
 import com.stuypulse.robot.commands.feeder.FeederSetForward;
 import com.stuypulse.robot.commands.handoff.HandoffSetForward;
 import com.stuypulse.robot.commands.intake.IntakeAgitateFastOnce;
@@ -22,6 +23,7 @@ public class LBDumpy extends SequentialCommandGroup {
         addCommands(
             new WaitCommand(Settings.BATTLECRY_DOT_DELAY.get()),
             new SwerveResetPose(paths[0].getStartingHolonomicPose().get()),
+            new TunableWaitCommand("LB Dumpy Delay"),
             new IntakeSetIntake(),
             CommandSwerveDrivetrain.getInstance().followPathCommand(paths[0]),
             CommandSwerveDrivetrain.getInstance().followPathCommand(paths[1]),
