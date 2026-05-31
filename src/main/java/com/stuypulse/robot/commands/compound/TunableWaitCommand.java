@@ -33,7 +33,6 @@ public class TunableWaitCommand extends WaitCommand {
     public TunableWaitCommand(String tunableName) {
         this(DogLog.tunable(makeTunableName(tunableName),
                 tunableDefaultValue));
-        SendableRegistry.setName(this, getName() + ": " + tunable.get() + " seconds");
     }
 
     @Override
