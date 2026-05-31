@@ -17,7 +17,7 @@ public class ShooterFirstShotIncrease extends Command{
     @Override
     public void initialize() {
         timer.restart();
-        shooter.addToBonusVelocity(100);
+        shooter.addToBonusVelocity(150);
     }
 
     @Override
