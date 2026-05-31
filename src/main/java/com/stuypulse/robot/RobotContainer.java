@@ -129,10 +129,10 @@ public class RobotContainer {
         rightTrigger.whileTrue(
             new SwerveDriveAlignToHub().withDeadline(new WaitCommand(1.5))
                 .andThen(new SwerveDriveXMode())
-                .andThen(new ShooterWaitForSpinUp())
                 .andThen(new ShooterSetShoot())
-                .andThen(new HandoffSetForward())
-                .alongWith(new FeederSetForward(), new IntakeAgitateFastOnce().repeatedly()));
+                .andThen(new ShooterWaitForSpinUp())
+                .andThen(new HandoffSetForward()
+                .alongWith(new FeederSetForward(), new IntakeAgitateFastOnce().repeatedly())));
         rightTrigger.onFalse(
             new StopShooting()
         );
@@ -144,8 +144,8 @@ public class RobotContainer {
             .whileTrue(
                 new SwerveDriveAlignToFerryZone().withDeadline(new WaitCommand(1.5))
                     .andThen(new SwerveDriveXMode())
-                    .andThen(new ShooterWaitForSpinUp())
                     .andThen(new ShooterSetFerry())
+                    .andThen(new ShooterWaitForSpinUp())
                     .andThen(new HandoffSetForward())
                     .alongWith(new FeederSetForward(), new IntakeAgitateFastOnce().repeatedly()));
         driver.rightBumper()
