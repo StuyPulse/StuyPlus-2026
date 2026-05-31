@@ -317,7 +317,7 @@ public class RobotContainer {
         // RB_Dumpy.register(autonChooser);
 
         AutonConfig centerDepot = new AutonConfig("Center Depot", CenterDepot::new,
-            "RB Depot",
+            "Hub to Depot",
             "Tower shoot");
         centerDepot.register(autonChooser);
 
