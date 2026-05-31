@@ -9,6 +9,7 @@ import com.stuypulse.robot.commands.shooter.ShooterSetShoot;
 import com.stuypulse.robot.commands.shooter.ShooterWaitForSpinUp;
 import com.stuypulse.robot.commands.swerve.SwerveDriveXMode;
 import com.stuypulse.robot.commands.swerve.SwerveResetPose;
+import com.stuypulse.robot.constants.Settings;
 import com.stuypulse.robot.subsystems.swerve.CommandSwerveDrivetrain;
 
 import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
@@ -18,6 +19,7 @@ import edu.wpi.first.wpilibj2.command.WaitCommand;
 public class RBDumpy extends SequentialCommandGroup {
     // public LBDumpy(PathPlannerPath... paths) {
     //     addCommands(
+    //         new WaitCommand(Settings.BATTLECRY_DOT_DELAY.get()),
     //         new SwerveResetPose(paths[0].getStartingHolonomicPose().get()),
     //         new IntakeSetIntake(),
     //         CommandSwerveDrivetrain.getInstance().followPathCommand(paths[0]),
