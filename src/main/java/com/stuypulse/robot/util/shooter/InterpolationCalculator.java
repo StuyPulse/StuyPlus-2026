@@ -63,8 +63,6 @@ public class InterpolationCalculator {
         double flightTime = shootingDistanceTOFInterpolator.get(distanceMeters);
         DogLog.log("InterpolationTesting/Interpolated RPM", targetRPM);
         DogLog.log("InterpolationTesting/Interpolated TOF", flightTime);
-        // if (targetRPM < Settings.Shooter.MIN_SHOOTER_VELOCITY.in(RPM))
-        //     targetRPM = Settings.Shooter.MIN_SHOOTER_VELOCITY.in(RPM);
         return new InterpolatedInfo(targetRPM, flightTime);
     }
 

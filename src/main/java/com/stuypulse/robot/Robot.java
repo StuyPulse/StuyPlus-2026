@@ -12,8 +12,6 @@ import com.stuypulse.robot.commands.vision.SetMegaTagMode;
 import com.stuypulse.robot.commands.vision.SetVisionEnabled;
 import com.stuypulse.robot.commands.vision.WhitelistAllTags;
 import com.stuypulse.robot.constants.Field;
-import com.stuypulse.robot.constants.Gains.Swerve.Alignment;
-import com.stuypulse.robot.subsystems.shooter.Shooter;
 import com.stuypulse.robot.subsystems.swerve.CommandSwerveDrivetrain;
 import com.stuypulse.robot.subsystems.vision.LimelightVision;
 import com.stuypulse.robot.subsystems.vision.LimelightVision.MegaTagMode;
@@ -73,7 +71,6 @@ public class Robot extends TimedRobot {
         DataLogManager.logNetworkTables(true);
         System.out.println("]LOGGING DIRECTORY]: " + DataLogManager.getLogDir());
         SignalLogger.start();
-        // SmartDashboard.putData(CommandScheduler.getInstance());
         DogLog.setOptions(new DogLogOptions()
             .withCaptureDs(true)
             .withNtTunables(true)

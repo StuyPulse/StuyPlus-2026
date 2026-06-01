@@ -42,7 +42,7 @@ public class LBTwoSweepAngled extends SequentialCommandGroup {
             new ShooterSetShoot(),
             new HandoffSetForward(),
             new ParallelDeadlineGroup(
-                new WaitCommand(6.5), // shoot for 6-7 seconds
+                new WaitCommand(6.5),
                 new FeederSetForward(), 
                 new IntakeAgitateFastOnce().repeatedly()
             )

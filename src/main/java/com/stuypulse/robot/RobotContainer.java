@@ -15,7 +15,6 @@ import com.stuypulse.robot.commands.auton.shooting.FrontHubShootPreloads;
 import com.stuypulse.robot.commands.auton.shooting.LBDumpy;
 import com.stuypulse.robot.commands.auton.shooting.RBDumpy;
 import com.stuypulse.robot.commands.compound.StopShooting;
-// import com.stuypulse.robot.commands.auton.depot.centerDepot;
 import com.stuypulse.robot.commands.auton.shooting.LBOnePointFiveSpiralAngled;
 import com.stuypulse.robot.commands.auton.shooting.LBOneSweepAngled;
 import com.stuypulse.robot.commands.auton.shooting.LBTwoSweepAngled;
@@ -210,62 +209,6 @@ public class RobotContainer {
      */
      public void configureAutons() {
         autonChooser.addOption("Do Nothing", new DoNothingAuton());
-        // AutonConfig LBFerry = new AutonConfig("LB Ferry", LBFerry::new,
-        // "LB to N Ferry",
-        // "N to LT Ferry",
-        // "LT Hub Ferry",
-        // "N to Depot Ferry");
-        // LBFerry.register(autonChooser);
-        // AutonConfig RBFerry = new AutonConfig("RB Ferry", RBFerry::new,
-        // "RB to N Ferry",
-        // "N to RT Ferry",
-        // "RT Hub Ferry",
-        // "N to Outpost Ferry");
-        // RBFerry.register(autonChooser);
-        // AutonConfig TwoMeterPath = new AutonConfig("Two Meter Path",
-        // TwoMeterPath::new,
-        // "2 meter path");
-        // TwoMeterPath.register(autonChooser);
-        // AutonConfig OutpostOnly = new AutonConfig("Outpost Only", OutpostOnly::new,
-        // "Outpost");
-        // OutpostOnly.register(autonChooser);
-        // AutonConfig RBOuttake = new AutonConfig("RB Outtake", RBOuttake::new,
-        // "RB to N Outtake",
-        // "N to RB Outtake");
-        // RBOuttake.register(autonChooser);
-        // AutonConfig LBOuttake = new AutonConfig("LB Outtake", LBOuttake::new,
-        // "LB to N Outtake",
-        // "N to LB Outtake");
-        // LBOuttake.register(autonChooser);
-        // AutonConfig LBDisrupt = new AutonConfig("LB Disrupt", LBDisrupt::new,
-        // "LB to CN Disrupt",
-        // "LN Circle Disrupt",
-        // "LN Circle Disrupt",
-        // "LB Disrupt Return");
-        // LBDisrupt.register(autonChooser);
-        // AutonConfig RBDisrupt = new AutonConfig("RB Disrupt", RBDisrupt::new,
-        // "RB to CN Disrupt",
-        // "RN Circle Disrupt",
-        // "RN Circle Disrupt",
-        // "RB Disrupt Return");
-        // RBDisrupt.register(autonChooser);
-        // AutonConfig LT_Disrupt = new AutonConfig("LT Disrupt", LTDisrupt::new,
-        // "LT to N Disrupt",
-        // "LT Circle Disrupt",
-        // "LT Circle Disrupt",
-        // "LT Side Push Disrupt",
-        // "LT Around Disrupt",
-        // "LT Back Push Disrupt");
-        // LT_Disrupt.register(autonChooser);
-        // AutonConfig RT_Disrupt = new AutonConfig("RT Disrupt", RTDisrupt::new,
-        // "RT to N Disrupt",
-        // "RT Circle Disrupt",
-        // "RT Circle Disrupt",
-        // "RT Side Push Disrupt",
-        // "RT Around Disrupt",
-        // "RT Back Push Disrupt");
-        // RT_Disrupt.register(autonChooser);
-
         // DOT
         AutonConfig LB_ToBCCenter = new AutonConfig("LB To BC Center", LBCenterDotDot::new,
             "LB to BC Center"
@@ -319,12 +262,6 @@ public class RobotContainer {
             "LB Shoot to Depot");
         LB_Dumpy.register(autonChooser);
 
-        // AutonConfig RB_Dumpy = new AutonConfig("RB Dumpy", RBDumpy::new,
-        //     "RB to N Dumpy",
-        //     "RB Intake Dumpy",
-        //     "RB Backsweep Dumpy",
-        //     "RB Shoot Dumpy");
-        // RB_Dumpy.register(autonChooser);
 
         AutonConfig centerDepot = new AutonConfig("Center Depot", CenterDepot::new,
             "Hub to Depot",
