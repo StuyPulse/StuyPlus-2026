@@ -36,11 +36,23 @@ public class TunableWaitCommand extends WaitCommand {
 
     /**
      * Creates a tunable wait command by <strong>creating</strong> a tunable at the path specified
-     * @param tunableName path & name of the {@link DogLog#tunable(String, double)} created
+     * 
+     * Initializes the tunable to a default value of 0.0
+     * @param tunableName path and name of the {@link DogLog#tunable(String, double)} created
      */
     public TunableWaitCommand(String tunableName) {
         this(DogLog.tunable(makeTunableName(tunableName),
                 tunableDefaultValue));
+    }
+
+    /**
+     * Creates a tunable wait command by <strong>creating</strong> a tunable at the path specified
+     * @param tunableName path and name of the {@link DogLog#tunable(String, double)} created
+     * @param defaultValue value the tunable will be initialized to
+     */
+    public TunableWaitCommand(String tunableName, double defaultValue) {
+        this(DogLog.tunable(makeTunableName(tunableName),
+                defaultValue));
     }
 
     @Override
