@@ -1,7 +1,6 @@
 com.stuypulse.robot
 com.stuypulse.robot.commands
 com.stuypulse.robot.commands.auton
-com.stuypulse.robot.commands.auton.BC_Dots
 com.stuypulse.robot.commands.auton.depot
 com.stuypulse.robot.commands.auton.shooting
 com.stuypulse.robot.commands.compound

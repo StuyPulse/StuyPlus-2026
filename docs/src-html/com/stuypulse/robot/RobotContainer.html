@@ -19,295 +19,243 @@
 <span class="source-line-no">006</span><span id="line-6">package com.stuypulse.robot;</span>
 <span class="source-line-no">007</span><span id="line-7"></span>
 <span class="source-line-no">008</span><span id="line-8">import com.stuypulse.robot.commands.auton.DoNothingAuton;</span>
-<span class="source-line-no">009</span><span id="line-9">import com.stuypulse.robot.commands.auton.BC_Dots.LBCenterDotDot;</span>
-<span class="source-line-no">010</span><span id="line-10">import com.stuypulse.robot.commands.auton.BC_Dots.LeftDot;</span>
-<span class="source-line-no">011</span><span id="line-11">import com.stuypulse.robot.commands.auton.BC_Dots.RBCenterDotDot;</span>
-<span class="source-line-no">012</span><span id="line-12">import com.stuypulse.robot.commands.auton.BC_Dots.RightDot;</span>
-<span class="source-line-no">013</span><span id="line-13">import com.stuypulse.robot.commands.auton.depot.CenterDepot;</span>
-<span class="source-line-no">014</span><span id="line-14">import com.stuypulse.robot.commands.auton.shooting.FrontHubShootPreloads;</span>
-<span class="source-line-no">015</span><span id="line-15">import com.stuypulse.robot.commands.auton.shooting.LBDumpy;</span>
-<span class="source-line-no">016</span><span id="line-16">import com.stuypulse.robot.commands.auton.shooting.RBDumpy;</span>
-<span class="source-line-no">017</span><span id="line-17">import com.stuypulse.robot.commands.compound.StopShooting;</span>
-<span class="source-line-no">018</span><span id="line-18">import com.stuypulse.robot.commands.auton.shooting.LBOnePointFiveSpiralAngled;</span>
-<span class="source-line-no">019</span><span id="line-19">import com.stuypulse.robot.commands.auton.shooting.LBOneSweepAngled;</span>
-<span class="source-line-no">020</span><span id="line-20">import com.stuypulse.robot.commands.auton.shooting.LBTwoSweepAngled;</span>
-<span class="source-line-no">021</span><span id="line-21">import com.stuypulse.robot.commands.feeder.FeederSetForward;</span>
-<span class="source-line-no">022</span><span id="line-22">import com.stuypulse.robot.commands.feeder.FeederSetIdle;</span>
-<span class="source-line-no">023</span><span id="line-23">import com.stuypulse.robot.commands.handoff.HandoffSetForward;</span>
-<span class="source-line-no">024</span><span id="line-24">import com.stuypulse.robot.commands.handoff.HandoffSetIdle;</span>
-<span class="source-line-no">025</span><span id="line-25">import com.stuypulse.robot.commands.intake.IntakeAgitateFastOnce;</span>
-<span class="source-line-no">026</span><span id="line-26">import com.stuypulse.robot.commands.intake.IntakeSetHomingDown;</span>
-<span class="source-line-no">027</span><span id="line-27">import com.stuypulse.robot.commands.intake.IntakeSetIdle;</span>
-<span class="source-line-no">028</span><span id="line-28">import com.stuypulse.robot.commands.intake.IntakeSetIntake;</span>
-<span class="source-line-no">029</span><span id="line-29">import com.stuypulse.robot.commands.intake.IntakeSetOuttake;</span>
-<span class="source-line-no">030</span><span id="line-30">import com.stuypulse.robot.commands.leds.LEDDefaultCommand;</span>
-<span class="source-line-no">031</span><span id="line-31">import com.stuypulse.robot.commands.shooter.ShooterAddToBonusVelocity;</span>
-<span class="source-line-no">032</span><span id="line-32">import com.stuypulse.robot.commands.shooter.ShooterFirstShotIncrease;</span>
-<span class="source-line-no">033</span><span id="line-33">import com.stuypulse.robot.commands.shooter.ShooterResetBonusVelocity;</span>
-<span class="source-line-no">034</span><span id="line-34">import com.stuypulse.robot.commands.shooter.ShooterSetFerry;</span>
-<span class="source-line-no">035</span><span id="line-35">import com.stuypulse.robot.commands.shooter.ShooterSetManual;</span>
-<span class="source-line-no">036</span><span id="line-36">import com.stuypulse.robot.commands.shooter.ShooterSetShoot;</span>
-<span class="source-line-no">037</span><span id="line-37">import com.stuypulse.robot.commands.shooter.ShooterWaitForSpinUp;</span>
-<span class="source-line-no">038</span><span id="line-38">import com.stuypulse.robot.commands.swerve.SwerveDriveDrive;</span>
-<span class="source-line-no">039</span><span id="line-39">import com.stuypulse.robot.commands.swerve.SwerveDriveResetRotation;</span>
-<span class="source-line-no">040</span><span id="line-40">import com.stuypulse.robot.commands.swerve.SwerveDriveXMode;</span>
-<span class="source-line-no">041</span><span id="line-41">import com.stuypulse.robot.commands.swerve.driveAligned.SwerveDriveAlignToFerryZone;</span>
-<span class="source-line-no">042</span><span id="line-42">import com.stuypulse.robot.commands.swerve.driveAligned.SwerveDriveAlignToHub;</span>
-<span class="source-line-no">043</span><span id="line-43">import com.stuypulse.robot.constants.Field;</span>
-<span class="source-line-no">044</span><span id="line-44">import com.stuypulse.robot.constants.Ports;</span>
-<span class="source-line-no">045</span><span id="line-45">import com.stuypulse.robot.subsystems.feeder.Feeder;</span>
-<span class="source-line-no">046</span><span id="line-46">import com.stuypulse.robot.subsystems.handoff.Handoff;</span>
-<span class="source-line-no">047</span><span id="line-47">import com.stuypulse.robot.subsystems.intake.Intake;</span>
-<span class="source-line-no">048</span><span id="line-48">import com.stuypulse.robot.subsystems.leds.LEDController;</span>
-<span class="source-line-no">049</span><span id="line-49">import com.stuypulse.robot.subsystems.shooter.Shooter;</span>
-<span class="source-line-no">050</span><span id="line-50">import com.stuypulse.robot.subsystems.swerve.CommandSwerveDrivetrain;</span>
-<span class="source-line-no">051</span><span id="line-51">import com.stuypulse.robot.subsystems.vision.LimelightVision;</span>
-<span class="source-line-no">052</span><span id="line-52">import com.stuypulse.robot.util.PathUtil.AutonConfig;</span>
-<span class="source-line-no">053</span><span id="line-53"></span>
-<span class="source-line-no">054</span><span id="line-54">import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;</span>
-<span class="source-line-no">055</span><span id="line-55">import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;</span>
-<span class="source-line-no">056</span><span id="line-56">import edu.wpi.first.wpilibj2.command.Command;</span>
-<span class="source-line-no">057</span><span id="line-57">import edu.wpi.first.wpilibj2.command.Commands;</span>
-<span class="source-line-no">058</span><span id="line-58">import edu.wpi.first.wpilibj2.command.WaitCommand;</span>
-<span class="source-line-no">059</span><span id="line-59">import edu.wpi.first.wpilibj2.command.button.CommandXboxController;</span>
-<span class="source-line-no">060</span><span id="line-60">import edu.wpi.first.wpilibj2.command.button.Trigger;</span>
-<span class="source-line-no">061</span><span id="line-61">import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;</span>
+<span class="source-line-no">009</span><span id="line-9">import com.stuypulse.robot.commands.auton.depot.CenterDepot;</span>
+<span class="source-line-no">010</span><span id="line-10">import com.stuypulse.robot.commands.auton.shooting.FrontHubShootPreloads;</span>
+<span class="source-line-no">011</span><span id="line-11">import com.stuypulse.robot.commands.auton.shooting.LBDumpy;</span>
+<span class="source-line-no">012</span><span id="line-12">import com.stuypulse.robot.commands.compound.StopShooting;</span>
+<span class="source-line-no">013</span><span id="line-13">import com.stuypulse.robot.commands.feeder.FeederSetForward;</span>
+<span class="source-line-no">014</span><span id="line-14">import com.stuypulse.robot.commands.handoff.HandoffSetForward;</span>
+<span class="source-line-no">015</span><span id="line-15">import com.stuypulse.robot.commands.intake.IntakeAgitateFastOnce;</span>
+<span class="source-line-no">016</span><span id="line-16">import com.stuypulse.robot.commands.intake.IntakeSetIdle;</span>
+<span class="source-line-no">017</span><span id="line-17">import com.stuypulse.robot.commands.intake.IntakeSetIntake;</span>
+<span class="source-line-no">018</span><span id="line-18">import com.stuypulse.robot.commands.intake.IntakeSetOuttake;</span>
+<span class="source-line-no">019</span><span id="line-19">import com.stuypulse.robot.commands.leds.LEDDefaultCommand;</span>
+<span class="source-line-no">020</span><span id="line-20">import com.stuypulse.robot.commands.shooter.ShooterAddToBonusVelocity;</span>
+<span class="source-line-no">021</span><span id="line-21">import com.stuypulse.robot.commands.shooter.ShooterFirstShotIncrease;</span>
+<span class="source-line-no">022</span><span id="line-22">import com.stuypulse.robot.commands.shooter.ShooterResetBonusVelocity;</span>
+<span class="source-line-no">023</span><span id="line-23">import com.stuypulse.robot.commands.shooter.ShooterSetFerry;</span>
+<span class="source-line-no">024</span><span id="line-24">import com.stuypulse.robot.commands.shooter.ShooterSetManual;</span>
+<span class="source-line-no">025</span><span id="line-25">import com.stuypulse.robot.commands.shooter.ShooterSetShoot;</span>
+<span class="source-line-no">026</span><span id="line-26">import com.stuypulse.robot.commands.shooter.ShooterWaitForSpinUp;</span>
+<span class="source-line-no">027</span><span id="line-27">import com.stuypulse.robot.commands.swerve.SwerveDriveDrive;</span>
+<span class="source-line-no">028</span><span id="line-28">import com.stuypulse.robot.commands.swerve.SwerveDriveResetRotation;</span>
+<span class="source-line-no">029</span><span id="line-29">import com.stuypulse.robot.commands.swerve.SwerveDriveXMode;</span>
+<span class="source-line-no">030</span><span id="line-30">import com.stuypulse.robot.commands.swerve.driveAligned.SwerveDriveAlignToFerryZone;</span>
+<span class="source-line-no">031</span><span id="line-31">import com.stuypulse.robot.commands.swerve.driveAligned.SwerveDriveAlignToHub;</span>
+<span class="source-line-no">032</span><span id="line-32">import com.stuypulse.robot.constants.Field;</span>
+<span class="source-line-no">033</span><span id="line-33">import com.stuypulse.robot.constants.Ports;</span>
+<span class="source-line-no">034</span><span id="line-34">import com.stuypulse.robot.subsystems.feeder.Feeder;</span>
+<span class="source-line-no">035</span><span id="line-35">import com.stuypulse.robot.subsystems.handoff.Handoff;</span>
+<span class="source-line-no">036</span><span id="line-36">import com.stuypulse.robot.subsystems.intake.Intake;</span>
+<span class="source-line-no">037</span><span id="line-37">import com.stuypulse.robot.subsystems.leds.LEDController;</span>
+<span class="source-line-no">038</span><span id="line-38">import com.stuypulse.robot.subsystems.shooter.Shooter;</span>
+<span class="source-line-no">039</span><span id="line-39">import com.stuypulse.robot.subsystems.swerve.CommandSwerveDrivetrain;</span>
+<span class="source-line-no">040</span><span id="line-40">import com.stuypulse.robot.subsystems.vision.LimelightVision;</span>
+<span class="source-line-no">041</span><span id="line-41">import com.stuypulse.robot.util.PathUtil.AutonConfig;</span>
+<span class="source-line-no">042</span><span id="line-42"></span>
+<span class="source-line-no">043</span><span id="line-43">import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;</span>
+<span class="source-line-no">044</span><span id="line-44">import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;</span>
+<span class="source-line-no">045</span><span id="line-45">import edu.wpi.first.wpilibj2.command.Command;</span>
+<span class="source-line-no">046</span><span id="line-46">import edu.wpi.first.wpilibj2.command.WaitCommand;</span>
+<span class="source-line-no">047</span><span id="line-47">import edu.wpi.first.wpilibj2.command.button.CommandXboxController;</span>
+<span class="source-line-no">048</span><span id="line-48">import edu.wpi.first.wpilibj2.command.button.Trigger;</span>
+<span class="source-line-no">049</span><span id="line-49"></span>
+<span class="source-line-no">050</span><span id="line-50">/**</span>
+<span class="source-line-no">051</span><span id="line-51"> * &lt;h2&gt;Robot Container Class&lt;/h2&gt;</span>
+<span class="source-line-no">052</span><span id="line-52"> * </span>
+<span class="source-line-no">053</span><span id="line-53"> * This class is where the bulk of the robot should be declared. Since Command-based is a</span>
+<span class="source-line-no">054</span><span id="line-54"> * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}</span>
+<span class="source-line-no">055</span><span id="line-55"> * periodic methods (other than the scheduler calls). Instead, the structure of the robot (including</span>
+<span class="source-line-no">056</span><span id="line-56"> * subsystems, commands, and trigger mappings) should be declared here.</span>
+<span class="source-line-no">057</span><span id="line-57"> */</span>
+<span class="source-line-no">058</span><span id="line-58">public class RobotContainer {</span>
+<span class="source-line-no">059</span><span id="line-59"></span>
+<span class="source-line-no">060</span><span id="line-60">    // Gamepads</span>
+<span class="source-line-no">061</span><span id="line-61">    public final CommandXboxController driver = new CommandXboxController(Ports.Gamepad.DRIVER);</span>
 <span class="source-line-no">062</span><span id="line-62"></span>
-<span class="source-line-no">063</span><span id="line-63">/**</span>
-<span class="source-line-no">064</span><span id="line-64"> * &lt;h2&gt;Robot Container Class&lt;/h2&gt;</span>
-<span class="source-line-no">065</span><span id="line-65"> * </span>
-<span class="source-line-no">066</span><span id="line-66"> * This class is where the bulk of the robot should be declared. Since Command-based is a</span>
-<span class="source-line-no">067</span><span id="line-67"> * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}</span>
-<span class="source-line-no">068</span><span id="line-68"> * periodic methods (other than the scheduler calls). Instead, the structure of the robot (including</span>
-<span class="source-line-no">069</span><span id="line-69"> * subsystems, commands, and trigger mappings) should be declared here.</span>
-<span class="source-line-no">070</span><span id="line-70"> */</span>
-<span class="source-line-no">071</span><span id="line-71">public class RobotContainer {</span>
-<span class="source-line-no">072</span><span id="line-72"></span>
-<span class="source-line-no">073</span><span id="line-73">    // Gamepads</span>
-<span class="source-line-no">074</span><span id="line-74">    public final CommandXboxController driver = new CommandXboxController(Ports.Gamepad.DRIVER);</span>
+<span class="source-line-no">063</span><span id="line-63">    // Subsystem</span>
+<span class="source-line-no">064</span><span id="line-64">    private final Feeder feeder = Feeder.getInstance();</span>
+<span class="source-line-no">065</span><span id="line-65"></span>
+<span class="source-line-no">066</span><span id="line-66">    private final Intake intake = Intake.getInstance();</span>
+<span class="source-line-no">067</span><span id="line-67"></span>
+<span class="source-line-no">068</span><span id="line-68">    private final Shooter shooter = Shooter.getInstance();</span>
+<span class="source-line-no">069</span><span id="line-69"></span>
+<span class="source-line-no">070</span><span id="line-70">    private final CommandSwerveDrivetrain swerve = CommandSwerveDrivetrain.getInstance();</span>
+<span class="source-line-no">071</span><span id="line-71"></span>
+<span class="source-line-no">072</span><span id="line-72">    private final LimelightVision vision = LimelightVision.getInstance();</span>
+<span class="source-line-no">073</span><span id="line-73"></span>
+<span class="source-line-no">074</span><span id="line-74">    private final LEDController leds = LEDController.getInstance();</span>
 <span class="source-line-no">075</span><span id="line-75"></span>
-<span class="source-line-no">076</span><span id="line-76">    // Subsystem</span>
-<span class="source-line-no">077</span><span id="line-77">    private final Feeder feeder = Feeder.getInstance();</span>
-<span class="source-line-no">078</span><span id="line-78"></span>
-<span class="source-line-no">079</span><span id="line-79">    private final Intake intake = Intake.getInstance();</span>
+<span class="source-line-no">076</span><span id="line-76">    private final Handoff handoff = Handoff.getInstance();</span>
+<span class="source-line-no">077</span><span id="line-77"></span>
+<span class="source-line-no">078</span><span id="line-78">    // Autons</span>
+<span class="source-line-no">079</span><span id="line-79">    private static SendableChooser&lt;Command&gt; autonChooser = new SendableChooser&lt;&gt;();</span>
 <span class="source-line-no">080</span><span id="line-80"></span>
-<span class="source-line-no">081</span><span id="line-81">    private final Shooter shooter = Shooter.getInstance();</span>
+<span class="source-line-no">081</span><span id="line-81">    // Robot container</span>
 <span class="source-line-no">082</span><span id="line-82"></span>
-<span class="source-line-no">083</span><span id="line-83">    private final CommandSwerveDrivetrain swerve = CommandSwerveDrivetrain.getInstance();</span>
-<span class="source-line-no">084</span><span id="line-84"></span>
-<span class="source-line-no">085</span><span id="line-85">    private final LimelightVision vision = LimelightVision.getInstance();</span>
-<span class="source-line-no">086</span><span id="line-86"></span>
-<span class="source-line-no">087</span><span id="line-87">    private final LEDController leds = LEDController.getInstance();</span>
-<span class="source-line-no">088</span><span id="line-88"></span>
-<span class="source-line-no">089</span><span id="line-89">    private final Handoff handoff = Handoff.getInstance();</span>
-<span class="source-line-no">090</span><span id="line-90"></span>
-<span class="source-line-no">091</span><span id="line-91">    // Autons</span>
-<span class="source-line-no">092</span><span id="line-92">    private static SendableChooser&lt;Command&gt; autonChooser = new SendableChooser&lt;&gt;();</span>
-<span class="source-line-no">093</span><span id="line-93"></span>
-<span class="source-line-no">094</span><span id="line-94">    // Robot container</span>
-<span class="source-line-no">095</span><span id="line-95"></span>
-<span class="source-line-no">096</span><span id="line-96">    /** The container for the robot. Contains subsystems, OI devices, and commands. */</span>
-<span class="source-line-no">097</span><span id="line-97">    public RobotContainer() {</span>
-<span class="source-line-no">098</span><span id="line-98">        swerve.configureAutoBuilder();</span>
-<span class="source-line-no">099</span><span id="line-99">        configureDefaultCommands();</span>
-<span class="source-line-no">100</span><span id="line-100">        configureButtonBindings();</span>
-<span class="source-line-no">101</span><span id="line-101">        configureAutons();</span>
-<span class="source-line-no">102</span><span id="line-102">        SmartDashboard.putData("Field", Field.FIELD2D);</span>
-<span class="source-line-no">103</span><span id="line-103">    }</span>
-<span class="source-line-no">104</span><span id="line-104"></span>
-<span class="source-line-no">105</span><span id="line-105">    /** ************ */</span>
-<span class="source-line-no">106</span><span id="line-106">    /** DEFAULTS ** */</span>
-<span class="source-line-no">107</span><span id="line-107">    /** ************ */</span>
-<span class="source-line-no">108</span><span id="line-108">    private void configureDefaultCommands() {</span>
-<span class="source-line-no">109</span><span id="line-109">        swerve.setDefaultCommand(new SwerveDriveDrive(driver));</span>
-<span class="source-line-no">110</span><span id="line-110">        leds.setDefaultCommand(new LEDDefaultCommand());</span>
-<span class="source-line-no">111</span><span id="line-111">    }</span>
-<span class="source-line-no">112</span><span id="line-112"></span>
-<span class="source-line-no">113</span><span id="line-113">    /***************/</span>
-<span class="source-line-no">114</span><span id="line-114">    /*** BUTTONS ***/</span>
-<span class="source-line-no">115</span><span id="line-115">    /***************/</span>
-<span class="source-line-no">116</span><span id="line-116"></span>
-<span class="source-line-no">117</span><span id="line-117">    /**</span>
-<span class="source-line-no">118</span><span id="line-118">     * This method is used to configure button bindings for controlling the robot.</span>
-<span class="source-line-no">119</span><span id="line-119">   */</span>
-<span class="source-line-no">120</span><span id="line-120">    private void configureButtonBindings() {</span>
-<span class="source-line-no">121</span><span id="line-121">        // Trigger buttons did not work for some reason so I had to do this</span>
-<span class="source-line-no">122</span><span id="line-122">        Trigger leftTrigger = new Trigger(() -&gt; driver.getLeftTriggerAxis() &gt; 0.5);</span>
-<span class="source-line-no">123</span><span id="line-123">        Trigger rightTrigger = new Trigger(() -&gt; driver.getRightTriggerAxis() &gt; 0.5);</span>
-<span class="source-line-no">124</span><span id="line-124"></span>
-<span class="source-line-no">125</span><span id="line-125">        leftTrigger.onTrue(new IntakeSetIntake());</span>
-<span class="source-line-no">126</span><span id="line-126">        driver.leftBumper().whileTrue(new IntakeSetOuttake());</span>
-<span class="source-line-no">127</span><span id="line-127">        driver.leftBumper().onFalse(new IntakeSetIntake());</span>
+<span class="source-line-no">083</span><span id="line-83">    /** The container for the robot. Contains subsystems, OI devices, and commands. */</span>
+<span class="source-line-no">084</span><span id="line-84">    public RobotContainer() {</span>
+<span class="source-line-no">085</span><span id="line-85">        swerve.configureAutoBuilder();</span>
+<span class="source-line-no">086</span><span id="line-86">        configureDefaultCommands();</span>
+<span class="source-line-no">087</span><span id="line-87">        configureButtonBindings();</span>
+<span class="source-line-no">088</span><span id="line-88">        configureAutons();</span>
+<span class="source-line-no">089</span><span id="line-89">        SmartDashboard.putData("Field", Field.FIELD2D);</span>
+<span class="source-line-no">090</span><span id="line-90">    }</span>
+<span class="source-line-no">091</span><span id="line-91"></span>
+<span class="source-line-no">092</span><span id="line-92">    /** ************ */</span>
+<span class="source-line-no">093</span><span id="line-93">    /** DEFAULTS ** */</span>
+<span class="source-line-no">094</span><span id="line-94">    /** ************ */</span>
+<span class="source-line-no">095</span><span id="line-95">    private void configureDefaultCommands() {</span>
+<span class="source-line-no">096</span><span id="line-96">        swerve.setDefaultCommand(new SwerveDriveDrive(driver));</span>
+<span class="source-line-no">097</span><span id="line-97">        leds.setDefaultCommand(new LEDDefaultCommand());</span>
+<span class="source-line-no">098</span><span id="line-98">    }</span>
+<span class="source-line-no">099</span><span id="line-99"></span>
+<span class="source-line-no">100</span><span id="line-100">    /***************/</span>
+<span class="source-line-no">101</span><span id="line-101">    /*** BUTTONS ***/</span>
+<span class="source-line-no">102</span><span id="line-102">    /***************/</span>
+<span class="source-line-no">103</span><span id="line-103"></span>
+<span class="source-line-no">104</span><span id="line-104">    /**</span>
+<span class="source-line-no">105</span><span id="line-105">     * This method is used to configure button bindings for controlling the robot.</span>
+<span class="source-line-no">106</span><span id="line-106">   */</span>
+<span class="source-line-no">107</span><span id="line-107">    private void configureButtonBindings() {</span>
+<span class="source-line-no">108</span><span id="line-108">        // Trigger buttons did not work for some reason so I had to do this</span>
+<span class="source-line-no">109</span><span id="line-109">        Trigger leftTrigger = new Trigger(() -&gt; driver.getLeftTriggerAxis() &gt; 0.5);</span>
+<span class="source-line-no">110</span><span id="line-110">        Trigger rightTrigger = new Trigger(() -&gt; driver.getRightTriggerAxis() &gt; 0.5);</span>
+<span class="source-line-no">111</span><span id="line-111"></span>
+<span class="source-line-no">112</span><span id="line-112">        leftTrigger.onTrue(new IntakeSetIntake());</span>
+<span class="source-line-no">113</span><span id="line-113">        driver.leftBumper().whileTrue(new IntakeSetOuttake());</span>
+<span class="source-line-no">114</span><span id="line-114">        driver.leftBumper().onFalse(new IntakeSetIntake());</span>
+<span class="source-line-no">115</span><span id="line-115"></span>
+<span class="source-line-no">116</span><span id="line-116">        rightTrigger.whileTrue(</span>
+<span class="source-line-no">117</span><span id="line-117">                new WaitCommand(1.5).raceWith(new SwerveDriveAlignToHub())</span>
+<span class="source-line-no">118</span><span id="line-118">                .andThen(new SwerveDriveXMode())</span>
+<span class="source-line-no">119</span><span id="line-119">                .andThen(new ShooterSetShoot())</span>
+<span class="source-line-no">120</span><span id="line-120">                .andThen(new ShooterWaitForSpinUp())</span>
+<span class="source-line-no">121</span><span id="line-121">                .andThen(new HandoffSetForward()</span>
+<span class="source-line-no">122</span><span id="line-122">                .alongWith(new FeederSetForward(),</span>
+<span class="source-line-no">123</span><span id="line-123">                    new IntakeAgitateFastOnce().repeatedly(),</span>
+<span class="source-line-no">124</span><span id="line-124">                    new ShooterFirstShotIncrease())));</span>
+<span class="source-line-no">125</span><span id="line-125">        rightTrigger.onFalse(</span>
+<span class="source-line-no">126</span><span id="line-126">            new StopShooting()</span>
+<span class="source-line-no">127</span><span id="line-127">        );</span>
 <span class="source-line-no">128</span><span id="line-128"></span>
-<span class="source-line-no">129</span><span id="line-129">        rightTrigger.whileTrue(</span>
-<span class="source-line-no">130</span><span id="line-130">                new WaitCommand(1.5).raceWith(new SwerveDriveAlignToHub())</span>
-<span class="source-line-no">131</span><span id="line-131">                .andThen(new SwerveDriveXMode())</span>
-<span class="source-line-no">132</span><span id="line-132">                .andThen(new ShooterSetShoot())</span>
-<span class="source-line-no">133</span><span id="line-133">                .andThen(new ShooterWaitForSpinUp())</span>
-<span class="source-line-no">134</span><span id="line-134">                .andThen(new HandoffSetForward()</span>
-<span class="source-line-no">135</span><span id="line-135">                .alongWith(new FeederSetForward(),</span>
-<span class="source-line-no">136</span><span id="line-136">                    new IntakeAgitateFastOnce().repeatedly(),</span>
-<span class="source-line-no">137</span><span id="line-137">                    new ShooterFirstShotIncrease())));</span>
-<span class="source-line-no">138</span><span id="line-138">        rightTrigger.onFalse(</span>
-<span class="source-line-no">139</span><span id="line-139">            new StopShooting()</span>
-<span class="source-line-no">140</span><span id="line-140">        );</span>
-<span class="source-line-no">141</span><span id="line-141"></span>
-<span class="source-line-no">142</span><span id="line-142">        // Top Left Paddle</span>
-<span class="source-line-no">143</span><span id="line-143">        driver.y().onTrue(new IntakeSetIdle());</span>
-<span class="source-line-no">144</span><span id="line-144">        </span>
-<span class="source-line-no">145</span><span id="line-145">        driver.rightBumper()</span>
-<span class="source-line-no">146</span><span id="line-146">            .whileTrue(</span>
-<span class="source-line-no">147</span><span id="line-147">                new WaitCommand(1.5).raceWith(new SwerveDriveAlignToFerryZone())</span>
-<span class="source-line-no">148</span><span id="line-148">                    .andThen(new SwerveDriveXMode())</span>
-<span class="source-line-no">149</span><span id="line-149">                    .andThen(new ShooterSetFerry())</span>
-<span class="source-line-no">150</span><span id="line-150">                    .andThen(new ShooterWaitForSpinUp())</span>
-<span class="source-line-no">151</span><span id="line-151">                    .andThen(new HandoffSetForward())</span>
-<span class="source-line-no">152</span><span id="line-152">                    .alongWith(new FeederSetForward(), </span>
-<span class="source-line-no">153</span><span id="line-153">                        new IntakeAgitateFastOnce().repeatedly(),</span>
-<span class="source-line-no">154</span><span id="line-154">                        new ShooterFirstShotIncrease()));</span>
-<span class="source-line-no">155</span><span id="line-155">        driver.rightBumper()</span>
-<span class="source-line-no">156</span><span id="line-156">            .onFalse(</span>
-<span class="source-line-no">157</span><span id="line-157">                new StopShooting()</span>
-<span class="source-line-no">158</span><span id="line-158">            );</span>
-<span class="source-line-no">159</span><span id="line-159">        // Manual shooting possibly from in front of the tower</span>
-<span class="source-line-no">160</span><span id="line-160">        driver.a()</span>
-<span class="source-line-no">161</span><span id="line-161">            .whileTrue(</span>
-<span class="source-line-no">162</span><span id="line-162">                new SwerveDriveXMode()</span>
-<span class="source-line-no">163</span><span id="line-163">                    .andThen(new ShooterSetManual())</span>
-<span class="source-line-no">164</span><span id="line-164">                    .andThen(new ShooterWaitForSpinUp())</span>
-<span class="source-line-no">165</span><span id="line-165">                    .andThen(new HandoffSetForward().repeatedly())</span>
-<span class="source-line-no">166</span><span id="line-166">                    .alongWith(new FeederSetForward().repeatedly(), </span>
-<span class="source-line-no">167</span><span id="line-167">                        new IntakeAgitateFastOnce().repeatedly(),</span>
-<span class="source-line-no">168</span><span id="line-168">                        new ShooterFirstShotIncrease()));</span>
-<span class="source-line-no">169</span><span id="line-169">        driver.a()</span>
-<span class="source-line-no">170</span><span id="line-170">            .onFalse(</span>
-<span class="source-line-no">171</span><span id="line-171">                new StopShooting()</span>
-<span class="source-line-no">172</span><span id="line-172">            );</span>
-<span class="source-line-no">173</span><span id="line-173"></span>
-<span class="source-line-no">174</span><span id="line-174">        driver.b()  </span>
-<span class="source-line-no">175</span><span id="line-175">            .whileTrue(</span>
-<span class="source-line-no">176</span><span id="line-176">                new SwerveDriveXMode()</span>
-<span class="source-line-no">177</span><span id="line-177">                    .andThen(new ShooterSetShoot())</span>
-<span class="source-line-no">178</span><span id="line-178">                    .andThen(new ShooterWaitForSpinUp())</span>
-<span class="source-line-no">179</span><span id="line-179">                    .andThen(new HandoffSetForward().repeatedly())</span>
-<span class="source-line-no">180</span><span id="line-180">                    .alongWith(new FeederSetForward().repeatedly(), </span>
-<span class="source-line-no">181</span><span id="line-181">                        new IntakeAgitateFastOnce().repeatedly(),</span>
-<span class="source-line-no">182</span><span id="line-182">                        new ShooterFirstShotIncrease())</span>
-<span class="source-line-no">183</span><span id="line-183">            );</span>
-<span class="source-line-no">184</span><span id="line-184">        driver.b()</span>
-<span class="source-line-no">185</span><span id="line-185">            .onFalse(</span>
-<span class="source-line-no">186</span><span id="line-186">                new StopShooting()</span>
-<span class="source-line-no">187</span><span id="line-187">            );</span>
-<span class="source-line-no">188</span><span id="line-188"></span>
-<span class="source-line-no">189</span><span id="line-189">        // Bottom Left Paddle</span>
-<span class="source-line-no">190</span><span id="line-190">        driver.x().whileTrue(new SwerveDriveXMode());</span>
-<span class="source-line-no">191</span><span id="line-191"></span>
-<span class="source-line-no">192</span><span id="line-192">        driver.povLeft().onTrue(new SwerveDriveResetRotation());</span>
-<span class="source-line-no">193</span><span id="line-193">        </span>
-<span class="source-line-no">194</span><span id="line-194">        driver.povUp()</span>
-<span class="source-line-no">195</span><span id="line-195">            .onTrue(new ShooterAddToBonusVelocity(50));</span>
-<span class="source-line-no">196</span><span id="line-196">        driver.povDown()</span>
-<span class="source-line-no">197</span><span id="line-197">            .onTrue(new ShooterAddToBonusVelocity(-50));</span>
-<span class="source-line-no">198</span><span id="line-198">        driver.povRight()</span>
-<span class="source-line-no">199</span><span id="line-199">            .onTrue(new ShooterResetBonusVelocity());</span>
-<span class="source-line-no">200</span><span id="line-200"></span>
-<span class="source-line-no">201</span><span id="line-201">    }</span>
-<span class="source-line-no">202</span><span id="line-202"></span>
-<span class="source-line-no">203</span><span id="line-203">    /**************/</span>
-<span class="source-line-no">204</span><span id="line-204">    /*** AUTONS ***/</span>
-<span class="source-line-no">205</span><span id="line-205">    /**************/</span>
-<span class="source-line-no">206</span><span id="line-206"></span>
-<span class="source-line-no">207</span><span id="line-207">    /**</span>
-<span class="source-line-no">208</span><span id="line-208">     * This method is used to configure the autonomous commands.</span>
-<span class="source-line-no">209</span><span id="line-209">     */</span>
-<span class="source-line-no">210</span><span id="line-210">     public void configureAutons() {</span>
-<span class="source-line-no">211</span><span id="line-211">        autonChooser.addOption("Do Nothing", new DoNothingAuton());</span>
-<span class="source-line-no">212</span><span id="line-212">        // DOT</span>
-<span class="source-line-no">213</span><span id="line-213">        AutonConfig LB_ToBCCenter = new AutonConfig("LB To BC Center", LBCenterDotDot::new,</span>
-<span class="source-line-no">214</span><span id="line-214">            "LB to BC Center"</span>
-<span class="source-line-no">215</span><span id="line-215">        );</span>
-<span class="source-line-no">216</span><span id="line-216">        LB_ToBCCenter.register(autonChooser);</span>
-<span class="source-line-no">217</span><span id="line-217">        AutonConfig LB_ToBCLeft = new AutonConfig("LB To BC Left", LeftDot::new,</span>
-<span class="source-line-no">218</span><span id="line-218">            "LB to BC Left"</span>
-<span class="source-line-no">219</span><span id="line-219">        );</span>
-<span class="source-line-no">220</span><span id="line-220">        LB_ToBCLeft.register(autonChooser);</span>
-<span class="source-line-no">221</span><span id="line-221">        AutonConfig RB_ToBCCenter = new AutonConfig("RB To BC Center", RBCenterDotDot::new,</span>
-<span class="source-line-no">222</span><span id="line-222">            "RB to BC Center"</span>
-<span class="source-line-no">223</span><span id="line-223">        );</span>
-<span class="source-line-no">224</span><span id="line-224">        RB_ToBCCenter.register(autonChooser);</span>
-<span class="source-line-no">225</span><span id="line-225">        AutonConfig RB_ToBCRight = new AutonConfig("RB To BC Right", RightDot::new,</span>
-<span class="source-line-no">226</span><span id="line-226">            "RB to BC Right"</span>
-<span class="source-line-no">227</span><span id="line-227">        );</span>
-<span class="source-line-no">228</span><span id="line-228">        RB_ToBCRight.register(autonChooser);</span>
-<span class="source-line-no">229</span><span id="line-229"></span>
-<span class="source-line-no">230</span><span id="line-230">        // SHOOT</span>
-<span class="source-line-no">231</span><span id="line-231">        AutonConfig frontHubShootPreloads = new AutonConfig("Front Hub Shoot Preloads", FrontHubShootPreloads::new,</span>
-<span class="source-line-no">232</span><span id="line-232">            "Front Hub Shoot Preloads"</span>
-<span class="source-line-no">233</span><span id="line-233">        );</span>
-<span class="source-line-no">234</span><span id="line-234">        frontHubShootPreloads.register(autonChooser);</span>
-<span class="source-line-no">235</span><span id="line-235">        AutonConfig LB_OneSweepAngled = new AutonConfig("LB 1 Sweep Angled", LBOneSweepAngled::new,</span>
-<span class="source-line-no">236</span><span id="line-236">            "LB to Mid Neutral RF",</span>
-<span class="source-line-no">237</span><span id="line-237">            "Mid Neutral RF to LB Shoot"</span>
-<span class="source-line-no">238</span><span id="line-238">        );</span>
-<span class="source-line-no">239</span><span id="line-239">        LB_OneSweepAngled.register(autonChooser);</span>
-<span class="source-line-no">240</span><span id="line-240">        AutonConfig LB_TwoSweepAngled = new AutonConfig("LB 2 Sweep Angled", LBTwoSweepAngled::new, </span>
-<span class="source-line-no">241</span><span id="line-241">            "LB to Mid Neutral RF",</span>
-<span class="source-line-no">242</span><span id="line-242">            "Mid Neutral RF to LB Shoot",</span>
-<span class="source-line-no">243</span><span id="line-243">            "LB Shoot to LB Start",</span>
-<span class="source-line-no">244</span><span id="line-244">            "LB to Mid Neutral RF",</span>
-<span class="source-line-no">245</span><span id="line-245">            "Mid Neutral RF to LB Shoot"</span>
-<span class="source-line-no">246</span><span id="line-246">        );</span>
-<span class="source-line-no">247</span><span id="line-247">        LB_TwoSweepAngled.register(autonChooser);</span>
-<span class="source-line-no">248</span><span id="line-248">        AutonConfig LB_OnePointFiveSpiralAngled = new AutonConfig("LB 1.5 Spiral Angled", LBOnePointFiveSpiralAngled::new, </span>
-<span class="source-line-no">249</span><span id="line-249">            "LB to Mid Neutral RF",</span>
-<span class="source-line-no">250</span><span id="line-250">            "Mid Neutral RF Spiral",</span>
-<span class="source-line-no">251</span><span id="line-251">            "Mid Neutral RF to LB Shoot",</span>
-<span class="source-line-no">252</span><span id="line-252">            "LB Shoot to LB Start",</span>
-<span class="source-line-no">253</span><span id="line-253">            "LB to Mid Neutral RF"</span>
-<span class="source-line-no">254</span><span id="line-254">        );</span>
-<span class="source-line-no">255</span><span id="line-255">        LB_OnePointFiveSpiralAngled.register(autonChooser);</span>
-<span class="source-line-no">256</span><span id="line-256"></span>
-<span class="source-line-no">257</span><span id="line-257">        AutonConfig LB_Dumpy = new AutonConfig("LB Dumpy", LBDumpy::new,</span>
-<span class="source-line-no">258</span><span id="line-258">            "LB to N Dumpy",</span>
-<span class="source-line-no">259</span><span id="line-259">            "LB Intake Dumpy",</span>
-<span class="source-line-no">260</span><span id="line-260">            "LB Backsweep Dumpy",</span>
-<span class="source-line-no">261</span><span id="line-261">            "LB Shoot Dumpy",</span>
-<span class="source-line-no">262</span><span id="line-262">            "LB Shoot to Depot");</span>
-<span class="source-line-no">263</span><span id="line-263">        LB_Dumpy.register(autonChooser);</span>
-<span class="source-line-no">264</span><span id="line-264"></span>
-<span class="source-line-no">265</span><span id="line-265"></span>
-<span class="source-line-no">266</span><span id="line-266">        AutonConfig centerDepot = new AutonConfig("Center Depot", CenterDepot::new,</span>
-<span class="source-line-no">267</span><span id="line-267">            "Hub to Depot",</span>
-<span class="source-line-no">268</span><span id="line-268">            "Tower shoot");</span>
-<span class="source-line-no">269</span><span id="line-269">        centerDepot.register(autonChooser);</span>
-<span class="source-line-no">270</span><span id="line-270"></span>
-<span class="source-line-no">271</span><span id="line-271">        // autonChooser.addOption("SysID Module Translation Dynamic Forwards",</span>
-<span class="source-line-no">272</span><span id="line-272">        // swerve.sysIdDynamic(Direction.kForward));</span>
-<span class="source-line-no">273</span><span id="line-273">        // autonChooser.addOption("SysID Module Translation Dynamic Backwards",</span>
-<span class="source-line-no">274</span><span id="line-274">        // swerve.sysIdDynamic(Direction.kReverse));</span>
-<span class="source-line-no">275</span><span id="line-275">        // autonChooser.addOption("SysID Module Translation Quasi Forwards",</span>
-<span class="source-line-no">276</span><span id="line-276">        // swerve.sysIdQuasistatic(Direction.kForward));</span>
-<span class="source-line-no">277</span><span id="line-277">        // autonChooser.addOption("SysID Module Translation Quasi Backwards",</span>
-<span class="source-line-no">278</span><span id="line-278">        // swerve.sysIdQuasistatic(Direction.kReverse));</span>
-<span class="source-line-no">279</span><span id="line-279">        // autonChooser.addOption("SysID Rotation Translation Dynamic Forwards",</span>
-<span class="source-line-no">280</span><span id="line-280">        // swerve.sysidRotationDynamic(Direction.kForward));</span>
-<span class="source-line-no">281</span><span id="line-281">        // autonChooser.addOption("SysID Rotation Translation Dynamic Backwards",</span>
-<span class="source-line-no">282</span><span id="line-282">        // swerve.sysidRotationDynamic(Direction.kReverse));</span>
-<span class="source-line-no">283</span><span id="line-283">        // autonChooser.addOption("SysID Rotation Translation Quasi Forwards",</span>
-<span class="source-line-no">284</span><span id="line-284">        // swerve.sysidRotationQuasiStatic(Direction.kForward));</span>
-<span class="source-line-no">285</span><span id="line-285">        // autonChooser.addOption("SysID Rotation Translation Quasi Backwards",</span>
-<span class="source-line-no">286</span><span id="line-286">        // swerve.sysidRotationQuasiStatic(Direction.kReverse));</span>
-<span class="source-line-no">287</span><span id="line-287">        SmartDashboard.putData("Autonomous", autonChooser);</span>
-<span class="source-line-no">288</span><span id="line-288">    }</span>
-<span class="source-line-no">289</span><span id="line-289"></span>
-<span class="source-line-no">290</span><span id="line-290">    /**</span>
-<span class="source-line-no">291</span><span id="line-291">     * Use this to pass the autonomous command to the main {@link Robot} class.</span>
-<span class="source-line-no">292</span><span id="line-292">     * @return The command to run in autonomous</span>
-<span class="source-line-no">293</span><span id="line-293">     */</span>
-<span class="source-line-no">294</span><span id="line-294">    public Command getAutonomousCommand() {</span>
-<span class="source-line-no">295</span><span id="line-295">        return autonChooser.getSelected();</span>
-<span class="source-line-no">296</span><span id="line-296">    }</span>
-<span class="source-line-no">297</span><span id="line-297">}</span>
+<span class="source-line-no">129</span><span id="line-129">        // Top Left Paddle</span>
+<span class="source-line-no">130</span><span id="line-130">        driver.y().onTrue(new IntakeSetIdle());</span>
+<span class="source-line-no">131</span><span id="line-131">        </span>
+<span class="source-line-no">132</span><span id="line-132">        driver.rightBumper()</span>
+<span class="source-line-no">133</span><span id="line-133">            .whileTrue(</span>
+<span class="source-line-no">134</span><span id="line-134">                new WaitCommand(1.5).raceWith(new SwerveDriveAlignToFerryZone())</span>
+<span class="source-line-no">135</span><span id="line-135">                    .andThen(new SwerveDriveXMode())</span>
+<span class="source-line-no">136</span><span id="line-136">                    .andThen(new ShooterSetFerry())</span>
+<span class="source-line-no">137</span><span id="line-137">                    .andThen(new ShooterWaitForSpinUp())</span>
+<span class="source-line-no">138</span><span id="line-138">                    .andThen(new HandoffSetForward())</span>
+<span class="source-line-no">139</span><span id="line-139">                    .alongWith(new FeederSetForward(), </span>
+<span class="source-line-no">140</span><span id="line-140">                        new IntakeAgitateFastOnce().repeatedly(),</span>
+<span class="source-line-no">141</span><span id="line-141">                        new ShooterFirstShotIncrease()));</span>
+<span class="source-line-no">142</span><span id="line-142">        driver.rightBumper()</span>
+<span class="source-line-no">143</span><span id="line-143">            .onFalse(</span>
+<span class="source-line-no">144</span><span id="line-144">                new StopShooting()</span>
+<span class="source-line-no">145</span><span id="line-145">            );</span>
+<span class="source-line-no">146</span><span id="line-146">        // Manual shooting possibly from in front of the tower</span>
+<span class="source-line-no">147</span><span id="line-147">        driver.a()</span>
+<span class="source-line-no">148</span><span id="line-148">            .whileTrue(</span>
+<span class="source-line-no">149</span><span id="line-149">                new SwerveDriveXMode()</span>
+<span class="source-line-no">150</span><span id="line-150">                    .andThen(new ShooterSetManual())</span>
+<span class="source-line-no">151</span><span id="line-151">                    .andThen(new ShooterWaitForSpinUp())</span>
+<span class="source-line-no">152</span><span id="line-152">                    .andThen(new HandoffSetForward().repeatedly())</span>
+<span class="source-line-no">153</span><span id="line-153">                    .alongWith(new FeederSetForward().repeatedly(), </span>
+<span class="source-line-no">154</span><span id="line-154">                        new IntakeAgitateFastOnce().repeatedly(),</span>
+<span class="source-line-no">155</span><span id="line-155">                        new ShooterFirstShotIncrease()));</span>
+<span class="source-line-no">156</span><span id="line-156">        driver.a()</span>
+<span class="source-line-no">157</span><span id="line-157">            .onFalse(</span>
+<span class="source-line-no">158</span><span id="line-158">                new StopShooting()</span>
+<span class="source-line-no">159</span><span id="line-159">            );</span>
+<span class="source-line-no">160</span><span id="line-160"></span>
+<span class="source-line-no">161</span><span id="line-161">        driver.b()  </span>
+<span class="source-line-no">162</span><span id="line-162">            .whileTrue(</span>
+<span class="source-line-no">163</span><span id="line-163">                new SwerveDriveXMode()</span>
+<span class="source-line-no">164</span><span id="line-164">                    .andThen(new ShooterSetShoot())</span>
+<span class="source-line-no">165</span><span id="line-165">                    .andThen(new ShooterWaitForSpinUp())</span>
+<span class="source-line-no">166</span><span id="line-166">                    .andThen(new HandoffSetForward().repeatedly())</span>
+<span class="source-line-no">167</span><span id="line-167">                    .alongWith(new FeederSetForward().repeatedly(), </span>
+<span class="source-line-no">168</span><span id="line-168">                        new IntakeAgitateFastOnce().repeatedly(),</span>
+<span class="source-line-no">169</span><span id="line-169">                        new ShooterFirstShotIncrease())</span>
+<span class="source-line-no">170</span><span id="line-170">            );</span>
+<span class="source-line-no">171</span><span id="line-171">        driver.b()</span>
+<span class="source-line-no">172</span><span id="line-172">            .onFalse(</span>
+<span class="source-line-no">173</span><span id="line-173">                new StopShooting()</span>
+<span class="source-line-no">174</span><span id="line-174">            );</span>
+<span class="source-line-no">175</span><span id="line-175"></span>
+<span class="source-line-no">176</span><span id="line-176">        // Bottom Left Paddle</span>
+<span class="source-line-no">177</span><span id="line-177">        driver.x().whileTrue(new SwerveDriveXMode());</span>
+<span class="source-line-no">178</span><span id="line-178"></span>
+<span class="source-line-no">179</span><span id="line-179">        driver.povLeft().onTrue(new SwerveDriveResetRotation());</span>
+<span class="source-line-no">180</span><span id="line-180">        </span>
+<span class="source-line-no">181</span><span id="line-181">        driver.povUp()</span>
+<span class="source-line-no">182</span><span id="line-182">            .onTrue(new ShooterAddToBonusVelocity(50));</span>
+<span class="source-line-no">183</span><span id="line-183">        driver.povDown()</span>
+<span class="source-line-no">184</span><span id="line-184">            .onTrue(new ShooterAddToBonusVelocity(-50));</span>
+<span class="source-line-no">185</span><span id="line-185">        driver.povRight()</span>
+<span class="source-line-no">186</span><span id="line-186">            .onTrue(new ShooterResetBonusVelocity());</span>
+<span class="source-line-no">187</span><span id="line-187"></span>
+<span class="source-line-no">188</span><span id="line-188">    }</span>
+<span class="source-line-no">189</span><span id="line-189"></span>
+<span class="source-line-no">190</span><span id="line-190">    /**************/</span>
+<span class="source-line-no">191</span><span id="line-191">    /*** AUTONS ***/</span>
+<span class="source-line-no">192</span><span id="line-192">    /**************/</span>
+<span class="source-line-no">193</span><span id="line-193"></span>
+<span class="source-line-no">194</span><span id="line-194">    /**</span>
+<span class="source-line-no">195</span><span id="line-195">     * This method is used to configure the autonomous commands.</span>
+<span class="source-line-no">196</span><span id="line-196">     */</span>
+<span class="source-line-no">197</span><span id="line-197">     public void configureAutons() {</span>
+<span class="source-line-no">198</span><span id="line-198">        autonChooser.addOption("Do Nothing", new DoNothingAuton());</span>
+<span class="source-line-no">199</span><span id="line-199">        // SHOOT</span>
+<span class="source-line-no">200</span><span id="line-200">        AutonConfig frontHubShootPreloads = new AutonConfig("Front Hub Shoot Preloads", FrontHubShootPreloads::new,</span>
+<span class="source-line-no">201</span><span id="line-201">            "Front Hub Shoot Preloads"</span>
+<span class="source-line-no">202</span><span id="line-202">        );</span>
+<span class="source-line-no">203</span><span id="line-203">        frontHubShootPreloads.register(autonChooser);</span>
+<span class="source-line-no">204</span><span id="line-204"></span>
+<span class="source-line-no">205</span><span id="line-205">        AutonConfig LB_Dumpy = new AutonConfig("LB Dumpy", LBDumpy::new,</span>
+<span class="source-line-no">206</span><span id="line-206">            "LB to N Dumpy",</span>
+<span class="source-line-no">207</span><span id="line-207">            "LB Intake Dumpy",</span>
+<span class="source-line-no">208</span><span id="line-208">            "LB Backsweep Dumpy",</span>
+<span class="source-line-no">209</span><span id="line-209">            "LB Shoot Dumpy",</span>
+<span class="source-line-no">210</span><span id="line-210">            "LB Shoot to Depot");</span>
+<span class="source-line-no">211</span><span id="line-211">        LB_Dumpy.register(autonChooser);</span>
+<span class="source-line-no">212</span><span id="line-212"></span>
+<span class="source-line-no">213</span><span id="line-213"></span>
+<span class="source-line-no">214</span><span id="line-214">        AutonConfig centerDepot = new AutonConfig("Center Depot", CenterDepot::new,</span>
+<span class="source-line-no">215</span><span id="line-215">            "Hub to Depot",</span>
+<span class="source-line-no">216</span><span id="line-216">            "Tower shoot");</span>
+<span class="source-line-no">217</span><span id="line-217">        centerDepot.register(autonChooser);</span>
+<span class="source-line-no">218</span><span id="line-218"></span>
+<span class="source-line-no">219</span><span id="line-219">        // autonChooser.addOption("SysID Module Translation Dynamic Forwards",</span>
+<span class="source-line-no">220</span><span id="line-220">        // swerve.sysIdDynamic(Direction.kForward));</span>
+<span class="source-line-no">221</span><span id="line-221">        // autonChooser.addOption("SysID Module Translation Dynamic Backwards",</span>
+<span class="source-line-no">222</span><span id="line-222">        // swerve.sysIdDynamic(Direction.kReverse));</span>
+<span class="source-line-no">223</span><span id="line-223">        // autonChooser.addOption("SysID Module Translation Quasi Forwards",</span>
+<span class="source-line-no">224</span><span id="line-224">        // swerve.sysIdQuasistatic(Direction.kForward));</span>
+<span class="source-line-no">225</span><span id="line-225">        // autonChooser.addOption("SysID Module Translation Quasi Backwards",</span>
+<span class="source-line-no">226</span><span id="line-226">        // swerve.sysIdQuasistatic(Direction.kReverse));</span>
+<span class="source-line-no">227</span><span id="line-227">        // autonChooser.addOption("SysID Rotation Translation Dynamic Forwards",</span>
+<span class="source-line-no">228</span><span id="line-228">        // swerve.sysidRotationDynamic(Direction.kForward));</span>
+<span class="source-line-no">229</span><span id="line-229">        // autonChooser.addOption("SysID Rotation Translation Dynamic Backwards",</span>
+<span class="source-line-no">230</span><span id="line-230">        // swerve.sysidRotationDynamic(Direction.kReverse));</span>
+<span class="source-line-no">231</span><span id="line-231">        // autonChooser.addOption("SysID Rotation Translation Quasi Forwards",</span>
+<span class="source-line-no">232</span><span id="line-232">        // swerve.sysidRotationQuasiStatic(Direction.kForward));</span>
+<span class="source-line-no">233</span><span id="line-233">        // autonChooser.addOption("SysID Rotation Translation Quasi Backwards",</span>
+<span class="source-line-no">234</span><span id="line-234">        // swerve.sysidRotationQuasiStatic(Direction.kReverse));</span>
+<span class="source-line-no">235</span><span id="line-235">        SmartDashboard.putData("Autonomous", autonChooser);</span>
+<span class="source-line-no">236</span><span id="line-236">    }</span>
+<span class="source-line-no">237</span><span id="line-237"></span>
+<span class="source-line-no">238</span><span id="line-238">    /**</span>
+<span class="source-line-no">239</span><span id="line-239">     * Use this to pass the autonomous command to the main {@link Robot} class.</span>
+<span class="source-line-no">240</span><span id="line-240">     * @return The command to run in autonomous</span>
+<span class="source-line-no">241</span><span id="line-241">     */</span>
+<span class="source-line-no">242</span><span id="line-242">    public Command getAutonomousCommand() {</span>
+<span class="source-line-no">243</span><span id="line-243">        return autonChooser.getSelected();</span>
+<span class="source-line-no">244</span><span id="line-244">    }</span>
+<span class="source-line-no">245</span><span id="line-245">}</span>
 
 
 
