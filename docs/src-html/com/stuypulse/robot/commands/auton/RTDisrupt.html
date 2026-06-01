@@ -16,21 +16,20 @@
 <span class="source-line-no">003</span><span id="line-3">import com.pathplanner.lib.path.PathPlannerPath;</span>
 <span class="source-line-no">004</span><span id="line-4">import com.stuypulse.robot.commands.swerve.SwerveResetPose;</span>
 <span class="source-line-no">005</span><span id="line-5">import com.stuypulse.robot.subsystems.swerve.CommandSwerveDrivetrain;</span>
-<span class="source-line-no">006</span><span id="line-6">import edu.wpi.first.wpilibj2.command.Command;</span>
-<span class="source-line-no">007</span><span id="line-7">import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;</span>
-<span class="source-line-no">008</span><span id="line-8"></span>
-<span class="source-line-no">009</span><span id="line-9">public class RTDisrupt extends SequentialCommandGroup {</span>
-<span class="source-line-no">010</span><span id="line-10"></span>
-<span class="source-line-no">011</span><span id="line-11">    public RTDisrupt(PathPlannerPath... paths) {</span>
-<span class="source-line-no">012</span><span id="line-12">        addCommands(new SwerveResetPose(paths[0].getStartingHolonomicPose().get()),</span>
-<span class="source-line-no">013</span><span id="line-13">                CommandSwerveDrivetrain.getInstance().followPathCommand(paths[0]),</span>
-<span class="source-line-no">014</span><span id="line-14">                CommandSwerveDrivetrain.getInstance().followPathCommand(paths[1]),</span>
-<span class="source-line-no">015</span><span id="line-15">                CommandSwerveDrivetrain.getInstance().followPathCommand(paths[2]),</span>
-<span class="source-line-no">016</span><span id="line-16">                CommandSwerveDrivetrain.getInstance().followPathCommand(paths[3]),</span>
-<span class="source-line-no">017</span><span id="line-17">                CommandSwerveDrivetrain.getInstance().followPathCommand(paths[4]),</span>
-<span class="source-line-no">018</span><span id="line-18">                CommandSwerveDrivetrain.getInstance().followPathCommand(paths[5]));</span>
-<span class="source-line-no">019</span><span id="line-19">    }</span>
-<span class="source-line-no">020</span><span id="line-20">}</span>
+<span class="source-line-no">006</span><span id="line-6">import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;</span>
+<span class="source-line-no">007</span><span id="line-7"></span>
+<span class="source-line-no">008</span><span id="line-8">public class RTDisrupt extends SequentialCommandGroup {</span>
+<span class="source-line-no">009</span><span id="line-9"></span>
+<span class="source-line-no">010</span><span id="line-10">    public RTDisrupt(PathPlannerPath... paths) {</span>
+<span class="source-line-no">011</span><span id="line-11">        addCommands(new SwerveResetPose(paths[0].getStartingHolonomicPose().get()),</span>
+<span class="source-line-no">012</span><span id="line-12">                CommandSwerveDrivetrain.getInstance().followPathCommand(paths[0]),</span>
+<span class="source-line-no">013</span><span id="line-13">                CommandSwerveDrivetrain.getInstance().followPathCommand(paths[1]),</span>
+<span class="source-line-no">014</span><span id="line-14">                CommandSwerveDrivetrain.getInstance().followPathCommand(paths[2]),</span>
+<span class="source-line-no">015</span><span id="line-15">                CommandSwerveDrivetrain.getInstance().followPathCommand(paths[3]),</span>
+<span class="source-line-no">016</span><span id="line-16">                CommandSwerveDrivetrain.getInstance().followPathCommand(paths[4]),</span>
+<span class="source-line-no">017</span><span id="line-17">                CommandSwerveDrivetrain.getInstance().followPathCommand(paths[5]));</span>
+<span class="source-line-no">018</span><span id="line-18">    }</span>
+<span class="source-line-no">019</span><span id="line-19">}</span>
 
 
 

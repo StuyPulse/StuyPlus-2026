@@ -84,7 +84,7 @@ loadScripts(document, 'script');</script>
 <dd><code>edu.wpi.first.util.sendable.Sendable</code>, <code>edu.wpi.first.wpilibj2.command.Subsystem</code></dd>
 </dl>
 <hr>
-<div class="type-signature"><span class="modifiers">public class </span><span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/shooter/ShooterSim.html#line-27">ShooterSim</a></span>
+<div class="type-signature"><span class="modifiers">public class </span><span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/shooter/ShooterSim.html#line-29">ShooterSim</a></span>
 <span class="extends-implements">extends <a href="Shooter.html" title="class in com.stuypulse.robot.subsystems.shooter">Shooter</a></span></div>
 </section>
 <section class="summary">
@@ -158,18 +158,21 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>edu.wpi.first.units.measure.AngularVelocity</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getCurrentAngularVelocity()" class="member-name-link">getCurrentAngularVelocity</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getShooterSysIdRoutine()" class="member-name-link">getShooterSysIdRoutine</a>()</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>private com.ctre.phoenix6.controls.ControlRequest</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getShooterControl()" class="member-name-link">getShooterControl</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#periodic()" class="member-name-link">periodic</a>()</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getShooterSysIdRoutine()" class="member-name-link">getShooterSysIdRoutine</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setVoltageOverride(edu.wpi.first.units.measure.Voltage)" class="member-name-link">setVoltageOverride</a><wbr>(edu.wpi.first.units.measure.Voltage&nbsp;voltage)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#periodic()" class="member-name-link">periodic</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#stopMotors()" class="member-name-link">stopMotors</a>()</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setVoltageOverride(edu.wpi.first.units.measure.Voltage)" class="member-name-link">setVoltageOverride</a><wbr>(edu.wpi.first.units.measure.Voltage&nbsp;voltage)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#stopMotors()" class="member-name-link">stopMotors</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 </div>
 </div>
 </div>
@@ -199,43 +202,43 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="shooterSim">
 <h3>shooterSim</h3>
-<div class="member-signature"><span class="modifiers">private final</span>&nbsp;<span class="return-type">edu.wpi.first.wpilibj.simulation.FlywheelSim</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/shooter/ShooterSim.html#line-29">shooterSim</a></span></div>
+<div class="member-signature"><span class="modifiers">private final</span>&nbsp;<span class="return-type">edu.wpi.first.wpilibj.simulation.FlywheelSim</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/shooter/ShooterSim.html#line-31">shooterSim</a></span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="shooterMotorLeft">
 <h3>shooterMotorLeft</h3>
-<div class="member-signature"><span class="modifiers">private final</span>&nbsp;<span class="return-type"><a href="../../util/simulation/TalonFXSimulation.html" title="class in com.stuypulse.robot.util.simulation">TalonFXSimulation</a></span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/shooter/ShooterSim.html#line-31">shooterMotorLeft</a></span></div>
+<div class="member-signature"><span class="modifiers">private final</span>&nbsp;<span class="return-type"><a href="../../util/simulation/TalonFXSimulation.html" title="class in com.stuypulse.robot.util.simulation">TalonFXSimulation</a></span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/shooter/ShooterSim.html#line-33">shooterMotorLeft</a></span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="shooterMotorCenter">
 <h3>shooterMotorCenter</h3>
-<div class="member-signature"><span class="modifiers">private final</span>&nbsp;<span class="return-type"><a href="../../util/simulation/TalonFXSimulation.html" title="class in com.stuypulse.robot.util.simulation">TalonFXSimulation</a></span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/shooter/ShooterSim.html#line-33">shooterMotorCenter</a></span></div>
+<div class="member-signature"><span class="modifiers">private final</span>&nbsp;<span class="return-type"><a href="../../util/simulation/TalonFXSimulation.html" title="class in com.stuypulse.robot.util.simulation">TalonFXSimulation</a></span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/shooter/ShooterSim.html#line-35">shooterMotorCenter</a></span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="shooterMotorRight">
 <h3>shooterMotorRight</h3>
-<div class="member-signature"><span class="modifiers">private final</span>&nbsp;<span class="return-type"><a href="../../util/simulation/TalonFXSimulation.html" title="class in com.stuypulse.robot.util.simulation">TalonFXSimulation</a></span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/shooter/ShooterSim.html#line-35">shooterMotorRight</a></span></div>
+<div class="member-signature"><span class="modifiers">private final</span>&nbsp;<span class="return-type"><a href="../../util/simulation/TalonFXSimulation.html" title="class in com.stuypulse.robot.util.simulation">TalonFXSimulation</a></span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/shooter/ShooterSim.html#line-37">shooterMotorRight</a></span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="shooterController">
 <h3>shooterController</h3>
-<div class="member-signature"><span class="modifiers">private final</span>&nbsp;<span class="return-type">com.ctre.phoenix6.controls.VelocityTorqueCurrentFOC</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/shooter/ShooterSim.html#line-37">shooterController</a></span></div>
+<div class="member-signature"><span class="modifiers">private final</span>&nbsp;<span class="return-type">com.ctre.phoenix6.controls.VelocityTorqueCurrentFOC</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/shooter/ShooterSim.html#line-39">shooterController</a></span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="shooterFollowerController">
 <h3>shooterFollowerController</h3>
-<div class="member-signature"><span class="modifiers">private final</span>&nbsp;<span class="return-type">com.ctre.phoenix6.controls.Follower</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/shooter/ShooterSim.html#line-39">shooterFollowerController</a></span></div>
+<div class="member-signature"><span class="modifiers">private final</span>&nbsp;<span class="return-type">com.ctre.phoenix6.controls.Follower</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/shooter/ShooterSim.html#line-41">shooterFollowerController</a></span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="voltageOverride">
 <h3>voltageOverride</h3>
-<div class="member-signature"><span class="modifiers">private</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;edu.wpi.first.units.measure.Voltage&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/shooter/ShooterSim.html#line-41">voltageOverride</a></span></div>
+<div class="member-signature"><span class="modifiers">private</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;edu.wpi.first.units.measure.Voltage&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/shooter/ShooterSim.html#line-43">voltageOverride</a></span></div>
 </section>
 </li>
 </ul>
@@ -249,7 +252,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="&lt;init&gt;()">
 <h3>ShooterSim</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/shooter/ShooterSim.html#line-43">ShooterSim</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/shooter/ShooterSim.html#line-45">ShooterSim</a></span>()</div>
 </section>
 </li>
 </ul>
@@ -263,7 +266,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getCurrentAngularVelocity()">
 <h3>getCurrentAngularVelocity</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">edu.wpi.first.units.measure.AngularVelocity</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/shooter/ShooterSim.html#line-64">getCurrentAngularVelocity</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">edu.wpi.first.units.measure.AngularVelocity</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/shooter/ShooterSim.html#line-66">getCurrentAngularVelocity</a></span>()</div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="Shooter.html#getCurrentAngularVelocity()">getCurrentAngularVelocity</a></code>&nbsp;in class&nbsp;<code><a href="Shooter.html" title="class in com.stuypulse.robot.subsystems.shooter">Shooter</a></code></dd>
@@ -273,7 +276,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="stopMotors()">
 <h3>stopMotors</h3>
-<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/shooter/ShooterSim.html#line-69">stopMotors</a></span>()</div>
+<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/shooter/ShooterSim.html#line-71">stopMotors</a></span>()</div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="Shooter.html#stopMotors()">stopMotors</a></code>&nbsp;in class&nbsp;<code><a href="Shooter.html" title="class in com.stuypulse.robot.subsystems.shooter">Shooter</a></code></dd>
@@ -283,7 +286,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="setVoltageOverride(edu.wpi.first.units.measure.Voltage)">
 <h3>setVoltageOverride</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/shooter/ShooterSim.html#line-78">setVoltageOverride</a></span><wbr><span class="parameters">(edu.wpi.first.units.measure.Voltage&nbsp;voltage)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/shooter/ShooterSim.html#line-80">setVoltageOverride</a></span><wbr><span class="parameters">(edu.wpi.first.units.measure.Voltage&nbsp;voltage)</span></div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="Shooter.html#setVoltageOverride(edu.wpi.first.units.measure.Voltage)">setVoltageOverride</a></code>&nbsp;in class&nbsp;<code><a href="Shooter.html" title="class in com.stuypulse.robot.subsystems.shooter">Shooter</a></code></dd>
@@ -291,9 +294,15 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
+<section class="detail" id="getShooterControl()">
+<h3>getShooterControl</h3>
+<div class="member-signature"><span class="modifiers">private</span>&nbsp;<span class="return-type">com.ctre.phoenix6.controls.ControlRequest</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/shooter/ShooterSim.html#line-85">getShooterControl</a></span>()</div>
+</section>
+</li>
+<li>
 <section class="detail" id="periodic()">
 <h3>periodic</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/shooter/ShooterSim.html#line-83">periodic</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/shooter/ShooterSim.html#line-92">periodic</a></span>()</div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code>periodic</code>&nbsp;in interface&nbsp;<code>edu.wpi.first.wpilibj2.command.Subsystem</code></dd>
@@ -305,7 +314,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getShooterSysIdRoutine()">
 <h3>getShooterSysIdRoutine</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/shooter/ShooterSim.html#line-101">getShooterSysIdRoutine</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/subsystems/shooter/ShooterSim.html#line-108">getShooterSysIdRoutine</a></span>()</div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="Shooter.html#getShooterSysIdRoutine()">getShooterSysIdRoutine</a></code>&nbsp;in class&nbsp;<code><a href="Shooter.html" title="class in com.stuypulse.robot.subsystems.shooter">Shooter</a></code></dd>

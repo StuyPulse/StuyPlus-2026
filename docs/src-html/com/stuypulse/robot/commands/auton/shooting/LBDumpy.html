@@ -14,43 +14,49 @@
 <pre><span class="source-line-no">001</span><span id="line-1">package com.stuypulse.robot.commands.auton.shooting;</span>
 <span class="source-line-no">002</span><span id="line-2"></span>
 <span class="source-line-no">003</span><span id="line-3">import com.pathplanner.lib.path.PathPlannerPath;</span>
-<span class="source-line-no">004</span><span id="line-4">import com.stuypulse.robot.commands.feeder.FeederSetForward;</span>
-<span class="source-line-no">005</span><span id="line-5">import com.stuypulse.robot.commands.handoff.HandoffSetForward;</span>
-<span class="source-line-no">006</span><span id="line-6">import com.stuypulse.robot.commands.intake.IntakeAgitateFastOnce;</span>
-<span class="source-line-no">007</span><span id="line-7">import com.stuypulse.robot.commands.intake.IntakeSetIntake;</span>
-<span class="source-line-no">008</span><span id="line-8">import com.stuypulse.robot.commands.shooter.ShooterSetShoot;</span>
-<span class="source-line-no">009</span><span id="line-9">import com.stuypulse.robot.commands.shooter.ShooterWaitForSpinUp;</span>
-<span class="source-line-no">010</span><span id="line-10">import com.stuypulse.robot.commands.swerve.SwerveDriveXMode;</span>
-<span class="source-line-no">011</span><span id="line-11">import com.stuypulse.robot.commands.swerve.SwerveResetPose;</span>
-<span class="source-line-no">012</span><span id="line-12">import com.stuypulse.robot.constants.Settings;</span>
-<span class="source-line-no">013</span><span id="line-13">import com.stuypulse.robot.subsystems.swerve.CommandSwerveDrivetrain;</span>
-<span class="source-line-no">014</span><span id="line-14"></span>
-<span class="source-line-no">015</span><span id="line-15">import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;</span>
-<span class="source-line-no">016</span><span id="line-16">import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;</span>
-<span class="source-line-no">017</span><span id="line-17">import edu.wpi.first.wpilibj2.command.WaitCommand;</span>
-<span class="source-line-no">018</span><span id="line-18"></span>
-<span class="source-line-no">019</span><span id="line-19">public class LBDumpy extends SequentialCommandGroup {</span>
-<span class="source-line-no">020</span><span id="line-20">    public LBDumpy(PathPlannerPath... paths) {</span>
-<span class="source-line-no">021</span><span id="line-21">        addCommands(</span>
-<span class="source-line-no">022</span><span id="line-22">            new WaitCommand(Settings.BATTLECRY_DOT_DELAY.get()),</span>
-<span class="source-line-no">023</span><span id="line-23">            new SwerveResetPose(paths[0].getStartingHolonomicPose().get()),</span>
-<span class="source-line-no">024</span><span id="line-24">            new IntakeSetIntake(),</span>
-<span class="source-line-no">025</span><span id="line-25">            CommandSwerveDrivetrain.getInstance().followPathCommand(paths[0]),</span>
-<span class="source-line-no">026</span><span id="line-26">            CommandSwerveDrivetrain.getInstance().followPathCommand(paths[1]),</span>
-<span class="source-line-no">027</span><span id="line-27">            CommandSwerveDrivetrain.getInstance().followPathCommand(paths[2]),</span>
-<span class="source-line-no">028</span><span id="line-28">            CommandSwerveDrivetrain.getInstance().followPathCommand(paths[3]),</span>
-<span class="source-line-no">029</span><span id="line-29">            new SwerveDriveXMode(),</span>
-<span class="source-line-no">030</span><span id="line-30">            new ShooterWaitForSpinUp(),</span>
-<span class="source-line-no">031</span><span id="line-31">            new ShooterSetShoot(),</span>
-<span class="source-line-no">032</span><span id="line-32">            new HandoffSetForward(),</span>
-<span class="source-line-no">033</span><span id="line-33">            new ParallelDeadlineGroup(</span>
-<span class="source-line-no">034</span><span id="line-34">                new WaitCommand(7),</span>
-<span class="source-line-no">035</span><span id="line-35">                new FeederSetForward(), </span>
-<span class="source-line-no">036</span><span id="line-36">                new IntakeAgitateFastOnce().repeatedly()</span>
-<span class="source-line-no">037</span><span id="line-37">            )</span>
-<span class="source-line-no">038</span><span id="line-38">        );</span>
-<span class="source-line-no">039</span><span id="line-39">    }</span>
-<span class="source-line-no">040</span><span id="line-40">}</span>
+<span class="source-line-no">004</span><span id="line-4">import com.stuypulse.robot.commands.compound.StopShooting;</span>
+<span class="source-line-no">005</span><span id="line-5">import com.stuypulse.robot.commands.compound.TunableWaitCommand;</span>
+<span class="source-line-no">006</span><span id="line-6">import com.stuypulse.robot.commands.feeder.FeederSetForward;</span>
+<span class="source-line-no">007</span><span id="line-7">import com.stuypulse.robot.commands.handoff.HandoffSetForward;</span>
+<span class="source-line-no">008</span><span id="line-8">import com.stuypulse.robot.commands.intake.IntakeAgitateFastOnce;</span>
+<span class="source-line-no">009</span><span id="line-9">import com.stuypulse.robot.commands.intake.IntakeSetIntake;</span>
+<span class="source-line-no">010</span><span id="line-10">import com.stuypulse.robot.commands.shooter.ShooterSetShoot;</span>
+<span class="source-line-no">011</span><span id="line-11">import com.stuypulse.robot.commands.shooter.ShooterWaitForSpinUp;</span>
+<span class="source-line-no">012</span><span id="line-12">import com.stuypulse.robot.commands.swerve.SwerveDriveXMode;</span>
+<span class="source-line-no">013</span><span id="line-13">import com.stuypulse.robot.commands.swerve.SwerveResetPose;</span>
+<span class="source-line-no">014</span><span id="line-14">import com.stuypulse.robot.constants.Settings;</span>
+<span class="source-line-no">015</span><span id="line-15">import com.stuypulse.robot.subsystems.swerve.CommandSwerveDrivetrain;</span>
+<span class="source-line-no">016</span><span id="line-16"></span>
+<span class="source-line-no">017</span><span id="line-17">import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;</span>
+<span class="source-line-no">018</span><span id="line-18">import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;</span>
+<span class="source-line-no">019</span><span id="line-19">import edu.wpi.first.wpilibj2.command.WaitCommand;</span>
+<span class="source-line-no">020</span><span id="line-20"></span>
+<span class="source-line-no">021</span><span id="line-21">public class LBDumpy extends SequentialCommandGroup {</span>
+<span class="source-line-no">022</span><span id="line-22">    public LBDumpy(PathPlannerPath... paths) {</span>
+<span class="source-line-no">023</span><span id="line-23">        addCommands(</span>
+<span class="source-line-no">024</span><span id="line-24">            new WaitCommand(Settings.BATTLECRY_DOT_DELAY.get()),</span>
+<span class="source-line-no">025</span><span id="line-25">            new SwerveResetPose(paths[0].getStartingHolonomicPose().get()),</span>
+<span class="source-line-no">026</span><span id="line-26">            new TunableWaitCommand("LB Dumpy Delay"),</span>
+<span class="source-line-no">027</span><span id="line-27">            new IntakeSetIntake(),</span>
+<span class="source-line-no">028</span><span id="line-28">            CommandSwerveDrivetrain.getInstance().followPathCommand(paths[0]),</span>
+<span class="source-line-no">029</span><span id="line-29">            CommandSwerveDrivetrain.getInstance().followPathCommand(paths[1]),</span>
+<span class="source-line-no">030</span><span id="line-30">            CommandSwerveDrivetrain.getInstance().followPathCommand(paths[2]),</span>
+<span class="source-line-no">031</span><span id="line-31">            CommandSwerveDrivetrain.getInstance().followPathCommand(paths[3]),</span>
+<span class="source-line-no">032</span><span id="line-32">            new SwerveDriveXMode(),</span>
+<span class="source-line-no">033</span><span id="line-33">            new ShooterWaitForSpinUp(),</span>
+<span class="source-line-no">034</span><span id="line-34">            new ShooterSetShoot(),</span>
+<span class="source-line-no">035</span><span id="line-35">            new HandoffSetForward(),</span>
+<span class="source-line-no">036</span><span id="line-36">            new ParallelDeadlineGroup(</span>
+<span class="source-line-no">037</span><span id="line-37">                new WaitCommand(7),</span>
+<span class="source-line-no">038</span><span id="line-38">                new FeederSetForward(), </span>
+<span class="source-line-no">039</span><span id="line-39">                new IntakeAgitateFastOnce().repeatedly()</span>
+<span class="source-line-no">040</span><span id="line-40">            ),</span>
+<span class="source-line-no">041</span><span id="line-41">            new StopShooting(),</span>
+<span class="source-line-no">042</span><span id="line-42">            new IntakeSetIntake(),</span>
+<span class="source-line-no">043</span><span id="line-43">            CommandSwerveDrivetrain.getInstance().followPathCommand(paths[4])</span>
+<span class="source-line-no">044</span><span id="line-44">        );</span>
+<span class="source-line-no">045</span><span id="line-45">    }</span>
+<span class="source-line-no">046</span><span id="line-46">}</span>
 
 
 
