@@ -10,8 +10,14 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import tools.PathplannerSearch.Main.ARGUMENTS;
+import tools.ToolClasses.ArgumentedTool;
+
+import static tools.util.AnsiColors.*;
 
 /**
  *
@@ -23,27 +29,33 @@ import java.util.regex.Pattern;
  * used so you can
  * clean up unused ones.
  */
-public final class PathplannerSearch {
+public final class PathplannerSearch extends ArgumentedTool<ARGUMENTS> {
     public enum SearchType {
         LINKED_WAYPOINT,
         PATH
     }
 
+    public PathplannerSearch() {
+        super(Main.ARGUMENTS.class);
+    }
+
     /**
      *
      *
-     * <h4>Main entry point</h4>
+     * <h4>Functionality</h4>
      *
      * <p>
      * Searches through .path files in <code>src/main/deploy/pathplanner</code> and
      * logs files that
      * match a certain search term based on the search type.
      *
-     * @param searchTerm
-     * @param searchType
-     * @throws IOException
+     * @param parsedArgs the parsed arguments
      */
-    public static void search(String searchTerm, SearchType searchType) throws IOException {
+    @Override
+    protected void execute(Map<ARGUMENTS, Object> parsedArgs) {
+        String searchTerm = ((String) parsedArgs.get(ARGUMENTS.SEARCH_TERM)).toLowerCase();
+        SearchType searchType = ((SearchType) parsedArgs.get(ARGUMENTS.SEARCH_TYPE));
+
         switch (searchType) {
             case LINKED_WAYPOINT -> {
                 final File[] files = new File("./src/main/deploy/pathplanner/paths/").listFiles();
@@ -52,12 +64,17 @@ public final class PathplannerSearch {
 
                 final List<String> matches = new ArrayList<>();
                 for (final File file : files) {
-                    final String content = Files.readString(file.toPath()).toLowerCase();
-                    if (content.isBlank())
-                        continue;
-                    if (content.contains("\"linkedname\"") && content.contains("\"" + searchTerm + "\"")) {
-                        final String folderName = parseFolderKeyFromFileContent(content);
-                        matches.add(folderName + "/" + file.getName());
+                    try {
+                        final String content = Files.readString(file.toPath()).toLowerCase();
+                        if (content.isBlank())
+                            continue;
+                        if (content.contains("\"linkedname\"") && content.contains("\"" + searchTerm + "\"")) {
+                            final String folderName = parseFolderKeyFromFileContent(content);
+                            matches.add(folderName + "/" + file.getName());
+                        }
+                    } catch (IOException e) {
+                        System.out.println("Error reading file: " + file.getName());
+                        e.printStackTrace();
                     }
                 }
 
@@ -70,15 +87,20 @@ public final class PathplannerSearch {
 
                 final List<String> matches = new ArrayList<>();
                 for (final File file : files) {
-                    final String content = Files.readString(file.toPath()).toLowerCase();
-                    if (!content.contains("\"sequential\""))
-                        continue;
-                    if (content.contains("\"path\"")
-                            && content.contains("\"pathname\"")
-                            && content.contains("\"" + searchTerm + "\"")) {
+                    try {
+                        final String content = Files.readString(file.toPath()).toLowerCase();
+                        if (!content.contains("\"sequential\""))
+                            continue;
+                        if (content.contains("\"path\"")
+                                && content.contains("\"pathname\"")
+                                && content.contains("\"" + searchTerm + "\"")) {
 
-                        final String folderName = parseFolderKeyFromFileContent(content);
-                        matches.add(folderName + "/" + file.getName());
+                            final String folderName = parseFolderKeyFromFileContent(content);
+                            matches.add(folderName + "/" + file.getName());
+                        }
+                    } catch (IOException e) {
+                        System.out.println("Error reading file: " + file.getName());
+                        e.printStackTrace();
                     }
                 }
 
@@ -155,11 +177,6 @@ public final class PathplannerSearch {
      * @param matches
      */
     public static void logFiles(String searchTerm, SearchType searchType, List<String> matches) {
-        final String RESET = "\u001B[0m";
-        final String RED = "\u001B[31m";
-        final String GREEN = "\u001B[32m";
-        final String YELLOW = "\u001B[33m";
-
         String stem = switch (searchType) {
             case LINKED_WAYPOINT -> "Paths that use the linked waypoint '";
             case PATH -> "Autons that use the path '";

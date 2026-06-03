@@ -7,13 +7,6 @@ package com.stuypulse.robot.subsystems.intake;
 
 import java.util.Optional;
 import java.util.function.BooleanSupplier;
-import com.stuypulse.robot.constants.Motors;
-import com.stuypulse.robot.constants.Ports;
-import com.stuypulse.robot.constants.Settings;
-import com.stuypulse.robot.constants.Settings.EnabledSubsystems;
-import com.stuypulse.robot.util.LoggedSignals;
-import com.stuypulse.robot.util.SysId;
-import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import com.ctre.phoenix6.controls.ControlRequest;
 import com.ctre.phoenix6.controls.DutyCycleOut;
 import com.ctre.phoenix6.controls.Follower;
@@ -22,16 +15,23 @@ import com.ctre.phoenix6.controls.TorqueCurrentFOC;
 import com.ctre.phoenix6.controls.VoltageOut;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.MotorAlignmentValue;
-import edu.wpi.first.math.filter.Debouncer;
+import com.stuypulse.robot.constants.Motors;
+import com.stuypulse.robot.constants.Ports;
+import com.stuypulse.robot.constants.Settings;
+import com.stuypulse.robot.util.LoggedSignals;
+import com.stuypulse.robot.util.SysId;
 
 import dev.doglog.DogLog;
 import static edu.wpi.first.units.Units.Amps;
 import static edu.wpi.first.units.Units.Seconds;
 import static edu.wpi.first.units.Units.Volts;
+
+import edu.wpi.first.math.filter.Debouncer;
 import edu.wpi.first.units.measure.Angle;
 import edu.wpi.first.units.measure.AngularVelocity;
 import edu.wpi.first.units.measure.Voltage;
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 
 public class IntakeImpl extends Intake {
 
@@ -64,18 +64,18 @@ public class IntakeImpl extends Intake {
     private final Debouncer rollerStallingDebouncer;
 
     public IntakeImpl() {
-
         pivotLimitSwitch = new DigitalInput(Ports.Intake.PIVOT_LIMIT_SWITCH);
         pivotMotor = new TalonFX(Ports.Intake.INTAKE_PIVOT_MOTOR, Settings.CANBUS);
         Motors.Intake.PIVOT_CONFIG.configure(pivotMotor);
+
         // zero it at the up pos
         pivotMotor.setPosition(Settings.Intake.Pivot.INITIAL_ANGLE);
         pivotSignals = new LoggedSignals(LoggedSignals.SignalLocation.CANIVORE, "Intake/Pivot/",
                 pivotMotor.getSupplyCurrent(),
                 pivotMotor.getStatorCurrent(),
                 pivotMotor.getVelocity());
-        // until rollers are fixed
-        // leader
+
+            // leader
         rollerMotorLeft = new TalonFX(Ports.Intake.INTAKE_ROLLER_MOTOR_LEFT, Settings.CANBUS);
         rollerMotorRight = new TalonFX(Ports.Intake.INTAKE_ROLLER_MOTOR_RIGHT, Settings.CANBUS);
         Motors.Intake.LEFT_ROLLER_CONFIG.configure(rollerMotorLeft);
@@ -99,7 +99,7 @@ public class IntakeImpl extends Intake {
         rollerMotorRight.setControl(followerController);
         pivotStalling = () -> pivotMotor.getStatorCurrent().getValue().gt(Settings.Intake.Pivot.STALL_CURRENT);
         // until rollers are fixed
-        rollerStallingDebouncer = new Debouncer(Settings.Intake.Roller.STALL_DEBOUNCE_SEC.in(Seconds), Debouncer.DebounceType.kBoth);
+        rollerStallingDebouncer = new Debouncer(Settings.Intake.Roller.STALL_DEBOUNCE_SEC.in(Seconds), Debouncer.DebounceType.kBoth); // TODO: split into two debouncers to match the two stalling getter functions
         pivotVoltageOverride = Optional.empty();
     }
 
@@ -153,57 +153,71 @@ public class IntakeImpl extends Intake {
     }
 
     @Override
-    protected void stopMotors() {
-        pivotMotor.stopMotor();
-        // until rollers are fixed
+    protected void stopRollerMotors() {
         rollerMotorLeft.stopMotor();
         rollerMotorRight.stopMotor();
         // re-add the follow control after stopMotor removes it
         rollerMotorRight.setControl(followerController);
     }
 
+    @Override
+    protected void stopPivotMotor() {
+        pivotMotor.stopMotor();
+    }
+
     private ControlRequest getPivotControl(IntakeState currentState) {
         boolean pivotAboveThreshold = isPivotAboveThreshold();
         return switch (currentState) {
-            case INTAKE, OUTTAKE, DOWN -> pivotAboveThreshold
+            case INTAKE, OUTTAKE, DOWN -> (pivotAboveThreshold) // Hardcoding pushdown disabled temporarily - AZ
                     ? pushdownController.withOutput(Settings.Intake.Pivot.PUSHDOWN_CURRENT.getAsDouble())
                     : positionController.withPosition(currentState.getTargetAngle()).withSlot(0);
             case HOMING_DOWN -> homingController;
-            case DIGEST -> positionController.withPosition(currentState.getTargetAngle()).withSlot(1);
+            case AGITATE, AGITATE_DOWN -> positionController.withPosition(currentState.getTargetAngle()).withSlot(1);
             default -> positionController.withPosition(currentState.getTargetAngle()).withSlot(0);
         };
     }
 
     @Override
     public void periodic() {
-        if (!EnabledSubsystems.INTAKE.get()) {
-            stopMotors();
+        if (!Settings.EnabledSubsystems.INTAKE.get()) {
+            stopAllMotors();
+
             return;
         }
+
         if (pivotVoltageOverride.isPresent()) {
             pivotMotor.setVoltage(pivotVoltageOverride.get().in(Volts));
             return;
         }
+
         // Input
         final boolean pivotStalling = pivotStalling();
         final IntakeState currentState = getState();
+
         // State
+        if (limitSwitchHit()) {
+            seedPivotAngle(Settings.Intake.Pivot.DEPLOY_ANGLE);
+        }
+
         if (currentState == IntakeState.HOMING_DOWN && (pivotStalling || limitSwitchHit())) {
             seedPivotAngle(Settings.Intake.Pivot.DEPLOY_ANGLE);
-            setState(IntakeState.DOWN);
+            setState(IntakeState.INTAKE);
         }
         if ((currentState == IntakeState.DOWN) && (pivotStalling || limitSwitchHit())) {
             seedPivotAngle(Settings.Intake.Pivot.DEPLOY_ANGLE);
         }
+
         // Output
         final ControlRequest pivotControl = getPivotControl(currentState);
         final DutyCycleOut rollerControl = rollerController.withOutput(currentState.getTargetDutyCycle());
+
         // Apply
         pivotMotor.setControl(pivotControl);
+
         rollerMotorLeft.setControl(rollerControl);
+
         // Logging
         this.pivotSignals.logAll();
-        // until rollers are fixed
         this.rollerSignals.logAll();
         DogLog.forceNt.log("Intake/Rollers/Stalling", leftRollerStalling() || rightRollerStalling());
         DogLog.forceNt.log(

@@ -3,6 +3,44 @@
 let hljsCSSLink = null;
 let hljsScript = null;
 
+const getLengthOfFlashMilliseconds = () => {
+    const element = document.querySelector("section.detail");
+    if (element) {
+        const rawDuration = getComputedStyle(element).getPropertyValue("--flash-duration").trim();
+        const seconds = parseFloat(rawDuration);
+        const milliseconds = seconds * 1000;
+
+        if (!isNaN(milliseconds)) {
+            return milliseconds;
+        } else {
+            console.warn(`--flash-duration variable not found. Fallbacking to 2300ms.`);
+            return 2300; // Default to 2.3 seconds if the value is invalid
+        }
+    }
+
+    return 2300;
+};
+console.log(`Length of flash animation in milliseconds: ${getLengthOfFlashMilliseconds()}ms`);
+let targetElementInView = null;
+let timeoutCancelId = null;
+const intersectionObserver = new IntersectionObserver((entries) => {
+    for (const entry of entries) {
+        if (!(entry.target === targetElementInView)) continue;
+
+        if (entry.isIntersecting) {
+            entry.target.classList.add("flash");
+        }
+        
+        timeoutCancelId = setTimeout(() => {
+            entry.target.classList.remove("flash");
+            targetElementInView = null;
+        }, getLengthOfFlashMilliseconds());
+    }
+}, { threshold: 0.9 });
+
+const targets = document.querySelectorAll("section.detail");
+targets.forEach(target => intersectionObserver.observe(target));
+
 const placeFavicon = () => {
     const link = document.createElement("link");
     link.setAttribute("rel", "icon");
@@ -13,6 +51,9 @@ const placeFavicon = () => {
 }
 
 const goToLineNumberByHash = () => {
+    const isSourcePage = document.querySelector("body.source-page") !== null;
+    if (!isSourcePage) return;
+
     const lineHashRegex = /^#line-\d+$/;
     if (!hljsScript) {
         console.warn("highlight.js not loaded yet .line-numbers container not created yet 🤤.");
@@ -25,12 +66,37 @@ const goToLineNumberByHash = () => {
     }
 
     // The hash exactly matches the id already so we can just scroll to it cuz querySelector is so tuff
-    const targetElement =  document.querySelector(hash);
+    const targetElement = document.querySelector(hash);
     if (targetElement) {
         const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
         const behavior = prefersReducedMotion ? "auto" : "smooth";
         targetElement.scrollIntoView({ behavior, block: "start" });
     }
+}
+
+const detectTargetElementInViewOnHashChange = () => {
+    const isClassDeclarationPage = document.querySelector("body.class-declaration-page") !== null;
+    if (!isClassDeclarationPage) return;
+
+    const hash = window.location.hash;
+    const targetElement = (() => {
+        try {
+            return document.querySelector(`#${CSS.escape(hash.slice(1))}`);
+        } catch (error) {
+            return null;
+        }
+    })();
+    if (!targetElement || !targetElement.matches("section.detail")) return;
+
+    if (timeoutCancelId) {
+        clearTimeout(timeoutCancelId);
+        timeoutCancelId = null;
+
+        targetElementInView?.classList.remove("flash");
+        targetElementInView = null;
+    }
+
+    targetElementInView = targetElement;
 }
 
 const syntaxHighlight = () => {
@@ -97,9 +163,15 @@ const syntaxHighlight = () => {
 
 const createListeners = () => {
     window.matchMedia('(prefers-color-scheme: light)').addEventListener('change', syntaxHighlight);
-    window.addEventListener("hashchange", goToLineNumberByHash);
+    window.addEventListener("hashchange", () => {
+        goToLineNumberByHash();
+        detectTargetElementInViewOnHashChange();
+    });
 }
 
 placeFavicon();
 syntaxHighlight();
+
+goToLineNumberByHash();
+detectTargetElementInViewOnHashChange();
 createListeners();

@@ -6,25 +6,34 @@
 package com.stuypulse.robot;
 
 import com.stuypulse.robot.commands.auton.DoNothingAuton;
+import com.stuypulse.robot.commands.auton.LBDisrupt;
+import com.stuypulse.robot.commands.auton.LBFerry;
+import com.stuypulse.robot.commands.auton.RBDisrupt;
+import com.stuypulse.robot.commands.auton.RBFerry;
+import com.stuypulse.robot.commands.auton.depot.CenterDepot;
+import com.stuypulse.robot.commands.auton.shooting.FrontHubShootPreloads;
+import com.stuypulse.robot.commands.auton.shooting.LBDumpy;
+import com.stuypulse.robot.commands.auton.shooting.RBDumpy;
+import com.stuypulse.robot.commands.compound.StopShooting;
 import com.stuypulse.robot.commands.feeder.FeederSetForward;
-import com.stuypulse.robot.commands.feeder.FeederSetIdle;
 import com.stuypulse.robot.commands.handoff.HandoffSetForward;
-import com.stuypulse.robot.commands.handoff.HandoffSetIdle;
-import com.stuypulse.robot.commands.intake.IntakeDigest;
+import com.stuypulse.robot.commands.intake.IntakeAgitateFastOnce;
 import com.stuypulse.robot.commands.intake.IntakeSetIdle;
 import com.stuypulse.robot.commands.intake.IntakeSetIntake;
 import com.stuypulse.robot.commands.intake.IntakeSetOuttake;
 import com.stuypulse.robot.commands.leds.LEDDefaultCommand;
+import com.stuypulse.robot.commands.shooter.ShooterAddToBonusVelocity;
+import com.stuypulse.robot.commands.shooter.ShooterFirstShotIncrease;
+import com.stuypulse.robot.commands.shooter.ShooterResetBonusVelocity;
 import com.stuypulse.robot.commands.shooter.ShooterSetFerry;
 import com.stuypulse.robot.commands.shooter.ShooterSetManual;
 import com.stuypulse.robot.commands.shooter.ShooterSetShoot;
+import com.stuypulse.robot.commands.shooter.ShooterWaitForSpinUp;
 import com.stuypulse.robot.commands.swerve.SwerveDriveDrive;
 import com.stuypulse.robot.commands.swerve.SwerveDriveResetRotation;
 import com.stuypulse.robot.commands.swerve.SwerveDriveXMode;
 import com.stuypulse.robot.commands.swerve.driveAligned.SwerveDriveAlignToFerryZone;
 import com.stuypulse.robot.commands.swerve.driveAligned.SwerveDriveAlignToHub;
-import com.stuypulse.robot.commands.vision.SetVisionDisabled;
-import com.stuypulse.robot.commands.vision.SetVisionEnabled;
 import com.stuypulse.robot.constants.Field;
 import com.stuypulse.robot.constants.Ports;
 import com.stuypulse.robot.subsystems.feeder.Feeder;
@@ -34,15 +43,14 @@ import com.stuypulse.robot.subsystems.leds.LEDController;
 import com.stuypulse.robot.subsystems.shooter.Shooter;
 import com.stuypulse.robot.subsystems.swerve.CommandSwerveDrivetrain;
 import com.stuypulse.robot.subsystems.vision.LimelightVision;
+import com.stuypulse.robot.util.PathUtil.AutonConfig;
+
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.Commands;
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
-import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
 
 /**
  * <h2>Robot Container Class</h2>
@@ -84,15 +92,6 @@ public class RobotContainer {
         configureButtonBindings();
         configureAutons();
         SmartDashboard.putData("Field", Field.FIELD2D);
-
-        // TEST
-        SequentialCommandGroup visionEnableDisableTest = new SequentialCommandGroup(
-            new SetVisionDisabled(),
-            new WaitCommand(4),
-            new SetVisionEnabled()
-        );
-
-        SmartDashboard.putData("Tests/Vision Enable Disable Test", visionEnableDisableTest);
     }
 
     /** ************ */
@@ -114,47 +113,83 @@ public class RobotContainer {
         // Trigger buttons did not work for some reason so I had to do this
         Trigger leftTrigger = new Trigger(() -> driver.getLeftTriggerAxis() > 0.5);
         Trigger rightTrigger = new Trigger(() -> driver.getRightTriggerAxis() > 0.5);
+
         leftTrigger.onTrue(new IntakeSetIntake());
         driver.leftBumper().whileTrue(new IntakeSetOuttake());
         driver.leftBumper().onFalse(new IntakeSetIntake());
-        rightTrigger.onTrue(
-                new SwerveDriveAlignToHub()
-                        .andThen(new SwerveDriveXMode())
-                        .andThen(new ShooterSetShoot())
-                        .andThen(new HandoffSetForward())
-                        .alongWith(new FeederSetForward(), new IntakeDigest()));
+
+        rightTrigger.whileTrue(
+                new WaitCommand(1.5).raceWith(new SwerveDriveAlignToHub())
+                .andThen(new SwerveDriveXMode())
+                .andThen(new ShooterSetShoot())
+                .andThen(new ShooterWaitForSpinUp())
+                .andThen(new HandoffSetForward()
+                .alongWith(new FeederSetForward(),
+                    new IntakeAgitateFastOnce().repeatedly(),
+                    new ShooterFirstShotIncrease())));
+        rightTrigger.onFalse(
+            new StopShooting()
+        );
+
         // Top Left Paddle
-        driver.a().onTrue(new IntakeSetIdle());
-        driver.povUp().onTrue(new SwerveDriveResetRotation());
-        driver
-                .rightBumper()
-                .onTrue(
-                        new SwerveDriveAlignToFerryZone()
-                                .andThen(new SwerveDriveXMode())
-                                .andThen(new ShooterSetFerry())
-                                .andThen(new HandoffSetForward())
-                                .alongWith(new FeederSetForward(), new IntakeDigest()));
-        // Bottom Right Paddle
-        // Manual shooting possibly from in front of the hub
-        driver
-                .y()
-                .onTrue(
-                        new SwerveDriveXMode()
-                                .andThen(new ShooterSetManual())
-                                .andThen(new HandoffSetForward())
-                                .alongWith(new FeederSetForward(), new IntakeDigest()));
-        // Top Right Paddle
-        driver
-                .b()
-                .onTrue(
-                        new HandoffSetIdle()
-                                .alongWith(
-                                        new FeederSetIdle(),
-                                        new IntakeSetIntake(),
-                                        Commands.runOnce(
-                                                () -> new SwerveDriveXMode().cancel())));
+        driver.y().onTrue(new IntakeSetIdle());
+        
+        driver.rightBumper()
+            .whileTrue(
+                new WaitCommand(1.5).raceWith(new SwerveDriveAlignToFerryZone())
+                    .andThen(new SwerveDriveXMode())
+                    .andThen(new ShooterSetFerry())
+                    .andThen(new ShooterWaitForSpinUp())
+                    .andThen(new HandoffSetForward())
+                    .alongWith(new FeederSetForward(), 
+                        new IntakeAgitateFastOnce().repeatedly(),
+                        new ShooterFirstShotIncrease()));
+        driver.rightBumper()
+            .onFalse(
+                new StopShooting()
+            );
+        // Manual shooting possibly from in front of the tower
+        driver.a()
+            .whileTrue(
+                new SwerveDriveXMode()
+                    .andThen(new ShooterSetManual())
+                    .andThen(new ShooterWaitForSpinUp())
+                    .andThen(new HandoffSetForward().repeatedly())
+                    .alongWith(new FeederSetForward().repeatedly(), 
+                        new IntakeAgitateFastOnce().repeatedly(),
+                        new ShooterFirstShotIncrease()));
+        driver.a()
+            .onFalse(
+                new StopShooting()
+            );
+
+        driver.b()  
+            .whileTrue(
+                new SwerveDriveXMode()
+                    .andThen(new ShooterSetShoot())
+                    .andThen(new ShooterWaitForSpinUp())
+                    .andThen(new HandoffSetForward().repeatedly())
+                    .alongWith(new FeederSetForward().repeatedly(), 
+                        new IntakeAgitateFastOnce().repeatedly(),
+                        new ShooterFirstShotIncrease())
+            );
+        driver.b()
+            .onFalse(
+                new StopShooting()
+            );
+
         // Bottom Left Paddle
         driver.x().whileTrue(new SwerveDriveXMode());
+
+        driver.povLeft().onTrue(new SwerveDriveResetRotation());
+        
+        driver.povUp()
+            .onTrue(new ShooterAddToBonusVelocity(50));
+        driver.povDown()
+            .onTrue(new ShooterAddToBonusVelocity(-50));
+        driver.povRight()
+            .onTrue(new ShooterResetBonusVelocity());
+
     }
 
     /**************/
@@ -166,88 +201,68 @@ public class RobotContainer {
      */
      public void configureAutons() {
         autonChooser.addOption("Do Nothing", new DoNothingAuton());
-        // AutonConfig LBFerry = new AutonConfig("LB Ferry", LBFerry::new,
-        // "LB to N Ferry",
-        // "N to LT Ferry",
-        // "LT Hub Ferry",
-        // "N to Depot Ferry");
-        // LBFerry.register(autonChooser);
-        // AutonConfig RBFerry = new AutonConfig("RB Ferry", RBFerry::new,
-        // "RB to N Ferry",
-        // "N to RT Ferry",
-        // "RT Hub Ferry",
-        // "N to Outpost Ferry");
-        // RBFerry.register(autonChooser);
-        // AutonConfig LBMid = new AutonConfig("LB Mid", LBMid::new,
-        // "LB to N Mid",
-        // "LB Return Mid");
-        // LBMid.register(autonChooser);
-        // AutonConfig LBStraight = new AutonConfig("LB Straight", LBStraight::new,
-        // "LB to N Straight",
-        // "N to LB Straight");
-        // LBStraight.register(autonChooser);
-        // AutonConfig RBStraight = new AutonConfig("RB Straight", RBStraight::new,
-        // "RB to N Straight",
-        // "N to RB Straight");
-        // RBStraight.register(autonChooser);
-        // AutonConfig RBMid = new AutonConfig("RB Mid", RBMid::new,
-        // "RB to N Mid",
-        // "RB Return Mid",
-        // "RB to Outpost Mid");
-        // RBMid.register(autonChooser);
-        // AutonConfig TwoMeterPath = new AutonConfig("Two Meter Path",
-        // TwoMeterPath::new,
-        // "2 meter path");
-        // TwoMeterPath.register(autonChooser);
-        // AutonConfig OutpostOnly = new AutonConfig("Outpost Only", OutpostOnly::new,
-        // "Outpost");
-        // OutpostOnly.register(autonChooser);
-        // AutonConfig RBOuttake = new AutonConfig("RB Outtake", RBOuttake::new,
-        // "RB to N Outtake",
-        // "N to RB Outtake");
-        // RBOuttake.register(autonChooser);
-        // AutonConfig LBOuttake = new AutonConfig("LB Outtake", LBOuttake::new,
-        // "LB to N Outtake",
-        // "N to LB Outtake");
-        // LBOuttake.register(autonChooser);
-        // AutonConfig LBMidlineSweep = new AutonConfig("LB Midline Sweep",
-        // LBMidlineSweep::new,
-        // "LB to N Midline",
-        // "LN Sweep Midline");
-        // LBMidlineSweep.register(autonChooser);
-        // AutonConfig RBMidlineSweep = new AutonConfig("RB Midline Sweep",
-        // RBMidlineSweep::new,
-        // "RB to N Midline",
-        // "RN Sweep Midline");
-        // RBMidlineSweep.register(autonChooser);
-        // AutonConfig LBDisrupt = new AutonConfig("LB Disrupt", LBDisrupt::new,
-        // "LB to CN Disrupt",
-        // "LN Circle Disrupt",
-        // "LN Circle Disrupt",
-        // "LB Disrupt Return");
-        // LBDisrupt.register(autonChooser);
-        // AutonConfig RBDisrupt = new AutonConfig("RB Disrupt", RBDisrupt::new,
-        // "RB to CN Disrupt",
-        // "RN Circle Disrupt",
-        // "RN Circle Disrupt",
-        // "RB Disrupt Return");
-        // RBDisrupt.register(autonChooser);
-        // AutonConfig LT_Disrupt = new AutonConfig("LT Disrupt", LTDisrupt::new,
-        // "LT to N Disrupt",
-        // "LT Circle Disrupt",
-        // "LT Circle Disrupt",
-        // "LT Side Push Disrupt",
-        // "LT Around Disrupt",
-        // "LT Back Push Disrupt");
-        // LT_Disrupt.register(autonChooser);
-        // AutonConfig RT_Disrupt = new AutonConfig("RT Disrupt", RTDisrupt::new,
-        // "RT to N Disrupt",
-        // "RT Circle Disrupt",
-        // "RT Circle Disrupt",
-        // "RT Side Push Disrupt",
-        // "RT Around Disrupt",
-        // "RT Back Push Disrupt");
-        // RT_Disrupt.register(autonChooser);
+        // SHOOT
+
+        AutonConfig centerDepot = new AutonConfig("Center Depot", CenterDepot::new,
+            "Hub to Depot",
+            "Tower shoot");
+        centerDepot.register(autonChooser);
+
+        AutonConfig frontHubShootPreloads = new AutonConfig("Front Hub Shoot Preloads", FrontHubShootPreloads::new,
+            "Front Hub Shoot Preloads"
+        );
+        frontHubShootPreloads.register(autonChooser);
+
+        AutonConfig LB_Dumpy = new AutonConfig("LB Dumpy", LBDumpy::new,
+            "LB to N Dumpy",
+            "LB Intake Dumpy",
+            "LB Backsweep Dumpy",
+            "LB Shoot Dumpy",
+            "LB Shoot to Depot");
+        LB_Dumpy.register(autonChooser);
+
+        AutonConfig RB_Dumpy = new AutonConfig("RB Dumpy", RBDumpy::new, 
+            "RB to N Dumpy",
+            "RB Intake Dumpy",
+            "RB Backsweep Dumpy",
+            "RB Shoot Dumpy"
+        );
+        RB_Dumpy.register(autonChooser);
+
+        // FERRY
+        AutonConfig LB_Ferry = new AutonConfig("LB Disrupt", LBFerry::new, 
+            "LB to N Ferry",
+            "N to LT Ferry",
+            "LT Hub Ferry",
+            "N to Depot Ferry"
+        );
+        LB_Ferry.register(autonChooser);
+
+        AutonConfig RB_Ferry = new AutonConfig("LB Disrupt", RBFerry::new, 
+            "RB to N Ferry",
+            "N to RT Ferry",
+            "RT Hub Ferry",
+            "N to Outpost Ferry"
+        );
+        RB_Ferry.register(autonChooser);
+
+        // DISRUPT
+        AutonConfig LB_Disrupt = new AutonConfig("LB Disrupt", LBDisrupt::new, 
+            "LB to CN Disrupt",
+            "LN Disrupt Circle",
+            "LN Disrupt Circle",
+            "LB Disrupt Return"
+        );
+        LB_Disrupt.register(autonChooser);
+
+        AutonConfig RB_Disrupt = new AutonConfig("RB Disrupt", RBDisrupt::new, 
+            "RB to CN Disrupt",
+            "RN Circle Disrupt",
+            "RN Circle Disrupt",
+            "RB Disrupt Return"
+        );
+        RB_Disrupt.register(autonChooser);
+
         // autonChooser.addOption("SysID Module Translation Dynamic Forwards",
         // swerve.sysIdDynamic(Direction.kForward));
         // autonChooser.addOption("SysID Module Translation Dynamic Backwards",
@@ -264,30 +279,6 @@ public class RobotContainer {
         // swerve.sysidRotationQuasiStatic(Direction.kForward));
         // autonChooser.addOption("SysID Rotation Translation Quasi Backwards",
         // swerve.sysidRotationQuasiStatic(Direction.kReverse));
-        autonChooser.addOption(
-                "Intake Pivot SysID  Quasi Forwards",
-                intake.getIntakeSysIdRoutine().quasistatic(Direction.kForward));
-        autonChooser.addOption(
-                "Intake Pivot SysID  Quasi Reverse",
-                intake.getIntakeSysIdRoutine().quasistatic(Direction.kReverse));
-        autonChooser.addOption(
-                "Intake Pivot SysID  Dynamic Forwards",
-                intake.getIntakeSysIdRoutine().dynamic(Direction.kForward));
-        autonChooser.addOption(
-                "Intake Pivot SysID  Dynamic Reverse",
-                intake.getIntakeSysIdRoutine().dynamic(Direction.kReverse));
-        autonChooser.addOption(
-                "Shooter SysID Quasi Forwards ",
-                shooter.getShooterSysIdRoutine().quasistatic(Direction.kForward));
-        autonChooser.addOption(
-                "Shooter SysID Quasi Reverse ",
-                shooter.getShooterSysIdRoutine().quasistatic(Direction.kReverse));
-        autonChooser.addOption(
-                "Shooter SysID Dynamic Forward ",
-                shooter.getShooterSysIdRoutine().dynamic(Direction.kForward));
-        autonChooser.addOption(
-                "Shooter SysID Dynamic Reverse ",
-                shooter.getShooterSysIdRoutine().dynamic(Direction.kReverse));
         SmartDashboard.putData("Autonomous", autonChooser);
     }
 

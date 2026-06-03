@@ -94,19 +94,6 @@
                   "period": 0.06,
                   "data_type": "boolean"
                 }
-              },
-              {
-                "title": "LED",
-                "x": 0.0,
-                "y": 0.0,
-                "width": 150.0,
-                "height": 150.0,
-                "type": "Toggle Switch",
-                "properties": {
-                  "topic": "/Tunable/Enabled Subsystems/LED",
-                  "period": 0.06,
-                  "data_type": "boolean"
-                }
               }
             ]
           }
@@ -340,6 +327,20 @@
               "data_type": "double",
               "show_submit_button": false
             }
+          },
+          {
+            "title": "LB Dumpy Delay",
+            "x": 1200.0,
+            "y": 400.0,
+            "width": 300.0,
+            "height": 150.0,
+            "type": "Text Display",
+            "properties": {
+              "topic": "/Tunable/LB Dumpy Delay",
+              "period": 0.06,
+              "data_type": "double",
+              "show_submit_button": false
+            }
           }
         ]
       }
@@ -350,10 +351,10 @@
         "layouts": [
           {
             "title": "Enabled Subsystems",
-            "x": 0.0,
-            "y": 0.0,
+            "x": 1200.0,
+            "y": 100.0,
             "width": 300.0,
-            "height": 350.0,
+            "height": 300.0,
             "type": "List Layout",
             "properties": {
               "label_position": "LEFT"
@@ -456,7 +457,7 @@
         "containers": [
           {
             "title": "Field",
-            "x": 300.0,
+            "x": 0.0,
             "y": 0.0,
             "width": 1000.0,
             "height": 450.0,
@@ -477,7 +478,7 @@
           },
           {
             "title": "Pivot At Target Angle",
-            "x": 1300.0,
+            "x": 1000.0,
             "y": 100.0,
             "width": 200.0,
             "height": 150.0,
@@ -494,7 +495,7 @@
           },
           {
             "title": "Shift",
-            "x": 750.0,
+            "x": 400.0,
             "y": 450.0,
             "width": 100.0,
             "height": 150.0,
@@ -507,7 +508,7 @@
           },
           {
             "title": "Is Active Shift?",
-            "x": 400.0,
+            "x": 50.0,
             "y": 450.0,
             "width": 150.0,
             "height": 150.0,
@@ -524,7 +525,7 @@
           },
           {
             "title": "Time Left In Shift",
-            "x": 550.0,
+            "x": 200.0,
             "y": 450.0,
             "width": 200.0,
             "height": 150.0,
@@ -540,7 +541,7 @@
           },
           {
             "title": "Intake State",
-            "x": 1300.0,
+            "x": 1000.0,
             "y": 0.0,
             "width": 200.0,
             "height": 100.0,
@@ -554,7 +555,7 @@
           },
           {
             "title": "Match Time",
-            "x": 850.0,
+            "x": 500.0,
             "y": 450.0,
             "width": 200.0,
             "height": 150.0,
@@ -570,7 +571,7 @@
           },
           {
             "title": "Auton Won",
-            "x": 1050.0,
+            "x": 700.0,
             "y": 450.0,
             "width": 150.0,
             "height": 150.0,
@@ -587,7 +588,7 @@
           },
           {
             "title": "Intake Pivot Stalling",
-            "x": 1300.0,
+            "x": 1000.0,
             "y": 250.0,
             "width": 200.0,
             "height": 150.0,
@@ -604,7 +605,7 @@
           },
           {
             "title": "Intake Rollers Stalling",
-            "x": 1300.0,
+            "x": 1000.0,
             "y": 400.0,
             "width": 200.0,
             "height": 150.0,
@@ -682,7 +683,7 @@
           },
           {
             "title": "Feeder State",
-            "x": 1500.0,
+            "x": 1200.0,
             "y": 0.0,
             "width": 150.0,
             "height": 100.0,
@@ -786,19 +787,6 @@
                 "type": "Toggle Switch",
                 "properties": {
                   "topic": "/Tunable/Enabled Subsystems/Handoff",
-                  "period": 0.06,
-                  "data_type": "boolean"
-                }
-              },
-              {
-                "title": "LED",
-                "x": 0.0,
-                "y": 0.0,
-                "width": 150.0,
-                "height": 150.0,
-                "type": "Toggle Switch",
-                "properties": {
-                  "topic": "/Tunable/Enabled Subsystems/LED",
                   "period": 0.06,
                   "data_type": "boolean"
                 }
@@ -924,7 +912,7 @@
         "layouts": [
           {
             "title": "Enabled Subsystems",
-            "x": 1200.0,
+            "x": 1050.0,
             "y": 0.0,
             "width": 300.0,
             "height": 350.0,
@@ -1010,26 +998,13 @@
                   "period": 0.06,
                   "data_type": "boolean"
                 }
-              },
-              {
-                "title": "LED",
-                "x": 0.0,
-                "y": 0.0,
-                "width": 150.0,
-                "height": 150.0,
-                "type": "Toggle Switch",
-                "properties": {
-                  "topic": "/Tunable/Enabled Subsystems/LED",
-                  "period": 0.06,
-                  "data_type": "boolean"
-                }
               }
             ]
           },
           {
             "title": "Robot Stats",
-            "x": 1500.0,
-            "y": 0.0,
+            "x": 1050.0,
+            "y": 350.0,
             "width": 300.0,
             "height": 300.0,
             "type": "List Layout",
@@ -1162,9 +1137,9 @@
           {
             "title": "Above Threshold",
             "x": 450.0,
-            "y": 600.0,
+            "y": 650.0,
             "width": 150.0,
-            "height": 150.0,
+            "height": 50.0,
             "type": "Boolean Box",
             "properties": {
               "topic": "/Robot/Intake/Pivot/Above Threshold",
@@ -1181,7 +1156,7 @@
             "x": 300.0,
             "y": 600.0,
             "width": 150.0,
-            "height": 150.0,
+            "height": 100.0,
             "type": "Boolean Box",
             "properties": {
               "topic": "/Robot/Intake/Pivot/At Target Angle",
@@ -1196,9 +1171,9 @@
           {
             "title": "Pushing Down",
             "x": 300.0,
-            "y": 750.0,
+            "y": 700.0,
             "width": 150.0,
-            "height": 150.0,
+            "height": 100.0,
             "type": "Boolean Box",
             "properties": {
               "topic": "/Robot/Intake/Pivot/Pushing Down",
@@ -1288,7 +1263,7 @@
             "height": 150.0,
             "type": "Text Display",
             "properties": {
-              "topic": "/Robot/Shooter/Target RPM",
+              "topic": "/Tunable/Shooter/Manual Shot Tuning RPM",
               "period": 0.06,
               "data_type": "double",
               "show_submit_button": false
@@ -1326,14 +1301,14 @@
             }
           },
           {
-            "title": "CANBus Utilization",
-            "x": 1200.0,
-            "y": 350.0,
+            "title": "Distance From Hub",
+            "x": 600.0,
+            "y": 0.0,
             "width": 300.0,
-            "height": 100.0,
+            "height": 150.0,
             "type": "Text Display",
             "properties": {
-              "topic": "/Robot/SystemStats/CANBus/Utilization",
+              "topic": "/Robot/Swerve/Distance From Hub",
               "period": 0.06,
               "data_type": "double",
               "show_submit_button": false

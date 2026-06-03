@@ -1,0 +1,43 @@
+{
+  "version": "2025.0",
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "LB to N Dumpy"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "LB Intake Dumpy"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "LB Backsweep Dumpy"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "LB Shoot Dumpy"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "LB Shoot to Depot"
+          }
+        }
+      ]
+    }
+  },
+  "resetOdom": true,
+  "folder": "Dumpy",
+  "choreoAuto": false
+}

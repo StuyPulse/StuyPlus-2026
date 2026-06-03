@@ -48,12 +48,16 @@ public class HandoffImpl extends Handoff {
 
     @Override
     protected boolean handoffStalling() {
-        boolean isStalling = Math.abs(handoffMotor.getStatorCurrent().getValueAsDouble()) > Settings.Handoff.STALL_CURRENT;
-        return handoffStalling.calculate(isStalling);
+        return handoffStalling.calculate(Math.abs(handoffMotor.getStatorCurrent().getValueAsDouble()) > Settings.Handoff.STALL_CURRENT);
     };
 
     @Override
     public void periodic() {
+        if (!Settings.EnabledSubsystems.HANDOFF.get()) {
+            stopMotors();
+            return;
+        }
+
         // States
         final Shooter shooter = Shooter.getInstance();
         final CommandSwerveDrivetrain swerve = CommandSwerveDrivetrain.getInstance();
@@ -64,10 +68,6 @@ public class HandoffImpl extends Handoff {
         // TODO: consider relaxing tolerances for ferrying
         if (!(swerve.isAlignedToTarget(Field.getFerryZonePose(swerve.getPose().getTranslation())))
                 && shooter.getState() == ShooterState.FERRY) {
-            setState(HandoffState.IDLE);
-        }
-
-        if (!Shooter.getInstance().shooterSpunUp()) {
             setState(HandoffState.IDLE);
         }
 

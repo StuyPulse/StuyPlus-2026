@@ -1,0 +1,54 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 3.353,
+        "y": 5.816
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 2.3132296215429404,
+        "y": 6.032075884734353
+      },
+      "isLocked": false,
+      "linkedName": "LB Dumpy 3"
+    },
+    {
+      "anchor": {
+        "x": 2.5995591111717613,
+        "y": 4.471275984807133
+      },
+      "prevControl": {
+        "x": 1.8309274927219796,
+        "y": 4.812607464519651
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "LB Dumpy Hub Shoot"
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 3.0,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": -8.0
+  },
+  "reversed": false,
+  "folder": "Dumpy",
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": 179.15
+  },
+  "useDefaultConstraints": true
+}

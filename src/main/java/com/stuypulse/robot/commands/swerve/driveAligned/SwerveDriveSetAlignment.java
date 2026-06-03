@@ -13,6 +13,7 @@ import com.ctre.phoenix6.swerve.SwerveRequest;
 import com.stuypulse.robot.constants.Gains.Swerve.Alignment;
 import com.stuypulse.robot.constants.Settings;
 import com.stuypulse.robot.subsystems.swerve.CommandSwerveDrivetrain;
+import com.stuypulse.robot.util.swerve.AlignmentUtil;
 
 import edu.wpi.first.math.filter.Debouncer;
 import edu.wpi.first.math.geometry.Pose2d;
@@ -38,9 +39,7 @@ public class SwerveDriveSetAlignment extends Command {
     }
 
     public Rotation2d getTargetAngle() {
-        Pose2d currentPose = swerve.getPose();
-        double atan = Math.atan2(pose.get().getY() - currentPose.getY(), pose.get().getX() - currentPose.getX());
-        return new Rotation2d((atan));
+        return AlignmentUtil.getTargetAlignmentAngle(swerve.getPose(), pose.get());
     }
 
     private boolean isAligned() {

@@ -1,0 +1,25 @@
+{
+  "version": "2025.0",
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Front Hub Shoot Preloads"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "LB Tower to BC Center"
+          }
+        }
+      ]
+    }
+  },
+  "resetOdom": true,
+  "folder": "Preloads",
+  "choreoAuto": false
+}

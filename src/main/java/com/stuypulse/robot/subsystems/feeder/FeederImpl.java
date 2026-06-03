@@ -63,9 +63,7 @@ public class FeederImpl extends Feeder {
                 && shooter.getState() == ShooterState.FERRY) {
             setState(FeederState.IDLE);
         }
-        if (!Shooter.getInstance().shooterSpunUp()) {
-            setState(FeederState.IDLE);
-        }
+
         // Apply
         feederMotor.setControl(controller.withOutput(getState().getTargetVoltage()));
         // Logging

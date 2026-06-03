@@ -5,13 +5,13 @@
 /***************************************************************/
 package com.stuypulse.robot.subsystems.shooter;
 
+import static edu.wpi.first.units.Units.Hertz;
 import static edu.wpi.first.units.Units.Volts;
 
 import com.ctre.phoenix6.controls.Follower;
 import com.ctre.phoenix6.controls.VelocityTorqueCurrentFOC;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.MotorAlignmentValue;
-import com.stuypulse.robot.constants.Gains;
 import com.stuypulse.robot.constants.Motors;
 import com.stuypulse.robot.constants.Ports;
 import com.stuypulse.robot.constants.Settings;
@@ -44,6 +44,8 @@ public class ShooterImpl extends Shooter {
         shooterMotorCenter = new TalonFX(Ports.Shooter.SHOOTER_MOTOR_CENTER, Settings.CANBUS);
         shooterMotorLeft = new TalonFX(Ports.Shooter.SHOOTER_MOTOR_LEFT, Settings.CANBUS);
         shooterController = new VelocityTorqueCurrentFOC(getState().getTargetAngularVelocity());
+
+        shooterMotorRight.getTorqueCurrent().setUpdateFrequency(Hertz.of(1000)); // TODO: test effect on CANBus usage (SystemStats/CANBus/Utilization)
         signals = new LoggedSignals(LoggedSignals.SignalLocation.CANIVORE, "Shooter/")
                 .withMotor(
                         "Right Motor",
@@ -100,8 +102,6 @@ public class ShooterImpl extends Shooter {
             shooterMotorRight.setVoltage(voltageOverride.get().in(Volts));
             return;
         }
-
-        // Motors.Shooter.SHOOTER_MOTOR_RIGHT.updateGainsConfig(shooterMotorRight, 0, Gains.Shooter.kP, Gains.Shooter.kI, Gains.Shooter.kD, Gains.Shooter.kS, Gains.Shooter.kV, Gains.Shooter.kA);
 
         final AngularVelocity targetAngularVelocity = getState().getTargetAngularVelocity();
         final VelocityTorqueCurrentFOC shooterControl = shooterController.withVelocity(targetAngularVelocity);

@@ -7,8 +7,10 @@ package com.stuypulse.robot.subsystems.shooter;
 
 import static edu.wpi.first.units.Units.*;
 
+import com.ctre.phoenix6.controls.ControlRequest;
 import com.ctre.phoenix6.controls.Follower;
 import com.ctre.phoenix6.controls.VelocityTorqueCurrentFOC;
+import com.ctre.phoenix6.controls.VoltageOut;
 import com.ctre.phoenix6.signals.MotorAlignmentValue;
 import com.stuypulse.robot.constants.Motors;
 import com.stuypulse.robot.constants.Ports;
@@ -80,16 +82,22 @@ public class ShooterSim extends Shooter {
         this.voltageOverride = Optional.of(voltage);
     }
 
+    private ControlRequest getShooterControl() {
+        if (voltageOverride.isPresent()) {
+            return new VoltageOut(voltageOverride.get());
+        }
+        return shooterController.withVelocity(getState().getTargetAngularVelocity().in(RotationsPerSecond));
+    }
+
     @Override
     public void periodic() {
-        if (!Settings.EnabledSubsystems.SHOOTER.get()) {
+        if (Settings.EnabledSubsystems.SHOOTER.get()) {
+            shooterMotorRight.setControl(getShooterControl());
+            // leader first
+        } else {
             stopMotors();
-            return;
         }
-        shooterMotorRight.setControl(
-                shooterController.withVelocity(
-                        getState().getTargetAngularVelocity().in(RotationsPerSecond)));
-        // leader first
+        
         shooterMotorRight.update(Settings.DT);
         shooterMotorCenter.update(Settings.DT);
         shooterMotorLeft.update(Settings.DT);

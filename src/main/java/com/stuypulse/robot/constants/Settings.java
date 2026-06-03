@@ -45,19 +45,23 @@ public interface Settings {
 
     public interface EnabledSubsystems {
 
-        BooleanSubscriber FEEDER = DogLog.tunable("Enabled Subsystems/Feeder", false);
+        BooleanSubscriber FEEDER = DogLog.tunable("Enabled Subsystems/Feeder", true);
 
         BooleanSubscriber INTAKE = DogLog.tunable("Enabled Subsystems/Intake", true);
 
+        // BooleanSubscriber INTAKE_ROLLERS = DogLog.tunable("Enabled Subsystems/Intake/Rollers", true);
+
+        // BooleanSubscriber INTAKE_PIVOT = DogLog.tunable("Enabled Subsystems/Intake/Pivot", true);
+
         BooleanSubscriber LED = DogLog.tunable("Enabled Subsystems/LED", false);
 
-        BooleanSubscriber HANDOFF = DogLog.tunable("Enabled Subsystems/Handoff", false);
+        BooleanSubscriber HANDOFF = DogLog.tunable("Enabled Subsystems/Handoff", true);
 
-        BooleanSubscriber SHOOTER = DogLog.tunable("Enabled Subsystems/Shooter", false);
+        BooleanSubscriber SHOOTER = DogLog.tunable("Enabled Subsystems/Shooter", true);
 
-        BooleanSubscriber VISION = DogLog.tunable("Enabled Subsystems/Vision", false);
+        BooleanSubscriber VISION = DogLog.tunable("Enabled Subsystems/Vision", true);
 
-        BooleanSubscriber SWERVE = DogLog.tunable("Enabled Subsystems/Swerve", false);
+        BooleanSubscriber SWERVE = DogLog.tunable("Enabled Subsystems/Swerve", true);
     }
 
     public interface Vision {
@@ -82,18 +86,20 @@ public interface Settings {
 
             Angle STOW_ANGLE = Degrees.of(-102);
 
-            Angle DEPLOY_ANGLE = Degrees.of(22);
+            Angle DEPLOY_ANGLE = Degrees.of(-22);
 
-            Angle AGITATE_UP_ANGLE = Degrees.of(-42);
+            Angle AGITATE_UP_ANGLE = Degrees.of(-62);
 
             Angle DIGEST_ANGLE = Degrees.of(-92);
+
+            Angle AGITATE_DOWN_ANGLE = Degrees.of(-22);
 
             // misc
             Angle ANGLE_TOLERANCE = Degrees.of(0.5);
 
-            Angle PUSHDOWN_THRESHOLD = Degrees.of(20);
+            Angle PUSHDOWN_THRESHOLD = Degrees.of(-30);
 
-            DoubleSubscriber PUSHDOWN_CURRENT = DogLog.tunable("Intake/Pivot/Pushdown Current Tuning Amps", 30.0);
+            DoubleSubscriber PUSHDOWN_CURRENT = DogLog.tunable("Intake/Pivot/Pushdown Current Tuning Amps", 5.0);
 
             // amps
             Current STALL_CURRENT = Amps.of(25);
@@ -199,7 +205,7 @@ public interface Settings {
     public interface Handoff {
         Voltage IDLE_VOLTAGE = Volts.of(0.0);
 
-        Voltage FORWARD_VOLTAGE = Volts.of(10.0);
+        Voltage FORWARD_VOLTAGE = Volts.of(12.0);
 
         Voltage REVERSE_VOLTAGE = Volts.of(-10.0);
 
@@ -232,34 +238,59 @@ public interface Settings {
         Distance FLYWHEEL_RADIUS = Inches.of(3);
 
         // TODO: Test for manual shooting RPM
-        AngularVelocity MANUAL_HUB_RPM = RPM.of(3000);
+        DoubleSubscriber MANUAL_HUB_RPM = DogLog.tunable("Shooter/Manual Shot Tuning RPM", 3650.0);
 
         AngularVelocity MIN_SHOOTER_VELOCITY = RPM.of(1740);
 
         DoubleSubscriber SHOOT_TUNING_RPM = DogLog.tunable("Shooter/Shoot Tuning RPM", 0.0);
         DoubleSubscriber FERRY_TUNING_RPM = DogLog.tunable("Shooter/Ferry Tuning RPM", 0.0);
 
+        AngularVelocity SHOOTER_SPUN_UP_TOLERANCE = RPM.of(100);
         public interface RPMInterpolation {
 
-            double[][] distanceRPMInterpolationValues = { { 1.0, 1000.0 }, { 2.0, 1500.0 }, { 3.0, 2000.0 }, { 4.0, 2500.0 }, { 5.0, 3000.0 } };
+            double[][] distanceRPMInterpolationValues = {
+                {1.46, 2600},
+                {2.07, 3150},
+                {3.0, 3633.0},
+                {3.13, 3700},
+                {3.45, 3933},
+                //TODO: These numbers don't make sense
+                // { 4.895367348608047, 3250.0 },
+                // { 6.1322461808798705, 3487.0 } 
+            };
         }
 
         // These values are placeholders and should be replaced with actual data from testing
         public interface TOFInterpolation {
 
-            double[][] distanceTOFInterpolationValues = { { 1.0, 0.5 }, { 2.0, 0.75 }, { 3.0, 1.0 }, { 4.0, 1.25 }, { 5.0, 1.5 } };
+            double[][] distanceTOFInterpolationValues = {
+                { 1.0, 0.5 },
+                { 2.0, 0.75 },
+                { 3.0, 1.0 },
+                { 4.0, 1.25 },
+                { 5.0, 1.5 } };
         }
 
         // These values are placeholders and should be replaced with actual data from testing
         public interface FerryRPMInterpolation {
 
-            double[][] ferryDistanceRPMInterpolation = { { 1.0, 1000.0 }, { 2.0, 1500.0 }, { 3.0, 2000.0 }, { 4.0, 2500.0 }, { 5.0, 3000.0 } };
+            double[][] ferryDistanceRPMInterpolation = {
+                { 1.0, 2300.0 },
+                { 2.0, 2800.0 },
+                { 3.0, 3300.0 },
+                { 4.0, 3800.0 },
+                { 5.0, 5500.0 } };
         }
 
         // These values are placeholders and should be replaced with actual data from testing
         public interface FerryTOFInterpolation {
 
-            double[][] FerryTOFInterpolationInterpolation = { { 1.0, 0.5 }, { 2.0, 0.75 }, { 3.0, 1.0 }, { 4.0, 1.25 }, { 5.0, 1.5 } };
+            double[][] FerryTOFInterpolationInterpolation = {
+                { 1.0, 0.5 },
+                { 2.0, 0.75 },
+                { 3.0, 1.0 },
+                { 4.0, 1.25 },
+                { 5.0, 1.5 } };
         }
         // These values are placeholders and should be replaced with actual data from testing
     }
@@ -275,7 +306,7 @@ public interface Settings {
             double MAX_VELOCITY_M_PER_S = 4.3;
 
             // TODO: revert to 15.0
-            double MAX_ACCEL_M_PER_S_SQUARED = 2.0;
+            double MAX_ACCEL_M_PER_S_SQUARED = 20.0;
 
             double MAX_ANGULAR_VEL_RAD_PER_S = Units.degreesToRadians(400.0);
 
@@ -304,7 +335,7 @@ public interface Settings {
 
                 Distance Y_TOLERANCE = Inches.of(2.0);
 
-                Rotation2d THETA_TOLERANCE = Rotation2d.fromDegrees(1);
+                Rotation2d THETA_TOLERANCE = Rotation2d.fromDegrees(8);
 
                 Pose2d POSE_TOLERANCE = new Pose2d(X_TOLERANCE.in(Meters), Y_TOLERANCE.in(Meters), THETA_TOLERANCE);
 

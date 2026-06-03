@@ -7,6 +7,8 @@ package com.stuypulse.robot.subsystems.shooter;
 
 import static edu.wpi.first.units.Units.RPM;
 
+import java.util.function.DoubleSupplier;
+
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.stuypulse.robot.Robot;
 import com.stuypulse.robot.constants.Settings;
@@ -16,11 +18,12 @@ import edu.wpi.first.units.measure.AngularVelocity;
 import edu.wpi.first.units.measure.Voltage;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
-import java.util.function.DoubleSupplier;
 
 public abstract class Shooter extends SubsystemBase {
 
     private static final Shooter instance;
+
+    private static AngularVelocity bonusVelocity;
 
     private ShooterState state;
 
@@ -38,6 +41,8 @@ public abstract class Shooter extends SubsystemBase {
 
     protected Shooter() {
         setState(ShooterState.SHOOT);
+
+        bonusVelocity = RPM.of(0);
     }
 
     public void setState(ShooterState state) {
@@ -56,26 +61,48 @@ public abstract class Shooter extends SubsystemBase {
         DogLog.log(stem + "RPM", motor.getVelocity().getValue().in(RPM));
     }
 
+    /** Enum representing the different possible states of the shooter. */
     public enum ShooterState {
 
         // SOTM(() -> 0.0), 
         // FOTM(() -> 0.0),
+        /** Shooter doesn't run. */
         IDLE(() -> 0.0),
-        SHOOT(Settings.Shooter.SHOOT_TUNING_RPM), //TODO:Replace with interpolated RPM after data is gathered
-        FERRY(Settings.Shooter.FERRY_TUNING_RPM),
-        // SHOOT(() -> InterpolationCalculator.interpolateShotInfo().targetRPM()),
-        // FERRY(() -> InterpolationCalculator.interpolateFerryingInfo().targetRPM()),
-        MANUAL_HUB(() -> Settings.Shooter.MANUAL_HUB_RPM.in(RPM));
+        /** Shooter wheels spin at it's target RPM, interpolated based on distance to hub. */
+        // SHOOT(Settings.Shooter.SHOOT_TUNING_RPM), //TODO:Replace with interpolated RPM after data is gathered
+        /** Shooter wheels spin at it's target RPM, interpolated based on distance to ferry zone. */
+        // FERRY(Settings.Shooter.FERRY_TUNING_RPM),
+        SHOOT(() -> InterpolationCalculator.interpolateShotInfo().targetRPM()),
+        FERRY(() -> InterpolationCalculator.interpolateFerryingInfo().targetRPM()),
+        /** Shooter wheels spin at a predetermined constant rate without interpolation. */
+        MANUAL_HUB(Settings.Shooter.MANUAL_HUB_RPM);
 
+        /** The supplier for the target RPM of the shooter in the corresponding state. */
         private DoubleSupplier RPMSupplier;
 
+        /**
+         * Constructs a ShooterState with the given supplier for the target RPM of the shooter.
+         * @param RPMSupplier the supplier for the target RPM of the shooter in the corresponding state
+         */
         private ShooterState(DoubleSupplier RPMSupplier) {
             this.RPMSupplier = RPMSupplier;
         }
 
+        /**
+         * Gets the target angular velocity of the shooter in the corresponding state by converting the target RPM from the supplier to an AngularVelocity.
+         * @return the target angular velocity of the shooter
+         */
         public AngularVelocity getTargetAngularVelocity() {
-            return RPM.of(RPMSupplier.getAsDouble());
+            return RPM.of(RPMSupplier.getAsDouble()).plus(bonusVelocity); // adding here allows target RPM readings to be accurate
         }
+    }
+
+    public void addToBonusVelocity(double velocity) {
+        bonusVelocity = bonusVelocity.plus(RPM.of(velocity));
+    }
+
+    public void resetBonusVelocity() {
+        bonusVelocity = RPM.of(0);
     }
 
     public abstract AngularVelocity getCurrentAngularVelocity();
@@ -87,13 +114,15 @@ public abstract class Shooter extends SubsystemBase {
     public abstract void setVoltageOverride(Voltage voltage);
 
     public boolean shooterSpunUp() {
-        return getCurrentAngularVelocity().gte(getState().getTargetAngularVelocity());
+        return getCurrentAngularVelocity().gte(getState().getTargetAngularVelocity().minus(Settings.Shooter.SHOOTER_SPUN_UP_TOLERANCE));
     }
 
     @Override
     public void periodic() {
         final ShooterState currentState = getState();
-        DogLog.log("Shooter/Target RPM", currentState.getTargetAngularVelocity().in(RPM));
+        DogLog.log("Shooter/Bonus Velocity", bonusVelocity);
+        DogLog.log("Shooter/Target RPM", (int) currentState.getTargetAngularVelocity().in(RPM));
+        DogLog.log("Shooter/Current RPM", (int) getCurrentAngularVelocity().in(RPM));
         DogLog.log("Shooter/State", currentState.name());
         DogLog.forceNt.log("States/Shooter", currentState.name());
         DogLog.forceNt.log("Shooter/At Target RPM", shooterSpunUp());

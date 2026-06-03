@@ -6,10 +6,12 @@
 package com.stuypulse.robot;
 
 import com.ctre.phoenix6.SignalLogger;
+import com.stuypulse.robot.commands.shooter.ShooterSetShoot;
 import com.stuypulse.robot.commands.vision.SetIMUMode;
 import com.stuypulse.robot.commands.vision.SetMegaTagMode;
 import com.stuypulse.robot.commands.vision.SetVisionEnabled;
 import com.stuypulse.robot.commands.vision.WhitelistAllTags;
+import com.stuypulse.robot.constants.Field;
 import com.stuypulse.robot.subsystems.swerve.CommandSwerveDrivetrain;
 import com.stuypulse.robot.subsystems.vision.LimelightVision;
 import com.stuypulse.robot.subsystems.vision.LimelightVision.MegaTagMode;
@@ -17,11 +19,14 @@ import com.stuypulse.robot.util.LoggedSignals;
 import com.stuypulse.robot.util.simulation.RobotVisualizer;
 import com.stuypulse.robot.util.simulation.Simulation;
 import com.stuypulse.robot.util.simulation.SimulationConstants;
+import com.stuypulse.robot.util.swerve.AlignmentUtil;
+
 import dev.doglog.DogLog;
 import dev.doglog.DogLogOptions;
 import edu.wpi.first.wpilibj.DataLogManager;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
+import edu.wpi.first.wpilibj.PowerDistribution;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -66,11 +71,12 @@ public class Robot extends TimedRobot {
         DataLogManager.logNetworkTables(true);
         System.out.println("]LOGGING DIRECTORY]: " + DataLogManager.getLogDir());
         SignalLogger.start();
-        // SmartDashboard.putData(CommandScheduler.getInstance());
         DogLog.setOptions(new DogLogOptions()
             .withCaptureDs(true)
             .withNtTunables(true)
-            .withLogExtras(true));
+            .withLogExtras(true)
+            .withNtPublish(true));
+        DogLog.setPdh(new PowerDistribution());
     }
 
     /**
@@ -93,6 +99,9 @@ public class Robot extends TimedRobot {
         DogLog.forceNt.log("Bot/Alliance", alliance.name());
         DogLog.forceNt.log("Match Time", DriverStation.getMatchTime());
         SmartDashboard.putData("Command Scheduler", CommandScheduler.getInstance());
+
+        DogLog.log("Alignment/Target Heading To Hub", 
+            AlignmentUtil.getTargetAlignmentAngle(CommandSwerveDrivetrain.getInstance().getPose(), Field.getHubPose()).getDegrees());
     }
 
     /******************/
@@ -171,6 +180,7 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void autonomousExit() {
+        LimelightVision.getInstance().captureRewind(25);
     }
 
     /*******************/
@@ -185,6 +195,7 @@ public class Robot extends TimedRobot {
         CommandScheduler.getInstance().schedule(new SetMegaTagMode(MegaTagMode.MEGATAG2));
         CommandScheduler.getInstance().schedule(new SetIMUMode(4));
         CommandScheduler.getInstance().schedule(new WhitelistAllTags());
+        CommandScheduler.getInstance().schedule(new ShooterSetShoot()); // start at SHOOT state
         if (auto != null) {
             auto.cancel();
         }
@@ -206,6 +217,7 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void teleopExit() {
+        LimelightVision.getInstance().captureRewind(165);
     }
 
     /*****************/

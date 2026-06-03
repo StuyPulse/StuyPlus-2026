@@ -1,0 +1,54 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 3.353,
+        "y": 2.184
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 2.332806169728393,
+        "y": 2.065959546443826
+      },
+      "isLocked": false,
+      "linkedName": "RB Dumpy 3"
+    },
+    {
+      "anchor": {
+        "x": 3.211,
+        "y": 3.085
+      },
+      "prevControl": {
+        "x": 2.2904620441896997,
+        "y": 2.8713767992174213
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": null
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 3.0,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 36.871
+  },
+  "reversed": false,
+  "folder": "Dumpy",
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": 179.15
+  },
+  "useDefaultConstraints": true
+}

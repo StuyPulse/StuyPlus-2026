@@ -1,0 +1,75 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 2.0,
+        "y": 4.0
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 2.651113231750909,
+        "y": 2.9148217326456276
+      },
+      "isLocked": false,
+      "linkedName": "Front Hub Preload 1"
+    },
+    {
+      "anchor": {
+        "x": 4.612741653020378,
+        "y": 2.459
+      },
+      "prevControl": {
+        "x": 3.5882485549987133,
+        "y": 2.456407281694863
+      },
+      "nextControl": {
+        "x": 5.730043055980378,
+        "y": 2.461827591328242
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 8.265,
+        "y": 4.0
+      },
+      "prevControl": {
+        "x": 7.348878729985444,
+        "y": 4.256852995360263
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "BC Dot Center"
+    }
+  ],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 1.6821546052631575,
+      "rotationDegrees": 0.0
+    }
+  ],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 3.0,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 180.0
+  },
+  "reversed": false,
+  "folder": "Preloads",
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": 0.0
+  },
+  "useDefaultConstraints": true
+}

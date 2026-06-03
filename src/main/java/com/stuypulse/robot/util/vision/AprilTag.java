@@ -9,17 +9,3 @@ import edu.wpi.first.math.geometry.Pose3d;
 
 public record AprilTag(int id, Pose3d location) {
 }
-// public class AprilTag {
-// private final int id;
-// private final Pose3d location;
-// public AprilTag(int id, Pose3d location) {
-// this.id = id;
-// this.location = location;
-// }
-// public int getID() {
-// return id;
-// }
-// public Pose3d getLocation() {
-// return location;
-// }
-// }

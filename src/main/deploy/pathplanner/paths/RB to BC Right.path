@@ -1,0 +1,75 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 3.55,
+        "y": 2.6
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 4.549999999999999,
+        "y": 2.6
+      },
+      "isLocked": false,
+      "linkedName": "RB Start Facing NZ"
+    },
+    {
+      "anchor": {
+        "x": 5.554108442503638,
+        "y": 2.6
+      },
+      "prevControl": {
+        "x": 4.684747879278044,
+        "y": 2.6006524479037516
+      },
+      "nextControl": {
+        "x": 6.351421983340962,
+        "y": 2.5994016227899484
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 8.265,
+        "y": 0.6
+      },
+      "prevControl": {
+        "x": 8.328442731077146,
+        "y": 2.7486116607532756
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "BC Dot Right"
+    }
+  ],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 1.426946271929825,
+      "rotationDegrees": -1.0
+    }
+  ],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 3.0,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": true
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 180.0
+  },
+  "reversed": false,
+  "folder": "BC Dots",
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": 0.0
+  },
+  "useDefaultConstraints": false
+}

@@ -20,6 +20,10 @@ jobs:
         with:
           java-version: 17
           distribution: 'temurin'      
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
       - name: Validate Gradle wrapper
         uses: gradle/actions/wrapper-validation@v4
       - name: Setup Gradle
@@ -30,6 +34,8 @@ jobs:
         run: ./gradlew build
       - name: Generate docs
         run: ./gradlew javadoc
+      - name: Patch javadocs
+        run: node workflowscripts/JavadocPatcher.mjs
       - name: Commit and Push
         run: |
           git config user.name "github-actions[bot]"

@@ -57,6 +57,7 @@ public class LimelightVision extends SubsystemBase {
             names[i] = Cameras.LimelightCameras[i].name();
             Pose3d robotRelativePose = Cameras.LimelightCameras[i].location();
             LimelightHelpers.setCameraPose_RobotSpace(names[i], robotRelativePose.getX(), robotRelativePose.getY(), robotRelativePose.getZ(), robotRelativePose.getRotation().getMeasureX().in(Degrees), robotRelativePose.getRotation().getMeasureY().in(Degrees), robotRelativePose.getRotation().getMeasureZ().in(Degrees));
+            LimelightHelpers.setRewindEnabled(names[i], true);
         }
         camerasEnabled = new BooleanSubscriber[Cameras.LimelightCameras.length];
         for (int i = 0; i < camerasEnabled.length; i++) {
@@ -126,12 +127,19 @@ public class LimelightVision extends SubsystemBase {
         return data;
     }
 
+    public void captureRewind(double timeSecs) {
+        for (int i = 0; i < Cameras.LimelightCameras.length; i++) {
+            LimelightHelpers.triggerRewindCapture(names[i], timeSecs);
+        }
+    }
+
     @Override
     public void periodic() {
         if (!EnabledSubsystems.VISION.get()) {
             return;
         }
         for (int i = 0; i < names.length; i++) {
+            DogLog.log("Vision/" + names[i] + "/Heartbeat", LimelightHelpers.getHeartbeat(names[i]));
             if (!camerasEnabled[i].get()) {
                 DogLog.log("Vision/" + names[i] + " Has Data", false);
                 continue;
@@ -148,20 +156,27 @@ public class LimelightVision extends SubsystemBase {
             }
             boolean notNull = false;
             boolean withinAngularVelocityTolerance = false;
-            boolean withinInvalidPositionTolerance = false;
+            boolean poseAtOrigin = false;
             // Adding to pose estimator
+            SmartDashboard.putBoolean("Vision/Pose Not Estimate Null", poseEstimate != null);
             if (poseEstimate != null && poseEstimate.tagCount > 0) {
                 notNull = true;
+                SmartDashboard.putNumber("Vision/Pose Estimate X", poseEstimate.pose.getX());
+                SmartDashboard.putNumber("Vision/Pose Estimate Y", poseEstimate.pose.getY());
+                SmartDashboard.putNumber("Vision/Pose Estimate Theta", poseEstimate.pose.getRotation().getDegrees());
+                SmartDashboard.putNumber("Vision/Tag Count", poseEstimate.tagCount);
                 if (poseEstimate.pose.equals(Settings.Vision.INVALID_POSITION)) {
-                    withinInvalidPositionTolerance = false;
+                    poseAtOrigin = true;
                 }
                 if (CommandSwerveDrivetrain.getInstance().getChassisSpeeds().omegaRadiansPerSecond < Settings.Vision.MAX_ANGULAR_VELOCITY_RAD_SEC) {
                     withinAngularVelocityTolerance = true;
                 }
-                Boolean isValidPose = notNull && withinAngularVelocityTolerance && withinInvalidPositionTolerance;
+                Boolean isValidPose = notNull && withinAngularVelocityTolerance && !poseAtOrigin;
+                SmartDashboard.putBoolean("Vision/Pose at Origin?", poseAtOrigin);
+                SmartDashboard.putBoolean("Vision/Within Angular Velocity", withinAngularVelocityTolerance);
                 DogLog.log("Vision/isValidPose", isValidPose);
                 DogLog.log("Vision/isWithinAngularVel", withinAngularVelocityTolerance);
-                DogLog.log("Vision/isWithinPos", withinInvalidPositionTolerance);
+                DogLog.log("Vision/poseAtOrigin", poseAtOrigin);
                 Pose2d robotPose = poseEstimate.pose;
                 double timestamp = poseEstimate.timestampSeconds;
                 if (megaTagMode == MegaTagMode.MEGATAG1 && isValidPose) {
@@ -169,6 +184,7 @@ public class LimelightVision extends SubsystemBase {
                 } else if (megaTagMode == MegaTagMode.MEGATAG2 && isValidPose) {
                     CommandSwerveDrivetrain.getInstance().addVisionMeasurement(robotPose, timestamp, Settings.Vision.MT2_STDEVS);
                 }
+                DogLog.log("Vision/Pose", robotPose);
                 DogLog.log("Vision/Pose X Component", robotPose.getX());
                 DogLog.log("Vision/Pose Y Component", robotPose.getY());
                 DogLog.log("Vision/Pose Theta (Degrees)", robotPose.getRotation().getDegrees());

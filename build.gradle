@@ -12,7 +12,7 @@ allprojects {
 
 // Set this to the latest version of StuyLib.
 // You can check here: https://github.com/StuyPulse/StuyLib/releases.
-final String STUYLIB_VERSION = '2026.1.1-SNAPSHOT'
+final String STUYLIB_VERSION = '61cedd1b41'
 
 def ROBOT_MAIN_CLASS = "com.stuypulse.robot.Main"
 
@@ -48,7 +48,7 @@ deploy {
                     jvmArgs.add("-Dcom.sun.management.jmxremote.local.only=false")
                     jvmArgs.add("-Dcom.sun.management.jmxremote.ssl=false")
                     jvmArgs.add("-Dcom.sun.management.jmxremote.authenticate=false")
-                    jvmArgs.add("-Djava.rmi.server.hostname=10.5.16.2") 
+                    jvmArgs.add("-Djava.rmi.server.hostname=10.5.16.2")
                 }
 
                 // Static files artifact
@@ -183,15 +183,28 @@ tasks.register("runPathplannerSearch", JavaExec) {
     classpath = sourceSets.main.runtimeClasspath
     mainClass = "tools.PathplannerSearch.Main"
 
+    def rawArgs = (project.findProperty("args") ?: "").trim() // Puts all args in a single string, consistently formatted regardless of how it was passed in
+    if (rawArgs) {
+        args rawArgs
+    }
+}
+
+tasks.register("runPathplannerPathFlip", JavaExec) {
+    classpath = sourceSets.main.runtimeClasspath
+    mainClass = "tools.PathplannerFlip.PathFlip.Main"
+
     def rawArgs = (project.findProperty("args") ?: "").trim()
     if (rawArgs) {
-        int lastSpace = rawArgs.lastIndexOf(' ')
-        if (lastSpace == -1) {
-            args rawArgs
-        } else {
-            def searchTerm = rawArgs.substring(0, lastSpace)
-            def secondParam = rawArgs.substring(lastSpace + 1)
-            args searchTerm, secondParam
-        }
-    } // makes it so that if ur search term has spaces, the 2nd param is only checked by the last space.
+        args rawArgs
+    }
+}
+
+tasks.register("runPathplannerAutonFlip", JavaExec) {
+    classpath = sourceSets.main.runtimeClasspath
+    mainClass = "tools.PathplannerFlip.AutonFlip.Main"
+
+    def rawArgs = (project.findProperty("args") ?: "").trim()
+    if (rawArgs) {
+        args rawArgs
+    }
 }

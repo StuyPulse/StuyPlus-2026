@@ -35,11 +35,11 @@ import java.util.function.Supplier;
 
 public class SwerveDrivePIDToPose extends Command {
 
-    private final CommandSwerveDrivetrain swerve;
+        private final CommandSwerveDrivetrain swerve;
 
     private final HolonomicDriveController controller;
 
-    private final Supplier<Pose2d> targetPose;
+        private final Supplier<Pose2d> targetPose;
 
     // FILTERS
     private final LinearFilter lowPass;
@@ -47,25 +47,25 @@ public class SwerveDrivePIDToPose extends Command {
 
     private double maxVelocity;
 
-    private double maxAcceleration;
+        private double maxAcceleration;
 
-    private boolean isMotionProfiled;
+        private boolean isMotionProfiled;
 
     private final BooleanSupplier isAligned;
 
-    private final FieldObject2d targetPose2d;
+        private final FieldObject2d targetPose2d;
 
-    private Number xTolerance;
+        private Number xTolerance;
 
-    private Number yTolerance;
+        private Number yTolerance;
 
-    private Number thetaTolerance;
+        private Number thetaTolerance;
 
-    private Number maxVelocityWhenAligned;
+        private Number maxVelocityWhenAligned;
 
     private Supplier<Translation2d> translationSetpoint;
 
-    private Supplier<Boolean> canEnd;
+        private Supplier<Boolean> canEnd;
 
     public SwerveDrivePIDToPose(Pose2d targetPose) {
         this(() -> targetPose);
