@@ -89,7 +89,7 @@ public class DriveInputProcessor {
     }
 
     /**
-     * Apply a deadband on the X and Y axes to the current {@link #filteredSpeed}
+     * Apply a deadband on the X and Y axes to the current {@link #intermediateProcessedSpeed} vector
      * using {@link MathUtil#applyDeadband}
      *
      * @return This instance of the class
