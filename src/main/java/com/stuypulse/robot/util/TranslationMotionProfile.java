@@ -5,100 +5,120 @@
 /***************************************************************/
 package com.stuypulse.robot.util;
 
-import com.stuypulse.stuylib.math.Vector2D;
-import com.stuypulse.stuylib.streams.vectors.filters.VFilter;
-import com.stuypulse.stuylib.util.StopWatch;
+import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.wpilibj.Timer;
 
-public class TranslationMotionProfile implements VFilter {
+public class TranslationMotionProfile {
 
     // Default number of times to apply filter (helps accuracy)
     private static final int kDefaultSteps = 64;
 
-    // Stopwatch to Track dt
-    private StopWatch mTimer;
-
     // Limits for each of the derivatives
-    private Number mVelLimit;
+    private final Number velocityLimit;
 
-    private Number mAccelLimit;
+    private final Number accelerationLimit;
 
     // The last output / velocity
-    private Vector2D mOutput;
+    private Translation2d output;
 
-    private Vector2D mVelocity;
+    private Translation2d velocity;
 
     // Number of times to apply filter (helps accuracy)
-    private final int mSteps;
+    private final int steps;
+
+    private double previousTime;
 
     public TranslationMotionProfile(
             Number velLimit,
             Number accelLimit,
-            Vector2D startingTranslation,
-            Vector2D startingVelocity,
+            Translation2d startingTranslation,
+            Translation2d startingVelocity,
             int steps) {
-        mTimer = new StopWatch();
-        mVelLimit = velLimit;
-        mAccelLimit = accelLimit;
-        mOutput = startingTranslation;
-        mVelocity = startingVelocity;
-        mSteps = steps;
+        velocityLimit = velLimit;
+        accelerationLimit = accelLimit;
+        output = startingTranslation;
+        velocity = startingVelocity;
+        this.steps = steps;
     }
 
     public TranslationMotionProfile(
-            Number velLimit, Number accelLimit, Vector2D startingTranslation, Vector2D startingVelocity) {
+            Number velLimit, Number accelLimit, Translation2d startingTranslation, Translation2d startingVelocity) {
         this(velLimit, accelLimit, startingTranslation, startingVelocity, kDefaultSteps);
     }
 
     public TranslationMotionProfile(Number velLimit, Number accelLimit) {
-        this(velLimit, accelLimit, Vector2D.kOrigin, Vector2D.kOrigin, kDefaultSteps);
+        this(velLimit, accelLimit, Translation2d.kZero, Translation2d.kZero, kDefaultSteps);
     }
 
-    public Vector2D get(Vector2D target) {
-        double dt = mTimer.reset() / mSteps;
-        for (int i = 0; i < mSteps; ++i) {
+    private static Translation2d clamp(Translation2d translation, double maxMagnitude) {
+        if (maxMagnitude <= 0.0) return Translation2d.kZero;
+
+        final double magnitude = translation.getNorm();
+
+        if (maxMagnitude <= magnitude) {
+            return translation.times(maxMagnitude / magnitude);
+        }
+
+        return translation;
+    }
+
+    public static Translation2d normalize(Translation2d translation) {
+        final double magnitude = translation.getNorm();
+        if (magnitude <= 1e-9) {
+            return new Translation2d(1, 0);
+        }
+        return translation.div(magnitude);
+    }
+
+    public Translation2d get(Translation2d target) {
+        double dt = resetTimer() / steps;
+        for (int i = 0; i < steps; ++i) {
             // if there is a accel limit, limit the amount the velocity can change
-            if (0 < mAccelLimit.doubleValue()) {
+            if (0 < accelerationLimit.doubleValue()) {
                 // amount of windup in system (how long it would take to slow down)
-                double windup = mVelocity.magnitude() / mAccelLimit.doubleValue();
+                double windup = velocity.getNorm() / accelerationLimit.doubleValue();
                 // If the windup is too small, just use normal algorithm to limit acceleration
                 if (windup < dt) {
                     // Calculate acceleration needed to reach target
-                    Vector2D accel = target.sub(mOutput).div(dt).sub(mVelocity);
+                    Translation2d accel = target.minus(output).div(dt).minus(velocity);
                     // Try to reach it while abiding by accel limit
-                    mVelocity = mVelocity.add(accel.clamp(dt * mAccelLimit.doubleValue()));
+                    velocity = velocity.plus(clamp(accel, dt * accelerationLimit.doubleValue()));
                 } else {
                     // the position it would end up if it attempted to come to a full stop
-                    Vector2D windA = // windup caused by acceleration
-                            mVelocity.mul(0.5 * (dt + windup));
+                    Translation2d windA = // windup caused by acceleration
+                            velocity.times(0.5 * (dt + windup));
                     // where the robot will end up
-                    Vector2D future = mOutput.add(windA);
+                    Translation2d future = output.plus(windA);
                     // Calculate acceleration needed to come to stop at target throughout windup
-                    Vector2D accel = target.sub(future).div(windup);
+                    Translation2d accel = target.minus(future).div(windup);
                     // Try to reach it while abiding by accel limit
-                    mVelocity = mVelocity.add(accel.clamp(dt * mAccelLimit.doubleValue()));
+                    velocity = velocity.plus(clamp(accel, dt * accelerationLimit.doubleValue()));
                 }
             } else {
                 // make the velocity the difference between target and current
-                mVelocity = target.sub(mOutput).div(dt);
+                velocity = target.minus(output).div(dt);
             }
             // if there is an velocity limit, limit the velocity
-            if (0 < mVelLimit.doubleValue()) {
-                mVelocity = mVelocity.clamp(mVelLimit.doubleValue());
+            if (0 < velocityLimit.doubleValue()) {
+                velocity = clamp(velocity, velocityLimit.doubleValue());
             }
-            Vector2D error = target.sub(mOutput);
-            Vector2D unitError = error.normalize();
-            double parallelMag = mVelocity.dot(unitError);
-            Vector2D accelParallel = unitError.mul(parallelMag);
-            Vector2D accelPerpendicular = mVelocity.sub(accelParallel);
+            Translation2d error = target.minus(output);
+            Translation2d unitError = normalize(error);
+            double parallelMag = velocity.dot(unitError);
+            Translation2d accelParallel = unitError.times(parallelMag);
+            Translation2d accelPerpendicular = velocity.minus(accelParallel);
             double damping = Math.pow(0.5, dt);
-            mVelocity = accelParallel.add(accelPerpendicular.mul(damping));
+            velocity = accelParallel.plus(accelPerpendicular.times(damping));
             // adjust output by calculated velocity
-            mOutput = mOutput.add(mVelocity.mul(dt));
+            output = output.plus(velocity.times(dt));
         }
-        // Field.FIELD2D.getObject("Translation Motion Profile").setPose(!Robot.isBlue()
-        // ? new Pose2d(mOutput.x, mOutput.y, new Rotation2d())
-        // : Field.transformToOppositeAlliance(new Pose2d(mOutput.x, mOutput.y, new
-        // Rotation2d())));
-        return mOutput;
+        return output;
+    }
+
+    private double resetTimer() {
+        double now = Timer.getFPGATimestamp();
+        double elapsed = now - previousTime;
+        previousTime = now;
+        return elapsed;
     }
 }
