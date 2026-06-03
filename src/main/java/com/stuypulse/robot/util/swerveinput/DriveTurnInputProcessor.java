@@ -3,6 +3,7 @@ package com.stuypulse.robot.util.swerveinput;
 import com.stuypulse.robot.constants.Settings;
 
 import edu.wpi.first.math.MathUtil;
+import edu.wpi.first.math.filter.LinearFilter;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 
 import static edu.wpi.first.units.Units.*;
@@ -31,7 +32,9 @@ public class DriveTurnInputProcessor {
     private double maxAngularVelocity; // radians/s
     private double rc; // low pass filter time constant
 
-    private double lowPassLastAngularVelocity;
+    private LinearFilter lowPassFilter;
+
+    private double intermediateProcessedAngularVelocity;
 
     private double filteredAngularVelocity;
 
@@ -51,59 +54,58 @@ public class DriveTurnInputProcessor {
         this.maxAngularVelocity = maxAngularVelocity;
         this.rc = rc;
 
-        this.lowPassLastAngularVelocity = 0;
+        this.lowPassFilter = LinearFilter.singlePoleIIR(this.rc, Settings.DT.in(Seconds));
+
+        this.intermediateProcessedAngularVelocity = 0;
+        this.filteredAngularVelocity = 0;
     }
 
     /**
-     * Get the right X input from the controller.
-     * @return The right X input value
+     * Read the raw joystick axis value for the right X axis and store it in {@link #intermediateProcessedAngularVelocity}
+     * @return This instance of the class
      */
-    private double getRightX() {
-        return controller.getRightX();
+    private DriveTurnInputProcessor getRightX() {
+        this.intermediateProcessedAngularVelocity = controller.getRightX();
+        return this;
     }
 
     /**
-     * Applies a deadband to the given input value.
-     * @param input The input value to apply the deadband to
-     * @return The input value with the deadband applied
+     * Applies a deadband to the current {@link #intermediateProcessedAngularVelocity} value.
+     * @return This instance of the class
      */
-    private double applyDeadband(double input) {
-        return MathUtil.applyDeadband(input, deadband);
+    private DriveTurnInputProcessor applyDeadband() {
+        this.intermediateProcessedAngularVelocity = MathUtil.applyDeadband(this.intermediateProcessedAngularVelocity, deadband);
+        return this;
     }
 
     /**
-     * Applies a power curve to the given input value.
-     * @param input The input value to apply the power curve to
-     * @return The input value with the power curve applied
+     * Apply a power curve to the current {@link #intermediateProcessedAngularVelocity} value.
+     * @return This instance of the class
      */
-    private double applyPowerCurve(double input) {
-        return Math.pow(Math.abs(input), power) * Math.signum(input);
+    private DriveTurnInputProcessor applyPowerCurve() {
+        this.intermediateProcessedAngularVelocity = Math.pow(Math.abs(this.intermediateProcessedAngularVelocity), power) * Math.signum(this.intermediateProcessedAngularVelocity);
+        return this;
     }
 
     /**
-     * Scales the given input value to the maximum angular velocity.
-     * @param input The input value to scale to the maximum angular velocity
-     * @return The input value scaled to the maximum angular velocity
+     * Scale the {@link #intermediateProcessedAngularVelocity} value to the robot's maximum velocity.
+     * @return This instance of the class
      */
-    private double scaleToMaxAngularVelocity(double input) {
-        return input * maxAngularVelocity;
+    private DriveTurnInputProcessor applyScalingToMaxAngularVelocity() {
+        this.intermediateProcessedAngularVelocity = this.intermediateProcessedAngularVelocity * maxAngularVelocity;
+        return this;
     }
 
     /**
-     * Applies a low pass filter to the given input value.
-     * @param input The input value to apply the low pass filter to
-     * @return The input value with the low pass filter applied
+     * Applies a low pass filter to {@link #intermediateProcessedAngularVelocity} using
+     * a {@link edu.wpi.first.math.filter.LinearFilter}.
+     * This smooths out the input and reduces noise.
+     * 
+     * @return This instance of the class
      */
-    private double applyLowPassFilter(double input) {
-        if (rc <= 0) {
-            lowPassLastAngularVelocity = input;
-            return input;
-        }
-
-        double alpha = 1.0 - Math.exp(-Settings.DT.in(Seconds) / rc);
-        double filtered = lowPassLastAngularVelocity + alpha * (input - lowPassLastAngularVelocity);
-        lowPassLastAngularVelocity = filtered;
-        return filtered;
+    private DriveTurnInputProcessor applyLowPassFilter() {
+        this.intermediateProcessedAngularVelocity = lowPassFilter.calculate(this.intermediateProcessedAngularVelocity);
+        return this;
     }
 
     /**
@@ -111,13 +113,13 @@ public class DriveTurnInputProcessor {
      * This should be called within the {@link edu.wpi.first.wpilibj2.command.Command#execute()} method of the command using this DriveTurnInputProcessor.
      */
     public void update() {
-        double rightX = getRightX();
-        double deadbanded = applyDeadband(rightX);
-        double powered = applyPowerCurve(deadbanded);
-        double scaled = scaleToMaxAngularVelocity(powered);
-        double completedFiltered = applyLowPassFilter(scaled);
+        getRightX()
+            .applyDeadband()
+            .applyPowerCurve()
+            .applyScalingToMaxAngularVelocity()
+            .applyLowPassFilter();
 
-        filteredAngularVelocity = completedFiltered;
+        this.filteredAngularVelocity = this.intermediateProcessedAngularVelocity;
     }
 
     /**
