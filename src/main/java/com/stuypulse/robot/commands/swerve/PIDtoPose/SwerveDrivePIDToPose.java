@@ -12,35 +12,38 @@ import com.stuypulse.robot.constants.Field;
 import com.stuypulse.robot.constants.Gains.Swerve.Alignment;
 import com.stuypulse.robot.constants.Settings;
 import com.stuypulse.robot.subsystems.swerve.CommandSwerveDrivetrain;
-import com.stuypulse.robot.util.HolonomicController;
 import com.stuypulse.robot.util.TranslationMotionProfile;
-import com.stuypulse.stuylib.control.angle.feedback.AnglePIDController;
+
+import edu.wpi.first.math.controller.HolonomicDriveController;
 import edu.wpi.first.math.controller.PIDController;
-import com.stuypulse.stuylib.math.Vector2D;
-import com.stuypulse.stuylib.streams.angles.filters.AMotionProfile;
-import com.stuypulse.stuylib.streams.booleans.BStream;
-import com.stuypulse.stuylib.streams.booleans.filters.BDebounceRC;
-import com.stuypulse.stuylib.streams.numbers.IStream;
-import com.stuypulse.stuylib.streams.numbers.filters.LowPassFilter;
-import com.stuypulse.stuylib.streams.vectors.VStream;
+import edu.wpi.first.math.controller.ProfiledPIDController;
+import edu.wpi.first.math.filter.Debouncer;
+import edu.wpi.first.math.filter.Debouncer.DebounceType;
+import edu.wpi.first.math.filter.LinearFilter;
+
 import dev.doglog.DogLog;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.kinematics.ChassisSpeeds;
+import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.wpilibj.smartdashboard.FieldObject2d;
 import edu.wpi.first.wpilibj2.command.Command;
 
 import java.util.function.BooleanSupplier;
-import java.util.function.DoubleSupplier;
 import java.util.function.Supplier;
 
 public class SwerveDrivePIDToPose extends Command {
 
     private final CommandSwerveDrivetrain swerve;
 
-    private final HolonomicController controller;
+    private final HolonomicDriveController controller;
 
     private final Supplier<Pose2d> targetPose;
+
+    // FILTERS
+    private final LinearFilter lowPass;
+    private final Debouncer debounceRC;
 
     private double maxVelocity;
 
@@ -49,8 +52,6 @@ public class SwerveDrivePIDToPose extends Command {
     private boolean isMotionProfiled;
 
     private final BooleanSupplier isAligned;
-
-    private final DoubleSupplier velocityError;
 
     private final FieldObject2d targetPose2d;
 
@@ -72,32 +73,26 @@ public class SwerveDrivePIDToPose extends Command {
 
     public SwerveDrivePIDToPose(Supplier<Pose2d> targetPose) {
         swerve = CommandSwerveDrivetrain.getInstance();
-        controller = new HolonomicController(
-                new PIDController(Alignment.XY.kP, Alignment.XY.kI, Alignment.XY.kD),
-                new PIDController(Alignment.XY.kP, Alignment.XY.kI, Alignment.XY.kD),
-                new PIDController(Alignment.THETA.kP, Alignment.THETA.kI, Alignment.THETA.kD)
-                        .setSetpointFilter(
-                                new AMotionProfile(
-                                        Settings.Swerve.Alignment.Constraints.DEFAULT_MAX_ANGULAR_VELOCITY,
-                                        Settings.Swerve.Alignment.Constraints.DEFAULT_MAX_ANGULAR_ACCELERATION)));
+        controller = new HolonomicDriveController(
+            new PIDController(Alignment.XY.kP, Alignment.XY.kI, Alignment.XY.kD),
+            new PIDController(Alignment.XY.kP, Alignment.XY.kI, Alignment.XY.kD),
+            new ProfiledPIDController(
+                Alignment.THETA.kP,
+                Alignment.THETA.kI,
+                Alignment.THETA.kD,
+                new TrapezoidProfile.Constraints(
+                    Settings.Swerve.Alignment.Constraints.DEFAULT_MAX_ANGULAR_VELOCITY,
+                    Settings.Swerve.Alignment.Constraints.DEFAULT_MAX_ANGULAR_ACCELERATION))
+        );
         maxVelocity = Settings.Swerve.Alignment.Constraints.DEFAULT_MAX_VELOCITY;
         maxAcceleration = Settings.Swerve.Alignment.Constraints.DEFAULT_MAX_ACCELERATION;
         isMotionProfiled = true;
         translationSetpoint = getNewTranslationSetpointGenerator();
         this.targetPose = targetPose;
         targetPose2d = Field.FIELD2D.getObject("Target Pose");
-        isAligned = BStream.create(this::isAligned)
-                .filtered(
-                        new BDebounceRC.Both(
-                                Settings.Swerve.Alignment.Tolerances.ALIGNMENT_DEBOUNCE
-                                        .in(Seconds)));
-        velocityError = IStream.create(
-                () -> new Translation2d(
-                        controller.getError().vxMetersPerSecond,
-                        controller.getError().vyMetersPerSecond)
-                        .getNorm())
-                .filtered(new LowPassFilter(0.05))
-                .filtered(x -> Math.abs(x));
+        lowPass = LinearFilter.singlePoleIIR(0.05, 0.02);
+        debounceRC =  new Debouncer(Settings.Swerve.Alignment.Tolerances.ALIGNMENT_DEBOUNCE.in(Seconds), DebounceType.kRising);
+        isAligned = () -> debounceRC.calculate(this.isAligned());
         xTolerance = Settings.Swerve.Alignment.Tolerances.X_TOLERANCE.in(Meters);
         yTolerance = Settings.Swerve.Alignment.Tolerances.Y_TOLERANCE.in(Meters);
         thetaTolerance = Settings.Swerve.Alignment.Tolerances.THETA_TOLERANCE.getRadians();
@@ -145,6 +140,14 @@ public class SwerveDrivePIDToPose extends Command {
         }
     }
 
+    private double getVelocityError() {        
+        return Math.abs(lowPass.calculate(
+            new Translation2d(
+                controller.getXController().getError(),
+                controller.getYController().getError())
+                .getNorm()));
+    }
+
     @Override
     public void initialize() {
         translationSetpoint = getNewTranslationSetpointGenerator();
@@ -168,7 +171,7 @@ public class SwerveDrivePIDToPose extends Command {
         return isAlignedX()
                 && isAlignedY()
                 && isAlignedTheta()
-                && velocityError.getAsDouble() < maxVelocityWhenAligned.doubleValue();
+                && getVelocityError() < maxVelocityWhenAligned.doubleValue();
     }
 
     @Override
@@ -176,28 +179,29 @@ public class SwerveDrivePIDToPose extends Command {
         targetPose2d.setPose(
                 Robot.isBlue() ? targetPose.get()
                         : Field.transformToOppositeAlliance(targetPose.get()));
-        final Pose2d output = controller.getOutput(
-                new Pose2d(translationSetpoint.get(),
-                        targetPose.get().getRotation()),
-                swerve.getPose());
+        final ChassisSpeeds output = controller.calculate(
+            swerve.getPose(),
+            new Pose2d(translationSetpoint.get(), targetPose.get().getRotation()),
+            0,
+            targetPose.get().getRotation());
         swerve.setControl(
                 swerve
                         .getRobotCentricSwerveRequest()
-                        .withVelocityX(output.getX())
-                        .withVelocityY(output.getY())
-                        .withRotationalRate(output.getRotation().getMeasure().per(Second)));
+                        .withVelocityX(output.vxMetersPerSecond)
+                        .withVelocityY(output.vyMetersPerSecond)
+                        .withRotationalRate(output.omegaRadiansPerSecond));
         DogLog.log("Alignment/Target x", targetPose.get().getX());
         DogLog.log("Alignment/Target y", targetPose.get().getY());
         DogLog.log("Alignment/Target Angle", targetPose.get().getRotation().getDegrees());
         DogLog.log(
                 "Alignment/Target Velocity Robot Relative X (m/s)",
-                output.getX());
+                output.vxMetersPerSecond);
         DogLog.log(
                 "Alignment/Target Velocity Robot Relative Y (m/s)",
-                output.getY());
+                output.vyMetersPerSecond);
         DogLog.log(
                 "Alignment/Target Angular Velocity (rad/s)",
-                output.getRotation().getRadians());
+                output.omegaRadiansPerSecond);
         DogLog.log("Alignment/Is Aligned", isAligned());
         DogLog.log("Alignment/Is Aligned X", isAlignedX());
         DogLog.log("Alignment/Is Aligned Y", isAlignedY());
