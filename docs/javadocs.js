@@ -78,10 +78,11 @@ const detectTargetElementInViewOnHashChange = () => {
     const isClassDeclarationPage = document.querySelector("body.class-declaration-page") !== null;
     if (!isClassDeclarationPage) return;
 
-    const hash = window.location.hash;
     const targetElement = (() => {
         try {
-            return document.querySelector(`#${CSS.escape(hash.slice(1))}`);
+            const rawHash = window.location.hash.slice(1);
+            const decodedHash = decodeURIComponent(rawHash);
+            return document.querySelector(`#${CSS.escape(decodedHash)}`);
         } catch (error) {
             return null;
         }
