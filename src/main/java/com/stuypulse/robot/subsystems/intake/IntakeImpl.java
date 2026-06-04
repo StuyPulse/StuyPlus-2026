@@ -21,15 +21,13 @@ import com.stuypulse.robot.constants.Settings;
 import com.stuypulse.robot.util.LoggedSignals;
 import com.stuypulse.robot.util.SysId;
 
+import static edu.wpi.first.units.Units.*;
+import edu.wpi.first.units.measure.*;
+
 import dev.doglog.DogLog;
-import static edu.wpi.first.units.Units.Amps;
-import static edu.wpi.first.units.Units.Seconds;
-import static edu.wpi.first.units.Units.Volts;
 
 import edu.wpi.first.math.filter.Debouncer;
-import edu.wpi.first.units.measure.Angle;
-import edu.wpi.first.units.measure.AngularVelocity;
-import edu.wpi.first.units.measure.Voltage;
+
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 
@@ -58,10 +56,13 @@ public class IntakeImpl extends Intake {
     private final LoggedSignals rollerSignals;
 
     private final BooleanSupplier pivotStalling;
+    private final BooleanSupplier leftRollerStalling;
+    private final BooleanSupplier rightRollerStalling;
 
     private Optional<Voltage> pivotVoltageOverride;
 
-    private final Debouncer rollerStallingDebouncer;
+    private final Debouncer leftRollerDebouncer;
+    private final Debouncer rightRollerDebouncer;
 
     public IntakeImpl() {
         pivotLimitSwitch = new DigitalInput(Ports.Intake.PIVOT_LIMIT_SWITCH);
@@ -98,8 +99,11 @@ public class IntakeImpl extends Intake {
         followerController = new Follower(Ports.Intake.INTAKE_ROLLER_MOTOR_LEFT, MotorAlignmentValue.Opposed);
         rollerMotorRight.setControl(followerController);
         pivotStalling = () -> pivotMotor.getStatorCurrent().getValue().gt(Settings.Intake.Pivot.STALL_CURRENT);
+        leftRollerStalling = () -> rollerMotorLeft.getStatorCurrent().getValue().gt(Settings.Intake.Roller.STALL_CURRENT);
+        rightRollerStalling = () -> rollerMotorRight.getStatorCurrent().getValue().gt(Settings.Intake.Roller.STALL_CURRENT);
         // until rollers are fixed
-        rollerStallingDebouncer = new Debouncer(Settings.Intake.Roller.STALL_DEBOUNCE_SEC.in(Seconds), Debouncer.DebounceType.kBoth); // TODO: split into two debouncers to match the two stalling getter functions
+        leftRollerDebouncer = new Debouncer(Settings.Intake.Roller.STALL_DEBOUNCE_SEC.in(Seconds), Debouncer.DebounceType.kBoth);
+        rightRollerDebouncer = new Debouncer(Settings.Intake.Roller.STALL_DEBOUNCE_SEC.in(Seconds), Debouncer.DebounceType.kBoth);
         pivotVoltageOverride = Optional.empty();
     }
 
@@ -141,15 +145,12 @@ public class IntakeImpl extends Intake {
         return rollerMotorRight.getVelocity().getValue();
     }
 
-    // until rollers are fixed
-    private boolean leftRollerStalling() {
-        boolean stalling = rollerMotorLeft.getStatorCurrent().getValueAsDouble() > Settings.Intake.Roller.STALL_CURRENT.in(Amps);
-        return rollerStallingDebouncer.calculate(stalling);
+    private boolean getLeftRollerStalling() {
+        return leftRollerDebouncer.calculate(leftRollerStalling.getAsBoolean());
     }
 
-    private boolean rightRollerStalling() {
-        boolean stalling = rollerMotorRight.getStatorCurrent().getValueAsDouble() > Settings.Intake.Roller.STALL_CURRENT.in(Amps);
-        return rollerStallingDebouncer.calculate(stalling);
+    private boolean getRightRollerStalling() {
+        return rightRollerDebouncer.calculate(rightRollerStalling.getAsBoolean());
     }
 
     @Override
@@ -192,6 +193,8 @@ public class IntakeImpl extends Intake {
 
         // Input
         final boolean pivotStalling = pivotStalling();
+        final boolean leftRollerStalling = getLeftRollerStalling();
+        final boolean rightRollerStalling = getRightRollerStalling();
         final IntakeState currentState = getState();
 
         // State
@@ -219,7 +222,7 @@ public class IntakeImpl extends Intake {
         // Logging
         this.pivotSignals.logAll();
         this.rollerSignals.logAll();
-        DogLog.forceNt.log("Intake/Rollers/Stalling", leftRollerStalling() || rightRollerStalling());
+        DogLog.forceNt.log("Intake/Rollers/Stalling", leftRollerStalling || rightRollerStalling);
         DogLog.forceNt.log(
                 "Intake/Pivot/Pushing Down", pivotMotor.getAppliedControl() == pushdownController);
         super.periodic();
