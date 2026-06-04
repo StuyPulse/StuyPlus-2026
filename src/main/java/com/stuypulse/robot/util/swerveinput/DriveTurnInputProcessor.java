@@ -31,8 +31,6 @@ public class DriveTurnInputProcessor {
     private final double power;
     /** The max angular velocity in radians per second */
     private final double maxAngularVelocity;
-    /** The time constant for the low pass filter (seconds) */
-    private final double rc;
 
     private final LinearFilter lowPassFilter;
 
@@ -53,9 +51,8 @@ public class DriveTurnInputProcessor {
         this.deadband = deadband;
         this.power = power;
         this.maxAngularVelocity = maxAngularVelocity;
-        this.rc = rc;
 
-        this.lowPassFilter = LinearFilter.singlePoleIIR(this.rc, Settings.DT.in(Seconds));
+        this.lowPassFilter = LinearFilter.singlePoleIIR(rc, Settings.DT.in(Seconds));
 
         this.processedAngularVelocity = 0;
     }

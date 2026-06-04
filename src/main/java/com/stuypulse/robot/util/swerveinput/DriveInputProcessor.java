@@ -33,10 +33,6 @@ public class DriveInputProcessor {
     private final double power;
     /** The max velocity in meters per second/ */
     private final double maxVelocity;
-    /** The max acceleration in meters per second squared */
-    private final double maxAcceleration;
-    /** The time constant for the low pass filter (seconds) */
-    private final double rc;
 
     private final SlewRateLimiter xRateLimiter;
     private final SlewRateLimiter yRateLimiter;
@@ -59,18 +55,16 @@ public class DriveInputProcessor {
      * @param maxAccel The maximum acceleration to apply to the input (m/s^2)
      * @param rc The time constant for the low pass filter (seconds)
      */
-    public DriveInputProcessor(CommandXboxController controller, double deadband, double power, double maxVelocity, double maxAccel, double rc) {
+    public DriveInputProcessor(CommandXboxController controller, double deadband, double power, double maxVelocity, double maxAcceleration, double rc) {
         this.controller = controller;
         this.deadband = deadband;
         this.power = power;
         this.maxVelocity = maxVelocity;
-        this.maxAcceleration = maxAccel;
-        this.rc = rc;
 
         this.xRateLimiter = new SlewRateLimiter(maxAcceleration);
         this.yRateLimiter = new SlewRateLimiter(maxAcceleration);
-        this.xLowPassFilter = LinearFilter.singlePoleIIR(this.rc, Settings.DT.in(Seconds));
-        this.yLowPassFilter = LinearFilter.singlePoleIIR(this.rc, Settings.DT.in(Seconds));
+        this.xLowPassFilter = LinearFilter.singlePoleIIR(rc, Settings.DT.in(Seconds));
+        this.yLowPassFilter = LinearFilter.singlePoleIIR(rc, Settings.DT.in(Seconds));
 
         this.processedSpeed = Translation2d.kZero;
     }
@@ -125,7 +119,7 @@ public class DriveInputProcessor {
      * Applies a rate limit to {@link #processedSpeed} using 
      * a {@link edu.wpi.first.math.filter.SlewRateLimiter} for each axis. 
      * This limits the rate of change of the velocity vector to the 
-     * {@link #maxAcceleration} (m/s^2).
+     * max acceleration (m/s^2).
      *
      * @return This instance of the class
      */
