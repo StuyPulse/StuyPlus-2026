@@ -176,9 +176,9 @@ public class IntakeImpl extends Intake {
     private ControlRequest getPivotControl(IntakeState currentState) {
         boolean pivotAboveThreshold = isPivotAboveThreshold();
         return switch (currentState) {
-            case INTAKE, OUTTAKE, DOWN -> (pivotAboveThreshold) // Hardcoding pushdown disabled temporarily - AZ
-                    ? pushdownController.withOutput(Settings.Intake.Pivot.PUSHDOWN_CURRENT.getAsDouble())
-                    : positionController.withPosition(currentState.getTargetAngle()).withSlot(0);
+            case INTAKE, OUTTAKE, DOWN -> pushdownController; //(pivotAboveThreshold) // Hardcoding pushdown disabled temporarily - AZ
+                    // ? pushdownController.withOutput(Settings.Intake.Pivot.PUSHDOWN_CURRENT.getAsDouble())
+                    // : positionController.withPosition(currentState.getTargetAngle()).withSlot(0);
             case HOMING_DOWN -> homingController;
             case AGITATE, AGITATE_DOWN -> positionController.withPosition(currentState.getTargetAngle()).withSlot(1);
             default -> positionController.withPosition(currentState.getTargetAngle()).withSlot(0);
