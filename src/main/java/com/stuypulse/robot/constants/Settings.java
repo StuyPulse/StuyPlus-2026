@@ -99,7 +99,7 @@ public interface Settings {
 
             Angle PUSHDOWN_THRESHOLD = Degrees.of(-30);
 
-            DoubleSubscriber PUSHDOWN_CURRENT = DogLog.tunable("Intake/Pivot/Pushdown Current Tuning Amps", 5.0);
+            DoubleSubscriber PUSHDOWN_CURRENT = DogLog.tunable("Intake/Pivot/Pushdown Current Tuning Amps", 13.0);
 
             // amps
             Current STALL_CURRENT = Amps.of(25);
