@@ -7,6 +7,7 @@ package com.stuypulse.robot.commands.swerve.driveAligned;
 
 import static edu.wpi.first.units.Units.*;
 
+import java.util.function.BooleanSupplier;
 import java.util.function.Supplier;
 
 import com.ctre.phoenix6.swerve.SwerveRequest;
@@ -24,11 +25,14 @@ public class SwerveDriveSetAlignment extends Command {
 
     protected static final CommandSwerveDrivetrain swerve;
 
+    protected final BooleanSupplier isAligned;
     protected final Debouncer alignmentDebouncer;
 
     private Supplier<Pose2d> pose;
 
     protected SwerveDriveSetAlignment(Supplier<Pose2d> pose) {
+        this.isAligned = () -> Math.abs(swerve.getPose().getRotation().minus(getTargetAngle())
+                .getDegrees()) < Settings.Swerve.Alignment.Tolerances.THETA_TOLERANCE.getDegrees();
         this.alignmentDebouncer = new Debouncer(Settings.Swerve.Alignment.Tolerances.ALIGNMENT_DEBOUNCE.in(Seconds), Debouncer.DebounceType.kRising);
         this.pose = pose;
         addRequirements(swerve);
@@ -42,14 +46,9 @@ public class SwerveDriveSetAlignment extends Command {
         return AlignmentUtil.getTargetAlignmentAngle(swerve.getPose(), pose.get());
     }
 
-    private boolean isAligned() {
-        return Math.abs(swerve.getPose().getRotation().minus(getTargetAngle())
-                .getDegrees()) < Settings.Swerve.Alignment.Tolerances.THETA_TOLERANCE.getDegrees();
-    }
-
     @Override
     public boolean isFinished() {
-        return alignmentDebouncer.calculate(isAligned());
+        return alignmentDebouncer.calculate(isAligned.getAsBoolean());
     }
 
     @Override

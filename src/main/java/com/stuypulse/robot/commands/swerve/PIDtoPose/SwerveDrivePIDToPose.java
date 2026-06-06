@@ -91,8 +91,11 @@ public class SwerveDrivePIDToPose extends Command {
         this.targetPose = targetPose;
         targetPose2d = Field.FIELD2D.getObject("Target Pose");
         lowPass = LinearFilter.singlePoleIIR(0.05, 0.02);
+        isAligned = () -> isAlignedX()
+                && isAlignedY()
+                && isAlignedTheta()
+                && getVelocityError() < maxVelocityWhenAligned.doubleValue();
         debounceRC =  new Debouncer(Settings.Swerve.Alignment.Tolerances.ALIGNMENT_DEBOUNCE.in(Seconds), DebounceType.kRising);
-        isAligned = () -> debounceRC.calculate(this.isAligned());
         xTolerance = Settings.Swerve.Alignment.Tolerances.X_TOLERANCE.in(Meters);
         yTolerance = Settings.Swerve.Alignment.Tolerances.Y_TOLERANCE.in(Meters);
         thetaTolerance = Settings.Swerve.Alignment.Tolerances.THETA_TOLERANCE.getRadians();
@@ -110,7 +113,7 @@ public class SwerveDrivePIDToPose extends Command {
     }
 
     public SwerveDrivePIDToPose withTranslationalConstraints(
-            double maxVelocity, double maxAcceleration) {
+        double maxVelocity, double maxAcceleration) {
         this.maxVelocity = maxVelocity;
         this.maxAcceleration = maxAcceleration;
         return this;
@@ -167,13 +170,6 @@ public class SwerveDrivePIDToPose extends Command {
                         .getRadians()) < thetaTolerance.doubleValue();
     }
 
-    public boolean isAligned() {
-        return isAlignedX()
-                && isAlignedY()
-                && isAlignedTheta()
-                && getVelocityError() < maxVelocityWhenAligned.doubleValue();
-    }
-
     @Override
     public void execute() {
         targetPose2d.setPose(
@@ -202,7 +198,7 @@ public class SwerveDrivePIDToPose extends Command {
         DogLog.log(
                 "Alignment/Target Angular Velocity (rad/s)",
                 output.omegaRadiansPerSecond);
-        DogLog.log("Alignment/Is Aligned", isAligned());
+        DogLog.log("Alignment/Is Aligned", this.isAligned.getAsBoolean());
         DogLog.log("Alignment/Is Aligned X", isAlignedX());
         DogLog.log("Alignment/Is Aligned Y", isAlignedY());
         DogLog.log("Alignment/Is Aligned Theta", isAlignedTheta());
@@ -210,7 +206,7 @@ public class SwerveDrivePIDToPose extends Command {
 
     @Override
     public boolean isFinished() {
-        return isAligned.getAsBoolean() && canEnd.get();
+        return debounceRC.calculate(this.isAligned.getAsBoolean()) && canEnd.get();
     }
 
     @Override

@@ -5,6 +5,8 @@
 /***************************************************************/
 package com.stuypulse.robot.subsystems.handoff;
 
+import java.util.function.BooleanSupplier;
+
 import com.ctre.phoenix6.controls.VoltageOut;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.stuypulse.robot.constants.Field;
@@ -27,7 +29,8 @@ public class HandoffImpl extends Handoff {
 
     private final LoggedSignals signals;
 
-    private final Debouncer handoffStalling;
+    private final BooleanSupplier handoffStalling;
+    private final Debouncer handoffDebouncer;
 
     public HandoffImpl() {
         handoffMotor = new TalonFX(Ports.Handoff.HANDOFF_MOTOR, Settings.CANBUS);
@@ -38,7 +41,8 @@ public class HandoffImpl extends Handoff {
                 handoffMotor.getVelocity());
         // Configuring
         Motors.Handoff.HANDOFF_MOTOR_CONFIG.configure(handoffMotor);
-        handoffStalling = new Debouncer(Settings.Handoff.STALL_DEBOUNCE, Debouncer.DebounceType.kRising);
+        this.handoffStalling = () -> Math.abs(handoffMotor.getStatorCurrent().getValueAsDouble()) > Settings.Handoff.STALL_CURRENT;
+        this.handoffDebouncer = new Debouncer(Settings.Handoff.STALL_DEBOUNCE, Debouncer.DebounceType.kRising);
     }
 
     @Override
@@ -48,8 +52,8 @@ public class HandoffImpl extends Handoff {
 
     @Override
     protected boolean handoffStalling() {
-        return handoffStalling.calculate(Math.abs(handoffMotor.getStatorCurrent().getValueAsDouble()) > Settings.Handoff.STALL_CURRENT);
-    };
+        return handoffDebouncer.calculate(this.handoffStalling.getAsBoolean());
+    }
 
     @Override
     public void periodic() {
