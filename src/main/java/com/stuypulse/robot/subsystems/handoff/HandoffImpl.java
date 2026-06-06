@@ -19,6 +19,7 @@ import com.stuypulse.robot.subsystems.swerve.CommandSwerveDrivetrain;
 import com.stuypulse.robot.util.LoggedSignals;
 
 import edu.wpi.first.math.filter.Debouncer;
+import edu.wpi.first.math.filter.Debouncer.DebounceType;
 import edu.wpi.first.units.measure.Voltage;
 
 public class HandoffImpl extends Handoff {
@@ -42,7 +43,7 @@ public class HandoffImpl extends Handoff {
         // Configuring
         Motors.Handoff.HANDOFF_MOTOR_CONFIG.configure(handoffMotor);
         this.handoffStalling = () -> Math.abs(handoffMotor.getStatorCurrent().getValueAsDouble()) > Settings.Handoff.STALL_CURRENT;
-        this.handoffDebouncer = new Debouncer(Settings.Handoff.STALL_DEBOUNCE, Debouncer.DebounceType.kRising);
+        this.handoffDebouncer = new Debouncer(Settings.Handoff.STALL_DEBOUNCE, DebounceType.kRising);
     }
 
     @Override
