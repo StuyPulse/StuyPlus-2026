@@ -37,7 +37,6 @@
 ## Documentation
 The documentation for StuyPlus-2026 can be found [here](https://stuypulse.github.io/StuyPlus-2026/). It's a work in progess, but hopefully we'll be able to make this a valuable resource for people learning robot code.
 
-
 ## Branch Naming Convention
 | Prefix | Use Case |
 |--------|---------|
@@ -49,7 +48,8 @@ The documentation for StuyPlus-2026 can be found [here](https://stuypulse.github
 ## Drivetrain
 Files: 
 - [`src/main/java/com/stuypulse/robot/subsystems/swerve`](https://github.com/StuyPulse/StuyPlus-2026/tree/main/src/main/java/com/stuypulse/robot/subsystems/swerve)
-- [`src/main/java/com/stuypulse/robot/util/HolonomicController.java`](https://github.com/StuyPulse/StuyPlus-2026/tree/main/src/main/java/com/stuypulse/robot/util/HolonomicController.java)
+- [`src/main/java/com/stuypulse/robot/util/swerve/swerveinput/DriveInputProcessor.java`](https://github.com/StuyPulse/StuyPlus-2026/tree/main/src/main/java/com/stuypulse/robot/util/swerve/swerveinput/DriveInputProcessor.java)
+- [`src/main/java/com/stuypulse/robot/util/swerve/swerveinput/DriveTurnInputProcessor.java`](https://github.com/StuyPulse/StuyPlus-2026/tree/main/src/main/java/com/stuypulse/robot/util/swerve/swerveinput/DriveTurnInputProcessor.java)
 
 We utilize a raised swerve drivetrain with CTRE Phoenix 6 hardware and four swerve modules, letting us independently rotate the wheels. This allows for higher manueverability.
 
@@ -59,7 +59,7 @@ The robot is driven `Field-Centric`.
 
 We use both [Vision](#vision) and odometry for pose estimation. Check the vision section for details. 
 
-`HolonomicController.java`, made by the main team 694, is essentially the PID Controller but for the drivetrain.
+For driver input, we created two classes called `DriveInputProcessor.java` and `DriveTurnInputProcessor.java`. These take in driver input and processes it, applying a deadband, power curve, rate limit, and a low pass filter. This allows us to better handle controller input by letting us apply maximum velocity and maximum acceleration.
 
 ## Intake
 File: [`src/main/java/com/stuypulse/robot/subsystems/intake`](https://github.com/StuyPulse/StuyPlus-2026/tree/main/src/main/java/com/stuypulse/robot/subsystems/intake)
