@@ -9,8 +9,9 @@ import com.stuypulse.robot.constants.Settings.Driver.Drive;
 import com.stuypulse.robot.constants.Settings.Driver.Turn;
 import com.stuypulse.robot.constants.Settings.Swerve;
 import com.stuypulse.robot.subsystems.swerve.CommandSwerveDrivetrain;
-import com.stuypulse.robot.util.swerveinput.DriveInputProcessor;
-import com.stuypulse.robot.util.swerveinput.DriveTurnInputProcessor;
+import com.stuypulse.robot.util.swerve.swerveinput.DriveInputProcessor;
+import com.stuypulse.robot.util.swerve.swerveinput.DriveTurnInputProcessor;
+
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 

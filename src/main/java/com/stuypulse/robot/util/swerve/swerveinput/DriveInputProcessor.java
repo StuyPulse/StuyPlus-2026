@@ -1,4 +1,4 @@
-package com.stuypulse.robot.util.swerveinput;
+package com.stuypulse.robot.util.swerve.swerveinput;
 
 import com.stuypulse.robot.constants.Settings;
 
