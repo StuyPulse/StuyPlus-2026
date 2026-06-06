@@ -27,18 +27,6 @@
           "data": {
             "pathName": "RB Shoot Dumpy"
           }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "RB Shoot to RB Start"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "RB to Mid Neutral LF"
-          }
         }
       ]
     }
