@@ -35,6 +35,7 @@ import static edu.wpi.first.units.Units.*;
 public class DriveInputProcessor {
     private final CommandXboxController controller;
     private final double deadband;
+    private final double clamp;
     private final double power;
     /** The max velocity in meters per second/ */
     private final double maxVelocity;
@@ -60,9 +61,10 @@ public class DriveInputProcessor {
      * @param maxAccel The maximum acceleration to apply to the input (m/s^2)
      * @param rc The time constant for the low pass filter (seconds)
      */
-    public DriveInputProcessor(CommandXboxController controller, double deadband, double power, double maxVelocity, double maxAcceleration, double rc) {
+    public DriveInputProcessor(CommandXboxController controller, double deadband, double clamp, double power, double maxVelocity, double maxAcceleration, double rc) {
         this.controller = controller;
         this.deadband = deadband;
+        this.clamp = clamp;
         this.power = power;
         this.maxVelocity = maxVelocity;
 
@@ -94,6 +96,21 @@ public class DriveInputProcessor {
         double deadbandX = MathUtil.applyDeadband(this.processedSpeed.getX(), deadband);
         double deadbandY = MathUtil.applyDeadband(this.processedSpeed.getY(), deadband);
         this.processedSpeed = new Translation2d(deadbandX, deadbandY);
+        return this;
+    }
+
+    /** 
+     * Limits the magnitude of the current {@link #processedSpeed} vector to a maximum
+     * 
+     * @return This instance of the class
+    */
+    private DriveInputProcessor applyClamp() {
+        double magnitude = this.processedSpeed.getNorm();
+
+        if (magnitude > clamp) {
+            this.processedSpeed = this.processedSpeed.times(clamp / magnitude);
+        }
+
         return this;
     }
 
@@ -159,6 +176,7 @@ public class DriveInputProcessor {
         getDriverInputAsVelocity()
             .applyDeadband()
             .applyPowerCurve()
+            .applyClamp()
             .applyScalingToMaxVelocity()
             .applyRateLimit()
             .applyLowPassFilter();
