@@ -56,6 +56,7 @@ public class DriveInputProcessor {
      * <p>Creates a new DriveInputProcessor with the specified parameters and processes the input periodically.</p>
      * @param controller The CommandXboxController to get driver input from
      * @param deadband The deadband to apply to the input (0-1)
+     * @param clamp The maximum magnitude of the input vector (0-1)
      * @param power The power to apply to the input
      * @param maxVelocity The maximum velocity to scale the input to (m/s)
      * @param maxAccel The maximum acceleration to apply to the input (m/s^2)
