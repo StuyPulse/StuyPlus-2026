@@ -187,79 +187,78 @@
 <span class="source-line-no">174</span><span id="line-174">    }</span>
 <span class="source-line-no">175</span><span id="line-175"></span>
 <span class="source-line-no">176</span><span id="line-176">    private ControlRequest getPivotControl(IntakeState currentState) {</span>
-<span class="source-line-no">177</span><span id="line-177">        boolean pivotAboveThreshold = isPivotAboveThreshold();</span>
-<span class="source-line-no">178</span><span id="line-178">        return switch (currentState) {</span>
-<span class="source-line-no">179</span><span id="line-179">            case INTAKE, OUTTAKE, DOWN -&gt; pushdownController; //(pivotAboveThreshold) // Hardcoding pushdown disabled temporarily - AZ</span>
-<span class="source-line-no">180</span><span id="line-180">                    // ? pushdownController.withOutput(Settings.Intake.Pivot.PUSHDOWN_CURRENT.getAsDouble())</span>
-<span class="source-line-no">181</span><span id="line-181">                    // : positionController.withPosition(currentState.getTargetAngle()).withSlot(0);</span>
-<span class="source-line-no">182</span><span id="line-182">            case HOMING_DOWN -&gt; homingController;</span>
-<span class="source-line-no">183</span><span id="line-183">            case AGITATE, AGITATE_DOWN -&gt; positionController.withPosition(currentState.getTargetAngle()).withSlot(1);</span>
-<span class="source-line-no">184</span><span id="line-184">            default -&gt; positionController.withPosition(currentState.getTargetAngle()).withSlot(0);</span>
-<span class="source-line-no">185</span><span id="line-185">        };</span>
-<span class="source-line-no">186</span><span id="line-186">    }</span>
-<span class="source-line-no">187</span><span id="line-187"></span>
-<span class="source-line-no">188</span><span id="line-188">    @Override</span>
-<span class="source-line-no">189</span><span id="line-189">    public void periodic() {</span>
-<span class="source-line-no">190</span><span id="line-190">        if (!Settings.EnabledSubsystems.INTAKE.get()) {</span>
-<span class="source-line-no">191</span><span id="line-191">            stopAllMotors();</span>
-<span class="source-line-no">192</span><span id="line-192"></span>
-<span class="source-line-no">193</span><span id="line-193">            return;</span>
-<span class="source-line-no">194</span><span id="line-194">        }</span>
-<span class="source-line-no">195</span><span id="line-195"></span>
-<span class="source-line-no">196</span><span id="line-196">        if (pivotVoltageOverride.isPresent()) {</span>
-<span class="source-line-no">197</span><span id="line-197">            pivotMotor.setVoltage(pivotVoltageOverride.get().in(Volts));</span>
-<span class="source-line-no">198</span><span id="line-198">            return;</span>
-<span class="source-line-no">199</span><span id="line-199">        }</span>
-<span class="source-line-no">200</span><span id="line-200"></span>
-<span class="source-line-no">201</span><span id="line-201">        // Input</span>
-<span class="source-line-no">202</span><span id="line-202">        final boolean pivotStalling = pivotStalling();</span>
-<span class="source-line-no">203</span><span id="line-203">        final IntakeState currentState = getState();</span>
-<span class="source-line-no">204</span><span id="line-204"></span>
-<span class="source-line-no">205</span><span id="line-205">        // State</span>
-<span class="source-line-no">206</span><span id="line-206">        if (limitSwitchHit()) {</span>
-<span class="source-line-no">207</span><span id="line-207">            seedPivotAngle(Settings.Intake.Pivot.DEPLOY_ANGLE);</span>
-<span class="source-line-no">208</span><span id="line-208">        }</span>
-<span class="source-line-no">209</span><span id="line-209"></span>
-<span class="source-line-no">210</span><span id="line-210">        if (currentState == IntakeState.HOMING_DOWN &amp;&amp; (pivotStalling || limitSwitchHit())) {</span>
-<span class="source-line-no">211</span><span id="line-211">            seedPivotAngle(Settings.Intake.Pivot.DEPLOY_ANGLE);</span>
-<span class="source-line-no">212</span><span id="line-212">            setState(IntakeState.INTAKE);</span>
-<span class="source-line-no">213</span><span id="line-213">        }</span>
-<span class="source-line-no">214</span><span id="line-214">        if ((currentState == IntakeState.DOWN) &amp;&amp; pivotStalling) {</span>
-<span class="source-line-no">215</span><span id="line-215">            seedPivotAngle(Settings.Intake.Pivot.DEPLOY_ANGLE);</span>
-<span class="source-line-no">216</span><span id="line-216">        }</span>
-<span class="source-line-no">217</span><span id="line-217"></span>
-<span class="source-line-no">218</span><span id="line-218">        // Output</span>
-<span class="source-line-no">219</span><span id="line-219">        final ControlRequest pivotControl = getPivotControl(currentState);</span>
-<span class="source-line-no">220</span><span id="line-220">        final DutyCycleOut rollerControl = rollerController.withOutput(currentState.getTargetDutyCycle());</span>
-<span class="source-line-no">221</span><span id="line-221"></span>
-<span class="source-line-no">222</span><span id="line-222">        // Apply</span>
-<span class="source-line-no">223</span><span id="line-223">        pivotMotor.setControl(pivotControl);</span>
-<span class="source-line-no">224</span><span id="line-224"></span>
-<span class="source-line-no">225</span><span id="line-225">        rollerMotorLeft.setControl(rollerControl);</span>
-<span class="source-line-no">226</span><span id="line-226"></span>
-<span class="source-line-no">227</span><span id="line-227">        // Logging</span>
-<span class="source-line-no">228</span><span id="line-228">        this.pivotSignals.logAll();</span>
-<span class="source-line-no">229</span><span id="line-229">        this.rollerSignals.logAll();</span>
-<span class="source-line-no">230</span><span id="line-230"></span>
-<span class="source-line-no">231</span><span id="line-231">        DogLog.forceNt.log("Intake/Rollers/Stalling", leftRollerStalling() || rightRollerStalling());</span>
-<span class="source-line-no">232</span><span id="line-232">        DogLog.forceNt.log(</span>
-<span class="source-line-no">233</span><span id="line-233">                "Intake/Pivot/Pushing Down", pivotMotor.getAppliedControl() == pushdownController);</span>
-<span class="source-line-no">234</span><span id="line-234">        super.periodic();</span>
-<span class="source-line-no">235</span><span id="line-235">    }</span>
-<span class="source-line-no">236</span><span id="line-236"></span>
-<span class="source-line-no">237</span><span id="line-237">    @Override</span>
-<span class="source-line-no">238</span><span id="line-238">    public SysIdRoutine getIntakeSysIdRoutine() {</span>
-<span class="source-line-no">239</span><span id="line-239">        return SysId.getRoutine(</span>
-<span class="source-line-no">240</span><span id="line-240">                Settings.Intake.Pivot.RAMP_RATE,</span>
-<span class="source-line-no">241</span><span id="line-241">                Settings.Intake.Pivot.STEP_VOLTAGE,</span>
-<span class="source-line-no">242</span><span id="line-242">                "Intake",</span>
-<span class="source-line-no">243</span><span id="line-243">                this::setPivotVoltageOverride,</span>
-<span class="source-line-no">244</span><span id="line-244">                () -&gt; pivotMotor.getPosition().getValue(),</span>
-<span class="source-line-no">245</span><span id="line-245">                () -&gt; pivotMotor.getVelocity().getValue(),</span>
-<span class="source-line-no">246</span><span id="line-246">                () -&gt; pivotMotor.getMotorVoltage().getValue(),</span>
-<span class="source-line-no">247</span><span id="line-247">                getInstance());</span>
-<span class="source-line-no">248</span><span id="line-248">    }</span>
-<span class="source-line-no">249</span><span id="line-249">}</span>
+<span class="source-line-no">177</span><span id="line-177">        return switch (currentState) {</span>
+<span class="source-line-no">178</span><span id="line-178">            case INTAKE, OUTTAKE, DOWN -&gt; pushdownController; //(pivotAboveThreshold) // Hardcoding pushdown disabled temporarily - AZ</span>
+<span class="source-line-no">179</span><span id="line-179">                    // ? pushdownController.withOutput(Settings.Intake.Pivot.PUSHDOWN_CURRENT.getAsDouble())</span>
+<span class="source-line-no">180</span><span id="line-180">                    // : positionController.withPosition(currentState.getTargetAngle()).withSlot(0);</span>
+<span class="source-line-no">181</span><span id="line-181">            case HOMING_DOWN -&gt; homingController;</span>
+<span class="source-line-no">182</span><span id="line-182">            case AGITATE, AGITATE_DOWN -&gt; positionController.withPosition(currentState.getTargetAngle()).withSlot(1);</span>
+<span class="source-line-no">183</span><span id="line-183">            default -&gt; positionController.withPosition(currentState.getTargetAngle()).withSlot(0);</span>
+<span class="source-line-no">184</span><span id="line-184">        };</span>
+<span class="source-line-no">185</span><span id="line-185">    }</span>
+<span class="source-line-no">186</span><span id="line-186"></span>
+<span class="source-line-no">187</span><span id="line-187">    @Override</span>
+<span class="source-line-no">188</span><span id="line-188">    public void periodic() {</span>
+<span class="source-line-no">189</span><span id="line-189">        if (!Settings.EnabledSubsystems.INTAKE.get()) {</span>
+<span class="source-line-no">190</span><span id="line-190">            stopAllMotors();</span>
+<span class="source-line-no">191</span><span id="line-191"></span>
+<span class="source-line-no">192</span><span id="line-192">            return;</span>
+<span class="source-line-no">193</span><span id="line-193">        }</span>
+<span class="source-line-no">194</span><span id="line-194"></span>
+<span class="source-line-no">195</span><span id="line-195">        if (pivotVoltageOverride.isPresent()) {</span>
+<span class="source-line-no">196</span><span id="line-196">            pivotMotor.setVoltage(pivotVoltageOverride.get().in(Volts));</span>
+<span class="source-line-no">197</span><span id="line-197">            return;</span>
+<span class="source-line-no">198</span><span id="line-198">        }</span>
+<span class="source-line-no">199</span><span id="line-199"></span>
+<span class="source-line-no">200</span><span id="line-200">        // Input</span>
+<span class="source-line-no">201</span><span id="line-201">        final boolean pivotStalling = pivotStalling();</span>
+<span class="source-line-no">202</span><span id="line-202">        final IntakeState currentState = getState();</span>
+<span class="source-line-no">203</span><span id="line-203"></span>
+<span class="source-line-no">204</span><span id="line-204">        // State</span>
+<span class="source-line-no">205</span><span id="line-205">        if (limitSwitchHit()) {</span>
+<span class="source-line-no">206</span><span id="line-206">            seedPivotAngle(Settings.Intake.Pivot.DEPLOY_ANGLE);</span>
+<span class="source-line-no">207</span><span id="line-207">        }</span>
+<span class="source-line-no">208</span><span id="line-208"></span>
+<span class="source-line-no">209</span><span id="line-209">        if (currentState == IntakeState.HOMING_DOWN &amp;&amp; (pivotStalling || limitSwitchHit())) {</span>
+<span class="source-line-no">210</span><span id="line-210">            seedPivotAngle(Settings.Intake.Pivot.DEPLOY_ANGLE);</span>
+<span class="source-line-no">211</span><span id="line-211">            setState(IntakeState.INTAKE);</span>
+<span class="source-line-no">212</span><span id="line-212">        }</span>
+<span class="source-line-no">213</span><span id="line-213">        if ((currentState == IntakeState.DOWN) &amp;&amp; pivotStalling) {</span>
+<span class="source-line-no">214</span><span id="line-214">            seedPivotAngle(Settings.Intake.Pivot.DEPLOY_ANGLE);</span>
+<span class="source-line-no">215</span><span id="line-215">        }</span>
+<span class="source-line-no">216</span><span id="line-216"></span>
+<span class="source-line-no">217</span><span id="line-217">        // Output</span>
+<span class="source-line-no">218</span><span id="line-218">        final ControlRequest pivotControl = getPivotControl(currentState);</span>
+<span class="source-line-no">219</span><span id="line-219">        final DutyCycleOut rollerControl = rollerController.withOutput(currentState.getTargetDutyCycle());</span>
+<span class="source-line-no">220</span><span id="line-220"></span>
+<span class="source-line-no">221</span><span id="line-221">        // Apply</span>
+<span class="source-line-no">222</span><span id="line-222">        pivotMotor.setControl(pivotControl);</span>
+<span class="source-line-no">223</span><span id="line-223"></span>
+<span class="source-line-no">224</span><span id="line-224">        rollerMotorLeft.setControl(rollerControl);</span>
+<span class="source-line-no">225</span><span id="line-225"></span>
+<span class="source-line-no">226</span><span id="line-226">        // Logging</span>
+<span class="source-line-no">227</span><span id="line-227">        this.pivotSignals.logAll();</span>
+<span class="source-line-no">228</span><span id="line-228">        this.rollerSignals.logAll();</span>
+<span class="source-line-no">229</span><span id="line-229"></span>
+<span class="source-line-no">230</span><span id="line-230">        DogLog.forceNt.log("Intake/Rollers/Stalling", leftRollerStalling() || rightRollerStalling());</span>
+<span class="source-line-no">231</span><span id="line-231">        DogLog.forceNt.log(</span>
+<span class="source-line-no">232</span><span id="line-232">                "Intake/Pivot/Pushing Down", pivotMotor.getAppliedControl() == pushdownController);</span>
+<span class="source-line-no">233</span><span id="line-233">        super.periodic();</span>
+<span class="source-line-no">234</span><span id="line-234">    }</span>
+<span class="source-line-no">235</span><span id="line-235"></span>
+<span class="source-line-no">236</span><span id="line-236">    @Override</span>
+<span class="source-line-no">237</span><span id="line-237">    public SysIdRoutine getIntakeSysIdRoutine() {</span>
+<span class="source-line-no">238</span><span id="line-238">        return SysId.getRoutine(</span>
+<span class="source-line-no">239</span><span id="line-239">                Settings.Intake.Pivot.RAMP_RATE,</span>
+<span class="source-line-no">240</span><span id="line-240">                Settings.Intake.Pivot.STEP_VOLTAGE,</span>
+<span class="source-line-no">241</span><span id="line-241">                "Intake",</span>
+<span class="source-line-no">242</span><span id="line-242">                this::setPivotVoltageOverride,</span>
+<span class="source-line-no">243</span><span id="line-243">                () -&gt; pivotMotor.getPosition().getValue(),</span>
+<span class="source-line-no">244</span><span id="line-244">                () -&gt; pivotMotor.getVelocity().getValue(),</span>
+<span class="source-line-no">245</span><span id="line-245">                () -&gt; pivotMotor.getMotorVoltage().getValue(),</span>
+<span class="source-line-no">246</span><span id="line-246">                getInstance());</span>
+<span class="source-line-no">247</span><span id="line-247">    }</span>
+<span class="source-line-no">248</span><span id="line-248">}</span>
 
 
 
