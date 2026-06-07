@@ -174,7 +174,6 @@ public class IntakeImpl extends Intake {
     }
 
     private ControlRequest getPivotControl(IntakeState currentState) {
-        boolean pivotAboveThreshold = isPivotAboveThreshold();
         return switch (currentState) {
             case INTAKE, OUTTAKE, DOWN -> pushdownController; //(pivotAboveThreshold) // Hardcoding pushdown disabled temporarily - AZ
                     // ? pushdownController.withOutput(Settings.Intake.Pivot.PUSHDOWN_CURRENT.getAsDouble())
