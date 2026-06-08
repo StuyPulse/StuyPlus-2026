@@ -22,61 +22,54 @@
 <span class="source-line-no">009</span><span id="line-9">import com.stuypulse.robot.constants.Settings.Driver.Turn;</span>
 <span class="source-line-no">010</span><span id="line-10">import com.stuypulse.robot.constants.Settings.Swerve;</span>
 <span class="source-line-no">011</span><span id="line-11">import com.stuypulse.robot.subsystems.swerve.CommandSwerveDrivetrain;</span>
-<span class="source-line-no">012</span><span id="line-12">import com.stuypulse.stuylib.math.SLMath;</span>
-<span class="source-line-no">013</span><span id="line-13">import com.stuypulse.stuylib.math.Vector2D;</span>
-<span class="source-line-no">014</span><span id="line-14">import com.stuypulse.stuylib.streams.numbers.IStream;</span>
-<span class="source-line-no">015</span><span id="line-15">import com.stuypulse.stuylib.streams.numbers.filters.LowPassFilter;</span>
-<span class="source-line-no">016</span><span id="line-16">import com.stuypulse.stuylib.streams.vectors.VStream;</span>
-<span class="source-line-no">017</span><span id="line-17">import com.stuypulse.stuylib.streams.vectors.filters.VDeadZone;</span>
-<span class="source-line-no">018</span><span id="line-18">import com.stuypulse.stuylib.streams.vectors.filters.VLowPassFilter;</span>
-<span class="source-line-no">019</span><span id="line-19">import com.stuypulse.stuylib.streams.vectors.filters.VRateLimit;</span>
-<span class="source-line-no">020</span><span id="line-20">import edu.wpi.first.wpilibj2.command.Command;</span>
-<span class="source-line-no">021</span><span id="line-21">import edu.wpi.first.wpilibj2.command.button.CommandXboxController;</span>
-<span class="source-line-no">022</span><span id="line-22"></span>
-<span class="source-line-no">023</span><span id="line-23">public class SwerveDriveDrive extends Command {</span>
-<span class="source-line-no">024</span><span id="line-24"></span>
-<span class="source-line-no">025</span><span id="line-25">        private final CommandSwerveDrivetrain swerve;</span>
-<span class="source-line-no">026</span><span id="line-26"></span>
-<span class="source-line-no">027</span><span id="line-27">        private final CommandXboxController driver;</span>
-<span class="source-line-no">028</span><span id="line-28"></span>
-<span class="source-line-no">029</span><span id="line-29">        private final VStream speed;</span>
-<span class="source-line-no">030</span><span id="line-30"></span>
-<span class="source-line-no">031</span><span id="line-31">        private final IStream turn;</span>
-<span class="source-line-no">032</span><span id="line-32"></span>
-<span class="source-line-no">033</span><span id="line-33">        public SwerveDriveDrive(CommandXboxController driver) {</span>
-<span class="source-line-no">034</span><span id="line-34">                swerve = CommandSwerveDrivetrain.getInstance();</span>
-<span class="source-line-no">035</span><span id="line-35">                speed = VStream.create(this::getDriverInputAsVelocity)</span>
-<span class="source-line-no">036</span><span id="line-36">                                .filtered(</span>
-<span class="source-line-no">037</span><span id="line-37">                                                new VDeadZone(Drive.DEADBAND),</span>
-<span class="source-line-no">038</span><span id="line-38">                                                x -&gt; x.clamp(1),</span>
-<span class="source-line-no">039</span><span id="line-39">                                                x -&gt; x.pow(Drive.POWER),</span>
-<span class="source-line-no">040</span><span id="line-40">                                                x -&gt; x.mul(Swerve.Constraints.MAX_VELOCITY_M_PER_S),</span>
-<span class="source-line-no">041</span><span id="line-41">                                                new VRateLimit(Swerve.Constraints.MAX_ACCEL_M_PER_S_SQUARED),</span>
-<span class="source-line-no">042</span><span id="line-42">                                                new VLowPassFilter(Drive.RC));</span>
-<span class="source-line-no">043</span><span id="line-43">                turn = IStream.create(driver::getRightX)</span>
-<span class="source-line-no">044</span><span id="line-44">                                .filtered(</span>
-<span class="source-line-no">045</span><span id="line-45">                                                x -&gt; SLMath.deadband(x, Turn.DEADBAND),</span>
-<span class="source-line-no">046</span><span id="line-46">                                                x -&gt; SLMath.spow(x, Turn.POWER),</span>
-<span class="source-line-no">047</span><span id="line-47">                                                x -&gt; x * Swerve.Constraints.MAX_ANGULAR_VEL_RAD_PER_S,</span>
-<span class="source-line-no">048</span><span id="line-48">                                                new LowPassFilter(Turn.RC));</span>
-<span class="source-line-no">049</span><span id="line-49">                this.driver = driver;</span>
-<span class="source-line-no">050</span><span id="line-50">                addRequirements(swerve);</span>
-<span class="source-line-no">051</span><span id="line-51">        }</span>
-<span class="source-line-no">052</span><span id="line-52"></span>
-<span class="source-line-no">053</span><span id="line-53">        private Vector2D getDriverInputAsVelocity() {</span>
-<span class="source-line-no">054</span><span id="line-54">                return new Vector2D(-driver.getLeftY(), -driver.getLeftX());</span>
-<span class="source-line-no">055</span><span id="line-55">        }</span>
-<span class="source-line-no">056</span><span id="line-56"></span>
-<span class="source-line-no">057</span><span id="line-57">        @Override</span>
-<span class="source-line-no">058</span><span id="line-58">        public void execute() {</span>
-<span class="source-line-no">059</span><span id="line-59">                swerve.setControl(</span>
-<span class="source-line-no">060</span><span id="line-60">                                swerve</span>
-<span class="source-line-no">061</span><span id="line-61">                                                .getFieldCentricSwerveRequest()</span>
-<span class="source-line-no">062</span><span id="line-62">                                                .withVelocityX(speed.get().x)</span>
-<span class="source-line-no">063</span><span id="line-63">                                                .withVelocityY(speed.get().y)</span>
-<span class="source-line-no">064</span><span id="line-64">                                                .withRotationalRate(-turn.getAsDouble()));</span>
-<span class="source-line-no">065</span><span id="line-65">        }</span>
-<span class="source-line-no">066</span><span id="line-66">}</span>
+<span class="source-line-no">012</span><span id="line-12">import com.stuypulse.robot.util.swerve.swerveinput.DriveInputProcessor;</span>
+<span class="source-line-no">013</span><span id="line-13">import com.stuypulse.robot.util.swerve.swerveinput.DriveTurnInputProcessor;</span>
+<span class="source-line-no">014</span><span id="line-14"></span>
+<span class="source-line-no">015</span><span id="line-15">import edu.wpi.first.wpilibj2.command.Command;</span>
+<span class="source-line-no">016</span><span id="line-16">import edu.wpi.first.wpilibj2.command.button.CommandXboxController;</span>
+<span class="source-line-no">017</span><span id="line-17"></span>
+<span class="source-line-no">018</span><span id="line-18">public class SwerveDriveDrive extends Command {</span>
+<span class="source-line-no">019</span><span id="line-19"></span>
+<span class="source-line-no">020</span><span id="line-20">        private final CommandSwerveDrivetrain swerve;</span>
+<span class="source-line-no">021</span><span id="line-21"></span>
+<span class="source-line-no">022</span><span id="line-22">        private final CommandXboxController driver;</span>
+<span class="source-line-no">023</span><span id="line-23"></span>
+<span class="source-line-no">024</span><span id="line-24">        private final DriveInputProcessor speed;</span>
+<span class="source-line-no">025</span><span id="line-25"></span>
+<span class="source-line-no">026</span><span id="line-26">        private final DriveTurnInputProcessor turn;</span>
+<span class="source-line-no">027</span><span id="line-27"></span>
+<span class="source-line-no">028</span><span id="line-28">        public SwerveDriveDrive(CommandXboxController driver) {</span>
+<span class="source-line-no">029</span><span id="line-29">                swerve = CommandSwerveDrivetrain.getInstance();</span>
+<span class="source-line-no">030</span><span id="line-30">                this.speed = new DriveInputProcessor(</span>
+<span class="source-line-no">031</span><span id="line-31">                driver, </span>
+<span class="source-line-no">032</span><span id="line-32">                Drive.DEADBAND, </span>
+<span class="source-line-no">033</span><span id="line-33">                                1,</span>
+<span class="source-line-no">034</span><span id="line-34">                Drive.POWER, </span>
+<span class="source-line-no">035</span><span id="line-35">                Swerve.Constraints.MAX_VELOCITY_M_PER_S, </span>
+<span class="source-line-no">036</span><span id="line-36">                Swerve.Constraints.MAX_ACCEL_M_PER_S_SQUARED, </span>
+<span class="source-line-no">037</span><span id="line-37">                Drive.RC);</span>
+<span class="source-line-no">038</span><span id="line-38">                turn = new DriveTurnInputProcessor(</span>
+<span class="source-line-no">039</span><span id="line-39">                        driver, </span>
+<span class="source-line-no">040</span><span id="line-40">                        Turn.DEADBAND, </span>
+<span class="source-line-no">041</span><span id="line-41">                        Turn.POWER, </span>
+<span class="source-line-no">042</span><span id="line-42">                        Swerve.Constraints.MAX_ANGULAR_VEL_RAD_PER_S, Turn.RC);</span>
+<span class="source-line-no">043</span><span id="line-43">                this.driver = driver;</span>
+<span class="source-line-no">044</span><span id="line-44">                addRequirements(swerve);</span>
+<span class="source-line-no">045</span><span id="line-45">        }</span>
+<span class="source-line-no">046</span><span id="line-46"></span>
+<span class="source-line-no">047</span><span id="line-47">        @Override</span>
+<span class="source-line-no">048</span><span id="line-48">        public void execute() {</span>
+<span class="source-line-no">049</span><span id="line-49">                speed.update();</span>
+<span class="source-line-no">050</span><span id="line-50">                turn.update();</span>
+<span class="source-line-no">051</span><span id="line-51"></span>
+<span class="source-line-no">052</span><span id="line-52">                swerve.setControl(</span>
+<span class="source-line-no">053</span><span id="line-53">                                swerve</span>
+<span class="source-line-no">054</span><span id="line-54">                                                .getFieldCentricSwerveRequest()</span>
+<span class="source-line-no">055</span><span id="line-55">                                                .withVelocityX(speed.get().getX())</span>
+<span class="source-line-no">056</span><span id="line-56">                                                .withVelocityY(speed.get().getY())</span>
+<span class="source-line-no">057</span><span id="line-57">                                                .withRotationalRate(-turn.get()));</span>
+<span class="source-line-no">058</span><span id="line-58">        }</span>
+<span class="source-line-no">059</span><span id="line-59">}</span>
 
 
 

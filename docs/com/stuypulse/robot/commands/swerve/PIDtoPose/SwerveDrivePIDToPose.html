@@ -82,7 +82,7 @@ loadScripts(document, 'script');</script>
 <dd><code>edu.wpi.first.util.sendable.Sendable</code></dd>
 </dl>
 <hr>
-<div class="type-signature"><span class="modifiers">public class </span><span class="element-name"><a href="../../../../../../src-html/com/stuypulse/robot/commands/swerve/PIDtoPose/SwerveDrivePIDToPose.html#line-34">SwerveDrivePIDToPose</a></span>
+<div class="type-signature"><span class="modifiers">public class </span><span class="element-name"><a href="../../../../../../src-html/com/stuypulse/robot/commands/swerve/PIDtoPose/SwerveDrivePIDToPose.html#line-36">SwerveDrivePIDToPose</a></span>
 <span class="extends-implements">extends edu.wpi.first.wpilibj2.command.Command</span></div>
 </section>
 <section class="summary">
@@ -108,14 +108,20 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color"><code>private <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Supplier.html" title="class or interface in java.util.function" class="external-link">Supplier</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Boolean.html" title="class or interface in java.lang" class="external-link">Boolean</a>&gt;</code></div>
 <div class="col-second even-row-color"><code><a href="#canEnd" class="member-name-link">canEnd</a></code></div>
 <div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code>private final <a href="../../../util/HolonomicController.html" title="class in com.stuypulse.robot.util">HolonomicController</a></code></div>
+<div class="col-first odd-row-color"><code>private final edu.wpi.first.math.controller.HolonomicDriveController</code></div>
 <div class="col-second odd-row-color"><code><a href="#controller" class="member-name-link">controller</a></code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><code>private final com.stuypulse.stuylib.streams.booleans.BStream</code></div>
-<div class="col-second even-row-color"><code><a href="#isAligned" class="member-name-link">isAligned</a></code></div>
+<div class="col-first even-row-color"><code>private final edu.wpi.first.math.filter.Debouncer</code></div>
+<div class="col-second even-row-color"><code><a href="#debounceRC" class="member-name-link">debounceRC</a></code></div>
 <div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code>private boolean</code></div>
-<div class="col-second odd-row-color"><code><a href="#isMotionProfiled" class="member-name-link">isMotionProfiled</a></code></div>
+<div class="col-first odd-row-color"><code>private final <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/BooleanSupplier.html" title="class or interface in java.util.function" class="external-link">BooleanSupplier</a></code></div>
+<div class="col-second odd-row-color"><code><a href="#isAligned" class="member-name-link">isAligned</a></code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>private boolean</code></div>
+<div class="col-second even-row-color"><code><a href="#isMotionProfiled" class="member-name-link">isMotionProfiled</a></code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>private final edu.wpi.first.math.filter.LinearFilter</code></div>
+<div class="col-second odd-row-color"><code><a href="#lowPass" class="member-name-link">lowPass</a></code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code>private double</code></div>
 <div class="col-second even-row-color"><code><a href="#maxAcceleration" class="member-name-link">maxAcceleration</a></code></div>
@@ -138,18 +144,15 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color"><code>private <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Number.html" title="class or interface in java.lang" class="external-link">Number</a></code></div>
 <div class="col-second even-row-color"><code><a href="#thetaTolerance" class="member-name-link">thetaTolerance</a></code></div>
 <div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code>private com.stuypulse.stuylib.streams.vectors.VStream</code></div>
+<div class="col-first odd-row-color"><code>private <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Supplier.html" title="class or interface in java.util.function" class="external-link">Supplier</a>&lt;edu.wpi.first.math.geometry.Translation2d&gt;</code></div>
 <div class="col-second odd-row-color"><code><a href="#translationSetpoint" class="member-name-link">translationSetpoint</a></code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><code>private final com.stuypulse.stuylib.streams.numbers.IStream</code></div>
-<div class="col-second even-row-color"><code><a href="#velocityError" class="member-name-link">velocityError</a></code></div>
+<div class="col-first even-row-color"><code>private <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Number.html" title="class or interface in java.lang" class="external-link">Number</a></code></div>
+<div class="col-second even-row-color"><code><a href="#xTolerance" class="member-name-link">xTolerance</a></code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code>private <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Number.html" title="class or interface in java.lang" class="external-link">Number</a></code></div>
-<div class="col-second odd-row-color"><code><a href="#xTolerance" class="member-name-link">xTolerance</a></code></div>
+<div class="col-second odd-row-color"><code><a href="#yTolerance" class="member-name-link">yTolerance</a></code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><code>private <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Number.html" title="class or interface in java.lang" class="external-link">Number</a></code></div>
-<div class="col-second even-row-color"><code><a href="#yTolerance" class="member-name-link">yTolerance</a></code></div>
-<div class="col-last even-row-color">&nbsp;</div>
 </div>
 </section>
 </li>
@@ -185,14 +188,14 @@ loadScripts(document, 'script');</script>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#execute()" class="member-name-link">execute</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>private com.stuypulse.stuylib.streams.vectors.VStream</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>private <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Supplier.html" title="class or interface in java.util.function" class="external-link">Supplier</a>&lt;edu.wpi.first.math.geometry.Translation2d&gt;</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getNewTranslationSetpointGenerator()" class="member-name-link">getNewTranslationSetpointGenerator</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#initialize()" class="member-name-link">initialize</a>()</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>private double</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getVelocityError()" class="member-name-link">getVelocityError</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isAligned()" class="member-name-link">isAligned</a>()</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#initialize()" class="member-name-link">initialize</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isAlignedTheta()" class="member-name-link">isAlignedTheta</a>()</code></div>
@@ -244,91 +247,97 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="swerve">
 <h3>swerve</h3>
-<div class="member-signature"><span class="modifiers">private final</span>&nbsp;<span class="return-type"><a href="../../../subsystems/swerve/CommandSwerveDrivetrain.html" title="class in com.stuypulse.robot.subsystems.swerve">CommandSwerveDrivetrain</a></span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/com/stuypulse/robot/commands/swerve/PIDtoPose/SwerveDrivePIDToPose.html#line-36">swerve</a></span></div>
+<div class="member-signature"><span class="modifiers">private final</span>&nbsp;<span class="return-type"><a href="../../../subsystems/swerve/CommandSwerveDrivetrain.html" title="class in com.stuypulse.robot.subsystems.swerve">CommandSwerveDrivetrain</a></span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/com/stuypulse/robot/commands/swerve/PIDtoPose/SwerveDrivePIDToPose.html#line-38">swerve</a></span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="controller">
 <h3>controller</h3>
-<div class="member-signature"><span class="modifiers">private final</span>&nbsp;<span class="return-type"><a href="../../../util/HolonomicController.html" title="class in com.stuypulse.robot.util">HolonomicController</a></span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/com/stuypulse/robot/commands/swerve/PIDtoPose/SwerveDrivePIDToPose.html#line-38">controller</a></span></div>
+<div class="member-signature"><span class="modifiers">private final</span>&nbsp;<span class="return-type">edu.wpi.first.math.controller.HolonomicDriveController</span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/com/stuypulse/robot/commands/swerve/PIDtoPose/SwerveDrivePIDToPose.html#line-40">controller</a></span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="targetPose">
 <h3>targetPose</h3>
-<div class="member-signature"><span class="modifiers">private final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Supplier.html" title="class or interface in java.util.function" class="external-link">Supplier</a>&lt;edu.wpi.first.math.geometry.Pose2d&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/com/stuypulse/robot/commands/swerve/PIDtoPose/SwerveDrivePIDToPose.html#line-40">targetPose</a></span></div>
+<div class="member-signature"><span class="modifiers">private final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Supplier.html" title="class or interface in java.util.function" class="external-link">Supplier</a>&lt;edu.wpi.first.math.geometry.Pose2d&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/com/stuypulse/robot/commands/swerve/PIDtoPose/SwerveDrivePIDToPose.html#line-42">targetPose</a></span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="lowPass">
+<h3>lowPass</h3>
+<div class="member-signature"><span class="modifiers">private final</span>&nbsp;<span class="return-type">edu.wpi.first.math.filter.LinearFilter</span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/com/stuypulse/robot/commands/swerve/PIDtoPose/SwerveDrivePIDToPose.html#line-45">lowPass</a></span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="debounceRC">
+<h3>debounceRC</h3>
+<div class="member-signature"><span class="modifiers">private final</span>&nbsp;<span class="return-type">edu.wpi.first.math.filter.Debouncer</span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/com/stuypulse/robot/commands/swerve/PIDtoPose/SwerveDrivePIDToPose.html#line-46">debounceRC</a></span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="maxVelocity">
 <h3>maxVelocity</h3>
-<div class="member-signature"><span class="modifiers">private</span>&nbsp;<span class="return-type">double</span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/com/stuypulse/robot/commands/swerve/PIDtoPose/SwerveDrivePIDToPose.html#line-42">maxVelocity</a></span></div>
+<div class="member-signature"><span class="modifiers">private</span>&nbsp;<span class="return-type">double</span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/com/stuypulse/robot/commands/swerve/PIDtoPose/SwerveDrivePIDToPose.html#line-48">maxVelocity</a></span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="maxAcceleration">
 <h3>maxAcceleration</h3>
-<div class="member-signature"><span class="modifiers">private</span>&nbsp;<span class="return-type">double</span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/com/stuypulse/robot/commands/swerve/PIDtoPose/SwerveDrivePIDToPose.html#line-44">maxAcceleration</a></span></div>
+<div class="member-signature"><span class="modifiers">private</span>&nbsp;<span class="return-type">double</span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/com/stuypulse/robot/commands/swerve/PIDtoPose/SwerveDrivePIDToPose.html#line-50">maxAcceleration</a></span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="isMotionProfiled">
 <h3>isMotionProfiled</h3>
-<div class="member-signature"><span class="modifiers">private</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/com/stuypulse/robot/commands/swerve/PIDtoPose/SwerveDrivePIDToPose.html#line-46">isMotionProfiled</a></span></div>
+<div class="member-signature"><span class="modifiers">private</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/com/stuypulse/robot/commands/swerve/PIDtoPose/SwerveDrivePIDToPose.html#line-52">isMotionProfiled</a></span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="isAligned">
 <h3>isAligned</h3>
-<div class="member-signature"><span class="modifiers">private final</span>&nbsp;<span class="return-type">com.stuypulse.stuylib.streams.booleans.BStream</span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/com/stuypulse/robot/commands/swerve/PIDtoPose/SwerveDrivePIDToPose.html#line-48">isAligned</a></span></div>
-</section>
-</li>
-<li>
-<section class="detail" id="velocityError">
-<h3>velocityError</h3>
-<div class="member-signature"><span class="modifiers">private final</span>&nbsp;<span class="return-type">com.stuypulse.stuylib.streams.numbers.IStream</span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/com/stuypulse/robot/commands/swerve/PIDtoPose/SwerveDrivePIDToPose.html#line-50">velocityError</a></span></div>
+<div class="member-signature"><span class="modifiers">private final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/BooleanSupplier.html" title="class or interface in java.util.function" class="external-link">BooleanSupplier</a></span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/com/stuypulse/robot/commands/swerve/PIDtoPose/SwerveDrivePIDToPose.html#line-54">isAligned</a></span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="targetPose2d">
 <h3>targetPose2d</h3>
-<div class="member-signature"><span class="modifiers">private final</span>&nbsp;<span class="return-type">edu.wpi.first.wpilibj.smartdashboard.FieldObject2d</span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/com/stuypulse/robot/commands/swerve/PIDtoPose/SwerveDrivePIDToPose.html#line-52">targetPose2d</a></span></div>
+<div class="member-signature"><span class="modifiers">private final</span>&nbsp;<span class="return-type">edu.wpi.first.wpilibj.smartdashboard.FieldObject2d</span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/com/stuypulse/robot/commands/swerve/PIDtoPose/SwerveDrivePIDToPose.html#line-56">targetPose2d</a></span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="xTolerance">
 <h3>xTolerance</h3>
-<div class="member-signature"><span class="modifiers">private</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Number.html" title="class or interface in java.lang" class="external-link">Number</a></span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/com/stuypulse/robot/commands/swerve/PIDtoPose/SwerveDrivePIDToPose.html#line-54">xTolerance</a></span></div>
+<div class="member-signature"><span class="modifiers">private</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Number.html" title="class or interface in java.lang" class="external-link">Number</a></span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/com/stuypulse/robot/commands/swerve/PIDtoPose/SwerveDrivePIDToPose.html#line-58">xTolerance</a></span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="yTolerance">
 <h3>yTolerance</h3>
-<div class="member-signature"><span class="modifiers">private</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Number.html" title="class or interface in java.lang" class="external-link">Number</a></span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/com/stuypulse/robot/commands/swerve/PIDtoPose/SwerveDrivePIDToPose.html#line-56">yTolerance</a></span></div>
+<div class="member-signature"><span class="modifiers">private</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Number.html" title="class or interface in java.lang" class="external-link">Number</a></span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/com/stuypulse/robot/commands/swerve/PIDtoPose/SwerveDrivePIDToPose.html#line-60">yTolerance</a></span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="thetaTolerance">
 <h3>thetaTolerance</h3>
-<div class="member-signature"><span class="modifiers">private</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Number.html" title="class or interface in java.lang" class="external-link">Number</a></span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/com/stuypulse/robot/commands/swerve/PIDtoPose/SwerveDrivePIDToPose.html#line-58">thetaTolerance</a></span></div>
+<div class="member-signature"><span class="modifiers">private</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Number.html" title="class or interface in java.lang" class="external-link">Number</a></span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/com/stuypulse/robot/commands/swerve/PIDtoPose/SwerveDrivePIDToPose.html#line-62">thetaTolerance</a></span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="maxVelocityWhenAligned">
 <h3>maxVelocityWhenAligned</h3>
-<div class="member-signature"><span class="modifiers">private</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Number.html" title="class or interface in java.lang" class="external-link">Number</a></span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/com/stuypulse/robot/commands/swerve/PIDtoPose/SwerveDrivePIDToPose.html#line-60">maxVelocityWhenAligned</a></span></div>
+<div class="member-signature"><span class="modifiers">private</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Number.html" title="class or interface in java.lang" class="external-link">Number</a></span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/com/stuypulse/robot/commands/swerve/PIDtoPose/SwerveDrivePIDToPose.html#line-64">maxVelocityWhenAligned</a></span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="translationSetpoint">
 <h3>translationSetpoint</h3>
-<div class="member-signature"><span class="modifiers">private</span>&nbsp;<span class="return-type">com.stuypulse.stuylib.streams.vectors.VStream</span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/com/stuypulse/robot/commands/swerve/PIDtoPose/SwerveDrivePIDToPose.html#line-62">translationSetpoint</a></span></div>
+<div class="member-signature"><span class="modifiers">private</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Supplier.html" title="class or interface in java.util.function" class="external-link">Supplier</a>&lt;edu.wpi.first.math.geometry.Translation2d&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/com/stuypulse/robot/commands/swerve/PIDtoPose/SwerveDrivePIDToPose.html#line-66">translationSetpoint</a></span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="canEnd">
 <h3>canEnd</h3>
-<div class="member-signature"><span class="modifiers">private</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Supplier.html" title="class or interface in java.util.function" class="external-link">Supplier</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Boolean.html" title="class or interface in java.lang" class="external-link">Boolean</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/com/stuypulse/robot/commands/swerve/PIDtoPose/SwerveDrivePIDToPose.html#line-64">canEnd</a></span></div>
+<div class="member-signature"><span class="modifiers">private</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Supplier.html" title="class or interface in java.util.function" class="external-link">Supplier</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Boolean.html" title="class or interface in java.lang" class="external-link">Boolean</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/com/stuypulse/robot/commands/swerve/PIDtoPose/SwerveDrivePIDToPose.html#line-68">canEnd</a></span></div>
 </section>
 </li>
 </ul>
@@ -342,13 +351,13 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="&lt;init&gt;(edu.wpi.first.math.geometry.Pose2d)">
 <h3>SwerveDrivePIDToPose</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/com/stuypulse/robot/commands/swerve/PIDtoPose/SwerveDrivePIDToPose.html#line-66">SwerveDrivePIDToPose</a></span><wbr><span class="parameters">(edu.wpi.first.math.geometry.Pose2d&nbsp;targetPose)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/com/stuypulse/robot/commands/swerve/PIDtoPose/SwerveDrivePIDToPose.html#line-70">SwerveDrivePIDToPose</a></span><wbr><span class="parameters">(edu.wpi.first.math.geometry.Pose2d&nbsp;targetPose)</span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="&lt;init&gt;(java.util.function.Supplier)">
 <h3>SwerveDrivePIDToPose</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/com/stuypulse/robot/commands/swerve/PIDtoPose/SwerveDrivePIDToPose.html#line-70">SwerveDrivePIDToPose</a></span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Supplier.html" title="class or interface in java.util.function" class="external-link">Supplier</a>&lt;edu.wpi.first.math.geometry.Pose2d&gt;&nbsp;targetPose)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/com/stuypulse/robot/commands/swerve/PIDtoPose/SwerveDrivePIDToPose.html#line-74">SwerveDrivePIDToPose</a></span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Supplier.html" title="class or interface in java.util.function" class="external-link">Supplier</a>&lt;edu.wpi.first.math.geometry.Pose2d&gt;&nbsp;targetPose)</span></div>
 </section>
 </li>
 </ul>
@@ -362,7 +371,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="withTolerance(double,double,edu.wpi.first.math.geometry.Rotation2d)">
 <h3>withTolerance</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="SwerveDrivePIDToPose.html" title="class in com.stuypulse.robot.commands.swerve.PIDtoPose">SwerveDrivePIDToPose</a></span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/com/stuypulse/robot/commands/swerve/PIDtoPose/SwerveDrivePIDToPose.html#line-107">withTolerance</a></span><wbr><span class="parameters">(double&nbsp;x,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="SwerveDrivePIDToPose.html" title="class in com.stuypulse.robot.commands.swerve.PIDtoPose">SwerveDrivePIDToPose</a></span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/com/stuypulse/robot/commands/swerve/PIDtoPose/SwerveDrivePIDToPose.html#line-108">withTolerance</a></span><wbr><span class="parameters">(double&nbsp;x,
  double&nbsp;y,
  edu.wpi.first.math.geometry.Rotation2d&nbsp;theta)</span></div>
 </section>
@@ -370,32 +379,38 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="withTranslationalConstraints(double,double)">
 <h3>withTranslationalConstraints</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="SwerveDrivePIDToPose.html" title="class in com.stuypulse.robot.commands.swerve.PIDtoPose">SwerveDrivePIDToPose</a></span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/com/stuypulse/robot/commands/swerve/PIDtoPose/SwerveDrivePIDToPose.html#line-114">withTranslationalConstraints</a></span><wbr><span class="parameters">(double&nbsp;maxVelocity,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="SwerveDrivePIDToPose.html" title="class in com.stuypulse.robot.commands.swerve.PIDtoPose">SwerveDrivePIDToPose</a></span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/com/stuypulse/robot/commands/swerve/PIDtoPose/SwerveDrivePIDToPose.html#line-115">withTranslationalConstraints</a></span><wbr><span class="parameters">(double&nbsp;maxVelocity,
  double&nbsp;maxAcceleration)</span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="withoutMotionProfile()">
 <h3>withoutMotionProfile</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="SwerveDrivePIDToPose.html" title="class in com.stuypulse.robot.commands.swerve.PIDtoPose">SwerveDrivePIDToPose</a></span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/com/stuypulse/robot/commands/swerve/PIDtoPose/SwerveDrivePIDToPose.html#line-121">withoutMotionProfile</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="SwerveDrivePIDToPose.html" title="class in com.stuypulse.robot.commands.swerve.PIDtoPose">SwerveDrivePIDToPose</a></span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/com/stuypulse/robot/commands/swerve/PIDtoPose/SwerveDrivePIDToPose.html#line-122">withoutMotionProfile</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="withCanEnd(java.util.function.Supplier)">
 <h3>withCanEnd</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="SwerveDrivePIDToPose.html" title="class in com.stuypulse.robot.commands.swerve.PIDtoPose">SwerveDrivePIDToPose</a></span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/com/stuypulse/robot/commands/swerve/PIDtoPose/SwerveDrivePIDToPose.html#line-126">withCanEnd</a></span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Supplier.html" title="class or interface in java.util.function" class="external-link">Supplier</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Boolean.html" title="class or interface in java.lang" class="external-link">Boolean</a>&gt;&nbsp;canEnd)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="SwerveDrivePIDToPose.html" title="class in com.stuypulse.robot.commands.swerve.PIDtoPose">SwerveDrivePIDToPose</a></span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/com/stuypulse/robot/commands/swerve/PIDtoPose/SwerveDrivePIDToPose.html#line-127">withCanEnd</a></span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Supplier.html" title="class or interface in java.util.function" class="external-link">Supplier</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Boolean.html" title="class or interface in java.lang" class="external-link">Boolean</a>&gt;&nbsp;canEnd)</span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="getNewTranslationSetpointGenerator()">
 <h3>getNewTranslationSetpointGenerator</h3>
-<div class="member-signature"><span class="modifiers">private</span>&nbsp;<span class="return-type">com.stuypulse.stuylib.streams.vectors.VStream</span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/com/stuypulse/robot/commands/swerve/PIDtoPose/SwerveDrivePIDToPose.html#line-131">getNewTranslationSetpointGenerator</a></span>()</div>
+<div class="member-signature"><span class="modifiers">private</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Supplier.html" title="class or interface in java.util.function" class="external-link">Supplier</a>&lt;edu.wpi.first.math.geometry.Translation2d&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/com/stuypulse/robot/commands/swerve/PIDtoPose/SwerveDrivePIDToPose.html#line-132">getNewTranslationSetpointGenerator</a></span>()</div>
+</section>
+</li>
+<li>
+<section class="detail" id="getVelocityError()">
+<h3>getVelocityError</h3>
+<div class="member-signature"><span class="modifiers">private</span>&nbsp;<span class="return-type">double</span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/com/stuypulse/robot/commands/swerve/PIDtoPose/SwerveDrivePIDToPose.html#line-146">getVelocityError</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="initialize()">
 <h3>initialize</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/com/stuypulse/robot/commands/swerve/PIDtoPose/SwerveDrivePIDToPose.html#line-145">initialize</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/com/stuypulse/robot/commands/swerve/PIDtoPose/SwerveDrivePIDToPose.html#line-154">initialize</a></span>()</div>
 <dl class="notes">
 <dt>Overrides:</dt>
 <dd><code>initialize</code>&nbsp;in class&nbsp;<code>edu.wpi.first.wpilibj2.command.Command</code></dd>
@@ -405,31 +420,25 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="isAlignedX()">
 <h3>isAlignedX</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/com/stuypulse/robot/commands/swerve/PIDtoPose/SwerveDrivePIDToPose.html#line-150">isAlignedX</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/com/stuypulse/robot/commands/swerve/PIDtoPose/SwerveDrivePIDToPose.html#line-159">isAlignedX</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="isAlignedY()">
 <h3>isAlignedY</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/com/stuypulse/robot/commands/swerve/PIDtoPose/SwerveDrivePIDToPose.html#line-154">isAlignedY</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/com/stuypulse/robot/commands/swerve/PIDtoPose/SwerveDrivePIDToPose.html#line-163">isAlignedY</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="isAlignedTheta()">
 <h3>isAlignedTheta</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/com/stuypulse/robot/commands/swerve/PIDtoPose/SwerveDrivePIDToPose.html#line-158">isAlignedTheta</a></span>()</div>
-</section>
-</li>
-<li>
-<section class="detail" id="isAligned()">
-<h3>isAligned</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/com/stuypulse/robot/commands/swerve/PIDtoPose/SwerveDrivePIDToPose.html#line-164">isAligned</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/com/stuypulse/robot/commands/swerve/PIDtoPose/SwerveDrivePIDToPose.html#line-167">isAlignedTheta</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="execute()">
 <h3>execute</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/com/stuypulse/robot/commands/swerve/PIDtoPose/SwerveDrivePIDToPose.html#line-171">execute</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/com/stuypulse/robot/commands/swerve/PIDtoPose/SwerveDrivePIDToPose.html#line-173">execute</a></span>()</div>
 <dl class="notes">
 <dt>Overrides:</dt>
 <dd><code>execute</code>&nbsp;in class&nbsp;<code>edu.wpi.first.wpilibj2.command.Command</code></dd>
@@ -439,7 +448,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="isFinished()">
 <h3>isFinished</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/com/stuypulse/robot/commands/swerve/PIDtoPose/SwerveDrivePIDToPose.html#line-204">isFinished</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/com/stuypulse/robot/commands/swerve/PIDtoPose/SwerveDrivePIDToPose.html#line-207">isFinished</a></span>()</div>
 <dl class="notes">
 <dt>Overrides:</dt>
 <dd><code>isFinished</code>&nbsp;in class&nbsp;<code>edu.wpi.first.wpilibj2.command.Command</code></dd>
@@ -449,7 +458,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="end(boolean)">
 <h3>end</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/com/stuypulse/robot/commands/swerve/PIDtoPose/SwerveDrivePIDToPose.html#line-209">end</a></span><wbr><span class="parameters">(boolean&nbsp;interrupted)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/com/stuypulse/robot/commands/swerve/PIDtoPose/SwerveDrivePIDToPose.html#line-212">end</a></span><wbr><span class="parameters">(boolean&nbsp;interrupted)</span></div>
 <dl class="notes">
 <dt>Overrides:</dt>
 <dd><code>end</code>&nbsp;in class&nbsp;<code>edu.wpi.first.wpilibj2.command.Command</code></dd>

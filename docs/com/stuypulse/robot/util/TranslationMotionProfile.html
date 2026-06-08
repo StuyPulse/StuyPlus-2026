@@ -75,14 +75,9 @@ loadScripts(document, 'script');</script>
 <div class="inheritance">com.stuypulse.robot.util.TranslationMotionProfile</div>
 </div>
 <section class="class-description" id="class-description">
-<dl class="notes">
-<dt>All Implemented Interfaces:</dt>
-<dd><code>com.stuypulse.stuylib.streams.vectors.filters.VFilter</code></dd>
-</dl>
 <hr>
-<div class="type-signature"><span class="modifiers">public class </span><span class="element-name"><a href="../../../../src-html/com/stuypulse/robot/util/TranslationMotionProfile.html#line-12">TranslationMotionProfile</a></span>
-<span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>
-implements com.stuypulse.stuylib.streams.vectors.filters.VFilter</span></div>
+<div class="type-signature"><span class="modifiers">public class </span><span class="element-name"><a href="../../../../src-html/com/stuypulse/robot/util/TranslationMotionProfile.html#line-11">TranslationMotionProfile</a></span>
+<span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></span></div>
 </section>
 <section class="summary">
 <ul class="summary-list">
@@ -95,26 +90,26 @@ implements com.stuypulse.stuylib.streams.vectors.filters.VFilter</span></div>
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Field</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color"><code>private static final int</code></div>
-<div class="col-second even-row-color"><code><a href="#kDefaultSteps" class="member-name-link">kDefaultSteps</a></code></div>
+<div class="col-first even-row-color"><code>private final <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Number.html" title="class or interface in java.lang" class="external-link">Number</a></code></div>
+<div class="col-second even-row-color"><code><a href="#accelerationLimit" class="member-name-link">accelerationLimit</a></code></div>
 <div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code>private <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Number.html" title="class or interface in java.lang" class="external-link">Number</a></code></div>
-<div class="col-second odd-row-color"><code><a href="#mAccelLimit" class="member-name-link">mAccelLimit</a></code></div>
+<div class="col-first odd-row-color"><code>private static final int</code></div>
+<div class="col-second odd-row-color"><code><a href="#kDefaultSteps" class="member-name-link">kDefaultSteps</a></code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><code>private com.stuypulse.stuylib.math.Vector2D</code></div>
-<div class="col-second even-row-color"><code><a href="#mOutput" class="member-name-link">mOutput</a></code></div>
+<div class="col-first even-row-color"><code>private edu.wpi.first.math.geometry.Translation2d</code></div>
+<div class="col-second even-row-color"><code><a href="#output" class="member-name-link">output</a></code></div>
 <div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code>private final int</code></div>
-<div class="col-second odd-row-color"><code><a href="#mSteps" class="member-name-link">mSteps</a></code></div>
+<div class="col-first odd-row-color"><code>private double</code></div>
+<div class="col-second odd-row-color"><code><a href="#previousTime" class="member-name-link">previousTime</a></code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><code>private com.stuypulse.stuylib.util.StopWatch</code></div>
-<div class="col-second even-row-color"><code><a href="#mTimer" class="member-name-link">mTimer</a></code></div>
+<div class="col-first even-row-color"><code>private final int</code></div>
+<div class="col-second even-row-color"><code><a href="#steps" class="member-name-link">steps</a></code></div>
 <div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code>private <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Number.html" title="class or interface in java.lang" class="external-link">Number</a></code></div>
-<div class="col-second odd-row-color"><code><a href="#mVelLimit" class="member-name-link">mVelLimit</a></code></div>
+<div class="col-first odd-row-color"><code>private edu.wpi.first.math.geometry.Translation2d</code></div>
+<div class="col-second odd-row-color"><code><a href="#velocity" class="member-name-link">velocity</a></code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><code>private com.stuypulse.stuylib.math.Vector2D</code></div>
-<div class="col-second even-row-color"><code><a href="#mVelocity" class="member-name-link">mVelocity</a></code></div>
+<div class="col-first even-row-color"><code>private final <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Number.html" title="class or interface in java.lang" class="external-link">Number</a></code></div>
+<div class="col-second even-row-color"><code><a href="#velocityLimit" class="member-name-link">velocityLimit</a></code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 </div>
 </section>
@@ -130,15 +125,15 @@ implements com.stuypulse.stuylib.streams.vectors.filters.VFilter</span></div>
 <div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(java.lang.Number,java.lang.Number)" class="member-name-link">TranslationMotionProfile</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Number.html" title="class or interface in java.lang" class="external-link">Number</a>&nbsp;velLimit,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Number.html" title="class or interface in java.lang" class="external-link">Number</a>&nbsp;accelLimit)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
-<div class="col-constructor-name odd-row-color"><code><a href="#%3Cinit%3E(java.lang.Number,java.lang.Number,com.stuypulse.stuylib.math.Vector2D,com.stuypulse.stuylib.math.Vector2D)" class="member-name-link">TranslationMotionProfile</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Number.html" title="class or interface in java.lang" class="external-link">Number</a>&nbsp;velLimit,
+<div class="col-constructor-name odd-row-color"><code><a href="#%3Cinit%3E(java.lang.Number,java.lang.Number,edu.wpi.first.math.geometry.Translation2d,edu.wpi.first.math.geometry.Translation2d)" class="member-name-link">TranslationMotionProfile</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Number.html" title="class or interface in java.lang" class="external-link">Number</a>&nbsp;velLimit,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Number.html" title="class or interface in java.lang" class="external-link">Number</a>&nbsp;accelLimit,
- com.stuypulse.stuylib.math.Vector2D&nbsp;startingTranslation,
- com.stuypulse.stuylib.math.Vector2D&nbsp;startingVelocity)</code></div>
+ edu.wpi.first.math.geometry.Translation2d&nbsp;startingTranslation,
+ edu.wpi.first.math.geometry.Translation2d&nbsp;startingVelocity)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(java.lang.Number,java.lang.Number,com.stuypulse.stuylib.math.Vector2D,com.stuypulse.stuylib.math.Vector2D,int)" class="member-name-link">TranslationMotionProfile</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Number.html" title="class or interface in java.lang" class="external-link">Number</a>&nbsp;velLimit,
+<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(java.lang.Number,java.lang.Number,edu.wpi.first.math.geometry.Translation2d,edu.wpi.first.math.geometry.Translation2d,int)" class="member-name-link">TranslationMotionProfile</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Number.html" title="class or interface in java.lang" class="external-link">Number</a>&nbsp;velLimit,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Number.html" title="class or interface in java.lang" class="external-link">Number</a>&nbsp;accelLimit,
- com.stuypulse.stuylib.math.Vector2D&nbsp;startingTranslation,
- com.stuypulse.stuylib.math.Vector2D&nbsp;startingVelocity,
+ edu.wpi.first.math.geometry.Translation2d&nbsp;startingTranslation,
+ edu.wpi.first.math.geometry.Translation2d&nbsp;startingVelocity,
  int&nbsp;steps)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 </div>
@@ -149,26 +144,31 @@ implements com.stuypulse.stuylib.streams.vectors.filters.VFilter</span></div>
 <section class="method-summary" id="method-summary">
 <h2>Method Summary</h2>
 <div id="method-summary-table">
-<div class="table-tabs" role="tablist" aria-orientation="horizontal"><button id="method-summary-table-tab0" role="tab" aria-selected="true" aria-controls="method-summary-table.tabpanel" tabindex="0" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table', 3)" class="active-table-tab">All Methods</button><button id="method-summary-table-tab2" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab2', 3)" class="table-tab">Instance Methods</button><button id="method-summary-table-tab4" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab4', 3)" class="table-tab">Concrete Methods</button></div>
+<div class="table-tabs" role="tablist" aria-orientation="horizontal"><button id="method-summary-table-tab0" role="tab" aria-selected="true" aria-controls="method-summary-table.tabpanel" tabindex="0" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table', 3)" class="active-table-tab">All Methods</button><button id="method-summary-table-tab1" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab1', 3)" class="table-tab">Static Methods</button><button id="method-summary-table-tab2" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab2', 3)" class="table-tab">Instance Methods</button><button id="method-summary-table-tab4" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab4', 3)" class="table-tab">Concrete Methods</button></div>
 <div id="method-summary-table.tabpanel" role="tabpanel" aria-labelledby="method-summary-table-tab0">
 <div class="summary-table three-column-summary">
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>com.stuypulse.stuylib.math.Vector2D</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#get(com.stuypulse.stuylib.math.Vector2D)" class="member-name-link">get</a><wbr>(com.stuypulse.stuylib.math.Vector2D&nbsp;target)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Get next value in Filter based on the next value given</div>
-</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>private static edu.wpi.first.math.geometry.Translation2d</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#clamp(edu.wpi.first.math.geometry.Translation2d,double)" class="member-name-link">clamp</a><wbr>(edu.wpi.first.math.geometry.Translation2d&nbsp;translation,
+ double&nbsp;maxMagnitude)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>edu.wpi.first.math.geometry.Translation2d</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#get(edu.wpi.first.math.geometry.Translation2d)" class="member-name-link">get</a><wbr>(edu.wpi.first.math.geometry.Translation2d&nbsp;target)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static edu.wpi.first.math.geometry.Translation2d</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#normalize(edu.wpi.first.math.geometry.Translation2d)" class="member-name-link">normalize</a><wbr>(edu.wpi.first.math.geometry.Translation2d&nbsp;translation)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>private double</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#resetTimer()" class="member-name-link">resetTimer</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 </div>
 </div>
 </div>
 <div class="inherited-list">
 <h3 id="methods-inherited-from-class-java.lang.Object">Methods inherited from class&nbsp;java.lang.<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></h3>
 <code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#clone()" title="class or interface in java.lang" class="external-link">clone</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#equals(java.lang.Object)" title="class or interface in java.lang" class="external-link">equals</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#finalize()" title="class or interface in java.lang" class="external-link">finalize</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#getClass()" title="class or interface in java.lang" class="external-link">getClass</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#hashCode()" title="class or interface in java.lang" class="external-link">hashCode</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#notify()" title="class or interface in java.lang" class="external-link">notify</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#notifyAll()" title="class or interface in java.lang" class="external-link">notifyAll</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#toString()" title="class or interface in java.lang" class="external-link">toString</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#wait()" title="class or interface in java.lang" class="external-link">wait</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#wait(long)" title="class or interface in java.lang" class="external-link">wait</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#wait(long,int)" title="class or interface in java.lang" class="external-link">wait</a></code></div>
-<div class="inherited-list">
-<h3 id="methods-inherited-from-class-com.stuypulse.stuylib.streams.vectors.filters.VFilter">Methods inherited from interface&nbsp;com.stuypulse.stuylib.streams.vectors.filters.VFilter</h3>
-<code>add, sub, then</code></div>
 </section>
 </li>
 </ul>
@@ -183,7 +183,7 @@ implements com.stuypulse.stuylib.streams.vectors.filters.VFilter</span></div>
 <li>
 <section class="detail" id="kDefaultSteps">
 <h3>kDefaultSteps</h3>
-<div class="member-signature"><span class="modifiers">private static final</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/stuypulse/robot/util/TranslationMotionProfile.html#line-15">kDefaultSteps</a></span></div>
+<div class="member-signature"><span class="modifiers">private static final</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/stuypulse/robot/util/TranslationMotionProfile.html#line-14">kDefaultSteps</a></span></div>
 <dl class="notes">
 <dt>See Also:</dt>
 <dd>
@@ -195,39 +195,39 @@ implements com.stuypulse.stuylib.streams.vectors.filters.VFilter</span></div>
 </section>
 </li>
 <li>
-<section class="detail" id="mTimer">
-<h3>mTimer</h3>
-<div class="member-signature"><span class="modifiers">private</span>&nbsp;<span class="return-type">com.stuypulse.stuylib.util.StopWatch</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/stuypulse/robot/util/TranslationMotionProfile.html#line-18">mTimer</a></span></div>
+<section class="detail" id="velocityLimit">
+<h3>velocityLimit</h3>
+<div class="member-signature"><span class="modifiers">private final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Number.html" title="class or interface in java.lang" class="external-link">Number</a></span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/stuypulse/robot/util/TranslationMotionProfile.html#line-17">velocityLimit</a></span></div>
 </section>
 </li>
 <li>
-<section class="detail" id="mVelLimit">
-<h3>mVelLimit</h3>
-<div class="member-signature"><span class="modifiers">private</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Number.html" title="class or interface in java.lang" class="external-link">Number</a></span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/stuypulse/robot/util/TranslationMotionProfile.html#line-21">mVelLimit</a></span></div>
+<section class="detail" id="accelerationLimit">
+<h3>accelerationLimit</h3>
+<div class="member-signature"><span class="modifiers">private final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Number.html" title="class or interface in java.lang" class="external-link">Number</a></span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/stuypulse/robot/util/TranslationMotionProfile.html#line-19">accelerationLimit</a></span></div>
 </section>
 </li>
 <li>
-<section class="detail" id="mAccelLimit">
-<h3>mAccelLimit</h3>
-<div class="member-signature"><span class="modifiers">private</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Number.html" title="class or interface in java.lang" class="external-link">Number</a></span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/stuypulse/robot/util/TranslationMotionProfile.html#line-23">mAccelLimit</a></span></div>
+<section class="detail" id="output">
+<h3>output</h3>
+<div class="member-signature"><span class="modifiers">private</span>&nbsp;<span class="return-type">edu.wpi.first.math.geometry.Translation2d</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/stuypulse/robot/util/TranslationMotionProfile.html#line-22">output</a></span></div>
 </section>
 </li>
 <li>
-<section class="detail" id="mOutput">
-<h3>mOutput</h3>
-<div class="member-signature"><span class="modifiers">private</span>&nbsp;<span class="return-type">com.stuypulse.stuylib.math.Vector2D</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/stuypulse/robot/util/TranslationMotionProfile.html#line-26">mOutput</a></span></div>
+<section class="detail" id="velocity">
+<h3>velocity</h3>
+<div class="member-signature"><span class="modifiers">private</span>&nbsp;<span class="return-type">edu.wpi.first.math.geometry.Translation2d</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/stuypulse/robot/util/TranslationMotionProfile.html#line-24">velocity</a></span></div>
 </section>
 </li>
 <li>
-<section class="detail" id="mVelocity">
-<h3>mVelocity</h3>
-<div class="member-signature"><span class="modifiers">private</span>&nbsp;<span class="return-type">com.stuypulse.stuylib.math.Vector2D</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/stuypulse/robot/util/TranslationMotionProfile.html#line-28">mVelocity</a></span></div>
+<section class="detail" id="steps">
+<h3>steps</h3>
+<div class="member-signature"><span class="modifiers">private final</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/stuypulse/robot/util/TranslationMotionProfile.html#line-27">steps</a></span></div>
 </section>
 </li>
 <li>
-<section class="detail" id="mSteps">
-<h3>mSteps</h3>
-<div class="member-signature"><span class="modifiers">private final</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/stuypulse/robot/util/TranslationMotionProfile.html#line-31">mSteps</a></span></div>
+<section class="detail" id="previousTime">
+<h3>previousTime</h3>
+<div class="member-signature"><span class="modifiers">private</span>&nbsp;<span class="return-type">double</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/stuypulse/robot/util/TranslationMotionProfile.html#line-29">previousTime</a></span></div>
 </section>
 </li>
 </ul>
@@ -239,28 +239,28 @@ implements com.stuypulse.stuylib.streams.vectors.filters.VFilter</span></div>
 <h2>Constructor Details</h2>
 <ul class="member-list">
 <li>
-<section class="detail" id="&lt;init&gt;(java.lang.Number,java.lang.Number,com.stuypulse.stuylib.math.Vector2D,com.stuypulse.stuylib.math.Vector2D,int)">
+<section class="detail" id="&lt;init&gt;(java.lang.Number,java.lang.Number,edu.wpi.first.math.geometry.Translation2d,edu.wpi.first.math.geometry.Translation2d,int)">
 <h3>TranslationMotionProfile</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/stuypulse/robot/util/TranslationMotionProfile.html#line-33">TranslationMotionProfile</a></span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Number.html" title="class or interface in java.lang" class="external-link">Number</a>&nbsp;velLimit,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/stuypulse/robot/util/TranslationMotionProfile.html#line-31">TranslationMotionProfile</a></span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Number.html" title="class or interface in java.lang" class="external-link">Number</a>&nbsp;velLimit,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Number.html" title="class or interface in java.lang" class="external-link">Number</a>&nbsp;accelLimit,
- com.stuypulse.stuylib.math.Vector2D&nbsp;startingTranslation,
- com.stuypulse.stuylib.math.Vector2D&nbsp;startingVelocity,
+ edu.wpi.first.math.geometry.Translation2d&nbsp;startingTranslation,
+ edu.wpi.first.math.geometry.Translation2d&nbsp;startingVelocity,
  int&nbsp;steps)</span></div>
 </section>
 </li>
 <li>
-<section class="detail" id="&lt;init&gt;(java.lang.Number,java.lang.Number,com.stuypulse.stuylib.math.Vector2D,com.stuypulse.stuylib.math.Vector2D)">
+<section class="detail" id="&lt;init&gt;(java.lang.Number,java.lang.Number,edu.wpi.first.math.geometry.Translation2d,edu.wpi.first.math.geometry.Translation2d)">
 <h3>TranslationMotionProfile</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/stuypulse/robot/util/TranslationMotionProfile.html#line-47">TranslationMotionProfile</a></span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Number.html" title="class or interface in java.lang" class="external-link">Number</a>&nbsp;velLimit,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/stuypulse/robot/util/TranslationMotionProfile.html#line-44">TranslationMotionProfile</a></span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Number.html" title="class or interface in java.lang" class="external-link">Number</a>&nbsp;velLimit,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Number.html" title="class or interface in java.lang" class="external-link">Number</a>&nbsp;accelLimit,
- com.stuypulse.stuylib.math.Vector2D&nbsp;startingTranslation,
- com.stuypulse.stuylib.math.Vector2D&nbsp;startingVelocity)</span></div>
+ edu.wpi.first.math.geometry.Translation2d&nbsp;startingTranslation,
+ edu.wpi.first.math.geometry.Translation2d&nbsp;startingVelocity)</span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="&lt;init&gt;(java.lang.Number,java.lang.Number)">
 <h3>TranslationMotionProfile</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/stuypulse/robot/util/TranslationMotionProfile.html#line-52">TranslationMotionProfile</a></span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Number.html" title="class or interface in java.lang" class="external-link">Number</a>&nbsp;velLimit,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/stuypulse/robot/util/TranslationMotionProfile.html#line-49">TranslationMotionProfile</a></span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Number.html" title="class or interface in java.lang" class="external-link">Number</a>&nbsp;velLimit,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Number.html" title="class or interface in java.lang" class="external-link">Number</a>&nbsp;accelLimit)</span></div>
 </section>
 </li>
@@ -273,19 +273,28 @@ implements com.stuypulse.stuylib.streams.vectors.filters.VFilter</span></div>
 <h2>Method Details</h2>
 <ul class="member-list">
 <li>
-<section class="detail" id="get(com.stuypulse.stuylib.math.Vector2D)">
+<section class="detail" id="clamp(edu.wpi.first.math.geometry.Translation2d,double)">
+<h3>clamp</h3>
+<div class="member-signature"><span class="modifiers">private static</span>&nbsp;<span class="return-type">edu.wpi.first.math.geometry.Translation2d</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/stuypulse/robot/util/TranslationMotionProfile.html#line-53">clamp</a></span><wbr><span class="parameters">(edu.wpi.first.math.geometry.Translation2d&nbsp;translation,
+ double&nbsp;maxMagnitude)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="normalize(edu.wpi.first.math.geometry.Translation2d)">
+<h3>normalize</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">edu.wpi.first.math.geometry.Translation2d</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/stuypulse/robot/util/TranslationMotionProfile.html#line-65">normalize</a></span><wbr><span class="parameters">(edu.wpi.first.math.geometry.Translation2d&nbsp;translation)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="get(edu.wpi.first.math.geometry.Translation2d)">
 <h3>get</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">com.stuypulse.stuylib.math.Vector2D</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/stuypulse/robot/util/TranslationMotionProfile.html#line-56">get</a></span><wbr><span class="parameters">(com.stuypulse.stuylib.math.Vector2D&nbsp;target)</span></div>
-<div class="block"><span class="descfrm-type-label">Description copied from interface:&nbsp;<code>com.stuypulse.stuylib.streams.vectors.filters.VFilter</code></span></div>
-<div class="block">Get next value in Filter based on the next value given</div>
-<dl class="notes">
-<dt>Specified by:</dt>
-<dd><code>get</code>&nbsp;in interface&nbsp;<code>com.stuypulse.stuylib.streams.vectors.filters.VFilter</code></dd>
-<dt>Parameters:</dt>
-<dd><code>target</code> - next input value in the stream</dd>
-<dt>Returns:</dt>
-<dd>the output value of the filter</dd>
-</dl>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">edu.wpi.first.math.geometry.Translation2d</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/stuypulse/robot/util/TranslationMotionProfile.html#line-73">get</a></span><wbr><span class="parameters">(edu.wpi.first.math.geometry.Translation2d&nbsp;target)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="resetTimer()">
+<h3>resetTimer</h3>
+<div class="member-signature"><span class="modifiers">private</span>&nbsp;<span class="return-type">double</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/stuypulse/robot/util/TranslationMotionProfile.html#line-118">resetTimer</a></span>()</div>
 </section>
 </li>
 </ul>

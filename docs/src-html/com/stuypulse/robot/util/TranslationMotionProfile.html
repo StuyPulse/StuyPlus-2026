@@ -18,103 +18,123 @@
 <span class="source-line-no">005</span><span id="line-5">/***************************************************************/</span>
 <span class="source-line-no">006</span><span id="line-6">package com.stuypulse.robot.util;</span>
 <span class="source-line-no">007</span><span id="line-7"></span>
-<span class="source-line-no">008</span><span id="line-8">import com.stuypulse.stuylib.math.Vector2D;</span>
-<span class="source-line-no">009</span><span id="line-9">import com.stuypulse.stuylib.streams.vectors.filters.VFilter;</span>
-<span class="source-line-no">010</span><span id="line-10">import com.stuypulse.stuylib.util.StopWatch;</span>
-<span class="source-line-no">011</span><span id="line-11"></span>
-<span class="source-line-no">012</span><span id="line-12">public class TranslationMotionProfile implements VFilter {</span>
-<span class="source-line-no">013</span><span id="line-13"></span>
-<span class="source-line-no">014</span><span id="line-14">    // Default number of times to apply filter (helps accuracy)</span>
-<span class="source-line-no">015</span><span id="line-15">    private static final int kDefaultSteps = 64;</span>
-<span class="source-line-no">016</span><span id="line-16"></span>
-<span class="source-line-no">017</span><span id="line-17">    // Stopwatch to Track dt</span>
-<span class="source-line-no">018</span><span id="line-18">    private StopWatch mTimer;</span>
-<span class="source-line-no">019</span><span id="line-19"></span>
-<span class="source-line-no">020</span><span id="line-20">    // Limits for each of the derivatives</span>
-<span class="source-line-no">021</span><span id="line-21">    private Number mVelLimit;</span>
-<span class="source-line-no">022</span><span id="line-22"></span>
-<span class="source-line-no">023</span><span id="line-23">    private Number mAccelLimit;</span>
-<span class="source-line-no">024</span><span id="line-24"></span>
-<span class="source-line-no">025</span><span id="line-25">    // The last output / velocity</span>
-<span class="source-line-no">026</span><span id="line-26">    private Vector2D mOutput;</span>
-<span class="source-line-no">027</span><span id="line-27"></span>
-<span class="source-line-no">028</span><span id="line-28">    private Vector2D mVelocity;</span>
-<span class="source-line-no">029</span><span id="line-29"></span>
-<span class="source-line-no">030</span><span id="line-30">    // Number of times to apply filter (helps accuracy)</span>
-<span class="source-line-no">031</span><span id="line-31">    private final int mSteps;</span>
-<span class="source-line-no">032</span><span id="line-32"></span>
-<span class="source-line-no">033</span><span id="line-33">    public TranslationMotionProfile(</span>
-<span class="source-line-no">034</span><span id="line-34">            Number velLimit,</span>
-<span class="source-line-no">035</span><span id="line-35">            Number accelLimit,</span>
-<span class="source-line-no">036</span><span id="line-36">            Vector2D startingTranslation,</span>
-<span class="source-line-no">037</span><span id="line-37">            Vector2D startingVelocity,</span>
-<span class="source-line-no">038</span><span id="line-38">            int steps) {</span>
-<span class="source-line-no">039</span><span id="line-39">        mTimer = new StopWatch();</span>
-<span class="source-line-no">040</span><span id="line-40">        mVelLimit = velLimit;</span>
-<span class="source-line-no">041</span><span id="line-41">        mAccelLimit = accelLimit;</span>
-<span class="source-line-no">042</span><span id="line-42">        mOutput = startingTranslation;</span>
-<span class="source-line-no">043</span><span id="line-43">        mVelocity = startingVelocity;</span>
-<span class="source-line-no">044</span><span id="line-44">        mSteps = steps;</span>
-<span class="source-line-no">045</span><span id="line-45">    }</span>
-<span class="source-line-no">046</span><span id="line-46"></span>
-<span class="source-line-no">047</span><span id="line-47">    public TranslationMotionProfile(</span>
-<span class="source-line-no">048</span><span id="line-48">            Number velLimit, Number accelLimit, Vector2D startingTranslation, Vector2D startingVelocity) {</span>
-<span class="source-line-no">049</span><span id="line-49">        this(velLimit, accelLimit, startingTranslation, startingVelocity, kDefaultSteps);</span>
-<span class="source-line-no">050</span><span id="line-50">    }</span>
-<span class="source-line-no">051</span><span id="line-51"></span>
-<span class="source-line-no">052</span><span id="line-52">    public TranslationMotionProfile(Number velLimit, Number accelLimit) {</span>
-<span class="source-line-no">053</span><span id="line-53">        this(velLimit, accelLimit, Vector2D.kOrigin, Vector2D.kOrigin, kDefaultSteps);</span>
-<span class="source-line-no">054</span><span id="line-54">    }</span>
+<span class="source-line-no">008</span><span id="line-8">import edu.wpi.first.math.geometry.Translation2d;</span>
+<span class="source-line-no">009</span><span id="line-9">import edu.wpi.first.wpilibj.Timer;</span>
+<span class="source-line-no">010</span><span id="line-10"></span>
+<span class="source-line-no">011</span><span id="line-11">public class TranslationMotionProfile {</span>
+<span class="source-line-no">012</span><span id="line-12"></span>
+<span class="source-line-no">013</span><span id="line-13">    // Default number of times to apply filter (helps accuracy)</span>
+<span class="source-line-no">014</span><span id="line-14">    private static final int kDefaultSteps = 64;</span>
+<span class="source-line-no">015</span><span id="line-15"></span>
+<span class="source-line-no">016</span><span id="line-16">    // Limits for each of the derivatives</span>
+<span class="source-line-no">017</span><span id="line-17">    private final Number velocityLimit;</span>
+<span class="source-line-no">018</span><span id="line-18"></span>
+<span class="source-line-no">019</span><span id="line-19">    private final Number accelerationLimit;</span>
+<span class="source-line-no">020</span><span id="line-20"></span>
+<span class="source-line-no">021</span><span id="line-21">    // The last output / velocity</span>
+<span class="source-line-no">022</span><span id="line-22">    private Translation2d output;</span>
+<span class="source-line-no">023</span><span id="line-23"></span>
+<span class="source-line-no">024</span><span id="line-24">    private Translation2d velocity;</span>
+<span class="source-line-no">025</span><span id="line-25"></span>
+<span class="source-line-no">026</span><span id="line-26">    // Number of times to apply filter (helps accuracy)</span>
+<span class="source-line-no">027</span><span id="line-27">    private final int steps;</span>
+<span class="source-line-no">028</span><span id="line-28"></span>
+<span class="source-line-no">029</span><span id="line-29">    private double previousTime;</span>
+<span class="source-line-no">030</span><span id="line-30"></span>
+<span class="source-line-no">031</span><span id="line-31">    public TranslationMotionProfile(</span>
+<span class="source-line-no">032</span><span id="line-32">            Number velLimit,</span>
+<span class="source-line-no">033</span><span id="line-33">            Number accelLimit,</span>
+<span class="source-line-no">034</span><span id="line-34">            Translation2d startingTranslation,</span>
+<span class="source-line-no">035</span><span id="line-35">            Translation2d startingVelocity,</span>
+<span class="source-line-no">036</span><span id="line-36">            int steps) {</span>
+<span class="source-line-no">037</span><span id="line-37">        velocityLimit = velLimit;</span>
+<span class="source-line-no">038</span><span id="line-38">        accelerationLimit = accelLimit;</span>
+<span class="source-line-no">039</span><span id="line-39">        output = startingTranslation;</span>
+<span class="source-line-no">040</span><span id="line-40">        velocity = startingVelocity;</span>
+<span class="source-line-no">041</span><span id="line-41">        this.steps = steps;</span>
+<span class="source-line-no">042</span><span id="line-42">    }</span>
+<span class="source-line-no">043</span><span id="line-43"></span>
+<span class="source-line-no">044</span><span id="line-44">    public TranslationMotionProfile(</span>
+<span class="source-line-no">045</span><span id="line-45">            Number velLimit, Number accelLimit, Translation2d startingTranslation, Translation2d startingVelocity) {</span>
+<span class="source-line-no">046</span><span id="line-46">        this(velLimit, accelLimit, startingTranslation, startingVelocity, kDefaultSteps);</span>
+<span class="source-line-no">047</span><span id="line-47">    }</span>
+<span class="source-line-no">048</span><span id="line-48"></span>
+<span class="source-line-no">049</span><span id="line-49">    public TranslationMotionProfile(Number velLimit, Number accelLimit) {</span>
+<span class="source-line-no">050</span><span id="line-50">        this(velLimit, accelLimit, Translation2d.kZero, Translation2d.kZero, kDefaultSteps);</span>
+<span class="source-line-no">051</span><span id="line-51">    }</span>
+<span class="source-line-no">052</span><span id="line-52"></span>
+<span class="source-line-no">053</span><span id="line-53">    private static Translation2d clamp(Translation2d translation, double maxMagnitude) {</span>
+<span class="source-line-no">054</span><span id="line-54">        if (maxMagnitude &lt;= 0.0) return Translation2d.kZero;</span>
 <span class="source-line-no">055</span><span id="line-55"></span>
-<span class="source-line-no">056</span><span id="line-56">    public Vector2D get(Vector2D target) {</span>
-<span class="source-line-no">057</span><span id="line-57">        double dt = mTimer.reset() / mSteps;</span>
-<span class="source-line-no">058</span><span id="line-58">        for (int i = 0; i &lt; mSteps; ++i) {</span>
-<span class="source-line-no">059</span><span id="line-59">            // if there is a accel limit, limit the amount the velocity can change</span>
-<span class="source-line-no">060</span><span id="line-60">            if (0 &lt; mAccelLimit.doubleValue()) {</span>
-<span class="source-line-no">061</span><span id="line-61">                // amount of windup in system (how long it would take to slow down)</span>
-<span class="source-line-no">062</span><span id="line-62">                double windup = mVelocity.magnitude() / mAccelLimit.doubleValue();</span>
-<span class="source-line-no">063</span><span id="line-63">                // If the windup is too small, just use normal algorithm to limit acceleration</span>
-<span class="source-line-no">064</span><span id="line-64">                if (windup &lt; dt) {</span>
-<span class="source-line-no">065</span><span id="line-65">                    // Calculate acceleration needed to reach target</span>
-<span class="source-line-no">066</span><span id="line-66">                    Vector2D accel = target.sub(mOutput).div(dt).sub(mVelocity);</span>
-<span class="source-line-no">067</span><span id="line-67">                    // Try to reach it while abiding by accel limit</span>
-<span class="source-line-no">068</span><span id="line-68">                    mVelocity = mVelocity.add(accel.clamp(dt * mAccelLimit.doubleValue()));</span>
-<span class="source-line-no">069</span><span id="line-69">                } else {</span>
-<span class="source-line-no">070</span><span id="line-70">                    // the position it would end up if it attempted to come to a full stop</span>
-<span class="source-line-no">071</span><span id="line-71">                    Vector2D windA = // windup caused by acceleration</span>
-<span class="source-line-no">072</span><span id="line-72">                            mVelocity.mul(0.5 * (dt + windup));</span>
-<span class="source-line-no">073</span><span id="line-73">                    // where the robot will end up</span>
-<span class="source-line-no">074</span><span id="line-74">                    Vector2D future = mOutput.add(windA);</span>
-<span class="source-line-no">075</span><span id="line-75">                    // Calculate acceleration needed to come to stop at target throughout windup</span>
-<span class="source-line-no">076</span><span id="line-76">                    Vector2D accel = target.sub(future).div(windup);</span>
-<span class="source-line-no">077</span><span id="line-77">                    // Try to reach it while abiding by accel limit</span>
-<span class="source-line-no">078</span><span id="line-78">                    mVelocity = mVelocity.add(accel.clamp(dt * mAccelLimit.doubleValue()));</span>
-<span class="source-line-no">079</span><span id="line-79">                }</span>
-<span class="source-line-no">080</span><span id="line-80">            } else {</span>
-<span class="source-line-no">081</span><span id="line-81">                // make the velocity the difference between target and current</span>
-<span class="source-line-no">082</span><span id="line-82">                mVelocity = target.sub(mOutput).div(dt);</span>
-<span class="source-line-no">083</span><span id="line-83">            }</span>
-<span class="source-line-no">084</span><span id="line-84">            // if there is an velocity limit, limit the velocity</span>
-<span class="source-line-no">085</span><span id="line-85">            if (0 &lt; mVelLimit.doubleValue()) {</span>
-<span class="source-line-no">086</span><span id="line-86">                mVelocity = mVelocity.clamp(mVelLimit.doubleValue());</span>
-<span class="source-line-no">087</span><span id="line-87">            }</span>
-<span class="source-line-no">088</span><span id="line-88">            Vector2D error = target.sub(mOutput);</span>
-<span class="source-line-no">089</span><span id="line-89">            Vector2D unitError = error.normalize();</span>
-<span class="source-line-no">090</span><span id="line-90">            double parallelMag = mVelocity.dot(unitError);</span>
-<span class="source-line-no">091</span><span id="line-91">            Vector2D accelParallel = unitError.mul(parallelMag);</span>
-<span class="source-line-no">092</span><span id="line-92">            Vector2D accelPerpendicular = mVelocity.sub(accelParallel);</span>
-<span class="source-line-no">093</span><span id="line-93">            double damping = Math.pow(0.5, dt);</span>
-<span class="source-line-no">094</span><span id="line-94">            mVelocity = accelParallel.add(accelPerpendicular.mul(damping));</span>
-<span class="source-line-no">095</span><span id="line-95">            // adjust output by calculated velocity</span>
-<span class="source-line-no">096</span><span id="line-96">            mOutput = mOutput.add(mVelocity.mul(dt));</span>
-<span class="source-line-no">097</span><span id="line-97">        }</span>
-<span class="source-line-no">098</span><span id="line-98">        // Field.FIELD2D.getObject("Translation Motion Profile").setPose(!Robot.isBlue()</span>
-<span class="source-line-no">099</span><span id="line-99">        // ? new Pose2d(mOutput.x, mOutput.y, new Rotation2d())</span>
-<span class="source-line-no">100</span><span id="line-100">        // : Field.transformToOppositeAlliance(new Pose2d(mOutput.x, mOutput.y, new</span>
-<span class="source-line-no">101</span><span id="line-101">        // Rotation2d())));</span>
-<span class="source-line-no">102</span><span id="line-102">        return mOutput;</span>
-<span class="source-line-no">103</span><span id="line-103">    }</span>
-<span class="source-line-no">104</span><span id="line-104">}</span>
+<span class="source-line-no">056</span><span id="line-56">        final double magnitude = translation.getNorm();</span>
+<span class="source-line-no">057</span><span id="line-57"></span>
+<span class="source-line-no">058</span><span id="line-58">        if (maxMagnitude &lt;= magnitude) {</span>
+<span class="source-line-no">059</span><span id="line-59">            return translation.times(maxMagnitude / magnitude);</span>
+<span class="source-line-no">060</span><span id="line-60">        }</span>
+<span class="source-line-no">061</span><span id="line-61"></span>
+<span class="source-line-no">062</span><span id="line-62">        return translation;</span>
+<span class="source-line-no">063</span><span id="line-63">    }</span>
+<span class="source-line-no">064</span><span id="line-64"></span>
+<span class="source-line-no">065</span><span id="line-65">    public static Translation2d normalize(Translation2d translation) {</span>
+<span class="source-line-no">066</span><span id="line-66">        final double magnitude = translation.getNorm();</span>
+<span class="source-line-no">067</span><span id="line-67">        if (magnitude &lt;= 1e-9) {</span>
+<span class="source-line-no">068</span><span id="line-68">            return new Translation2d(1, 0);</span>
+<span class="source-line-no">069</span><span id="line-69">        }</span>
+<span class="source-line-no">070</span><span id="line-70">        return translation.div(magnitude);</span>
+<span class="source-line-no">071</span><span id="line-71">    }</span>
+<span class="source-line-no">072</span><span id="line-72"></span>
+<span class="source-line-no">073</span><span id="line-73">    public Translation2d get(Translation2d target) {</span>
+<span class="source-line-no">074</span><span id="line-74">        double dt = resetTimer() / steps;</span>
+<span class="source-line-no">075</span><span id="line-75">        for (int i = 0; i &lt; steps; ++i) {</span>
+<span class="source-line-no">076</span><span id="line-76">            // if there is a accel limit, limit the amount the velocity can change</span>
+<span class="source-line-no">077</span><span id="line-77">            if (0 &lt; accelerationLimit.doubleValue()) {</span>
+<span class="source-line-no">078</span><span id="line-78">                // amount of windup in system (how long it would take to slow down)</span>
+<span class="source-line-no">079</span><span id="line-79">                double windup = velocity.getNorm() / accelerationLimit.doubleValue();</span>
+<span class="source-line-no">080</span><span id="line-80">                // If the windup is too small, just use normal algorithm to limit acceleration</span>
+<span class="source-line-no">081</span><span id="line-81">                if (windup &lt; dt) {</span>
+<span class="source-line-no">082</span><span id="line-82">                    // Calculate acceleration needed to reach target</span>
+<span class="source-line-no">083</span><span id="line-83">                    Translation2d accel = target.minus(output).div(dt).minus(velocity);</span>
+<span class="source-line-no">084</span><span id="line-84">                    // Try to reach it while abiding by accel limit</span>
+<span class="source-line-no">085</span><span id="line-85">                    velocity = velocity.plus(clamp(accel, dt * accelerationLimit.doubleValue()));</span>
+<span class="source-line-no">086</span><span id="line-86">                } else {</span>
+<span class="source-line-no">087</span><span id="line-87">                    // the position it would end up if it attempted to come to a full stop</span>
+<span class="source-line-no">088</span><span id="line-88">                    Translation2d windA = // windup caused by acceleration</span>
+<span class="source-line-no">089</span><span id="line-89">                            velocity.times(0.5 * (dt + windup));</span>
+<span class="source-line-no">090</span><span id="line-90">                    // where the robot will end up</span>
+<span class="source-line-no">091</span><span id="line-91">                    Translation2d future = output.plus(windA);</span>
+<span class="source-line-no">092</span><span id="line-92">                    // Calculate acceleration needed to come to stop at target throughout windup</span>
+<span class="source-line-no">093</span><span id="line-93">                    Translation2d accel = target.minus(future).div(windup);</span>
+<span class="source-line-no">094</span><span id="line-94">                    // Try to reach it while abiding by accel limit</span>
+<span class="source-line-no">095</span><span id="line-95">                    velocity = velocity.plus(clamp(accel, dt * accelerationLimit.doubleValue()));</span>
+<span class="source-line-no">096</span><span id="line-96">                }</span>
+<span class="source-line-no">097</span><span id="line-97">            } else {</span>
+<span class="source-line-no">098</span><span id="line-98">                // make the velocity the difference between target and current</span>
+<span class="source-line-no">099</span><span id="line-99">                velocity = target.minus(output).div(dt);</span>
+<span class="source-line-no">100</span><span id="line-100">            }</span>
+<span class="source-line-no">101</span><span id="line-101">            // if there is an velocity limit, limit the velocity</span>
+<span class="source-line-no">102</span><span id="line-102">            if (0 &lt; velocityLimit.doubleValue()) {</span>
+<span class="source-line-no">103</span><span id="line-103">                velocity = clamp(velocity, velocityLimit.doubleValue());</span>
+<span class="source-line-no">104</span><span id="line-104">            }</span>
+<span class="source-line-no">105</span><span id="line-105">            Translation2d error = target.minus(output);</span>
+<span class="source-line-no">106</span><span id="line-106">            Translation2d unitError = normalize(error);</span>
+<span class="source-line-no">107</span><span id="line-107">            double parallelMag = velocity.dot(unitError);</span>
+<span class="source-line-no">108</span><span id="line-108">            Translation2d accelParallel = unitError.times(parallelMag);</span>
+<span class="source-line-no">109</span><span id="line-109">            Translation2d accelPerpendicular = velocity.minus(accelParallel);</span>
+<span class="source-line-no">110</span><span id="line-110">            double damping = Math.pow(0.5, dt);</span>
+<span class="source-line-no">111</span><span id="line-111">            velocity = accelParallel.plus(accelPerpendicular.times(damping));</span>
+<span class="source-line-no">112</span><span id="line-112">            // adjust output by calculated velocity</span>
+<span class="source-line-no">113</span><span id="line-113">            output = output.plus(velocity.times(dt));</span>
+<span class="source-line-no">114</span><span id="line-114">        }</span>
+<span class="source-line-no">115</span><span id="line-115">        return output;</span>
+<span class="source-line-no">116</span><span id="line-116">    }</span>
+<span class="source-line-no">117</span><span id="line-117"></span>
+<span class="source-line-no">118</span><span id="line-118">    private double resetTimer() {</span>
+<span class="source-line-no">119</span><span id="line-119">        double now = Timer.getFPGATimestamp();</span>
+<span class="source-line-no">120</span><span id="line-120">        double elapsed = now - previousTime;</span>
+<span class="source-line-no">121</span><span id="line-121">        previousTime = now;</span>
+<span class="source-line-no">122</span><span id="line-122">        return elapsed;</span>
+<span class="source-line-no">123</span><span id="line-123">    }</span>
+<span class="source-line-no">124</span><span id="line-124">}</span>
 
 
 
