@@ -59,7 +59,7 @@ public class DriveInputProcessor {
      * @param clamp The maximum magnitude of the input vector (0-1)
      * @param power The power to apply to the input
      * @param maxVelocity The maximum velocity to scale the input to (m/s)
-     * @param maxAccel The maximum acceleration to apply to the input (m/s^2)
+     * @param maxAcceleration The maximum acceleration to apply to the input (m/s^2)
      * @param rc The time constant for the low pass filter (seconds)
      */
     public DriveInputProcessor(CommandXboxController controller, double deadband, double clamp, double power, double maxVelocity, double maxAcceleration, double rc) {
