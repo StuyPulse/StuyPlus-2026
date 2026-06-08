@@ -63,6 +63,6 @@ public class TunableWaitCommand extends WaitCommand {
     @Override
     public void initSendable(SendableBuilder builder) {
         super.initSendable(builder);
-        builder.addDoubleProperty("duration", () -> tunable.get(), null);
+        builder.addDoubleProperty("duration", tunable, null);
     }
 }
