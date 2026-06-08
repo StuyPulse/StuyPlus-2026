@@ -6,7 +6,6 @@
 package tools.PathplannerSearch;
 
 import java.io.IOException;
-
 import tools.PathplannerSearch.PathplannerSearch.SearchType;
 import tools.ToolClasses.ArgumentEnum;
 

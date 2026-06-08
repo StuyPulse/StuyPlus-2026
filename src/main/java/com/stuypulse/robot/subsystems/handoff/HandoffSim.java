@@ -66,7 +66,6 @@ public class HandoffSim extends Handoff {
         } else {
             stopMotors();
         }
-
         handoffMotor.update(Settings.DT);
         super.periodic();
     }

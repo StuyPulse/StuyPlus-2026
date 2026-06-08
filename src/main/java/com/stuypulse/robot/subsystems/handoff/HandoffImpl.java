@@ -5,6 +5,8 @@
 /***************************************************************/
 package com.stuypulse.robot.subsystems.handoff;
 
+import java.util.function.BooleanSupplier;
+
 import com.ctre.phoenix6.controls.VoltageOut;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.stuypulse.robot.constants.Field;
@@ -15,9 +17,9 @@ import com.stuypulse.robot.subsystems.shooter.Shooter;
 import com.stuypulse.robot.subsystems.shooter.Shooter.ShooterState;
 import com.stuypulse.robot.subsystems.swerve.CommandSwerveDrivetrain;
 import com.stuypulse.robot.util.LoggedSignals;
-import com.stuypulse.stuylib.streams.booleans.BStream;
-import com.stuypulse.stuylib.streams.booleans.filters.BDebounce;
 
+import edu.wpi.first.math.filter.Debouncer;
+import edu.wpi.first.math.filter.Debouncer.DebounceType;
 import edu.wpi.first.units.measure.Voltage;
 
 public class HandoffImpl extends Handoff {
@@ -28,7 +30,8 @@ public class HandoffImpl extends Handoff {
 
     private final LoggedSignals signals;
 
-    private final BStream handoffStalling;
+    private final BooleanSupplier handoffStalling;
+    private final Debouncer handoffDebouncer;
 
     public HandoffImpl() {
         handoffMotor = new TalonFX(Ports.Handoff.HANDOFF_MOTOR, Settings.CANBUS);
@@ -39,9 +42,8 @@ public class HandoffImpl extends Handoff {
                 handoffMotor.getVelocity());
         // Configuring
         Motors.Handoff.HANDOFF_MOTOR_CONFIG.configure(handoffMotor);
-        handoffStalling = BStream.create(
-                () -> Math.abs(handoffMotor.getStatorCurrent().getValueAsDouble()) > Settings.Handoff.STALL_CURRENT)
-                .filtered(new BDebounce.Rising(Settings.Handoff.STALL_DEBOUNCE));
+        this.handoffStalling = () -> Math.abs(handoffMotor.getStatorCurrent().getValueAsDouble()) > Settings.Handoff.STALL_CURRENT;
+        this.handoffDebouncer = new Debouncer(Settings.Handoff.STALL_DEBOUNCE, DebounceType.kRising);
     }
 
     @Override
@@ -51,8 +53,8 @@ public class HandoffImpl extends Handoff {
 
     @Override
     protected boolean handoffStalling() {
-        return handoffStalling.get();
-    };
+        return handoffDebouncer.calculate(this.handoffStalling.getAsBoolean());
+    }
 
     @Override
     public void periodic() {
@@ -75,7 +77,7 @@ public class HandoffImpl extends Handoff {
         }
 
         // Control
-        final Voltage voltage = handoffStalling.get()
+        final Voltage voltage = handoffStalling()
                 ? Handoff.HandoffState.REVERSE.getTargetVoltage()
                 : getState().getTargetVoltage();
         final VoltageOut handoffControl = handoffController.withOutput(voltage);

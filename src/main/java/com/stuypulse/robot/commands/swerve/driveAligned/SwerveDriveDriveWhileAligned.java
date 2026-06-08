@@ -10,11 +10,8 @@ import com.stuypulse.robot.constants.Gains.Swerve.Alignment;
 import com.stuypulse.robot.constants.Settings.Driver.Drive;
 import com.stuypulse.robot.constants.Settings.Swerve;
 import com.stuypulse.robot.subsystems.swerve.CommandSwerveDrivetrain;
-import com.stuypulse.stuylib.math.Vector2D;
-import com.stuypulse.stuylib.streams.vectors.VStream;
-import com.stuypulse.stuylib.streams.vectors.filters.VDeadZone;
-import com.stuypulse.stuylib.streams.vectors.filters.VLowPassFilter;
-import com.stuypulse.stuylib.streams.vectors.filters.VRateLimit;
+import com.stuypulse.robot.util.swerve.swerveinput.DriveInputProcessor;
+
 import dev.doglog.DogLog;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -28,19 +25,19 @@ public class SwerveDriveDriveWhileAligned extends Command {
 
     private final CommandXboxController driver;
 
-    private final VStream speed;
+    private final DriveInputProcessor speed;
 
     private final Supplier<Pose2d> targetPose;
 
     public SwerveDriveDriveWhileAligned(CommandXboxController driver, Supplier<Pose2d> targetPose) {
-        this.speed = VStream.create(this::getDriverInputAsVelocity)
-                .filtered(
-                        new VDeadZone(Drive.DEADBAND),
-                        x -> x.clamp(1),
-                        x -> x.pow(Drive.POWER),
-                        x -> x.mul(Swerve.Constraints.MAX_VELOCITY_M_PER_S),
-                        new VRateLimit(Swerve.Constraints.MAX_ACCEL_M_PER_S_SQUARED),
-                        new VLowPassFilter(Drive.RC));
+        this.speed = new DriveInputProcessor(
+                driver, 
+                Drive.DEADBAND, 
+                1,
+                Drive.POWER, 
+                Swerve.Constraints.MAX_VELOCITY_M_PER_S, 
+                Swerve.Constraints.MAX_ACCEL_M_PER_S_SQUARED, 
+                Drive.RC);
         this.driver = driver;
         this.targetPose = targetPose;
         addRequirements(swerve);
@@ -48,10 +45,6 @@ public class SwerveDriveDriveWhileAligned extends Command {
 
     static {
         swerve = CommandSwerveDrivetrain.getInstance();
-    }
-
-    private Vector2D getDriverInputAsVelocity() {
-        return new Vector2D(-driver.getLeftY(), -driver.getLeftX());
     }
 
     public Rotation2d getTargetAngle() {
@@ -64,10 +57,12 @@ public class SwerveDriveDriveWhileAligned extends Command {
 
     @Override
     public void execute() {
+        speed.update();
+
         swerve.setControl(
                 new SwerveRequest.FieldCentricFacingAngle()
-                        .withVelocityX(speed.get().x)
-                        .withVelocityY(speed.get().y)
+                        .withVelocityX(speed.get().getX())
+                        .withVelocityY(speed.get().getY())
                         .withTargetDirection(getTargetAngle())
                         .withHeadingPID(Alignment.akP, Alignment.akI, Alignment.akD));
         DogLog.log("Swerve/targetAngle", getTargetAngle().getDegrees());

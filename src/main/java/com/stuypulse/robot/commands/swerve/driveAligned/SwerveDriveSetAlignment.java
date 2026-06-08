@@ -7,31 +7,34 @@ package com.stuypulse.robot.commands.swerve.driveAligned;
 
 import static edu.wpi.first.units.Units.*;
 
+import java.util.function.BooleanSupplier;
+import java.util.function.Supplier;
+
 import com.ctre.phoenix6.swerve.SwerveRequest;
 import com.stuypulse.robot.constants.Gains.Swerve.Alignment;
 import com.stuypulse.robot.constants.Settings;
 import com.stuypulse.robot.subsystems.swerve.CommandSwerveDrivetrain;
 import com.stuypulse.robot.util.swerve.AlignmentUtil;
-import com.stuypulse.stuylib.streams.booleans.BStream;
-import com.stuypulse.stuylib.streams.booleans.filters.BDebounceRC;
+
+import edu.wpi.first.math.filter.Debouncer;
+import edu.wpi.first.math.filter.Debouncer.DebounceType;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj2.command.Command;
-import java.util.function.Supplier;
 
 public class SwerveDriveSetAlignment extends Command {
 
     protected static final CommandSwerveDrivetrain swerve;
 
-    protected final BStream isAligned;
+    protected final BooleanSupplier isAligned;
+    protected final Debouncer alignmentDebouncer;
 
     private Supplier<Pose2d> pose;
 
     protected SwerveDriveSetAlignment(Supplier<Pose2d> pose) {
-        this.isAligned = BStream.create(this::isAligned)
-                .filtered(
-                        new BDebounceRC.Both(
-                                Settings.Swerve.Alignment.Tolerances.ALIGNMENT_DEBOUNCE.in(Seconds)));
+        this.isAligned = () -> Math.abs(swerve.getPose().getRotation().minus(getTargetAngle())
+                .getDegrees()) < Settings.Swerve.Alignment.Tolerances.THETA_TOLERANCE.getDegrees();
+        this.alignmentDebouncer = new Debouncer(Settings.Swerve.Alignment.Tolerances.ALIGNMENT_DEBOUNCE.in(Seconds), DebounceType.kBoth);
         this.pose = pose;
         addRequirements(swerve);
     }
@@ -44,14 +47,9 @@ public class SwerveDriveSetAlignment extends Command {
         return AlignmentUtil.getTargetAlignmentAngle(swerve.getPose(), pose.get());
     }
 
-    private boolean isAligned() {
-        return Math.abs(swerve.getPose().getRotation().minus(getTargetAngle())
-                .getDegrees()) < Settings.Swerve.Alignment.Tolerances.THETA_TOLERANCE.getDegrees();
-    }
-
     @Override
     public boolean isFinished() {
-        return isAligned.get();
+        return alignmentDebouncer.calculate(isAligned.getAsBoolean());
     }
 
     @Override
