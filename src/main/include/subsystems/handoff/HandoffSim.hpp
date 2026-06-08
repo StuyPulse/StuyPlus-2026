@@ -7,6 +7,11 @@ class HandoffSim : public Handoff
 {
 public:
     void Periodic() override {}
+
+    void StopMotors() override {
+        handoffMotor.StopMotor();
+    }
+
 private:
     ctre::phoenix6::hardware::TalonFX handoffMotor{Ports::Handoff::HANDOFF_MOTOR, Settings::CANBus};
 };

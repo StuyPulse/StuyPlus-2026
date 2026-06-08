@@ -14,6 +14,8 @@ class Handoff : public frc2::SubsystemBase {
     protected:
         Handoff();
 
+        virtual void StopMotors() = 0;
+
     private:
         static Handoff* instance;
         HandoffState state;

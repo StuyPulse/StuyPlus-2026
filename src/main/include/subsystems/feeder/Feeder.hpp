@@ -18,7 +18,7 @@ public:
 protected:
     Feeder();
 
-    virtual void stopMotors() = 0;
+    virtual void StopMotors() = 0;
 
 private:
     FeederState state;

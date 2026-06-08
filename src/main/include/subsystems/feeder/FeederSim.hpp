@@ -13,7 +13,7 @@ public:
         return feederMotor.GetVelocity().GetValue();
     }
 
-    void stopMotors() override {
+    void StopMotors() override {
         feederMotor.StopMotor();
     }
 private:
