@@ -10,10 +10,6 @@ allprojects {
     }
 }
 
-// Set this to the latest version of StuyLib.
-// You can check here: https://github.com/StuyPulse/StuyLib/releases.
-final String STUYLIB_VERSION = '61cedd1b41'
-
 def ROBOT_MAIN_CLASS = "com.stuypulse.robot.Main"
 
 java {
@@ -93,7 +89,6 @@ dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter:5.10.1'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 
-    implementation "com.github.StuyPulse:StuyLib:${STUYLIB_VERSION}";
     compileOnly "com.github.javaparser:javaparser-core:3.24.0";
 }
 
@@ -129,8 +124,7 @@ spotless {
             'com.stuypulse',
             'edu.wpi',
             'com.ctre',
-            'com.revrobotics',
-            'com.stuypulse.stuylib'
+            'com.revrobotics'
         )
         googleJavaFormat().aosp()
         removeUnusedImports()
