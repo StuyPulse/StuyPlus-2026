@@ -7,7 +7,7 @@
 
 using namespace ctre::phoenix6::hardware;
 
-class ShooterImpl : public Shooter
+class ShooterSim : public Shooter
 {
 public:
     void Periodic() override;

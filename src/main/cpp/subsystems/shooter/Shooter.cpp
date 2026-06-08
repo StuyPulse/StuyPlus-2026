@@ -4,20 +4,10 @@
 #include "ShooterSim.cpp"
 #include <frc/RobotBase.h>
 
-static Shooter* initInstance()
-{
-    if (frc::RobotBase::IsReal())
-    {
-        return new ShooterImpl();
-    }
-    else
-    {
-        return new ShooterSim();
-    }
-}
-
-Shooter* instance = initInstance();
 Shooter& Shooter::getInstance() {
+    static Shooter* instance = frc::RobotBase::IsReal()
+        ? static_cast<Shooter*>(new ShooterImpl())
+        : static_cast<Shooter*>(new ShooterSim());
     return *instance;
 }
 
@@ -28,7 +18,7 @@ void Shooter::setState(ShooterState state)
     this -> state = state;
 }
 
-ShooterState Shooter::getState()
+ShooterState Shooter::getState() const
 {
     return state;
 }
