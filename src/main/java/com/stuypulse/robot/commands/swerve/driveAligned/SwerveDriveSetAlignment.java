@@ -34,7 +34,7 @@ public class SwerveDriveSetAlignment extends Command {
     protected SwerveDriveSetAlignment(Supplier<Pose2d> pose) {
         this.isAligned = () -> Math.abs(swerve.getPose().getRotation().minus(getTargetAngle())
                 .getDegrees()) < Settings.Swerve.Alignment.Tolerances.THETA_TOLERANCE.getDegrees();
-        this.alignmentDebouncer = new Debouncer(Settings.Swerve.Alignment.Tolerances.ALIGNMENT_DEBOUNCE.in(Seconds), DebounceType.kRising);
+        this.alignmentDebouncer = new Debouncer(Settings.Swerve.Alignment.Tolerances.ALIGNMENT_DEBOUNCE.in(Seconds), DebounceType.kBoth);
         this.pose = pose;
         addRequirements(swerve);
     }
