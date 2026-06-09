@@ -40,10 +40,11 @@ The documentation for StuyPlus-2026 can be found [here](https://stuypulse.github
 ## Branch Naming Convention
 | Prefix | Use Case |
 |--------|---------|
-| `main` | Production branch |
-| `feat/` | New features that may need some review before being pushed |
-| `experiments/` | Experimental work, may or may not necessarily be pushed to `main` |
-| `docs` | Not meant to be pushed to manually. Only for the [`javadoc.yml`](./.github/workflows/javadoc.yml) action for automatic [documentation page](https://stuypulse.github.io/StuyPlus-2026/) generation |
+| `main` | Production branch. |
+| `feat/` | Development of new features. |
+| `fix/` | Investigation of unresolved bugs that need more debugging and experimentation. |
+| `experiments/` | Experimental work that may not be merged into to `main`. |
+| `docs` | Reserved for automated [documentation](https://stuypulse.github.io/StuyPlus-2026/) generation by the [`javadoc.yml`](./.github/workflows/javadoc.yml) workflow. This branch should not be pushed to manually. |
 
 ## Drivetrain
 Files: 
