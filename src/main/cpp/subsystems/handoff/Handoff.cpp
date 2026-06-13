@@ -1,7 +1,7 @@
 #include "subsystems/handoff/Handoff.hpp"
 #include "subsystems/handoff/HandoffState.hpp"
-#include "HandoffImpl.cpp"
-#include "HandoffSim.cpp"
+#include "subsystems/handoff/HandoffImpl.hpp"
+#include "subsystems/handoff/HandoffSim.hpp"
 #include <frc/RobotBase.h>
 
 Handoff& Handoff::getInstance() {
@@ -21,4 +21,7 @@ void Handoff::setState(HandoffState state)
 HandoffState Handoff::getState()
 {
     return state;
+}
+
+void Handoff::Periodic() {
 }

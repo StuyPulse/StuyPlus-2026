@@ -9,7 +9,8 @@ class Handoff : public frc2::SubsystemBase {
 
         HandoffState getState();
         void setState(HandoffState state);
-        virtual void Periodic();
+
+        void Periodic() override;
 
     protected:
         Handoff();

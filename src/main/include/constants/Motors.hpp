@@ -17,7 +17,7 @@
  * Such configurations include:
  *  - If it is Inverted
  *  - The Idle Mode of the Motor
- *  - The Current Limit
+ *  - The Current_Amps Limit
  *  - The Open Loop Ramp Rate
  */
 namespace Motors {

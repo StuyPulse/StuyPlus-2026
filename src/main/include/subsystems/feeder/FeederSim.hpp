@@ -1,3 +1,5 @@
+#pragma once
+
 #include "Feeder.hpp"
 #include <ctre/phoenix6/TalonFX.hpp>
 #include "constants/Ports.hpp"

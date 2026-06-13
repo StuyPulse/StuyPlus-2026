@@ -1,4 +1,5 @@
 #pragma once
+
 #include "subsystems/shooter/Shooter.hpp"
 #include <ctre/phoenix6/TalonFX.hpp>
 #include "constants/Ports.hpp"

@@ -1,7 +1,7 @@
 #include "subsystems/shooter/Shooter.hpp"
 #include "subsystems/shooter/ShooterState.hpp"
-#include "ShooterImpl.cpp"
-#include "ShooterSim.cpp"
+#include "subsystems/shooter/ShooterImpl.hpp"
+#include "subsystems/shooter/ShooterSim.hpp"
 #include <frc/RobotBase.h>
 
 Shooter& Shooter::getInstance() {
@@ -21,4 +21,7 @@ void Shooter::setState(ShooterState state)
 ShooterState Shooter::getState() const
 {
     return state;
+}
+
+void Shooter::Periodic() {
 }

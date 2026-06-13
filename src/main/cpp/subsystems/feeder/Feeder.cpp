@@ -1,8 +1,8 @@
 #include "subsystems/feeder/Feeder.hpp"
 #include <frc/RobotBase.h>
-#include "FeederImpl.cpp"
-#include "FeederSim.cpp"
-#include "FeederState.cpp"
+#include "subsystems/feeder/FeederImpl.hpp"
+#include "subsystems/feeder/FeederSim.hpp"
+#include "subsystems/feeder/FeederState.hpp"
 
 Feeder& Feeder::getInstance() {
     static Feeder* instance = frc::RobotBase::IsReal()

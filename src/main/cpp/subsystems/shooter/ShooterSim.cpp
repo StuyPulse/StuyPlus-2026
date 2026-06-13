@@ -1,4 +1,5 @@
 #include "subsystems/shooter/ShooterSim.hpp"
+#include "subsystems/shooter/Shooter.hpp"
 #include <ctre/phoenix6/TalonFX.hpp>
 #include "constants/Ports.hpp"
 #include "constants/Settings.hpp"
@@ -12,9 +13,9 @@ void ShooterSim::Periodic() {
 
     // Logging
     tkit::Logger& logger = tkit::Logger::GetInstance();
-    logger.RecordOutput("Handoff/Velocity", shooterMotorLeft.GetVelocity().GetValue());
-    logger.RecordOutput("Handoff/Stator Current", shooterMotorLeft.GetStatorCurrent().GetValue());
-    logger.RecordOutput("Handoff/Supply Current", shooterMotorLeft.GetSupplyCurrent().GetValue());
+    logger.RecordOutput("Handoff/Velocity_RPS", shooterMotorLeft.GetVelocity().GetValueAsDouble());
+    logger.RecordOutput("Handoff/Stator Current_Amps", shooterMotorLeft.GetStatorCurrent().GetValueAsDouble());
+    logger.RecordOutput("Handoff/Supply Current_Amps", shooterMotorLeft.GetSupplyCurrent().GetValueAsDouble());
 
     Shooter::Periodic();
 }
