@@ -16,6 +16,7 @@ import com.stuypulse.robot.commands.auton.shooting.LBDumpy;
 import com.stuypulse.robot.commands.auton.shooting.RBDumpy;
 import com.stuypulse.robot.commands.compound.StopShooting;
 import com.stuypulse.robot.commands.feeder.FeederSetForward;
+import com.stuypulse.robot.commands.feeder.FeederSetReverse;
 import com.stuypulse.robot.commands.handoff.HandoffSetForward;
 import com.stuypulse.robot.commands.intake.IntakeAgitateFastOnce;
 import com.stuypulse.robot.commands.intake.IntakeSetIdle;
@@ -122,6 +123,7 @@ public class RobotContainer {
                 new WaitCommand(1.5).raceWith(new SwerveDriveAlignToHub())
                 .andThen(new SwerveDriveXMode())
                 .andThen(new ShooterSetShoot())
+                .andThen(new FeederSetReverse())
                 .andThen(new ShooterWaitForSpinUp())
                 .andThen(new HandoffSetForward()
                 .alongWith(new FeederSetForward(),
@@ -139,6 +141,7 @@ public class RobotContainer {
                 new WaitCommand(1.5).raceWith(new SwerveDriveAlignToFerryZone())
                     .andThen(new SwerveDriveXMode())
                     .andThen(new ShooterSetFerry())
+                    .andThen(new FeederSetReverse())
                     .andThen(new ShooterWaitForSpinUp())
                     .andThen(new HandoffSetForward())
                     .alongWith(new FeederSetForward(), 
@@ -153,6 +156,7 @@ public class RobotContainer {
             .whileTrue(
                 new SwerveDriveXMode()
                     .andThen(new ShooterSetManual())
+                    .andThen(new FeederSetReverse())
                     .andThen(new ShooterWaitForSpinUp())
                     .andThen(new HandoffSetForward().repeatedly())
                     .alongWith(new FeederSetForward().repeatedly(), 
@@ -167,6 +171,7 @@ public class RobotContainer {
             .whileTrue(
                 new SwerveDriveXMode()
                     .andThen(new ShooterSetShoot())
+                    .andThen(new FeederSetReverse())
                     .andThen(new ShooterWaitForSpinUp())
                     .andThen(new HandoffSetForward().repeatedly())
                     .alongWith(new FeederSetForward().repeatedly(), 

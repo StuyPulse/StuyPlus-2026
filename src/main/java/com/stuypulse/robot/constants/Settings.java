@@ -221,6 +221,7 @@ public interface Settings {
 
     public interface Shooter {
         DoubleSubscriber FIRST_SHOT_BONUS = DogLog.tunable("Shooter/First_shot_bonus_RPM", 250.0);
+        Time FIRST_SHOT_DEBOUNCE = Seconds.of(6.7);
 
         Time SHOOT_TIME_AUTO = Seconds.of(1.5);
 
