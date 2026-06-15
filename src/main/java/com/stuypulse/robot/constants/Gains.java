@@ -17,7 +17,7 @@ public class Gains {
 
     public interface Shooter {
 
-        DoubleSubscriber kP = DogLog.tunable("Shooter/kP", 20.0);
+        DoubleSubscriber kP = DogLog.tunable("Shooter/kP", 15.0);
 
         DoubleSubscriber kI = DogLog.tunable("Shooter/kI", 0.0);
 
