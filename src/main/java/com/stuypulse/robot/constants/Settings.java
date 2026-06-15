@@ -306,10 +306,10 @@ public interface Settings {
 
         public interface Constraints {
 
-            double MAX_VELOCITY_M_PER_S = 4.3;
+            double MAX_VELOCITY_M_PER_S = 2.15;
 
             // TODO: revert to 15.0
-            double MAX_ACCEL_M_PER_S_SQUARED = 20.0;
+            double MAX_ACCEL_M_PER_S_SQUARED = 10.0;
 
             double MAX_ANGULAR_VEL_RAD_PER_S = Units.degreesToRadians(400.0);
 
