@@ -239,6 +239,8 @@ public interface Settings {
         // TODO: get
         Distance FLYWHEEL_RADIUS = Inches.of(3);
 
+        DoubleSubscriber BABY_RPM = DogLog.tunable("Shooter/Baby Shot RPM", 1500.0);
+
         // TODO: Test for manual shooting RPM
         DoubleSubscriber MANUAL_HUB_RPM = DogLog.tunable("Shooter/Manual Shot Tuning RPM", 1825.0);
 
