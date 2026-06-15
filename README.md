@@ -73,14 +73,17 @@ It contains the following states:
 - `INTAKE`: The intake is deployed and rollers are running to take in gamepieces.
 - `OUTTAKE`: The intake is deployed and rollers are running in reverse to expel gamepieces.
 - `DIGEST`: The intake is brought up once to an angle between stowed and deployed to dislodge gamepieces. Rollers do not run.
-- `AGITATE`: The intake is brought up repeatedly to an angle between stowed and deployed to dislodge gamepieces. Rollers do not run.
+- `AGITATE`: The intake is brought up to an angle between stowed and deployed to dislodge gamepieces. Rollers do not run.
+- `AGITATE_DOWN`: The intake is brought up to an agitate angle and rollers are running to take in gamepieces.
 - `HOMING_DOWN`: The intake is pushed against the bumpers to re-zero the pivot.
 
-Based on an angle and a duty cycle, in the `periodic` method, we use PID to control our pivot and a duty cycle to control the percentage of power given to the rollers.
+In the `periodic` method, we use `PositionTorqueCurrentFOC` to control our pivot motor and a duty cycle to control the percentage of power given to the rollers via `DutyCycleOut`.
 
-In order to stop the fuel from pushing the intake up, we apply something called "pushdown current". This keeps pushing the intake downwards in order to resist the force of the fuel and keep it downwards at the angle we want.
+The roller motors follow each other, with the `left` roller motor as the leader and the `right` roller motor as the follower.
 
-Due to encoder issues when the chain skips, it's quite difficult to detect when the pivot is within tolerance. In order to detect this, we detect stalling to know when to stop. This works in combination with homing down, in which we apply a constant current in order to force the pivot downwards.
+In order to stop the fuel from pushing the intake up, we apply something called "pushdown current" via `TorqueCurrentFOC`. This keeps pushing the intake downwards in order to resist the force of the fuel and keep it downwards at the angle we want.
+
+Due to encoder issues when the chain skips, it's quite difficult to detect when the pivot is within tolerance. To detect this, we monitor stalling in combination with homing down. From this, we apply a constant voltage to force the pivot downwards until the limit switch is hit.
 
 ## Feeder
 File: [`src/main/java/com/stuypulse/robot/subsystems/feeder`](https://github.com/StuyPulse/StuyPlus-2026/tree/main/src/main/java/com/stuypulse/robot/subsystems/feeder)
