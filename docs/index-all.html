@@ -121,10 +121,6 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="tools/util/AnsiColors.html" class="type-name-link" title="interface in tools.util">AnsiColors</a> - Interface in <a href="tools/util/package-summary.html">tools.util</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="com/stuypulse/robot/util/swerve/swerveinput/DriveInputProcessor.html#applyClamp()" class="member-name-link">applyClamp()</a> - Method in class com.stuypulse.robot.util.swerve.swerveinput.<a href="com/stuypulse/robot/util/swerve/swerveinput/DriveInputProcessor.html" title="class in com.stuypulse.robot.util.swerve.swerveinput">DriveInputProcessor</a></dt>
-<dd>
-<div class="block">Limits the magnitude of the current <a href="com/stuypulse/robot/util/swerve/swerveinput/DriveInputProcessor.html#processedSpeed"><code>DriveInputProcessor.processedSpeed</code></a> vector to a maximum</div>
-</dd>
 <dt><a href="com/stuypulse/robot/util/swerve/swerveinput/DriveInputProcessor.html#applyDeadband()" class="member-name-link">applyDeadband()</a> - Method in class com.stuypulse.robot.util.swerve.swerveinput.<a href="com/stuypulse/robot/util/swerve/swerveinput/DriveInputProcessor.html" title="class in com.stuypulse.robot.util.swerve.swerveinput">DriveInputProcessor</a></dt>
 <dd>
 <div class="block">Apply a deadband on the X and Y axes to the current <a href="com/stuypulse/robot/util/swerve/swerveinput/DriveInputProcessor.html#processedSpeed"><code>DriveInputProcessor.processedSpeed</code></a> vector
@@ -140,6 +136,10 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="com/stuypulse/robot/subsystems/leds/LEDController.html#applyIntake(edu.wpi.first.wpilibj.LEDPattern)" class="member-name-link">applyIntake(LEDPattern)</a> - Method in class com.stuypulse.robot.subsystems.leds.<a href="com/stuypulse/robot/subsystems/leds/LEDController.html" title="class in com.stuypulse.robot.subsystems.leds">LEDController</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="com/stuypulse/robot/util/swerve/swerveinput/DriveInputProcessor.html#applyLimitMagnitudeToOne()" class="member-name-link">applyLimitMagnitudeToOne()</a> - Method in class com.stuypulse.robot.util.swerve.swerveinput.<a href="com/stuypulse/robot/util/swerve/swerveinput/DriveInputProcessor.html" title="class in com.stuypulse.robot.util.swerve.swerveinput">DriveInputProcessor</a></dt>
+<dd>
+<div class="block">Limits the magnitude of the current <a href="com/stuypulse/robot/util/swerve/swerveinput/DriveInputProcessor.html#processedSpeed"><code>DriveInputProcessor.processedSpeed</code></a> vector to 1</div>
+</dd>
 <dt><a href="com/stuypulse/robot/util/swerve/swerveinput/DriveInputProcessor.html#applyLowPassFilter()" class="member-name-link">applyLowPassFilter()</a> - Method in class com.stuypulse.robot.util.swerve.swerveinput.<a href="com/stuypulse/robot/util/swerve/swerveinput/DriveInputProcessor.html" title="class in com.stuypulse.robot.util.swerve.swerveinput">DriveInputProcessor</a></dt>
 <dd>
 <div class="block">Applies a low pass filter to <a href="com/stuypulse/robot/util/swerve/swerveinput/DriveInputProcessor.html#processedSpeed"><code>DriveInputProcessor.processedSpeed</code></a> using
@@ -402,8 +402,6 @@ loadScripts(document, 'script');</script>
 <dt><a href="com/stuypulse/robot/commands/auton/depot/CenterDepot.html#%3Cinit%3E(com.pathplanner.lib.path.PathPlannerPath...)" class="member-name-link">CenterDepot(PathPlannerPath...)</a> - Constructor for class com.stuypulse.robot.commands.auton.depot.<a href="com/stuypulse/robot/commands/auton/depot/CenterDepot.html" title="class in com.stuypulse.robot.commands.auton.depot">CenterDepot</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/stuypulse/robot/subsystems/swerve/CommandSwerveDrivetrain.html#chassisPublisher" class="member-name-link">chassisPublisher</a> - Variable in class com.stuypulse.robot.subsystems.swerve.<a href="com/stuypulse/robot/subsystems/swerve/CommandSwerveDrivetrain.html" title="class in com.stuypulse.robot.subsystems.swerve">CommandSwerveDrivetrain</a></dt>
-<dd>&nbsp;</dd>
-<dt><a href="com/stuypulse/robot/util/swerve/swerveinput/DriveInputProcessor.html#clamp" class="member-name-link">clamp</a> - Variable in class com.stuypulse.robot.util.swerve.swerveinput.<a href="com/stuypulse/robot/util/swerve/swerveinput/DriveInputProcessor.html" title="class in com.stuypulse.robot.util.swerve.swerveinput">DriveInputProcessor</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/stuypulse/robot/util/TranslationMotionProfile.html#clamp(edu.wpi.first.math.geometry.Translation2d,double)" class="member-name-link">clamp(Translation2d, double)</a> - Static method in class com.stuypulse.robot.util.<a href="com/stuypulse/robot/util/TranslationMotionProfile.html" title="class in com.stuypulse.robot.util">TranslationMotionProfile</a></dt>
 <dd>&nbsp;</dd>
@@ -683,7 +681,7 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">DriveInputProcessor</div>
 </dd>
-<dt><a href="com/stuypulse/robot/util/swerve/swerveinput/DriveInputProcessor.html#%3Cinit%3E(edu.wpi.first.wpilibj2.command.button.CommandXboxController,double,double,double,double,double,double)" class="member-name-link">DriveInputProcessor(CommandXboxController, double, double, double, double, double, double)</a> - Constructor for class com.stuypulse.robot.util.swerve.swerveinput.<a href="com/stuypulse/robot/util/swerve/swerveinput/DriveInputProcessor.html" title="class in com.stuypulse.robot.util.swerve.swerveinput">DriveInputProcessor</a></dt>
+<dt><a href="com/stuypulse/robot/util/swerve/swerveinput/DriveInputProcessor.html#%3Cinit%3E(edu.wpi.first.wpilibj2.command.button.CommandXboxController,double,double,double,double,double)" class="member-name-link">DriveInputProcessor(CommandXboxController, double, double, double, double, double)</a> - Constructor for class com.stuypulse.robot.util.swerve.swerveinput.<a href="com/stuypulse/robot/util/swerve/swerveinput/DriveInputProcessor.html" title="class in com.stuypulse.robot.util.swerve.swerveinput">DriveInputProcessor</a></dt>
 <dd>
 <div class="block">Constructor for the DriveInputProcessor</div>
 </dd>

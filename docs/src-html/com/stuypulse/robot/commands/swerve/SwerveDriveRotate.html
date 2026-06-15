@@ -47,31 +47,30 @@
 <span class="source-line-no">034</span><span id="line-34">        this.speed = new DriveInputProcessor(</span>
 <span class="source-line-no">035</span><span id="line-35">                driver, </span>
 <span class="source-line-no">036</span><span id="line-36">                Drive.DEADBAND, </span>
-<span class="source-line-no">037</span><span id="line-37">                1,</span>
-<span class="source-line-no">038</span><span id="line-38">                Drive.POWER, </span>
-<span class="source-line-no">039</span><span id="line-39">                Swerve.Constraints.MAX_VELOCITY_M_PER_S, </span>
-<span class="source-line-no">040</span><span id="line-40">                Swerve.Constraints.MAX_ACCEL_M_PER_S_SQUARED, </span>
-<span class="source-line-no">041</span><span id="line-41">                Drive.RC);</span>
-<span class="source-line-no">042</span><span id="line-42">        addRequirements(swerve);</span>
-<span class="source-line-no">043</span><span id="line-43">    }</span>
-<span class="source-line-no">044</span><span id="line-44"></span>
-<span class="source-line-no">045</span><span id="line-45">    @Override</span>
-<span class="source-line-no">046</span><span id="line-46">    public void execute() {</span>
-<span class="source-line-no">047</span><span id="line-47">        speed.update();</span>
-<span class="source-line-no">048</span><span id="line-48"></span>
-<span class="source-line-no">049</span><span id="line-49">        SwerveRequest request = new SwerveRequest.FieldCentricFacingAngle()</span>
-<span class="source-line-no">050</span><span id="line-50">                .withTargetDirection(rotation)</span>
-<span class="source-line-no">051</span><span id="line-51">                .withVelocityX(speed.get().getX())</span>
-<span class="source-line-no">052</span><span id="line-52">                .withVelocityY(speed.get().getY())</span>
-<span class="source-line-no">053</span><span id="line-53">                .withHeadingPID(</span>
-<span class="source-line-no">054</span><span id="line-54">                        Gains.Swerve.Alignment.akP, Gains.Swerve.Alignment.akI, Gains.Swerve.Alignment.akD);</span>
-<span class="source-line-no">055</span><span id="line-55">        swerve.setControl(request);</span>
-<span class="source-line-no">056</span><span id="line-56">        DogLog.log(</span>
-<span class="source-line-no">057</span><span id="line-57">                "Swerve/Angle Minus Target Angle",</span>
-<span class="source-line-no">058</span><span id="line-58">                swerve.getPose().getRotation().minus(rotation).getDegrees());</span>
-<span class="source-line-no">059</span><span id="line-59">        DogLog.log("Swerve/Facing Angle", swerve.getPose().getRotation().getDegrees());</span>
-<span class="source-line-no">060</span><span id="line-60">    }</span>
-<span class="source-line-no">061</span><span id="line-61">}</span>
+<span class="source-line-no">037</span><span id="line-37">                Drive.POWER, </span>
+<span class="source-line-no">038</span><span id="line-38">                Swerve.Constraints.MAX_VELOCITY_M_PER_S, </span>
+<span class="source-line-no">039</span><span id="line-39">                Swerve.Constraints.MAX_ACCEL_M_PER_S_SQUARED, </span>
+<span class="source-line-no">040</span><span id="line-40">                Drive.RC);</span>
+<span class="source-line-no">041</span><span id="line-41">        addRequirements(swerve);</span>
+<span class="source-line-no">042</span><span id="line-42">    }</span>
+<span class="source-line-no">043</span><span id="line-43"></span>
+<span class="source-line-no">044</span><span id="line-44">    @Override</span>
+<span class="source-line-no">045</span><span id="line-45">    public void execute() {</span>
+<span class="source-line-no">046</span><span id="line-46">        speed.update();</span>
+<span class="source-line-no">047</span><span id="line-47"></span>
+<span class="source-line-no">048</span><span id="line-48">        SwerveRequest request = new SwerveRequest.FieldCentricFacingAngle()</span>
+<span class="source-line-no">049</span><span id="line-49">                .withTargetDirection(rotation)</span>
+<span class="source-line-no">050</span><span id="line-50">                .withVelocityX(speed.get().getX())</span>
+<span class="source-line-no">051</span><span id="line-51">                .withVelocityY(speed.get().getY())</span>
+<span class="source-line-no">052</span><span id="line-52">                .withHeadingPID(</span>
+<span class="source-line-no">053</span><span id="line-53">                        Gains.Swerve.Alignment.akP, Gains.Swerve.Alignment.akI, Gains.Swerve.Alignment.akD);</span>
+<span class="source-line-no">054</span><span id="line-54">        swerve.setControl(request);</span>
+<span class="source-line-no">055</span><span id="line-55">        DogLog.log(</span>
+<span class="source-line-no">056</span><span id="line-56">                "Swerve/Angle Minus Target Angle",</span>
+<span class="source-line-no">057</span><span id="line-57">                swerve.getPose().getRotation().minus(rotation).getDegrees());</span>
+<span class="source-line-no">058</span><span id="line-58">        DogLog.log("Swerve/Facing Angle", swerve.getPose().getRotation().getDegrees());</span>
+<span class="source-line-no">059</span><span id="line-59">    }</span>
+<span class="source-line-no">060</span><span id="line-60">}</span>
 
 
 

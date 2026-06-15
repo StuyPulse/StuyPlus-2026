@@ -46,43 +46,42 @@
 <span class="source-line-no">033</span><span id="line-33">        this.speed = new DriveInputProcessor(</span>
 <span class="source-line-no">034</span><span id="line-34">                driver, </span>
 <span class="source-line-no">035</span><span id="line-35">                Drive.DEADBAND, </span>
-<span class="source-line-no">036</span><span id="line-36">                1,</span>
-<span class="source-line-no">037</span><span id="line-37">                Drive.POWER, </span>
-<span class="source-line-no">038</span><span id="line-38">                Swerve.Constraints.MAX_VELOCITY_M_PER_S, </span>
-<span class="source-line-no">039</span><span id="line-39">                Swerve.Constraints.MAX_ACCEL_M_PER_S_SQUARED, </span>
-<span class="source-line-no">040</span><span id="line-40">                Drive.RC);</span>
-<span class="source-line-no">041</span><span id="line-41">        this.driver = driver;</span>
-<span class="source-line-no">042</span><span id="line-42">        this.targetPose = targetPose;</span>
-<span class="source-line-no">043</span><span id="line-43">        addRequirements(swerve);</span>
-<span class="source-line-no">044</span><span id="line-44">    }</span>
-<span class="source-line-no">045</span><span id="line-45"></span>
-<span class="source-line-no">046</span><span id="line-46">    static {</span>
-<span class="source-line-no">047</span><span id="line-47">        swerve = CommandSwerveDrivetrain.getInstance();</span>
-<span class="source-line-no">048</span><span id="line-48">    }</span>
-<span class="source-line-no">049</span><span id="line-49"></span>
-<span class="source-line-no">050</span><span id="line-50">    public Rotation2d getTargetAngle() {</span>
-<span class="source-line-no">051</span><span id="line-51">        Pose2d currentPose = swerve.getPose();</span>
-<span class="source-line-no">052</span><span id="line-52">        double atan = Math.atan2(</span>
-<span class="source-line-no">053</span><span id="line-53">                targetPose.get().getY() - currentPose.getY(),</span>
-<span class="source-line-no">054</span><span id="line-54">                targetPose.get().getX() - currentPose.getX());</span>
-<span class="source-line-no">055</span><span id="line-55">        return new Rotation2d(atan);</span>
-<span class="source-line-no">056</span><span id="line-56">    }</span>
-<span class="source-line-no">057</span><span id="line-57"></span>
-<span class="source-line-no">058</span><span id="line-58">    @Override</span>
-<span class="source-line-no">059</span><span id="line-59">    public void execute() {</span>
-<span class="source-line-no">060</span><span id="line-60">        speed.update();</span>
-<span class="source-line-no">061</span><span id="line-61"></span>
-<span class="source-line-no">062</span><span id="line-62">        swerve.setControl(</span>
-<span class="source-line-no">063</span><span id="line-63">                new SwerveRequest.FieldCentricFacingAngle()</span>
-<span class="source-line-no">064</span><span id="line-64">                        .withVelocityX(speed.get().getX())</span>
-<span class="source-line-no">065</span><span id="line-65">                        .withVelocityY(speed.get().getY())</span>
-<span class="source-line-no">066</span><span id="line-66">                        .withTargetDirection(getTargetAngle())</span>
-<span class="source-line-no">067</span><span id="line-67">                        .withHeadingPID(Alignment.akP, Alignment.akI, Alignment.akD));</span>
-<span class="source-line-no">068</span><span id="line-68">        DogLog.log("Swerve/targetAngle", getTargetAngle().getDegrees());</span>
-<span class="source-line-no">069</span><span id="line-69">        DogLog.log("Swerve/Target Pose X", targetPose.get().getX());</span>
-<span class="source-line-no">070</span><span id="line-70">        DogLog.log("Swerve/Target Pose Y", targetPose.get().getY());</span>
-<span class="source-line-no">071</span><span id="line-71">    }</span>
-<span class="source-line-no">072</span><span id="line-72">}</span>
+<span class="source-line-no">036</span><span id="line-36">                Drive.POWER, </span>
+<span class="source-line-no">037</span><span id="line-37">                Swerve.Constraints.MAX_VELOCITY_M_PER_S, </span>
+<span class="source-line-no">038</span><span id="line-38">                Swerve.Constraints.MAX_ACCEL_M_PER_S_SQUARED, </span>
+<span class="source-line-no">039</span><span id="line-39">                Drive.RC);</span>
+<span class="source-line-no">040</span><span id="line-40">        this.driver = driver;</span>
+<span class="source-line-no">041</span><span id="line-41">        this.targetPose = targetPose;</span>
+<span class="source-line-no">042</span><span id="line-42">        addRequirements(swerve);</span>
+<span class="source-line-no">043</span><span id="line-43">    }</span>
+<span class="source-line-no">044</span><span id="line-44"></span>
+<span class="source-line-no">045</span><span id="line-45">    static {</span>
+<span class="source-line-no">046</span><span id="line-46">        swerve = CommandSwerveDrivetrain.getInstance();</span>
+<span class="source-line-no">047</span><span id="line-47">    }</span>
+<span class="source-line-no">048</span><span id="line-48"></span>
+<span class="source-line-no">049</span><span id="line-49">    public Rotation2d getTargetAngle() {</span>
+<span class="source-line-no">050</span><span id="line-50">        Pose2d currentPose = swerve.getPose();</span>
+<span class="source-line-no">051</span><span id="line-51">        double atan = Math.atan2(</span>
+<span class="source-line-no">052</span><span id="line-52">                targetPose.get().getY() - currentPose.getY(),</span>
+<span class="source-line-no">053</span><span id="line-53">                targetPose.get().getX() - currentPose.getX());</span>
+<span class="source-line-no">054</span><span id="line-54">        return new Rotation2d(atan);</span>
+<span class="source-line-no">055</span><span id="line-55">    }</span>
+<span class="source-line-no">056</span><span id="line-56"></span>
+<span class="source-line-no">057</span><span id="line-57">    @Override</span>
+<span class="source-line-no">058</span><span id="line-58">    public void execute() {</span>
+<span class="source-line-no">059</span><span id="line-59">        speed.update();</span>
+<span class="source-line-no">060</span><span id="line-60"></span>
+<span class="source-line-no">061</span><span id="line-61">        swerve.setControl(</span>
+<span class="source-line-no">062</span><span id="line-62">                new SwerveRequest.FieldCentricFacingAngle()</span>
+<span class="source-line-no">063</span><span id="line-63">                        .withVelocityX(speed.get().getX())</span>
+<span class="source-line-no">064</span><span id="line-64">                        .withVelocityY(speed.get().getY())</span>
+<span class="source-line-no">065</span><span id="line-65">                        .withTargetDirection(getTargetAngle())</span>
+<span class="source-line-no">066</span><span id="line-66">                        .withHeadingPID(Alignment.akP, Alignment.akI, Alignment.akD));</span>
+<span class="source-line-no">067</span><span id="line-67">        DogLog.log("Swerve/targetAngle", getTargetAngle().getDegrees());</span>
+<span class="source-line-no">068</span><span id="line-68">        DogLog.log("Swerve/Target Pose X", targetPose.get().getX());</span>
+<span class="source-line-no">069</span><span id="line-69">        DogLog.log("Swerve/Target Pose Y", targetPose.get().getY());</span>
+<span class="source-line-no">070</span><span id="line-70">    }</span>
+<span class="source-line-no">071</span><span id="line-71">}</span>
 
 
 

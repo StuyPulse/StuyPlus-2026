@@ -76,7 +76,7 @@ loadScripts(document, 'script');</script>
 </div>
 <section class="class-description" id="class-description">
 <hr>
-<div class="type-signature"><span class="modifiers">public class </span><span class="element-name"><a href="../../../../../../src-html/com/stuypulse/robot/util/swerve/swerveinput/DriveInputProcessor.html#line-35">DriveInputProcessor</a></span>
+<div class="type-signature"><span class="modifiers">public class </span><span class="element-name"><a href="../../../../../../src-html/com/stuypulse/robot/util/swerve/swerveinput/DriveInputProcessor.html#line-37">DriveInputProcessor</a></span>
 <span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></span></div>
 <div class="block"><h2>DriveInputProcessor</h2>
  <p>Class for processing driver input for the drivetrain. It's intended to replace StuyLib's VStream 
@@ -87,6 +87,8 @@ loadScripts(document, 'script');</script>
  <ul>
    <li>Applying deadbands</li>
    <li>Applying power curves</li>
+   <li>Limiting magnitude to 1</li>
+   <li>Scaling to max velocity</li>
    <li>Applying rate limits</li>
    <li>Applying a low pass filter</li>
  </ul>
@@ -105,40 +107,37 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Field</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color"><code>private final double</code></div>
-<div class="col-second even-row-color"><code><a href="#clamp" class="member-name-link">clamp</a></code></div>
-<div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code>private final edu.wpi.first.wpilibj2.command.button.CommandXboxController</code></div>
-<div class="col-second odd-row-color"><code><a href="#controller" class="member-name-link">controller</a></code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><code>private final double</code></div>
-<div class="col-second even-row-color"><code><a href="#deadband" class="member-name-link">deadband</a></code></div>
+<div class="col-first even-row-color"><code>private final edu.wpi.first.wpilibj2.command.button.CommandXboxController</code></div>
+<div class="col-second even-row-color"><code><a href="#controller" class="member-name-link">controller</a></code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code>private final double</code></div>
-<div class="col-second odd-row-color"><code><a href="#maxVelocity" class="member-name-link">maxVelocity</a></code></div>
-<div class="col-last odd-row-color">
+<div class="col-second odd-row-color"><code><a href="#deadband" class="member-name-link">deadband</a></code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>private final double</code></div>
+<div class="col-second even-row-color"><code><a href="#maxVelocity" class="member-name-link">maxVelocity</a></code></div>
+<div class="col-last even-row-color">
 <div class="block">The max velocity in meters per second/</div>
 </div>
-<div class="col-first even-row-color"><code>private final double</code></div>
-<div class="col-second even-row-color"><code><a href="#power" class="member-name-link">power</a></code></div>
-<div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code>private edu.wpi.first.math.geometry.Translation2d</code></div>
-<div class="col-second odd-row-color"><code><a href="#processedSpeed" class="member-name-link">processedSpeed</a></code></div>
-<div class="col-last odd-row-color">
+<div class="col-first odd-row-color"><code>private final double</code></div>
+<div class="col-second odd-row-color"><code><a href="#power" class="member-name-link">power</a></code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>private edu.wpi.first.math.geometry.Translation2d</code></div>
+<div class="col-second even-row-color"><code><a href="#processedSpeed" class="member-name-link">processedSpeed</a></code></div>
+<div class="col-last even-row-color">
 <div class="block">The speed vector after the full processing and filtering.</div>
 </div>
-<div class="col-first even-row-color"><code>private final edu.wpi.first.math.filter.LinearFilter</code></div>
-<div class="col-second even-row-color"><code><a href="#xLowPassFilter" class="member-name-link">xLowPassFilter</a></code></div>
-<div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code>private final edu.wpi.first.math.filter.SlewRateLimiter</code></div>
-<div class="col-second odd-row-color"><code><a href="#xRateLimiter" class="member-name-link">xRateLimiter</a></code></div>
+<div class="col-first odd-row-color"><code>private final edu.wpi.first.math.filter.LinearFilter</code></div>
+<div class="col-second odd-row-color"><code><a href="#xLowPassFilter" class="member-name-link">xLowPassFilter</a></code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><code>private final edu.wpi.first.math.filter.LinearFilter</code></div>
-<div class="col-second even-row-color"><code><a href="#yLowPassFilter" class="member-name-link">yLowPassFilter</a></code></div>
+<div class="col-first even-row-color"><code>private final edu.wpi.first.math.filter.SlewRateLimiter</code></div>
+<div class="col-second even-row-color"><code><a href="#xRateLimiter" class="member-name-link">xRateLimiter</a></code></div>
 <div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code>private final edu.wpi.first.math.filter.SlewRateLimiter</code></div>
-<div class="col-second odd-row-color"><code><a href="#yRateLimiter" class="member-name-link">yRateLimiter</a></code></div>
+<div class="col-first odd-row-color"><code>private final edu.wpi.first.math.filter.LinearFilter</code></div>
+<div class="col-second odd-row-color"><code><a href="#yLowPassFilter" class="member-name-link">yLowPassFilter</a></code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>private final edu.wpi.first.math.filter.SlewRateLimiter</code></div>
+<div class="col-second even-row-color"><code><a href="#yRateLimiter" class="member-name-link">yRateLimiter</a></code></div>
+<div class="col-last even-row-color">&nbsp;</div>
 </div>
 </section>
 </li>
@@ -150,9 +149,8 @@ loadScripts(document, 'script');</script>
 <div class="summary-table two-column-summary">
 <div class="table-header col-first">Constructor</div>
 <div class="table-header col-last">Description</div>
-<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(edu.wpi.first.wpilibj2.command.button.CommandXboxController,double,double,double,double,double,double)" class="member-name-link">DriveInputProcessor</a><wbr>(edu.wpi.first.wpilibj2.command.button.CommandXboxController&nbsp;controller,
+<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(edu.wpi.first.wpilibj2.command.button.CommandXboxController,double,double,double,double,double)" class="member-name-link">DriveInputProcessor</a><wbr>(edu.wpi.first.wpilibj2.command.button.CommandXboxController&nbsp;controller,
  double&nbsp;deadband,
- double&nbsp;clamp,
  double&nbsp;power,
  double&nbsp;maxVelocity,
  double&nbsp;maxAcceleration,
@@ -175,15 +173,15 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>private <a href="DriveInputProcessor.html" title="class in com.stuypulse.robot.util.swerve.swerveinput">DriveInputProcessor</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#applyClamp()" class="member-name-link">applyClamp</a>()</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#applyDeadband()" class="member-name-link">applyDeadband</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Limits the magnitude of the current <a href="#processedSpeed"><code>processedSpeed</code></a> vector to a maximum</div>
-</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>private <a href="DriveInputProcessor.html" title="class in com.stuypulse.robot.util.swerve.swerveinput">DriveInputProcessor</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#applyDeadband()" class="member-name-link">applyDeadband</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Apply a deadband on the X and Y axes to the current <a href="#processedSpeed"><code>processedSpeed</code></a> vector
  using <code>MathUtil.applyDeadband(double, double, double)</code></div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>private <a href="DriveInputProcessor.html" title="class in com.stuypulse.robot.util.swerve.swerveinput">DriveInputProcessor</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#applyLimitMagnitudeToOne()" class="member-name-link">applyLimitMagnitudeToOne</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Limits the magnitude of the current <a href="#processedSpeed"><code>processedSpeed</code></a> vector to 1</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>private <a href="DriveInputProcessor.html" title="class in com.stuypulse.robot.util.swerve.swerveinput">DriveInputProcessor</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#applyLowPassFilter()" class="member-name-link">applyLowPassFilter</a>()</code></div>
@@ -242,62 +240,56 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="controller">
 <h3>controller</h3>
-<div class="member-signature"><span class="modifiers">private final</span>&nbsp;<span class="return-type">edu.wpi.first.wpilibj2.command.button.CommandXboxController</span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/com/stuypulse/robot/util/swerve/swerveinput/DriveInputProcessor.html#line-36">controller</a></span></div>
+<div class="member-signature"><span class="modifiers">private final</span>&nbsp;<span class="return-type">edu.wpi.first.wpilibj2.command.button.CommandXboxController</span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/com/stuypulse/robot/util/swerve/swerveinput/DriveInputProcessor.html#line-38">controller</a></span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="deadband">
 <h3>deadband</h3>
-<div class="member-signature"><span class="modifiers">private final</span>&nbsp;<span class="return-type">double</span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/com/stuypulse/robot/util/swerve/swerveinput/DriveInputProcessor.html#line-37">deadband</a></span></div>
-</section>
-</li>
-<li>
-<section class="detail" id="clamp">
-<h3>clamp</h3>
-<div class="member-signature"><span class="modifiers">private final</span>&nbsp;<span class="return-type">double</span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/com/stuypulse/robot/util/swerve/swerveinput/DriveInputProcessor.html#line-38">clamp</a></span></div>
+<div class="member-signature"><span class="modifiers">private final</span>&nbsp;<span class="return-type">double</span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/com/stuypulse/robot/util/swerve/swerveinput/DriveInputProcessor.html#line-39">deadband</a></span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="power">
 <h3>power</h3>
-<div class="member-signature"><span class="modifiers">private final</span>&nbsp;<span class="return-type">double</span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/com/stuypulse/robot/util/swerve/swerveinput/DriveInputProcessor.html#line-39">power</a></span></div>
+<div class="member-signature"><span class="modifiers">private final</span>&nbsp;<span class="return-type">double</span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/com/stuypulse/robot/util/swerve/swerveinput/DriveInputProcessor.html#line-40">power</a></span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="maxVelocity">
 <h3>maxVelocity</h3>
-<div class="member-signature"><span class="modifiers">private final</span>&nbsp;<span class="return-type">double</span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/com/stuypulse/robot/util/swerve/swerveinput/DriveInputProcessor.html#line-41">maxVelocity</a></span></div>
+<div class="member-signature"><span class="modifiers">private final</span>&nbsp;<span class="return-type">double</span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/com/stuypulse/robot/util/swerve/swerveinput/DriveInputProcessor.html#line-42">maxVelocity</a></span></div>
 <div class="block">The max velocity in meters per second/</div>
 </section>
 </li>
 <li>
 <section class="detail" id="xRateLimiter">
 <h3>xRateLimiter</h3>
-<div class="member-signature"><span class="modifiers">private final</span>&nbsp;<span class="return-type">edu.wpi.first.math.filter.SlewRateLimiter</span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/com/stuypulse/robot/util/swerve/swerveinput/DriveInputProcessor.html#line-43">xRateLimiter</a></span></div>
+<div class="member-signature"><span class="modifiers">private final</span>&nbsp;<span class="return-type">edu.wpi.first.math.filter.SlewRateLimiter</span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/com/stuypulse/robot/util/swerve/swerveinput/DriveInputProcessor.html#line-44">xRateLimiter</a></span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="yRateLimiter">
 <h3>yRateLimiter</h3>
-<div class="member-signature"><span class="modifiers">private final</span>&nbsp;<span class="return-type">edu.wpi.first.math.filter.SlewRateLimiter</span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/com/stuypulse/robot/util/swerve/swerveinput/DriveInputProcessor.html#line-44">yRateLimiter</a></span></div>
+<div class="member-signature"><span class="modifiers">private final</span>&nbsp;<span class="return-type">edu.wpi.first.math.filter.SlewRateLimiter</span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/com/stuypulse/robot/util/swerve/swerveinput/DriveInputProcessor.html#line-45">yRateLimiter</a></span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="xLowPassFilter">
 <h3>xLowPassFilter</h3>
-<div class="member-signature"><span class="modifiers">private final</span>&nbsp;<span class="return-type">edu.wpi.first.math.filter.LinearFilter</span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/com/stuypulse/robot/util/swerve/swerveinput/DriveInputProcessor.html#line-46">xLowPassFilter</a></span></div>
+<div class="member-signature"><span class="modifiers">private final</span>&nbsp;<span class="return-type">edu.wpi.first.math.filter.LinearFilter</span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/com/stuypulse/robot/util/swerve/swerveinput/DriveInputProcessor.html#line-47">xLowPassFilter</a></span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="yLowPassFilter">
 <h3>yLowPassFilter</h3>
-<div class="member-signature"><span class="modifiers">private final</span>&nbsp;<span class="return-type">edu.wpi.first.math.filter.LinearFilter</span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/com/stuypulse/robot/util/swerve/swerveinput/DriveInputProcessor.html#line-47">yLowPassFilter</a></span></div>
+<div class="member-signature"><span class="modifiers">private final</span>&nbsp;<span class="return-type">edu.wpi.first.math.filter.LinearFilter</span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/com/stuypulse/robot/util/swerve/swerveinput/DriveInputProcessor.html#line-48">yLowPassFilter</a></span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="processedSpeed">
 <h3>processedSpeed</h3>
-<div class="member-signature"><span class="modifiers">private</span>&nbsp;<span class="return-type">edu.wpi.first.math.geometry.Translation2d</span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/com/stuypulse/robot/util/swerve/swerveinput/DriveInputProcessor.html#line-52">processedSpeed</a></span></div>
+<div class="member-signature"><span class="modifiers">private</span>&nbsp;<span class="return-type">edu.wpi.first.math.geometry.Translation2d</span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/com/stuypulse/robot/util/swerve/swerveinput/DriveInputProcessor.html#line-53">processedSpeed</a></span></div>
 <div class="block">The speed vector after the full processing and filtering.</div>
 </section>
 </li>
@@ -310,11 +302,10 @@ loadScripts(document, 'script');</script>
 <h2>Constructor Details</h2>
 <ul class="member-list">
 <li>
-<section class="detail" id="&lt;init&gt;(edu.wpi.first.wpilibj2.command.button.CommandXboxController,double,double,double,double,double,double)">
+<section class="detail" id="&lt;init&gt;(edu.wpi.first.wpilibj2.command.button.CommandXboxController,double,double,double,double,double)">
 <h3>DriveInputProcessor</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/com/stuypulse/robot/util/swerve/swerveinput/DriveInputProcessor.html#line-65">DriveInputProcessor</a></span><wbr><span class="parameters">(edu.wpi.first.wpilibj2.command.button.CommandXboxController&nbsp;controller,
  double&nbsp;deadband,
- double&nbsp;clamp,
  double&nbsp;power,
  double&nbsp;maxVelocity,
  double&nbsp;maxAcceleration,
@@ -325,7 +316,6 @@ loadScripts(document, 'script');</script>
 <dt>Parameters:</dt>
 <dd><code>controller</code> - The CommandXboxController to get driver input from</dd>
 <dd><code>deadband</code> - The deadband to apply to the input (0-1)</dd>
-<dd><code>clamp</code> - The maximum magnitude of the input vector (0-1)</dd>
 <dd><code>power</code> - The power to apply to the input</dd>
 <dd><code>maxVelocity</code> - The maximum velocity to scale the input to (m/s)</dd>
 <dd><code>maxAcceleration</code> - The maximum acceleration to apply to the input (m/s^2)</dd>
@@ -344,7 +334,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getDriverInputAsVelocity()">
 <h3>getDriverInputAsVelocity</h3>
-<div class="member-signature"><span class="modifiers">private</span>&nbsp;<span class="return-type"><a href="DriveInputProcessor.html" title="class in com.stuypulse.robot.util.swerve.swerveinput">DriveInputProcessor</a></span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/com/stuypulse/robot/util/swerve/swerveinput/DriveInputProcessor.html#line-85">getDriverInputAsVelocity</a></span>()</div>
+<div class="member-signature"><span class="modifiers">private</span>&nbsp;<span class="return-type"><a href="DriveInputProcessor.html" title="class in com.stuypulse.robot.util.swerve.swerveinput">DriveInputProcessor</a></span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/com/stuypulse/robot/util/swerve/swerveinput/DriveInputProcessor.html#line-84">getDriverInputAsVelocity</a></span>()</div>
 <div class="block">Read the raw joystick axes and store them as a velocity vector in <a href="#processedSpeed"><code>processedSpeed</code></a></div>
 <dl class="notes">
 <dt>Returns:</dt>
@@ -355,7 +345,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="applyDeadband()">
 <h3>applyDeadband</h3>
-<div class="member-signature"><span class="modifiers">private</span>&nbsp;<span class="return-type"><a href="DriveInputProcessor.html" title="class in com.stuypulse.robot.util.swerve.swerveinput">DriveInputProcessor</a></span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/com/stuypulse/robot/util/swerve/swerveinput/DriveInputProcessor.html#line-96">applyDeadband</a></span>()</div>
+<div class="member-signature"><span class="modifiers">private</span>&nbsp;<span class="return-type"><a href="DriveInputProcessor.html" title="class in com.stuypulse.robot.util.swerve.swerveinput">DriveInputProcessor</a></span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/com/stuypulse/robot/util/swerve/swerveinput/DriveInputProcessor.html#line-95">applyDeadband</a></span>()</div>
 <div class="block">Apply a deadband on the X and Y axes to the current <a href="#processedSpeed"><code>processedSpeed</code></a> vector
  using <code>MathUtil.applyDeadband(double, double, double)</code></div>
 <dl class="notes">
@@ -365,10 +355,10 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
-<section class="detail" id="applyClamp()">
-<h3>applyClamp</h3>
-<div class="member-signature"><span class="modifiers">private</span>&nbsp;<span class="return-type"><a href="DriveInputProcessor.html" title="class in com.stuypulse.robot.util.swerve.swerveinput">DriveInputProcessor</a></span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/com/stuypulse/robot/util/swerve/swerveinput/DriveInputProcessor.html#line-108">applyClamp</a></span>()</div>
-<div class="block">Limits the magnitude of the current <a href="#processedSpeed"><code>processedSpeed</code></a> vector to a maximum</div>
+<section class="detail" id="applyLimitMagnitudeToOne()">
+<h3>applyLimitMagnitudeToOne</h3>
+<div class="member-signature"><span class="modifiers">private</span>&nbsp;<span class="return-type"><a href="DriveInputProcessor.html" title="class in com.stuypulse.robot.util.swerve.swerveinput">DriveInputProcessor</a></span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/com/stuypulse/robot/util/swerve/swerveinput/DriveInputProcessor.html#line-107">applyLimitMagnitudeToOne</a></span>()</div>
+<div class="block">Limits the magnitude of the current <a href="#processedSpeed"><code>processedSpeed</code></a> vector to 1</div>
 <dl class="notes">
 <dt>Returns:</dt>
 <dd>This instance of the class</dd>
@@ -378,7 +368,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="applyPowerCurve()">
 <h3>applyPowerCurve</h3>
-<div class="member-signature"><span class="modifiers">private</span>&nbsp;<span class="return-type"><a href="DriveInputProcessor.html" title="class in com.stuypulse.robot.util.swerve.swerveinput">DriveInputProcessor</a></span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/com/stuypulse/robot/util/swerve/swerveinput/DriveInputProcessor.html#line-125">applyPowerCurve</a></span>()</div>
+<div class="member-signature"><span class="modifiers">private</span>&nbsp;<span class="return-type"><a href="DriveInputProcessor.html" title="class in com.stuypulse.robot.util.swerve.swerveinput">DriveInputProcessor</a></span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/com/stuypulse/robot/util/swerve/swerveinput/DriveInputProcessor.html#line-124">applyPowerCurve</a></span>()</div>
 <div class="block">Apply a power curve to the current <a href="#processedSpeed"><code>processedSpeed</code></a> vector.
  The vector's magnitude is raised according to the configured power
  while preserving direction.</div>
@@ -391,7 +381,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="applyScalingToMaxVelocity()">
 <h3>applyScalingToMaxVelocity</h3>
-<div class="member-signature"><span class="modifiers">private</span>&nbsp;<span class="return-type"><a href="DriveInputProcessor.html" title="class in com.stuypulse.robot.util.swerve.swerveinput">DriveInputProcessor</a></span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/com/stuypulse/robot/util/swerve/swerveinput/DriveInputProcessor.html#line-136">applyScalingToMaxVelocity</a></span>()</div>
+<div class="member-signature"><span class="modifiers">private</span>&nbsp;<span class="return-type"><a href="DriveInputProcessor.html" title="class in com.stuypulse.robot.util.swerve.swerveinput">DriveInputProcessor</a></span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/com/stuypulse/robot/util/swerve/swerveinput/DriveInputProcessor.html#line-135">applyScalingToMaxVelocity</a></span>()</div>
 <div class="block">Scale the <a href="#processedSpeed"><code>processedSpeed</code></a> vector to the robot's maximum velocity.
  Multiplies the current vector by maxVelocity (m/s).</div>
 <dl class="notes">
@@ -403,7 +393,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="applyRateLimit()">
 <h3>applyRateLimit</h3>
-<div class="member-signature"><span class="modifiers">private</span>&nbsp;<span class="return-type"><a href="DriveInputProcessor.html" title="class in com.stuypulse.robot.util.swerve.swerveinput">DriveInputProcessor</a></span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/com/stuypulse/robot/util/swerve/swerveinput/DriveInputProcessor.html#line-149">applyRateLimit</a></span>()</div>
+<div class="member-signature"><span class="modifiers">private</span>&nbsp;<span class="return-type"><a href="DriveInputProcessor.html" title="class in com.stuypulse.robot.util.swerve.swerveinput">DriveInputProcessor</a></span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/com/stuypulse/robot/util/swerve/swerveinput/DriveInputProcessor.html#line-148">applyRateLimit</a></span>()</div>
 <div class="block">Applies a rate limit to <a href="#processedSpeed"><code>processedSpeed</code></a> using 
  a <code>SlewRateLimiter</code> for each axis. 
  This limits the rate of change of the velocity vector to the 
@@ -417,7 +407,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="applyLowPassFilter()">
 <h3>applyLowPassFilter</h3>
-<div class="member-signature"><span class="modifiers">private</span>&nbsp;<span class="return-type"><a href="DriveInputProcessor.html" title="class in com.stuypulse.robot.util.swerve.swerveinput">DriveInputProcessor</a></span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/com/stuypulse/robot/util/swerve/swerveinput/DriveInputProcessor.html#line-163">applyLowPassFilter</a></span>()</div>
+<div class="member-signature"><span class="modifiers">private</span>&nbsp;<span class="return-type"><a href="DriveInputProcessor.html" title="class in com.stuypulse.robot.util.swerve.swerveinput">DriveInputProcessor</a></span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/com/stuypulse/robot/util/swerve/swerveinput/DriveInputProcessor.html#line-162">applyLowPassFilter</a></span>()</div>
 <div class="block">Applies a low pass filter to <a href="#processedSpeed"><code>processedSpeed</code></a> using
  a <code>LinearFilter</code> for each axis. 
  This smooths out the velocity vector and reduces noise.</div>
@@ -430,7 +420,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="update()">
 <h3>update</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/com/stuypulse/robot/util/swerve/swerveinput/DriveInputProcessor.html#line-176">update</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/com/stuypulse/robot/util/swerve/swerveinput/DriveInputProcessor.html#line-175">update</a></span>()</div>
 <div class="block">Update method that processes all filters and updates the filtered speed.
  This should be called within the start of the <code>Command.execute()</code> 
  method of the command using DriveInputProcessor.</div>
@@ -439,7 +429,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="get()">
 <h3>get</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">edu.wpi.first.math.geometry.Translation2d</span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/com/stuypulse/robot/util/swerve/swerveinput/DriveInputProcessor.html#line-190">get</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">edu.wpi.first.math.geometry.Translation2d</span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/com/stuypulse/robot/util/swerve/swerveinput/DriveInputProcessor.html#line-189">get</a></span>()</div>
 <div class="block">Get the processed speed.</div>
 <dl class="notes">
 <dt>Returns:</dt>
