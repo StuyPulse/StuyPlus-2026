@@ -34,6 +34,7 @@ public class LimelightVision extends SubsystemBase {
         instance = new LimelightVision();
         SmartDashboard.putData("Vision/Set Cloudy Pipeline", new SetPipeline(0));
         SmartDashboard.putData("Vision/Set Sunny Pipeline", new SetPipeline(1));
+        SmartDashboard.putData("Vision/Set Lab Pipeline", new SetPipeline(4));
     }
 
     public static LimelightVision getInstance() {

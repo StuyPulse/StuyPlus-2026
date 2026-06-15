@@ -1,11 +1,12 @@
 package com.stuypulse.robot.commands.shooter;
 
+import com.stuypulse.robot.constants.Settings;
 import com.stuypulse.robot.subsystems.shooter.Shooter;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 
-public class ShooterFirstShotIncrease extends Command{
+public class ShooterFirstShotIncrease extends Command {
     private final Shooter shooter;
     private final Timer timer;
 
@@ -17,7 +18,7 @@ public class ShooterFirstShotIncrease extends Command{
     @Override
     public void initialize() {
         timer.restart();
-        shooter.addToBonusVelocity(190);
+        shooter.addToBonusVelocity(Settings.Shooter.FIRST_SHOT_BONUS.get());
     }
 
     @Override
