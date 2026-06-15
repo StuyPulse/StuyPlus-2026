@@ -30,7 +30,6 @@ public class SwerveDriveDrive extends Command {
 		this.speed = new DriveInputProcessor(
                 driver, 
                 Drive.DEADBAND, 
-				1,
                 Drive.POWER, 
                 Swerve.Constraints.MAX_VELOCITY_M_PER_S, 
                 Swerve.Constraints.MAX_ACCEL_M_PER_S_SQUARED, 
