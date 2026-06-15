@@ -154,14 +154,10 @@ public class RobotContainer {
         // Manual shooting possibly from in front of the tower
         driver.rightTrigger()
             .whileTrue(
-                new SwerveDriveXMode()
-                    .andThen(new ShooterSetManual())
-                    .andThen(new FeederSetReverse())
+d                    new ShooterSetBaby()
                     .andThen(new ShooterWaitForSpinUp())
-                    .andThen(new HandoffSetForward().repeatedly())
-                    .alongWith(new FeederSetForward().repeatedly(), 
-                        new IntakeAgitateFastOnce().repeatedly(),
-                        new ShooterFirstShotIncrease()));
+                    .andThen(new HandoffSetForward().repeatedly()
+                      .alongWith(new FeederSetForward().repeatedly())));
         driver.rightTrigger()
             .onFalse(
                 new StopShooting()
