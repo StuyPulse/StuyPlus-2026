@@ -28,6 +28,12 @@ public class Gains {
         DoubleSubscriber kV = DogLog.tunable("Shooter/kV", 0.05);
 
         DoubleSubscriber kA = DogLog.tunable("Shooter/kA", 0.0);
+
+        public interface FirstShot {
+            double kP = 20;
+            double kI = 0;
+            double kD = 0;
+        }
     }
 
     public interface Intake {

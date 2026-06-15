@@ -28,6 +28,7 @@ public class ShooterFirstShotIncrease extends Command {
     @Override
     public void initialize() {
         shooter.addToBonusVelocity(Settings.Shooter.FIRST_SHOT_BONUS.get());
+        shooter.setGainSlot(1);
     }
 
     private boolean currentDecreasing() {
@@ -53,5 +54,6 @@ public class ShooterFirstShotIncrease extends Command {
     @Override
     public void end(boolean interrupted) {
         shooter.resetBonusVelocity();
+        shooter.setGainSlot(0);
     }
 }

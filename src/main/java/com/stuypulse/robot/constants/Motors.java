@@ -91,6 +91,7 @@ public interface Motors {
 	public interface Shooter {
 		TalonFXConfig SHOOTER_MOTOR_LEFT = new TalonFXConfig()
 				.withPIDConstants(Gains.Shooter.kP.get(), Gains.Shooter.kI.get(), Gains.Shooter.kD.get(), 0)
+				.withPIDConstants(Gains.Shooter.FirstShot.kP, Gains.Shooter.FirstShot.kI, Gains.Shooter.FirstShot.kD, 1)
 				.withSupplyCurrentLimitAmps(200)
 				.withStatorCurrentLimitAmps(200)
 				.withNeutralMode(NeutralModeValue.Coast)
@@ -99,6 +100,7 @@ public interface Motors {
 
 		TalonFXConfig SHOOTER_MOTOR_CENTER = new TalonFXConfig()
 				.withPIDConstants(Gains.Shooter.kP.get(), Gains.Shooter.kI.get(), Gains.Shooter.kD.get(), 0)
+				.withPIDConstants(Gains.Shooter.FirstShot.kP, Gains.Shooter.FirstShot.kI, Gains.Shooter.FirstShot.kD, 1)
 				.withSupplyCurrentLimitAmps(200)
 				.withStatorCurrentLimitAmps(200)
 				.withNeutralMode(NeutralModeValue.Coast)
@@ -107,10 +109,12 @@ public interface Motors {
 
 		TalonFXConfig SHOOTER_MOTOR_RIGHT = new TalonFXConfig()
 				.withPIDConstants(Gains.Shooter.kP.get(), Gains.Shooter.kI.get(), Gains.Shooter.kD.get(), 0)
+				.withPIDConstants(Gains.Shooter.FirstShot.kP, Gains.Shooter.FirstShot.kI, Gains.Shooter.FirstShot.kD, 1)
 				.withSupplyCurrentLimitAmps(200)
 				.withStatorCurrentLimitAmps(200)
 				.withNeutralMode(NeutralModeValue.Coast)
 				.withFFConstants(Gains.Shooter.kS.get(), Gains.Shooter.kV.get(), Gains.Shooter.kA.get(), 0)
+				.withFFConstants(Gains.Shooter.kS.get(), Gains.Shooter.kV.get(), Gains.Shooter.kA.get(), 1)
 				.withInvertedValue(InvertedValue.Clockwise_Positive);
 	}
 

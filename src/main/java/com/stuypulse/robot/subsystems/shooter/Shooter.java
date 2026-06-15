@@ -27,6 +27,8 @@ public abstract class Shooter extends SubsystemBase {
 
     private ShooterState state;
 
+    protected int gainSlot;
+
     static {
         if (Robot.isReal()) {
             instance = new ShooterImpl();
@@ -42,6 +44,8 @@ public abstract class Shooter extends SubsystemBase {
     protected Shooter() {
         setState(ShooterState.SHOOT);
 
+        setGainSlot(0);
+
         bonusVelocity = RPM.of(0);
     }
 
@@ -51,6 +55,10 @@ public abstract class Shooter extends SubsystemBase {
 
     public ShooterState getState() {
         return this.state;
+    }
+
+    public void setGainSlot(int slot) {
+        this.gainSlot = slot;
     }
 
     public void logMotor(String motorName, TalonFX motor) {
