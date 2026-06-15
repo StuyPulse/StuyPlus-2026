@@ -60,7 +60,7 @@ The robot is driven `Field-Centric`.
 
 We use both [Vision](#vision) and odometry for pose estimation. Check the vision section for details. 
 
-For driver input, we created two classes called `DriveInputProcessor.java` and `DriveTurnInputProcessor.java`. These take in driver input and processes it, applying a deadband, power curve, rate limit, and a low pass filter. This allows us to better handle controller input by letting us apply maximum velocity and maximum acceleration.
+For driver input, we created two classes called `DriveInputProcessor.java` and `DriveTurnInputProcessor.java`. These take in driver input and processes it, applying a deadband, power curve, clamp to magnitude 1, scaling to max velocity, rate limit, and a low pass filter. This allows us to better handle controller input by letting us apply maximum velocity and maximum acceleration.
 
 ## Intake
 File: [`src/main/java/com/stuypulse/robot/subsystems/intake`](https://github.com/StuyPulse/StuyPlus-2026/tree/main/src/main/java/com/stuypulse/robot/subsystems/intake)

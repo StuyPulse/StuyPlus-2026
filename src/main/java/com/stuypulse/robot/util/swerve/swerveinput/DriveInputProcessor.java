@@ -25,6 +25,8 @@ import static edu.wpi.first.units.Units.*;
  * <ul>
  *   <li>Applying deadbands</li>
  *   <li>Applying power curves</li>
+ *   <li>Limiting magnitude to 1</li>
+ *   <li>Scaling to max velocity</li>
  *   <li>Applying rate limits</li>
  *   <li>Applying a low pass filter</li>
  * </ul>
@@ -35,7 +37,6 @@ import static edu.wpi.first.units.Units.*;
 public class DriveInputProcessor {
     private final CommandXboxController controller;
     private final double deadband;
-    private final double clamp;
     private final double power;
     /** The max velocity in meters per second/ */
     private final double maxVelocity;
@@ -62,10 +63,9 @@ public class DriveInputProcessor {
      * @param maxAcceleration The maximum acceleration to apply to the input (m/s^2)
      * @param rc The time constant for the low pass filter (seconds)
      */
-    public DriveInputProcessor(CommandXboxController controller, double deadband, double clamp, double power, double maxVelocity, double maxAcceleration, double rc) {
+    public DriveInputProcessor(CommandXboxController controller, double deadband, double power, double maxVelocity, double maxAcceleration, double rc) {
         this.controller = controller;
         this.deadband = deadband;
-        this.clamp = clamp;
         this.power = power;
         this.maxVelocity = maxVelocity;
 
@@ -101,15 +101,15 @@ public class DriveInputProcessor {
     }
 
     /** 
-     * Limits the magnitude of the current {@link #processedSpeed} vector to a maximum
+     * Limits the magnitude of the current {@link #processedSpeed} vector to 1
      * 
      * @return This instance of the class
     */
-    private DriveInputProcessor applyClamp() {
+    private DriveInputProcessor applyLimitMagnitudeToOne() {
         double magnitude = this.processedSpeed.getNorm();
 
-        if (magnitude > clamp) {
-            this.processedSpeed = this.processedSpeed.times(clamp / magnitude);
+        if (magnitude > 1.0) {
+            this.processedSpeed = this.processedSpeed.div(magnitude);
         }
 
         return this;
@@ -177,7 +177,7 @@ public class DriveInputProcessor {
         getDriverInputAsVelocity()
             .applyDeadband()
             .applyPowerCurve()
-            .applyClamp()
+            .applyLimitMagnitudeToOne()
             .applyScalingToMaxVelocity()
             .applyRateLimit()
             .applyLowPassFilter();
