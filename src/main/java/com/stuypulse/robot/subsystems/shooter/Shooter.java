@@ -83,7 +83,7 @@ public abstract class Shooter extends SubsystemBase {
         SHOOT(() -> InterpolationCalculator.interpolateShotInfo().targetRPM()),
         FERRY(() -> InterpolationCalculator.interpolateFerryingInfo().targetRPM()),
         /** Shooter wheels spin at a predetermined constant rate without interpolation. */
-        MANUAL_HUB(Settings.Shooter.MANUAL_HUB_RPM);
+        MANUAL_HUB(Settings.Shooter.MANUAL_HUB_RPM),
         BABY(Settings.Shooter.BABY_RPM);
 
         /** The supplier for the target RPM of the shooter in the corresponding state. */

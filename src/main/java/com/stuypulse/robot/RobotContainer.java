@@ -26,6 +26,7 @@ import com.stuypulse.robot.commands.leds.LEDDefaultCommand;
 import com.stuypulse.robot.commands.shooter.ShooterAddToBonusVelocity;
 import com.stuypulse.robot.commands.shooter.ShooterFirstShotIncrease;
 import com.stuypulse.robot.commands.shooter.ShooterResetBonusVelocity;
+import com.stuypulse.robot.commands.shooter.ShooterSetBaby;
 import com.stuypulse.robot.commands.shooter.ShooterSetFerry;
 import com.stuypulse.robot.commands.shooter.ShooterSetManual;
 import com.stuypulse.robot.commands.shooter.ShooterSetShoot;
@@ -154,7 +155,7 @@ public class RobotContainer {
         // Manual shooting possibly from in front of the tower
         driver.rightTrigger()
             .whileTrue(
-d                    new ShooterSetBaby()
+                    new ShooterSetBaby()
                     .andThen(new ShooterWaitForSpinUp())
                     .andThen(new HandoffSetForward().repeatedly()
                       .alongWith(new FeederSetForward().repeatedly())));
