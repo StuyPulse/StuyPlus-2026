@@ -240,9 +240,9 @@ public interface Settings {
         Distance FLYWHEEL_RADIUS = Inches.of(3);
 
         // TODO: Test for manual shooting RPM
-        DoubleSubscriber MANUAL_HUB_RPM = DogLog.tunable("Shooter/Manual Shot Tuning RPM", 3650.0);
+        DoubleSubscriber MANUAL_HUB_RPM = DogLog.tunable("Shooter/Manual Shot Tuning RPM", 1825.0);
 
-        AngularVelocity MIN_SHOOTER_VELOCITY = RPM.of(1740);
+        AngularVelocity MIN_SHOOTER_VELOCITY = RPM.of(870);
 
         DoubleSubscriber SHOOT_TUNING_RPM = DogLog.tunable("Shooter/Shoot Tuning RPM", 0.0);
         DoubleSubscriber FERRY_TUNING_RPM = DogLog.tunable("Shooter/Ferry Tuning RPM", 0.0);
@@ -251,12 +251,12 @@ public interface Settings {
         public interface RPMInterpolation {
 
             double[][] distanceRPMInterpolationValues = {
-                {1.46, 2600},
-                {2.07, 3150},
-                {3.0, 3633.0},
-                {3.13, 3700},
-                {3.45, 3933},
-                {4.13, 4200}
+                {1.46, 1300},
+                {2.07, 1575},
+                {3.0, 1816.5},
+                {3.13, 1850},
+                {3.45, 1966.5},
+                {4.13, 2100}
                 //TODO: These numbers don't make sense
                 // { 4.895367348608047, 3250.0 },
                 // { 6.1322461808798705, 3487.0 } 
@@ -278,11 +278,11 @@ public interface Settings {
         public interface FerryRPMInterpolation {
 
             double[][] ferryDistanceRPMInterpolation = {
-                { 1.0, 2300.0 },
-                { 2.0, 2800.0 },
-                { 3.0, 3300.0 },
-                { 4.0, 3800.0 },
-                { 5.0, 5500.0 } };
+                { 1.0, 1150.0 },
+                { 2.0, 1400.0 },
+                { 3.0, 1650.0 },
+                { 4.0, 1900.0 },
+                { 5.0, 2750.0 } };
         }
 
         // These values are placeholders and should be replaced with actual data from testing
