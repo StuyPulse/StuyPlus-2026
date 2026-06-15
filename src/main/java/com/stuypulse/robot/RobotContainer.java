@@ -119,40 +119,40 @@ public class RobotContainer {
         driver.leftBumper().whileTrue(new IntakeSetOuttake());
         driver.leftBumper().onFalse(new IntakeSetIntake());
 
-        rightTrigger.whileTrue(
-                new WaitCommand(1.5).raceWith(new SwerveDriveAlignToHub())
-                .andThen(new SwerveDriveXMode())
-                .andThen(new ShooterSetShoot())
-                .andThen(new FeederSetReverse())
-                .andThen(new ShooterWaitForSpinUp())
-                .andThen(new HandoffSetForward()
-                .alongWith(new FeederSetForward(),
-                    new IntakeAgitateFastOnce().repeatedly(),
-                    new ShooterFirstShotIncrease())));
-        rightTrigger.onFalse(
-            new StopShooting()
-        );
+        // rightTrigger.whileTrue(
+        //         new WaitCommand(1.5).raceWith(new SwerveDriveAlignToHub())
+        //         .andThen(new SwerveDriveXMode())
+        //         .andThen(new ShooterSetShoot())
+        //         .andThen(new FeederSetReverse())
+        //         .andThen(new ShooterWaitForSpinUp())
+        //         .andThen(new HandoffSetForward()
+        //         .alongWith(new FeederSetForward(),
+        //             new IntakeAgitateFastOnce().repeatedly(),
+        //             new ShooterFirstShotIncrease())));
+        // rightTrigger.onFalse(
+        //     new StopShooting()
+        // );
 
         // Top Left Paddle
         driver.y().onTrue(new IntakeSetIdle());
         
-        driver.rightBumper()
-            .whileTrue(
-                new WaitCommand(1.5).raceWith(new SwerveDriveAlignToFerryZone())
-                    .andThen(new SwerveDriveXMode())
-                    .andThen(new ShooterSetFerry())
-                    .andThen(new FeederSetReverse())
-                    .andThen(new ShooterWaitForSpinUp())
-                    .andThen(new HandoffSetForward())
-                    .alongWith(new FeederSetForward(), 
-                        new IntakeAgitateFastOnce().repeatedly(),
-                        new ShooterFirstShotIncrease()));
-        driver.rightBumper()
-            .onFalse(
-                new StopShooting()
-            );
+        // driver.rightBumper()
+        //     .whileTrue(
+        //         new WaitCommand(1.5).raceWith(new SwerveDriveAlignToFerryZone())
+        //             .andThen(new SwerveDriveXMode())
+        //             .andThen(new ShooterSetFerry())
+        //             .andThen(new FeederSetReverse())
+        //             .andThen(new ShooterWaitForSpinUp())
+        //             .andThen(new HandoffSetForward())
+        //             .alongWith(new FeederSetForward(), 
+        //                 new IntakeAgitateFastOnce().repeatedly(),
+        //                 new ShooterFirstShotIncrease()));
+        // driver.rightBumper()
+        //     .onFalse(
+        //         new StopShooting()
+        //     );
         // Manual shooting possibly from in front of the tower
-        driver.a()
+        driver.rightTrigger()
             .whileTrue(
                 new SwerveDriveXMode()
                     .andThen(new ShooterSetManual())
@@ -162,38 +162,38 @@ public class RobotContainer {
                     .alongWith(new FeederSetForward().repeatedly(), 
                         new IntakeAgitateFastOnce().repeatedly(),
                         new ShooterFirstShotIncrease()));
-        driver.a()
+        driver.rightTrigger()
             .onFalse(
                 new StopShooting()
             );
 
-        driver.b()  
-            .whileTrue(
-                new SwerveDriveXMode()
-                    .andThen(new ShooterSetShoot())
-                    .andThen(new FeederSetReverse())
-                    .andThen(new ShooterWaitForSpinUp())
-                    .andThen(new HandoffSetForward().repeatedly())
-                    .alongWith(new FeederSetForward().repeatedly(), 
-                        new IntakeAgitateFastOnce().repeatedly(),
-                        new ShooterFirstShotIncrease())
-            );
-        driver.b()
-            .onFalse(
-                new StopShooting()
-            );
+        // driver.b()  
+        //     .whileTrue(
+        //         new SwerveDriveXMode()
+        //             .andThen(new ShooterSetShoot())
+        //             .andThen(new FeederSetReverse())
+        //             .andThen(new ShooterWaitForSpinUp())
+        //             .andThen(new HandoffSetForward().repeatedly())
+        //             .alongWith(new FeederSetForward().repeatedly(), 
+        //                 new IntakeAgitateFastOnce().repeatedly(),
+        //                 new ShooterFirstShotIncrease())
+        //     );
+        // driver.b()
+        //     .onFalse(
+        //         new StopShooting()
+        //     );
 
         // Bottom Left Paddle
-        driver.x().whileTrue(new SwerveDriveXMode());
+        // driver.x().whileTrue(new SwerveDriveXMode());
 
-        driver.povLeft().onTrue(new SwerveDriveResetRotation());
+        // driver.povLeft().onTrue(new SwerveDriveResetRotation());
         
-        driver.povUp()
-            .onTrue(new ShooterAddToBonusVelocity(50));
-        driver.povDown()
-            .onTrue(new ShooterAddToBonusVelocity(-50));
-        driver.povRight()
-            .onTrue(new ShooterResetBonusVelocity());
+        // driver.povUp()
+        //     .onTrue(new ShooterAddToBonusVelocity(50));
+        // driver.povDown()
+        //     .onTrue(new ShooterAddToBonusVelocity(-50));
+        // driver.povRight()
+        //     .onTrue(new ShooterResetBonusVelocity());
 
     }
 
