@@ -5,6 +5,7 @@ import com.stuypulse.robot.commands.feeder.FeederSetForward;
 import com.stuypulse.robot.commands.handoff.HandoffSetForward;
 import com.stuypulse.robot.commands.intake.IntakeAgitateFastOnce;
 import com.stuypulse.robot.commands.intake.IntakeSetIntake;
+import com.stuypulse.robot.commands.shooter.ShooterFirstShotIncrease;
 import com.stuypulse.robot.commands.shooter.ShooterSetShoot;
 import com.stuypulse.robot.commands.shooter.ShooterWaitForSpinUp;
 import com.stuypulse.robot.commands.swerve.SwerveDriveXMode;
@@ -31,7 +32,8 @@ public class RBDumpy extends SequentialCommandGroup {
             new ParallelDeadlineGroup(
                 new WaitCommand(7),
                 new FeederSetForward(), 
-                new IntakeAgitateFastOnce().repeatedly()
+                new IntakeAgitateFastOnce().repeatedly(),
+                new ShooterFirstShotIncrease()
             )
         );
     }

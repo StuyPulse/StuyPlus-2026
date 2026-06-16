@@ -4,6 +4,7 @@ import com.pathplanner.lib.path.PathPlannerPath;
 import com.stuypulse.robot.commands.feeder.FeederSetForward;
 import com.stuypulse.robot.commands.handoff.HandoffSetForward;
 import com.stuypulse.robot.commands.intake.IntakeAgitateFastOnce;
+import com.stuypulse.robot.commands.shooter.ShooterFirstShotIncrease;
 import com.stuypulse.robot.commands.shooter.ShooterSetShoot;
 import com.stuypulse.robot.commands.shooter.ShooterWaitForSpinUp;
 import com.stuypulse.robot.commands.swerve.SwerveDriveXMode;
@@ -28,7 +29,8 @@ public class FrontHubShootPreloads extends SequentialCommandGroup {
             new ParallelDeadlineGroup(
                 new WaitCommand(6.5), // shoot for 6-7 seconds
                 new FeederSetForward(), 
-                new IntakeAgitateFastOnce().repeatedly()
+                new IntakeAgitateFastOnce().repeatedly(),
+                new ShooterFirstShotIncrease()
             )
         );
     }
