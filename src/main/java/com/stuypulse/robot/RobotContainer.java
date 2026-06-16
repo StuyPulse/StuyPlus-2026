@@ -117,6 +117,7 @@ public class RobotContainer {
 
         leftTrigger.onTrue(new IntakeSetIntake());
         driver.leftBumper().whileTrue(new IntakeSetOuttake());
+
         driver.leftBumper().onFalse(new IntakeSetIntake());
 
         rightTrigger.whileTrue(
@@ -124,11 +125,11 @@ public class RobotContainer {
                 .andThen(new SwerveDriveXMode())
                 .andThen(new ShooterSetShoot())
                 .andThen(new FeederSetReverse())
-                .andThen(new ShooterWaitForSpinUp())
+                .andThen(new ShooterWaitForSpinUp().withDeadline(new WaitCommand(1)))
                 .andThen(new HandoffSetForward()
-                .alongWith(new FeederSetForward(),
-                    new IntakeAgitateFastOnce().repeatedly(),
-                    new ShooterFirstShotIncrease())));
+                    .alongWith(new FeederSetForward(),
+                        new IntakeAgitateFastOnce().repeatedly(),
+                        new ShooterFirstShotIncrease())));
         rightTrigger.onFalse(
             new StopShooting()
         );
@@ -143,11 +144,11 @@ public class RobotContainer {
                     .andThen(new ShooterSetFerry())
                     .andThen(new FeederSetReverse())
                     .andThen(new ShooterWaitForSpinUp())
-                    .andThen(new HandoffSetForward())
-                    .andThen(new FeederSetForward())
-                    .alongWith(
-                        new IntakeAgitateFastOnce().repeatedly(),
-                        new ShooterFirstShotIncrease()));
+                    .andThen(new HandoffSetForward()
+                        .alongWith(
+                            new FeederSetForward(),
+                            new IntakeAgitateFastOnce().repeatedly(),
+                            new ShooterFirstShotIncrease())));
         driver.rightBumper()
             .onFalse(
                 new StopShooting()
@@ -159,11 +160,11 @@ public class RobotContainer {
                     .andThen(new ShooterSetManual())
                     .andThen(new FeederSetReverse())
                     .andThen(new ShooterWaitForSpinUp())
-                    .andThen(new HandoffSetForward())
-                    .andThen(new FeederSetForward())
-                    .alongWith( 
-                        new IntakeAgitateFastOnce().repeatedly(),
-                        new ShooterFirstShotIncrease()));
+                    .andThen(new HandoffSetForward()
+                        .alongWith(
+                            new FeederSetForward(),
+                            new IntakeAgitateFastOnce().repeatedly(),
+                            new ShooterFirstShotIncrease())));
         driver.a()
             .onFalse(
                 new StopShooting()
@@ -175,11 +176,11 @@ public class RobotContainer {
                     .andThen(new ShooterSetShoot())
                     .andThen(new FeederSetReverse())
                     .andThen(new ShooterWaitForSpinUp())
-                    .andThen(new HandoffSetForward())
-                    .andThen(new FeederSetForward())
-                    .alongWith( 
+                    .andThen(new HandoffSetForward()
+                    .alongWith(
+                        new FeederSetForward(),
                         new IntakeAgitateFastOnce().repeatedly(),
-                        new ShooterFirstShotIncrease())
+                        new ShooterFirstShotIncrease()))
             );
         driver.b()
             .onFalse(
@@ -191,12 +192,12 @@ public class RobotContainer {
 
         driver.povLeft().onTrue(new SwerveDriveResetRotation());
         
-        driver.povUp()
-            .onTrue(new ShooterAddToBonusVelocity(50));
-        driver.povDown()
-            .onTrue(new ShooterAddToBonusVelocity(-50));
-        driver.povRight()
-            .onTrue(new ShooterResetBonusVelocity());
+        // driver.povUp()
+        //     .onTrue(new ShooterAddToBonusVelocity(50));
+        // driver.povDown()
+        //     .onTrue(new ShooterAddToBonusVelocity(-50));
+        // driver.povRight()
+        //     .onTrue(new ShooterResetBonusVelocity());
 
     }
 
