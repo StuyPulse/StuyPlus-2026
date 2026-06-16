@@ -239,7 +239,7 @@ public interface Settings {
         // TODO: get
         Distance FLYWHEEL_RADIUS = Inches.of(3);
 
-        DoubleSubscriber BABY_RPM = DogLog.tunable("Shooter/Baby Shot RPM", 1500.0);
+        DoubleSubscriber BABY_RPM = DogLog.tunable("Shooter/Baby Shot RPM", 2700.0);
 
         // TODO: Test for manual shooting RPM
         DoubleSubscriber MANUAL_HUB_RPM = DogLog.tunable("Shooter/Manual Shot Tuning RPM", 1825.0);
@@ -308,10 +308,10 @@ public interface Settings {
 
         public interface Constraints {
 
-            double MAX_VELOCITY_M_PER_S = 2.15;
+            double MAX_VELOCITY_M_PER_S = 1.0;
 
             // TODO: revert to 15.0
-            double MAX_ACCEL_M_PER_S_SQUARED = 10.0;
+            double MAX_ACCEL_M_PER_S_SQUARED = 20.0;
 
             double MAX_ANGULAR_VEL_RAD_PER_S = Units.degreesToRadians(400.0);
 
@@ -376,7 +376,7 @@ public interface Settings {
 
         public interface Turn {
 
-            double DEADBAND = 0.05;
+            double DEADBAND = 0.07;
 
             double RC = 0.05;
 
