@@ -25,6 +25,8 @@ public abstract class Shooter extends SubsystemBase {
 
     private static AngularVelocity bonusVelocity;
 
+    private static double velocityMultiplier;
+
     private ShooterState state;
 
     protected int gainSlot;
@@ -46,6 +48,8 @@ public abstract class Shooter extends SubsystemBase {
 
         setGainSlot(0);
 
+        setVelocityMultiplier(1);
+
         bonusVelocity = RPM.of(0);
     }
 
@@ -59,6 +63,10 @@ public abstract class Shooter extends SubsystemBase {
 
     public void setGainSlot(int slot) {
         this.gainSlot = slot;
+    }
+
+    public void setVelocityMultiplier(double multiplier) {
+        velocityMultiplier = multiplier;
     }
 
     public void logMotor(String motorName, TalonFX motor) {
@@ -101,7 +109,7 @@ public abstract class Shooter extends SubsystemBase {
          * @return the target angular velocity of the shooter
          */
         public AngularVelocity getTargetAngularVelocity() {
-            return RPM.of(RPMSupplier.getAsDouble()).plus(bonusVelocity); // adding here allows target RPM readings to be accurate
+            return RPM.of(RPMSupplier.getAsDouble()).times(velocityMultiplier); // adding here allows target RPM readings to be accurate
         }
     }
 

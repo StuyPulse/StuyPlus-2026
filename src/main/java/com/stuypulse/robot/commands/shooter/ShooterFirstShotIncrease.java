@@ -34,7 +34,8 @@ public class ShooterFirstShotIncrease extends Command {
     public void initialize() {
         timer.restart();
 
-        shooter.addToBonusVelocity(Settings.Shooter.FIRST_SHOT_BONUS.get());
+        // Add 10 percent to the RPM 
+        shooter.setVelocityMultiplier(1.1); 
         shooter.setGainSlot(1);
     }
 
@@ -62,6 +63,7 @@ public class ShooterFirstShotIncrease extends Command {
     @Override
     public void end(boolean interrupted) {
         shooter.resetBonusVelocity();
+        shooter.setVelocityMultiplier(1);
         shooter.setGainSlot(0);
     }
 }
