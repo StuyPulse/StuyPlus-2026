@@ -374,7 +374,7 @@ public interface Settings {
 
         public interface Turn {
 
-            double DEADBAND = 0.05;
+            double DEADBAND = 0.07;
 
             double RC = 0.05;
 
