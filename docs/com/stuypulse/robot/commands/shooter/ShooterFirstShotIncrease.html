@@ -82,7 +82,7 @@ loadScripts(document, 'script');</script>
 <dd><code>edu.wpi.first.util.sendable.Sendable</code></dd>
 </dl>
 <hr>
-<div class="type-signature"><span class="modifiers">public class </span><span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/commands/shooter/ShooterFirstShotIncrease.html#line-15">ShooterFirstShotIncrease</a></span>
+<div class="type-signature"><span class="modifiers">public class </span><span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/commands/shooter/ShooterFirstShotIncrease.html#line-16">ShooterFirstShotIncrease</a></span>
 <span class="extends-implements">extends edu.wpi.first.wpilibj2.command.Command</span></div>
 </section>
 <section class="summary">
@@ -117,6 +117,9 @@ loadScripts(document, 'script');</script>
 <div class="col-first odd-row-color"><code>private final edu.wpi.first.math.filter.Debouncer</code></div>
 <div class="col-second odd-row-color"><code><a href="#shotFinished" class="member-name-link">shotFinished</a></code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>private final edu.wpi.first.wpilibj.Timer</code></div>
+<div class="col-second even-row-color"><code><a href="#timer" class="member-name-link">timer</a></code></div>
+<div class="col-last even-row-color">&nbsp;</div>
 </div>
 </section>
 </li>
@@ -179,25 +182,31 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="shooter">
 <h3>shooter</h3>
-<div class="member-signature"><span class="modifiers">private final</span>&nbsp;<span class="return-type"><a href="../../subsystems/shooter/Shooter.html" title="class in com.stuypulse.robot.subsystems.shooter">Shooter</a></span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/commands/shooter/ShooterFirstShotIncrease.html#line-16">shooter</a></span></div>
+<div class="member-signature"><span class="modifiers">private final</span>&nbsp;<span class="return-type"><a href="../../subsystems/shooter/Shooter.html" title="class in com.stuypulse.robot.subsystems.shooter">Shooter</a></span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/commands/shooter/ShooterFirstShotIncrease.html#line-17">shooter</a></span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="currentFilter">
 <h3>currentFilter</h3>
-<div class="member-signature"><span class="modifiers">private final</span>&nbsp;<span class="return-type">edu.wpi.first.math.filter.LinearFilter</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/commands/shooter/ShooterFirstShotIncrease.html#line-17">currentFilter</a></span></div>
+<div class="member-signature"><span class="modifiers">private final</span>&nbsp;<span class="return-type">edu.wpi.first.math.filter.LinearFilter</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/commands/shooter/ShooterFirstShotIncrease.html#line-18">currentFilter</a></span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="shotFinished">
 <h3>shotFinished</h3>
-<div class="member-signature"><span class="modifiers">private final</span>&nbsp;<span class="return-type">edu.wpi.first.math.filter.Debouncer</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/commands/shooter/ShooterFirstShotIncrease.html#line-18">shotFinished</a></span></div>
+<div class="member-signature"><span class="modifiers">private final</span>&nbsp;<span class="return-type">edu.wpi.first.math.filter.Debouncer</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/commands/shooter/ShooterFirstShotIncrease.html#line-19">shotFinished</a></span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="previousCurrent">
 <h3>previousCurrent</h3>
-<div class="member-signature"><span class="modifiers">private</span>&nbsp;<span class="return-type">double</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/commands/shooter/ShooterFirstShotIncrease.html#line-19">previousCurrent</a></span></div>
+<div class="member-signature"><span class="modifiers">private</span>&nbsp;<span class="return-type">double</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/commands/shooter/ShooterFirstShotIncrease.html#line-20">previousCurrent</a></span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="timer">
+<h3>timer</h3>
+<div class="member-signature"><span class="modifiers">private final</span>&nbsp;<span class="return-type">edu.wpi.first.wpilibj.Timer</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/commands/shooter/ShooterFirstShotIncrease.html#line-22">timer</a></span></div>
 </section>
 </li>
 </ul>
@@ -211,7 +220,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="&lt;init&gt;()">
 <h3>ShooterFirstShotIncrease</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/commands/shooter/ShooterFirstShotIncrease.html#line-21">ShooterFirstShotIncrease</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/commands/shooter/ShooterFirstShotIncrease.html#line-24">ShooterFirstShotIncrease</a></span>()</div>
 </section>
 </li>
 </ul>
@@ -225,7 +234,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="initialize()">
 <h3>initialize</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/commands/shooter/ShooterFirstShotIncrease.html#line-28">initialize</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/commands/shooter/ShooterFirstShotIncrease.html#line-33">initialize</a></span>()</div>
 <dl class="notes">
 <dt>Overrides:</dt>
 <dd><code>initialize</code>&nbsp;in class&nbsp;<code>edu.wpi.first.wpilibj2.command.Command</code></dd>
@@ -235,13 +244,13 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="currentDecreasing()">
 <h3>currentDecreasing</h3>
-<div class="member-signature"><span class="modifiers">private</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/commands/shooter/ShooterFirstShotIncrease.html#line-34">currentDecreasing</a></span>()</div>
+<div class="member-signature"><span class="modifiers">private</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/commands/shooter/ShooterFirstShotIncrease.html#line-41">currentDecreasing</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="isFinished()">
 <h3>isFinished</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/commands/shooter/ShooterFirstShotIncrease.html#line-49">isFinished</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/commands/shooter/ShooterFirstShotIncrease.html#line-56">isFinished</a></span>()</div>
 <dl class="notes">
 <dt>Overrides:</dt>
 <dd><code>isFinished</code>&nbsp;in class&nbsp;<code>edu.wpi.first.wpilibj2.command.Command</code></dd>
@@ -251,7 +260,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="end(boolean)">
 <h3>end</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/commands/shooter/ShooterFirstShotIncrease.html#line-54">end</a></span><wbr><span class="parameters">(boolean&nbsp;interrupted)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/commands/shooter/ShooterFirstShotIncrease.html#line-62">end</a></span><wbr><span class="parameters">(boolean&nbsp;interrupted)</span></div>
 <dl class="notes">
 <dt>Overrides:</dt>
 <dd><code>end</code>&nbsp;in class&nbsp;<code>edu.wpi.first.wpilibj2.command.Command</code></dd>
