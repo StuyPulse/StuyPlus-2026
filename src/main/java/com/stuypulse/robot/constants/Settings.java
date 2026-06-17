@@ -253,7 +253,6 @@ public interface Settings {
             double[][] distanceRPMInterpolationValues = {
                 {1.46, 2600},
                 {2.07, 3150},
-                {3.0, 3633.0},
                 {3.13, 3700},
                 {3.45, 3933},
                 {4.13, 4200}
