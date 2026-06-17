@@ -19,6 +19,7 @@ import com.stuypulse.robot.commands.feeder.FeederSetForward;
 import com.stuypulse.robot.commands.feeder.FeederSetReverse;
 import com.stuypulse.robot.commands.handoff.HandoffSetForward;
 import com.stuypulse.robot.commands.intake.IntakeAgitateFastOnce;
+import com.stuypulse.robot.commands.intake.IntakeSetDown;
 import com.stuypulse.robot.commands.intake.IntakeSetIdle;
 import com.stuypulse.robot.commands.intake.IntakeSetIntake;
 import com.stuypulse.robot.commands.intake.IntakeSetOuttake;
@@ -117,8 +118,8 @@ public class RobotContainer {
         Trigger rightTrigger = new Trigger(() -> driver.getRightTriggerAxis() > 0.5);
 
         leftTrigger.onTrue(new IntakeSetIntake());
-        driver.leftBumper().whileTrue(new IntakeSetOuttake());
-        driver.leftBumper().onFalse(new IntakeSetIntake());
+        driver.leftBumper().onTrue(new IntakeSetDown());
+        // driver.leftBumper().onFalse(new IntakeSetIntake());
 
         // rightTrigger.whileTrue(
         //         new WaitCommand(1.5).raceWith(new SwerveDriveAlignToHub())
