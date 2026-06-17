@@ -15,6 +15,7 @@ import com.stuypulse.robot.commands.auton.shooting.FrontHubShootPreloads;
 import com.stuypulse.robot.commands.auton.shooting.LBDumpy;
 import com.stuypulse.robot.commands.auton.shooting.RBDumpy;
 import com.stuypulse.robot.commands.compound.StopShooting;
+import com.stuypulse.robot.commands.feeder.FeederScramble;
 import com.stuypulse.robot.commands.feeder.FeederSetForward;
 import com.stuypulse.robot.commands.feeder.FeederSetReverse;
 import com.stuypulse.robot.commands.handoff.HandoffSetForward;
@@ -124,8 +125,7 @@ public class RobotContainer {
                 new WaitCommand(1.5).raceWith(new SwerveDriveAlignToHub())
                 .andThen(new SwerveDriveXMode())
                 .andThen(new ShooterSetShoot())
-                .andThen(new FeederSetReverse())
-                .andThen(new ShooterWaitForSpinUp().withDeadline(new WaitCommand(1)))
+                .andThen(new ShooterWaitForSpinUp().withDeadline(new FeederScramble()))
                 .andThen(new HandoffSetForward()
                     .alongWith(new FeederSetForward(),
                         new IntakeAgitateFastOnce().repeatedly(),
@@ -142,8 +142,7 @@ public class RobotContainer {
                 new WaitCommand(1.5).raceWith(new SwerveDriveAlignToFerryZone())
                     .andThen(new SwerveDriveXMode())
                     .andThen(new ShooterSetFerry())
-                    .andThen(new FeederSetReverse())
-                    .andThen(new ShooterWaitForSpinUp())
+                    .andThen(new ShooterWaitForSpinUp().withDeadline(new FeederScramble()))
                     .andThen(new HandoffSetForward()
                         .alongWith(
                             new FeederSetForward(),
@@ -158,8 +157,7 @@ public class RobotContainer {
             .whileTrue(
                 new SwerveDriveXMode()
                     .andThen(new ShooterSetManual())
-                    .andThen(new FeederSetReverse())
-                    .andThen(new ShooterWaitForSpinUp())
+                    .andThen(new ShooterWaitForSpinUp().withDeadline(new FeederScramble()))
                     .andThen(new HandoffSetForward()
                         .alongWith(
                             new FeederSetForward(),
@@ -174,8 +172,7 @@ public class RobotContainer {
             .whileTrue(
                 new SwerveDriveXMode()
                     .andThen(new ShooterSetShoot())
-                    .andThen(new FeederSetReverse())
-                    .andThen(new ShooterWaitForSpinUp())
+                    .andThen(new ShooterWaitForSpinUp().withDeadline(new FeederScramble()))
                     .andThen(new HandoffSetForward()
                     .alongWith(
                         new FeederSetForward(),

@@ -148,6 +148,7 @@ public interface Settings {
     public interface Feeder {
 
         Voltage REVERSE_VOLTAGE = Volts.of(-10.0); // TODO: get
+        DoubleSubscriber REVERSE_TIME_BEFORE_SHOOT = DogLog.tunable("Feeder/Seconds To Reverse Before Shooting", 0.75);
 
         Voltage FORWARD_VOLTAGE = Volts.of(10.0);
 
