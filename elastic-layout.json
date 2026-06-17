@@ -1256,7 +1256,7 @@
             }
           },
           {
-            "title": "Target RPM",
+            "title": "Target Manual Hub RPM",
             "x": 900.0,
             "y": 300.0,
             "width": 150.0,
@@ -1309,6 +1309,34 @@
             "type": "Text Display",
             "properties": {
               "topic": "/Robot/Swerve/Distance From Hub",
+              "period": 0.06,
+              "data_type": "double",
+              "show_submit_button": false
+            }
+          },
+          {
+            "title": "Target RPM",
+            "x": 750.0,
+            "y": 300.0,
+            "width": 150.0,
+            "height": 150.0,
+            "type": "Text Display",
+            "properties": {
+              "topic": "/Robot/Shooter/Target RPM",
+              "period": 0.06,
+              "data_type": "int",
+              "show_submit_button": false
+            }
+          },
+          {
+            "title": "First_shot_bonus_RPM",
+            "x": 750.0,
+            "y": 450.0,
+            "width": 150.0,
+            "height": 150.0,
+            "type": "Text Display",
+            "properties": {
+              "topic": "/Tunable/Shooter/First_shot_bonus_RPM",
               "period": 0.06,
               "data_type": "double",
               "show_submit_button": false
