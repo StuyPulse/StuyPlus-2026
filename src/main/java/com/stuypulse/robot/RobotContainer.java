@@ -183,7 +183,7 @@ public class RobotContainer {
         // Bottom Left Paddle
         // driver.x().whileTrue(new SwerveDriveXMode());
 
-        // driver.povLeft().onTrue(new SwerveDriveResetRotation());
+        driver.povLeft().onTrue(new SwerveDriveResetRotation());
         
         // driver.povUp()
         //     .onTrue(new ShooterAddToBonusVelocity(50));
