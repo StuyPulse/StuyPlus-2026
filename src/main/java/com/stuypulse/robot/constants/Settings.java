@@ -311,9 +311,9 @@ public interface Settings {
             double MAX_VELOCITY_M_PER_S = 1.0;
 
             // TODO: revert to 15.0
-            double MAX_ACCEL_M_PER_S_SQUARED = 20.0;
+            double MAX_ACCEL_M_PER_S_SQUARED = 67.0;
 
-            double MAX_ANGULAR_VEL_RAD_PER_S = Units.degreesToRadians(400.0);
+            double MAX_ANGULAR_VEL_RAD_PER_S = Units.degreesToRadians(100.0);
 
             // TODO: revert to 900
             double MAX_ANGULAR_ACCEL_RAD_PER_S = Units.degreesToRadians(300.0);
