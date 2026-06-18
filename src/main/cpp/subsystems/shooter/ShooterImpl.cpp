@@ -3,18 +3,28 @@
 #include "constants/Ports.hpp"
 #include "constants/Settings.hpp"
 #include <telemetrykit/TelemetryKit.h>
+#include "constants/Motors.hpp"
+
+ShooterImpl::ShooterImpl() {
+    Motors::Shooter::SHOOTER_MOTOR_LEFT.configure(shooterMotorLeft);
+    Motors::Shooter::SHOOTER_MOTOR_CENTER.configure(shooterMotorCenter);
+    Motors::Shooter::SHOOTER_MOTOR_RIGHT.configure(shooterMotorRight);
+
+    shooterMotorLeft.SetControl(Shooter::followerControl);
+    shooterMotorCenter.SetControl(Shooter::followerControl);
+}
 
 // TODO: follower control initialization
 
 void ShooterImpl::Periodic() {
     // Control
-    shooterMotorLeft.SetControl(ctre::phoenix6::controls::DutyCycleOut(getState().getTargetRPM()));
+    shooterMotorRight.SetControl(ctre::phoenix6::controls::DutyCycleOut(getState().getTargetRPM()));
 
     // Logging
     tkit::Logger& logger = tkit::Logger::GetInstance();
-    logger.RecordOutput("Handoff/Velocity_RPS", shooterMotorLeft.GetVelocity().GetValueAsDouble());
-    logger.RecordOutput("Handoff/Stator Current_Amps", shooterMotorLeft.GetStatorCurrent().GetValueAsDouble());
-    logger.RecordOutput("Handoff/Supply Current_Amps", shooterMotorLeft.GetSupplyCurrent().GetValueAsDouble());
+    logger.RecordOutput("Handoff/Velocity_RPS", shooterMotorRight.GetVelocity().GetValueAsDouble());
+    logger.RecordOutput("Handoff/Stator Current_Amps", shooterMotorRight.GetStatorCurrent().GetValueAsDouble());
+    logger.RecordOutput("Handoff/Supply Current_Amps", shooterMotorRight.GetSupplyCurrent().GetValueAsDouble());
 
     Shooter::Periodic();
 }

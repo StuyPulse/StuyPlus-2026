@@ -1,5 +1,10 @@
 #include "subsystems/handoff/HandoffSim.hpp"
 #include "subsystems/handoff/Handoff.hpp"
+#include "constants/Motors.hpp"
+
+HandoffSim::HandoffSim() {
+    Motors::Handoff::HANDOFF_MOTOR_CONFIG.configure(handoffMotor);
+}
 
 void HandoffSim::Periodic() {
     // Control

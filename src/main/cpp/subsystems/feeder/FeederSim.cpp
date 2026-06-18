@@ -1,5 +1,10 @@
 #include "subsystems/feeder/FeederSim.hpp"
 #include "subsystems/feeder/Feeder.hpp"
+#include "constants/Motors.hpp"
+
+FeederSim::FeederSim() {
+    Motors::Feeder::LEADER_CONFIG.configure(feederMotor);
+}
 
 void FeederSim::Periodic() {
     // Control

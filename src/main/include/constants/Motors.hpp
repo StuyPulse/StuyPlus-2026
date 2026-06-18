@@ -1,5 +1,7 @@
 #include <ctre/phoenix6/signals/SpnEnums.hpp>
 #include "util/TalonFXConfig.hpp"
+#include "Settings.hpp"
+#include "Gains.hpp"
 
 #include <units/time.h>
 #include <units/voltage.h>
@@ -24,77 +26,72 @@ namespace Motors {
 
     /** Classes to store all of the values a motor needs */
     namespace Intake {
-        TalonFXConfig PIVOT_CONFIG = TalonFXConfig()
-            .withSupplyCurrentLimitAmps(units::current::ampere_t(30))
-            .withCurrentLimitAmps(units::current::ampere_t(40))
-            .withInvertedValue(InvertedValue.Clockwise_Positive) // not necessarily true, get inverted val
-            .withNeutralMode(NeutralModeValue.Brake)
-            .withPIDConstants(Gains.Intake.kP.get(), Gains.Intake.kI.get(), Gains.Intake.kD.get(), 0)
-            .withSensorToMechanismRatio(Settings.Intake.Pivot.GEAR_RATIO);
+        inline TalonFXConfig PIVOT_CONFIG = TalonFXConfig()
+            .withSupplyCurrentLimitAmps(30_A)
+            .withStatorCurrentLimitAmps(40_A)
+            .withInvertedValue(ctre::phoenix6::signals::InvertedValue::Clockwise_Positive) // not necessarily true, get inverted val
+            .withNeutralMode(ctre::phoenix6::signals::NeutralModeValue::Brake)
+            .withPIDConstants(Gains::Intake::kP, Gains::Intake::kI, Gains::Intake::kD, 0)
+            .withSensorToMechanismRatio(Settings::Intake::Pivot::GEAR_RATIO);
         
-        TalonFXConfig LEFT_ROLLER_CONFIG = TalonFXConfig() // TODO: apply later
-            .withCurrentLimitAmps(units::current::ampere_t(50))
-            .withInvertedValue(InvertedValue.CounterClockwise_Positive) // not necessarily true, get inverted val
-            .withNeutralMode(NeutralModeValue.Coast)
-            .withSensorToMechanismRatio(Settings.Intake.Roller.GEAR_RATIO);
+        inline TalonFXConfig LEFT_ROLLER_CONFIG = TalonFXConfig() // TODO: apply later
+            .withStatorCurrentLimitAmps(50_A)
+            .withInvertedValue(ctre::phoenix6::signals::InvertedValue::CounterClockwise_Positive) // not necessarily true, get inverted val
+            .withNeutralMode(ctre::phoenix6::signals::NeutralModeValue::Coast)
+            .withSensorToMechanismRatio(Settings::Intake::Roller::GEAR_RATIO);
         
-        TalonFXConfig RIGHT_ROLLER_CONFIG = TalonFXConfig() // TODO: apply later
-            .withCurrentLimitAmps(units::current::ampere_t(50))
-            .withInvertedValue(InvertedValue.Clockwise_Positive) 
-            .withNeutralMode(NeutralModeValue.Coast)
-            .withSensorToMechanismRatio(Settings.Intake.Roller.GEAR_RATIO);
+        inline TalonFXConfig RIGHT_ROLLER_CONFIG = TalonFXConfig() // TODO: apply later
+            .withStatorCurrentLimitAmps(50_A)
+            .withInvertedValue(ctre::phoenix6::signals::InvertedValue::Clockwise_Positive) 
+            .withNeutralMode(ctre::phoenix6::signals::NeutralModeValue::Coast)
+            .withSensorToMechanismRatio(Settings::Intake::Roller::GEAR_RATIO);
 
     }
 
     namespace Feeder {
         // TODO: get values after motor pinion swap
-        TalonFXConfig LEADER_CONFIG = TalonFXConfig()
-            .withCurrentLimitAmps(units::current::ampere_t(80))
-			.withRampRate(units::time::second_t(0.25))
-			.withNeutralMode(NeutralModeValue.Coast)
-			.withInvertedValue(InvertedValue.CounterClockwise_Positive);
+        inline TalonFXConfig LEADER_CONFIG = TalonFXConfig()
+            .withStatorCurrentLimitAmps(80_A)
+			.withRampRate(0.25_s)
+			.withNeutralMode(ctre::phoenix6::signals::NeutralModeValue::Coast)
+			.withInvertedValue(ctre::phoenix6::signals::InvertedValue::CounterClockwise_Positive);
     }
 
     namespace Shooter {
-        TalonFXConfig SHOOTER_MOTOR_CONFIG = TalonFXConfig()
-            .withPIDConstants(Gains.Shooter.kP, Gains.Shooter.kI, Gains.Shooter.kD, 0)
-            .withCurrentLimitAmps(units::current::ampere_t(80))
-			.withRampRate(units::time::second_t(0.25))
-			.withNeutralMode(NeutralModeValue.Coast)
-            .withFFConstants(Gains.Shooter.kS, Gains.Shooter.kV, Gains.Shooter.kA, 0)
-			.withInvertedValue(InvertedValue.CounterClockwise_Positive);
+        inline TalonFXConfig SHOOTER_MOTOR_LEFT = TalonFXConfig()
+				.withPIDConstants(Gains::Shooter::kP, Gains::Shooter::kI, Gains::Shooter::kD, 0)
+				.withPIDConstants(Gains::Shooter::FirstShot::kP, Gains::Shooter::FirstShot::kI, Gains::Shooter::FirstShot::kD, 1)
+				.withSupplyCurrentLimitAmps(200_A)
+				.withStatorCurrentLimitAmps(200_A)
+				.withNeutralMode(ctre::phoenix6::signals::NeutralModeValue::Coast)
+				.withFFConstants(Gains::Shooter::kS, Gains::Shooter::kV, Gains::Shooter::kA, 0)
+				.withInvertedValue(ctre::phoenix6::signals::InvertedValue::CounterClockwise_Positive);
 
-        
-        TalonFXConfig SHOOTER_MOTOR_RIGHT = TalonFXConfig()
-            .withPIDConstants(Gains.Shooter.kP, Gains.Shooter.kI, Gains.Shooter.kD, 0)
-            .withCurrentLimitAmps(units::current::ampere_t(80))
-			.withRampRate(units::time::second_t(0.25))
-			.withNeutralMode(NeutralModeValue.Coast)
-            .withFFConstants(Gains.Shooter.kS, Gains.Shooter.kV, Gains.Shooter.kA, 0)
-			.withInvertedValue(InvertedValue.Clockwise_Positive);
+		inline TalonFXConfig SHOOTER_MOTOR_CENTER = TalonFXConfig()
+				.withPIDConstants(Gains::Shooter::kP, Gains::Shooter::kI, Gains::Shooter::kD, 0)
+				.withPIDConstants(Gains::Shooter::FirstShot::kP, Gains::Shooter::FirstShot::kI, Gains::Shooter::FirstShot::kD, 1)
+				.withSupplyCurrentLimitAmps(200_A)
+				.withStatorCurrentLimitAmps(200_A)
+				.withNeutralMode(ctre::phoenix6::signals::NeutralModeValue::Coast)
+				.withFFConstants(Gains::Shooter::kS, Gains::Shooter::kV, Gains::Shooter::kA, 0)
+				.withInvertedValue(ctre::phoenix6::signals::InvertedValue::CounterClockwise_Positive);
 
-        // TalonFXConfig SHOOTER_MOTOR_RIGHT = TalonFXConfig()
-        //     .withPIDConstants(Gains.Shooter.kP, Gains.Shooter.kI, Gains.Shooter.kD, 0)
-        //     .withCurrentLimitAmps(80)
-		// 	.withRampRate(0.25)
-		// 	.withNeutralMode(NeutralModeValue.Coast)
-        //     .withFFConstants(Gains.Shooter.kS, Gains.Shooter.kV, Gains.Shooter.kA, 0)
-		// 	.withInvertedValue(InvertedValue.Clockwise_Positive);
-
-        TalonFXConfig SHOOTER_MOTOR_LEFT = TalonFXConfig()
-            .withPIDConstants(Gains.Shooter.kP, Gains.Shooter.kI, Gains.Shooter.kD, 0)
-            .withCurrentLimitAmps(units::current::ampere_t(80))
-			.withRampRate(units::time::second_t(0.25))
-			.withNeutralMode(NeutralModeValue.Coast)
-            .withFFConstants(Gains.Shooter.kS, Gains.Shooter.kV, Gains.Shooter.kA, 0)
-			.withInvertedValue(InvertedValue.CounterClockwise_Positive);
+		inline TalonFXConfig SHOOTER_MOTOR_RIGHT = TalonFXConfig()
+				.withPIDConstants(Gains::Shooter::kP, Gains::Shooter::kI, Gains::Shooter::kD, 0)
+				.withPIDConstants(Gains::Shooter::FirstShot::kP, Gains::Shooter::FirstShot::kI, Gains::Shooter::FirstShot::kD, 1)
+				.withSupplyCurrentLimitAmps(200_A)
+				.withStatorCurrentLimitAmps(200_A)
+				.withNeutralMode(ctre::phoenix6::signals::NeutralModeValue::Coast)
+				.withFFConstants(Gains::Shooter::kS, Gains::Shooter::kV, Gains::Shooter::kA, 0)
+				.withFFConstants(Gains::Shooter::kS, Gains::Shooter::kV, Gains::Shooter::kA, 1)
+				.withInvertedValue(ctre::phoenix6::signals::InvertedValue::Clockwise_Positive);
     }
 
     namespace Handoff {
-        TalonFXConfig HANDOFF_MOTOR_CONFIG = TalonFXConfig()
-            .withCurrentLimitAmps(units::current::ampere_t(80))
-            .withRampRate(units::time::second_t(0.25))
-            .withNeutralMode(NeutralModeValue.Coast)
-            .withInvertedValue(InvertedValue.CounterClockwise_Positive);
+        inline TalonFXConfig HANDOFF_MOTOR_CONFIG = TalonFXConfig()
+            .withStatorCurrentLimitAmps(80_A)
+            .withRampRate(0.25_s)
+            .withNeutralMode(ctre::phoenix6::signals::NeutralModeValue::Coast)
+            .withInvertedValue(ctre::phoenix6::signals::InvertedValue::CounterClockwise_Positive);
     }
 }

@@ -3,6 +3,7 @@
 #include "subsystems/feeder/FeederImpl.hpp"
 #include "subsystems/feeder/FeederSim.hpp"
 #include "subsystems/feeder/FeederState.hpp"
+#include "constants/Motors.hpp"
 
 Feeder& Feeder::getInstance() {
     static Feeder* instance = frc::RobotBase::IsReal()

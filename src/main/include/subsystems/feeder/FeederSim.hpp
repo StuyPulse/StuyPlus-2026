@@ -9,6 +9,8 @@
 class FeederSim : public Feeder
 {
 public:
+    FeederSim();
+
     void Periodic() override;
 
     units::angular_velocity::revolutions_per_minute_t getCurrentAngularVelocity() override {

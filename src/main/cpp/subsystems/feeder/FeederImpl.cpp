@@ -1,4 +1,9 @@
 #include "subsystems/feeder/FeederImpl.hpp"
+#include "constants/Motors.hpp"
+
+FeederImpl::FeederImpl() {
+    Motors::Feeder::LEADER_CONFIG.configure(feederMotor);
+}
 
 void FeederImpl::Periodic() {
     // Control

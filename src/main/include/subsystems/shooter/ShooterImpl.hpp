@@ -11,6 +11,8 @@ using namespace ctre::phoenix6::hardware;
 class ShooterImpl : public Shooter
 {
 public:
+    ShooterImpl();
+
     void Periodic() override;
 
     units::angular_velocity::revolutions_per_minute_t getCurrentAngularVelocity() override {

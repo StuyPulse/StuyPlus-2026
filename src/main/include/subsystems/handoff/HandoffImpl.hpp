@@ -8,6 +8,8 @@
 class HandoffImpl : public Handoff
 {
 public:
+    HandoffImpl();
+
     void Periodic() override;
 
     void StopMotors() override {

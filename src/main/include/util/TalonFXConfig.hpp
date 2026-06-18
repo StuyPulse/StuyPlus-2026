@@ -33,7 +33,7 @@ class TalonFXConfig {
         ctre::phoenix6::configs::FeedbackConfigs feedbackConfigs{};
         ctre::phoenix6::configs::MotionMagicConfigs motionMagicConfigs{};
     public:
-        void configure(ctre::phoenix6::hardware::TalonFX motor) {
+        void configure(ctre::phoenix6::hardware::TalonFX &motor) {
             motor.GetConfigurator().Apply(configuration);
         }
 
@@ -143,7 +143,7 @@ class TalonFXConfig {
 
         // CURRENT LIMIT CONFIGS
 
-        TalonFXConfig& withCurrentLimitAmps(units::current::ampere_t currentLimitAmps) {
+        TalonFXConfig& withStatorCurrentLimitAmps(units::current::ampere_t currentLimitAmps) {
             currentLimitsConfigs.WithStatorCurrentLimit(currentLimitAmps);
             currentLimitsConfigs.WithStatorCurrentLimitEnable(true);
 

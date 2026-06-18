@@ -3,6 +3,11 @@
 #include "constants/Ports.hpp"
 #include "constants/Settings.hpp"
 #include <telemetrykit/TelemetryKit.h>
+#include "constants/Motors.hpp"
+
+HandoffImpl::HandoffImpl() {
+    Motors::Handoff::HANDOFF_MOTOR_CONFIG.configure(handoffMotor);
+}
 
 void HandoffImpl::Periodic() {
     // Control

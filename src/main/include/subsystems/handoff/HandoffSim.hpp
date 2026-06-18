@@ -9,6 +9,8 @@
 class HandoffSim : public Handoff
 {
 public:
+    HandoffSim();
+
     void Periodic() override;
 
     void StopMotors() override {
