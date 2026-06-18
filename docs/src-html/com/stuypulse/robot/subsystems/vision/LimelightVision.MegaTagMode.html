@@ -172,13 +172,13 @@
 <span class="source-line-no">159</span><span id="line-159">            boolean withinAngularVelocityTolerance = false;</span>
 <span class="source-line-no">160</span><span id="line-160">            boolean poseAtOrigin = false;</span>
 <span class="source-line-no">161</span><span id="line-161">            // Adding to pose estimator</span>
-<span class="source-line-no">162</span><span id="line-162">            SmartDashboard.putBoolean("Vision/Pose Not Estimate Null", poseEstimate != null);</span>
+<span class="source-line-no">162</span><span id="line-162">            DogLog.log("Vision/Pose Not Estimate Null", poseEstimate != null);</span>
 <span class="source-line-no">163</span><span id="line-163">            if (poseEstimate != null &amp;&amp; poseEstimate.tagCount &gt; 0) {</span>
 <span class="source-line-no">164</span><span id="line-164">                notNull = true;</span>
-<span class="source-line-no">165</span><span id="line-165">                SmartDashboard.putNumber("Vision/Pose Estimate X", poseEstimate.pose.getX());</span>
-<span class="source-line-no">166</span><span id="line-166">                SmartDashboard.putNumber("Vision/Pose Estimate Y", poseEstimate.pose.getY());</span>
-<span class="source-line-no">167</span><span id="line-167">                SmartDashboard.putNumber("Vision/Pose Estimate Theta", poseEstimate.pose.getRotation().getDegrees());</span>
-<span class="source-line-no">168</span><span id="line-168">                SmartDashboard.putNumber("Vision/Tag Count", poseEstimate.tagCount);</span>
+<span class="source-line-no">165</span><span id="line-165">                DogLog.log("Vision/Pose Estimate X", poseEstimate.pose.getX());</span>
+<span class="source-line-no">166</span><span id="line-166">                DogLog.log("Vision/Pose Estimate Y", poseEstimate.pose.getY());</span>
+<span class="source-line-no">167</span><span id="line-167">                DogLog.log("Vision/Pose Estimate Theta", poseEstimate.pose.getRotation().getDegrees());</span>
+<span class="source-line-no">168</span><span id="line-168">                DogLog.log("Vision/Tag Count", poseEstimate.tagCount);</span>
 <span class="source-line-no">169</span><span id="line-169">                if (poseEstimate.pose.equals(Settings.Vision.INVALID_POSITION)) {</span>
 <span class="source-line-no">170</span><span id="line-170">                    poseAtOrigin = true;</span>
 <span class="source-line-no">171</span><span id="line-171">                }</span>
@@ -186,8 +186,8 @@
 <span class="source-line-no">173</span><span id="line-173">                    withinAngularVelocityTolerance = true;</span>
 <span class="source-line-no">174</span><span id="line-174">                }</span>
 <span class="source-line-no">175</span><span id="line-175">                Boolean isValidPose = notNull &amp;&amp; withinAngularVelocityTolerance &amp;&amp; !poseAtOrigin;</span>
-<span class="source-line-no">176</span><span id="line-176">                SmartDashboard.putBoolean("Vision/Pose at Origin?", poseAtOrigin);</span>
-<span class="source-line-no">177</span><span id="line-177">                SmartDashboard.putBoolean("Vision/Within Angular Velocity", withinAngularVelocityTolerance);</span>
+<span class="source-line-no">176</span><span id="line-176">                DogLog.log("Vision/Pose at Origin?", poseAtOrigin);</span>
+<span class="source-line-no">177</span><span id="line-177">                DogLog.log("Vision/Within Angular Velocity", withinAngularVelocityTolerance);</span>
 <span class="source-line-no">178</span><span id="line-178">                DogLog.log("Vision/isValidPose", isValidPose);</span>
 <span class="source-line-no">179</span><span id="line-179">                DogLog.log("Vision/isWithinAngularVel", withinAngularVelocityTolerance);</span>
 <span class="source-line-no">180</span><span id="line-180">                DogLog.log("Vision/poseAtOrigin", poseAtOrigin);</span>
