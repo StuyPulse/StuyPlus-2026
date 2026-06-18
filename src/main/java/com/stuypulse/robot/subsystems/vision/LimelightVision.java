@@ -159,13 +159,13 @@ public class LimelightVision extends SubsystemBase {
             boolean withinAngularVelocityTolerance = false;
             boolean poseAtOrigin = false;
             // Adding to pose estimator
-            SmartDashboard.putBoolean("Vision/Pose Not Estimate Null", poseEstimate != null);
+            DogLog.log("Vision/Pose Not Estimate Null", poseEstimate != null);
             if (poseEstimate != null && poseEstimate.tagCount > 0) {
                 notNull = true;
-                SmartDashboard.putNumber("Vision/Pose Estimate X", poseEstimate.pose.getX());
-                SmartDashboard.putNumber("Vision/Pose Estimate Y", poseEstimate.pose.getY());
-                SmartDashboard.putNumber("Vision/Pose Estimate Theta", poseEstimate.pose.getRotation().getDegrees());
-                SmartDashboard.putNumber("Vision/Tag Count", poseEstimate.tagCount);
+                DogLog.log("Vision/Pose Estimate X", poseEstimate.pose.getX());
+                DogLog.log("Vision/Pose Estimate Y", poseEstimate.pose.getY());
+                DogLog.log("Vision/Pose Estimate Theta", poseEstimate.pose.getRotation().getDegrees());
+                DogLog.log("Vision/Tag Count", poseEstimate.tagCount);
                 if (poseEstimate.pose.equals(Settings.Vision.INVALID_POSITION)) {
                     poseAtOrigin = true;
                 }
@@ -173,8 +173,8 @@ public class LimelightVision extends SubsystemBase {
                     withinAngularVelocityTolerance = true;
                 }
                 Boolean isValidPose = notNull && withinAngularVelocityTolerance && !poseAtOrigin;
-                SmartDashboard.putBoolean("Vision/Pose at Origin?", poseAtOrigin);
-                SmartDashboard.putBoolean("Vision/Within Angular Velocity", withinAngularVelocityTolerance);
+                DogLog.log("Vision/Pose at Origin?", poseAtOrigin);
+                DogLog.log("Vision/Within Angular Velocity", withinAngularVelocityTolerance);
                 DogLog.log("Vision/isValidPose", isValidPose);
                 DogLog.log("Vision/isWithinAngularVel", withinAngularVelocityTolerance);
                 DogLog.log("Vision/poseAtOrigin", poseAtOrigin);
