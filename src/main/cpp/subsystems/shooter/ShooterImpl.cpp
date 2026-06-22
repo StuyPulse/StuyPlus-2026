@@ -22,9 +22,9 @@ void ShooterImpl::Periodic() {
 
     // Logging
     tkit::Logger& logger = tkit::Logger::GetInstance();
-    logger.RecordOutput("Handoff/Velocity_RPS", shooterMotorRight.GetVelocity().GetValueAsDouble());
-    logger.RecordOutput("Handoff/Stator Current_Amps", shooterMotorRight.GetStatorCurrent().GetValueAsDouble());
-    logger.RecordOutput("Handoff/Supply Current_Amps", shooterMotorRight.GetSupplyCurrent().GetValueAsDouble());
+    logger.RecordOutput("Shooter/Velocity_RPS", shooterMotorRight.GetVelocity().GetValueAsDouble());
+    logger.RecordOutput("Shooter/Stator Current_Amps", shooterMotorRight.GetStatorCurrent().GetValueAsDouble());
+    logger.RecordOutput("Shooter/Supply Current_Amps", shooterMotorRight.GetSupplyCurrent().GetValueAsDouble());
 
     Shooter::Periodic();
 }

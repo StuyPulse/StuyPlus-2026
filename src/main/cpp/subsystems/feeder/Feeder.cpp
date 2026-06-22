@@ -4,6 +4,7 @@
 #include "subsystems/feeder/FeederSim.hpp"
 #include "subsystems/feeder/FeederState.hpp"
 #include "constants/Motors.hpp"
+#include <frc/smartdashboard/SmartDashboard.h>
 
 Feeder& Feeder::getInstance() {
     static Feeder* instance = frc::RobotBase::IsReal()
@@ -22,5 +23,4 @@ FeederState Feeder::getState() const {
     return state;
 }
 
-void Feeder::Periodic() {
-}
+void Feeder::Periodic() {}

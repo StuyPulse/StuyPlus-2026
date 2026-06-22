@@ -7,6 +7,7 @@
 #include <frc/smartdashboard/SmartDashboard.h>
 #include <wpi/print.h>
 #include <telemetrykit/TelemetryKit.h>
+#include <frc2/command/CommandScheduler.h>
 
 Robot::Robot() {
   m_chooser.SetDefaultOption(kAutoNameDefault, kAutoNameDefault);
@@ -30,6 +31,7 @@ Robot::Robot() {
  * LiveWindow and SmartDashboard integrated updating.
  */
 void Robot::RobotPeriodic() {
+  frc2::CommandScheduler::GetInstance().Run();
   tkit::Logger::GetInstance().Periodic();
 }
 

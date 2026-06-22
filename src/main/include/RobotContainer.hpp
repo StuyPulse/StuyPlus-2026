@@ -6,6 +6,9 @@
 
 #include <frc2/command/CommandPtr.h>
 #include <frc2/command/button/CommandXboxController.h>
+#include "subsystems/feeder/Feeder.hpp"
+#include "subsystems/handoff/Handoff.hpp"
+#include "subsystems/shooter/Shooter.hpp"
 
 class RobotContainer {
  public:
@@ -17,4 +20,8 @@ class RobotContainer {
   void ConfigureBindings();
 
   frc2::CommandXboxController controller{0};
+
+  Feeder &feeder = Feeder::getInstance();
+  Handoff &handoff = Handoff::getInstance();
+  Shooter &shooter = Shooter::getInstance();
 };
