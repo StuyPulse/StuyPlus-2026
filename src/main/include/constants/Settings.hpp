@@ -48,14 +48,17 @@ namespace Settings
         namespace Pivot
         {
             // State angles
-            const frc::Rotation2d INITIAL_ANGLE = frc::Rotation2d{0_deg};
-            const frc::Rotation2d IDLE_ANGLE = frc::Rotation2d{0_deg};
-            const frc::Rotation2d DOWN_ANGLE = frc::Rotation2d{102_deg};
+            constexpr units::degree_t INITIAL_ANGLE = -102_deg;
+            constexpr units::degree_t STOW_ANGLE = -102_deg;
+            constexpr units::degree_t DEPLOY_ANGLE = -22_deg;
+            constexpr units::degree_t AGITATE_UP_ANGLE = -62_deg;
+            constexpr units::degree_t AGITATE_DOWN_ANGLE = -22_deg;
+            constexpr units::degree_t DIGEST_ANGLE = -92_deg;
 
             // Misc
-            const frc::Rotation2d ANGLE_TOLERANCE = frc::Rotation2d{0.5_deg};
-            const frc::Rotation2d PUSHDOWN_THRESHOLD = frc::Rotation2d{85_deg};
-            constexpr units::ampere_t PUSHDOWN_CURRENT = 30_A;
+            constexpr units::degree_t ANGLE_TOLERANCE = 0.5_deg;
+            constexpr units::degree_t PUSHDOWN_THRESHOLD = -30_deg;
+            constexpr units::ampere_t PUSHDOWN_CURRENT = 13_A;
             constexpr units::ampere_t STALL_CURRENT = 25_A;
             constexpr units::second_t STALL_DEBOUNCE = 0.0_s;
             constexpr units::volt_t HOMING_DOWN_VOLTAGE = 3_V;
@@ -65,8 +68,8 @@ namespace Settings
             constexpr units::volt_t STEP_VOLTAGE = 4_V;
 
             // Sim
-            const frc::Rotation2d MIN_ANGLE = frc::Rotation2d{0_deg};
-            const frc::Rotation2d MAX_ANGLE = frc::Rotation2d{102_deg};
+            constexpr units::degree_t MIN_ANGLE = 0_deg;
+            constexpr units::degree_t MAX_ANGLE = 102_deg;
             constexpr double GEAR_RATIO = 60.0;
             constexpr units::kilogram_square_meter_t J = 0.001_kg_sq_m;
         }

@@ -10,7 +10,6 @@
 class Shooter : public frc2::SubsystemBase {
     public: 
         static Shooter& getInstance();
-        constexpr static ctre::phoenix6::controls::Follower followerControl{Ports::Shooter::SHOOTER_MOTOR_RIGHT, ctre::phoenix6::signals::MotorAlignmentValue::Opposed};
 
         ShooterState getState() const;
         void setState(ShooterState state);
@@ -23,6 +22,7 @@ class Shooter : public frc2::SubsystemBase {
         Shooter();
 
         virtual void StopMotors() = 0;
+        const ctre::phoenix6::controls::Follower followerControl{Ports::Shooter::SHOOTER_MOTOR_RIGHT, ctre::phoenix6::signals::MotorAlignmentValue::Opposed};
 
     private:
         ShooterState state;

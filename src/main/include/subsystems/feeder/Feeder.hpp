@@ -12,7 +12,7 @@ public:
     void setState(FeederState state);
     FeederState getState() const;
 
-    virtual units::angular_velocity::revolutions_per_minute_t getCurrentAngularVelocity() = 0;
+    virtual units::angular_velocity::revolutions_per_minute_t getCurrentAngularVelocity() const = 0;
 
     void Periodic() override;
 
