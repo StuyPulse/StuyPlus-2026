@@ -30,12 +30,14 @@ class Intake : public frc2::SubsystemBase {
         void Periodic() override;
 
     private:
-        IntakeState state = IntakeState::IDLE;
+        IntakeState state;
 
     protected:
+        Intake();
+
         // rollers
-        const ctre::phoenix6::controls::Follower rollerFollowerControl{Ports::Intake::INTAKE_ROLLER_MOTOR_LEFT, ctre::phoenix6::signals::MotorAlignmentValue::Opposed};
         ctre::phoenix6::controls::DutyCycleOut rollerController;
+        const ctre::phoenix6::controls::Follower rollerFollowerControl{Ports::Intake::INTAKE_ROLLER_MOTOR_LEFT, ctre::phoenix6::signals::MotorAlignmentValue::Opposed};
         
         // pivot
         ctre::phoenix6::controls::PositionTorqueCurrentFOC positionController;
@@ -43,4 +45,6 @@ class Intake : public frc2::SubsystemBase {
         const ctre::phoenix6::controls::TorqueCurrentFOC pushdownController{Settings::Intake::Pivot::PUSHDOWN_CURRENT};
 
         virtual void stopRollerMotors() = 0;
+        virtual void stopPivotMotor() = 0;
+        virtual void stopAllMotors() = 0;
 };
