@@ -18,5 +18,5 @@ struct IntakeState {
         double targetDutyCycle;
         units::degree_t targetAngle;
 
-        IntakeState(double targetDutyCycle, units::degree_t targetAngle) : targetDutyCycle(targetDutyCycle), targetAngle(targetAngle) {}
+        IntakeState(units::degree_t targetAngle, double targetDutyCycle) : targetAngle(targetAngle), targetDutyCycle(targetDutyCycle) {}
 };
