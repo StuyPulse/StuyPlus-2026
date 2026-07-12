@@ -46,6 +46,7 @@ The documentation for StuyPlus-2026 can be found [here](https://stuypulse.github
 | `experiments/` | Experimental work that may not be merged into to `main`. |
 | `docs` | Reserved for automated [documentation](https://stuypulse.github.io/StuyPlus-2026/) generation by the [`javadoc.yml`](./.github/workflows/javadoc.yml) workflow. This branch should not be pushed to manually. |
 | `versions` | Different variants of the code for specific events |
+| `offseason` | Branches for experimenting with offseason code |
 
 ## Drivetrain
 Files: 
