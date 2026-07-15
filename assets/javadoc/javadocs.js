@@ -1,3 +1,4 @@
+// full update
 // hella tuff javascript code to make javadocs look way nicer
 
 let hljsCSSLink = null;
@@ -41,29 +42,38 @@ const getLineFlashLengthMilliseconds = () => {
 
 let targetElementInView = null;
 let timeoutCancelId = null;
-const intersectionObserver = new IntersectionObserver((entries) => {
-    for (const entry of entries) {
-        if (!(entry.target === targetElementInView)) continue;
 
-        if (entry.isIntersecting) {
-            entry.target.classList.add("flash");
-        }
-        
+const sectionInViewObserver = new IntersectionObserver((entries) => {
+    for (const entry of entries) {
+        console.log(
+        `entry.target: ${entry.target.id}, isIntersecting: ${entry.isIntersecting}, intersectionRatio: ${entry.intersectionRatio}`
+        )
+
+        console.log(
+            "OBSERVED:",
+            entry.target.id,
+            "CURRENT TARGET:",
+            targetElementInView?.id
+        );
+        if (entry.target.id !== targetElementInView?.id) continue;
+
+        if (!entry.isIntersecting || entry.intersectionRatio < 0.99) continue;
+
+        console.log(`Target element ${entry.target.id} is in view. Flashing it now.`);
+        entry.target.classList.add("flash");
+        sectionInViewObserver.unobserve(entry.target);
+
         timeoutCancelId = setTimeout(() => {
             entry.target.classList.remove("flash");
             targetElementInView = null;
         }, getSectionFlashLengthMilliseconds());
     }
-}, { threshold: 0.9 });
-
-const targets = document.querySelectorAll("section.detail");
-targets.forEach(target => intersectionObserver.observe(target));
+}, { threshold: 0.99 });
 
 const placeFavicon = () => {
     const link = document.createElement("link");
     link.setAttribute("rel", "icon");
-    link.setAttribute("href", "/StuyPlus-2026/favicon.ico?t=" + Date.now()); // This forces the browser 
-                                                                            // to reload the favicon everytime instead of getting the cached version
+    link.setAttribute("href", "/StuyPlus-2026/favicon.ico?t=" + Date.now());
     link.setAttribute("type", "image/x-icon");
     document.head.appendChild(link);
 }
@@ -132,17 +142,31 @@ const detectTargetElementInViewOnHashChange = () => {
             return null;
         }
     })();
-    if (!targetElement || !targetElement.matches("section.detail")) return;
+    if (!targetElement || !targetElement.matches("section.detail")) {
+        console.log("NOT");
+        return;
+    }
 
     if (timeoutCancelId) {
         clearTimeout(timeoutCancelId);
         timeoutCancelId = null;
+    }
 
-        targetElementInView?.classList.remove("flash");
+    if (targetElementInView) {
+        targetElementInView.classList.remove("flash");
+        sectionInViewObserver.unobserve(targetElementInView);
         targetElementInView = null;
     }
 
+    if (targetElementInView && targetElementInView !== targetElement) {
+        sectionInViewObserver.unobserve(targetElementInView);
+        targetElementInView.classList.remove("flash");
+    }
+
     targetElementInView = targetElement;
+    sectionInViewObserver.observe(targetElement);
+
+    targetElement.scrollIntoView({ behavior: "smooth", block: "center" });
 }
 
 const syntaxHighlight = () => {
@@ -189,6 +213,10 @@ const syntaxHighlight = () => {
             const codeBlock = document.querySelector(".code-wrapper > pre > code");
             codeBlock.textContent = source;
             hljs.highlightElement(codeBlock);
+
+            const highlightDiv = document.createElement("div");
+            highlightDiv.setAttribute("class", "line-highlight");
+            codeBlock.appendChild(highlightDiv);
 
             const backButton = document.querySelector(".back-button");
             backButton.addEventListener("click", () => {
