@@ -3,7 +3,7 @@
 let hljsCSSLink = null;
 let hljsScript = null;
 
-const getLengthOfFlashMilliseconds = () => {
+const getSectionFlashLengthMilliseconds = () => {
     const element = document.querySelector("section.detail");
     if (element) {
         const rawDuration = getComputedStyle(element).getPropertyValue("--flash-duration").trim();
@@ -19,8 +19,26 @@ const getLengthOfFlashMilliseconds = () => {
     }
 
     return 2300;
+}
+
+const getLineFlashLengthMilliseconds = () => {
+    const element = document.querySelector(".line-highlight");
+    if (element) {
+        const rawDuration = getComputedStyle(element).getPropertyValue("--flash-duration").trim();
+        const seconds = parseFloat(rawDuration);
+        const milliseconds = seconds * 1000;
+
+        if (!isNaN(milliseconds)) {
+            return milliseconds;
+        } else {
+            console.warn(`--flash-duration variable not found. Fallbacking to 2300ms.`);
+            return 2300; // Default to 2.3 seconds if the value is invalid
+        }
+    }
+
+    return 2300;
 };
-console.log(`Length of flash animation in milliseconds: ${getLengthOfFlashMilliseconds()}ms`);
+
 let targetElementInView = null;
 let timeoutCancelId = null;
 const intersectionObserver = new IntersectionObserver((entries) => {
@@ -34,7 +52,7 @@ const intersectionObserver = new IntersectionObserver((entries) => {
         timeoutCancelId = setTimeout(() => {
             entry.target.classList.remove("flash");
             targetElementInView = null;
-        }, getLengthOfFlashMilliseconds());
+        }, getSectionFlashLengthMilliseconds());
     }
 }, { threshold: 0.9 });
 
@@ -56,7 +74,7 @@ const goToLineNumberByHash = () => {
 
     const lineHashRegex = /^#line-\d+$/;
     if (!hljsScript) {
-        console.warn("highlight.js not loaded yet .line-numbers container not created yet 🤤.");
+        console.warn("highlight.js not loaded yet & .line-numbers container not created yet 🤤.");
         return;
     }
 
@@ -70,7 +88,34 @@ const goToLineNumberByHash = () => {
     if (targetElement) {
         const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
         const behavior = prefersReducedMotion ? "auto" : "smooth";
-        targetElement.scrollIntoView({ behavior, block: "start" });
+
+        const lineInViewObserver = new IntersectionObserver((entries) => {
+            for (const entry of entries) {
+                if (!(entry.target === targetElement)) continue;
+
+                if (entry.isIntersecting && entry.intersectionRatio >= 1.0) {
+                    const highlightDiv = document.querySelector(".line-highlight");
+                    const lineHeight = (() => {
+                        const computed = window.getComputedStyle(highlightDiv);
+                        const lineHeight = computed.getPropertyValue('--line-height').trim();
+                        return parseFloat(lineHeight);
+                    })();
+                    const lineNumber = parseInt(entry.target.id.replace("line-", ""));
+                    const translateY = (lineNumber - 1) * lineHeight;
+                    highlightDiv.style.setProperty("transform", `translateY(${translateY}em)`);
+                    highlightDiv.classList.add("flash");
+
+                    setTimeout(() => {
+                        entry.target.classList.remove("flash");
+                    }, getLineFlashLengthMilliseconds());
+
+                    lineInViewObserver.disconnect();
+                }
+            }
+        }, { threshold: 1.0 })
+
+        lineInViewObserver.observe(targetElement);
+        targetElement.scrollIntoView({ behavior, block: "start", block: "center" });
     }
 }
 

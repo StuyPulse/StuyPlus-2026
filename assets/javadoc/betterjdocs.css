@@ -100,6 +100,27 @@
   margin: 0 !important;
 }
 
+@keyframes flashLine {
+  0% {
+    background-color: transparent;
+  }
+
+  /* Rapidly ramps up to the peak flash color */
+  20% {
+    background-color: #ff00008c;
+  }
+
+  /* Lingers slightly at the peak before fading out */
+  40% {
+    background-color: #ff00008c;
+  }
+
+  /* Smoothly fades back to the code block background */
+  100% {
+    background-color: transparent;
+  }
+}
+
 .source-page {
   .back-button {
     background: var(--primary-color);
@@ -129,6 +150,12 @@
   code.language-java.hljs {
     line-height: var(--line-height);
     padding: 3px 5px;
+    position: relative;
+  }
+
+  code.language-java.hljs > *:not(.line-highlight) {
+    z-index: 6;
+    position: relative;
   }
 
   .line-numbers {
@@ -142,6 +169,21 @@
 
     span {
       user-select: none;
+    }
+  }
+
+  .line-highlight {
+    --flash-duration: 2.3s;
+
+    position: absolute;
+    inset: 0;
+    height: var(--line-height);
+    width: 100%;
+    background-color: transparent;
+    z-index: 5;
+
+    &.flash {
+      animation: flashLine var(--flash-duration) cubic-bezier(0.2, 0.8, 0.2, 1);
     }
   }
 }
