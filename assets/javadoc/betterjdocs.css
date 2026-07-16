@@ -79,7 +79,8 @@
   align-items: flex-end;
 }
 
-.package-index-page .title::after {
+.package-index-page .title::after,
+.all-packages-index-page .title::after {
   --size: 75px;
   content: "";
   position: absolute;
