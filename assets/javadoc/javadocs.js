@@ -11,45 +11,8 @@ const scrollToElementWithRespectToMotionPreference = (element, block) => {
     element.scrollIntoView({ behavior, block });
 }
 
-const getSectionFlashLengthMilliseconds = () => {
-    const element = document.querySelector("section.detail");
-    if (element) {
-        const rawDuration = getComputedStyle(element).getPropertyValue("--flash-duration").trim();
-        const seconds = parseFloat(rawDuration);
-        const milliseconds = seconds * 1000;
-
-        if (!isNaN(milliseconds)) {
-            return milliseconds;
-        } else {
-            console.warn(`--flash-duration variable not found. Fallbacking to 2300ms.`);
-            return 2300; // Default to 2.3 seconds if the value is invalid
-        }
-    }
-
-    return 2300;
-}
-
-const getLineFlashLengthMilliseconds = () => {
-    const element = document.querySelector(".line-highlight");
-    if (element) {
-        const rawDuration = getComputedStyle(element).getPropertyValue("--flash-duration").trim();
-        const seconds = parseFloat(rawDuration);
-        const milliseconds = seconds * 1000;
-
-        if (!isNaN(milliseconds)) {
-            return milliseconds;
-        } else {
-            console.warn(`--flash-duration variable not found. Fallbacking to 2300ms.`);
-            return 2300; // Default to 2.3 seconds if the value is invalid
-        }
-    }
-
-    return 2300;
-};
-
+let animationEndEventListener = null;
 let targetElementInView = null;
-let timeoutCancelId = null;
-
 const sectionInViewObserver = new IntersectionObserver((entries) => {
     for (const entry of entries) {
         console.log(
@@ -70,10 +33,18 @@ const sectionInViewObserver = new IntersectionObserver((entries) => {
         entry.target.classList.add("flash");
         sectionInViewObserver.unobserve(entry.target);
 
-        timeoutCancelId = setTimeout(() => {
+        // timeoutCancelId = setTimeout(() => {
+        //     entry.target.classList.remove("flash");
+        //     targetElementInView = null;
+        // }, getSectionFlashLengthMilliseconds());
+
+        const handleAnimationEnd = (animationEvent) => {
+            if (animationEvent.animationName !== "flashBorder") return;
+
             entry.target.classList.remove("flash");
             targetElementInView = null;
-        }, getSectionFlashLengthMilliseconds());
+        }
+        entry.target.addEventListener("animationend", handleAnimationEnd, { once: true });
     }
 }, { threshold: 0.99 });
 
@@ -119,9 +90,13 @@ const goToLineNumberByHash = () => {
                     highlightDiv.style.setProperty("transform", `translateY(${translateY}em)`);
                     highlightDiv.classList.add("flash");
 
-                    setTimeout(() => {
-                        entry.target.classList.remove("flash");
-                    }, getLineFlashLengthMilliseconds());
+                    const handleAnimationEnd = (animationEvent) => {
+                        if (animationEvent.animationName !== "flashLine") return;
+
+                        highlightDiv.classList.remove("flash");
+                    }
+                    highlightDiv.addEventListener("animationend", handleAnimationEnd, { once: true });
+                    animationEndEventListener = handleAnimationEnd;
 
                     lineInViewObserver.disconnect();
                 }
@@ -151,9 +126,10 @@ const detectTargetElementInViewOnHashChange = () => {
         return;
     }
 
-    if (timeoutCancelId) {
-        clearTimeout(timeoutCancelId);
-        timeoutCancelId = null;
+    if (animationEndEventListener) {
+        const highlightDiv = document.querySelector(".line-highlight");
+        highlightDiv.removeEventListener("animationend", animationEndEventListener);
+        animationEndEventListener = null;
     }
 
     if (targetElementInView) {
