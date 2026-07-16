@@ -4,6 +4,13 @@
 let hljsCSSLink = null;
 let hljsScript = null;
 
+const scrollToElementWithRespectToMotionPreference = (element, block) => {
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const behavior = prefersReducedMotion ? "auto" : "smooth";
+
+    element.scrollIntoView({ behavior, block });
+}
+
 const getSectionFlashLengthMilliseconds = () => {
     const element = document.querySelector("section.detail");
     if (element) {
@@ -96,9 +103,6 @@ const goToLineNumberByHash = () => {
     // The hash exactly matches the id already so we can just scroll to it cuz querySelector is so tuff
     const targetElement = document.querySelector(hash);
     if (targetElement) {
-        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-        const behavior = prefersReducedMotion ? "auto" : "smooth";
-
         const lineInViewObserver = new IntersectionObserver((entries) => {
             for (const entry of entries) {
                 if (!(entry.target === targetElement)) continue;
@@ -125,7 +129,7 @@ const goToLineNumberByHash = () => {
         }, { threshold: 1.0 })
 
         lineInViewObserver.observe(targetElement);
-        targetElement.scrollIntoView({ behavior, block: "start", block: "center" });
+        scrollToElementWithRespectToMotionPreference(targetElement, "center");
     }
 }
 
@@ -166,7 +170,7 @@ const detectTargetElementInViewOnHashChange = () => {
     targetElementInView = targetElement;
     sectionInViewObserver.observe(targetElement);
 
-    targetElement.scrollIntoView({ behavior: "smooth", block: "center" });
+    scrollToElementWithRespectToMotionPreference(targetElement, "center");
 }
 
 const syntaxHighlight = () => {

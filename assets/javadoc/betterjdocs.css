@@ -188,27 +188,53 @@
   }
 }
 
-@keyframes flashBorder {
-  0% {
-    transform: scale(1);
-    border-color: var(--primary-color);
-    background: color-mix(in srgb, var(--primary-color) 22%, transparent);
-    box-shadow: 0 0 0 0 color-mix(in srgb, var(--primary-color) 50%, transparent);
+@media (prefers-reduced-motion: no-preference) {
+  @keyframes flashBorder {
+    0% {
+      transform: scale(1);
+      border-color: var(--primary-color);
+      background: color-mix(in srgb, var(--primary-color) 22%, transparent);
+      box-shadow: 0 0 0 0 color-mix(in srgb, var(--primary-color) 50%, transparent);
+    }
+  
+    20% {
+      transform: scale(1.025);
+      background: color-mix(in srgb, var(--primary-color) 12%, transparent);
+      box-shadow:
+        0 0 0 8px color-mix(in srgb, var(--primary-color) 30%, transparent),
+        0 0 24px color-mix(in srgb, var(--primary-color) 35%, transparent);
+    }
+  
+    100% {
+      transform: scale(1);
+      border-color: var(--bg-600-color);
+      background: transparent;
+      box-shadow: none;
+    }
   }
+}
 
-  20% {
-    transform: scale(1.025);
-    background: color-mix(in srgb, var(--primary-color) 12%, transparent);
-    box-shadow:
-      0 0 0 8px color-mix(in srgb, var(--primary-color) 30%, transparent),
-      0 0 24px color-mix(in srgb, var(--primary-color) 35%, transparent);
-  }
+@media (prefers-reduced-motion: reduce) {
+  @keyframes flashBorder {
+    0% {
+      border-color: var(--bg-600-color);
+      background: transparent;
+      box-shadow: none;
+    }
 
-  100% {
-    transform: scale(1);
-    border-color: var(--bg-600-color);
-    background: transparent;
-    box-shadow: none;
+    5% {
+      border-color: var(--primary-color);
+      background: color-mix(in srgb, var(--primary-color) 16%, transparent);
+      box-shadow:
+        0 0 0 3px color-mix(in srgb, var(--primary-color) 35%, transparent),
+        0 0 12px color-mix(in srgb, var(--primary-color) 25%, transparent);
+    }
+
+    100% {
+      border-color: var(--bg-600-color);
+      background: transparent;
+      box-shadow: none;
+    }
   }
 }
 
