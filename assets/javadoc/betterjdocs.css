@@ -86,7 +86,7 @@
   position: absolute;
   width: var(--size);
   height: var(--size);
-  background-image: url("/StuyPlus-2026/StuyPlusLogo.png");
+  background-image: url("./StuyPlusLogo.png");
   background-size: contain;
   background-repeat: no-repeat;
   right: 0;

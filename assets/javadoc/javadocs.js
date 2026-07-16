@@ -48,14 +48,6 @@ const sectionInViewObserver = new IntersectionObserver((entries) => {
     }
 }, { threshold: 0.99 });
 
-const placeFavicon = () => {
-    const link = document.createElement("link");
-    link.setAttribute("rel", "icon");
-    link.setAttribute("href", "/StuyPlus-2026/favicon.ico?t=" + Date.now());
-    link.setAttribute("type", "image/x-icon");
-    document.head.appendChild(link);
-}
-
 const goToLineNumberByHash = () => {
     const isSourcePage = document.querySelector("body.source-page") !== null;
     if (!isSourcePage) return;
@@ -223,7 +215,6 @@ const createListeners = () => {
     });
 }
 
-placeFavicon();
 syntaxHighlight();
 
 goToLineNumberByHash();
