@@ -466,7 +466,7 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
             this,
             this::getPose,
             this::getChassisSpeeds,
-            this::driveRobotRelative,
+            this::setChassisSpeeds,
             new PIDController(2.0, 0.0, 0.0),
             new PIDController(1.0, 0.0, 0.0),
             new PIDController(0.2, 0.0, 0.0)
