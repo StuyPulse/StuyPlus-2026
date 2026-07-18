@@ -89,9 +89,7 @@ public class RobotContainer {
         swerve,
         swerve::getPose,
         swerve::getChassisSpeeds,
-        speeds -> swerve.drive(
-            new Translation2d(speeds.vxMetersPerSecond, speeds.vyMetersPerSecond),
-            speeds.omegaRadiansPerSecond),        
+        swerve::driveRobotRelative,        
         new PIDController(2.0, 0.0, 0.0),
         new PIDController(1.0, 0.0, 0.0),
         new PIDController(0.2, 0.0, 0.0)

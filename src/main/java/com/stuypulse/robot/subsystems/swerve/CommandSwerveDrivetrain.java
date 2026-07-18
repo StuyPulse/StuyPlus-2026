@@ -541,6 +541,19 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
                         twistVel.dtheta / Settings.DT.in(Seconds)));
     }
 
+    public void driveRobotRelative(ChassisSpeeds speeds) {
+    Pose2d robotVel = new Pose2d(
+            Settings.DT.in(Seconds) * speeds.vxMetersPerSecond,
+            Settings.DT.in(Seconds) * speeds.vyMetersPerSecond,
+            Rotation2d.fromRadians(Settings.DT.in(Seconds) * speeds.omegaRadiansPerSecond));
+    Twist2d twistVel = new Pose2d().log(robotVel);
+    setChassisSpeeds(
+            new ChassisSpeeds(
+                    twistVel.dx / Settings.DT.in(Seconds),
+                    twistVel.dy / Settings.DT.in(Seconds),
+                    twistVel.dtheta / Settings.DT.in(Seconds)));
+}
+
     private final StructPublisher<Pose2d> posePublisher = NetworkTableInstance.getDefault()
             .getStructTopic("AdvScope/DTPose", Pose2d.struct).publish();
 
