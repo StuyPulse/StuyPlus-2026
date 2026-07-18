@@ -63,23 +63,19 @@ const fileWalker = (directory) => {
 const scriptJsPatcher = (filePath) => {
     const text = fs.readFileSync(filePath, "utf-8");
 
-    const alreadyPatchedRegex = /var timeoutID;\s*var contentDiv\s*=/; // vibe coded btw
-    if (alreadyPatchedRegex.test(text)) {
-        log(`Already patched ${getRelativePath(filePath)}`, "green");
-        return;
-    }
+    const newText = (() => {
+        let updatedText = text.replace(
+            /^(\s*)var contentDiv = document\.querySelector\("div\.flex-content"\);/m,
+            `$1var timeoutID;\n$1var contentDiv = document.querySelector("div.flex-content");`
+        )
 
-    let newText = text;
+        updatedText = updatedText.replace(
+            /(contentDiv\.addEventListener\("scroll", function\(e\) {\s*)var timeoutID;\s*/m,
+            "$1"
+        )
 
-    newText = newText.replace(
-        /^(\s*)var contentDiv = document\.querySelector\("div\.flex-content"\);/m,
-        `$1var timeoutID;\n$1var contentDiv = document.querySelector("div.flex-content");`
-    );
-
-    newText = newText.replace(
-        /(contentDiv\.addEventListener\("scroll", function\(e\) {\s*)var timeoutID;\s*/m,
-        "$1"
-    );
+        return updatedText;
+    })();
 
     if (newText === text) {
         log(`Failed to patch ${getRelativePath(filePath)}`, "red");
@@ -99,10 +95,6 @@ const htmlPatcher = (filePath) => {
     `<script defer src="${getRelativePathBetweenFiles(filePath, javadocsFile)}"></script>` +
     `<link rel="icon" href="${getRelativePathBetweenFiles(filePath, faviconFile)}?t=${Date.now()}" type="image/x-icon"></head>`;
 
-    if (text.includes(replacement)) {
-        log(`Already patched ${getRelativePath(filePath)}`, "green");
-        return;
-    }
     const newText = text.replace(
         "</head>",
         replacement
@@ -132,8 +124,15 @@ const addJavadocAssets = () => {
     }
 }
 
-scriptJsPatcher(path.join(javadocDirectory, "script.js"));
-fileWalker(javadocDirectory);
-addJavadocAssets();
+const checkpointFile = path.join(javadocDirectory, ".patched");
 
-log("Patcher complete", "green");
+if (fs.existsSync(checkpointFile)) {
+    log("Javadoc already patched, skipping patcher", "green"); 
+} else {
+    scriptJsPatcher(path.join(javadocDirectory, "script.js"));
+    fileWalker(javadocDirectory);
+    addJavadocAssets();
+
+    log("Patcher complete", "green");
+    fs.writeFileSync(checkpointFile, "done", "utf-8");
+}
