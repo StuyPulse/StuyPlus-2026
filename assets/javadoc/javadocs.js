@@ -1,5 +1,23 @@
-// full update
-// hella tuff javascript code to make javadocs look way nicer
+/************************* PROJECT RON *************************/
+/* Copyright (c) 2026 StuyPulse Robotics. All rights reserved. */
+/* Use of this source code is governed by an MIT-style license */
+/* that can be found in the repository LICENSE file.           */
+/***************************************************************/
+
+/************************* javadocs.js ************************/
+/* The following code is used to customize the javadoc pages  */
+/* to add custom features to improve UX and readability. It   */
+/* adds the following feature:                                */
+/* 1. Syntax highlighting for source code pages (via          */
+/* highlight.js)                                              */
+/* 2. Back button on source code pages to return to class     */
+/* declaration page                                           */
+/* 3. Theming for light and dark mode                         */
+/* 4. Smooth scrolling to line numbers on source code pages   */
+/* and sections on class declaration pages on URL hash change */
+/* 5. Flashing of line numbers and sections when scrolled in  */
+/* view                                                       */
+/**************************************************************/
 
 let hljsCSSLink = null;
 let hljsScript = null;
@@ -15,28 +33,12 @@ let animationEndEventListener = null;
 let targetElementInView = null;
 const sectionInViewObserver = new IntersectionObserver((entries) => {
     for (const entry of entries) {
-        console.log(
-        `entry.target: ${entry.target.id}, isIntersecting: ${entry.isIntersecting}, intersectionRatio: ${entry.intersectionRatio}`
-        )
-
-        console.log(
-            "OBSERVED:",
-            entry.target.id,
-            "CURRENT TARGET:",
-            targetElementInView?.id
-        );
         if (entry.target.id !== targetElementInView?.id) continue;
 
         if (!entry.isIntersecting || entry.intersectionRatio < 0.99) continue;
 
-        console.log(`Target element ${entry.target.id} is in view. Flashing it now.`);
         entry.target.classList.add("flash");
         sectionInViewObserver.unobserve(entry.target);
-
-        // timeoutCancelId = setTimeout(() => {
-        //     entry.target.classList.remove("flash");
-        //     targetElementInView = null;
-        // }, getSectionFlashLengthMilliseconds());
 
         const handleAnimationEnd = (animationEvent) => {
             if (animationEvent.animationName !== "flashBorder") return;
@@ -63,7 +65,6 @@ const goToLineNumberByHash = () => {
         return;
     }
 
-    // The hash exactly matches the id already so we can just scroll to it cuz querySelector is so tuff
     const targetElement = document.querySelector(hash);
     if (targetElement) {
         const lineInViewObserver = new IntersectionObserver((entries) => {
@@ -114,7 +115,6 @@ const detectTargetElementInViewOnHashChange = () => {
         }
     })();
     if (!targetElement || !targetElement.matches("section.detail")) {
-        console.log("NOT");
         return;
     }
 
@@ -148,7 +148,6 @@ const syntaxHighlight = () => {
     const isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches;
     const theme = isLightMode ? "github" : "github-dark";
 
-    // import highlight.js + css
     if (!hljsCSSLink) {
         const link = document.createElement("link");
         link.setAttribute("rel", "stylesheet");
@@ -159,7 +158,6 @@ const syntaxHighlight = () => {
         hljsCSSLink.href = `https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/${theme}.min.css`;
     }
     
-    // get all lines of code and highlight them
     if (!hljsScript) {
         const script = document.createElement("script");
         script.src = "https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/highlight.min.js";

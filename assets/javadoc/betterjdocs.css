@@ -106,17 +106,14 @@
     background-color: transparent;
   }
 
-  /* Rapidly ramps up to the peak flash color */
   20% {
     background-color: #ff00008c;
   }
 
-  /* Lingers slightly at the peak before fading out */
   40% {
     background-color: #ff00008c;
   }
 
-  /* Smoothly fades back to the code block background */
   100% {
     background-color: transparent;
   }
