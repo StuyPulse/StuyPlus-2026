@@ -85,16 +85,6 @@ public class RobotContainer {
 
     private final Handoff handoff = Handoff.getInstance();
 
-    public FollowPath.Builder pathBuilder = new FollowPath.Builder(
-        swerve,
-        swerve::getPose,
-        swerve::getChassisSpeeds,
-        swerve::driveRobotRelative,        
-        new PIDController(2.0, 0.0, 0.0),
-        new PIDController(1.0, 0.0, 0.0),
-        new PIDController(0.2, 0.0, 0.0)
-        ).withDefaultShouldFlip().withTRatioBasedTranslationHandoffs(true);
-
     // Autons
     private static SendableChooser<Command> autonChooser = new SendableChooser<>();
 
