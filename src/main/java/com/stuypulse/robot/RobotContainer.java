@@ -53,6 +53,9 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.geometry.Translation2d;
+import frc.robot.lib.BLine.FollowPath;
 
 /**
  * <h2>Robot Container Class</h2>
@@ -81,6 +84,18 @@ public class RobotContainer {
     private final LEDController leds = LEDController.getInstance();
 
     private final Handoff handoff = Handoff.getInstance();
+
+    public FollowPath.Builder pathBuilder = new FollowPath.Builder(
+        swerve,
+        swerve::getPose,
+        swerve::getChassisSpeeds,
+        speeds -> swerve.drive(
+            new Translation2d(speeds.vxMetersPerSecond, speeds.vyMetersPerSecond),
+            speeds.omegaRadiansPerSecond),        
+        new PIDController(2.0, 0.0, 0.0),
+        new PIDController(1.0, 0.0, 0.0),
+        new PIDController(0.2, 0.0, 0.0)
+        ).withDefaultShouldFlip().withTRatioBasedTranslationHandoffs(true);
 
     // Autons
     private static SendableChooser<Command> autonChooser = new SendableChooser<>();
