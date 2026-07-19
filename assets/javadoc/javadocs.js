@@ -18,16 +18,11 @@
 /* 5. Flashing of line numbers and sections when scrolled in  */
 /* view                                                       */
 /**************************************************************/
+import { scrollToElementWithRespectToMotionPreference, isSourcePage, isClassDeclarationPage } from "./utils.js";
+import { getEffectiveTheme } from "./theme.js";
 
 let hljsCSSLink = null;
 let hljsScript = null;
-
-const scrollToElementWithRespectToMotionPreference = (element, block) => {
-    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const behavior = prefersReducedMotion ? "auto" : "smooth";
-
-    element.scrollIntoView({ behavior, block });
-}
 
 let animationEndEventListener = null;
 let targetElementInView = null;
@@ -51,8 +46,7 @@ const sectionInViewObserver = new IntersectionObserver((entries) => {
 }, { threshold: 0.99 });
 
 const goToLineNumberByHash = () => {
-    const isSourcePage = document.querySelector("body.source-page") !== null;
-    if (!isSourcePage) return;
+    if (!isSourcePage()) return;
 
     const lineHashRegex = /^#line-\d+$/;
     if (!hljsScript) {
@@ -75,7 +69,7 @@ const goToLineNumberByHash = () => {
                     const highlightDiv = document.querySelector(".line-highlight");
                     const lineHeight = (() => {
                         const computed = window.getComputedStyle(highlightDiv);
-                        const lineHeight = computed.getPropertyValue('--line-height').trim();
+                        const lineHeight = computed.getPropertyValue("--line-height").trim();
                         return parseFloat(lineHeight);
                     })();
                     const lineNumber = parseInt(entry.target.id.replace("line-", ""));
@@ -102,8 +96,7 @@ const goToLineNumberByHash = () => {
 }
 
 const detectTargetElementInViewOnHashChange = () => {
-    const isClassDeclarationPage = document.querySelector("body.class-declaration-page") !== null;
-    if (!isClassDeclarationPage) return;
+    if (!isClassDeclarationPage()) return;
 
     const targetElement = (() => {
         try {
@@ -142,10 +135,9 @@ const detectTargetElementInViewOnHashChange = () => {
 }
 
 const syntaxHighlight = () => {
-    const isSourcePage = document.querySelector("body.source-page") !== null;
-    if (!isSourcePage) return;
+    if (!isSourcePage()) return;
 
-    const isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches;
+    const isLightMode = getEffectiveTheme() === "light";
     const theme = isLightMode ? "github" : "github-dark";
 
     if (!hljsCSSLink) {
@@ -162,8 +154,8 @@ const syntaxHighlight = () => {
         const script = document.createElement("script");
         script.src = "https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/highlight.min.js";
         script.onload = () => {
-            const pre = document.querySelector('.source-container > pre');
-            const lines = pre.querySelectorAll(':scope > [id*="line-"]');
+            const pre = document.querySelector(".source-container > pre");
+            const lines = pre.querySelectorAll(":scope > [id*=\"line-\"]");
             const source = Array.from(lines).map(line => line.textContent).join("\n");
             const lineNumbers = Array.from(lines).map((_, i) => `<span id="line-${i + 1}">${i + 1}</span>`).join("\n");
 
@@ -205,8 +197,44 @@ const syntaxHighlight = () => {
     }
 }
 
+const handleThemeChangeEvent = (event) => {
+    const isLightMode = event.matches;
+    document.documentElement.setAttribute("data-theme", isLightMode ? "light" : "dark");
+};
+const handleTheme = () => {
+    const isSourcePage = document.querySelector("body.source-page") !== null;
+    if (isSourcePage) return;
+
+    let themeState = localStorage.getItem("theme");
+    if (!themeState) {
+        themeState = "system";
+        localStorage.setItem("theme", themeState);
+    }
+    if (themeState === "light") {
+        document.documentElement.setAttribute("data-theme", "light");
+    } else if (themeState === "dark") {
+        document.documentElement.setAttribute("data-theme", "dark");
+    } else if (themeState === "system") {
+        const isLightMode = window.matchMedia("(prefers-color-scheme: light)").matches;
+        document.documentElement.setAttribute("data-theme", isLightMode ? "light" : "dark");
+
+        window.matchMedia("(prefers-color-scheme: light)").addEventListener("change", handleThemeChangeEvent);
+    }
+
+    const topNavbar = document.querySelector("#navbar-top");
+    
+    const themeToggleWrapper = document.createElement("div");
+    themeToggleWrapper.setAttribute("class", "theme-toggle-wrapper");
+    topNavbar.appendChild(themeToggleWrapper);
+
+    const themeToggleButton = document.createElement("button");
+    themeToggleButton.setAttribute("class", "theme-toggle-button");
+    themeToggleButton.setAttribute("aria-label", "Toggle theme");
+    themeToggleWrapper.appendChild(themeToggleButton);
+}
+
 const createListeners = () => {
-    window.matchMedia('(prefers-color-scheme: light)').addEventListener('change', syntaxHighlight);
+    window.matchMedia("(prefers-color-scheme: light)").addEventListener("change", syntaxHighlight);
     window.addEventListener("hashchange", () => {
         goToLineNumberByHash();
         detectTargetElementInViewOnHashChange();

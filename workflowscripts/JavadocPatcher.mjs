@@ -90,9 +90,20 @@ const htmlPatcher = (filePath) => {
     const text = fs.readFileSync(filePath, "utf-8");
 
     const javadocsFile = path.join(javadocDirectory, "javadocs.js");
+    const svgsFile = path.join(javadocDirectory, "svgs.js");
+    const utilsFile = path.join(javadocDirectory, "utils.js");
+    const themeFile = path.join(javadocDirectory, "theme.js");
+
     const faviconFile = path.join(javadocDirectory, "favicon.ico");
+
+    const inlineThemeScript = `<script>!function(){let s=localStorage.getItem("theme")||"system",e=s;"system"===s&&(e=window.matchMedia("(prefers-color-scheme:light)").matches?"light":"dark"),document.documentElement.setAttribute("data-theme",e)}();</script>`
+
     const replacement =
-    `<script defer src="${getRelativePathBetweenFiles(filePath, javadocsFile)}"></script>` +
+    inlineThemeScript +
+    `<script defer type="module" src="${getRelativePathBetweenFiles(filePath, javadocsFile)}"></script>` +
+    `<script defer type="module" src="${getRelativePathBetweenFiles(filePath, svgsFile)}"></script>` +
+    `<script defer type="module" src="${getRelativePathBetweenFiles(filePath, utilsFile)}"></script>` +
+    `<script defer type="module" src="${getRelativePathBetweenFiles(filePath, themeFile)}"></script>` +
     `<link rel="icon" href="${getRelativePathBetweenFiles(filePath, faviconFile)}?t=${Date.now()}" type="image/x-icon"></head>`;
 
     const newText = text.replace(
@@ -112,6 +123,9 @@ const htmlPatcher = (filePath) => {
 const javadocAssets = [
     "javadoc/favicon.ico",
     "javadoc/javadocs.js",
+    "javadoc/svgs.js",
+    "javadoc/utils.js",
+    "javadoc/theme.js",
     "logos/StuyPlusLogo.png"
 ]
 const addJavadocAssets = () => {
