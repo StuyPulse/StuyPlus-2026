@@ -10,6 +10,7 @@ import com.stuypulse.robot.commands.auton.LBDisrupt;
 import com.stuypulse.robot.commands.auton.LBFerry;
 import com.stuypulse.robot.commands.auton.RBDisrupt;
 import com.stuypulse.robot.commands.auton.RBFerry;
+import com.stuypulse.robot.commands.auton.bline.RBBCDotCenterPreload;
 import com.stuypulse.robot.commands.auton.bline.TwoMeterPathBLine;
 import com.stuypulse.robot.commands.auton.depot.CenterDepot;
 import com.stuypulse.robot.commands.auton.shooting.FrontHubShootPreloads;
@@ -275,6 +276,10 @@ public class RobotContainer {
 
         autonChooser.addOption(
             "Two Meter Path (BLine)", new TwoMeterPathBLine("TwoMeter")
+            );
+        
+        autonChooser.addOption(
+            "RB BR Dot Center Preload", new RBBCDotCenterPreload("RBBCDotCenterPreload")
             );
 
         // autonChooser.addOption("SysID Module Translation Dynamic Forwards",
