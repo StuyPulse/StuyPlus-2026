@@ -119,7 +119,6 @@ document.addEventListener("DOMContentLoaded", function(e) {
         history.replaceState(contentDiv.scrollTop, document.title);
     });
     contentDiv.addEventListener("scroll", function(e) {
-        
         if (!timeoutID) {
             timeoutID = setTimeout(function() {
                 history.replaceState(contentDiv.scrollTop, document.title);

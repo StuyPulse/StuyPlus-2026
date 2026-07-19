@@ -1,54 +1,54 @@
-// hella tuff javascript code to make javadocs look way nicer
+/************************* PROJECT RON *************************/
+/* Copyright (c) 2026 StuyPulse Robotics. All rights reserved. */
+/* Use of this source code is governed by an MIT-style license */
+/* that can be found in the repository LICENSE file.           */
+/***************************************************************/
+
+/************************* javadocs.js ************************/
+/* The following code is used to customize the javadoc pages  */
+/* to add custom features to improve UX and readability. It   */
+/* adds the following feature:                                */
+/* 1. Syntax highlighting for source code pages (via          */
+/* highlight.js)                                              */
+/* 2. Back button on source code pages to return to class     */
+/* declaration page                                           */
+/* 3. Theming for light and dark mode                         */
+/* 4. Smooth scrolling to line numbers on source code pages   */
+/* and sections on class declaration pages on URL hash change */
+/* 5. Flashing of line numbers and sections when scrolled in  */
+/* view                                                       */
+/**************************************************************/
 
 let hljsCSSLink = null;
 let hljsScript = null;
 
-const getLengthOfFlashMilliseconds = () => {
-    const element = document.querySelector("section.detail");
-    if (element) {
-        const rawDuration = getComputedStyle(element).getPropertyValue("--flash-duration").trim();
-        const seconds = parseFloat(rawDuration);
-        const milliseconds = seconds * 1000;
+const scrollToElementWithRespectToMotionPreference = (element, block) => {
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const behavior = prefersReducedMotion ? "auto" : "smooth";
 
-        if (!isNaN(milliseconds)) {
-            return milliseconds;
-        } else {
-            console.warn(`--flash-duration variable not found. Fallbacking to 2300ms.`);
-            return 2300; // Default to 2.3 seconds if the value is invalid
-        }
-    }
+    element.scrollIntoView({ behavior, block });
+}
 
-    return 2300;
-};
-console.log(`Length of flash animation in milliseconds: ${getLengthOfFlashMilliseconds()}ms`);
+let animationEndEventListener = null;
 let targetElementInView = null;
-let timeoutCancelId = null;
-const intersectionObserver = new IntersectionObserver((entries) => {
+const sectionInViewObserver = new IntersectionObserver((entries) => {
     for (const entry of entries) {
-        if (!(entry.target === targetElementInView)) continue;
+        if (entry.target.id !== targetElementInView?.id) continue;
 
-        if (entry.isIntersecting) {
-            entry.target.classList.add("flash");
-        }
-        
-        timeoutCancelId = setTimeout(() => {
+        if (!entry.isIntersecting || entry.intersectionRatio < 0.99) continue;
+
+        entry.target.classList.add("flash");
+        sectionInViewObserver.unobserve(entry.target);
+
+        const handleAnimationEnd = (animationEvent) => {
+            if (animationEvent.animationName !== "flashBorder") return;
+
             entry.target.classList.remove("flash");
             targetElementInView = null;
-        }, getLengthOfFlashMilliseconds());
+        }
+        entry.target.addEventListener("animationend", handleAnimationEnd, { once: true });
     }
-}, { threshold: 0.9 });
-
-const targets = document.querySelectorAll("section.detail");
-targets.forEach(target => intersectionObserver.observe(target));
-
-const placeFavicon = () => {
-    const link = document.createElement("link");
-    link.setAttribute("rel", "icon");
-    link.setAttribute("href", "/StuyPlus-2026/favicon.ico?t=" + Date.now()); // This forces the browser 
-                                                                            // to reload the favicon everytime instead of getting the cached version
-    link.setAttribute("type", "image/x-icon");
-    document.head.appendChild(link);
-}
+}, { threshold: 0.99 });
 
 const goToLineNumberByHash = () => {
     const isSourcePage = document.querySelector("body.source-page") !== null;
@@ -56,7 +56,7 @@ const goToLineNumberByHash = () => {
 
     const lineHashRegex = /^#line-\d+$/;
     if (!hljsScript) {
-        console.warn("highlight.js not loaded yet .line-numbers container not created yet 🤤.");
+        console.warn("highlight.js not loaded yet & .line-numbers container not created yet 🤤.");
         return;
     }
 
@@ -65,12 +65,39 @@ const goToLineNumberByHash = () => {
         return;
     }
 
-    // The hash exactly matches the id already so we can just scroll to it cuz querySelector is so tuff
     const targetElement = document.querySelector(hash);
     if (targetElement) {
-        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-        const behavior = prefersReducedMotion ? "auto" : "smooth";
-        targetElement.scrollIntoView({ behavior, block: "start" });
+        const lineInViewObserver = new IntersectionObserver((entries) => {
+            for (const entry of entries) {
+                if (!(entry.target === targetElement)) continue;
+
+                if (entry.isIntersecting && entry.intersectionRatio >= 1.0) {
+                    const highlightDiv = document.querySelector(".line-highlight");
+                    const lineHeight = (() => {
+                        const computed = window.getComputedStyle(highlightDiv);
+                        const lineHeight = computed.getPropertyValue('--line-height').trim();
+                        return parseFloat(lineHeight);
+                    })();
+                    const lineNumber = parseInt(entry.target.id.replace("line-", ""));
+                    const translateY = (lineNumber - 1) * lineHeight;
+                    highlightDiv.style.setProperty("transform", `translateY(${translateY}em)`);
+                    highlightDiv.classList.add("flash");
+
+                    const handleAnimationEnd = (animationEvent) => {
+                        if (animationEvent.animationName !== "flashLine") return;
+
+                        highlightDiv.classList.remove("flash");
+                    }
+                    highlightDiv.addEventListener("animationend", handleAnimationEnd, { once: true });
+                    animationEndEventListener = handleAnimationEnd;
+
+                    lineInViewObserver.disconnect();
+                }
+            }
+        }, { threshold: 1.0 })
+
+        lineInViewObserver.observe(targetElement);
+        scrollToElementWithRespectToMotionPreference(targetElement, "center");
     }
 }
 
@@ -87,17 +114,31 @@ const detectTargetElementInViewOnHashChange = () => {
             return null;
         }
     })();
-    if (!targetElement || !targetElement.matches("section.detail")) return;
+    if (!targetElement || !targetElement.matches("section.detail")) {
+        return;
+    }
 
-    if (timeoutCancelId) {
-        clearTimeout(timeoutCancelId);
-        timeoutCancelId = null;
+    if (animationEndEventListener) {
+        const highlightDiv = document.querySelector(".line-highlight");
+        highlightDiv.removeEventListener("animationend", animationEndEventListener);
+        animationEndEventListener = null;
+    }
 
-        targetElementInView?.classList.remove("flash");
+    if (targetElementInView) {
+        targetElementInView.classList.remove("flash");
+        sectionInViewObserver.unobserve(targetElementInView);
         targetElementInView = null;
     }
 
+    if (targetElementInView && targetElementInView !== targetElement) {
+        sectionInViewObserver.unobserve(targetElementInView);
+        targetElementInView.classList.remove("flash");
+    }
+
     targetElementInView = targetElement;
+    sectionInViewObserver.observe(targetElement);
+
+    scrollToElementWithRespectToMotionPreference(targetElement, "center");
 }
 
 const syntaxHighlight = () => {
@@ -107,7 +148,6 @@ const syntaxHighlight = () => {
     const isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches;
     const theme = isLightMode ? "github" : "github-dark";
 
-    // import highlight.js + css
     if (!hljsCSSLink) {
         const link = document.createElement("link");
         link.setAttribute("rel", "stylesheet");
@@ -118,7 +158,6 @@ const syntaxHighlight = () => {
         hljsCSSLink.href = `https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/${theme}.min.css`;
     }
     
-    // get all lines of code and highlight them
     if (!hljsScript) {
         const script = document.createElement("script");
         script.src = "https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/highlight.min.js";
@@ -145,6 +184,10 @@ const syntaxHighlight = () => {
             codeBlock.textContent = source;
             hljs.highlightElement(codeBlock);
 
+            const highlightDiv = document.createElement("div");
+            highlightDiv.setAttribute("class", "line-highlight");
+            codeBlock.appendChild(highlightDiv);
+
             const backButton = document.querySelector(".back-button");
             backButton.addEventListener("click", () => {
                 const currentURL = new URL(window.location.href);
@@ -170,7 +213,6 @@ const createListeners = () => {
     });
 }
 
-placeFavicon();
 syntaxHighlight();
 
 goToLineNumberByHash();
