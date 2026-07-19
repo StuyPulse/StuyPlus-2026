@@ -1,45 +1,152 @@
+import process from "process";
 import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
 
 const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+const __dirname = (() => {
+    process.chdir(path.join(path.dirname(__filename), "../"));
+    return process.cwd();
+})();
 
-const javadocDirectory = path.join(__dirname, "../build/docs/javadoc");
+const javadocDirectory = path.join(__dirname, "build/docs/javadoc");
+const assetsDirectory = path.join(__dirname, "assets");
+
+const getRelativePath = (filePath) => {
+    return path.relative(__dirname, filePath);
+}
+
+const getRelativePathBetweenFiles = (fromFile, toFile) => {
+    const relativePath = path.relative(
+        path.dirname(fromFile),
+        toFile
+    );
+
+    return relativePath.replaceAll("\\", "/");
+}
+
+const log = (message, color = "yellow") => {
+    const RESET_ANSI = "\x1b[0m";
+
+    const colorCode = (() => {
+        if (color === "green") {
+            return "\x1b[32m";
+        }
+        if (color === "yellow") {
+            return "\x1b[33m";
+        }
+        if (color === "red") {
+            return "\x1b[31m";
+        }
+    })();
+
+    console.log(`${colorCode}${message}${RESET_ANSI}`);
+}
 
 const fileWalker = (directory) => {
-    const files = fs.readdirSync(directory);
+    const files = fs.readdirSync(directory, { withFileTypes: true });
 
     for (const file of files) {
-        const filePath = path.join(directory, file);
-        const stat = fs.statSync(filePath);
+        const filePath = path.join(directory, file.name);
 
-        if (stat.isDirectory()) {
+        if (file.isDirectory()) {
             fileWalker(filePath);
-        } else if (stat.isFile()) {
+        } else if (file.isFile()) {
             if (filePath.endsWith(".html")) {
                 htmlPatcher(filePath);
-            }
-
-            // Patch the script.js file because of the scroll position bug that comes with older versions of Javadoc.
-            if (filePath.endsWith("script.js")) {
-                const text = fs.readFileSync(filePath, "utf-8");
-                const firstReplace = text.replace("var timeoutID;", "");
-                const secondReplace = firstReplace.replace(
-                    "var contentDiv = document.querySelector(\"div.flex-content\");",
-                    "var timeoutID;\n    var contentDiv = document.querySelector(\"div.flex-content\");"
-                )
-                fs.writeFileSync(filePath, secondReplace, "utf-8");
             }
         }
     }
 }
 
+// Patch the script.js file because of the scroll position bug that comes with older versions of Javadoc.
+const scriptJsPatcher = (filePath) => {
+    const text = fs.readFileSync(filePath, "utf-8");
+
+    const newText = (() => {
+        let updatedText = text.replace(
+            /^(\s*)var contentDiv = document\.querySelector\("div\.flex-content"\);/m,
+            `$1var timeoutID;\n$1var contentDiv = document.querySelector("div.flex-content");`
+        )
+
+        updatedText = updatedText.replace(
+            /(contentDiv\.addEventListener\("scroll", function\(e\) {\s*)var timeoutID;\s*/m,
+            "$1"
+        )
+
+        return updatedText;
+    })();
+
+    if (newText === text) {
+        log(`Failed to patch ${getRelativePath(filePath)}`, "red");
+        return;
+    }
+
+    fs.writeFileSync(filePath, newText, "utf-8");
+    log(`Patched ${getRelativePath(filePath)}`);
+};
+
 const htmlPatcher = (filePath) => {
     const text = fs.readFileSync(filePath, "utf-8");
-    const newText = text.replace("</head>", '<script defer src="/StuyPlus-2026/javadocs.js"></script></head>');
+
+    const javadocsFile = path.join(javadocDirectory, "javadocs.js");
+    const svgsFile = path.join(javadocDirectory, "svgs.js");
+    const utilsFile = path.join(javadocDirectory, "utils.js");
+    const themeFile = path.join(javadocDirectory, "theme.js");
+
+    const faviconFile = path.join(javadocDirectory, "favicon.ico");
+
+    const inlineThemeScript = `<script>!function(){let s=localStorage.getItem("theme")||"system",e=s;"system"===s&&(e=window.matchMedia("(prefers-color-scheme:light)").matches?"light":"dark"),document.documentElement.setAttribute("data-theme",e)}();</script>`
+
+    const replacement =
+    inlineThemeScript +
+    `<script defer type="module" src="${getRelativePathBetweenFiles(filePath, javadocsFile)}"></script>` +
+    `<script defer type="module" src="${getRelativePathBetweenFiles(filePath, svgsFile)}"></script>` +
+    `<script defer type="module" src="${getRelativePathBetweenFiles(filePath, utilsFile)}"></script>` +
+    `<script defer type="module" src="${getRelativePathBetweenFiles(filePath, themeFile)}"></script>` +
+    `<link rel="icon" href="${getRelativePathBetweenFiles(filePath, faviconFile)}?t=${Date.now()}" type="image/x-icon"></head>`;
+
+    const newText = text.replace(
+        "</head>",
+        replacement
+    );
+
+    if (newText === text) {
+        log(`Failed to patch ${getRelativePath(filePath)}`, "red");
+        return;
+    }
+
     fs.writeFileSync(filePath, newText, "utf-8");
+    log(`Patched ${getRelativePath(filePath)}`);
 }
 
-fileWalker(javadocDirectory);
-console.log("Patcher complete");
+const javadocAssets = [
+    "javadoc/favicon.ico",
+    "javadoc/javadocs.js",
+    "javadoc/svgs.js",
+    "javadoc/utils.js",
+    "javadoc/theme.js",
+    "logos/StuyPlusLogo.png"
+]
+const addJavadocAssets = () => {
+    for (const asset of javadocAssets) {
+        const sourcePath = path.join(assetsDirectory, asset);
+        const assetName = path.basename(asset);
+        const destPath = path.join(javadocDirectory, assetName);
+        fs.copyFileSync(sourcePath, destPath);
+        log(`Copied ${getRelativePath(sourcePath)} to javadoc directory`);
+    }
+}
+
+const checkpointFile = path.join(javadocDirectory, ".patched");
+
+if (fs.existsSync(checkpointFile)) {
+    log("Javadoc already patched, skipping patcher", "green"); 
+} else {
+    scriptJsPatcher(path.join(javadocDirectory, "script.js"));
+    fileWalker(javadocDirectory);
+    addJavadocAssets();
+
+    log("Patcher complete", "green");
+    fs.writeFileSync(checkpointFile, "done", "utf-8");
+}

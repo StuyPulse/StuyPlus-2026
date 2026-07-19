@@ -43,32 +43,125 @@
 }
 
 /* OUR STYLESHEETS */
-@media (prefers-color-scheme: dark) {
-  :root {
-    --primary-color: var(--primary-color-dark);
-    --secondary-color: var(--secondary-color-dark);
-    --description-color: var(--description-color-dark);
 
-    --bg-900-color: var(--bg-900-color-dark);
-    --bg-800-color: var(--bg-800-color-dark);
-    --bg-700-color: var(--bg-700-color-dark);
-    --bg-600-color: var(--bg-600-color-dark);
+:root[data-theme="dark"] {
+  --primary-color: var(--primary-color-dark);
+  --secondary-color: var(--secondary-color-dark);
+  --description-color: var(--description-color-dark);
 
-    --autocomplete-selected-bg: var(--autocomplete-selected-bg-dark);
+  --bg-900-color: var(--bg-900-color-dark);
+  --bg-800-color: var(--bg-800-color-dark);
+  --bg-700-color: var(--bg-700-color-dark);
+  --bg-600-color: var(--bg-600-color-dark);
+
+  --autocomplete-selected-bg: var(--autocomplete-selected-bg-dark);
+}
+
+:root[data-theme="light"] {
+  --primary-color: var(--primary-color-light);
+  --secondary-color: var(--secondary-color-light);
+  --description-color: var(--description-color-light);
+  
+  --bg-900-color: var(--bg-900-color-light);
+  --bg-800-color: var(--bg-800-color-light);
+  --bg-700-color: var(--bg-700-color-light);
+  --bg-600-color: var(--bg-600-color-light);
+
+  --autocomplete-selected-bg: var(--autocomplete-selected-bg-light);
+}
+
+#navbar-top {
+  display: flex;
+}
+
+.theme-toggle-wrapper {
+  margin-left: auto;
+  margin-right: 1.5em;
+  align-self: center;
+
+  position: relative;
+  height: 2.5rem; 
+  width: 2.5rem;
+  
+  transition: width 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.theme-button {
+  width: 2.25rem;
+  height: 2.25rem;
+  padding: 0;
+  border-radius: 50%;
+  box-sizing: border-box;
+  background-color: var(--bg-700-color);
+  border: 1px solid rgba(148, 148, 148, 0.2);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%) translateX(0rem);
+  
+  opacity: 0;
+  pointer-events: none;
+  z-index: 1;
+  
+  transition: 
+    transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1),
+    opacity 0.2s ease,
+    background-color 0.15s ease,
+    border-color 0.15s ease;
+
+  svg {
+    --length: 1.2rem;
+    width: var(--length);
+    height: var(--length);
+    color: var(--description-color);
+    fill: currentColor;
+    transition: color 0.15s ease;
+  }
+
+  &:hover {
+    background-color: var(--bg-600-color);
+    border-color: var(--primary-color);
+    
+    svg {
+      color: var(--primary-color);
+    }
   }
 }
-@media (prefers-color-scheme: light) {
-  :root {
-    --primary-color: var(--primary-color-light);
-    --secondary-color: var(--secondary-color-light);
-    --description-color: var(--description-color-light);
-    
-    --bg-900-color: var(--bg-900-color-light);
-    --bg-800-color: var(--bg-800-color-light);
-    --bg-700-color: var(--bg-700-color-light);
-    --bg-600-color: var(--bg-600-color-light);
 
-    --autocomplete-selected-bg: var(--autocomplete-selected-bg-light);
+.theme-button.is-active {
+  opacity: 1;
+  pointer-events: auto;
+  z-index: 2;
+  border-color: var(--primary-color);
+  
+  transform: translateY(-50%) translateX(0rem);
+
+  svg {
+    color: var(--primary-color);
+  }
+}
+
+.theme-toggle-wrapper.is-hover {
+  width: 7.5rem;
+
+  .theme-button {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .theme-button-system {
+    transform: translateY(-50%) translateX(0rem);
+  }
+  .theme-button-dark {
+    transform: translateY(-50%) translateX(2.5rem);
+  }
+  .theme-button-light {
+    transform: translateY(-50%) translateX(5.0rem);
   }
 }
 
@@ -79,13 +172,14 @@
   align-items: flex-end;
 }
 
-.package-index-page .title::after {
+.package-index-page .title::after,
+.all-packages-index-page .title::after {
   --size: 75px;
   content: "";
   position: absolute;
   width: var(--size);
   height: var(--size);
-  background-image: url("/StuyPlus-2026/StuyPlusLogo.png");
+  background-image: url("./StuyPlusLogo.png");
   background-size: contain;
   background-repeat: no-repeat;
   right: 0;
@@ -98,6 +192,24 @@
   border: var(--primary-color) solid 1px !important;
   text-shadow: 0px 0px 2px var(--primary-color);
   margin: 0 !important;
+}
+
+@keyframes flashLine {
+  0% {
+    background-color: transparent;
+  }
+
+  20% {
+    background-color: #ff00008c;
+  }
+
+  40% {
+    background-color: #ff00008c;
+  }
+
+  100% {
+    background-color: transparent;
+  }
 }
 
 .source-page {
@@ -129,6 +241,12 @@
   code.language-java.hljs {
     line-height: var(--line-height);
     padding: 3px 5px;
+    position: relative;
+  }
+
+  code.language-java.hljs > *:not(.line-highlight) {
+    z-index: 6;
+    position: relative;
   }
 
   .line-numbers {
@@ -144,38 +262,88 @@
       user-select: none;
     }
   }
+
+  .line-highlight {
+    --flash-duration: 2.3s;
+
+    position: absolute;
+    inset: 0;
+    height: var(--line-height);
+    width: 100%;
+    background-color: transparent;
+    z-index: 5;
+
+    &.flash {
+      animation: flashLine var(--flash-duration) cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+  }
 }
 
-@keyframes flashBorder {
-  0% {
-    border: 2px solid var(--primary-color);
-    box-shadow: 0 0 0 0 color-mix(in srgb, var(--primary-color) 0%, transparent);
-    transform: scale(1);
+@media (prefers-reduced-motion: no-preference) {
+  @keyframes flashBorder {
+    0% {
+      transform: scale(1);
+      border-color: var(--primary-color);
+      background: color-mix(in srgb, var(--primary-color) 22%, transparent);
+      box-shadow: 0 0 0 0 color-mix(in srgb, var(--primary-color) 50%, transparent);
+    }
+  
+    20% {
+      transform: scale(1.025);
+      background: color-mix(in srgb, var(--primary-color) 12%, transparent);
+      box-shadow:
+        0 0 0 8px color-mix(in srgb, var(--primary-color) 30%, transparent),
+        0 0 24px color-mix(in srgb, var(--primary-color) 35%, transparent);
+    }
+  
+    100% {
+      transform: scale(1);
+      border-color: var(--bg-600-color);
+      background: var(--bg-600-color);
+      box-shadow: none;
+    }
   }
 
-  20% {
-    box-shadow: 0 0 0 6px color-mix(in srgb, var(--primary-color) 25%, transparent);
-    transform: scale(1.01);
+  body.class-declaration-page section.detail {
+    --flash-duration: 2.3s;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  @keyframes flashBorder {
+    0% {
+      border-color: var(--bg-600-color);
+      background: var(--bg-600-color);
+      box-shadow: none;
+    }
+
+    5% {
+      border-color: var(--primary-color);
+      background: color-mix(in srgb, var(--primary-color) 16%, transparent);
+      box-shadow:
+        0 0 0 3px color-mix(in srgb, var(--primary-color) 35%, transparent),
+        0 0 12px color-mix(in srgb, var(--primary-color) 25%, transparent);
+    }
+
+    59% {
+      border-color: var(--primary-color);
+    }
+
+    100% {
+      border-color: var(--bg-600-color);
+      background: var(--bg-600-color);
+      box-shadow: none;
+    }
   }
 
-  60% {
-    box-shadow: 0 0 0 10px color-mix(in srgb, var(--primary-color) 0%, transparent);
-    transform: scale(1);
-  }
-
-  100% {
-    border: 2px solid var(--bg-600-color);
-    box-shadow: 0 0 0 0 transparent;
+  body.class-declaration-page section.detail {
+    --flash-duration: 2.5s;
   }
 }
 
 body.class-declaration-page {
-  section.detail {
-    --flash-duration: 2.3s;
-
-    &.flash {
-      animation: flashBorder var(--flash-duration) cubic-bezier(0.2, 0.8, 0.2, 1);
-    }
+  section.detail.flash {
+    animation: flashBorder var(--flash-duration) cubic-bezier(.25, .8, .25, 1);
   }
 }
 
