@@ -10,6 +10,7 @@ import com.stuypulse.robot.commands.auton.LBDisrupt;
 import com.stuypulse.robot.commands.auton.LBFerry;
 import com.stuypulse.robot.commands.auton.RBDisrupt;
 import com.stuypulse.robot.commands.auton.RBFerry;
+import com.stuypulse.robot.commands.auton.bline.TwoMeterPathBLine;
 import com.stuypulse.robot.commands.auton.depot.CenterDepot;
 import com.stuypulse.robot.commands.auton.shooting.FrontHubShootPreloads;
 import com.stuypulse.robot.commands.auton.shooting.LBDumpy;
@@ -271,6 +272,10 @@ public class RobotContainer {
             "RB Disrupt Return"
         );
         RB_Disrupt.register(autonChooser);
+
+        autonChooser.addOption(
+            "Two Meter Path (BLine)", new TwoMeterPathBLine("TwoMeter")
+            );
 
         // autonChooser.addOption("SysID Module Translation Dynamic Forwards",
         // swerve.sysIdDynamic(Direction.kForward));

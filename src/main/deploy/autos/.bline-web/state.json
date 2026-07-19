@@ -25,14 +25,13 @@
       "default_auto_velocity_merge_tolerance_meters_per_sec": 0.3
     }
   },
-  "active_path_file_name": "new_path.json",
+  "active_path_file_name": "TwoMeter.json",
   "active_path_group_id": null,
   "path_groups": [],
   "linked_targets": [],
   "paths": {
-    "new_path.json": {
-      "display_name": "new path",
-      "editor_metadata": null
+    "TwoMeter.json": {
+      "display_name": "TwoMeter"
     }
   },
   "field_assets": {}
