@@ -45,6 +45,7 @@ import com.stuypulse.robot.subsystems.leds.LEDController;
 import com.stuypulse.robot.subsystems.shooter.Shooter;
 import com.stuypulse.robot.subsystems.swerve.CommandSwerveDrivetrain;
 import com.stuypulse.robot.subsystems.vision.LimelightVision;
+import com.stuypulse.robot.subsystems.vision.PhotonVision;
 import com.stuypulse.robot.util.PathUtil.AutonConfig;
 
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -76,7 +77,8 @@ public class RobotContainer {
 
     private final CommandSwerveDrivetrain swerve = CommandSwerveDrivetrain.getInstance();
 
-    private final LimelightVision vision = LimelightVision.getInstance();
+    // private final LimelightVision vision = LimelightVision.getInstance();
+    private final PhotonVision vision = PhotonVision.getInstance();
 
     private final LEDController leds = LEDController.getInstance();
 
