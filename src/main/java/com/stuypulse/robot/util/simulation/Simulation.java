@@ -8,6 +8,8 @@ package com.stuypulse.robot.util.simulation;
 import static edu.wpi.first.units.Units.*;
 
 import com.stuypulse.robot.constants.Settings;
+import com.stuypulse.robot.subsystems.handoff.Handoff;
+import com.stuypulse.robot.subsystems.handoff.Handoff.HandoffState;
 import com.stuypulse.robot.subsystems.intake.Intake;
 import com.stuypulse.robot.subsystems.intake.Intake.IntakeState;
 import com.stuypulse.robot.subsystems.shooter.Shooter;
@@ -48,6 +50,8 @@ public class Simulation {
 
     private final Shooter shooterSim;
 
+    private final Handoff handoffSim;
+
     private final StructArrayPublisher<Pose3d> fuel;
 
     private final StructPublisher<Pose3d> intakePivot;
@@ -73,13 +77,17 @@ public class Simulation {
     private Simulation() {
         intakeSim = Intake.getInstance();
         shooterSim = Shooter.getInstance();
+        handoffSim = Handoff.getInstance();
         swerveMSim = CommandSwerveDrivetrain.getInstance().getMapleSimDrive();
         arenaInstance = new Arena2026Rebuilt(false);
-        configureArena();
+        configureArena(arenaInstance, swerveMSim);
+
         intakeMSim = createIntakeSimulation();
         intakeMSim.addGamePiecesToIntake(SimulationConstants.Hopper.FUEL_CAPACITY);
-        shotLoop = new Notifier(this::updateShooting);
+
+        shotLoop = new Notifier(this::updateSubsystemsBPSLoop);
         shotLoop.startPeriodic(1.0 / SimulationConstants.Shooter.BPS);
+
         NetworkTableInstance table = NetworkTableInstance.getDefault();
         fuel = table.getStructArrayTopic("AdvScope/FuelPoses", Pose3d.struct).publish();
         intakePivot = table.getStructTopic("AdvScope/IntakePose", Pose3d.struct).publish();
@@ -88,11 +96,11 @@ public class Simulation {
         shooter = table.getStructTopic("AdvScope/ShooterPose", Pose3d.struct).publish();
     }
 
-    private void configureArena() {
-        arenaInstance.setEfficiencyMode(SimulationConstants.SPAWN_GAMEPIECES_SPARSELY);
-        arenaInstance.resetFieldForAuto();
-        arenaInstance.addDriveTrainSimulation(this.swerveMSim);
-        SimulatedArena.overrideInstance(arenaInstance);
+    private void configureArena(Arena2026Rebuilt arena, SwerveDriveSimulation drivetrain) {
+        arena.setEfficiencyMode(SimulationConstants.SPAWN_GAMEPIECES_SPARSELY);
+        arena.resetFieldForAuto();
+        arena.addDriveTrainSimulation(drivetrain);
+        SimulatedArena.overrideInstance(arena);
     }
 
     private IntakeSimulation createIntakeSimulation() {
@@ -221,18 +229,27 @@ public class Simulation {
                 0.0);
     }
 
-    private void updateShooting() {
+    private boolean canShoot() {
+        // final ShooterState shooterState = shooterSim.getState();
+        // final boolean shooterEnabled = (shooterState == ShooterState.SHOOT || shooterState == ShooterState.MANUAL_HUB || shooterState == ShooterState.FERRY) && Settings.EnabledSubsystems.SHOOTER.get();
+        return handoffSim.getState() == HandoffState.FORWARD && intakeMSim.obtainGamePieceFromIntake();
+    }
+
+    /**
+     * <h4>Custom interval periodic function</h4>
+     * <p>Runs at the speed of 1 over the balls per second constant {@link SimulationConstants.Shooter#BPS}</p>
+     */
+    private void updateSubsystemsBPSLoop() {
         if (intakeSim.getState() == IntakeState.OUTTAKE
                 && Settings.EnabledSubsystems.INTAKE.get()
                 && intakeMSim.obtainGamePieceFromIntake()) {
             summonFuelAtIntake();
-        } else if ((shooterSim.getState() == ShooterState.SHOOT
-                || shooterSim.getState() == ShooterState.FERRY)
-                && Settings.EnabledSubsystems.SHOOTER.get()) {
+        }
+        if (this.canShoot()) {
             final Pose2d shooterPose = SimulationConstants.Shooter.OFFSETS.applyToPose2d(
                     swerveMSim.getSimulatedDriveTrainPose());
-            final double launchAngle = 67.67;
-            robotRelativeAddPieceWithVariance(
+            final double launchAngle = 67.67; // random hood exit angle?
+            this.robotRelativeAddPieceWithVariance(
                     shooterPose.getTranslation(),
                     swerveMSim.getSimulatedDriveTrainPose().getRotation(),
                     Meters.of(SimulationConstants.Shooter.OFFSETS.toPose3d().getZ()),
