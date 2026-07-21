@@ -7,12 +7,13 @@ package com.stuypulse.robot.constants;
 
 import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Rotation3d;
+import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.math.util.Units;
 
 public class Cameras {
     public static final Camera[] LimelightCameras = new Camera[] {
             new Camera("limelight-front",
-                    new Pose3d(
+                    new Transform3d(
                             Units.inchesToMeters(0),
                             Units.inchesToMeters(0),
                             Units.inchesToMeters(26.1),
@@ -21,7 +22,7 @@ public class Cameras {
                                     Units.degreesToRadians(9.764),
                                     Units.degreesToRadians(0)))),
             new Camera("limelight-back", 
-                    new Pose3d(
+                    new Transform3d(
                             Units.inchesToMeters(-12.109), 
                             Units.inchesToMeters(-7.129), 
                             Units.inchesToMeters(8.375), 
@@ -31,5 +32,5 @@ public class Cameras {
                                     Units.degreesToRadians(180))))
     };
 
-    public static record Camera(String name, Pose3d location) {};
+    public static record Camera(String name, Transform3d location) {};
 }
