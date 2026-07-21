@@ -65,7 +65,7 @@ public class PhotonVision extends SubsystemBase {
             Camera camera = Cameras.LimelightCameras[i];
 
             PhotonCamera realCamera = new PhotonCamera(camera.name());
-            Transform3d cameraTransform = new Transform3d(camera.location().getTranslation(), camera.location().getRotation());
+            Transform3d cameraTransform = camera.location();
             PhotonPoseEstimator poseEstimator = new PhotonPoseEstimator(layout, cameraTransform);
 
             realCameras[i] = realCamera;
