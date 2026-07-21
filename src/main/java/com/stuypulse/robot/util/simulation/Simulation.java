@@ -10,8 +10,6 @@ import static edu.wpi.first.units.Units.*;
 import com.stuypulse.robot.constants.Settings;
 import com.stuypulse.robot.subsystems.handoff.Handoff;
 import com.stuypulse.robot.subsystems.handoff.Handoff.HandoffState;
-import com.stuypulse.robot.subsystems.handoff.Handoff;
-import com.stuypulse.robot.subsystems.handoff.Handoff.HandoffState;
 import com.stuypulse.robot.subsystems.intake.Intake;
 import com.stuypulse.robot.subsystems.intake.Intake.IntakeState;
 import com.stuypulse.robot.subsystems.shooter.Shooter;
@@ -51,8 +49,6 @@ public class Simulation {
     private final Intake intakeSim;
 
     private final Shooter shooterSim;
-
-    private final Handoff handoffSim;
 
     private final Handoff handoffSim;
 
@@ -236,7 +232,7 @@ public class Simulation {
     private boolean canShoot() {
         // final ShooterState shooterState = shooterSim.getState();
         // final boolean shooterEnabled = (shooterState == ShooterState.SHOOT || shooterState == ShooterState.MANUAL_HUB || shooterState == ShooterState.FERRY) && Settings.EnabledSubsystems.SHOOTER.get();
-        return handoffSim.getState() == HandoffState.FORWARD && intakeMSim.obtainGamePieceFromIntake();
+        return handoffSim.getState() == HandoffState.FORWARD;
     }
 
     /**
