@@ -33,18 +33,16 @@ import edu.wpi.first.math.util.Units;
 import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-
 public class PhotonVision extends SubsystemBase {
     private static final PhotonVision instance;
-   
+
     static {
         instance = new PhotonVision(AprilTagFields.k2026RebuiltAndymark);
     }
-   
+
     public static PhotonVision getInstance() {
         return instance;
-    }
-
+    } 
 
     private final CommandSwerveDrivetrain drivetrainInstance;
     private final SwerveDriveSimulation mapleSimDrivetrain;
@@ -85,8 +83,6 @@ public class PhotonVision extends SubsystemBase {
                 cameraSims[i] = cameraSim;
                 visionSim.addCamera(cameraSim, cameraTransform);
             }
-
-
         }
     }
 
@@ -147,7 +143,6 @@ public class PhotonVision extends SubsystemBase {
                 if (estimatedPose.isEmpty()) {
                     continue;
                 }
-
 
                 final Pose2d finalPose = estimatedPose.get().estimatedPose.toPose2d();
                 drivetrainInstance.addVisionMeasurement(finalPose, result.getTimestampSeconds());
