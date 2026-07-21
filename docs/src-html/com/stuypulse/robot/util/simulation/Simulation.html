@@ -7,7 +7,7 @@
 <meta name="description" content="source: package: com.stuypulse.robot.util.simulation, class: Simulation">
 <meta name="generator" content="javadoc/SourceToHTMLConverter">
 <link rel="stylesheet" type="text/css" href="../../../../../../betterjdocs.css" title="Style">
-<script>!function(){let s=localStorage.getItem("theme")||"system",e=s;"system"===s&&(e=window.matchMedia("(prefers-color-scheme:light)").matches?"light":"dark"),document.documentElement.setAttribute("data-theme",e)}();</script><script defer type="module" src="../../../../../../javadocs.js"></script><script defer type="module" src="../../../../../../svgs.js"></script><script defer type="module" src="../../../../../../utils.js"></script><script defer type="module" src="../../../../../../theme.js"></script><link rel="icon" href="../../../../../../favicon.ico?t=1784674869298" type="image/x-icon"></head>
+<script>!function(){let s=localStorage.getItem("theme")||"system",e=s;"system"===s&&(e=window.matchMedia("(prefers-color-scheme:light)").matches?"light":"dark"),document.documentElement.setAttribute("data-theme",e)}();</script><script defer type="module" src="../../../../../../javadocs.js"></script><script defer type="module" src="../../../../../../svgs.js"></script><script defer type="module" src="../../../../../../utils.js"></script><script defer type="module" src="../../../../../../theme.js"></script><link rel="icon" href="../../../../../../favicon.ico?t=1784676138259" type="image/x-icon"></head>
 <body class="source-page">
 <main role="main">
 <div class="source-container">
@@ -245,7 +245,7 @@
 <span class="source-line-no">232</span><span id="line-232">    private boolean canShoot() {</span>
 <span class="source-line-no">233</span><span id="line-233">        // final ShooterState shooterState = shooterSim.getState();</span>
 <span class="source-line-no">234</span><span id="line-234">        // final boolean shooterEnabled = (shooterState == ShooterState.SHOOT || shooterState == ShooterState.MANUAL_HUB || shooterState == ShooterState.FERRY) &amp;&amp; Settings.EnabledSubsystems.SHOOTER.get();</span>
-<span class="source-line-no">235</span><span id="line-235">        return handoffSim.getState() == HandoffState.FORWARD;</span>
+<span class="source-line-no">235</span><span id="line-235">        return handoffSim.getState() == HandoffState.FORWARD &amp;&amp; intakeMSim.obtainGamePieceFromIntake();</span>
 <span class="source-line-no">236</span><span id="line-236">    }</span>
 <span class="source-line-no">237</span><span id="line-237"></span>
 <span class="source-line-no">238</span><span id="line-238">    /**</span>
