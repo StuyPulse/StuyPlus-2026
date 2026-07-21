@@ -13,7 +13,7 @@
 <script type="text/javascript" src="../../../../../script.js"></script>
 <script type="text/javascript" src="../../../../../script-dir/jquery-3.7.1.min.js"></script>
 <script type="text/javascript" src="../../../../../script-dir/jquery-ui.min.js"></script>
-<script>!function(){let s=localStorage.getItem("theme")||"system",e=s;"system"===s&&(e=window.matchMedia("(prefers-color-scheme:light)").matches?"light":"dark"),document.documentElement.setAttribute("data-theme",e)}();</script><script defer type="module" src="../../../../../javadocs.js"></script><script defer type="module" src="../../../../../svgs.js"></script><script defer type="module" src="../../../../../utils.js"></script><script defer type="module" src="../../../../../theme.js"></script><link rel="icon" href="../../../../../favicon.ico?t=1784454563205" type="image/x-icon"></head>
+<script>!function(){let s=localStorage.getItem("theme")||"system",e=s;"system"===s&&(e=window.matchMedia("(prefers-color-scheme:light)").matches?"light":"dark"),document.documentElement.setAttribute("data-theme",e)}();</script><script defer type="module" src="../../../../../javadocs.js"></script><script defer type="module" src="../../../../../svgs.js"></script><script defer type="module" src="../../../../../utils.js"></script><script defer type="module" src="../../../../../theme.js"></script><link rel="icon" href="../../../../../favicon.ico?t=1784674869236" type="image/x-icon"></head>
 <body class="class-declaration-page">
 <script type="text/javascript">var evenRowColor = "even-row-color";
 var oddRowColor = "odd-row-color";
@@ -76,7 +76,7 @@ loadScripts(document, 'script');</script>
 </div>
 <section class="class-description" id="class-description">
 <hr>
-<div class="type-signature"><span class="modifiers">public class </span><span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/util/simulation/Simulation.html#line-35">Simulation</a></span>
+<div class="type-signature"><span class="modifiers">public class </span><span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/util/simulation/Simulation.html#line-37">Simulation</a></span>
 <span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></span></div>
 </section>
 <section class="summary">
@@ -99,33 +99,36 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color"><code>private final edu.wpi.first.networktables.StructArrayPublisher&lt;edu.wpi.first.math.geometry.Pose3d&gt;</code></div>
 <div class="col-second even-row-color"><code><a href="#fuelLayers" class="member-name-link">fuelLayers</a></code></div>
 <div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>private final <a href="../../subsystems/handoff/Handoff.html" title="class in com.stuypulse.robot.subsystems.handoff">Handoff</a></code></div>
+<div class="col-second odd-row-color"><code><a href="#handoffSim" class="member-name-link">handoffSim</a></code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>private final edu.wpi.first.networktables.StructPublisher&lt;edu.wpi.first.math.geometry.Pose3d&gt;</code></div>
+<div class="col-second even-row-color"><code><a href="#hopper" class="member-name-link">hopper</a></code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>private static final <a href="Simulation.html" title="class in com.stuypulse.robot.util.simulation">Simulation</a></code></div>
+<div class="col-second odd-row-color"><code><a href="#instance" class="member-name-link">instance</a></code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>private final org.ironmaple.simulation.IntakeSimulation</code></div>
+<div class="col-second even-row-color"><code><a href="#intakeMSim" class="member-name-link">intakeMSim</a></code></div>
+<div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code>private final edu.wpi.first.networktables.StructPublisher&lt;edu.wpi.first.math.geometry.Pose3d&gt;</code></div>
-<div class="col-second odd-row-color"><code><a href="#hopper" class="member-name-link">hopper</a></code></div>
+<div class="col-second odd-row-color"><code><a href="#intakePivot" class="member-name-link">intakePivot</a></code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><code>private static final <a href="Simulation.html" title="class in com.stuypulse.robot.util.simulation">Simulation</a></code></div>
-<div class="col-second even-row-color"><code><a href="#instance" class="member-name-link">instance</a></code></div>
+<div class="col-first even-row-color"><code>private final <a href="../../subsystems/intake/Intake.html" title="class in com.stuypulse.robot.subsystems.intake">Intake</a></code></div>
+<div class="col-second even-row-color"><code><a href="#intakeSim" class="member-name-link">intakeSim</a></code></div>
 <div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code>private final org.ironmaple.simulation.IntakeSimulation</code></div>
-<div class="col-second odd-row-color"><code><a href="#intakeMSim" class="member-name-link">intakeMSim</a></code></div>
+<div class="col-first odd-row-color"><code>private final edu.wpi.first.networktables.StructPublisher&lt;edu.wpi.first.math.geometry.Pose3d&gt;</code></div>
+<div class="col-second odd-row-color"><code><a href="#shooter" class="member-name-link">shooter</a></code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><code>private final edu.wpi.first.networktables.StructPublisher&lt;edu.wpi.first.math.geometry.Pose3d&gt;</code></div>
-<div class="col-second even-row-color"><code><a href="#intakePivot" class="member-name-link">intakePivot</a></code></div>
+<div class="col-first even-row-color"><code>private final <a href="../../subsystems/shooter/Shooter.html" title="class in com.stuypulse.robot.subsystems.shooter">Shooter</a></code></div>
+<div class="col-second even-row-color"><code><a href="#shooterSim" class="member-name-link">shooterSim</a></code></div>
 <div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code>private final <a href="../../subsystems/intake/Intake.html" title="class in com.stuypulse.robot.subsystems.intake">Intake</a></code></div>
-<div class="col-second odd-row-color"><code><a href="#intakeSim" class="member-name-link">intakeSim</a></code></div>
+<div class="col-first odd-row-color"><code>private final edu.wpi.first.wpilibj.Notifier</code></div>
+<div class="col-second odd-row-color"><code><a href="#shotLoop" class="member-name-link">shotLoop</a></code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><code>private final edu.wpi.first.networktables.StructPublisher&lt;edu.wpi.first.math.geometry.Pose3d&gt;</code></div>
-<div class="col-second even-row-color"><code><a href="#shooter" class="member-name-link">shooter</a></code></div>
+<div class="col-first even-row-color"><code>private final org.ironmaple.simulation.drivesims.SwerveDriveSimulation</code></div>
+<div class="col-second even-row-color"><code><a href="#swerveMSim" class="member-name-link">swerveMSim</a></code></div>
 <div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code>private final <a href="../../subsystems/shooter/Shooter.html" title="class in com.stuypulse.robot.subsystems.shooter">Shooter</a></code></div>
-<div class="col-second odd-row-color"><code><a href="#shooterSim" class="member-name-link">shooterSim</a></code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><code>private final edu.wpi.first.wpilibj.Notifier</code></div>
-<div class="col-second even-row-color"><code><a href="#shotLoop" class="member-name-link">shotLoop</a></code></div>
-<div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code>private final org.ironmaple.simulation.drivesims.SwerveDriveSimulation</code></div>
-<div class="col-second odd-row-color"><code><a href="#swerveMSim" class="member-name-link">swerveMSim</a></code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
 </div>
 </section>
 </li>
@@ -155,23 +158,27 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>private void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#configureArena()" class="member-name-link">configureArena</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>private org.ironmaple.simulation.IntakeSimulation</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#createIntakeSimulation()" class="member-name-link">createIntakeSimulation</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="Simulation.html" title="class in com.stuypulse.robot.util.simulation">Simulation</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#getInstance()" class="member-name-link">getInstance</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>private double</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getIntakeArmEndX()" class="member-name-link">getIntakeArmEndX</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>private edu.wpi.first.math.geometry.Pose3d</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getIntakePivotPose()" class="member-name-link">getIntakePivotPose</a>()</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>private boolean</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#canShoot()" class="member-name-link">canShoot</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>private void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#robotRelativeAddPieceWithVariance(edu.wpi.first.math.geometry.Translation2d,edu.wpi.first.math.geometry.Rotation2d,edu.wpi.first.units.measure.Distance,edu.wpi.first.units.measure.LinearVelocity,edu.wpi.first.units.measure.Angle,double,double,double,double,double)" class="member-name-link">robotRelativeAddPieceWithVariance</a><wbr>(edu.wpi.first.math.geometry.Translation2d&nbsp;piecePose,
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#configureArena(org.ironmaple.simulation.seasonspecific.rebuilt2026.Arena2026Rebuilt,org.ironmaple.simulation.drivesims.SwerveDriveSimulation)" class="member-name-link">configureArena</a><wbr>(org.ironmaple.simulation.seasonspecific.rebuilt2026.Arena2026Rebuilt&nbsp;arena,
+ org.ironmaple.simulation.drivesims.SwerveDriveSimulation&nbsp;drivetrain)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>private org.ironmaple.simulation.IntakeSimulation</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#createIntakeSimulation()" class="member-name-link">createIntakeSimulation</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="Simulation.html" title="class in com.stuypulse.robot.util.simulation">Simulation</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#getInstance()" class="member-name-link">getInstance</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>private double</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getIntakeArmEndX()" class="member-name-link">getIntakeArmEndX</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>private edu.wpi.first.math.geometry.Pose3d</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getIntakePivotPose()" class="member-name-link">getIntakePivotPose</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>private void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#robotRelativeAddPieceWithVariance(edu.wpi.first.math.geometry.Translation2d,edu.wpi.first.math.geometry.Rotation2d,edu.wpi.first.units.measure.Distance,edu.wpi.first.units.measure.LinearVelocity,edu.wpi.first.units.measure.Angle,double,double,double,double,double)" class="member-name-link">robotRelativeAddPieceWithVariance</a><wbr>(edu.wpi.first.math.geometry.Translation2d&nbsp;piecePose,
  edu.wpi.first.math.geometry.Rotation2d&nbsp;yaw,
  edu.wpi.first.units.measure.Distance&nbsp;height,
  edu.wpi.first.units.measure.LinearVelocity&nbsp;speed,
@@ -181,28 +188,30 @@ loadScripts(document, 'script');</script>
  double&nbsp;yawVariance,
  double&nbsp;speedVariance,
  double&nbsp;pitchVariance)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Extension of <code>Arena2026Rebuilt.addPieceWithVariance(edu.wpi.first.math.geometry.Translation2d, edu.wpi.first.math.geometry.Rotation2d, edu.wpi.first.units.measure.Distance, edu.wpi.first.units.measure.LinearVelocity, edu.wpi.first.units.measure.Angle, double, double, double, double, double)</code> that uses
  chassis speeds</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>private void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#summonFuelAtIntake()" class="member-name-link">summonFuelAtIntake</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#update()" class="member-name-link">update</a>()</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>private void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#summonFuelAtIntake()" class="member-name-link">summonFuelAtIntake</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>private void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#updateHopperFuel()" class="member-name-link">updateHopperFuel</a>()</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#update()" class="member-name-link">update</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>private void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#updateIntake()" class="member-name-link">updateIntake</a>()</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#updateHopperFuel()" class="member-name-link">updateHopperFuel</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>private void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#updateIntakeEnabled(boolean)" class="member-name-link">updateIntakeEnabled</a><wbr>(boolean&nbsp;enabled)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#updateIntake()" class="member-name-link">updateIntake</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>private void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#updateShooting()" class="member-name-link">updateShooting</a>()</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#updateIntakeEnabled(boolean)" class="member-name-link">updateIntakeEnabled</a><wbr>(boolean&nbsp;enabled)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>private void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#updateSubsystemsBPSLoop()" class="member-name-link">updateSubsystemsBPSLoop</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Custom interval periodic function</div>
+</div>
 </div>
 </div>
 </div>
@@ -223,73 +232,79 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="instance">
 <h3>instance</h3>
-<div class="member-signature"><span class="modifiers">private static final</span>&nbsp;<span class="return-type"><a href="Simulation.html" title="class in com.stuypulse.robot.util.simulation">Simulation</a></span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/util/simulation/Simulation.html#line-37">instance</a></span></div>
+<div class="member-signature"><span class="modifiers">private static final</span>&nbsp;<span class="return-type"><a href="Simulation.html" title="class in com.stuypulse.robot.util.simulation">Simulation</a></span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/util/simulation/Simulation.html#line-39">instance</a></span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="arenaInstance">
 <h3>arenaInstance</h3>
-<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type">org.ironmaple.simulation.seasonspecific.rebuilt2026.Arena2026Rebuilt</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/util/simulation/Simulation.html#line-39">arenaInstance</a></span></div>
+<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type">org.ironmaple.simulation.seasonspecific.rebuilt2026.Arena2026Rebuilt</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/util/simulation/Simulation.html#line-41">arenaInstance</a></span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="shotLoop">
 <h3>shotLoop</h3>
-<div class="member-signature"><span class="modifiers">private final</span>&nbsp;<span class="return-type">edu.wpi.first.wpilibj.Notifier</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/util/simulation/Simulation.html#line-41">shotLoop</a></span></div>
+<div class="member-signature"><span class="modifiers">private final</span>&nbsp;<span class="return-type">edu.wpi.first.wpilibj.Notifier</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/util/simulation/Simulation.html#line-43">shotLoop</a></span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="swerveMSim">
 <h3>swerveMSim</h3>
-<div class="member-signature"><span class="modifiers">private final</span>&nbsp;<span class="return-type">org.ironmaple.simulation.drivesims.SwerveDriveSimulation</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/util/simulation/Simulation.html#line-43">swerveMSim</a></span></div>
+<div class="member-signature"><span class="modifiers">private final</span>&nbsp;<span class="return-type">org.ironmaple.simulation.drivesims.SwerveDriveSimulation</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/util/simulation/Simulation.html#line-45">swerveMSim</a></span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="intakeMSim">
 <h3>intakeMSim</h3>
-<div class="member-signature"><span class="modifiers">private final</span>&nbsp;<span class="return-type">org.ironmaple.simulation.IntakeSimulation</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/util/simulation/Simulation.html#line-45">intakeMSim</a></span></div>
+<div class="member-signature"><span class="modifiers">private final</span>&nbsp;<span class="return-type">org.ironmaple.simulation.IntakeSimulation</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/util/simulation/Simulation.html#line-47">intakeMSim</a></span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="intakeSim">
 <h3>intakeSim</h3>
-<div class="member-signature"><span class="modifiers">private final</span>&nbsp;<span class="return-type"><a href="../../subsystems/intake/Intake.html" title="class in com.stuypulse.robot.subsystems.intake">Intake</a></span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/util/simulation/Simulation.html#line-47">intakeSim</a></span></div>
+<div class="member-signature"><span class="modifiers">private final</span>&nbsp;<span class="return-type"><a href="../../subsystems/intake/Intake.html" title="class in com.stuypulse.robot.subsystems.intake">Intake</a></span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/util/simulation/Simulation.html#line-49">intakeSim</a></span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="shooterSim">
 <h3>shooterSim</h3>
-<div class="member-signature"><span class="modifiers">private final</span>&nbsp;<span class="return-type"><a href="../../subsystems/shooter/Shooter.html" title="class in com.stuypulse.robot.subsystems.shooter">Shooter</a></span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/util/simulation/Simulation.html#line-49">shooterSim</a></span></div>
+<div class="member-signature"><span class="modifiers">private final</span>&nbsp;<span class="return-type"><a href="../../subsystems/shooter/Shooter.html" title="class in com.stuypulse.robot.subsystems.shooter">Shooter</a></span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/util/simulation/Simulation.html#line-51">shooterSim</a></span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="handoffSim">
+<h3>handoffSim</h3>
+<div class="member-signature"><span class="modifiers">private final</span>&nbsp;<span class="return-type"><a href="../../subsystems/handoff/Handoff.html" title="class in com.stuypulse.robot.subsystems.handoff">Handoff</a></span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/util/simulation/Simulation.html#line-53">handoffSim</a></span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="fuel">
 <h3>fuel</h3>
-<div class="member-signature"><span class="modifiers">private final</span>&nbsp;<span class="return-type">edu.wpi.first.networktables.StructArrayPublisher&lt;edu.wpi.first.math.geometry.Pose3d&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/util/simulation/Simulation.html#line-51">fuel</a></span></div>
+<div class="member-signature"><span class="modifiers">private final</span>&nbsp;<span class="return-type">edu.wpi.first.networktables.StructArrayPublisher&lt;edu.wpi.first.math.geometry.Pose3d&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/util/simulation/Simulation.html#line-55">fuel</a></span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="intakePivot">
 <h3>intakePivot</h3>
-<div class="member-signature"><span class="modifiers">private final</span>&nbsp;<span class="return-type">edu.wpi.first.networktables.StructPublisher&lt;edu.wpi.first.math.geometry.Pose3d&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/util/simulation/Simulation.html#line-53">intakePivot</a></span></div>
+<div class="member-signature"><span class="modifiers">private final</span>&nbsp;<span class="return-type">edu.wpi.first.networktables.StructPublisher&lt;edu.wpi.first.math.geometry.Pose3d&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/util/simulation/Simulation.html#line-57">intakePivot</a></span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="hopper">
 <h3>hopper</h3>
-<div class="member-signature"><span class="modifiers">private final</span>&nbsp;<span class="return-type">edu.wpi.first.networktables.StructPublisher&lt;edu.wpi.first.math.geometry.Pose3d&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/util/simulation/Simulation.html#line-55">hopper</a></span></div>
+<div class="member-signature"><span class="modifiers">private final</span>&nbsp;<span class="return-type">edu.wpi.first.networktables.StructPublisher&lt;edu.wpi.first.math.geometry.Pose3d&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/util/simulation/Simulation.html#line-59">hopper</a></span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="fuelLayers">
 <h3>fuelLayers</h3>
-<div class="member-signature"><span class="modifiers">private final</span>&nbsp;<span class="return-type">edu.wpi.first.networktables.StructArrayPublisher&lt;edu.wpi.first.math.geometry.Pose3d&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/util/simulation/Simulation.html#line-57">fuelLayers</a></span></div>
+<div class="member-signature"><span class="modifiers">private final</span>&nbsp;<span class="return-type">edu.wpi.first.networktables.StructArrayPublisher&lt;edu.wpi.first.math.geometry.Pose3d&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/util/simulation/Simulation.html#line-61">fuelLayers</a></span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="shooter">
 <h3>shooter</h3>
-<div class="member-signature"><span class="modifiers">private final</span>&nbsp;<span class="return-type">edu.wpi.first.networktables.StructPublisher&lt;edu.wpi.first.math.geometry.Pose3d&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/util/simulation/Simulation.html#line-59">shooter</a></span></div>
+<div class="member-signature"><span class="modifiers">private final</span>&nbsp;<span class="return-type">edu.wpi.first.networktables.StructPublisher&lt;edu.wpi.first.math.geometry.Pose3d&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/util/simulation/Simulation.html#line-63">shooter</a></span></div>
 </section>
 </li>
 </ul>
@@ -303,7 +318,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="&lt;init&gt;()">
 <h3>Simulation</h3>
-<div class="member-signature"><span class="modifiers">private</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/util/simulation/Simulation.html#line-73">Simulation</a></span>()</div>
+<div class="member-signature"><span class="modifiers">private</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/util/simulation/Simulation.html#line-77">Simulation</a></span>()</div>
 </section>
 </li>
 </ul>
@@ -317,55 +332,56 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getInstance()">
 <h3>getInstance</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="Simulation.html" title="class in com.stuypulse.robot.util.simulation">Simulation</a></span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/util/simulation/Simulation.html#line-69">getInstance</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="Simulation.html" title="class in com.stuypulse.robot.util.simulation">Simulation</a></span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/util/simulation/Simulation.html#line-73">getInstance</a></span>()</div>
 </section>
 </li>
 <li>
-<section class="detail" id="configureArena()">
+<section class="detail" id="configureArena(org.ironmaple.simulation.seasonspecific.rebuilt2026.Arena2026Rebuilt,org.ironmaple.simulation.drivesims.SwerveDriveSimulation)">
 <h3>configureArena</h3>
-<div class="member-signature"><span class="modifiers">private</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/util/simulation/Simulation.html#line-91">configureArena</a></span>()</div>
+<div class="member-signature"><span class="modifiers">private</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/util/simulation/Simulation.html#line-99">configureArena</a></span><wbr><span class="parameters">(org.ironmaple.simulation.seasonspecific.rebuilt2026.Arena2026Rebuilt&nbsp;arena,
+ org.ironmaple.simulation.drivesims.SwerveDriveSimulation&nbsp;drivetrain)</span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="createIntakeSimulation()">
 <h3>createIntakeSimulation</h3>
-<div class="member-signature"><span class="modifiers">private</span>&nbsp;<span class="return-type">org.ironmaple.simulation.IntakeSimulation</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/util/simulation/Simulation.html#line-98">createIntakeSimulation</a></span>()</div>
+<div class="member-signature"><span class="modifiers">private</span>&nbsp;<span class="return-type">org.ironmaple.simulation.IntakeSimulation</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/util/simulation/Simulation.html#line-106">createIntakeSimulation</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getIntakePivotPose()">
 <h3>getIntakePivotPose</h3>
-<div class="member-signature"><span class="modifiers">private</span>&nbsp;<span class="return-type">edu.wpi.first.math.geometry.Pose3d</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/util/simulation/Simulation.html#line-108">getIntakePivotPose</a></span>()</div>
+<div class="member-signature"><span class="modifiers">private</span>&nbsp;<span class="return-type">edu.wpi.first.math.geometry.Pose3d</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/util/simulation/Simulation.html#line-116">getIntakePivotPose</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getIntakeArmEndX()">
 <h3>getIntakeArmEndX</h3>
-<div class="member-signature"><span class="modifiers">private</span>&nbsp;<span class="return-type">double</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/util/simulation/Simulation.html#line-116">getIntakeArmEndX</a></span>()</div>
+<div class="member-signature"><span class="modifiers">private</span>&nbsp;<span class="return-type">double</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/util/simulation/Simulation.html#line-124">getIntakeArmEndX</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="updateIntakeEnabled(boolean)">
 <h3>updateIntakeEnabled</h3>
-<div class="member-signature"><span class="modifiers">private</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/util/simulation/Simulation.html#line-125">updateIntakeEnabled</a></span><wbr><span class="parameters">(boolean&nbsp;enabled)</span></div>
+<div class="member-signature"><span class="modifiers">private</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/util/simulation/Simulation.html#line-133">updateIntakeEnabled</a></span><wbr><span class="parameters">(boolean&nbsp;enabled)</span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="updateIntake()">
 <h3>updateIntake</h3>
-<div class="member-signature"><span class="modifiers">private</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/util/simulation/Simulation.html#line-133">updateIntake</a></span>()</div>
+<div class="member-signature"><span class="modifiers">private</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/util/simulation/Simulation.html#line-141">updateIntake</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="updateHopperFuel()">
 <h3>updateHopperFuel</h3>
-<div class="member-signature"><span class="modifiers">private</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/util/simulation/Simulation.html#line-140">updateHopperFuel</a></span>()</div>
+<div class="member-signature"><span class="modifiers">private</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/util/simulation/Simulation.html#line-148">updateHopperFuel</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="robotRelativeAddPieceWithVariance(edu.wpi.first.math.geometry.Translation2d,edu.wpi.first.math.geometry.Rotation2d,edu.wpi.first.units.measure.Distance,edu.wpi.first.units.measure.LinearVelocity,edu.wpi.first.units.measure.Angle,double,double,double,double,double)">
 <h3>robotRelativeAddPieceWithVariance</h3>
-<div class="member-signature"><span class="modifiers">private</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/util/simulation/Simulation.html#line-172">robotRelativeAddPieceWithVariance</a></span><wbr><span class="parameters">(edu.wpi.first.math.geometry.Translation2d&nbsp;piecePose,
+<div class="member-signature"><span class="modifiers">private</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/util/simulation/Simulation.html#line-180">robotRelativeAddPieceWithVariance</a></span><wbr><span class="parameters">(edu.wpi.first.math.geometry.Translation2d&nbsp;piecePose,
  edu.wpi.first.math.geometry.Rotation2d&nbsp;yaw,
  edu.wpi.first.units.measure.Distance&nbsp;height,
  edu.wpi.first.units.measure.LinearVelocity&nbsp;speed,
@@ -398,19 +414,27 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="summonFuelAtIntake()">
 <h3>summonFuelAtIntake</h3>
-<div class="member-signature"><span class="modifiers">private</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/util/simulation/Simulation.html#line-197">summonFuelAtIntake</a></span>()</div>
+<div class="member-signature"><span class="modifiers">private</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/util/simulation/Simulation.html#line-205">summonFuelAtIntake</a></span>()</div>
 </section>
 </li>
 <li>
-<section class="detail" id="updateShooting()">
-<h3>updateShooting</h3>
-<div class="member-signature"><span class="modifiers">private</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/util/simulation/Simulation.html#line-224">updateShooting</a></span>()</div>
+<section class="detail" id="canShoot()">
+<h3>canShoot</h3>
+<div class="member-signature"><span class="modifiers">private</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/util/simulation/Simulation.html#line-232">canShoot</a></span>()</div>
+</section>
+</li>
+<li>
+<section class="detail" id="updateSubsystemsBPSLoop()">
+<h3>updateSubsystemsBPSLoop</h3>
+<div class="member-signature"><span class="modifiers">private</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/util/simulation/Simulation.html#line-242">updateSubsystemsBPSLoop</a></span>()</div>
+<div class="block"><h4>Custom interval periodic function</h4>
+ <p>Runs at the speed of 1 over the balls per second constant <a href="SimulationConstants.Shooter.html#BPS"><code>SimulationConstants.Shooter.BPS</code></a></p></div>
 </section>
 </li>
 <li>
 <section class="detail" id="update()">
 <h3>update</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/util/simulation/Simulation.html#line-251">update</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/stuypulse/robot/util/simulation/Simulation.html#line-268">update</a></span>()</div>
 </section>
 </li>
 </ul>
