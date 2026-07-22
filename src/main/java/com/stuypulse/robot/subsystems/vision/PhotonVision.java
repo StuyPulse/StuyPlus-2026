@@ -21,10 +21,12 @@ import com.stuypulse.robot.constants.Cameras;
 import com.stuypulse.robot.constants.Cameras.Camera;
 import com.stuypulse.robot.subsystems.swerve.CommandSwerveDrivetrain;
 
-
+import dev.doglog.DogLog;
+import edu.wpi.first.apriltag.AprilTag;
 import edu.wpi.first.apriltag.AprilTagFieldLayout;
 import edu.wpi.first.apriltag.AprilTagFields;
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -59,6 +61,15 @@ public class PhotonVision extends SubsystemBase {
         this.visionSim = new VisionSystemSim("main");
        
         AprilTagFieldLayout layout = AprilTagFieldLayout.loadField(fieldLayout);
+        final List<AprilTag> tags = layout.getTags();
+        final int tagCount = tags.size();
+        final Pose3d[] tagPoses = new Pose3d[tagCount];
+
+        for (int i = 0; i < tagCount; i++) {
+            tagPoses[i] = tags.get(i).pose;
+        }
+        DogLog.log("/AdvScope/Tags", tagPoses);
+
         visionSim.addAprilTags(layout);
 
         for (int i = 0; i < Cameras.LimelightCameras.length; i++) {
@@ -74,7 +85,8 @@ public class PhotonVision extends SubsystemBase {
             if (Robot.isSimulation()) {
                 SimCameraProperties cameraProps = new SimCameraProperties();
 
-                PhotonCameraSim cameraSim = new PhotonCameraSim(realCamera, cameraProps);
+                final PhotonCameraSim cameraSim = new PhotonCameraSim(realCamera, cameraProps);
+                cameraSim.enableDrawWireframe(true);
                 cameraSims[i] = cameraSim;
                 visionSim.addCamera(cameraSim, cameraTransform);
             }
