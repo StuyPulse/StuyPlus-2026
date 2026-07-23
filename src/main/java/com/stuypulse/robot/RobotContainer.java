@@ -5,6 +5,8 @@
 /***************************************************************/
 package com.stuypulse.robot;
 
+import org.photonvision.proto.Photon;
+
 import com.stuypulse.robot.commands.auton.DoNothingAuton;
 import com.stuypulse.robot.commands.auton.LBDisrupt;
 import com.stuypulse.robot.commands.auton.LBFerry;
@@ -44,8 +46,8 @@ import com.stuypulse.robot.subsystems.intake.Intake;
 import com.stuypulse.robot.subsystems.leds.LEDController;
 import com.stuypulse.robot.subsystems.shooter.Shooter;
 import com.stuypulse.robot.subsystems.swerve.CommandSwerveDrivetrain;
-import com.stuypulse.robot.subsystems.vision.LimelightVision;
 import com.stuypulse.robot.subsystems.vision.PhotonVision;
+import com.stuypulse.robot.subsystems.vision.PhotonVisionImpl;
 import com.stuypulse.robot.util.PathUtil.AutonConfig;
 
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -78,11 +80,13 @@ public class RobotContainer {
     private final CommandSwerveDrivetrain swerve = CommandSwerveDrivetrain.getInstance();
 
     // private final LimelightVision vision = LimelightVision.getInstance();
-    private final PhotonVision vision = PhotonVision.getInstance();
+    // private final PhotonVision vision = PhotonVision.getInstance();
 
     private final LEDController leds = LEDController.getInstance();
 
     private final Handoff handoff = Handoff.getInstance();
+
+    private final PhotonVisionImpl vision = PhotonVisionImpl.getInstance(); 
 
     // Autons
     private static SendableChooser<Command> autonChooser = new SendableChooser<>();
