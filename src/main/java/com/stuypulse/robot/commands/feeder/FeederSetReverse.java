@@ -5,7 +5,7 @@
 /***************************************************************/
 package com.stuypulse.robot.commands.feeder;
 
-import com.stuypulse.robot.subsystems.feeder.Feeder.FeederState;
+import com.stuypulse.robot.subsystems.feeder.FeederIO.FeederState;
 
 public class FeederSetReverse extends FeederSetState {  
     public FeederSetReverse() {

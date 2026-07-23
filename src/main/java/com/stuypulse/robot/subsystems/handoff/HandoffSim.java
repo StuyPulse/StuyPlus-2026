@@ -13,34 +13,35 @@ import com.stuypulse.robot.constants.Settings;
 import com.stuypulse.robot.subsystems.shooter.Shooter;
 import com.stuypulse.robot.subsystems.shooter.Shooter.ShooterState;
 import com.stuypulse.robot.subsystems.swerve.CommandSwerveDrivetrain;
-import com.stuypulse.robot.util.simulation.TalonFXSimulation;
+import com.stuypulse.robot.util.simulation.TalonFXSimulation.TalonFXSimulation;
+
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.math.system.plant.LinearSystemId;
 import edu.wpi.first.wpilibj.simulation.DCMotorSim;
 
 public class HandoffSim extends Handoff {
 
-    private final TalonFXSimulation handoffMotor;
+    // private final TalonFXSimulation handoffMotor;
 
-    private final DCMotorSim handoffSim;
+    // private final DCMotorSim handoffSim;
 
-    private final VoltageOut handoffMotorController;
+    // private final VoltageOut handoffMotorController;
 
     public HandoffSim() {
-        handoffSim = new DCMotorSim(
-                LinearSystemId.createDCMotorSystem(
-                        DCMotor.getKrakenX60(1),
-                        Settings.Handoff.J_KG_METERS_SQUARED,
-                        Settings.Handoff.GEAR_RATIO),
-                DCMotor.getKrakenX60(1));
-        handoffMotor = new TalonFXSimulation(Ports.Handoff.HANDOFF_MOTOR, handoffSim);
-        handoffMotor.configure(Motors.Handoff.HANDOFF_MOTOR_CONFIG);
-        handoffMotorController = new VoltageOut(getState().getTargetVoltage()).withEnableFOC(true);
+        // handoffSim = new DCMotorSim(
+        //         LinearSystemId.createDCMotorSystem(
+        //                 DCMotor.getKrakenX60(1),
+        //                 Settings.Handoff.J_KG_METERS_SQUARED,
+        //                 Settings.Handoff.GEAR_RATIO),
+        //         DCMotor.getKrakenX60(1));
+        // handoffMotor = new TalonFXSimulation(Ports.Handoff.HANDOFF_MOTOR, handoffSim);
+        // handoffMotor.configure(Motors.Handoff.HANDOFF_MOTOR_CONFIG);
+        // handoffMotorController = new VoltageOut(getState().getTargetVoltage()).withEnableFOC(true);
     }
 
     @Override
     protected void stopMotors() {
-        handoffMotor.stopMotor();
+        // handoffMotor.stopMotor();
     }
 
     @Override
@@ -62,11 +63,11 @@ public class HandoffSim extends Handoff {
                 setState(HandoffState.IDLE);
             }
             
-            handoffMotor.setControl(handoffMotorController.withOutput(getState().getTargetVoltage()));
+            // handoffMotor.setControl(handoffMotorController.withOutput(getState().getTargetVoltage()));
         } else {
             stopMotors();
         }
-        handoffMotor.update(Settings.DT);
+        // handoffMotor.update(Settings.DT);
         super.periodic();
     }
 }
