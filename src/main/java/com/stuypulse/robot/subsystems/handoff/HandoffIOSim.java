@@ -3,9 +3,7 @@
 /* Use of this source code is governed by an MIT-style license */
 /* that can be found in the repository LICENSE file.           */
 /***************************************************************/
-package com.stuypulse.robot.subsystems.feeder;
-
-import static edu.wpi.first.units.Units.*;
+package com.stuypulse.robot.subsystems.handoff;
 
 import com.stuypulse.robot.constants.Ports;
 import com.stuypulse.robot.constants.Settings;
@@ -14,32 +12,32 @@ import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.math.system.plant.LinearSystemId;
 import edu.wpi.first.wpilibj.simulation.DCMotorSim;
 
-public class FeederIOSim extends FeederIOTalonFXBase {
-    private static TalonFXSimulation getFeederMotor(int id) {
+public class HandoffIOSim extends HandoffIOTalonFXBase {
+    private static TalonFXSimulation getHandoffMotor(int id) {
         final DCMotorSim sim = new DCMotorSim(
-            LinearSystemId.createDCMotorSystem(
-                DCMotor.getKrakenX60(2),
-                Settings.Feeder.J.in(KilogramSquareMeters),
-                Settings.Feeder.GEAR_RATIO),
-            DCMotor.getKrakenX60(2));
+                LinearSystemId.createDCMotorSystem(
+                        DCMotor.getKrakenX60(1),
+                        Settings.Handoff.J_KG_METERS_SQUARED,
+                        Settings.Handoff.GEAR_RATIO),
+                DCMotor.getKrakenX60(1));
         final TalonFXSimulation motor = new TalonFXSimulation(id, sim);
         return motor;
     }
 
-    private final TalonFXSimulation feederMotor;
+    private final TalonFXSimulation handoffMotor;
 
-    public FeederIOSim() {
-        this(getFeederMotor(Ports.Feeder.FEEDER_MOTOR));
+    public HandoffIOSim() {
+        this(getHandoffMotor(Ports.Feeder.FEEDER_MOTOR));
     }
 
-    private FeederIOSim(TalonFXSimulation feederMotor) {
-        super(feederMotor);
-        this.feederMotor = feederMotor;
+    private HandoffIOSim(TalonFXSimulation handoffMotor) {
+        super(handoffMotor);
+        this.handoffMotor = handoffMotor;
     }
 
     @Override
-    public void updateInputs(FeederIOInputs inputs) {
-        feederMotor.update(Settings.DT);
+    public void updateInputs(HandoffIOInputs inputs) {
+        handoffMotor.update(Settings.DT);
         super.updateInputs(inputs);
     }
 }

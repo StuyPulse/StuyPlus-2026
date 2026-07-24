@@ -7,28 +7,29 @@ package com.stuypulse.robot.subsystems.handoff;
 
 import com.stuypulse.robot.Robot;
 import com.stuypulse.robot.constants.Settings;
+
 import dev.doglog.DogLog;
 import edu.wpi.first.units.measure.Voltage;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-public abstract class Handoff extends SubsystemBase {
+public class Handoff extends SubsystemBase {
     private static final Handoff instance;
 
-    private HandoffState state;
-
     static {
-        if (Robot.isReal()) {
-            instance = new HandoffImpl();
-        } else {
-            instance = new HandoffSim();
-        }
+        instance = Robot.isReal() ? new Handoff(new HandoffIOTalonFX()) : new Handoff(new HandoffIOSim());
     }
 
     public static Handoff getInstance() {
         return instance;
     }
 
-    protected Handoff() {
+    private final HandoffIO io;
+    private final HandoffIOInputsAutoLogged inputs;
+    private HandoffState state;
+
+    protected Handoff(HandoffIO io) {
+        this.io = io;
+        this.inputs = new HandoffIOInputsAutoLogged();
         this.state = HandoffState.IDLE;
     }
 
@@ -69,12 +70,22 @@ public abstract class Handoff extends SubsystemBase {
         }
     }
 
-    protected abstract void stopMotors();
-    protected abstract boolean handoffStalling();
+    public boolean handoffStalling() {
+        return inputs.isStalling;
+    };
 
     @Override
     public void periodic() {
         final HandoffState currentState = getState();
+
+        
+        if (Settings.EnabledSubsystems.HANDOFF.get()) {
+            io.setTargetVoltage(currentState.getTargetVoltage());
+        } else {
+            io.stopMotors();
+        }
+        io.updateInputs(inputs);
+
         DogLog.log("Handoff/State", currentState.name());
         DogLog.forceNt.log("States/Handoff", currentState.name());
         DogLog.log("Handoff/Handoff Target Voltage", currentState.getTargetVoltage());

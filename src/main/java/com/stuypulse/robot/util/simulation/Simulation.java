@@ -13,7 +13,6 @@ import com.stuypulse.robot.subsystems.handoff.Handoff.HandoffState;
 import com.stuypulse.robot.subsystems.intake.Intake;
 import com.stuypulse.robot.subsystems.intake.Intake.IntakeState;
 import com.stuypulse.robot.subsystems.shooter.Shooter;
-import com.stuypulse.robot.subsystems.shooter.Shooter.ShooterState;
 import com.stuypulse.robot.subsystems.swerve.CommandSwerveDrivetrain;
 import dev.doglog.DogLog;
 import edu.wpi.first.math.geometry.Pose2d;
@@ -28,6 +27,7 @@ import edu.wpi.first.units.measure.Angle;
 import edu.wpi.first.units.measure.Distance;
 import edu.wpi.first.units.measure.LinearVelocity;
 import edu.wpi.first.wpilibj.Notifier;
+
 import org.ironmaple.simulation.IntakeSimulation;
 import org.ironmaple.simulation.SimulatedArena;
 import org.ironmaple.simulation.drivesims.SwerveDriveSimulation;
@@ -113,20 +113,20 @@ public class Simulation {
                 SimulationConstants.Hopper.FUEL_CAPACITY);
     }
 
-    private Pose3d getIntakePivotPose() {
+    private Pose3d getIntakePivotPose(Angle position) {
         return SimulationConstants.Intake.PIVOT_OFFSETS.withRotation(
                 new Rotation3d(
                         0, // inverts the angle
-                        intakeSim.getRelativePosition().in(Radians),
+                        position.in(Radians),
                         0));
     }
 
-    private double getIntakeArmEndX() {
+    private double getIntakeArmEndX(Angle position) {
         return SimulationConstants.Intake.PIVOT_END_X
                 + // sin works because we're zeroed at horizontal
                 Settings.Intake.Pivot.PIVOT_ARM_LENGTH.in(Meters)
                         * Math.sin(
-                                intakeSim.getRelativePosition().in(Radians)
+                                position.in(Radians)
                                         + SimulationConstants.Intake.PIVOT_OFFSETS.toRotation3d().getX());
     }
 
@@ -138,8 +138,8 @@ public class Simulation {
         }
     }
 
-    private void updateIntake() {
-        boolean intakeEnabled = intakeSim.atTargetAngle()
+    private void updateIntake(boolean atTargetAngle) {
+        boolean intakeEnabled = atTargetAngle
                 && (intakeSim.getState() == IntakeState.DOWN)
                 && Settings.EnabledSubsystems.INTAKE.get();
         updateIntakeEnabled(intakeEnabled);
@@ -204,20 +204,8 @@ public class Simulation {
 
     private void summonFuelAtIntake() {
         robotRelativeAddPieceWithVariance(
-                swerveMSim
-                        .getSimulatedDriveTrainPose()
-                        .getTranslation()
-                        .plus(
-                                SimulationConstants.Intake.OUTTAKE_OFFSETS
-                                        .applyToPose3dRobotRelative(
-                                                new Pose3d(
-                                                        getIntakeArmEndX(),
-                                                        0,
-                                                        0,
-                                                        new Rotation3d(
-                                                                swerveMSim.getSimulatedDriveTrainPose().getRotation())))
-                                        .getTranslation()
-                                        .toTranslation2d()),
+                SimulationConstants.Intake.OUTTAKE_OFFSETS.applyToPose3dRobotRelative(new Pose3d(swerveMSim.getSimulatedDriveTrainPose()))
+                    .getTranslation().toTranslation2d(),
                 swerveMSim.getSimulatedDriveTrainPose().getRotation(),
                 Meters.of(0),
                 MetersPerSecond.of(2),
@@ -269,10 +257,11 @@ public class Simulation {
         if (swerveMSim == null)
             return;
         fuel.set(arenaInstance.getGamePiecesArrayByType("Fuel"));
-        updateIntake();
+        updateIntake(intakeSim.atTargetAngle());
         updateHopperFuel();
-        double armEndX = getIntakeArmEndX();
-        intakePivot.set(getIntakePivotPose());
+        final Angle intakeAngle = intakeSim.getRelativePosition();
+        final double armEndX = getIntakeArmEndX(intakeAngle);
+        intakePivot.set(getIntakePivotPose(intakeAngle));
         hopper.set(
                 SimulationConstants.Hopper.OFFSETS.applyToPose3d(
                         new Pose3d(armEndX, 0, 0, new Rotation3d())));

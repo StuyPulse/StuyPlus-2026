@@ -10,29 +10,30 @@ import com.stuypulse.robot.commands.intake.IntakeSeedPivotDeployed;
 import com.stuypulse.robot.commands.intake.IntakeSeedPivotNinety;
 import com.stuypulse.robot.commands.intake.IntakeSeedPivotStowed;
 import com.stuypulse.robot.constants.Settings;
+import com.stuypulse.robot.util.SysId;
+import com.stuypulse.robot.util.simulation.RobotVisualizer;
 
 import dev.doglog.DogLog;
-import static edu.wpi.first.units.Units.Degrees;
-import static edu.wpi.first.units.Units.RPM;
+
+import static edu.wpi.first.units.Units.Amps;
 import static edu.wpi.first.units.Units.Rotations;
+
+import java.util.Optional;
+
 import edu.wpi.first.units.measure.Angle;
-import edu.wpi.first.units.measure.AngularVelocity;
 import edu.wpi.first.units.measure.Voltage;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 
-public abstract class Intake extends SubsystemBase {
-
+public class Intake extends SubsystemBase {
     private static final Intake instance;
-
-    private IntakeState state;
 
     static {
         if (Robot.isReal()) {
-            instance = new IntakeImpl();
+            instance = new Intake(new IntakeIOTalonFX());
         } else {
-            instance = new IntakeSim();
+            instance = new Intake(new IntakeIOSim());
         }
         // Elastic Commands
         SmartDashboard.putData("Intake/Seed Pivot Angle Stowed", new IntakeSeedPivotStowed());
@@ -44,7 +45,23 @@ public abstract class Intake extends SubsystemBase {
         return instance;
     }
 
-    public abstract boolean limitSwitchHit();
+    private final IntakeIO io;
+    private final IntakeIOInputsAutoLogged inputs;
+    private IntakeState state;
+
+    protected Intake(IntakeIO io) {
+        this.io = io;
+        this.inputs = new IntakeIOInputsAutoLogged();
+        this.state = IntakeState.IDLE;
+    }
+
+    public void setState(IntakeState state) {
+        this.state = state;
+    }
+
+    public IntakeState getState() {
+        return state;
+    }
 
     /** Enum representing the different possible states of the intake. */
     public enum IntakeState {
@@ -114,60 +131,77 @@ public abstract class Intake extends SubsystemBase {
         }
     }
 
-    protected Intake() {
-        this.state = IntakeState.IDLE;
+    public Angle getRelativePosition() {
+        return inputs.pivotPosition;
     }
-
-    public void setState(IntakeState state) {
-        this.state = state;
-    }
-
-    public IntakeState getState() {
-        return state;
-    }
-
-    // Pivot Commands
-    public abstract Angle getRelativePosition();
-
-    public abstract void seedPivotAngle(Angle angle);
 
     public boolean atTargetAngle() {
-        return getRelativePosition().minus(getState().getTargetAngle())
+        return inputs.pivotPosition.minus(getState().getTargetAngle())
                 .abs(Rotations) < Settings.Intake.Pivot.ANGLE_TOLERANCE.in(Rotations);
     }
 
     public boolean isPivotAboveThreshold() {
-        return getRelativePosition().gt(Settings.Intake.Pivot.PUSHDOWN_THRESHOLD);
+        return inputs.pivotPosition.gt(Settings.Intake.Pivot.PUSHDOWN_THRESHOLD);
     }
 
-    // Roller Commands
-    public abstract AngularVelocity getRollerVelocity();
+    // Sysid
+    private Optional<Voltage> pivotVoltageOverride = Optional.empty();
 
-    // Stop Commands
-    protected abstract void stopRollerMotors();
-    protected abstract void stopPivotMotor();
-    protected void stopAllMotors() {
-        stopRollerMotors();
-        stopPivotMotor();
+    public void setPivotVoltageOverride(Voltage voltage) {
+        this.pivotVoltageOverride = Optional.of(voltage);
     };
 
-    // Sysid
-    public abstract SysIdRoutine getIntakeSysIdRoutine();
+    public SysIdRoutine getIntakeSysIdRoutine() {
+        return SysId.getRoutine(
+                Settings.Intake.Pivot.RAMP_RATE,
+                Settings.Intake.Pivot.STEP_VOLTAGE,
+                "Intake",
+                this::setPivotVoltageOverride,
+                () -> inputs.pivotPosition,
+                () -> inputs.pivotVelocity,
+                () -> inputs.pivotVoltage,
+                getInstance());
+    }
 
-    public abstract void setPivotVoltageOverride(Voltage voltage);
+    public void seedPivotAngle(Angle angle) {
+        io.seedPivotAngle(angle);
+    }
 
     @Override
     public void periodic() {
         final IntakeState currentState = getState();
-        // Logging
+    
+        if (Settings.EnabledSubsystems.INTAKE.get()) {
+            // roller
+            io.setRollerDutyCycle(currentState.getTargetDutyCycle());
+
+            // pivot
+            if (pivotVoltageOverride.isEmpty()) {
+                switch (currentState) {
+                    case INTAKE, OUTTAKE, DOWN:
+                        if (isPivotAboveThreshold()) {
+                            io.setPivotPushdown(Amps.of(Settings.Intake.Pivot.PUSHDOWN_CURRENT.get()));
+                        } else {
+                            io.setPivotPosition(currentState.getTargetAngle());
+                        };
+                        break;
+                    case HOMING_DOWN:
+                        io.setPivotHoming(Settings.Intake.Pivot.HOMING_DOWN_VOLTAGE);
+                        break;
+                    case AGITATE, AGITATE_DOWN:
+                        io.setPivotPosition(currentState.getTargetAngle());
+                        break;
+                    default: io.setPivotPosition(currentState.getTargetAngle());
+                };
+            } else {
+                io.setPivotHoming(pivotVoltageOverride.get());
+            }
+        } else {
+            io.stopAllMotors();
+        }
+        io.updateInputs(inputs);
+        RobotVisualizer.getInstance().updateIntake(inputs.pivotPosition, inputs.rollerVelocity);
+
         DogLog.log("Intake/State", currentState.name());
-        DogLog.forceNt.log("Intake/Pivot/Limit Switch Hit", limitSwitchHit());
-        DogLog.forceNt.log("States/Intake", currentState.name());
-        DogLog.log("Intake/Pivot/Target Angle", currentState.getTargetAngle().in(Degrees));
-        DogLog.forceNt.log("Intake/Pivot/Current Angle", getRelativePosition().in(Degrees));
-        DogLog.forceNt.log("Intake/Pivot/At Target Angle", atTargetAngle());
-        DogLog.log("Intake/Pivot/Above Threshold", isPivotAboveThreshold());
-        DogLog.forceNt.log("Intake/Rollers/Target Duty Cycle", currentState.getTargetDutyCycle());
-        DogLog.log("Intake/Rollers/RPM", getRollerVelocity().in(RPM));
     }
 }

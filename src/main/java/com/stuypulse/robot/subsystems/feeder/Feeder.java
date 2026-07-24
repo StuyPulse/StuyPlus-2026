@@ -13,7 +13,6 @@ import dev.doglog.DogLog;
 import edu.wpi.first.units.measure.*;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.stuypulse.robot.util.simulation.RobotVisualizer;
 
@@ -29,8 +28,22 @@ public class Feeder extends SubsystemBase {
     }
 
     private final FeederIO io;
-    private final FeederIOInputsAutoLogged inputs = new FeederIOInputsAutoLogged();
+    private final FeederIOInputsAutoLogged inputs;
     private FeederState state;
+
+    private Feeder(FeederIO io) {
+        this.io = io;
+        this.inputs = new FeederIOInputsAutoLogged();
+        this.state = FeederState.IDLE;
+    }
+
+    public void setState(FeederState state) {
+        this.state = state;
+    }
+
+    public FeederState getState() {
+        return state;
+    }
 
     public enum FeederState {
         IDLE(Volts.of(0.0)),
@@ -46,19 +59,6 @@ public class Feeder extends SubsystemBase {
         public Voltage getTargetVoltage() {
             return this.targetVoltage;
         }
-    }
-
-    private Feeder(FeederIO io) {
-        this.io = io;
-        this.state = FeederState.IDLE;
-    }
-
-    public void setState(FeederState state) {
-        this.state = state;
-    }
-
-    public FeederState getState() {
-        return state;
     }
 
     private Command setStateCommand(FeederState state) {
@@ -92,7 +92,11 @@ public class Feeder extends SubsystemBase {
         //     setState(FeederState.IDLE);
         // }
 
-        io.setTargetVoltage(currentState.getTargetVoltage());
+        if (Settings.EnabledSubsystems.FEEDER.get()) {
+            io.setTargetVoltage(currentState.getTargetVoltage());
+        } else {
+            io.stopMotors();
+        }
         io.updateInputs(inputs);
         RobotVisualizer.getInstance().updateFeeder(inputs.velocity);
 
