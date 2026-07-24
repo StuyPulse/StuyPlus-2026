@@ -1,10 +1,10 @@
 package com.stuypulse.robot.util.simulation;
 
+import java.lang.reflect.Field;
 import java.util.ArrayDeque;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Queue;
-import java.lang.reflect.Field;
 
 import com.ctre.phoenix6.swerve.SwerveModuleConstants;
 import com.stuypulse.robot.Robot;
@@ -23,28 +23,33 @@ public final class TalonFXSimIds {
             idPool.add(i);
         }
 
-        reserveSwerveModule(TunerConstants.FrontLeft);
-        reserveSwerveModule(TunerConstants.FrontRight);
-        reserveSwerveModule(TunerConstants.BackLeft);
-        reserveSwerveModule(TunerConstants.BackRight);
+        reserveSwerveModule("Swerve (Reserved)/FrontLeft", TunerConstants.FrontLeft);
+        reserveSwerveModule("Swerve (Reserved)/FrontRight", TunerConstants.FrontRight);
+        reserveSwerveModule("Swerve (Reserved)/BackLeft", TunerConstants.BackLeft);
+        reserveSwerveModule("Swerve (Reserved)/BackRight", TunerConstants.BackRight);
     }
 
-    private static void reserveSwerveModule(SwerveModuleConstants<?, ?, ?> module) {
-        Class<?> classObjectReference = module.getClass();
-        Field[] publicFields = classObjectReference.getFields();
-
-        for (Field field: publicFields) {
-            if (field.getType() == int.class) {
-                if (field.getName().toLowerCase().endsWith("id")) {
-                    try {
-                        int value = field.getInt(module);
-                        idPool.remove(Integer.valueOf(value));
-                    } catch (IllegalAccessException e) {
-                        e.printStackTrace();
-                    }
+    private static void reserveSwerveModule(String key, SwerveModuleConstants<?, ?, ?> module) {
+        for (Field field : module.getClass().getFields()) {
+            if (field.getType() == int.class
+                    && field.getName().toLowerCase().endsWith("id")) {
+                try {
+                    reserve(key + "/" + field.getName(), field.getInt(module));
+                } catch (IllegalAccessException e) {
+                    e.printStackTrace();
                 }
             }
         }
+    }
+
+    private static void assign(String key, int id) {
+        assignedIds.put(key, id);
+        DogLog.log("Simulation/CAN Assignments/" + key, id);
+    }
+
+    private static void reserve(String key, int id) {
+        idPool.remove(Integer.valueOf(id));
+        assign(key, id);
     }
 
     public static int get(String key) {
@@ -64,12 +69,8 @@ public final class TalonFXSimIds {
                 "Out of simulated CAN IDs (" + MAX_SIM_DEVICES + " max)");
         }
 
-        return assignedIds.computeIfAbsent(key, k -> {
-            int id = idPool.remove();
-
-            DogLog.log("Simulation/CAN Assignments/" + key, id);
-
-            return id;
-        });
+        int id = idPool.remove();
+        assign(key, id);
+        return id;
     }
 }
