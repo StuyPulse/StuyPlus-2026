@@ -1,73 +1,35 @@
-/************************* PROJECT RON *************************/
-/* Copyright (c) 2026 StuyPulse Robotics. All rights reserved. */
-/* Use of this source code is governed by an MIT-style license */
-/* that can be found in the repository LICENSE file.           */
-/***************************************************************/
 package com.stuypulse.robot.subsystems.shooter;
 
-import static edu.wpi.first.units.Units.RPM;
-
+import java.util.Optional;
 import java.util.function.DoubleSupplier;
 
-import com.ctre.phoenix6.hardware.TalonFX;
 import com.stuypulse.robot.Robot;
+import com.stuypulse.robot.constants.Ports;
 import com.stuypulse.robot.constants.Settings;
+
+import com.stuypulse.robot.subsystems.shooter.ShooterIO.ShooterIOInputs;
+import com.stuypulse.robot.util.SysId;
 import com.stuypulse.robot.util.shooter.InterpolationCalculator;
+
 import dev.doglog.DogLog;
-import edu.wpi.first.units.measure.AngularVelocity;
-import edu.wpi.first.units.measure.Voltage;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 
-public abstract class Shooter extends SubsystemBase {
+import static edu.wpi.first.units.Units.*;
+import edu.wpi.first.units.measure.*;
 
-    private static final Shooter instance;
+public class Shooter extends SubsystemBase {
+    private static Shooter instance;
 
-    private static AngularVelocity bonusVelocity;
+    private ShooterIO io;
+    private ShooterIOInputs inputs;
 
     private ShooterState state;
 
-    protected int gainSlot;
+    private AngularVelocity bonusVelocity;
+    private int gainSlot;
 
-    static {
-        if (Robot.isReal()) {
-            instance = new ShooterImpl();
-        } else {
-            instance = new ShooterSim();
-        }
-    }
-
-    public static Shooter getInstance() {
-        return instance;
-    }
-
-    protected Shooter() {
-        setState(ShooterState.SHOOT);
-
-        setGainSlot(0);
-
-        bonusVelocity = RPM.of(0);
-    }
-
-    public void setState(ShooterState state) {
-        this.state = state;
-    }
-
-    public ShooterState getState() {
-        return this.state;
-    }
-
-    public void setGainSlot(int slot) {
-        this.gainSlot = slot;
-    }
-
-    public void logMotor(String motorName, TalonFX motor) {
-        String stem = "Shooter/Motors/" + motorName + "/";
-        DogLog.log(stem + "MotorVoltage", motor.getMotorVoltage().getValueAsDouble());
-        DogLog.log(stem + "SupplyCurrent", motor.getSupplyCurrent().getValueAsDouble());
-        DogLog.log(stem + "StatorCurrent", motor.getStatorCurrent().getValueAsDouble());
-        DogLog.log(stem + "RPM", motor.getVelocity().getValue().in(RPM));
-    }
+    private Optional<Voltage> voltageOverride; 
 
     /** Enum representing the different possible states of the shooter. */
     public enum ShooterState {
@@ -97,42 +59,121 @@ public abstract class Shooter extends SubsystemBase {
         }
 
         /**
-         * Gets the target angular velocity of the shooter in the corresponding state by converting the target RPM from the supplier to an AngularVelocity.
-         * @return the target angular velocity of the shooter
+         * Gets the base target angular velocity of the shooter in the corresponding state before any bonus velocity is added.
+         * @return the base target angular velocity of the shooter
          */
-        public AngularVelocity getTargetAngularVelocity() {
-            return RPM.of(RPMSupplier.getAsDouble()).plus(bonusVelocity); // adding here allows target RPM readings to be accurate
+        public AngularVelocity getBaseTargetAngularVelocity() {
+            return RPM.of(RPMSupplier.getAsDouble());
         }
     }
 
+    static {
+        instance = new Shooter();
+    }
+
+    public static Shooter getInstance() {
+        return instance;
+    }
+
+    private Shooter() {
+        setState(ShooterState.SHOOT);
+
+        this.io = Robot.isReal()
+            ? new ShooterIOImpl(Ports.Shooter.SHOOTER_MOTOR_LEFT, Ports.Shooter.SHOOTER_MOTOR_CENTER, Ports.Shooter.SHOOTER_MOTOR_RIGHT, Settings.CANBUS)
+            : new ShooterIOSim(Ports.Shooter.SHOOTER_MOTOR_LEFT, Ports.Shooter.SHOOTER_MOTOR_CENTER, Ports.Shooter.SHOOTER_MOTOR_RIGHT, Settings.Shooter.GEAR_RATIO);
+        this.inputs = new ShooterIOInputs();
+
+        setGainSlot(0);
+        this.bonusVelocity = RPM.of(0);
+        
+        this.voltageOverride = Optional.empty();
+    }
+
+    public void setState(ShooterState state) {
+        this.state = state;
+    }
+
+    public ShooterState getState() {
+        return state;
+    }
+
+    public void setGainSlot(int gainSlot) {
+        this.gainSlot = gainSlot;
+    }
+
+    public void addToBonusVelocity(AngularVelocity velocity) {
+        this.bonusVelocity = bonusVelocity.plus(velocity);
+    }
+
     public void addToBonusVelocity(double velocity) {
-        bonusVelocity = bonusVelocity.plus(RPM.of(velocity));
+        this.bonusVelocity = bonusVelocity.plus(RPM.of(velocity));
     }
 
     public void resetBonusVelocity() {
-        bonusVelocity = RPM.of(0);
+        this.bonusVelocity = RPM.of(0);
     }
 
-    public abstract AngularVelocity getCurrentAngularVelocity();
+    public AngularVelocity getTargetAngularVelocity() {
+        return state.getBaseTargetAngularVelocity().plus(this.bonusVelocity);
+    }
 
-    protected abstract void stopMotors();
-
-    public abstract SysIdRoutine getShooterSysIdRoutine();
-
-    public abstract void setVoltageOverride(Voltage voltage);
+    public AngularVelocity getCurrentAngularVelocity() {
+        return inputs.angularVelocity;
+    }
 
     public boolean shooterSpunUp() {
-        return getCurrentAngularVelocity().gte(getState().getTargetAngularVelocity().minus(Settings.Shooter.SHOOTER_SPUN_UP_TOLERANCE));
+        return getCurrentAngularVelocity().gte(getTargetAngularVelocity().minus(Settings.Shooter.SHOOTER_SPUN_UP_TOLERANCE));
     }
 
     @Override
     public void periodic() {
-        final ShooterState currentState = getState();
-        DogLog.log("Shooter/Bonus Velocity", bonusVelocity);
-        DogLog.log("Shooter/Target RPM", (int) currentState.getTargetAngularVelocity().in(RPM));
-        DogLog.log("Shooter/Current RPM", (int) getCurrentAngularVelocity().in(RPM));
-        DogLog.log("Shooter/State", currentState.name());
-        DogLog.forceNt.log("States/Shooter", currentState.name());
+        io.updateInputs(inputs);
+
+        if (!Settings.EnabledSubsystems.SHOOTER.get()) {
+            io.stopMotors();
+            return;
+        }
+        if (voltageOverride.isPresent()) {
+            io.setVoltage(voltageOverride.get());
+            return;
+        }
+
+        io.setShooterAngularVelocity(getTargetAngularVelocity(), gainSlot);
+
+        DogLog.log("Shooter/Bonus Velocity", bonusVelocity.in(RPM));
+        DogLog.log("Shooter/Target RPM", getTargetAngularVelocity().in(RPM));
+        DogLog.log("Shooter/Current RPM", getCurrentAngularVelocity().in(RPM));
+
         DogLog.forceNt.log("Shooter/At Target RPM", shooterSpunUp());
+
+        inputs.leftMotor.log("Shooter/Left");
+        inputs.centerMotor.log("Shooter/Center");
+        inputs.rightMotor.log("Shooter/Right");
+
+        DogLog.log("Shooter/State", state.name());
+        DogLog.forceNt.log("States/Shooter", state.name());
+        io.logHardwareSignals();
+    }
+
+    @Override
+    public void simulationPeriodic() {
+        io.updateSim();
+    }
+
+    public void setVoltageOverride(Voltage voltage) {
+        this.voltageOverride = Optional.of(voltage);
+    }
+
+    public SysIdRoutine getShooterSysIdRoutine() {
+        return SysId.getRoutine(
+            Settings.Shooter.RAMP_RATE,
+            Settings.Shooter.STEP_VOLTAGE,
+            "Shooter",
+            this::setVoltageOverride,
+            () -> inputs.position,
+            () -> inputs.angularVelocity,
+            () -> inputs.voltage,
+            getInstance()
+        );
     }
 }

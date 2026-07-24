@@ -114,7 +114,7 @@ public class Feeder extends SubsystemBase {
         DogLog.log("Feeder/Voltage", inputs.voltage.in(Volts));
         
         DogLog.log("Feeder/State", state.name());
-        DogLog.log("States/Feeder", state.name());
+        DogLog.forceNt.log("States/Feeder", state.name());
         io.logHardwareSignals();
     }
 
