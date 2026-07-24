@@ -39,5 +39,5 @@ public interface ShooterIO {
     default void updateSim() {};
     default void logHardwareSignals() {};
 
-    default void setVoltage(Voltage voltage) {};
+    default void setVoltageOverride(Voltage voltage) {};
 }

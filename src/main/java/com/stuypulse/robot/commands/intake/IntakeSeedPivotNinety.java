@@ -5,8 +5,6 @@
 /***************************************************************/
 package com.stuypulse.robot.commands.intake;
 
-import static edu.wpi.first.units.Units.Degrees;
-
 import com.stuypulse.robot.subsystems.intake.Intake;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 
@@ -26,6 +24,6 @@ public class IntakeSeedPivotNinety extends InstantCommand {
 
     @Override
     public void initialize() {
-        intake.seedPivotAngle(Degrees.of(-90));
+        intake.seedPivotNinety();
     }
 }

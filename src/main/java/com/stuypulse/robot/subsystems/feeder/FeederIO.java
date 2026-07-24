@@ -5,8 +5,8 @@ import static edu.wpi.first.units.Units.*;
 
 public interface FeederIO {
     class FeederIOInputs {
-        public AngularVelocity angularVelocity = RPM.of(0.0);
-        public Voltage voltage = Volts.of(0.0); 
+        AngularVelocity angularVelocity = RPM.of(0.0);
+        Voltage voltage = Volts.of(0.0); 
     }
     
     void updateInputs(FeederIOInputs inputs);

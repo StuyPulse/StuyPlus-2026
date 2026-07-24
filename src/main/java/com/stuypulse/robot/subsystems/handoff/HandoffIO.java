@@ -5,9 +5,9 @@ import static edu.wpi.first.units.Units.*;
 
 public interface HandoffIO {
     class HandoffIOInputs {
-        public Voltage voltage = Volts.of(0.0);
-        public AngularVelocity angularVelocity = RPM.of(0.0);
-        public boolean isStalling = false;
+        Voltage voltage = Volts.of(0.0);
+        AngularVelocity angularVelocity = RPM.of(0.0);
+        boolean isStalling = false;
     }
     void updateInputs(HandoffIOInputs inputs);
 

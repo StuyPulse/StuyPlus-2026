@@ -10,6 +10,7 @@ import com.stuypulse.robot.constants.Settings;
 import com.stuypulse.robot.subsystems.shooter.ShooterIO.ShooterIOInputs;
 import com.stuypulse.robot.util.SysId;
 import com.stuypulse.robot.util.shooter.InterpolationCalculator;
+import com.stuypulse.robot.util.simulation.TalonFXSimIds;
 
 import dev.doglog.DogLog;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -80,7 +81,7 @@ public class Shooter extends SubsystemBase {
 
         this.io = Robot.isReal()
             ? new ShooterIOImpl(Ports.Shooter.SHOOTER_MOTOR_LEFT, Ports.Shooter.SHOOTER_MOTOR_CENTER, Ports.Shooter.SHOOTER_MOTOR_RIGHT, Settings.CANBUS)
-            : new ShooterIOSim(Ports.Shooter.SHOOTER_MOTOR_LEFT, Ports.Shooter.SHOOTER_MOTOR_CENTER, Ports.Shooter.SHOOTER_MOTOR_RIGHT, Settings.Shooter.GEAR_RATIO);
+            : new ShooterIOSim(TalonFXSimIds.get(), TalonFXSimIds.get(), TalonFXSimIds.get(), Settings.Shooter.GEAR_RATIO);
         this.inputs = new ShooterIOInputs();
 
         setGainSlot(0);
@@ -134,7 +135,7 @@ public class Shooter extends SubsystemBase {
             return;
         }
         if (voltageOverride.isPresent()) {
-            io.setVoltage(voltageOverride.get());
+            io.setVoltageOverride(voltageOverride.get());
             return;
         }
 

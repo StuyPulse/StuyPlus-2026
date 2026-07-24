@@ -99,7 +99,7 @@ public class ShooterIOImpl implements ShooterIO {
     }
 
     @Override
-    public void setVoltage(Voltage voltage) {
+    public void setVoltageOverride(Voltage voltage) {
         shooterMotorRight.setVoltage(voltage.in(Volts));
     }
 }
