@@ -32,7 +32,6 @@ public class FeederIOImpl implements FeederIO {
     public void updateInputs(FeederIOInputs inputs) {
         inputs.angularVelocity = feederMotor.getVelocity().getValue();
         inputs.voltage = feederMotor.getMotorVoltage().getValue();
-        inputs.position = feederMotor.getPosition().getValue();
     }
 
     @Override
@@ -41,7 +40,7 @@ public class FeederIOImpl implements FeederIO {
     }
 
     @Override
-    public void setTargetVoltage(Voltage voltage) {
+    public void setMotorVoltage(Voltage voltage) {
         feederMotor.setControl(controller.withOutput(voltage));
     }
 

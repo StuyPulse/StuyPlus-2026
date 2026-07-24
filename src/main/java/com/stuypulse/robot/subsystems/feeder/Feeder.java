@@ -1,10 +1,7 @@
 package com.stuypulse.robot.subsystems.feeder;
 
 import com.stuypulse.robot.Robot;
-import com.stuypulse.robot.commands.feeder.FeederScramble;
-import com.stuypulse.robot.commands.feeder.FeederSetForward;
-import com.stuypulse.robot.commands.feeder.FeederSetIdle;
-import com.stuypulse.robot.commands.feeder.FeederSetReverse;
+
 import com.stuypulse.robot.constants.Field;
 import com.stuypulse.robot.constants.Ports;
 import com.stuypulse.robot.constants.Settings;
@@ -22,7 +19,6 @@ import dev.doglog.DogLog;
 import static edu.wpi.first.units.Units.*;
 import edu.wpi.first.units.measure.*;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Feeder extends SubsystemBase {
@@ -64,11 +60,6 @@ public class Feeder extends SubsystemBase {
 
     static {
         instance = new Feeder();
-
-        SmartDashboard.putData(new FeederSetForward());
-        SmartDashboard.putData(new FeederScramble());
-        SmartDashboard.putData(new FeederSetIdle());
-        SmartDashboard.putData(new FeederSetReverse());
     }
 
     public static Feeder getInstance() {
@@ -116,14 +107,15 @@ public class Feeder extends SubsystemBase {
             setState(FeederState.IDLE);
         }
 
-        io.setTargetVoltage(getState().getTargetVoltage());
+        io.setMotorVoltage(getState().getTargetVoltage());
         
+        DogLog.log("Feeder/Feeder Target Voltage", state.getTargetVoltage());
         DogLog.log("Feeder/Velocity", inputs.angularVelocity.in(RotationsPerSecond));
-        DogLog.log("Feeder/Position", inputs.position.in(Rotations));
         DogLog.log("Feeder/Voltage", inputs.voltage.in(Volts));
         
         DogLog.log("Feeder/State", state.name());
         DogLog.log("States/Feeder", state.name());
+        io.logHardwareSignals();
     }
 
     @Override

@@ -1,44 +1,32 @@
-/************************* PROJECT RON *************************/
-/* Copyright (c) 2026 StuyPulse Robotics. All rights reserved. */
-/* Use of this source code is governed by an MIT-style license */
-/* that can be found in the repository LICENSE file.           */
-/***************************************************************/
 package com.stuypulse.robot.subsystems.handoff;
 
 import com.stuypulse.robot.Robot;
+
+import com.stuypulse.robot.constants.Field;
+import com.stuypulse.robot.constants.Ports;
 import com.stuypulse.robot.constants.Settings;
+
+import com.stuypulse.robot.subsystems.handoff.HandoffIO.HandoffIOInputs;
+
+import com.stuypulse.robot.subsystems.shooter.Shooter;
+import com.stuypulse.robot.subsystems.shooter.Shooter.ShooterState;
+
+import com.stuypulse.robot.subsystems.swerve.CommandSwerveDrivetrain;
+import com.stuypulse.robot.util.simulation.TalonFXSimIds;
+
 import dev.doglog.DogLog;
-import edu.wpi.first.units.measure.Voltage;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-public abstract class Handoff extends SubsystemBase {
-    private static final Handoff instance;
+import static edu.wpi.first.units.Units.*;
+import edu.wpi.first.units.measure.*;
+
+public class Handoff extends SubsystemBase {
+    private static Handoff instance;
+
+    private HandoffIO io;
+    private HandoffIOInputs inputs;
 
     private HandoffState state;
-
-    static {
-        if (Robot.isReal()) {
-            instance = new HandoffImpl();
-        } else {
-            instance = new HandoffSim();
-        }
-    }
-
-    public static Handoff getInstance() {
-        return instance;
-    }
-
-    protected Handoff() {
-        this.state = HandoffState.IDLE;
-    }
-
-    public void setState(HandoffState state) {
-        this.state = state;
-    }
-
-    public HandoffState getState() {
-        return this.state;
-    }
 
     /** Enum representing the different possible states of the handoff. */
     public enum HandoffState {
@@ -69,15 +57,71 @@ public abstract class Handoff extends SubsystemBase {
         }
     }
 
-    protected abstract void stopMotors();
-    protected abstract boolean handoffStalling();
+    static {
+        instance = new Handoff();
+    }
+
+    public static Handoff getInstance() {
+        return instance;
+    }
+
+    private Handoff() {
+        setState(HandoffState.IDLE);
+
+        this.io = Robot.isReal()
+            ? new HandoffIOImpl(Ports.Handoff.HANDOFF_MOTOR, Settings.CANBUS)
+            : new HandoffIOSim(TalonFXSimIds.get(), Settings.Handoff.GEAR_RATIO);
+        this.inputs = new HandoffIOInputs();
+    }
+
+    public void setState(HandoffState state) {
+        this.state = state;
+    }
+
+    public HandoffState getState() {
+        return state;
+    }
 
     @Override
     public void periodic() {
-        final HandoffState currentState = getState();
-        DogLog.log("Handoff/State", currentState.name());
-        DogLog.forceNt.log("States/Handoff", currentState.name());
-        DogLog.log("Handoff/Handoff Target Voltage", currentState.getTargetVoltage());
-        DogLog.forceNt.log("Handoff/Stalling", handoffStalling());
+        io.updateInputs(inputs);
+
+        if (!Settings.EnabledSubsystems.HANDOFF.get()) {
+            io.stopMotors();
+            return;
+        }
+
+        final Shooter shooter = Shooter.getInstance();
+        final CommandSwerveDrivetrain swerve = CommandSwerveDrivetrain.getInstance();
+        if (!(swerve.isAlignedToTarget(Field.getHubPose()))
+                && shooter.getState() == ShooterState.SHOOT) {
+            setState(HandoffState.IDLE);
+        }
+        // TODO: consider relaxing tolerances for ferrying
+        if (!(swerve.isAlignedToTarget(Field.getFerryZonePose(swerve.getPose().getTranslation())))
+                && shooter.getState() == ShooterState.FERRY) {
+            setState(HandoffState.IDLE);
+        }
+
+        final Voltage targetVoltage = inputs.isStalling
+            ? HandoffState.REVERSE.getTargetVoltage()
+            : this.state.getTargetVoltage();
+
+        io.setMotorVoltage(targetVoltage);
+
+        
+        DogLog.log("Handoff/Handoff Target Voltage", state.getTargetVoltage());
+        DogLog.log("Handoff/Velocity", inputs.angularVelocity.in(RotationsPerSecond));
+        DogLog.log("Handoff/Voltage", inputs.voltage.in(Volts));
+
+        DogLog.log("Handoff/State", state.name());
+        DogLog.forceNt.log("States/Handoff", state.name());
+        DogLog.forceNt.log("Handoff/Stalling", inputs.isStalling);
+        io.logHardwareSignals();
+    }
+
+    @Override
+    public void simulationPeriodic() {
+        io.updateSim();
     }
 }

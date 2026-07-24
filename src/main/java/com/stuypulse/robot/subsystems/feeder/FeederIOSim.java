@@ -45,11 +45,10 @@ public class FeederIOSim implements FeederIO {
     public void updateInputs(FeederIOInputs inputs) {
         inputs.voltage = feederMotor.getMotorVoltage().getValue();
         inputs.angularVelocity = feederMotor.getVelocity().getValue();
-        inputs.position = feederMotor.getPosition().getValue();
     }
 
     @Override
-    public void setTargetVoltage(Voltage voltage) {
+    public void setMotorVoltage(Voltage voltage) {
         feederMotor.setControl(controller.withOutput(voltage));
     }
 
