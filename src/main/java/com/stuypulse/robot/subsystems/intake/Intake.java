@@ -3,20 +3,17 @@ package com.stuypulse.robot.subsystems.intake;
 import java.util.Optional;
 
 import com.stuypulse.robot.Robot;
-import com.stuypulse.robot.constants.Ports;
 import com.stuypulse.robot.constants.Settings;
 import com.stuypulse.robot.subsystems.intake.IntakeIO.IntakeIOInputs;
+import com.stuypulse.robot.util.SysId;
 
-import dev.doglog.DogLog;
-import edu.wpi.first.units.measure.Angle;
-import edu.wpi.first.units.measure.Voltage;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 
 import static edu.wpi.first.units.Units.*;
+import edu.wpi.first.units.measure.*;
 
-import com.stuypulse.robot.util.SysId;
-import com.stuypulse.robot.util.simulation.TalonFXSimIds;
+import dev.doglog.DogLog;
 
 public class Intake extends SubsystemBase {
     private static Intake instance;
@@ -107,13 +104,11 @@ public class Intake extends SubsystemBase {
     private Intake() {
         setState(IntakeState.IDLE);
 
-        this.io = Robot.isReal()
-                ? new IntakeIOImpl(Ports.Intake.PIVOT_LIMIT_SWITCH, Ports.Intake.INTAKE_PIVOT_MOTOR,
-                        Ports.Intake.INTAKE_ROLLER_MOTOR_LEFT, Ports.Intake.INTAKE_ROLLER_MOTOR_RIGHT, Settings.CANBUS)
-                : new IntakeIOSim(TalonFXSimIds.get(), TalonFXSimIds.get(), TalonFXSimIds.get(),
-                        Settings.Intake.Pivot.GEAR_RATIO, Settings.Intake.Roller.GEAR_RATIO);
-
         this.inputs = new IntakeIOInputs();
+        this.io = Robot.isReal()
+            ? new IntakeIOImpl()
+            : new IntakeIOSim();
+
         this.voltageOverride = Optional.empty();
     }
 

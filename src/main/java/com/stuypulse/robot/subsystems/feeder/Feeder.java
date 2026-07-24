@@ -3,7 +3,6 @@ package com.stuypulse.robot.subsystems.feeder;
 import com.stuypulse.robot.Robot;
 
 import com.stuypulse.robot.constants.Field;
-import com.stuypulse.robot.constants.Ports;
 import com.stuypulse.robot.constants.Settings;
 
 import com.stuypulse.robot.subsystems.shooter.Shooter.ShooterState;
@@ -12,7 +11,6 @@ import com.stuypulse.robot.subsystems.shooter.Shooter;
 import com.stuypulse.robot.subsystems.feeder.FeederIO.FeederIOInputs;
 
 import com.stuypulse.robot.subsystems.swerve.CommandSwerveDrivetrain;
-import com.stuypulse.robot.util.simulation.TalonFXSimIds;
 
 import dev.doglog.DogLog;
 
@@ -71,8 +69,8 @@ public class Feeder extends SubsystemBase {
 
         this.inputs = new FeederIOInputs();
         this.io = Robot.isReal() 
-            ? new FeederIOImpl(Ports.Feeder.FEEDER_MOTOR, Settings.CANBUS)
-            : new FeederIOSim(TalonFXSimIds.get(), Settings.Feeder.GEAR_RATIO);
+            ? new FeederIOImpl()
+            : new FeederIOSim();
     }
 
     public AngularVelocity getCurrentAngularVelocity() {

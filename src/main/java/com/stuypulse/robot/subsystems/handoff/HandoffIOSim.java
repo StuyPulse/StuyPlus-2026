@@ -5,6 +5,7 @@ import com.ctre.phoenix6.controls.VoltageOut;
 import com.stuypulse.robot.constants.Motors;
 import com.stuypulse.robot.constants.Settings;
 
+import com.stuypulse.robot.util.simulation.TalonFXSimIds;
 import com.stuypulse.robot.util.simulation.TalonFXSimulation.SystemSim;
 import com.stuypulse.robot.util.simulation.TalonFXSimulation.TalonFXSimulation;
 
@@ -18,7 +19,7 @@ public class HandoffIOSim implements HandoffIO {
     private final TalonFXSimulation handoffMotor;
     private final VoltageOut handoffController;
 
-    public HandoffIOSim(int feederMotorID, double gearRatio) {
+    public HandoffIOSim() {
         this.handoffSim = SystemSim.of(
             new DCMotorSim(
                 LinearSystemId.createDCMotorSystem(
@@ -28,7 +29,7 @@ public class HandoffIOSim implements HandoffIO {
                 DCMotor.getKrakenX60(1))
         );
 
-        this.handoffMotor = new TalonFXSimulation(feederMotorID, gearRatio, this.handoffSim);
+        this.handoffMotor = new TalonFXSimulation(TalonFXSimIds.get("Handoff/Motor"), Settings.Handoff.GEAR_RATIO, this.handoffSim);
         Motors.Handoff.HANDOFF_MOTOR_CONFIG.configure(handoffMotor);
 
         this.handoffController = new VoltageOut(0).withEnableFOC(true);

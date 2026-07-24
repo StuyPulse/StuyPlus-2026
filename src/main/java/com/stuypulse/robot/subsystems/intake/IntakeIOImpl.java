@@ -2,7 +2,6 @@ package com.stuypulse.robot.subsystems.intake;
 
 import java.util.function.BooleanSupplier;
 
-import com.ctre.phoenix6.CANBus;
 import com.ctre.phoenix6.controls.DutyCycleOut;
 import com.ctre.phoenix6.controls.Follower;
 import com.ctre.phoenix6.controls.PositionTorqueCurrentFOC;
@@ -10,7 +9,9 @@ import com.ctre.phoenix6.controls.TorqueCurrentFOC;
 import com.ctre.phoenix6.controls.VoltageOut;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.MotorAlignmentValue;
+
 import com.stuypulse.robot.constants.Motors;
+import com.stuypulse.robot.constants.Ports;
 import com.stuypulse.robot.constants.Settings;
 import com.stuypulse.robot.util.LoggedSignals;
 
@@ -46,10 +47,10 @@ public class IntakeIOImpl implements IntakeIO {
     private final Debouncer leftRollerDebouncer;
     private final Debouncer rightRollerDebouncer;
 
-    public IntakeIOImpl(int limitSwitchId, int pivotMotorId, int rollerMotorLeftId, int rollerMotorRightId, CANBus canbus) {
-        this.pivotLimitSwitch = new DigitalInput(limitSwitchId);
+    public IntakeIOImpl() {
+        this.pivotLimitSwitch = new DigitalInput(Ports.Intake.PIVOT_LIMIT_SWITCH);
         
-        this.pivotMotor = new TalonFX(pivotMotorId, canbus);
+        this.pivotMotor = new TalonFX(Ports.Intake.INTAKE_PIVOT_MOTOR, Settings.CANBUS);
         Motors.Intake.PIVOT_CONFIG.configure(pivotMotor);
 
         // zero it at the up position
@@ -59,10 +60,10 @@ public class IntakeIOImpl implements IntakeIO {
                 pivotMotor.getStatorCurrent(),
                 pivotMotor.getVelocity());
 
-        this.rollerMotorLeft = new TalonFX(rollerMotorLeftId, canbus);
+        this.rollerMotorLeft = new TalonFX(Ports.Intake.INTAKE_ROLLER_MOTOR_LEFT, Settings.CANBUS);
         Motors.Intake.LEFT_ROLLER_CONFIG.configure(rollerMotorLeft);
 
-        this.rollerMotorRight = new TalonFX(rollerMotorRightId, canbus);
+        this.rollerMotorRight = new TalonFX(Ports.Intake.INTAKE_ROLLER_MOTOR_RIGHT, Settings.CANBUS);
         Motors.Intake.RIGHT_ROLLER_CONFIG.configure(rollerMotorRight);
 
         this.rollerSignals = new LoggedSignals(LoggedSignals.SignalLocation.CANIVORE, "Intake/Roller/").withMotor(
@@ -80,7 +81,7 @@ public class IntakeIOImpl implements IntakeIO {
         this.homingController = new VoltageOut(Settings.Intake.Pivot.HOMING_DOWN_VOLTAGE).withEnableFOC(true);
         this.pushdownController = new TorqueCurrentFOC(Settings.Intake.Pivot.PUSHDOWN_CURRENT.getAsDouble());
         this.rollerController = new DutyCycleOut(0.0).withEnableFOC(true);
-        this.rollerFollower = new Follower(rollerMotorLeftId, MotorAlignmentValue.Opposed);
+        this.rollerFollower = new Follower(rollerMotorLeft.getDeviceID(), MotorAlignmentValue.Opposed);
 
         rollerMotorRight.setControl(rollerFollower);
 

@@ -1,7 +1,7 @@
 package com.stuypulse.robot.subsystems.intake;
 
-import edu.wpi.first.units.measure.*;
 import static edu.wpi.first.units.Units.*;
+import edu.wpi.first.units.measure.*;
 
 public interface IntakeIO {
     public static class IntakeIOInputs {

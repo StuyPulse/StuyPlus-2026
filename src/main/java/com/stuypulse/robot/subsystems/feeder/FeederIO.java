@@ -1,7 +1,7 @@
 package com.stuypulse.robot.subsystems.feeder;
 
-import edu.wpi.first.units.measure.*;
 import static edu.wpi.first.units.Units.*;
+import edu.wpi.first.units.measure.*;
 
 public interface FeederIO {
     class FeederIOInputs {

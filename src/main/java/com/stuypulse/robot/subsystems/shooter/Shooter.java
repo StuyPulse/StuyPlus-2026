@@ -4,20 +4,19 @@ import java.util.Optional;
 import java.util.function.DoubleSupplier;
 
 import com.stuypulse.robot.Robot;
-import com.stuypulse.robot.constants.Ports;
 import com.stuypulse.robot.constants.Settings;
 
 import com.stuypulse.robot.subsystems.shooter.ShooterIO.ShooterIOInputs;
 import com.stuypulse.robot.util.SysId;
 import com.stuypulse.robot.util.shooter.InterpolationCalculator;
-import com.stuypulse.robot.util.simulation.TalonFXSimIds;
 
-import dev.doglog.DogLog;
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import static edu.wpi.first.units.Units.*;
 import edu.wpi.first.units.measure.*;
+
+import dev.doglog.DogLog;
 
 public class Shooter extends SubsystemBase {
     private static Shooter instance;
@@ -79,10 +78,10 @@ public class Shooter extends SubsystemBase {
     private Shooter() {
         setState(ShooterState.SHOOT);
 
-        this.io = Robot.isReal()
-            ? new ShooterIOImpl(Ports.Shooter.SHOOTER_MOTOR_LEFT, Ports.Shooter.SHOOTER_MOTOR_CENTER, Ports.Shooter.SHOOTER_MOTOR_RIGHT, Settings.CANBUS)
-            : new ShooterIOSim(TalonFXSimIds.get(), TalonFXSimIds.get(), TalonFXSimIds.get(), Settings.Shooter.GEAR_RATIO);
         this.inputs = new ShooterIOInputs();
+        this.io = Robot.isReal()
+            ? new ShooterIOImpl()
+            : new ShooterIOSim();
 
         setGainSlot(0);
         this.bonusVelocity = RPM.of(0);

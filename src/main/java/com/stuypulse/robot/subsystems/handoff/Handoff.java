@@ -3,7 +3,6 @@ package com.stuypulse.robot.subsystems.handoff;
 import com.stuypulse.robot.Robot;
 
 import com.stuypulse.robot.constants.Field;
-import com.stuypulse.robot.constants.Ports;
 import com.stuypulse.robot.constants.Settings;
 
 import com.stuypulse.robot.subsystems.handoff.HandoffIO.HandoffIOInputs;
@@ -12,13 +11,13 @@ import com.stuypulse.robot.subsystems.shooter.Shooter;
 import com.stuypulse.robot.subsystems.shooter.Shooter.ShooterState;
 
 import com.stuypulse.robot.subsystems.swerve.CommandSwerveDrivetrain;
-import com.stuypulse.robot.util.simulation.TalonFXSimIds;
 
-import dev.doglog.DogLog;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import static edu.wpi.first.units.Units.*;
 import edu.wpi.first.units.measure.*;
+
+import dev.doglog.DogLog;
 
 public class Handoff extends SubsystemBase {
     private static Handoff instance;
@@ -68,10 +67,10 @@ public class Handoff extends SubsystemBase {
     private Handoff() {
         setState(HandoffState.IDLE);
 
-        this.io = Robot.isReal()
-            ? new HandoffIOImpl(Ports.Handoff.HANDOFF_MOTOR, Settings.CANBUS)
-            : new HandoffIOSim(TalonFXSimIds.get(), Settings.Handoff.GEAR_RATIO);
         this.inputs = new HandoffIOInputs();
+        this.io = Robot.isReal()
+            ? new HandoffIOImpl()
+            : new HandoffIOSim();
     }
 
     public void setState(HandoffState state) {

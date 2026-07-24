@@ -1,9 +1,9 @@
 package com.stuypulse.robot.subsystems.shooter;
 
 import static edu.wpi.first.units.Units.*;
+import edu.wpi.first.units.measure.*;
 
 import dev.doglog.DogLog;
-import edu.wpi.first.units.measure.*;
 
 public interface ShooterIO {
     public static class MotorInputs {

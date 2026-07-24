@@ -1,7 +1,7 @@
 package com.stuypulse.robot.subsystems.handoff;
 
-import edu.wpi.first.units.measure.*;
 import static edu.wpi.first.units.Units.*;
+import edu.wpi.first.units.measure.*;
 
 public interface HandoffIO {
     class HandoffIOInputs {

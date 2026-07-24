@@ -2,17 +2,19 @@ package com.stuypulse.robot.subsystems.handoff;
 
 import java.util.function.BooleanSupplier;
 
-import com.ctre.phoenix6.CANBus;
 import com.ctre.phoenix6.controls.VoltageOut;
 import com.ctre.phoenix6.hardware.TalonFX;
+
 import com.stuypulse.robot.constants.Motors;
+import com.stuypulse.robot.constants.Ports;
 import com.stuypulse.robot.constants.Settings;
+
 import com.stuypulse.robot.util.LoggedSignals;
 
 import edu.wpi.first.math.filter.Debouncer;
 import edu.wpi.first.math.filter.Debouncer.DebounceType;
 
-import edu.wpi.first.units.measure.Voltage;
+import edu.wpi.first.units.measure.*;
 
 public class HandoffIOImpl implements HandoffIO {
     private final TalonFX handoffMotor;
@@ -22,8 +24,8 @@ public class HandoffIOImpl implements HandoffIO {
     private final BooleanSupplier handoffStalling;
     private final Debouncer stallDebouncer;
 
-    public HandoffIOImpl(int handoffMotorId, CANBus canbus) {
-        this.handoffMotor = new TalonFX(handoffMotorId, canbus);
+    public HandoffIOImpl() {
+        this.handoffMotor = new TalonFX(Ports.Handoff.HANDOFF_MOTOR, Settings.CANBUS);
         Motors.Handoff.HANDOFF_MOTOR_CONFIG.configure(handoffMotor);
 
         this.handoffController = new VoltageOut(0).withEnableFOC(true);

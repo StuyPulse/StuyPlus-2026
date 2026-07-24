@@ -1,17 +1,22 @@
 package com.stuypulse.robot.util.simulation;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import java.util.ArrayDeque;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Queue;
 import java.lang.reflect.Field;
 
 import com.ctre.phoenix6.swerve.SwerveModuleConstants;
 import com.stuypulse.robot.Robot;
 import com.stuypulse.robot.subsystems.swerve.TunerConstants;
 
+import dev.doglog.DogLog;
+
 public final class TalonFXSimIds {
     private static final int MAX_SIM_DEVICES = 63;
-    private static final List<Integer> idPool = new ArrayList<>();
+
+    private static final Map<String, Integer> assignedIds = new HashMap<>();
+    private static final Queue<Integer> idPool = new ArrayDeque<>();
 
     static {
         for (int i = 0; i < MAX_SIM_DEVICES; i++) {
@@ -30,7 +35,7 @@ public final class TalonFXSimIds {
 
         for (Field field: publicFields) {
             if (field.getType() == int.class) {
-                if (field.getName().endsWith("Id")) {
+                if (field.getName().toLowerCase().endsWith("id")) {
                     try {
                         int value = field.getInt(module);
                         idPool.remove(Integer.valueOf(value));
@@ -42,11 +47,16 @@ public final class TalonFXSimIds {
         }
     }
 
-    public static int get() {
+    public static int get(String key) {
         if (Robot.isReal()) {
             throw new IllegalStateException(
                 "TalonFXSimIds.get() was called on a real robot. This utility is used purely for simulation and should not be used on a real robot."
             );
+        }
+
+        Integer assigned = assignedIds.get(key);
+        if (assigned != null) {
+            return assigned;
         }
 
         if (idPool.isEmpty()) {
@@ -54,6 +64,12 @@ public final class TalonFXSimIds {
                 "Out of simulated CAN IDs (" + MAX_SIM_DEVICES + " max)");
         }
 
-        return idPool.remove(0);
+        return assignedIds.computeIfAbsent(key, k -> {
+            int id = idPool.remove();
+
+            DogLog.log("Simulation/CAN Assignments/" + key, id);
+
+            return id;
+        });
     }
 }

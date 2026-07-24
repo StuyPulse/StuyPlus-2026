@@ -1,15 +1,16 @@
 package com.stuypulse.robot.subsystems.shooter;
 
-import com.ctre.phoenix6.CANBus;
 import com.ctre.phoenix6.controls.Follower;
 import com.ctre.phoenix6.controls.VelocityTorqueCurrentFOC;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.MotorAlignmentValue;
+
 import com.stuypulse.robot.constants.Motors;
+import com.stuypulse.robot.constants.Ports;
+import com.stuypulse.robot.constants.Settings;
 import com.stuypulse.robot.util.LoggedSignals;
 
 import static edu.wpi.first.units.Units.*;
-
 import edu.wpi.first.units.measure.*;
 
 public class ShooterIOImpl implements ShooterIO {
@@ -22,14 +23,14 @@ public class ShooterIOImpl implements ShooterIO {
 
     private final LoggedSignals signals;
 
-    public ShooterIOImpl(int leftId, int centerId, int rightId, CANBus canbus) {
-        this.shooterMotorLeft = new TalonFX(leftId, canbus);
+    public ShooterIOImpl() {
+        this.shooterMotorLeft = new TalonFX(Ports.Shooter.SHOOTER_MOTOR_LEFT, Settings.CANBUS);
         Motors.Shooter.SHOOTER_MOTOR_LEFT.configure(shooterMotorLeft);
 
-        this.shooterMotorCenter = new TalonFX(centerId, canbus);
+        this.shooterMotorCenter = new TalonFX(Ports.Shooter.SHOOTER_MOTOR_CENTER, Settings.CANBUS);
         Motors.Shooter.SHOOTER_MOTOR_CENTER.configure(shooterMotorCenter);
 
-        this.shooterMotorRight = new TalonFX(rightId, canbus);
+        this.shooterMotorRight = new TalonFX(Ports.Shooter.SHOOTER_MOTOR_RIGHT, Settings.CANBUS);
         Motors.Shooter.SHOOTER_MOTOR_RIGHT.configure(shooterMotorRight);
         shooterMotorRight.getTorqueCurrent().setUpdateFrequency(Hertz.of(1000)); // TODO: test effect on CANBus usage (SystemStats/CANBus/Utilization)
 

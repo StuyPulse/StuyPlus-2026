@@ -1,23 +1,25 @@
 package com.stuypulse.robot.subsystems.feeder;
 
-import com.ctre.phoenix6.CANBus;
 import com.ctre.phoenix6.controls.VoltageOut;
 import com.ctre.phoenix6.hardware.TalonFX;
 
 import com.stuypulse.robot.constants.Motors;
+import com.stuypulse.robot.constants.Ports;
+import com.stuypulse.robot.constants.Settings;
+
 import com.stuypulse.robot.util.LoggedSignals;
 import com.stuypulse.robot.util.LoggedSignals.SignalLocation;
 
-import edu.wpi.first.units.measure.Voltage;
+import edu.wpi.first.units.measure.*;
 
 public class FeederIOImpl implements FeederIO {
     private final TalonFX feederMotor;
     private final VoltageOut controller;
     private final LoggedSignals signals;
 
-    public FeederIOImpl(int feederMotorID, CANBus canBus) {
+    public FeederIOImpl() {
 
-        this.feederMotor = new TalonFX(feederMotorID, canBus);
+        this.feederMotor = new TalonFX(Ports.Feeder.FEEDER_MOTOR, Settings.CANBUS);
         Motors.Feeder.LEADER_CONFIG.configure(feederMotor);
         
         this.controller = new VoltageOut(0).withEnableFOC(true);

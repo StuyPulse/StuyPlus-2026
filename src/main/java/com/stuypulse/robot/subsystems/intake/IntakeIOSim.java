@@ -12,18 +12,21 @@ import com.ctre.phoenix6.signals.MotorAlignmentValue;
 import com.stuypulse.robot.constants.Motors;
 import com.stuypulse.robot.constants.Settings;
 
+import com.stuypulse.robot.util.simulation.TalonFXSimIds;
 import com.stuypulse.robot.util.simulation.TalonFXSimulation.SystemSim;
 import com.stuypulse.robot.util.simulation.TalonFXSimulation.TalonFXSimulation;
 
 import edu.wpi.first.math.filter.Debouncer;
 import edu.wpi.first.math.filter.Debouncer.DebounceType;
+
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.math.system.plant.LinearSystemId;
-import edu.wpi.first.units.measure.Angle;
+
 import edu.wpi.first.wpilibj.simulation.DCMotorSim;
 import edu.wpi.first.wpilibj.simulation.SingleJointedArmSim;
 
 import static edu.wpi.first.units.Units.*;
+import edu.wpi.first.units.measure.*;
 
 public class IntakeIOSim implements IntakeIO {
     private final SystemSim<SingleJointedArmSim> pivotSim;
@@ -50,7 +53,7 @@ public class IntakeIOSim implements IntakeIO {
     private static final Angle LIMIT_SWITCH_ANGLE = Settings.Intake.Pivot.DEPLOY_ANGLE;
     private static final Angle LIMIT_SWITCH_TOLERANCE = Degrees.of(2.0);
 
-    public IntakeIOSim(int pivotMotorId, int rollerMotorLeftId, int rollerMotorRightId, double pivotGearRatio, double rollerGearRatio) {
+    public IntakeIOSim() {
         this.pivotSim = SystemSim.of(
             new SingleJointedArmSim(
                 LinearSystemId.createDCMotorSystem(
@@ -75,23 +78,23 @@ public class IntakeIOSim implements IntakeIO {
                 DCMotor.getKrakenX60(2))
         );
         
-        this.pivotMotor = new TalonFXSimulation(pivotMotorId, pivotGearRatio, pivotSim);
+        this.pivotMotor = new TalonFXSimulation(TalonFXSimIds.get("Intake/Pivot/Motor"), Settings.Intake.Pivot.GEAR_RATIO, pivotSim);
         Motors.Intake.PIVOT_CONFIG.configure(pivotMotor);
 
         // zero it at the up position
         pivotMotor.setPosition(Settings.Intake.Pivot.INITIAL_ANGLE);
 
-        this.rollerMotorLeft = new TalonFXSimulation(rollerMotorLeftId, rollerGearRatio, rollerSim);
+        this.rollerMotorLeft = new TalonFXSimulation(TalonFXSimIds.get("Intake/Rollers/Left"), Settings.Intake.Roller.GEAR_RATIO, rollerSim);
         Motors.Intake.LEFT_ROLLER_CONFIG.configure(rollerMotorLeft);
 
-        this.rollerMotorRight = new TalonFXSimulation(rollerMotorRightId, rollerGearRatio, rollerSim);
+        this.rollerMotorRight = new TalonFXSimulation(TalonFXSimIds.get("Intake/Rollers/Right"), Settings.Intake.Roller.GEAR_RATIO, rollerSim);
         Motors.Intake.RIGHT_ROLLER_CONFIG.configure(rollerMotorRight);
 
         this.positionController = new PositionTorqueCurrentFOC(0.0);
         this.homingController = new VoltageOut(Settings.Intake.Pivot.HOMING_DOWN_VOLTAGE).withEnableFOC(true);
         this.pushdownController = new TorqueCurrentFOC(Settings.Intake.Pivot.PUSHDOWN_CURRENT.getAsDouble());
         this.rollerController = new DutyCycleOut(0.0).withEnableFOC(true);
-        this.rollerFollower = new Follower(rollerMotorLeftId, MotorAlignmentValue.Opposed);
+        this.rollerFollower = new Follower(rollerMotorLeft.getDeviceID(), MotorAlignmentValue.Opposed);
 
         rollerMotorRight.setControl(rollerFollower);
 
