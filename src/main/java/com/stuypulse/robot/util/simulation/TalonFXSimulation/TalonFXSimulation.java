@@ -8,7 +8,7 @@ package com.stuypulse.robot.util.simulation.TalonFXSimulation;
 import com.stuypulse.robot.constants.Motors.TalonFXConfig;
 
 import edu.wpi.first.units.measure.*;
-import static edu.wpi.first.units.Units.*;
+import edu.wpi.first.wpilibj.RobotController;
 
 import com.ctre.phoenix6.sim.TalonFXSimState;
 import com.ctre.phoenix6.hardware.TalonFX;
@@ -32,11 +32,11 @@ public class TalonFXSimulation extends TalonFX {
 
         this.simMotor.setInputVoltage(simState.getMotorVoltageMeasure());
 
-        Angle rotorPosition = simMotor.getMechanismPositionRotations().times(this.gearRatio);
+        Angle rotorPosition = simMotor.getMechanismPosition().times(this.gearRatio);
         AngularVelocity rotorVelocity = this.simMotor.getMechanismVelocity().times(this.gearRatio);
 
         simState.setRawRotorPosition(rotorPosition);
         simState.setRotorVelocity(rotorVelocity);
-        simState.setSupplyVoltage(Volts.of(12.0));
+        simState.setSupplyVoltage(RobotController.getBatteryVoltage());
     }
 }

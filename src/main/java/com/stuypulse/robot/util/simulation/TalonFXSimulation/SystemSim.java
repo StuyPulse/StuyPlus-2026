@@ -11,9 +11,10 @@ import static edu.wpi.first.units.Units.*;
 public interface SystemSim<T> {
     void setInputVoltage(Voltage voltage);
     void update(Time dt);
-    Angle getMechanismPositionRotations();
+    Angle getMechanismPosition();
     AngularVelocity getMechanismVelocity();
     T getLinearSystemSim();
+
 
     static SystemSim<DCMotorSim> of(DCMotorSim dcMotorSim) {
         return new SystemSim<DCMotorSim>() {
@@ -28,7 +29,7 @@ public interface SystemSim<T> {
             }
 
             @Override
-            public Angle getMechanismPositionRotations() {
+            public Angle getMechanismPosition() {
                 return dcMotorSim.getAngularPosition();
             }
 
@@ -60,7 +61,7 @@ public interface SystemSim<T> {
             }
 
             @Override
-            public Angle getMechanismPositionRotations() {
+            public Angle getMechanismPosition() {
                 return position; 
             }
 
@@ -89,7 +90,7 @@ public interface SystemSim<T> {
             }
 
             @Override
-            public Angle getMechanismPositionRotations() {
+            public Angle getMechanismPosition() {
                 return Radians.of(armSim.getAngleRads());
             }
 
@@ -118,7 +119,7 @@ public interface SystemSim<T> {
             }
 
             @Override
-            public Angle getMechanismPositionRotations() {
+            public Angle getMechanismPosition() {
                 return Radians.of(elevatorSim.getPositionMeters() / drumRadius.in(Meters));
             }
 

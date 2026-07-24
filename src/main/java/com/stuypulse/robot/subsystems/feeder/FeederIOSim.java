@@ -10,33 +10,30 @@ import com.stuypulse.robot.util.simulation.TalonFXSimulation.TalonFXSimulation;
 
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.math.system.plant.LinearSystemId;
-import edu.wpi.first.units.measure.Voltage;
 import edu.wpi.first.wpilibj.simulation.DCMotorSim;
 
 import static edu.wpi.first.units.Units.*;
+import edu.wpi.first.units.measure.*;
 
 public class FeederIOSim implements FeederIO {
-    private TalonFXSimulation feederMotor;
-    private VoltageOut controller;
-    private FeederState state;
-    private SystemSim<DCMotorSim> feederSim;
+    private final TalonFXSimulation feederMotor;
+    private final VoltageOut controller;
+    private final SystemSim<DCMotorSim> feederSim;
 
     public FeederIOSim(int feederMotorID, double gearRatio) {
-        setState(FeederState.IDLE);
-
         this.feederSim = SystemSim.of(
             new DCMotorSim(
                 LinearSystemId.createDCMotorSystem(
-                        DCMotor.getKrakenX60(2),
+                        DCMotor.getKrakenX60(1),
                         Settings.Feeder.J.in(KilogramSquareMeters),
                         gearRatio),
-                DCMotor.getKrakenX60(2))
+                DCMotor.getKrakenX60(1))
         );
 
         this.feederMotor = new TalonFXSimulation(feederMotorID, gearRatio, this.feederSim);
         Motors.Feeder.LEADER_CONFIG.configure(feederMotor);
         
-        this.controller = new VoltageOut(getState().getTargetVoltage()).withEnableFOC(true);
+        this.controller = new VoltageOut(0).withEnableFOC(true);
     }
 
     @Override
@@ -46,11 +43,9 @@ public class FeederIOSim implements FeederIO {
 
     @Override
     public void updateInputs(FeederIOInputs inputs) {
-        inputs.targetVoltage = getState().getTargetVoltage();
-        inputs.currentAngularVelocity = feederMotor.getVelocity().getValue();
-        
-        this.feederSim.update(Settings.DT);
-        this.feederMotor.refresh();
+        inputs.voltage = feederMotor.getMotorVoltage().getValue();
+        inputs.angularVelocity = feederMotor.getVelocity().getValue();
+        inputs.position = feederMotor.getPosition().getValue();
     }
 
     @Override
@@ -59,12 +54,8 @@ public class FeederIOSim implements FeederIO {
     }
 
     @Override
-    public void setState(FeederState state) {
-        this.state = state;
-    }
-
-    @Override
-    public FeederState getState() {
-        return this.state;
+    public void updateSim() {
+        this.feederSim.update(Settings.DT);
+        this.feederMotor.refresh();
     }
 }

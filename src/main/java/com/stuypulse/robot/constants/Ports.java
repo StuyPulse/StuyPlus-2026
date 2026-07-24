@@ -44,7 +44,7 @@ public interface Ports {
     // TODO: Get ports from mech
     public interface Feeder {
 
-        int FEEDER_MOTOR = 15;
+        int FEEDER_MOTOR = 62;
     }
 
     public interface Intake {
