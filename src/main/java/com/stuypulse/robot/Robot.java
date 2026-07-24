@@ -5,6 +5,8 @@
 /***************************************************************/
 package com.stuypulse.robot;
 
+import org.littletonrobotics.junction.LoggedRobot;
+
 import com.ctre.phoenix6.SignalLogger;
 import com.stuypulse.robot.commands.shooter.ShooterSetShoot;
 import com.stuypulse.robot.commands.vision.SetIMUMode;
@@ -40,7 +42,7 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
  * 
  * This robot is structured using the <a href="https://docs.wpilib.org/en/stable/docs/software/commandbased/what-is-command-based.html">CommandBased</a> framework.
  */
-public class Robot extends TimedRobot {
+public class Robot extends LoggedRobot {
 
     private RobotContainer robot;
 

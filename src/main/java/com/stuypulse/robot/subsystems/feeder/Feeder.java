@@ -11,56 +11,45 @@ import com.stuypulse.robot.Robot;
 import com.stuypulse.robot.constants.Settings;
 import dev.doglog.DogLog;
 import edu.wpi.first.units.measure.*;
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import com.stuypulse.robot.util.simulation.RobotVisualizer;
 
-public abstract class Feeder extends SubsystemBase {
-
+public class Feeder extends SubsystemBase {
     private static final Feeder instance;
 
-    private FeederState state;
-
     static {
-        if (Robot.isReal()) {
-            instance = new FeederImpl();
-        } else {
-            instance = new FeederSim();
-        }
+        instance = Robot.isReal() ? new Feeder(new FeederIOTalonFX()) : new Feeder(new FeederIOSim());
     }
 
     public static Feeder getInstance() {
         return instance;
     }
 
-    /** Enum representing the different possible states of the feeder. */
+    private final FeederIO io;
+    private final FeederIOInputsAutoLogged inputs = new FeederIOInputsAutoLogged();
+    private FeederState state;
+
     public enum FeederState {
-        /** Feeder is stopped. */
         IDLE(Volts.of(0.0)),
-        /** Motors run forward to feed to the shooter. */
         FORWARD(Settings.Feeder.FORWARD_VOLTAGE),
-        /** Motors run backward to work with the intake to outtake fuel from the robot. */
         REVERSE(Settings.Feeder.REVERSE_VOLTAGE);
 
-        /** The target voltage of the feeder motors. */
-        private Voltage targetVoltage;
+        private final Voltage targetVoltage;
 
-        /**
-         * Constructs a FeederState with the given target voltage.
-         * @param targetVoltage the target voltage of the feeder motors in the corresponding state.
-         */
         private FeederState(Voltage targetVoltage) {
             this.targetVoltage = targetVoltage;
         }
 
-        /** 
-         * Gets the target voltage of the feeder motors in the corresponding state.
-         * @return the target voltage of the feeder motors
-         */
         public Voltage getTargetVoltage() {
             return this.targetVoltage;
         }
     }
 
-    protected Feeder() {
+    private Feeder(FeederIO io) {
+        this.io = io;
         this.state = FeederState.IDLE;
     }
 
@@ -72,16 +61,42 @@ public abstract class Feeder extends SubsystemBase {
         return state;
     }
 
-    public abstract AngularVelocity getCurrentAngularVelocity();
+    private Command setStateCommand(FeederState state) {
+        return Commands.runOnce(() -> this.setState(state));
+    }
 
-    protected abstract void stopMotors();
+    public Command setIdle() {
+        return setStateCommand(FeederState.IDLE);
+    }
+
+    public Command setForward() {
+        return setStateCommand(FeederState.FORWARD);
+    }
+
+    public Command setReverse() {
+        return setStateCommand(FeederState.REVERSE);
+    }
 
     @Override
     public void periodic() {
-        final FeederState currentState = getState();
+        final FeederState currentState = this.getState();
+        // Stop shooting if not aligned
+        // final CommandSwerveDrivetrain swerve = CommandSwerveDrivetrain.getInstance();
+        // final Shooter shooter = Shooter.getInstance();
+        // if (!(swerve.isAlignedToTarget(Field.getHubPose()))
+        //         && shooter.getState() == ShooterState.SHOOT) {
+        //     setState(FeederState.IDLE);
+        // }
+        // if (!(swerve.isAlignedToTarget(Field.getFerryZonePose(swerve.getPose().getTranslation())))
+        //         && shooter.getState() == ShooterState.FERRY) {
+        //     setState(FeederState.IDLE);
+        // }
+
+        io.setTargetVoltage(currentState.getTargetVoltage());
+        io.updateInputs(inputs);
+        RobotVisualizer.getInstance().updateFeeder(inputs.velocity);
+
         // Logging
-        DogLog.log("Feeder/Target Voltage", currentState.getTargetVoltage());
-        DogLog.log("Feeder/Current RPM", getCurrentAngularVelocity().in(RPM));
         DogLog.log("Feeder/State", currentState.name());
         DogLog.forceNt.log("States/Feeder", currentState.name());
     }
