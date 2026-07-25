@@ -9,20 +9,22 @@ import static edu.wpi.first.units.Units.*;
 
 import com.stuypulse.robot.constants.Ports;
 import com.stuypulse.robot.constants.Settings;
-import com.stuypulse.robot.util.simulation.TalonFXSimulation;
+import com.stuypulse.robot.util.simulation.TalonFXSimulation.SystemSim;
+import com.stuypulse.robot.util.simulation.TalonFXSimulation.TalonFXSimulation;
+
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.math.system.plant.LinearSystemId;
 import edu.wpi.first.wpilibj.simulation.DCMotorSim;
 
 public class FeederIOSim extends FeederIOTalonFXBase {
-    private static TalonFXSimulation getFeederMotor(int id) {
-        final DCMotorSim sim = new DCMotorSim(
+    private static final SystemSim<DCMotorSim> sim = SystemSim.of(new DCMotorSim(
             LinearSystemId.createDCMotorSystem(
                 DCMotor.getKrakenX60(2),
                 Settings.Feeder.J.in(KilogramSquareMeters),
                 Settings.Feeder.GEAR_RATIO),
-            DCMotor.getKrakenX60(2));
-        final TalonFXSimulation motor = new TalonFXSimulation(id, sim);
+            DCMotor.getKrakenX60(2)));
+    private static TalonFXSimulation getFeederMotor(int id) {
+        final TalonFXSimulation motor = new TalonFXSimulation(id, Settings.Feeder.GEAR_RATIO, sim);
         return motor;
     }
 
@@ -39,7 +41,8 @@ public class FeederIOSim extends FeederIOTalonFXBase {
 
     @Override
     public void updateInputs(FeederIOInputs inputs) {
-        feederMotor.update(Settings.DT);
+        sim.update(Settings.DT);
+        feederMotor.refresh();
         super.updateInputs(inputs);
     }
 }

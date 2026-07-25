@@ -13,12 +13,13 @@ import com.stuypulse.robot.constants.Settings;
 import com.stuypulse.robot.util.SysId;
 import com.stuypulse.robot.util.simulation.RobotVisualizer;
 
-import dev.doglog.DogLog;
-
 import static edu.wpi.first.units.Units.Amps;
 import static edu.wpi.first.units.Units.Rotations;
 
 import java.util.Optional;
+
+import org.littletonrobotics.junction.AutoLogOutput;
+import org.littletonrobotics.junction.Logger;
 
 import edu.wpi.first.units.measure.Angle;
 import edu.wpi.first.units.measure.Voltage;
@@ -135,11 +136,13 @@ public class Intake extends SubsystemBase {
         return inputs.pivotPosition;
     }
 
+    @AutoLogOutput(key = "Intake/Pivot/atTargetAngle")
     public boolean atTargetAngle() {
         return inputs.pivotPosition.minus(getState().getTargetAngle())
                 .abs(Rotations) < Settings.Intake.Pivot.ANGLE_TOLERANCE.in(Rotations);
     }
 
+    @AutoLogOutput(key = "Intake/Pivot/aboveThreshold")
     public boolean isPivotAboveThreshold() {
         return inputs.pivotPosition.gt(Settings.Intake.Pivot.PUSHDOWN_THRESHOLD);
     }
@@ -169,6 +172,8 @@ public class Intake extends SubsystemBase {
 
     @Override
     public void periodic() {
+        io.updateInputs(inputs);
+        Logger.processInputs("Intake", inputs);
         final IntakeState currentState = getState();
     
         if (!Settings.EnabledSubsystems.INTAKE.get()) {
@@ -198,11 +203,8 @@ public class Intake extends SubsystemBase {
                 default: io.setPivotPosition(currentState.getTargetAngle());
             };
         }
-        io.updateInputs(inputs);
         if (!Robot.isReal()) {
             RobotVisualizer.getInstance().updateIntake(inputs.pivotPosition, inputs.rollerVelocity);
         }
-
-        DogLog.log("Intake/State", currentState.name());
     }
 }

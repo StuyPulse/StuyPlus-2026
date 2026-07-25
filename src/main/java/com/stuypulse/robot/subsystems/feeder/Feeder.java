@@ -7,6 +7,8 @@ package com.stuypulse.robot.subsystems.feeder;
 
 import static edu.wpi.first.units.Units.*;
 
+import org.littletonrobotics.junction.Logger;
+
 import com.stuypulse.robot.Robot;
 import com.stuypulse.robot.constants.Settings;
 import dev.doglog.DogLog;
@@ -79,6 +81,8 @@ public class Feeder extends SubsystemBase {
 
     @Override
     public void periodic() {
+        io.updateInputs(inputs);
+        Logger.processInputs("Feeder", inputs);
         final FeederState currentState = this.getState();
         // Stop shooting if not aligned
         // final CommandSwerveDrivetrain swerve = CommandSwerveDrivetrain.getInstance();
@@ -97,7 +101,6 @@ public class Feeder extends SubsystemBase {
         } else {
             io.stopMotors();
         }
-        io.updateInputs(inputs);
         
         if (Robot.isReal()) {
             RobotVisualizer.getInstance().updateFeeder(inputs.velocity);

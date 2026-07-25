@@ -12,7 +12,7 @@ import edu.wpi.first.math.filter.Debouncer;
 import edu.wpi.first.math.filter.Debouncer.DebounceType;
 import edu.wpi.first.units.measure.*;
 
-public class HandoffIOTalonFXBase implements HandoffIO {
+public abstract class HandoffIOTalonFXBase implements HandoffIO {
     private final TalonFX handoffMotor;
 
     private final VoltageOut handoffController;

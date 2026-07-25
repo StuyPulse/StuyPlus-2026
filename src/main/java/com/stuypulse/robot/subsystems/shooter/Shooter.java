@@ -10,13 +10,15 @@ import static edu.wpi.first.units.Units.RPM;
 import java.util.Optional;
 import java.util.function.DoubleSupplier;
 
+import org.littletonrobotics.junction.AutoLogOutput;
+import org.littletonrobotics.junction.Logger;
+
 import com.stuypulse.robot.Robot;
 import com.stuypulse.robot.constants.Settings;
 import com.stuypulse.robot.util.SysId;
 import com.stuypulse.robot.util.shooter.InterpolationCalculator;
 import com.stuypulse.robot.util.simulation.RobotVisualizer;
 
-import dev.doglog.DogLog;
 import edu.wpi.first.units.measure.AngularVelocity;
 import edu.wpi.first.units.measure.Voltage;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -39,9 +41,9 @@ public class Shooter extends SubsystemBase {
 
     private final ShooterIO io;
     private final ShooterIOInputsAutoLogged inputs;
+    @AutoLogOutput(key = "States/Shooter")
     private ShooterState state;
 
-    protected int gainSlot;
     private AngularVelocity bonusVelocity;
 
     private Shooter(ShooterIO io) {
@@ -54,12 +56,12 @@ public class Shooter extends SubsystemBase {
         bonusVelocity = RPM.zero();
     }
 
-    public void setState(ShooterState state) {
-        this.state = state;
-    }
-
     public ShooterState getState() {
         return this.state;
+    }
+
+    public void setState(ShooterState state) {
+        this.state = state;
     }
 
     public void setGainSlot(int slot) {
@@ -113,6 +115,7 @@ public class Shooter extends SubsystemBase {
         return inputs.velocity;
     }
 
+    @AutoLogOutput(key = "Shooter/isSpunUp")
     public boolean shooterSpunUp() {
         return getCurrentAngularVelocity().gte(getState().getTargetAngularVelocity().minus(Settings.Shooter.SHOOTER_SPUN_UP_TOLERANCE));
     }
@@ -140,7 +143,10 @@ public class Shooter extends SubsystemBase {
 
     @Override
     public void periodic() {
+        io.updateInputs(inputs);
+        Logger.processInputs("Shooter", inputs);
         final ShooterState currentState = getState();
+
         if (!Settings.EnabledSubsystems.SHOOTER.get()) {
             io.stopMotors();
         } else if (voltageOverride.isPresent()) {
@@ -149,8 +155,5 @@ public class Shooter extends SubsystemBase {
             io.setTargetVelocity(currentState.getTargetAngularVelocity().plus(bonusVelocity));
         }
         RobotVisualizer.getInstance().updateShooter(inputs.velocity);
-
-        DogLog.log("Shooter/State", currentState.name());
-        DogLog.forceNt.log("States/Shooter", currentState.name());
     }
 }

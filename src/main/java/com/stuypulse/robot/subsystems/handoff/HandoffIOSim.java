@@ -7,20 +7,22 @@ package com.stuypulse.robot.subsystems.handoff;
 
 import com.stuypulse.robot.constants.Ports;
 import com.stuypulse.robot.constants.Settings;
-import com.stuypulse.robot.util.simulation.TalonFXSimulation;
+import com.stuypulse.robot.util.simulation.TalonFXSimulation.SystemSim;
+import com.stuypulse.robot.util.simulation.TalonFXSimulation.TalonFXSimulation;
+
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.math.system.plant.LinearSystemId;
 import edu.wpi.first.wpilibj.simulation.DCMotorSim;
 
 public class HandoffIOSim extends HandoffIOTalonFXBase {
-    private static TalonFXSimulation getHandoffMotor(int id) {
-        final DCMotorSim sim = new DCMotorSim(
+    private static final SystemSim<DCMotorSim> sim = SystemSim.of(new DCMotorSim(
                 LinearSystemId.createDCMotorSystem(
                         DCMotor.getKrakenX60(1),
                         Settings.Handoff.J_KG_METERS_SQUARED,
                         Settings.Handoff.GEAR_RATIO),
-                DCMotor.getKrakenX60(1));
-        final TalonFXSimulation motor = new TalonFXSimulation(id, sim);
+                DCMotor.getKrakenX60(1)));
+    private static TalonFXSimulation getHandoffMotor(int id) {
+        final TalonFXSimulation motor = new TalonFXSimulation(id, Settings.Handoff.GEAR_RATIO, sim);
         return motor;
     }
 
@@ -37,7 +39,8 @@ public class HandoffIOSim extends HandoffIOTalonFXBase {
 
     @Override
     public void updateInputs(HandoffIOInputs inputs) {
-        handoffMotor.update(Settings.DT);
+        sim.update(Settings.DT);
+        handoffMotor.refresh();
         super.updateInputs(inputs);
     }
 }

@@ -7,7 +7,8 @@ package com.stuypulse.robot.subsystems.intake;
 
 import com.stuypulse.robot.constants.Ports;
 import com.stuypulse.robot.constants.Settings;
-import com.stuypulse.robot.util.simulation.TalonFXSimulation;
+import com.stuypulse.robot.util.simulation.TalonFXSimulation.SystemSim;
+import com.stuypulse.robot.util.simulation.TalonFXSimulation.TalonFXSimulation;
 
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.math.system.plant.LinearSystemId;
@@ -18,7 +19,7 @@ import edu.wpi.first.wpilibj.simulation.DCMotorSim;
 import edu.wpi.first.wpilibj.simulation.SingleJointedArmSim;
 
 public class IntakeIOSim extends IntakeIOTalonFXBase {
-    private static final SingleJointedArmSim pivotSim = new SingleJointedArmSim(
+    private static final SystemSim<SingleJointedArmSim> pivotSim = SystemSim.of(new SingleJointedArmSim(
             LinearSystemId.createDCMotorSystem(
                     DCMotor.getKrakenX60(1),
                     Settings.Intake.Pivot.MOI.in(KilogramSquareMeters),
@@ -29,20 +30,20 @@ public class IntakeIOSim extends IntakeIOTalonFXBase {
             Settings.Intake.Pivot.MAX_ANGLE.in(Radians),
             Settings.Intake.Pivot.MIN_ANGLE.in(Radians), // reversed because negative?
             true,
-            Settings.Intake.Pivot.INITIAL_ANGLE.in(Radians));
+            Settings.Intake.Pivot.INITIAL_ANGLE.in(Radians)));
     private static TalonFXSimulation getPivotMotor(int id) {
-        final TalonFXSimulation pivotMotor = new TalonFXSimulation(id, pivotSim);
+        final TalonFXSimulation pivotMotor = new TalonFXSimulation(id, Settings.Intake.Pivot.GEAR_RATIO, pivotSim);
         return pivotMotor;
     }
     
-    private static final DCMotorSim rollerSim = new DCMotorSim(
+    private static final SystemSim<DCMotorSim> rollerSim = SystemSim.of(new DCMotorSim(
         LinearSystemId.createDCMotorSystem(
             DCMotor.getKrakenX60(2),
             Settings.Intake.Roller.J.in(KilogramSquareMeters),
             Settings.Intake.Roller.GEAR_RATIO),
-        DCMotor.getKrakenX60(2));
+        DCMotor.getKrakenX60(2)));
     private static TalonFXSimulation getRollerMotor(int id) {
-        final TalonFXSimulation rollerMotor = new TalonFXSimulation(id, rollerSim);
+        final TalonFXSimulation rollerMotor = new TalonFXSimulation(id, Settings.Intake.Roller.GEAR_RATIO, rollerSim);
         return rollerMotor;
     }
 
@@ -65,9 +66,11 @@ public class IntakeIOSim extends IntakeIOTalonFXBase {
 
     @Override
     public void updateInputs(IntakeIOInputs inputs) {
-        rollerMotorLeft.update(Settings.DT);
-        rollerMotorRight.update(Settings.DT);
-        pivotMotor.update(Settings.DT);
+        pivotSim.update(Settings.DT);
+        pivotMotor.refresh();
+        rollerSim.update(Settings.DT);
+        rollerMotorLeft.refresh();
+        rollerMotorRight.refresh();
         super.updateInputs(inputs);
     }
 }

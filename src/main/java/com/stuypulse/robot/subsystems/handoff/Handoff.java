@@ -5,6 +5,8 @@
 /***************************************************************/
 package com.stuypulse.robot.subsystems.handoff;
 
+import org.littletonrobotics.junction.Logger;
+
 import com.stuypulse.robot.Robot;
 import com.stuypulse.robot.constants.Settings;
 
@@ -76,15 +78,15 @@ public class Handoff extends SubsystemBase {
 
     @Override
     public void periodic() {
+        io.updateInputs(inputs);
+        Logger.processInputs("Handoff", inputs);
         final HandoffState currentState = getState();
-
         
         if (Settings.EnabledSubsystems.HANDOFF.get()) {
             io.setTargetVoltage(currentState.getTargetVoltage());
         } else {
             io.stopMotors();
         }
-        io.updateInputs(inputs);
 
         DogLog.log("Handoff/State", currentState.name());
         DogLog.forceNt.log("States/Handoff", currentState.name());

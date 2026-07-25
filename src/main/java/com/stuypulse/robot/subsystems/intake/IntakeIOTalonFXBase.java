@@ -27,7 +27,7 @@ import edu.wpi.first.math.filter.Debouncer.DebounceType;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 
-public class IntakeIOTalonFXBase implements IntakeIO {
+public abstract class IntakeIOTalonFXBase implements IntakeIO {
     private final TalonFX pivotMotor;
 
     private final TalonFX rollerMotorLeft;

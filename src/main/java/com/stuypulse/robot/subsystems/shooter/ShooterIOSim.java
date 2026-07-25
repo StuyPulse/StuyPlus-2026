@@ -9,20 +9,22 @@ import static edu.wpi.first.units.Units.*;
 
 import com.stuypulse.robot.constants.Ports;
 import com.stuypulse.robot.constants.Settings;
-import com.stuypulse.robot.util.simulation.TalonFXSimulation;
+import com.stuypulse.robot.util.simulation.TalonFXSimulation.SystemSim;
+import com.stuypulse.robot.util.simulation.TalonFXSimulation.TalonFXSimulation;
+
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.math.system.plant.LinearSystemId;
 import edu.wpi.first.wpilibj.simulation.FlywheelSim;
 
 public class ShooterIOSim extends ShooterIOTalonFXBase {
-    private static final FlywheelSim shooterSim = new FlywheelSim(
+    private static final SystemSim<FlywheelSim> shooterSim = SystemSim.of(new FlywheelSim(
         LinearSystemId.createFlywheelSystem(
             DCMotor.getKrakenX60(3),
             Settings.Shooter.J.in(KilogramSquareMeters),
             Settings.Shooter.GEAR_RATIO),
-        DCMotor.getKrakenX60(3));
+        DCMotor.getKrakenX60(3)));
     private static TalonFXSimulation getShooterMotor(int id) {
-        return new TalonFXSimulation(id, shooterSim);
+        return new TalonFXSimulation(id, Settings.Shooter.GEAR_RATIO, shooterSim);
     }
 
     private final TalonFXSimulation shooterMotorLeft;
@@ -44,9 +46,10 @@ public class ShooterIOSim extends ShooterIOTalonFXBase {
 
     @Override
     public void updateInputs(ShooterIOInputs inputs) {
-        shooterMotorRight.update(Settings.DT);
-        shooterMotorCenter.update(Settings.DT);
-        shooterMotorLeft.update(Settings.DT);
+        shooterSim.update(Settings.DT);
+        shooterMotorRight.refresh();
+        shooterMotorCenter.refresh();
+        shooterMotorLeft.refresh();
         super.updateInputs(inputs);
     }
 }

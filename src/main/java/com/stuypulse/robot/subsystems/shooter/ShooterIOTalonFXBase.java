@@ -16,7 +16,7 @@ import com.ctre.phoenix6.signals.MotorAlignmentValue;
 import com.stuypulse.robot.constants.Motors;
 import edu.wpi.first.units.measure.*;
 
-public class ShooterIOTalonFXBase implements ShooterIO {
+public abstract class ShooterIOTalonFXBase implements ShooterIO {
     private final TalonFX shooterMotorLeft;
     private final TalonFX shooterMotorCenter;
     private final TalonFX shooterMotorRight;
