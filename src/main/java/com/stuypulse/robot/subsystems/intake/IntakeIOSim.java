@@ -12,7 +12,7 @@ import com.ctre.phoenix6.signals.MotorAlignmentValue;
 import com.stuypulse.robot.constants.Motors;
 import com.stuypulse.robot.constants.Settings;
 
-import com.stuypulse.robot.util.simulation.TalonFXSimIds;
+import com.stuypulse.robot.util.simulation.SimCanIds;
 import com.stuypulse.robot.util.simulation.TalonFXSimulation.SystemSim;
 import com.stuypulse.robot.util.simulation.TalonFXSimulation.TalonFXSimulation;
 
@@ -78,16 +78,16 @@ public class IntakeIOSim implements IntakeIO {
                 DCMotor.getKrakenX60(2))
         );
         
-        this.pivotMotor = new TalonFXSimulation(TalonFXSimIds.get("Intake/Pivot/Motor"), Settings.Intake.Pivot.GEAR_RATIO, pivotSim);
+        this.pivotMotor = new TalonFXSimulation(SimCanIds.get("Intake/Pivot/Motor"), Settings.Intake.Pivot.GEAR_RATIO, pivotSim);
         Motors.Intake.PIVOT_CONFIG.configure(pivotMotor);
 
         // zero it at the up position
         pivotMotor.setPosition(Settings.Intake.Pivot.INITIAL_ANGLE);
 
-        this.rollerMotorLeft = new TalonFXSimulation(TalonFXSimIds.get("Intake/Rollers/Left"), Settings.Intake.Roller.GEAR_RATIO, rollerSim);
+        this.rollerMotorLeft = new TalonFXSimulation(SimCanIds.get("Intake/Rollers/Left"), Settings.Intake.Roller.GEAR_RATIO, rollerSim);
         Motors.Intake.LEFT_ROLLER_CONFIG.configure(rollerMotorLeft);
 
-        this.rollerMotorRight = new TalonFXSimulation(TalonFXSimIds.get("Intake/Rollers/Right"), Settings.Intake.Roller.GEAR_RATIO, rollerSim);
+        this.rollerMotorRight = new TalonFXSimulation(SimCanIds.get("Intake/Rollers/Right"), Settings.Intake.Roller.GEAR_RATIO, rollerSim);
         Motors.Intake.RIGHT_ROLLER_CONFIG.configure(rollerMotorRight);
 
         this.positionController = new PositionTorqueCurrentFOC(0.0);

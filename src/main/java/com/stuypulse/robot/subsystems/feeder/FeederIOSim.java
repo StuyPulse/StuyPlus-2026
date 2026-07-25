@@ -5,7 +5,7 @@ import com.ctre.phoenix6.controls.VoltageOut;
 import com.stuypulse.robot.constants.Motors;
 import com.stuypulse.robot.constants.Settings;
 
-import com.stuypulse.robot.util.simulation.TalonFXSimIds;
+import com.stuypulse.robot.util.simulation.SimCanIds;
 import com.stuypulse.robot.util.simulation.TalonFXSimulation.SystemSim;
 import com.stuypulse.robot.util.simulation.TalonFXSimulation.TalonFXSimulation;
 
@@ -31,7 +31,7 @@ public class FeederIOSim implements FeederIO {
                 DCMotor.getKrakenX60(1))
         );
 
-        this.feederMotor = new TalonFXSimulation(TalonFXSimIds.get("Feeder/Motor"), Settings.Feeder.GEAR_RATIO, this.feederSim);
+        this.feederMotor = new TalonFXSimulation(SimCanIds.get("Feeder/Motor"), Settings.Feeder.GEAR_RATIO, this.feederSim);
         Motors.Feeder.LEADER_CONFIG.configure(feederMotor);
         
         this.controller = new VoltageOut(0).withEnableFOC(true);

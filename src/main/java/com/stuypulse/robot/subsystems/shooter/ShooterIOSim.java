@@ -6,7 +6,7 @@ import com.ctre.phoenix6.signals.MotorAlignmentValue;
 
 import com.stuypulse.robot.constants.Motors;
 import com.stuypulse.robot.constants.Settings;
-import com.stuypulse.robot.util.simulation.TalonFXSimIds;
+import com.stuypulse.robot.util.simulation.SimCanIds;
 import com.stuypulse.robot.util.simulation.TalonFXSimulation.SystemSim;
 import com.stuypulse.robot.util.simulation.TalonFXSimulation.TalonFXSimulation;
 
@@ -37,13 +37,13 @@ public class ShooterIOSim implements ShooterIO {
                 DCMotor.getKrakenX60(3))
         );
 
-        this.shooterMotorLeft = new TalonFXSimulation(TalonFXSimIds.get("Shooter/Motors/Left"), Settings.Shooter.GEAR_RATIO, shooterSim);
+        this.shooterMotorLeft = new TalonFXSimulation(SimCanIds.get("Shooter/Motors/Left"), Settings.Shooter.GEAR_RATIO, shooterSim);
         Motors.Shooter.SHOOTER_MOTOR_LEFT.configure(shooterMotorLeft);
 
-        this.shooterMotorCenter = new TalonFXSimulation(TalonFXSimIds.get("Shooter/Motors/Center"), Settings.Shooter.GEAR_RATIO, shooterSim);
+        this.shooterMotorCenter = new TalonFXSimulation(SimCanIds.get("Shooter/Motors/Center"), Settings.Shooter.GEAR_RATIO, shooterSim);
         Motors.Shooter.SHOOTER_MOTOR_CENTER.configure(shooterMotorCenter);
 
-        this.shooterMotorRight = new TalonFXSimulation(TalonFXSimIds.get("Shooter/Motors/Right"), Settings.Shooter.GEAR_RATIO, shooterSim);
+        this.shooterMotorRight = new TalonFXSimulation(SimCanIds.get("Shooter/Motors/Right"), Settings.Shooter.GEAR_RATIO, shooterSim);
         Motors.Shooter.SHOOTER_MOTOR_RIGHT.configure(shooterMotorRight);
         shooterMotorRight.getTorqueCurrent().setUpdateFrequency(Hertz.of(1000));
 
