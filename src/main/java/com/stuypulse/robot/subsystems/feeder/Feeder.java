@@ -98,7 +98,10 @@ public class Feeder extends SubsystemBase {
             io.stopMotors();
         }
         io.updateInputs(inputs);
-        RobotVisualizer.getInstance().updateFeeder(inputs.velocity);
+        
+        if (Robot.isReal()) {
+            RobotVisualizer.getInstance().updateFeeder(inputs.velocity);
+        }
 
         // Logging
         DogLog.log("Feeder/State", currentState.name());

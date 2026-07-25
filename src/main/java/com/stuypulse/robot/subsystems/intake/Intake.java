@@ -49,7 +49,7 @@ public class Intake extends SubsystemBase {
     private final IntakeIOInputsAutoLogged inputs;
     private IntakeState state;
 
-    protected Intake(IntakeIO io) {
+    private Intake(IntakeIO io) {
         this.io = io;
         this.inputs = new IntakeIOInputsAutoLogged();
         this.state = IntakeState.IDLE;
@@ -171,36 +171,37 @@ public class Intake extends SubsystemBase {
     public void periodic() {
         final IntakeState currentState = getState();
     
-        if (Settings.EnabledSubsystems.INTAKE.get()) {
+        if (!Settings.EnabledSubsystems.INTAKE.get()) {
+            io.stopAllMotors();
+        } else if (pivotVoltageOverride.isEmpty()) {
+            io.setPivotHoming(pivotVoltageOverride.get());
+        } else {
             // roller
             io.setRollerDutyCycle(currentState.getTargetDutyCycle());
 
             // pivot
-            if (pivotVoltageOverride.isEmpty()) {
-                switch (currentState) {
-                    case INTAKE, OUTTAKE, DOWN:
-                        if (isPivotAboveThreshold()) {
-                            io.setPivotPushdown(Amps.of(Settings.Intake.Pivot.PUSHDOWN_CURRENT.get()));
-                        } else {
-                            io.setPivotPosition(currentState.getTargetAngle());
-                        };
-                        break;
-                    case HOMING_DOWN:
-                        io.setPivotHoming(Settings.Intake.Pivot.HOMING_DOWN_VOLTAGE);
-                        break;
-                    case AGITATE, AGITATE_DOWN:
+            // this structure doesn't support dynamic gains unless gainsSlot becomes part of IO
+            switch (currentState) {
+                case INTAKE, OUTTAKE, DOWN:
+                    if (isPivotAboveThreshold()) {
+                        io.setPivotPushdown(Amps.of(Settings.Intake.Pivot.PUSHDOWN_CURRENT.get()));
+                    } else {
                         io.setPivotPosition(currentState.getTargetAngle());
-                        break;
-                    default: io.setPivotPosition(currentState.getTargetAngle());
-                };
-            } else {
-                io.setPivotHoming(pivotVoltageOverride.get());
-            }
-        } else {
-            io.stopAllMotors();
+                    };
+                    break;
+                case HOMING_DOWN:
+                    io.setPivotHoming(Settings.Intake.Pivot.HOMING_DOWN_VOLTAGE);
+                    break;
+                case AGITATE, AGITATE_DOWN:
+                    io.setPivotPosition(currentState.getTargetAngle());
+                    break;
+                default: io.setPivotPosition(currentState.getTargetAngle());
+            };
         }
         io.updateInputs(inputs);
-        RobotVisualizer.getInstance().updateIntake(inputs.pivotPosition, inputs.rollerVelocity);
+        if (!Robot.isReal()) {
+            RobotVisualizer.getInstance().updateIntake(inputs.pivotPosition, inputs.rollerVelocity);
+        }
 
         DogLog.log("Intake/State", currentState.name());
     }

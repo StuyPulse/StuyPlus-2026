@@ -18,19 +18,19 @@ import edu.wpi.first.wpilibj.simulation.DCMotorSim;
 import edu.wpi.first.wpilibj.simulation.SingleJointedArmSim;
 
 public class IntakeIOSim extends IntakeIOTalonFXBase {
+    private static final SingleJointedArmSim pivotSim = new SingleJointedArmSim(
+            LinearSystemId.createDCMotorSystem(
+                    DCMotor.getKrakenX60(1),
+                    Settings.Intake.Pivot.MOI.in(KilogramSquareMeters),
+                    Settings.Intake.Pivot.GEAR_RATIO),
+            DCMotor.getKrakenX60(1),
+            Settings.Intake.Pivot.GEAR_RATIO,
+            Settings.Intake.Pivot.PIVOT_ARM_LENGTH.in(Meters),
+            Settings.Intake.Pivot.MAX_ANGLE.in(Radians),
+            Settings.Intake.Pivot.MIN_ANGLE.in(Radians), // reversed because negative?
+            true,
+            Settings.Intake.Pivot.INITIAL_ANGLE.in(Radians));
     private static TalonFXSimulation getPivotMotor(int id) {
-        final SingleJointedArmSim pivotSim = new SingleJointedArmSim(
-                LinearSystemId.createDCMotorSystem(
-                        DCMotor.getKrakenX60(1),
-                        Settings.Intake.Pivot.MOI.in(KilogramSquareMeters),
-                        Settings.Intake.Pivot.GEAR_RATIO),
-                DCMotor.getKrakenX60(1),
-                Settings.Intake.Pivot.GEAR_RATIO,
-                Settings.Intake.Pivot.PIVOT_ARM_LENGTH.in(Meters),
-                Settings.Intake.Pivot.MAX_ANGLE.in(Radians),
-                Settings.Intake.Pivot.MIN_ANGLE.in(Radians), // reversed because negative?
-                true,
-                Settings.Intake.Pivot.INITIAL_ANGLE.in(Radians));
         final TalonFXSimulation pivotMotor = new TalonFXSimulation(id, pivotSim);
         return pivotMotor;
     }

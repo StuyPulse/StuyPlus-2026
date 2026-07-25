@@ -27,7 +27,7 @@ public class Handoff extends SubsystemBase {
     private final HandoffIOInputsAutoLogged inputs;
     private HandoffState state;
 
-    protected Handoff(HandoffIO io) {
+    private Handoff(HandoffIO io) {
         this.io = io;
         this.inputs = new HandoffIOInputsAutoLogged();
         this.state = HandoffState.IDLE;

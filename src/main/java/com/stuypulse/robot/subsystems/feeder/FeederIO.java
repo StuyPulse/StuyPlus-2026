@@ -15,9 +15,9 @@ public interface FeederIO {
         public Current supplyCurrent = Amps.zero();
     }
 
-    public default void updateInputs(FeederIOInputs inputs) {}
+    public default void updateInputs(FeederIOInputs inputs) {};
 
-    public default void setTargetVoltage(Voltage voltage) {}
+    public default void setTargetVoltage(Voltage voltage) {};
 
-    public default void stopMotors() {}
+    public default void stopMotors() {};
 }
