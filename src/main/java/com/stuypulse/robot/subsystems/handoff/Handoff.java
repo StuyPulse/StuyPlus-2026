@@ -5,6 +5,7 @@
 /***************************************************************/
 package com.stuypulse.robot.subsystems.handoff;
 
+import org.littletonrobotics.junction.AutoLogOutput;
 import org.littletonrobotics.junction.Logger;
 
 import com.stuypulse.robot.Robot;
@@ -27,6 +28,7 @@ public class Handoff extends SubsystemBase {
 
     private final HandoffIO io;
     private final HandoffIOInputsAutoLogged inputs;
+    @AutoLogOutput(key = "States/Handoff")
     private HandoffState state;
 
     private Handoff(HandoffIO io) {
@@ -87,10 +89,5 @@ public class Handoff extends SubsystemBase {
         } else {
             io.stopMotors();
         }
-
-        DogLog.log("Handoff/State", currentState.name());
-        DogLog.forceNt.log("States/Handoff", currentState.name());
-        DogLog.log("Handoff/Handoff Target Voltage", currentState.getTargetVoltage());
-        DogLog.forceNt.log("Handoff/Stalling", handoffStalling());
     }
 }

@@ -1,4 +1,4 @@
-package com.stuypulse.robot.util.simulation.TalonFXSimulation;
+package com.stuypulse.robot.util.simulation.TalonSimulation;
 
 import edu.wpi.first.wpilibj.simulation.DCMotorSim;
 import edu.wpi.first.wpilibj.simulation.ElevatorSim;

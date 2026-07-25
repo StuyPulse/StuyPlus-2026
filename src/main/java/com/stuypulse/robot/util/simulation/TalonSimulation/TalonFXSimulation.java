@@ -3,7 +3,7 @@
 /* Use of this source code is governed by an MIT-style license */
 /* that can be found in the repository LICENSE file.           */
 /***************************************************************/
-package com.stuypulse.robot.util.simulation.TalonFXSimulation;
+package com.stuypulse.robot.util.simulation.TalonSimulation;
 
 import com.stuypulse.robot.constants.Motors.TalonFXConfig;
 

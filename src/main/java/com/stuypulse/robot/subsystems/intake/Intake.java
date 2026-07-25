@@ -178,7 +178,7 @@ public class Intake extends SubsystemBase {
     
         if (!Settings.EnabledSubsystems.INTAKE.get()) {
             io.stopAllMotors();
-        } else if (pivotVoltageOverride.isEmpty()) {
+        } else if (pivotVoltageOverride.isPresent()) {
             io.setPivotHoming(pivotVoltageOverride.get());
         } else {
             // roller

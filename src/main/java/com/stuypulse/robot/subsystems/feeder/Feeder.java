@@ -7,6 +7,7 @@ package com.stuypulse.robot.subsystems.feeder;
 
 import static edu.wpi.first.units.Units.*;
 
+import org.littletonrobotics.junction.AutoLogOutput;
 import org.littletonrobotics.junction.Logger;
 
 import com.stuypulse.robot.Robot;
@@ -31,6 +32,7 @@ public class Feeder extends SubsystemBase {
 
     private final FeederIO io;
     private final FeederIOInputsAutoLogged inputs;
+    @AutoLogOutput(key = "States/Feeder")
     private FeederState state;
 
     private Feeder(FeederIO io) {
@@ -105,9 +107,5 @@ public class Feeder extends SubsystemBase {
         if (Robot.isReal()) {
             RobotVisualizer.getInstance().updateFeeder(inputs.velocity);
         }
-
-        // Logging
-        DogLog.log("Feeder/State", currentState.name());
-        DogLog.forceNt.log("States/Feeder", currentState.name());
     }
 }

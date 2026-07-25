@@ -46,6 +46,8 @@ public class Shooter extends SubsystemBase {
 
     private AngularVelocity bonusVelocity;
 
+    private Optional<Voltage> voltageOverride;
+
     private Shooter(ShooterIO io) {
         this.io = io;
         this.inputs = new ShooterIOInputsAutoLogged();
@@ -54,6 +56,8 @@ public class Shooter extends SubsystemBase {
         io.setGainsSlot(0);
 
         bonusVelocity = RPM.zero();
+
+        voltageOverride = Optional.empty();
     }
 
     public ShooterState getState() {
@@ -103,8 +107,6 @@ public class Shooter extends SubsystemBase {
             return RPM.of(RPMSupplier.getAsDouble());
         }
     }
-
-    private Optional<Voltage> voltageOverride;
 
     //getters
     public void setVoltageOverride(Voltage voltage) {
