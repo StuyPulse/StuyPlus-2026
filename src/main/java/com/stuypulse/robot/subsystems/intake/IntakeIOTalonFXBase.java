@@ -162,20 +162,20 @@ public abstract class IntakeIOTalonFXBase implements IntakeIO {
         // }
 
         // Inputs
-        inputs.pivotPosition = pivotPosition.getValue();
-        inputs.pivotVelocity = pivotVelocity.getValue();
-        inputs.pivotVoltage = pivotVoltage.getValue();
-        inputs.pivotStatorCurrent = pivotStatorCurrent.getValue();
-        inputs.pivotSupplyCurrent = pivotSupplyCurrent.getValue();
+        inputs.pivotPosition = pivotPosition.refresh().getValue();
+        inputs.pivotVelocity = pivotVelocity.refresh().getValue();
+        inputs.pivotVoltage = pivotVoltage.refresh().getValue();
+        inputs.pivotStatorCurrent = pivotStatorCurrent.refresh().getValue();
+        inputs.pivotSupplyCurrent = pivotSupplyCurrent.refresh().getValue();
         inputs.limitSwitchHit = !pivotLimitSwitch.get();
         inputs.pivotStalling = pivotStalling.getAsBoolean();
         inputs.pivotPushingDown = pivotMotor.getAppliedControl() == pushdownController;
 
-        inputs.rollerVelocity = rollerVelocity.getValue();
-        inputs.rollerVoltage = rollerVoltage.getValue();
-        inputs.rollerStatorCurrent = rollerStatorCurrent.getValue();
-        inputs.rollerSupplyCurrent = rollerSupplyCurrent.getValue();
-        inputs.rollerDutyCycle = rollerDutyCycle.getValue();
+        inputs.rollerVelocity = rollerVelocity.refresh().getValue();
+        inputs.rollerVoltage = rollerVoltage.refresh().getValue();
+        inputs.rollerStatorCurrent = rollerStatorCurrent.refresh().getValue();
+        inputs.rollerSupplyCurrent = rollerSupplyCurrent.refresh().getValue();
+        inputs.rollerDutyCycle = rollerDutyCycle.refresh().getValue();
         inputs.leftRollerStalling = leftRollerDebouncer.calculate(leftRollerStalling.getAsBoolean());
         inputs.rightRollerStalling = rightRollerDebouncer.calculate(rightRollerStalling.getAsBoolean());
 

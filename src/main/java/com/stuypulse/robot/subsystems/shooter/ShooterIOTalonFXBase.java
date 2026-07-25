@@ -85,11 +85,11 @@ public abstract class ShooterIOTalonFXBase implements ShooterIO {
 
     @Override
     public void updateInputs(ShooterIOInputs inputs) {
-        inputs.position = this.position.getValue();
-        inputs.velocity = this.velocity.getValue();
-        inputs.voltage = this.voltage.getValue();
-        inputs.torqueCurrent = this.torqueCurrent.getValue();
-        inputs.supplyCurrent = this.supplyCurrent.getValue();
-        inputs.statorCurrent = this.statorCurrent.getValue();
+        inputs.position = this.position.refresh().getValue();
+        inputs.velocity = this.velocity.refresh().getValue();
+        inputs.voltage = this.voltage.refresh().getValue();
+        inputs.torqueCurrent = this.torqueCurrent.refresh().getValue();
+        inputs.supplyCurrent = this.supplyCurrent.refresh().getValue();
+        inputs.statorCurrent = this.statorCurrent.refresh().getValue();
     }
 }

@@ -5,13 +5,18 @@
 /***************************************************************/
 package com.stuypulse.robot.subsystems.handoff;
 
+import static edu.wpi.first.units.Units.Amps;
+
+import java.util.function.BooleanSupplier;
+
 import org.littletonrobotics.junction.AutoLogOutput;
 import org.littletonrobotics.junction.Logger;
 
 import com.stuypulse.robot.Robot;
 import com.stuypulse.robot.constants.Settings;
 
-import dev.doglog.DogLog;
+import edu.wpi.first.math.filter.Debouncer;
+import edu.wpi.first.math.filter.Debouncer.DebounceType;
 import edu.wpi.first.units.measure.Voltage;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -31,10 +36,16 @@ public class Handoff extends SubsystemBase {
     @AutoLogOutput(key = "States/Handoff")
     private HandoffState state;
 
+    private final BooleanSupplier handoffStalling;
+    private final Debouncer handoffDebouncer;
+
     private Handoff(HandoffIO io) {
         this.io = io;
         this.inputs = new HandoffIOInputsAutoLogged();
         this.state = HandoffState.IDLE;
+
+        this.handoffStalling = () -> inputs.statorCurrent.abs(Amps) > Settings.Handoff.STALL_CURRENT;
+        this.handoffDebouncer = new Debouncer(Settings.Handoff.STALL_DEBOUNCE, DebounceType.kRising);
     }
 
     public void setState(HandoffState state) {
@@ -74,8 +85,9 @@ public class Handoff extends SubsystemBase {
         }
     }
 
+    @AutoLogOutput(key = "Handoff/isStalling")
     public boolean handoffStalling() {
-        return inputs.isStalling;
+        return handoffDebouncer.calculate(this.handoffStalling.getAsBoolean());
     };
 
     @Override

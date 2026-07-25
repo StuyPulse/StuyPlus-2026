@@ -5,9 +5,15 @@
 /***************************************************************/
 package com.stuypulse.robot;
 
+import org.littletonrobotics.junction.LogFileUtil;
 import org.littletonrobotics.junction.LoggedRobot;
+import org.littletonrobotics.junction.Logger;
+import org.littletonrobotics.junction.networktables.NT4Publisher;
+import org.littletonrobotics.junction.wpilog.WPILOGReader;
+import org.littletonrobotics.junction.wpilog.WPILOGWriter;
 
 import com.ctre.phoenix6.SignalLogger;
+import com.google.flatbuffers.Constants;
 import com.stuypulse.robot.commands.shooter.ShooterSetShoot;
 import com.stuypulse.robot.commands.vision.SetIMUMode;
 import com.stuypulse.robot.commands.vision.SetMegaTagMode;
@@ -69,16 +75,21 @@ public class Robot extends LoggedRobot {
         } else {
             alliance = Alliance.Blue;
         }
-        DataLogManager.start();
-        DataLogManager.logNetworkTables(true);
-        System.out.println("]LOGGING DIRECTORY]: " + DataLogManager.getLogDir());
-        SignalLogger.start();
-        DogLog.setOptions(new DogLogOptions()
-            .withCaptureDs(true)
-            .withNtTunables(true)
-            .withLogExtras(true)
-            .withNtPublish(true));
-        DogLog.setPdh(new PowerDistribution());
+        if (isReal()) {
+            Logger.addDataReceiver(new WPILOGWriter());       // log to USB stick / roboRIO storage
+            Logger.addDataReceiver(new NT4Publisher());        // live view in AdvantageScope
+        } else { //if (Constants.currentMode == Mode.SIM) {
+            Logger.addDataReceiver(new WPILOGWriter());
+            Logger.addDataReceiver(new NT4Publisher());
+        } //else {
+        //     // REPLAY mode
+        //     setUseTiming(false);
+        //     String logPath = LogFileUtil.findReplayLog();
+        //     Logger.setReplaySource(new WPILOGReader(logPath));
+        //     Logger.addDataReceiver(new WPILOGWriter(LogFileUtil.addPathSuffix(logPath, "_sim")));
+        // }
+
+        Logger.start();
     }
 
     /**

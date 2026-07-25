@@ -1,15 +1,10 @@
 package com.stuypulse.robot.subsystems.handoff;
 
-import java.util.function.BooleanSupplier;
-
 import com.ctre.phoenix6.StatusSignal;
 import com.ctre.phoenix6.controls.VoltageOut;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.stuypulse.robot.constants.Motors;
-import com.stuypulse.robot.constants.Settings;
 
-import edu.wpi.first.math.filter.Debouncer;
-import edu.wpi.first.math.filter.Debouncer.DebounceType;
 import edu.wpi.first.units.measure.*;
 
 public abstract class HandoffIOTalonFXBase implements HandoffIO {
@@ -21,9 +16,7 @@ public abstract class HandoffIOTalonFXBase implements HandoffIO {
     private final StatusSignal<AngularVelocity> velocity;
     private final StatusSignal<Voltage> voltage;
     private final StatusSignal<Current> supplyCurrent;
-
-    private final BooleanSupplier handoffStalling;
-    private final Debouncer handoffDebouncer;
+    private final StatusSignal<Current> statorCurrent;
 
     public HandoffIOTalonFXBase(TalonFX motor) {
         handoffMotor = motor;
@@ -35,9 +28,7 @@ public abstract class HandoffIOTalonFXBase implements HandoffIO {
         velocity = handoffMotor.getVelocity();
         voltage = handoffMotor.getMotorVoltage();
         supplyCurrent = handoffMotor.getSupplyCurrent();
-
-        this.handoffStalling = () -> Math.abs(handoffMotor.getStatorCurrent().getValueAsDouble()) > Settings.Handoff.STALL_CURRENT;
-        this.handoffDebouncer = new Debouncer(Settings.Handoff.STALL_DEBOUNCE, DebounceType.kRising);
+        statorCurrent = handoffMotor.getStatorCurrent();
     }
 
     @Override
@@ -47,11 +38,11 @@ public abstract class HandoffIOTalonFXBase implements HandoffIO {
 
     @Override
     public void updateInputs(HandoffIOInputs inputs) {
-        inputs.position = position.getValue();
-        inputs.velocity = velocity.getValue();
-        inputs.voltage = voltage.getValue();
-        inputs.supplyCurrent = supplyCurrent.getValue();
-        inputs.isStalling = handoffDebouncer.calculate(this.handoffStalling.getAsBoolean());
+        inputs.position = position.refresh().getValue();
+        inputs.velocity = velocity.refresh().getValue();
+        inputs.voltage = voltage.refresh().getValue();
+        inputs.supplyCurrent = supplyCurrent.refresh().getValue();
+        inputs.statorCurrent = statorCurrent.refresh().getValue();
         // final Shooter shooter = Shooter.getInstance();
         // final CommandSwerveDrivetrain swerve = CommandSwerveDrivetrain.getInstance();
         // if (!(swerve.isAlignedToTarget(Field.getHubPose()))

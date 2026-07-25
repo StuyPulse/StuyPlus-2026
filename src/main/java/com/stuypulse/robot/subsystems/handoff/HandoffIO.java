@@ -13,6 +13,7 @@ public interface HandoffIO {
         public AngularVelocity velocity = RPM.zero();
         public Voltage voltage = Volts.zero();
         public Current supplyCurrent = Amps.zero();
+        public Current statorCurrent = Amps.zero();
         public boolean isStalling = false;
     }
 

@@ -38,10 +38,10 @@ public abstract class FeederIOTalonFXBase implements FeederIO {
 
     @Override
     public void updateInputs(FeederIOInputs inputs) {
-        inputs.position = position.getValue();
-        inputs.velocity = velocity.getValue();
-        inputs.voltage = voltage.getValue();
-        inputs.supplyCurrent = supplyCurrent.getValue();
+        inputs.position = position.refresh().getValue();
+        inputs.velocity = velocity.refresh().getValue();
+        inputs.voltage = voltage.refresh().getValue();
+        inputs.supplyCurrent = supplyCurrent.refresh().getValue();
     }
 
     @Override
