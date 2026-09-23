@@ -1,4 +1,4 @@
-package com.stuypulse.robot.commands.auton.depot;
+package com.stuypulse.robot.commands.auton.misc;
 
 import com.pathplanner.lib.path.PathPlannerPath;
 import com.stuypulse.robot.commands.feeder.FeederSetForward;

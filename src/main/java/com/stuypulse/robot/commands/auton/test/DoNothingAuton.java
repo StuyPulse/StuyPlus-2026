@@ -1,4 +1,4 @@
-package com.stuypulse.robot.commands.auton;
+package com.stuypulse.robot.commands.auton.test;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
