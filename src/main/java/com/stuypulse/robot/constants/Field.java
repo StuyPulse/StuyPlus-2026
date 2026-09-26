@@ -66,6 +66,8 @@ public interface Field {
                 return CommandSwerveDrivetrain.getInstance().getPose().getX() < allianceZone.getX();
         }
 
+        public static final double FUEL_RADIUS_METERS = Units.inchesToMeters(2.95);
+
         /** APRILTAGS ** */
         enum NamedTags {
 

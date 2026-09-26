@@ -13,7 +13,9 @@ import static edu.wpi.first.units.Units.*;
 import com.stuypulse.robot.Robot;
 import com.stuypulse.robot.commands.vision.SetPipeline;
 import com.stuypulse.robot.constants.Cameras;
+import com.stuypulse.robot.constants.Field;
 import com.stuypulse.robot.constants.Settings;
+import com.stuypulse.robot.constants.Cameras.Camera;
 import com.stuypulse.robot.constants.Settings.EnabledSubsystems;
 import com.stuypulse.robot.subsystems.swerve.CommandSwerveDrivetrain;
 import com.stuypulse.robot.util.vision.LimelightHelpers;
@@ -21,6 +23,10 @@ import com.stuypulse.robot.util.vision.LimelightHelpers.IMUData;
 import com.stuypulse.robot.util.vision.LimelightHelpers.PoseEstimate;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Pose3d;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Rotation3d;
+import edu.wpi.first.math.geometry.Transform3d;
+import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.networktables.BooleanSubscriber;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -56,7 +62,7 @@ public class LimelightVision extends SubsystemBase {
         names = new String[Cameras.LimelightCameras.length];
         for (int i = 0; i < Cameras.LimelightCameras.length; i++) {
             names[i] = Cameras.LimelightCameras[i].name();
-            Pose3d robotRelativePose = Cameras.LimelightCameras[i].location();
+            Transform3d robotRelativePose = Cameras.LimelightCameras[i].location();
             LimelightHelpers.setCameraPose_RobotSpace(names[i], robotRelativePose.getX(), robotRelativePose.getY(), robotRelativePose.getZ(), robotRelativePose.getRotation().getMeasureX().in(Degrees), robotRelativePose.getRotation().getMeasureY().in(Degrees), robotRelativePose.getRotation().getMeasureZ().in(Degrees));
             LimelightHelpers.setRewindEnabled(names[i], true);
         }
@@ -132,6 +138,25 @@ public class LimelightVision extends SubsystemBase {
         for (int i = 0; i < Cameras.LimelightCameras.length; i++) {
             LimelightHelpers.triggerRewindCapture(names[i], timeSecs);
         }
+    }
+
+    public Pose2d getFuelPoseFromCamera(Camera camera) {
+        double dz = camera.location().getZ() - Field.FUEL_RADIUS_METERS;   
+
+        double pitchDeg = LimelightHelpers.getTY(camera.name());
+        double dx = dz / Math.tan(camera.location().getRotation().getY() - Math.toRadians(pitchDeg));
+
+        double yawDeg = LimelightHelpers.getTX(camera.name());
+        double dy = Math.tan(Math.toRadians(yawDeg)) * dx;
+
+        Translation2d cameraRelative = new Translation2d(dx, dy).rotateBy(new Rotation2d(camera.location().getRotation().getMeasureZ()));
+        Translation2d robotRelative = cameraRelative.plus(camera.location().getTranslation().toTranslation2d());
+
+        Pose2d robotPose = CommandSwerveDrivetrain.getInstance().getPose();
+    
+        Translation2d fieldRelative = robotRelative.rotateBy(robotPose.getRotation()).plus(robotPose.getTranslation());
+
+        return new Pose2d(fieldRelative, new Rotation2d());
     }
 
     @Override
