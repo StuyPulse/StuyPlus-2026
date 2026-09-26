@@ -5,15 +5,16 @@
 /***************************************************************/
 package com.stuypulse.robot;
 
-import com.stuypulse.robot.commands.auton.DoNothingAuton;
-import com.stuypulse.robot.commands.auton.LBDisrupt;
-import com.stuypulse.robot.commands.auton.LBFerry;
-import com.stuypulse.robot.commands.auton.RBDisrupt;
-import com.stuypulse.robot.commands.auton.RBFerry;
-import com.stuypulse.robot.commands.auton.depot.CenterDepot;
+import com.stuypulse.robot.commands.auton.bline.TwoMeterTestBLine;
+import com.stuypulse.robot.commands.auton.misc.CenterDepot;
+import com.stuypulse.robot.commands.auton.misc.LBDisrupt;
+import com.stuypulse.robot.commands.auton.misc.RBDisrupt;
 import com.stuypulse.robot.commands.auton.shooting.FrontHubShootPreloads;
 import com.stuypulse.robot.commands.auton.shooting.LBDumpy;
+import com.stuypulse.robot.commands.auton.shooting.LBFerry;
 import com.stuypulse.robot.commands.auton.shooting.RBDumpy;
+import com.stuypulse.robot.commands.auton.shooting.RBFerry;
+import com.stuypulse.robot.commands.auton.test.DoNothingAuton;
 import com.stuypulse.robot.commands.compound.StopShooting;
 import com.stuypulse.robot.commands.feeder.FeederScramble;
 import com.stuypulse.robot.commands.feeder.FeederSetForward;
@@ -45,6 +46,7 @@ import com.stuypulse.robot.subsystems.leds.LEDController;
 import com.stuypulse.robot.subsystems.shooter.Shooter;
 import com.stuypulse.robot.subsystems.swerve.CommandSwerveDrivetrain;
 import com.stuypulse.robot.subsystems.vision.LimelightVision;
+import com.stuypulse.robot.util.BlineUtil.BLineConfig;
 import com.stuypulse.robot.util.PathUtil.AutonConfig;
 
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -269,6 +271,10 @@ public class RobotContainer {
         );
         RB_Disrupt.register(autonChooser);
 
+        BLineConfig twoMeterTestBLine = new BLineConfig("Two Meter Test", TwoMeterTestBLine::new,
+            "two-meter"
+        );
+        twoMeterTestBLine.register(autonChooser);
         // autonChooser.addOption("SysID Module Translation Dynamic Forwards",
         // swerve.sysIdDynamic(Direction.kForward));
         // autonChooser.addOption("SysID Module Translation Dynamic Backwards",
