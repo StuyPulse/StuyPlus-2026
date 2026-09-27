@@ -1,8 +1,12 @@
-/************************* PROJECT RON *************************/
+/**
+ * ********************** PROJECT RON ************************
+ */
 /* Copyright (c) 2026 StuyPulse Robotics. All rights reserved. */
 /* Use of this source code is governed by an MIT-style license */
 /* that can be found in the repository LICENSE file.           */
-/***************************************************************/
+/**
+ * ***********************************************************
+ */
 package com.stuypulse.robot.util;
 
 import com.pathplanner.lib.path.PathPlannerPath;
@@ -15,6 +19,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -22,29 +27,24 @@ import java.util.function.Function;
 
 public class PathUtil {
 
-    public static class AutonConfig {
+    public static record AutonConfig(String name, Function<PathPlannerPath[], Command> auton, String... paths) {
 
-        private final String name;
+        private static final List<AutonConfig> ALL_AUTONS = new ArrayList<>();
 
-        private final Function<PathPlannerPath[], Command> auton;
-
-        private final String[] paths;
+        public static List<AutonConfig> getAll() {
+            return Collections.unmodifiableList(ALL_AUTONS);
+        }
 
         public AutonConfig(String name, Function<PathPlannerPath[], Command> auton, String... paths) {
             this.name = name;
             this.auton = auton;
-            this.paths = paths;
+            this.paths = Arrays.copyOf(paths, paths.length);
+            ALL_AUTONS.add(this);
             for (String path : paths) {
                 try {
                     PathPlannerPath.fromPathFile(path);
                 } catch (Exception e) {
-                    DriverStation.reportError(
-                            "Path \""
-                                    + path
-                                    + "\" not found. Did you mean \""
-                                    + PathUtil.findClosestMatch(PathUtil.getPathFileNames(), path)
-                                    + "\"?",
-                            false);
+                    System.out.println("Path \"" + path + "\" not found. Did you mean \"" + PathUtil.findClosestMatch(PathUtil.getPathFileNames(), path) + "\"?");
                 }
             }
         }
@@ -60,7 +60,9 @@ public class PathUtil {
         }
     }
 
-    /** PATH LOADING ** */
+    /**
+     * PATH LOADING **
+     */
     public static PathPlannerPath[] loadPaths(String... names) {
         PathPlannerPath[] output = new PathPlannerPath[names.length];
         for (int i = 0; i < names.length; i++) {
@@ -78,7 +80,9 @@ public class PathUtil {
         }
     }
 
-    /** PATH FILENAME CORRECTION ** */
+    /**
+     * PATH FILENAME CORRECTION **
+     */
     public static List<String> getPathFileNames() {
         // ../../../../../deploy/pathplanner/paths
         Path path = Paths.get("").toAbsolutePath().resolve("src/main/deploy/pathplanner/paths");
@@ -111,10 +115,8 @@ public class PathUtil {
 
     public static HashMap<Character, Integer> countChars(char[] chars) {
         HashMap<Character, Integer> letterMap = new HashMap<>();
-        for (char i = 'a'; i <= 'z'; i++)
-            letterMap.put(i, 0);
-        for (char i = 'a'; i <= 'z'; i++)
-            letterMap.put(i, 0);
+        for (char i = 'a'; i <= 'z'; i++) letterMap.put(i, 0);
+        for (char i = 'a'; i <= 'z'; i++) letterMap.put(i, 0);
         letterMap.put('(', 0);
         letterMap.put(' ', 0);
         letterMap.put(')', 0);
@@ -128,8 +130,7 @@ public class PathUtil {
         return letterMap;
     }
 
-    public static double compareNameProximity(
-            HashMap<Character, Integer> list1, HashMap<Character, Integer> list2) {
+    public static double compareNameProximity(HashMap<Character, Integer> list1, HashMap<Character, Integer> list2) {
         double proximity = 0.0;
         int list1sum = 0, list2sum = 0;
         for (char key : list1.keySet()) {
@@ -146,10 +147,8 @@ public class PathUtil {
             }
             proximity += 0.05 * Math.abs(list1.get(key) - list2.get(key));
         }
-        for (int count : list1.values())
-            list1sum += count;
-        for (int count : list2.values())
-            list2sum += count;
+        for (int count : list1.values()) list1sum += count;
+        for (int count : list2.values()) list2sum += count;
         proximity += 0.4 * Math.abs(list2sum - list1sum);
         return proximity;
     }

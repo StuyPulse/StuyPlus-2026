@@ -1,0 +1,33 @@
+[ {
+  "paths" : [ "Hub to Depot", "Tower shoot" ],
+  "name" : "Center Depot",
+  "command_timings" : [ 0.0, 0.0, 3.872567401484438, 2.382201839797098, 0.0, 0.0, 0.0, 0.0, 0.0 ]
+}, {
+  "paths" : [ "Front Hub Shoot Preloads" ],
+  "name" : "Front Hub Shoot Preloads",
+  "command_timings" : [ 0.0, 1.4400889600941433, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0 ]
+}, {
+  "paths" : [ "LB to N Dumpy", "LB Intake Dumpy", "LB Backsweep Dumpy", "LB Shoot Dumpy", "LB Shoot to Depot" ],
+  "name" : "LB Dumpy",
+  "command_timings" : [ 0.0, 0.0, 0.0, 2.1034803621883285, 2.1654807772409965, 4.419748242785714, 1.9683164029556413, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0 ]
+}, {
+  "paths" : [ "RB to N Dumpy", "RB Intake Dumpy", "RB Backsweep Dumpy", "RB Shoot Dumpy" ],
+  "name" : "RB Dumpy",
+  "command_timings" : [ 0.0, 0.0, 2.1530638982935284, 2.408032454504289, 4.429520506244769, 1.784847091403676, 0.0, 0.0, 0.0, 0.0, 0.0 ]
+}, {
+  "paths" : [ "LB to N Ferry", "N to LT Ferry", "LT Hub Ferry", "N to Depot Ferry" ],
+  "name" : "LB Disrupt",
+  "command_timings" : [ 0.0, 4.334493686217024, 2.5543447630254623, 0.0, 0.0, 4.073775514161561 ]
+}, {
+  "paths" : [ "RB to N Ferry", "N to RT Ferry", "RT Hub Ferry", "N to Outpost Ferry" ],
+  "name" : "LB Disrupt",
+  "command_timings" : [ 0.0, 4.253574831202877, 2.813093521819522, 0.0, 4.214681875303913, 0.0 ]
+}, {
+  "paths" : [ "LB to CN Disrupt", "LN Disrupt Circle", "LN Disrupt Circle", "LB Disrupt Return" ],
+  "name" : "LB Disrupt",
+  "command_timings" : [ 0.0, 3.717680750916639, 2.458839642576622, 2.458839642576622, 2.1439431985941333 ]
+}, {
+  "paths" : [ "RB to CN Disrupt", "RN Circle Disrupt", "RN Circle Disrupt", "RB Disrupt Return" ],
+  "name" : "RB Disrupt",
+  "command_timings" : [ 0.0, 3.162627029185802, 2.4239786224808864, 2.4239786224808864, 1.9029152275174017 ]
+} ]

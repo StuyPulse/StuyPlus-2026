@@ -192,3 +192,20 @@ tasks.register("runPathplannerAutonFlip", JavaExec) {
         args rawArgs
     }
 }
+
+tasks.register("runAutonDataSerializer", JavaExec) {
+    classpath = sourceSets.main.runtimeClasspath + configurations.nativeRelease + configurations.simulationRelease
+    mainClass = "tools.autondataserializer.Main"
+
+    def extractTask = tasks.named("extractReleaseNative")
+    dependsOn extractTask
+
+    doFirst {
+        systemProperty "java.library.path", extractTask.get().outputs.files.asPath
+    }
+
+    def rawArgs = (project.findProperty("args") ?: "").trim()
+    if (rawArgs) {
+        args rawArgs
+    }
+}
