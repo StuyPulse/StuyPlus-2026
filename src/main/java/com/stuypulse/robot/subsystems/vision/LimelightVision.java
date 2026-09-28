@@ -164,65 +164,71 @@ public class LimelightVision extends SubsystemBase {
         if (!EnabledSubsystems.VISION.get()) {
             return;
         }
-        for (int i = 0; i < names.length; i++) {
-            DogLog.log("Vision/" + names[i] + "/Heartbeat", LimelightHelpers.getHeartbeat(names[i]));
-            if (!camerasEnabled[i].get()) {
-                DogLog.log("Vision/" + names[i] + " Has Data", false);
-                continue;
-            }
-            String limelightName = names[i];
-            // Seed robot heading (used by MT2)
-            LimelightHelpers.SetRobotOrientation(limelightName, (CommandSwerveDrivetrain.getInstance().getPose().getRotation().getDegrees() + (Robot.isBlue() ? 0 : 180)) % 360, 0, 0, 0, 0, 0);
-            PoseEstimate poseEstimate;
-            // MegaTag switching
-            if (megaTagMode == MegaTagMode.MEGATAG1) {
-                poseEstimate = Robot.isBlue() ? LimelightHelpers.getBotPoseEstimate_wpiBlue(limelightName) : LimelightHelpers.getBotPoseEstimate_wpiRed(limelightName);
-            } else {
-                poseEstimate = Robot.isBlue() ? LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2(limelightName) : LimelightHelpers.getBotPoseEstimate_wpiRed_MegaTag2(limelightName);
-            }
-            boolean notNull = false;
-            boolean withinAngularVelocityTolerance = false;
-            boolean poseAtOrigin = false;
-            // Adding to pose estimator
-            DogLog.log("Vision/Pose Not Estimate Null", poseEstimate != null);
-            if (poseEstimate != null && poseEstimate.tagCount > 0) {
-                notNull = true;
-                DogLog.log("Vision/Pose Estimate X", poseEstimate.pose.getX());
-                DogLog.log("Vision/Pose Estimate Y", poseEstimate.pose.getY());
-                DogLog.log("Vision/Pose Estimate Theta", poseEstimate.pose.getRotation().getDegrees());
-                DogLog.log("Vision/Tag Count", poseEstimate.tagCount);
-                if (poseEstimate.pose.equals(Settings.Vision.INVALID_POSITION)) {
-                    poseAtOrigin = true;
-                }
-                if (CommandSwerveDrivetrain.getInstance().getChassisSpeeds().omegaRadiansPerSecond < Settings.Vision.MAX_ANGULAR_VELOCITY_RAD_SEC) {
-                    withinAngularVelocityTolerance = true;
-                }
-                Boolean isValidPose = notNull && withinAngularVelocityTolerance && !poseAtOrigin;
-                DogLog.log("Vision/Pose at Origin?", poseAtOrigin);
-                DogLog.log("Vision/Within Angular Velocity", withinAngularVelocityTolerance);
-                DogLog.log("Vision/isValidPose", isValidPose);
-                DogLog.log("Vision/isWithinAngularVel", withinAngularVelocityTolerance);
-                DogLog.log("Vision/poseAtOrigin", poseAtOrigin);
-                Pose2d robotPose = poseEstimate.pose;
-                double timestamp = poseEstimate.timestampSeconds;
-                if (megaTagMode == MegaTagMode.MEGATAG1 && isValidPose) {
-                    CommandSwerveDrivetrain.getInstance().addVisionMeasurement(robotPose, timestamp, Settings.Vision.MT1_STDEVS);
-                } else if (megaTagMode == MegaTagMode.MEGATAG2 && isValidPose) {
-                    CommandSwerveDrivetrain.getInstance().addVisionMeasurement(robotPose, timestamp, Settings.Vision.MT2_STDEVS);
-                }
-                DogLog.log("Vision/Pose", robotPose);
-                DogLog.log("Vision/Pose X Component", robotPose.getX());
-                DogLog.log("Vision/Pose Y Component", robotPose.getY());
-                DogLog.log("Vision/Pose Theta (Degrees)", robotPose.getRotation().getDegrees());
-                DogLog.log("Vision/" + names[i] + " Has Data", true);
-                DogLog.log("Vision/MegaTag Mode", megaTagMode.toString());
-                // this yaw is seems to be the robot yaw passed into the LL
-                DogLog.forceNt.log("Vision/Pipeline", LimelightHelpers.getCurrentPipelineIndex(limelightName));
-                DogLog.log("Vision/Limelight Robot Yaw", LimelightHelpers.getIMUData(limelightName).robotYaw);
-                // this is just the yaw of the internal imu
-                DogLog.log("Vision/Limelight Yaw", LimelightHelpers.getIMUData(limelightName).Yaw);
-                DogLog.log("Vision/Has at least 2 tags", poseEstimate.tagCount >= 2);
-            }
+
+        if (Robot.isBlue()) {
+            Field.FIELD2D.getObject("Fuel").setPose(getFuelPoseFromCamera(Cameras.LimelightCameras[1]));
+        } else {
+            Field.FIELD2D.getObject("Fuel").setPose(Field.transformToOppositeAlliance(getFuelPoseFromCamera(Cameras.LimelightCameras[1])));
         }
+        // for (int i = 0; i < names.length; i++) {
+        //     DogLog.log("Vision/" + names[i] + "/Heartbeat", LimelightHelpers.getHeartbeat(names[i]));
+        //     if (!camerasEnabled[i].get()) {
+        //         DogLog.log("Vision/" + names[i] + " Has Data", false);
+        //         continue;
+        //     }
+        //     String limelightName = names[i];
+        //     // Seed robot heading (used by MT2)
+        //     LimelightHelpers.SetRobotOrientation(limelightName, (CommandSwerveDrivetrain.getInstance().getPose().getRotation().getDegrees() + (Robot.isBlue() ? 0 : 180)) % 360, 0, 0, 0, 0, 0);
+        //     PoseEstimate poseEstimate;
+        //     // MegaTag switching
+        //     if (megaTagMode == MegaTagMode.MEGATAG1) {
+        //         poseEstimate = Robot.isBlue() ? LimelightHelpers.getBotPoseEstimate_wpiBlue(limelightName) : LimelightHelpers.getBotPoseEstimate_wpiRed(limelightName);
+        //     } else {
+        //         poseEstimate = Robot.isBlue() ? LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2(limelightName) : LimelightHelpers.getBotPoseEstimate_wpiRed_MegaTag2(limelightName);
+        //     }
+        //     boolean notNull = false;
+        //     boolean withinAngularVelocityTolerance = false;
+        //     boolean poseAtOrigin = false;
+        //     // Adding to pose estimator
+        //     DogLog.log("Vision/Pose Not Estimate Null", poseEstimate != null);
+        //     if (poseEstimate != null && poseEstimate.tagCount > 0) {
+        //         notNull = true;
+        //         DogLog.log("Vision/Pose Estimate X", poseEstimate.pose.getX());
+        //         DogLog.log("Vision/Pose Estimate Y", poseEstimate.pose.getY());
+        //         DogLog.log("Vision/Pose Estimate Theta", poseEstimate.pose.getRotation().getDegrees());
+        //         DogLog.log("Vision/Tag Count", poseEstimate.tagCount);
+        //         if (poseEstimate.pose.equals(Settings.Vision.INVALID_POSITION)) {
+        //             poseAtOrigin = true;
+        //         }
+        //         if (CommandSwerveDrivetrain.getInstance().getChassisSpeeds().omegaRadiansPerSecond < Settings.Vision.MAX_ANGULAR_VELOCITY_RAD_SEC) {
+        //             withinAngularVelocityTolerance = true;
+        //         }
+        //         Boolean isValidPose = notNull && withinAngularVelocityTolerance && !poseAtOrigin;
+        //         DogLog.log("Vision/Pose at Origin?", poseAtOrigin);
+        //         DogLog.log("Vision/Within Angular Velocity", withinAngularVelocityTolerance);
+        //         DogLog.log("Vision/isValidPose", isValidPose);
+        //         DogLog.log("Vision/isWithinAngularVel", withinAngularVelocityTolerance);
+        //         DogLog.log("Vision/poseAtOrigin", poseAtOrigin);
+        //         Pose2d robotPose = poseEstimate.pose;
+        //         double timestamp = poseEstimate.timestampSeconds;
+        //         if (megaTagMode == MegaTagMode.MEGATAG1 && isValidPose) {
+        //             CommandSwerveDrivetrain.getInstance().addVisionMeasurement(robotPose, timestamp, Settings.Vision.MT1_STDEVS);
+        //         } else if (megaTagMode == MegaTagMode.MEGATAG2 && isValidPose) {
+        //             CommandSwerveDrivetrain.getInstance().addVisionMeasurement(robotPose, timestamp, Settings.Vision.MT2_STDEVS);
+        //         }
+        //         DogLog.log("Vision/Pose", robotPose);
+        //         DogLog.log("Vision/Pose X Component", robotPose.getX());
+        //         DogLog.log("Vision/Pose Y Component", robotPose.getY());
+        //         DogLog.log("Vision/Pose Theta (Degrees)", robotPose.getRotation().getDegrees());
+        //         DogLog.log("Vision/" + names[i] + " Has Data", true);
+        //         DogLog.log("Vision/MegaTag Mode", megaTagMode.toString());
+        //         // this yaw is seems to be the robot yaw passed into the LL
+        //         DogLog.forceNt.log("Vision/Pipeline", LimelightHelpers.getCurrentPipelineIndex(limelightName));
+        //         DogLog.log("Vision/Limelight Robot Yaw", LimelightHelpers.getIMUData(limelightName).robotYaw);
+        //         // this is just the yaw of the internal imu
+        //         DogLog.log("Vision/Limelight Yaw", LimelightHelpers.getIMUData(limelightName).Yaw);
+        //         DogLog.log("Vision/Has at least 2 tags", poseEstimate.tagCount >= 2);
+        //     }
+        // }
     }
 }
