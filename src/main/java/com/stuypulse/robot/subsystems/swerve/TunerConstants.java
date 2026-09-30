@@ -197,22 +197,11 @@ public class TunerConstants {
         );
 
     /**
-     * Creates a CommandSwerveDrivetrain instance.
-     * This should only be called once in your robot program,.
-     */
-    public static CommandSwerveDrivetrain createDrivetrain() {
-        return new CommandSwerveDrivetrain(
-            DrivetrainConstants, FrontLeft, FrontRight, BackLeft, BackRight
-        );
-    }
-
-
-    /**
      * Swerve Drive class utilizing CTR Electronics' Phoenix 6 API with the selected device types.
      */
     public static class TunerSwerveDrivetrain extends SwerveDrivetrain<TalonFX, TalonFX, CANcoder> {
         /**
-         * Creates a CommandSwerveDrivetrain instance. This should only be called once
+         * Creates a Swerve instance. This should only be called once
          * in your robot
          * program,.
          */

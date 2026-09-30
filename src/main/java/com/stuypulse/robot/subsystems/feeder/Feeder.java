@@ -87,7 +87,7 @@ public class Feeder extends SubsystemBase {
         Logger.processInputs("Feeder", inputs);
         final FeederState currentState = this.getState();
         // Stop shooting if not aligned
-        // final CommandSwerveDrivetrain swerve = CommandSwerveDrivetrain.getInstance();
+        // final Swerve swerve = Swerve.getInstance();
         // final Shooter shooter = Shooter.getInstance();
         // if (!(swerve.isAlignedToTarget(Field.getHubPose()))
         //         && shooter.getState() == ShooterState.SHOOT) {

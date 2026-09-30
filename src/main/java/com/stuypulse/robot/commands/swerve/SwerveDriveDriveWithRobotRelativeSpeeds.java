@@ -5,12 +5,14 @@
 /***************************************************************/
 package com.stuypulse.robot.commands.swerve;
 
-import com.stuypulse.robot.subsystems.swerve.CommandSwerveDrivetrain;
+import com.stuypulse.robot.subsystems.swerve.Swerve;
+
+import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj2.command.Command;
 
 public class SwerveDriveDriveWithRobotRelativeSpeeds extends Command {
 
-    private final CommandSwerveDrivetrain swerve;
+    private final Swerve swerve;
 
     private double velocityX;
 
@@ -20,7 +22,7 @@ public class SwerveDriveDriveWithRobotRelativeSpeeds extends Command {
 
     public SwerveDriveDriveWithRobotRelativeSpeeds(
             double velocityX, double velocityY, double angularVelocity) {
-        this.swerve = CommandSwerveDrivetrain.getInstance();
+        this.swerve = Swerve.getInstance();
         this.velocityX = velocityX;
         this.velocityY = velocityY;
         this.angularVelocity = angularVelocity;
@@ -29,11 +31,8 @@ public class SwerveDriveDriveWithRobotRelativeSpeeds extends Command {
 
     @Override
     public void execute() {
-        swerve.setControl(
-                swerve
-                        .getRobotCentricSwerveRequest()
-                        .withVelocityX(velocityX)
-                        .withVelocityY(velocityY)
-                        .withRotationalRate(angularVelocity));
+        ChassisSpeeds speeds = new ChassisSpeeds(velocityX, velocityY, -angularVelocity);
+        swerve
+                .runVelocity(speeds);
     }
 }

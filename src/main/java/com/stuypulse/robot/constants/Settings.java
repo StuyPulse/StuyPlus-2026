@@ -21,6 +21,7 @@ import edu.wpi.first.networktables.DoubleSubscriber;
 import edu.wpi.first.units.*;
 import edu.wpi.first.units.measure.*;
 import edu.wpi.first.wpilibj.LEDPattern;
+import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.simulation.SingleJointedArmSim;
 import edu.wpi.first.wpilibj.util.Color;
 import com.ctre.phoenix6.CANBus;
@@ -37,11 +38,31 @@ import com.pathplanner.lib.path.PathConstraints;
  */
 public interface Settings {
 
-    Time DT = Seconds.of(0.020);
+    Time DT = Milliseconds.of(20);
 
     boolean DEBUG_MODE = true;
 
     CANBus CANBUS = new CANBus("rio");
+
+    Mode SIMULATION_TASK = Mode.SIM; // What to do during simulation mode. Change this to REPLAY when replaying. Change to SIM when simulating code.
+    Mode CURRENT_MODE = RobotBase.isReal() ? Mode.REAL : SIMULATION_TASK;
+    VisionMode VISION_MODE = VisionMode.LIMELIGHT_VISION;
+
+    enum Mode {
+        /** Running on a real robot. */
+        REAL,
+
+        /** Running a physics simulator. */
+        SIM,
+
+        /** Replaying from a log file. */
+        REPLAY
+    }
+
+    enum VisionMode {
+        LIMELIGHT_VISION,
+        PHOTON_VISION
+    }
 
     public interface EnabledSubsystems {
 
@@ -49,9 +70,11 @@ public interface Settings {
 
         BooleanSubscriber INTAKE = DogLog.tunable("Enabled Subsystems/Intake", true);
 
-        // BooleanSubscriber INTAKE_ROLLERS = DogLog.tunable("Enabled Subsystems/Intake/Rollers", true);
+        // BooleanSubscriber INTAKE_ROLLERS = DogLog.tunable("Enabled
+        // Subsystems/Intake/Rollers", true);
 
-        // BooleanSubscriber INTAKE_PIVOT = DogLog.tunable("Enabled Subsystems/Intake/Pivot", true);
+        // BooleanSubscriber INTAKE_PIVOT = DogLog.tunable("Enabled
+        // Subsystems/Intake/Pivot", true);
 
         BooleanSubscriber LED = DogLog.tunable("Enabled Subsystems/LED", false);
 
@@ -124,7 +147,8 @@ public interface Settings {
             Distance PIVOT_ARM_LENGTH = Meters.of(0.1439822);
 
             // mass in kg
-            MomentOfInertia MOI = KilogramSquareMeters.of(SingleJointedArmSim.estimateMOI(PIVOT_ARM_LENGTH.in(Meters), 1));
+            MomentOfInertia MOI = KilogramSquareMeters
+                    .of(SingleJointedArmSim.estimateMOI(PIVOT_ARM_LENGTH.in(Meters), 1));
         }
 
         public interface Roller {
@@ -153,7 +177,7 @@ public interface Settings {
         Voltage FORWARD_VOLTAGE = Volts.of(10.0);
 
         // TODO: get from mec
-        double GEAR_RATIO = 34/14; // (34/14) : 1
+        double GEAR_RATIO = 34 / 14; // (34/14) : 1
 
         MomentOfInertia J = KilogramSquareMeters.of(0.001);
     }
@@ -249,53 +273,58 @@ public interface Settings {
         DoubleSubscriber FERRY_TUNING_RPM = DogLog.tunable("Shooter/Ferry Tuning RPM", 0.0);
 
         AngularVelocity SHOOTER_SPUN_UP_TOLERANCE = RPM.of(100);
+
         public interface RPMInterpolation {
 
             double[][] distanceRPMInterpolationValues = {
-                {1.46, 2600},
-                {2.07, 3150},
-                {3.13, 3700},
-                {3.45, 3933},
-                {4.13, 4200}
-                //TODO: These numbers don't make sense
-                // { 4.895367348608047, 3250.0 },
-                // { 6.1322461808798705, 3487.0 } 
+                    { 1.46, 2600 },
+                    { 2.07, 3150 },
+                    { 3.13, 3700 },
+                    { 3.45, 3933 },
+                    { 4.13, 4200 }
+                    // TODO: These numbers don't make sense
+                    // { 4.895367348608047, 3250.0 },
+                    // { 6.1322461808798705, 3487.0 }
             };
         }
 
-        // These values are placeholders and should be replaced with actual data from testing
+        // These values are placeholders and should be replaced with actual data from
+        // testing
         public interface TOFInterpolation {
 
             double[][] distanceTOFInterpolationValues = {
-                { 1.0, 0.5 },
-                { 2.0, 0.75 },
-                { 3.0, 1.0 },
-                { 4.0, 1.25 },
-                { 5.0, 1.5 } };
+                    { 1.0, 0.5 },
+                    { 2.0, 0.75 },
+                    { 3.0, 1.0 },
+                    { 4.0, 1.25 },
+                    { 5.0, 1.5 } };
         }
 
-        // These values are placeholders and should be replaced with actual data from testing
+        // These values are placeholders and should be replaced with actual data from
+        // testing
         public interface FerryRPMInterpolation {
 
             double[][] ferryDistanceRPMInterpolation = {
-                { 1.0, 2300.0 },
-                { 2.0, 2800.0 },
-                { 3.0, 3300.0 },
-                { 4.0, 3800.0 },
-                { 5.0, 5500.0 } };
+                    { 1.0, 2300.0 },
+                    { 2.0, 2800.0 },
+                    { 3.0, 3300.0 },
+                    { 4.0, 3800.0 },
+                    { 5.0, 5500.0 } };
         }
 
-        // These values are placeholders and should be replaced with actual data from testing
+        // These values are placeholders and should be replaced with actual data from
+        // testing
         public interface FerryTOFInterpolation {
 
             double[][] FerryTOFInterpolationInterpolation = {
-                { 1.0, 0.5 },
-                { 2.0, 0.75 },
-                { 3.0, 1.0 },
-                { 4.0, 1.25 },
-                { 5.0, 1.5 } };
+                    { 1.0, 0.5 },
+                    { 2.0, 0.75 },
+                    { 3.0, 1.0 },
+                    { 4.0, 1.25 },
+                    { 5.0, 1.5 } };
         }
-        // These values are placeholders and should be replaced with actual data from testing
+        // These values are placeholders and should be replaced with actual data from
+        // testing
     }
 
     public interface Swerve {
@@ -316,7 +345,8 @@ public interface Settings {
             // TODO: revert to 900
             double MAX_ANGULAR_ACCEL_RAD_PER_S = Units.degreesToRadians(300.0);
 
-            PathConstraints DEFAULT_CONSTRAINTS = new PathConstraints(MAX_VELOCITY_M_PER_S, MAX_ACCEL_M_PER_S_SQUARED, MAX_ANGULAR_VEL_RAD_PER_S, MAX_ANGULAR_ACCEL_RAD_PER_S);
+            PathConstraints DEFAULT_CONSTRAINTS = new PathConstraints(MAX_VELOCITY_M_PER_S, MAX_ACCEL_M_PER_S_SQUARED,
+                    MAX_ANGULAR_VEL_RAD_PER_S, MAX_ANGULAR_ACCEL_RAD_PER_S);
         }
 
         public interface Alignment {
