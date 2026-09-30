@@ -44,6 +44,7 @@ public interface Settings {
 
     CANBus CANBUS = new CANBus("rio");
 
+    // Change to REPLAY during comp
     Mode SIM_MODE = Mode.SIM;
 
     Mode CURRENT_MODE = Robot.isReal() ? Mode.REAL : SIM_MODE;

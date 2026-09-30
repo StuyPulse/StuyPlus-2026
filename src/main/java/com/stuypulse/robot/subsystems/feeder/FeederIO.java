@@ -3,6 +3,7 @@ package com.stuypulse.robot.subsystems.feeder;
 import static edu.wpi.first.units.Units.*;
 
 import org.littletonrobotics.junction.AutoLog;
+import org.littletonrobotics.junction.AutoLogOutput;
 
 import edu.wpi.first.units.measure.*;
 
@@ -17,7 +18,18 @@ public interface FeederIO {
 
     public default void updateInputs(FeederIOInputs inputs) {};
 
-    public default void setTargetVoltage(Voltage voltage) {};
+    public static enum FeederIOOutputMode {
+        STOP,
+        VOLTAGE
+    }
 
-    public default void stopMotors() {};
+    public static class FeederIOOutputs {
+        @AutoLogOutput(key = "Feeder/Mode")
+        public FeederIOOutputMode mode = FeederIOOutputMode.VOLTAGE;
+
+        @AutoLogOutput(key = "Feeder/Target Voltage")
+        public Voltage voltage = Volts.of(0);
+    }
+
+    public default void applyOutputs(FeederIOOutputs outputs) {}
 }

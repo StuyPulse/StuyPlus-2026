@@ -31,11 +31,6 @@ public abstract class FeederIOTalonFXBase implements FeederIO {
     }
 
     @Override
-    public void stopMotors() {
-        feederMotor.stopMotor();
-    }
-
-    @Override
     public void updateInputs(FeederIOInputs inputs) {
         inputs.position = position.refresh().getValue();
         inputs.velocity = velocity.refresh().getValue();
@@ -44,7 +39,11 @@ public abstract class FeederIOTalonFXBase implements FeederIO {
     }
 
     @Override
-    public void setTargetVoltage(Voltage voltage) {
-        feederMotor.setControl(feederController.withOutput(voltage));
+    public void applyOutputs(FeederIOOutputs outputs) {
+        switch (outputs.mode) {
+            case VOLTAGE -> feederMotor.setControl(feederController.withOutput(outputs.voltage));
+
+            case STOP -> feederMotor.stopMotor();
+        }
     }
 }

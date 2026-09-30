@@ -12,7 +12,9 @@ import org.littletonrobotics.junction.Logger;
 
 import com.stuypulse.robot.Robot;
 import com.stuypulse.robot.constants.Settings;
-import dev.doglog.DogLog;
+import com.stuypulse.robot.subsystems.feeder.FeederIO.FeederIOOutputMode;
+import com.stuypulse.robot.subsystems.feeder.FeederIO.FeederIOOutputs;
+
 import edu.wpi.first.units.measure.*;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
@@ -23,7 +25,13 @@ public class Feeder extends SubsystemBase {
     private static final Feeder instance;
 
     static {
-        instance = Robot.isReal() ? new Feeder(new FeederIOTalonFX()) : new Feeder(new FeederIOSim());
+        switch (Settings.CURRENT_MODE) {
+            case REAL -> instance = new Feeder(new FeederIOTalonFX());
+
+            case SIM -> instance = new Feeder(new FeederIOSim());
+
+            default -> instance = new Feeder(new FeederIO() {});
+        }
     }
 
     public static Feeder getInstance() {
@@ -32,12 +40,15 @@ public class Feeder extends SubsystemBase {
 
     private final FeederIO io;
     private final FeederIOInputsAutoLogged inputs;
+    private final FeederIOOutputs outputs;
+
     @AutoLogOutput(key = "States/Feeder")
     private FeederState state;
 
     private Feeder(FeederIO io) {
         this.io = io;
         this.inputs = new FeederIOInputsAutoLogged();
+        this.outputs = new FeederIOOutputs();
         this.state = FeederState.IDLE;
     }
 
@@ -85,7 +96,6 @@ public class Feeder extends SubsystemBase {
     public void periodic() {
         io.updateInputs(inputs);
         Logger.processInputs("Feeder", inputs);
-        final FeederState currentState = this.getState();
         // Stop shooting if not aligned
         // final CommandSwerveDrivetrain swerve = CommandSwerveDrivetrain.getInstance();
         // final Shooter shooter = Shooter.getInstance();
@@ -99,13 +109,20 @@ public class Feeder extends SubsystemBase {
         // }
 
         if (Settings.EnabledSubsystems.FEEDER.get()) {
-            io.setTargetVoltage(currentState.getTargetVoltage());
+            runVoltage(getState().getTargetVoltage());
         } else {
-            io.stopMotors();
+            outputs.mode = FeederIOOutputMode.STOP;
         }
         
-        if (Robot.isReal()) {
+        if (!Robot.isReal()) {
             RobotVisualizer.getInstance().updateFeeder(inputs.velocity);
         }
+
+        io.applyOutputs(outputs);
+    }
+
+    private void runVoltage(Voltage voltage) {
+        outputs.mode = FeederIOOutputMode.VOLTAGE;
+        outputs.voltage = voltage;
     }
 }
