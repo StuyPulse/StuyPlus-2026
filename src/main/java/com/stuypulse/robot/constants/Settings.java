@@ -156,19 +156,6 @@ public interface Settings {
         }
     }
 
-    public interface Feeder {
-
-        Voltage REVERSE_VOLTAGE = Volts.of(-10.0); // TODO: get
-        DoubleSubscriber REVERSE_TIME_BEFORE_SHOOT = DogLog.tunable("Feeder/Seconds To Reverse Before Shooting", 0.75);
-
-        Voltage FORWARD_VOLTAGE = Volts.of(10.0);
-
-        // TODO: get from mec
-        double GEAR_RATIO = 34/14; // (34/14) : 1
-
-        MomentOfInertia J = KilogramSquareMeters.of(0.001);
-    }
-
     public interface LED {
 
         // TODO: Get actual length of led, along with length of individual sections
@@ -212,23 +199,6 @@ public interface Settings {
 
         // states
         LEDPattern DISABLED = LEDPattern.solid(Color.kGray);
-    }
-
-    public interface Handoff {
-        Voltage IDLE_VOLTAGE = Volts.of(0.0);
-
-        Voltage FORWARD_VOLTAGE = Volts.of(12.0);
-
-        Voltage REVERSE_VOLTAGE = Volts.of(-10.0);
-
-        double STALL_CURRENT = 67;
-
-        // TODO: get and maybe convert to wpilib units
-        double STALL_DEBOUNCE = 67;
-
-        double J_KG_METERS_SQUARED = 1;
-
-        double GEAR_RATIO = 1.0 / 3.0; // 1:3
     }
 
     public interface Shooter {

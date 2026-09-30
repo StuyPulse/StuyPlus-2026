@@ -3,7 +3,6 @@ package com.stuypulse.robot.subsystems.handoff;
 import com.ctre.phoenix6.StatusSignal;
 import com.ctre.phoenix6.controls.VoltageOut;
 import com.ctre.phoenix6.hardware.TalonFX;
-import com.stuypulse.robot.constants.Motors;
 
 import edu.wpi.first.units.measure.*;
 
@@ -22,7 +21,7 @@ public abstract class HandoffIOTalonFXBase implements HandoffIO {
         handoffMotor = motor;
         handoffController = new VoltageOut(0).withEnableFOC(true);
 
-        Motors.Handoff.HANDOFF_MOTOR_CONFIG.configure(handoffMotor);
+        HandoffConstants.HandoffMotorConfigs.HANDOFF_MOTOR_CONFIG.configure(handoffMotor);
 
         position = handoffMotor.getPosition();
         velocity = handoffMotor.getVelocity();

@@ -7,7 +7,6 @@ package com.stuypulse.robot.subsystems.feeder;
 
 import static edu.wpi.first.units.Units.*;
 
-import com.stuypulse.robot.constants.Ports;
 import com.stuypulse.robot.constants.Settings;
 import com.stuypulse.robot.util.simulation.TalonSimulation.SystemSim;
 import com.stuypulse.robot.util.simulation.TalonSimulation.TalonFXSimulation;
@@ -20,18 +19,18 @@ public class FeederIOSim extends FeederIOTalonFXBase {
     private static final SystemSim<DCMotorSim> sim = SystemSim.of(new DCMotorSim(
             LinearSystemId.createDCMotorSystem(
                 DCMotor.getKrakenX60(2),
-                Settings.Feeder.J.in(KilogramSquareMeters),
-                Settings.Feeder.GEAR_RATIO),
+                FeederConstants.FeederSettings.J.in(KilogramSquareMeters),
+                FeederConstants.FeederSettings.GEAR_RATIO),
             DCMotor.getKrakenX60(2)));
     private static TalonFXSimulation getFeederMotor(int id) {
-        final TalonFXSimulation motor = new TalonFXSimulation(id, Settings.Feeder.GEAR_RATIO, sim);
+        final TalonFXSimulation motor = new TalonFXSimulation(id, FeederConstants.FeederSettings.GEAR_RATIO, sim);
         return motor;
     }
 
     private final TalonFXSimulation feederMotor;
 
     public FeederIOSim() {
-        this(getFeederMotor(Ports.Feeder.FEEDER_MOTOR));
+        this(getFeederMotor(FeederConstants.FeederDeviceIds.FEEDER_MOTOR));
     }
 
     private FeederIOSim(TalonFXSimulation feederMotor) {

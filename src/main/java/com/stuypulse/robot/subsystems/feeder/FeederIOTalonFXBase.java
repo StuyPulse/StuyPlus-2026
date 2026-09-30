@@ -3,7 +3,6 @@ package com.stuypulse.robot.subsystems.feeder;
 import com.ctre.phoenix6.StatusSignal;
 import com.ctre.phoenix6.controls.VoltageOut;
 import com.ctre.phoenix6.hardware.TalonFX;
-import com.stuypulse.robot.constants.Motors;
 
 import edu.wpi.first.units.measure.Angle;
 import edu.wpi.first.units.measure.AngularVelocity;
@@ -22,7 +21,7 @@ public abstract class FeederIOTalonFXBase implements FeederIO {
 
     protected FeederIOTalonFXBase(TalonFX feederMotor) {
         this.feederMotor = feederMotor;
-        Motors.Feeder.LEADER_CONFIG.configure(feederMotor);
+        FeederConstants.FeederMotorConfigs.LEADER_CONFIG.configure(feederMotor);
         feederController = new VoltageOut(0).withEnableFOC(true);
 
         position = feederMotor.getPosition();
