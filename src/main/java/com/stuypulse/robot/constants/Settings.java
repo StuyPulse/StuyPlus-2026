@@ -27,6 +27,7 @@ import com.ctre.phoenix6.CANBus;
 import dev.doglog.DogLog;
 
 import com.pathplanner.lib.path.PathConstraints;
+import com.stuypulse.robot.Robot;
 
 /*-
  * File containing tunable settings for every subsystem on the robot.
@@ -42,6 +43,16 @@ public interface Settings {
     boolean DEBUG_MODE = true;
 
     CANBus CANBUS = new CANBus("rio");
+
+    Mode SIM_MODE = Mode.SIM;
+
+    Mode CURRENT_MODE = Robot.isReal() ? Mode.REAL : SIM_MODE;
+
+    enum Mode {
+        REAL,
+        SIM,
+        REPLAY
+    }
 
     public interface EnabledSubsystems {
 
