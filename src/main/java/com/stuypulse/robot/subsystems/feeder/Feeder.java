@@ -51,8 +51,8 @@ public class Feeder extends SubsystemBase {
 
     public enum FeederState {
         IDLE(Volts.of(0.0)),
-        FORWARD(Settings.Feeder.FORWARD_VOLTAGE),
-        REVERSE(Settings.Feeder.REVERSE_VOLTAGE);
+        FORWARD(FeederConstants.FeederSettings.FORWARD_VOLTAGE),
+        REVERSE(FeederConstants.FeederSettings.REVERSE_VOLTAGE);
 
         private final Voltage targetVoltage;
 
