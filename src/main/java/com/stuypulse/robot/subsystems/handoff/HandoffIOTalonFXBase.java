@@ -31,37 +31,20 @@ public abstract class HandoffIOTalonFXBase implements HandoffIO {
     }
 
     @Override
-    public void stopMotors() {
-        handoffMotor.stopMotor();
-    }
-
-    @Override
     public void updateInputs(HandoffIOInputs inputs) {
         inputs.position = position.refresh().getValue();
         inputs.velocity = velocity.refresh().getValue();
         inputs.voltage = voltage.refresh().getValue();
         inputs.supplyCurrent = supplyCurrent.refresh().getValue();
         inputs.statorCurrent = statorCurrent.refresh().getValue();
-        // final Shooter shooter = Shooter.getInstance();
-        // final CommandSwerveDrivetrain swerve = CommandSwerveDrivetrain.getInstance();
-        // if (!(swerve.isAlignedToTarget(Field.getHubPose()))
-        //         && shooter.getState() == ShooterState.SHOOT) {
-        //     setState(HandoffState.IDLE);
-        // }
-        // // TODO: consider relaxing tolerances for ferrying
-        // if (!(swerve.isAlignedToTarget(Field.getFerryZonePose(swerve.getPose().getTranslation())))
-        //         && shooter.getState() == ShooterState.FERRY) {
-        //     setState(HandoffState.IDLE);
-        // }
-
-        // Control
-        // final Voltage voltage = handoffStalling()
-        //         ? Handoff.HandoffState.REVERSE.getTargetVoltage()
-        //         : getState().getTargetVoltage();
-        // final VoltageOut handoffControl = handoffController.withOutput(voltage);
     }
 
-    public void setTargetVoltage(Voltage voltage) {
-        handoffMotor.setControl(handoffController.withOutput(voltage));
-    }
+    @Override
+    public void applyOutputs(HandoffIOOutputs outputs) {
+        switch (outputs.mode) {
+            case VOLTAGE -> handoffMotor.setControl(handoffController.withOutput(outputs.voltage));
+
+            case STOP -> handoffMotor.stopMotor();
+        }
+    }   
 }

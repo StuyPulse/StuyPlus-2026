@@ -19,7 +19,15 @@ public interface HandoffIO {
 
     public default void updateInputs(HandoffIOInputs inputs) {};
 
-    public default void setTargetVoltage(Voltage voltage) {};
+    public static enum HandoffIOOutputMode {
+        VOLTAGE,
+        STOP
+    }
 
-    public default void stopMotors() {};
+    public static class HandoffIOOutputs {
+        public HandoffIOOutputMode mode = HandoffIOOutputMode.STOP;
+        public Voltage voltage = Volts.zero();
+    }
+
+    public default void applyOutputs(HandoffIOOutputs outputs) {};
 }
