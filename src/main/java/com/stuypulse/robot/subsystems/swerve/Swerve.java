@@ -46,22 +46,6 @@ import org.littletonrobotics.junction.AutoLogOutput;
 import org.littletonrobotics.junction.Logger;
 
 public class Swerve extends SubsystemBase implements VisionConsumer {
-    private static final Swerve instance;
-    static {
-        if (Robot.isReal()) {
-            instance = new Swerve(new GyroIOReal(), new ModuleIOReal(TunerConstants.FrontLeft),
-                    new ModuleIOReal(TunerConstants.FrontRight), new ModuleIOReal(TunerConstants.BackLeft),
-                    new ModuleIOReal(TunerConstants.BackRight));
-        } else {
-            instance = new Swerve(new GyroIO() {
-            }, new ModuleIOSim(TunerConstants.FrontLeft), new ModuleIOSim(TunerConstants.FrontRight),
-                    new ModuleIOSim(TunerConstants.BackLeft), new ModuleIOSim(TunerConstants.BackRight));
-        }
-    }
-
-    public static Swerve getInstance() {
-        return instance;
-    }
 
     // TunerConstants doesn't include these constants, so they are declared locally
     static final double ODOMETRY_FREQUENCY = TunerConstants.kCANBus.isNetworkFD() ? 250.0 : 100.0;
@@ -91,6 +75,24 @@ public class Swerve extends SubsystemBase implements VisionConsumer {
             getModuleTranslations());
 
     static final Lock odometryLock = new ReentrantLock();
+    
+    private static final Swerve instance;
+    static {
+        if (Robot.isReal()) {
+            instance = new Swerve(new GyroIOReal(), new ModuleIOReal(TunerConstants.FrontLeft),
+                    new ModuleIOReal(TunerConstants.FrontRight), new ModuleIOReal(TunerConstants.BackLeft),
+                    new ModuleIOReal(TunerConstants.BackRight));
+        } else {
+            instance = new Swerve(new GyroIO() {
+            }, new ModuleIOSim(TunerConstants.FrontLeft), new ModuleIOSim(TunerConstants.FrontRight),
+                    new ModuleIOSim(TunerConstants.BackLeft), new ModuleIOSim(TunerConstants.BackRight));
+        }
+    }
+
+    public static Swerve getInstance() {
+        return instance;
+    }
+
     private final GyroIO gyroIO;
     private final GyroIOInputsAutoLogged gyroInputs = new GyroIOInputsAutoLogged();
     private final Module[] modules = new Module[4]; // FL, FR, BL, BR
