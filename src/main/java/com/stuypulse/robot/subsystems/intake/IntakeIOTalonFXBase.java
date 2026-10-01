@@ -7,17 +7,16 @@ package com.stuypulse.robot.subsystems.intake;
 
 import java.util.function.BooleanSupplier;
 
-import com.ctre.phoenix6.StatusSignal;
 import com.ctre.phoenix6.controls.DutyCycleOut;
 import com.ctre.phoenix6.controls.Follower;
 import com.ctre.phoenix6.controls.PositionTorqueCurrentFOC;
 import com.ctre.phoenix6.controls.TorqueCurrentFOC;
 import com.ctre.phoenix6.controls.VoltageOut;
-import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.MotorAlignmentValue;
 import com.stuypulse.robot.constants.Motors;
 import com.stuypulse.robot.constants.Ports;
 import com.stuypulse.robot.constants.Settings;
+import com.stuypulse.robot.util.logged.LoggedTalonFX.LoggedTalonFX;
 
 import static edu.wpi.first.units.Units.*;
 import edu.wpi.first.units.measure.*;
@@ -28,10 +27,10 @@ import edu.wpi.first.math.filter.Debouncer.DebounceType;
 import edu.wpi.first.wpilibj.DigitalInput;
 
 public abstract class IntakeIOTalonFXBase implements IntakeIO {
-    private final TalonFX pivotMotor;
+    private final LoggedTalonFX pivotMotor;
 
-    private final TalonFX rollerMotorLeft;
-    private final TalonFX rollerMotorRight;
+    private final LoggedTalonFX rollerMotorLeft;
+    private final LoggedTalonFX rollerMotorRight;
 
     private final PositionTorqueCurrentFOC positionController;
     private final VoltageOut homingController;
@@ -41,26 +40,15 @@ public abstract class IntakeIOTalonFXBase implements IntakeIO {
     private final DutyCycleOut rollerController;
     private final Follower followerController;
     
-    public final StatusSignal<Angle> pivotPosition;
-    public final StatusSignal<AngularVelocity> pivotVelocity;
-    public final StatusSignal<Voltage> pivotVoltage;
-    public final StatusSignal<Current> pivotSupplyCurrent;
-    public final StatusSignal<Current> pivotStatorCurrent;
     private final DigitalInput pivotLimitSwitch;
     private final BooleanSupplier pivotStalling;
-
-    public final StatusSignal<AngularVelocity> rollerVelocity;
-    public final StatusSignal<Voltage> rollerVoltage;
-    public final StatusSignal<Current> rollerStatorCurrent;
-    public final StatusSignal<Current> rollerSupplyCurrent;
-    public final StatusSignal<Double> rollerDutyCycle;
 
     private final BooleanSupplier leftRollerStalling;
     private final BooleanSupplier rightRollerStalling;
     private final Debouncer leftRollerDebouncer;
     private final Debouncer rightRollerDebouncer;
 
-    public IntakeIOTalonFXBase(TalonFX pivotMotor, TalonFX rollerMotorLeft, TalonFX rollerMotorRight) {
+    public IntakeIOTalonFXBase(LoggedTalonFX pivotMotor, LoggedTalonFX rollerMotorLeft, LoggedTalonFX rollerMotorRight) {
         this.pivotMotor = pivotMotor;
         Motors.Intake.PIVOT_CONFIG.configure(pivotMotor);
         pivotMotor.setPosition(Settings.Intake.Pivot.INITIAL_ANGLE);
@@ -79,19 +67,9 @@ public abstract class IntakeIOTalonFXBase implements IntakeIO {
         followerController = new Follower(Ports.Intake.INTAKE_ROLLER_MOTOR_LEFT, MotorAlignmentValue.Opposed);
         rollerMotorRight.setControl(followerController);
 
-        this.pivotPosition = pivotMotor.getPosition();
-        this.pivotVelocity = pivotMotor.getVelocity();
-        this.pivotVoltage = pivotMotor.getMotorVoltage();
-        this.pivotSupplyCurrent = pivotMotor.getSupplyCurrent();
-        this.pivotStatorCurrent = pivotMotor.getStatorCurrent();
         pivotLimitSwitch = new DigitalInput(Ports.Intake.PIVOT_LIMIT_SWITCH);
         pivotStalling = () -> pivotMotor.getStatorCurrent().getValue().gt(Settings.Intake.Pivot.STALL_CURRENT);
 
-        this.rollerVelocity = rollerMotorLeft.getVelocity();
-        this.rollerVoltage = rollerMotorLeft.getMotorVoltage();
-        this.rollerStatorCurrent = rollerMotorLeft.getStatorCurrent();
-        this.rollerSupplyCurrent = rollerMotorLeft.getSupplyCurrent();
-        this.rollerDutyCycle = rollerMotorLeft.getDutyCycle();
         leftRollerStalling = () -> rollerMotorLeft.getStatorCurrent().getValue().gt(Settings.Intake.Roller.STALL_CURRENT);
         rightRollerStalling = () -> rollerMotorRight.getStatorCurrent().getValue().gt(Settings.Intake.Roller.STALL_CURRENT);
 
@@ -99,97 +77,45 @@ public abstract class IntakeIOTalonFXBase implements IntakeIO {
         rightRollerDebouncer = new Debouncer(Settings.Intake.Roller.STALL_DEBOUNCE_SEC.in(Seconds), DebounceType.kBoth);
     }
 
-    /*********************/
-    /** Pivot Controls ***/
-    /*********************/
-
-    @Override
-    public void setPivotPosition(Angle position) {
-        pivotMotor.setControl(positionController.withPosition(position));
-    }
-
-    @Override
-    public void setPivotPushdown(Current current) {
-        pivotMotor.setControl(pushdownController.withOutput(current));
-    }
-
-    @Override
-    public void setPivotHoming(Voltage voltage) {
-        pivotMotor.setControl(homingController.withOutput(voltage));
-    }
-
-    @Override
-    public void setVoltageOverride(Voltage voltage) {
-        pivotMotor.setControl(sysIdController.withOutput(voltage));
-    }
-
-    /*********************/
-    /** Roller Control ***/
-    /*********************/
-
-    @Override
-    public void setRollerDutyCycle(double dutyCycle) {
-        rollerMotorLeft.setControl(rollerController.withOutput(dutyCycle));
-    }
-
-    /*********************/
-    /** Pivot Commands ***/
-    /*********************/
-
     @Override
     public void seedPivotAngle(Angle angle) {
         pivotMotor.setPosition(angle);
     }
 
     @Override
-    public void stopRollerMotors() {
-        rollerMotorLeft.stopMotor();
-        rollerMotorRight.stopMotor();
-        // re-add the follow control after stopMotor removes it
-        rollerMotorRight.setControl(followerController);
-    }
-
-    @Override
-    public void stopPivotMotor() {
-        pivotMotor.stopMotor();
-    }
-
-    @Override
     public void updateInputs(IntakeIOInputs inputs) {
-        // if (pivotVoltageOverride.isPresent()) {
-        //     pivotMotor.setVoltage(pivotVoltageOverride.get().in(Volts));
-        //     return;
-        // }
-
-        // Inputs
-        inputs.pivotPosition = pivotPosition.refresh().getValue();
-        inputs.pivotVelocity = pivotVelocity.refresh().getValue();
-        inputs.pivotVoltage = pivotVoltage.refresh().getValue();
-        inputs.pivotStatorCurrent = pivotStatorCurrent.refresh().getValue();
-        inputs.pivotSupplyCurrent = pivotSupplyCurrent.refresh().getValue();
+        pivotMotor.updateInputs(inputs.pivotMotorInputs);
         inputs.limitSwitchHit = !pivotLimitSwitch.get();
         inputs.pivotStalling = pivotStalling.getAsBoolean();
         inputs.pivotPushingDown = pivotMotor.getAppliedControl() == pushdownController;
 
-        inputs.rollerVelocity = rollerVelocity.refresh().getValue();
-        inputs.rollerVoltage = rollerVoltage.refresh().getValue();
-        inputs.rollerStatorCurrent = rollerStatorCurrent.refresh().getValue();
-        inputs.rollerSupplyCurrent = rollerSupplyCurrent.refresh().getValue();
-        inputs.rollerDutyCycle = rollerDutyCycle.refresh().getValue();
+        rollerMotorLeft.updateInputs(inputs.rollerMotorInputs);
         inputs.leftRollerStalling = leftRollerDebouncer.calculate(leftRollerStalling.getAsBoolean());
         inputs.rightRollerStalling = rightRollerDebouncer.calculate(rightRollerStalling.getAsBoolean());
+    }
 
-        // State
-        // if (limitSwitchHit()) {
-        //     seedPivotAngle(Settings.Intake.Pivot.DEPLOY_ANGLE);
-        // }
+    @Override
+    public void applyOutputs(IntakeIOOutputs outputs) {
+        switch (outputs.pivot.outputMode) {
+            case STOP -> pivotMotor.stopMotor();
+            case POSITION -> pivotMotor.setControl(positionController.withPosition(outputs.pivot.position).withSlot(outputs.pivot.positionGainsSlot));
+            case PUSHDOWN -> pivotMotor.setControl(pushdownController.withOutput(outputs.pivot.pushdown));
+            case HOMING -> pivotMotor.setControl(homingController.withOutput(outputs.pivot.homing));
+            case VOLTAGE_OVERRIDE -> {
+                if (outputs.pivot.voltageOverride.isPresent()) {
+                    pivotMotor.setControl(sysIdController.withOutput(outputs.pivot.voltageOverride.get()));
+                }
+            }
+        }
 
-        // if (currentState == IntakeState.HOMING_DOWN && (pivotStalling || limitSwitchHit())) {
-        //     seedPivotAngle(Settings.Intake.Pivot.DEPLOY_ANGLE);
-        //     setState(IntakeState.INTAKE);
-        // }
-        // if ((currentState == IntakeState.DOWN) && (pivotStalling || limitSwitchHit())) {
-        //     seedPivotAngle(Settings.Intake.Pivot.DEPLOY_ANGLE);
-        // }
+        switch (outputs.roller.outputMode) {
+            case STOP -> {
+                rollerMotorLeft.stopMotor();
+                rollerMotorRight.stopMotor();
+
+                rollerMotorRight.setControl(followerController);
+            }
+            case DUTY_CYCLE -> rollerMotorLeft.setControl(rollerController.withOutput(outputs.roller.targetDutyCycle));
+        }
     }
 }

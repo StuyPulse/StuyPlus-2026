@@ -1,8 +1,14 @@
 package com.stuypulse.robot.subsystems.intake;
 
+import org.littletonrobotics.junction.AutoLog;
+import org.littletonrobotics.junction.AutoLogOutput;
+
+import com.stuypulse.robot.constants.Settings;
+import com.stuypulse.robot.util.logged.LoggedTalonFX.TalonFXInputs;
+
 import static edu.wpi.first.units.Units.*;
 
-import org.littletonrobotics.junction.AutoLog;
+import java.util.Optional;
 
 import edu.wpi.first.units.measure.*;
 
@@ -10,40 +16,79 @@ public interface IntakeIO {
     @AutoLog
     public static class IntakeIOInputs {
         // Pivot
-        public Angle pivotPosition = Radians.zero();
-        public AngularVelocity pivotVelocity = RPM.zero(); // for sysid
-        public Voltage pivotVoltage = Volts.zero();
-        public Current pivotSupplyCurrent = Amps.zero();
-        public Current pivotStatorCurrent = Amps.zero();
+        public TalonFXInputs pivotMotorInputs = new TalonFXInputs();
         public boolean limitSwitchHit = false;
         public boolean pivotStalling = false;
         public boolean pivotPushingDown = false;
 
         // Roller
-        public AngularVelocity rollerVelocity = RPM.zero();
-        public Voltage rollerVoltage = Volts.zero();
-        public Current rollerStatorCurrent = Amps.zero();
-        public Current rollerSupplyCurrent = Amps.zero();
-        public double rollerDutyCycle = 0.0;
+        public TalonFXInputs rollerMotorInputs = new TalonFXInputs();
         public boolean leftRollerStalling = false;
         public boolean rightRollerStalling = false;
     }
 
+    public enum IntakeIOPivotOutputMode {
+        STOP,
+        POSITION,
+        PUSHDOWN,
+        HOMING,
+        VOLTAGE_OVERRIDE
+    }
+
+    public enum IntakeIORollerOutputMode {
+        STOP,
+        DUTY_CYCLE
+    }
+
+    public static class IntakeIOOutputs {
+        public IntakeIOPivotOutputs pivot = new IntakeIOPivotOutputs();
+        public IntakeIORollerOutputs roller = new IntakeIORollerOutputs();
+
+        public static class IntakeIOPivotOutputs {
+            @AutoLogOutput(key="Intake/Pivot/Output Mode")
+            public IntakeIOPivotOutputMode outputMode = IntakeIOPivotOutputMode.STOP;
+
+            @AutoLogOutput(key="Intake/Pivot/Position")
+            public Angle position = Settings.Intake.Pivot.INITIAL_ANGLE;
+
+            @AutoLogOutput(key="Intake/Pivot/Position Gains Slot")
+            public int positionGainsSlot = 0;
+            
+            @AutoLogOutput(key="Intake/Pivot/Pushdown Current")
+            public Current pushdown = Amps.of(0.0);
+
+            @AutoLogOutput(key="Intake/Pivot/Homing Voltage")
+            public Voltage homing = Volts.of(0.0);
+            
+            @AutoLogOutput(key="Intake/Pivot/Voltage Override")
+            public Optional<Voltage> voltageOverride = Optional.empty();
+        }
+
+        public static class IntakeIORollerOutputs {
+            @AutoLogOutput(key="Intake/Roller/Output Mode")
+            public IntakeIORollerOutputMode outputMode = IntakeIORollerOutputMode.STOP;
+
+            @AutoLogOutput(key="Intake/Roller/Target Duty Cycle")
+            public double targetDutyCycle = 0.0;
+        }
+    }
+
     public default void updateInputs(IntakeIOInputs inputs) {};
+    public default void applyOutputs(IntakeIOOutputs outputs) {};
 
     public default void seedPivotAngle(Angle angle) {};
 
-    public default void stopRollerMotors() {};
-    public default void stopPivotMotor() {};
-    public default void stopAllMotors() {
-        stopRollerMotors();
-        stopPivotMotor();
-    };
+    // public default void stopRollerMotors() {};
+    // public default void stopPivotMotor() {};
+    // public default void stopAllMotors() {
+        // stopRollerMotors();
+        // stopPivotMotor();
+    // };
 
-    public default void setPivotPosition(Angle position) {};
-    public default void setPivotPushdown(Current current) {};
-    public default void setPivotHoming(Voltage voltage) {};
-    public default void setVoltageOverride(Voltage voltage) {};
+    // public default void setPivotPosition(Angle position) {};
+    // public default void setPivotPushdown(Current current) {};
+    // public default void setPivotHoming(Voltage voltage) {};
+    // public default void setVoltageOverride(Voltage voltage) {};
 
-    public default void setRollerDutyCycle(double dutyCycle) {};
+    // public default void setRollerDutyCycle(double dutyCycle) {};
 }

@@ -10,8 +10,11 @@ import com.stuypulse.robot.commands.intake.IntakeSeedPivotDeployed;
 import com.stuypulse.robot.commands.intake.IntakeSeedPivotNinety;
 import com.stuypulse.robot.commands.intake.IntakeSeedPivotStowed;
 import com.stuypulse.robot.constants.Settings;
+import com.stuypulse.robot.subsystems.intake.IntakeIO.IntakeIOOutputs;
+import com.stuypulse.robot.subsystems.intake.IntakeIO.IntakeIOPivotOutputMode;
+import com.stuypulse.robot.subsystems.intake.IntakeIO.IntakeIORollerOutputMode;
+import com.stuypulse.robot.util.FullSubsystem;
 import com.stuypulse.robot.util.SysId;
-import com.stuypulse.robot.util.simulation.RobotVisualizer;
 
 import static edu.wpi.first.units.Units.Amps;
 import static edu.wpi.first.units.Units.Rotations;
@@ -21,13 +24,12 @@ import java.util.Optional;
 import org.littletonrobotics.junction.AutoLogOutput;
 import org.littletonrobotics.junction.Logger;
 
-import edu.wpi.first.units.measure.Angle;
-import edu.wpi.first.units.measure.Voltage;
+import edu.wpi.first.units.measure.*;
+
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 
-public class Intake extends SubsystemBase {
+public class Intake extends FullSubsystem {
     private static final Intake instance;
 
     static {
@@ -48,11 +50,13 @@ public class Intake extends SubsystemBase {
 
     private final IntakeIO io;
     private final IntakeIOInputsAutoLogged inputs;
+    private final IntakeIOOutputs outputs;
     private IntakeState state;
 
     private Intake(IntakeIO io) {
         this.io = io;
         this.inputs = new IntakeIOInputsAutoLogged();
+        this.outputs = new IntakeIOOutputs();
         this.state = IntakeState.IDLE;
     }
 
@@ -133,25 +137,25 @@ public class Intake extends SubsystemBase {
     }
 
     public Angle getRelativePosition() {
-        return inputs.pivotPosition;
+        return inputs.pivotMotorInputs.position;
     }
 
     @AutoLogOutput(key = "Intake/Pivot/atTargetAngle")
     public boolean atTargetAngle() {
-        return inputs.pivotPosition.minus(getState().getTargetAngle())
+        return inputs.pivotMotorInputs.position.minus(getState().getTargetAngle())
                 .abs(Rotations) < Settings.Intake.Pivot.ANGLE_TOLERANCE.in(Rotations);
     }
 
     @AutoLogOutput(key = "Intake/Pivot/aboveThreshold")
     public boolean isPivotAboveThreshold() {
-        return inputs.pivotPosition.gt(Settings.Intake.Pivot.PUSHDOWN_THRESHOLD);
+        return inputs.pivotMotorInputs.position.gt(Settings.Intake.Pivot.PUSHDOWN_THRESHOLD);
     }
 
     // Sysid
-    private Optional<Voltage> pivotVoltageOverride = Optional.empty();
 
     public void setPivotVoltageOverride(Voltage voltage) {
-        this.pivotVoltageOverride = Optional.of(voltage);
+        outputs.pivot.outputMode = IntakeIOPivotOutputMode.VOLTAGE_OVERRIDE;
+        outputs.pivot.voltageOverride = Optional.of(voltage);
     };
 
     public SysIdRoutine getIntakeSysIdRoutine() {
@@ -160,14 +164,52 @@ public class Intake extends SubsystemBase {
                 Settings.Intake.Pivot.STEP_VOLTAGE,
                 "Intake",
                 this::setPivotVoltageOverride,
-                () -> inputs.pivotPosition,
-                () -> inputs.pivotVelocity,
-                () -> inputs.pivotVoltage,
+                () -> inputs.pivotMotorInputs.position,
+                () -> inputs.pivotMotorInputs.velocity,
+                () -> inputs.pivotMotorInputs.appliedVoltage,
                 getInstance());
     }
 
+    /*********************/
+    /** Pivot Controls ***/
+    /*********************/
+  
+    private void setPivotPosition(Angle position, int gainsSlot) {
+        outputs.pivot.outputMode = IntakeIOPivotOutputMode.POSITION;
+        outputs.pivot.position = position;
+        outputs.pivot.positionGainsSlot = gainsSlot;
+    }
+
+    private void setPivotPushdown(Current current) {
+        outputs.pivot.outputMode = IntakeIOPivotOutputMode.PUSHDOWN;
+        outputs.pivot.pushdown = current;
+    }
+    
+    private void setPivotHoming(Voltage voltage) {
+        outputs.pivot.outputMode = IntakeIOPivotOutputMode.HOMING;
+        outputs.pivot.homing = voltage; 
+    }
+
+    /*********************/
+    /** Roller Control ***/
+    /*********************/
+
+    private void setRollerDutyCycle(double dutyCycle) {
+        outputs.roller.outputMode = IntakeIORollerOutputMode.DUTY_CYCLE;
+        outputs.roller.targetDutyCycle = dutyCycle;
+    }
+
+    /*********************/
+    /** Pivot Commands ***/
+    /*********************/
+
     public void seedPivotAngle(Angle angle) {
         io.seedPivotAngle(angle);
+    }
+
+    private void stopAllMotors() {
+        outputs.pivot.outputMode = IntakeIOPivotOutputMode.STOP;
+        outputs.roller.outputMode = IntakeIORollerOutputMode.STOP;
     }
 
     @Override
@@ -177,34 +219,39 @@ public class Intake extends SubsystemBase {
         final IntakeState currentState = getState();
     
         if (!Settings.EnabledSubsystems.INTAKE.get()) {
-            io.stopAllMotors();
-        } else if (pivotVoltageOverride.isPresent()) {
-            io.setPivotHoming(pivotVoltageOverride.get());
-        } else {
-            // roller
-            io.setRollerDutyCycle(currentState.getTargetDutyCycle());
+            stopAllMotors();
+            return;
+        }
 
-            // pivot
-            // this structure doesn't support dynamic gains unless gainsSlot becomes part of IO
-            switch (currentState) {
-                case INTAKE, OUTTAKE, DOWN:
-                    if (isPivotAboveThreshold()) {
-                        io.setPivotPushdown(Amps.of(Settings.Intake.Pivot.PUSHDOWN_CURRENT.get()));
-                    } else {
-                        io.setPivotPosition(currentState.getTargetAngle());
-                    };
-                    break;
-                case HOMING_DOWN:
-                    io.setPivotHoming(Settings.Intake.Pivot.HOMING_DOWN_VOLTAGE);
-                    break;
-                case AGITATE, AGITATE_DOWN:
-                    io.setPivotPosition(currentState.getTargetAngle());
-                    break;
-                default: io.setPivotPosition(currentState.getTargetAngle());
-            };
+        if (outputs.pivot.voltageOverride.isPresent()) {
+            return;
         }
-        if (!Robot.isReal()) {
-            RobotVisualizer.getInstance().updateIntake(inputs.pivotPosition, inputs.rollerVelocity);
+
+        if (inputs.limitSwitchHit) {
+            io.seedPivotAngle(Settings.Intake.Pivot.DEPLOY_ANGLE);
         }
+
+        if (currentState == IntakeState.HOMING_DOWN && (inputs.pivotStalling || inputs.limitSwitchHit)) {
+            io.seedPivotAngle(Settings.Intake.Pivot.DEPLOY_ANGLE);
+            setState(IntakeState.INTAKE);
+        }
+
+        if ((currentState == IntakeState.DOWN) && (inputs.pivotStalling || inputs.limitSwitchHit)) {
+            io.seedPivotAngle(Settings.Intake.Pivot.DEPLOY_ANGLE);
+        }
+
+        switch (currentState) {
+            case INTAKE, OUTTAKE, DOWN -> setPivotPushdown(Amps.of(Settings.Intake.Pivot.PUSHDOWN_CURRENT.get()));
+            case HOMING_DOWN -> setPivotHoming(Settings.Intake.Pivot.HOMING_DOWN_VOLTAGE);
+            case AGITATE, AGITATE_DOWN -> setPivotPosition(currentState.getTargetAngle(), 1);
+            default -> setPivotPosition(currentState.getTargetAngle(), 0);
+        }
+
+        setRollerDutyCycle(currentState.getTargetDutyCycle());
+    }
+
+    @Override
+    public void periodicAfterScheduler() {
+        io.applyOutputs(outputs);
     }
 }

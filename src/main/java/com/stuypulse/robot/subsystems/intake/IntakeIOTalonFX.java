@@ -5,18 +5,19 @@
 /***************************************************************/
 package com.stuypulse.robot.subsystems.intake;
 
-import com.ctre.phoenix6.hardware.TalonFX;
 import com.stuypulse.robot.constants.Ports;
 import com.stuypulse.robot.constants.Settings;
+import com.stuypulse.robot.util.logged.LoggedTalonFX.LoggedTalonFX;
 
 public class IntakeIOTalonFX extends IntakeIOTalonFXBase {
-    private static TalonFX getPivotMotor(int id) {
-        final TalonFX pivotMotor = new TalonFX(id, Settings.CANBUS);
+    private static LoggedTalonFX getPivotMotor(int id) {
+        final LoggedTalonFX pivotMotor = new LoggedTalonFX(id, Settings.CANBUS);
         return pivotMotor;
     }
 
-    private static TalonFX getRollerMotor(int id) {
-        final TalonFX rollerMotor = new TalonFX(id, Settings.CANBUS);
+    private static LoggedTalonFX getRollerMotor(int id) {
+        final LoggedTalonFX rollerMotor = new LoggedTalonFX(id, Settings.CANBUS);
+        rollerMotor.withSignal(rollerMotor.getDutyCycle());
         return rollerMotor;
     }
 
