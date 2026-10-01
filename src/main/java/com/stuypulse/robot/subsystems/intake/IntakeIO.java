@@ -60,7 +60,6 @@ public interface IntakeIO {
             @AutoLogOutput(key="Intake/Pivot/Homing Voltage")
             public Voltage homing = Volts.of(0.0);
             
-            @AutoLogOutput(key="Intake/Pivot/Voltage Override")
             public Optional<Voltage> voltageOverride = Optional.empty();
         }
 

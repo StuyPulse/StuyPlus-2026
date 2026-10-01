@@ -51,6 +51,7 @@ public class Intake extends FullSubsystem {
     private final IntakeIO io;
     private final IntakeIOInputsAutoLogged inputs;
     private final IntakeIOOutputs outputs;
+    @AutoLogOutput(key = "States/Intake")
     private IntakeState state;
 
     private Intake(IntakeIO io) {
@@ -253,5 +254,8 @@ public class Intake extends FullSubsystem {
     @Override
     public void periodicAfterScheduler() {
         io.applyOutputs(outputs);
+        if (outputs.pivot.voltageOverride.isPresent()) {
+            Logger.recordOutput("Intake/Pivot/Voltage Override", outputs.pivot.voltageOverride.get());
+        }
     }
 }
