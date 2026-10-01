@@ -18,10 +18,11 @@ import com.stuypulse.robot.subsystems.feeder.FeederIO.FeederIOOutputs;
 import edu.wpi.first.units.measure.*;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
+
+import com.stuypulse.robot.util.FullSubsystem;
 import com.stuypulse.robot.util.simulation.RobotVisualizer;
 
-public class Feeder extends SubsystemBase {
+public class Feeder extends FullSubsystem {
     private static final Feeder instance;
 
     static {
@@ -117,7 +118,10 @@ public class Feeder extends SubsystemBase {
         if (!Robot.isReal()) {
             RobotVisualizer.getInstance().updateFeeder(inputs.velocity);
         }
+    }
 
+    @Override
+    public void periodicAfterScheduler() {
         io.applyOutputs(outputs);
     }
 
