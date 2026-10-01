@@ -28,6 +28,7 @@ import com.ctre.phoenix6.CANBus;
 import dev.doglog.DogLog;
 
 import com.pathplanner.lib.path.PathConstraints;
+import com.stuypulse.robot.Robot;
 
 /*-
  * File containing tunable settings for every subsystem on the robot.
@@ -225,23 +226,6 @@ public interface Settings {
 
         // states
         LEDPattern DISABLED = LEDPattern.solid(Color.kGray);
-    }
-
-    public interface Handoff {
-        Voltage IDLE_VOLTAGE = Volts.of(0.0);
-
-        Voltage FORWARD_VOLTAGE = Volts.of(12.0);
-
-        Voltage REVERSE_VOLTAGE = Volts.of(-10.0);
-
-        double STALL_CURRENT = 67;
-
-        // TODO: get and maybe convert to wpilib units
-        double STALL_DEBOUNCE = 67;
-
-        double J_KG_METERS_SQUARED = 1;
-
-        double GEAR_RATIO = 1.0 / 3.0; // 1:3
     }
 
     public interface Shooter {

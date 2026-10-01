@@ -78,16 +78,6 @@ public interface Motors {
 						.withSensorToMechanismRatio(Settings.Intake.Roller.GEAR_RATIO);
 	}
 
-	public interface Feeder {
-
-		// TODO: get values after motor pinion swap
-		TalonFXConfig LEADER_CONFIG = new TalonFXConfig()
-				.withStatorCurrentLimitAmps(80)
-				.withNeutralMode(NeutralModeValue.Coast)
-				.withInvertedValue(InvertedValue.Clockwise_Positive)
-				.withSensorToMechanismRatio(Settings.Feeder.GEAR_RATIO);
-	}
-
 	public interface Shooter {
 		TalonFXConfig SHOOTER_MOTOR_LEFT = new TalonFXConfig()
 				.withPIDConstants(Gains.Shooter.kP.get(), Gains.Shooter.kI.get(), Gains.Shooter.kD.get(), 0)
@@ -116,15 +106,6 @@ public interface Motors {
 				.withFFConstants(Gains.Shooter.kS.get(), Gains.Shooter.kV.get(), Gains.Shooter.kA.get(), 0)
 				.withFFConstants(Gains.Shooter.kS.get(), Gains.Shooter.kV.get(), Gains.Shooter.kA.get(), 1)
 				.withInvertedValue(InvertedValue.Clockwise_Positive);
-	}
-
-	public interface Handoff {
-
-		TalonFXConfig HANDOFF_MOTOR_CONFIG = new TalonFXConfig()
-				.withStatorCurrentLimitAmps(80)
-				.withNeutralMode(NeutralModeValue.Coast)
-				.withInvertedValue(InvertedValue.CounterClockwise_Positive)
-				.withSensorToMechanismRatio(Settings.Handoff.GEAR_RATIO);
 	}
 
 	public static class TalonFXConfig {

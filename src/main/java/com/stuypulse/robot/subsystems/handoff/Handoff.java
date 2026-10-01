@@ -44,8 +44,8 @@ public class Handoff extends SubsystemBase {
         this.inputs = new HandoffIOInputsAutoLogged();
         this.state = HandoffState.IDLE;
 
-        this.handoffStalling = () -> inputs.statorCurrent.abs(Amps) > Settings.Handoff.STALL_CURRENT;
-        this.handoffDebouncer = new Debouncer(Settings.Handoff.STALL_DEBOUNCE, DebounceType.kRising);
+        this.handoffStalling = () -> inputs.statorCurrent.abs(Amps) > HandoffConstants.HandoffSettings.STALL_CURRENT;
+        this.handoffDebouncer = new Debouncer(HandoffConstants.HandoffSettings.STALL_DEBOUNCE, DebounceType.kRising);
     }
 
     public void setState(HandoffState state) {
@@ -59,11 +59,11 @@ public class Handoff extends SubsystemBase {
     /** Enum representing the different possible states of the handoff. */
     public enum HandoffState {
         /** Handoff is stopped. */
-        IDLE(Settings.Handoff.IDLE_VOLTAGE),
+        IDLE(HandoffConstants.HandoffSettings.IDLE_VOLTAGE),
         /** The handoff runs forward. */
-        FORWARD(Settings.Handoff.FORWARD_VOLTAGE),
+        FORWARD(HandoffConstants.HandoffSettings.FORWARD_VOLTAGE),
         /** The handoff runs backward. */
-        REVERSE(Settings.Handoff.REVERSE_VOLTAGE);
+        REVERSE(HandoffConstants.HandoffSettings.REVERSE_VOLTAGE);
 
         /** The target voltage of the handoff motor. */
         private Voltage targetVoltage;
