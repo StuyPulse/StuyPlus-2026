@@ -1,4 +1,4 @@
-package com.stuypulse.robot.commands.auton;
+package com.stuypulse.robot.commands.auton.structures;
 
 import com.pathplanner.lib.path.PathPlannerPath;
 import com.stuypulse.robot.commands.swerve.SwerveResetPose;

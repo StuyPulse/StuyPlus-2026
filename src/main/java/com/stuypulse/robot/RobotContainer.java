@@ -5,15 +5,15 @@
 /***************************************************************/
 package com.stuypulse.robot;
 
-import com.stuypulse.robot.commands.auton.DoNothingAuton;
-import com.stuypulse.robot.commands.auton.LBDisrupt;
-import com.stuypulse.robot.commands.auton.LBFerry;
-import com.stuypulse.robot.commands.auton.RBDisrupt;
-import com.stuypulse.robot.commands.auton.RBFerry;
-import com.stuypulse.robot.commands.auton.depot.CenterDepot;
+import com.stuypulse.robot.commands.auton.defensive.LBDisrupt;
+import com.stuypulse.robot.commands.auton.defensive.LBFerry;
+import com.stuypulse.robot.commands.auton.defensive.RBDisrupt;
+import com.stuypulse.robot.commands.auton.defensive.RBFerry;
 import com.stuypulse.robot.commands.auton.shooting.FrontHubShootPreloads;
 import com.stuypulse.robot.commands.auton.shooting.LBDumpy;
 import com.stuypulse.robot.commands.auton.shooting.RBDumpy;
+import com.stuypulse.robot.commands.auton.structures.CenterDepot;
+import com.stuypulse.robot.commands.auton.test.DoNothingAuton;
 import com.stuypulse.robot.commands.compound.StopShooting;
 import com.stuypulse.robot.commands.feeder.FeederScramble;
 import com.stuypulse.robot.commands.feeder.FeederSetForward;
