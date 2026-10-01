@@ -34,18 +34,7 @@ public interface Ports {
         int SHOOTER_MOTOR_CENTER = 54;
 
         int SHOOTER_MOTOR_RIGHT = 47;
-    }
-
-    public interface Handoff {
-
-        int HANDOFF_MOTOR = 50;
-    }
-
-    // TODO: Get ports from mech
-    public interface Feeder {
-
-        int FEEDER_MOTOR = 15;
-    }
+    } 
 
     public interface Intake {
 

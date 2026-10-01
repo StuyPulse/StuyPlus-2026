@@ -6,7 +6,6 @@
 package com.stuypulse.robot.subsystems.feeder;
 
 import com.ctre.phoenix6.hardware.TalonFX;
-import com.stuypulse.robot.constants.Ports;
 import com.stuypulse.robot.constants.Settings;
 
 public class FeederIOTalonFX extends FeederIOTalonFXBase {
@@ -16,6 +15,6 @@ public class FeederIOTalonFX extends FeederIOTalonFXBase {
     }
 
     public FeederIOTalonFX() {
-        super(getFeederMotor(Ports.Feeder.FEEDER_MOTOR));
+        super(getFeederMotor(FeederConstants.FeederDeviceIds.FEEDER_MOTOR));
     }
 }

@@ -20,6 +20,7 @@ import com.stuypulse.robot.commands.vision.SetVisionEnabled;
 import com.stuypulse.robot.constants.Field;
 import com.stuypulse.robot.subsystems.swerve.Swerve;
 import com.stuypulse.robot.subsystems.vision.Vision;
+import com.stuypulse.robot.constants.Settings;
 import com.stuypulse.robot.util.LoggedSignals;
 import com.stuypulse.robot.util.simulation.RobotVisualizer;
 import com.stuypulse.robot.util.simulation.SimulationConstants;
@@ -73,19 +74,23 @@ public class Robot extends LoggedRobot {
         } else {
             alliance = Alliance.Blue;
         }
-        if (isReal()) {
-            Logger.addDataReceiver(new WPILOGWriter());       // log to USB stick / roboRIO storage
-            Logger.addDataReceiver(new NT4Publisher());        // live view in AdvantageScope
-        } else { //if (Constants.currentMode == Mode.SIM) {
-            Logger.addDataReceiver(new WPILOGWriter());
-            Logger.addDataReceiver(new NT4Publisher());
-        } //else {
-        //     // REPLAY mode
-        //     setUseTiming(false);
-        //     String logPath = LogFileUtil.findReplayLog();
-        //     Logger.setReplaySource(new WPILOGReader(logPath));
-        //     Logger.addDataReceiver(new WPILOGWriter(LogFileUtil.addPathSuffix(logPath, "_sim")));
-        // }
+        
+        switch (Settings.CURRENT_MODE) {
+            case REAL -> {
+                Logger.addDataReceiver(new WPILOGWriter());
+                Logger.addDataReceiver(new NT4Publisher());
+            }
+
+            case SIM -> Logger.addDataReceiver(new NT4Publisher());
+
+            case REPLAY -> {
+                setUseTiming(false); // Run as fast as possible
+                String logPath = LogFileUtil.findReplayLog();
+                Logger.setReplaySource(new WPILOGReader(logPath));
+                Logger.addDataReceiver(
+                        new WPILOGWriter(LogFileUtil.addPathSuffix(logPath, "replay")));
+            }
+        }
 
         Logger.start();
     }
