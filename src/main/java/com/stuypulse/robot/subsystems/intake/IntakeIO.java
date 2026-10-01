@@ -76,18 +76,4 @@ public interface IntakeIO {
     public default void applyOutputs(IntakeIOOutputs outputs) {};
 
     public default void seedPivotAngle(Angle angle) {};
-
-    // public default void stopRollerMotors() {};
-    // public default void stopPivotMotor() {};
-    // public default void stopAllMotors() {
-        // stopRollerMotors();
-        // stopPivotMotor();
-    // };
-
-    // public default void setPivotPosition(Angle position) {};
-    // public default void setPivotPushdown(Current current) {};
-    // public default void setPivotHoming(Voltage voltage) {};
-    // public default void setVoltageOverride(Voltage voltage) {};
-
-    // public default void setRollerDutyCycle(double dutyCycle) {};
 }
