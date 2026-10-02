@@ -17,11 +17,11 @@ import com.ctre.phoenix6.swerve.SwerveDrivetrainConstants;
 import com.ctre.phoenix6.swerve.SwerveModule.DriveRequestType;
 import com.ctre.phoenix6.swerve.SwerveModuleConstants;
 import com.ctre.phoenix6.swerve.SwerveRequest;
-import com.pathplanner.lib.auto.AutoBuilder;
-import com.pathplanner.lib.config.RobotConfig;
-import com.pathplanner.lib.controllers.PPHolonomicDriveController;
-import com.pathplanner.lib.path.PathPlannerPath;
-import com.pathplanner.lib.util.PathPlannerLogging;
+// import com.pathplanner.lib.auto.AutoBuilder;
+// import com.pathplanner.lib.config.RobotConfig;
+// import com.pathplanner.lib.controllers.PPHolonomicDriveController;
+// import com.pathplanner.lib.path.PathPlannerPath;
+// import com.pathplanner.lib.util.PathPlannerLogging;
 import com.stuypulse.robot.Robot;
 import com.stuypulse.robot.constants.Field;
 import com.stuypulse.robot.constants.Gains;
@@ -32,6 +32,7 @@ import com.stuypulse.robot.util.simulation.SimulationConstants;
 
 import dev.doglog.DogLog;
 import edu.wpi.first.math.Matrix;
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
@@ -50,6 +51,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
+import frc.robot.lib.BLine.FollowPath;
 
 /**
  * Class that extends the Phoenix 6 SwerveDrivetrain class and implements
@@ -66,6 +68,20 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
 
     public static CommandSwerveDrivetrain getInstance() {
         return instance;
+    }
+
+    private final FollowPath.Builder pathBuilder = new FollowPath.Builder(
+        this,
+        this::getPose,
+        this::getChassisSpeeds,
+        this::setChassisSpeeds,
+        new PIDController(4.0, 0.0, 0.0),
+        new PIDController(7.0, 0.0, 0.0),
+        new PIDController(0.5, 0.0, 0.0)
+    ).withDefaultShouldFlip().withTRatioBasedTranslationHandoffs(true);
+
+    public FollowPath.Builder getPathBuilder() {
+        return pathBuilder;
     }
 
     // 5 ms
@@ -460,43 +476,43 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
         super.resetPose(pose);
     }
 
-    public void configureAutoBuilder() {
-        try {
-            AutoBuilder.configure(
-                    this::getPose,
-                    this::resetPose,
-                    this::getChassisSpeeds,
-                    this::setChassisSpeeds,
-                    new PPHolonomicDriveController(Gains.Swerve.Alignment.XY,
-                            Gains.Swerve.Alignment.THETA),
-                    RobotConfig.fromGUISettings(),
-                    () -> false,
-                    instance);
-            PathPlannerLogging.setLogActivePathCallback(
-                    (poses) -> {
-                        if (Robot.isBlue()) {
-                            Field.FIELD2D.getObject("path").setPoses(poses);
-                        } else {
-                            Field.FIELD2D.getObject("path").setPoses(
-                                    Field.transformToOppositeAlliance(poses));
-                        }
-                    });
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+//     public void configureAutoBuilder() {
+//         try {
+//             AutoBuilder.configure(
+//                     this::getPose,
+//                     this::resetPose,
+//                     this::getChassisSpeeds,
+//                     this::setChassisSpeeds,
+//                     new PPHolonomicDriveController(Gains.Swerve.Alignment.XY,
+//                             Gains.Swerve.Alignment.THETA),
+//                     RobotConfig.fromGUISettings(),
+//                     () -> false,
+//                     instance);
+//             PathPlannerLogging.setLogActivePathCallback(
+//                     (poses) -> {
+//                         if (Robot.isBlue()) {
+//                             Field.FIELD2D.getObject("path").setPoses(poses);
+//                         } else {
+//                             Field.FIELD2D.getObject("path").setPoses(
+//                                     Field.transformToOppositeAlliance(poses));
+//                         }
+//                     });
+//         } catch (Exception e) {
+//             e.printStackTrace();
+//         }
+//     }
 
-    public Command followPathCommand(String pathName) {
-        try {
-            return followPathCommand(PathPlannerPath.fromPathFile(pathName));
-        } catch (Exception e) {
-            throw new IllegalArgumentException(pathName + " does not exist");
-        }
-    }
+//     public Command followPathCommand(String pathName) {
+//         try {
+//             return followPathCommand(PathPlannerPath.fromPathFile(pathName));
+//         } catch (Exception e) {
+//             throw new IllegalArgumentException(pathName + " does not exist");
+//         }
+//     }
 
-    public Command followPathCommand(PathPlannerPath path) {
-        return AutoBuilder.followPath(path);
-    }
+//     public Command followPathCommand(PathPlannerPath path) {
+//         return AutoBuilder.followPath(path);
+//     }
 
     public SwerveModuleState[] getModuleStates() {
         SwerveModuleState[] moduleStates = new SwerveModuleState[4];
