@@ -8,9 +8,12 @@ package com.stuypulse.robot.subsystems.vision;
 import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Rotation3d;
+import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.networktables.*;
 import edu.wpi.first.wpilibj.RobotController;
+
+import static edu.wpi.first.units.Units.Radians;
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -23,6 +26,7 @@ import java.util.function.Supplier;
 public class VisionIOLimelight implements VisionIO {
     private final Supplier<Rotation2d> rotationSupplier;
     private final DoubleArrayPublisher orientationPublisher;
+    private final DoubleArrayPublisher cameraPosePublisher;
     private final IntegerPublisher pipelinePublisher;
     private final DoubleArrayPublisher aprilTagWhitelistPublisher;
 
@@ -41,20 +45,31 @@ public class VisionIOLimelight implements VisionIO {
      * @param rotationSupplier Supplier for the current estimated rotation, used for
      *                         MegaTag 2.
      */
-    public VisionIOLimelight(String name, Supplier<Rotation2d> rotationSupplier) {
+    public VisionIOLimelight(String name, Transform3d robotToCamera, Supplier<Rotation2d> rotationSupplier) {
         megaTagMode = MegaTagMode.MEGATAG_1;
 
         var table = NetworkTableInstance.getDefault().getTable(name);
         this.rotationSupplier = rotationSupplier;
         pipelinePublisher = table.getIntegerTopic("pipeline").publish();
         orientationPublisher = table.getDoubleArrayTopic("robot_orientation_set").publish();
+        cameraPosePublisher = table.getDoubleArrayTopic("camerapose_robotspace_set").publish();
         aprilTagWhitelistPublisher = table.getDoubleArrayTopic("fiducial_id_filters_set").publish();
         latencySubscriber = table.getDoubleTopic("tl").subscribe(0.0);
         txSubscriber = table.getDoubleTopic("tx").subscribe(0.0);
         tySubscriber = table.getDoubleTopic("ty").subscribe(0.0);
         megatag1Subscriber = table.getDoubleArrayTopic("botpose_wpiblue").subscribe(new double[] {});
         megatag2Subscriber = table.getDoubleArrayTopic("botpose_orb_wpiblue").subscribe(new double[] {});
-    }
+
+        cameraPosePublisher.accept(
+                new double[] {
+                    robotToCamera.getX(),
+                    robotToCamera.getY(),
+                    robotToCamera.getZ(),
+                    robotToCamera.getRotation().getMeasureX().in(Radians),
+                    robotToCamera.getRotation().getMeasureY().in(Radians),
+                    robotToCamera.getRotation().getMeasureZ().in(Radians)
+                });
+        }
 
     @Override
     public void updateInputs(VisionIOInputs inputs) {
