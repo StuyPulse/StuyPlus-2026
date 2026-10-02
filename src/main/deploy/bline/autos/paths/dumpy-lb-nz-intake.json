@@ -14,19 +14,19 @@
     },
     {
       "type": "translation",
-      "x_meters": 7.89034,
+      "x_meters": 7.89,
       "y_meters": 6.03642,
       "intermediate_handoff_radius_meters": 0.48
     },
     {
       "type": "translation",
-      "x_meters": 8.27289,
+      "x_meters": 8.27,
       "y_meters": 5.51243,
       "intermediate_handoff_radius_meters": 0.45
     },
     {
       "type": "translation",
-      "x_meters": 8.32747,
+      "x_meters": 8.33,
       "y_meters": 4.77,
       "intermediate_handoff_radius_meters": 0.45
     },
