@@ -6,13 +6,11 @@
 package com.stuypulse.robot.util.shooter;
 
 import com.stuypulse.robot.constants.Field;
-import com.stuypulse.robot.constants.Settings;
 import com.stuypulse.robot.constants.Settings.Shooter.FerryRPMInterpolation;
 import com.stuypulse.robot.constants.Settings.Shooter.FerryTOFInterpolation;
 import com.stuypulse.robot.constants.Settings.Shooter.RPMInterpolation;
 import com.stuypulse.robot.constants.Settings.Shooter.TOFInterpolation;
-import com.stuypulse.robot.subsystems.swerve.CommandSwerveDrivetrain;
-import static edu.wpi.first.units.Units.RPM;
+import com.stuypulse.robot.subsystems.swerve.Swerve;
 import dev.doglog.DogLog;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Translation2d;
@@ -51,7 +49,7 @@ public class InterpolationCalculator {
     }
 
     public static InterpolatedInfo interpolateShotInfo() {
-        CommandSwerveDrivetrain swerve = CommandSwerveDrivetrain.getInstance();
+        Swerve swerve = Swerve.getInstance();
         return interpolateShotInfo(swerve.getPose(), Field.getHubPose());
     }
 
@@ -69,7 +67,7 @@ public class InterpolationCalculator {
     }
 
     public static InterpolatedInfo interpolateFerryingInfo() {
-        CommandSwerveDrivetrain swerve = CommandSwerveDrivetrain.getInstance();
+        Swerve swerve = Swerve.getInstance();
         Pose2d shooterPose = swerve.getPose();
         Pose2d ferryPose = Field.getFerryZonePose(swerve.getPose().getTranslation());
         return interpolateFerryingInfo(shooterPose, ferryPose);

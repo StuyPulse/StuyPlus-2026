@@ -10,7 +10,7 @@ import com.stuypulse.robot.commands.shooter.ShooterWaitForSpinUp;
 import com.stuypulse.robot.commands.swerve.SwerveDriveXMode;
 import com.stuypulse.robot.commands.swerve.SwerveResetPose;
 import com.stuypulse.robot.commands.swerve.driveAligned.SwerveDriveAlignToHub;
-import com.stuypulse.robot.subsystems.swerve.CommandSwerveDrivetrain;
+import com.stuypulse.robot.subsystems.swerve.Swerve;
 
 import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
@@ -20,7 +20,7 @@ public class FrontHubShootPreloads extends SequentialCommandGroup {
     public FrontHubShootPreloads(PathPlannerPath... paths) {
         addCommands(
             new SwerveResetPose(paths[0].getStartingHolonomicPose().get()),
-            CommandSwerveDrivetrain.getInstance().followPathCommand(paths[0]),
+            Swerve.getInstance().followPathCommand(paths[0]),
             new SwerveDriveAlignToHub(), // worth noting that alignment commands don't work so this may not aim correctly
             new SwerveDriveXMode(),
             new ShooterWaitForSpinUp(),

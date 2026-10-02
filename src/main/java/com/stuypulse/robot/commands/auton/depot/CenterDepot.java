@@ -10,7 +10,7 @@ import com.stuypulse.robot.commands.shooter.ShooterWaitForSpinUp;
 import com.stuypulse.robot.commands.swerve.SwerveDriveXMode;
 import com.stuypulse.robot.commands.swerve.SwerveResetPose;
 import com.stuypulse.robot.commands.swerve.driveAligned.SwerveDriveAlignToHub;
-import com.stuypulse.robot.subsystems.swerve.CommandSwerveDrivetrain;
+import com.stuypulse.robot.subsystems.swerve.Swerve;
 
 import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
@@ -21,8 +21,8 @@ public class CenterDepot extends SequentialCommandGroup {
         addCommands(
            new SwerveResetPose(paths[0].getStartingHolonomicPose().get()),
            new IntakeSetIntake(),
-           CommandSwerveDrivetrain.getInstance().followPathCommand(paths[0]),
-           CommandSwerveDrivetrain.getInstance().followPathCommand(paths[1]),
+           Swerve.getInstance().followPathCommand(paths[0]),
+           Swerve.getInstance().followPathCommand(paths[1]),
            new SwerveDriveXMode(),
            new ShooterWaitForSpinUp(),
            new ShooterSetShoot(),

@@ -11,7 +11,7 @@ import com.stuypulse.robot.Robot;
 import com.stuypulse.robot.constants.Field;
 import com.stuypulse.robot.constants.Gains.Swerve.Alignment;
 import com.stuypulse.robot.constants.Settings;
-import com.stuypulse.robot.subsystems.swerve.CommandSwerveDrivetrain;
+import com.stuypulse.robot.subsystems.swerve.Swerve;
 import com.stuypulse.robot.util.TranslationMotionProfile;
 
 import edu.wpi.first.math.controller.HolonomicDriveController;
@@ -35,7 +35,7 @@ import java.util.function.Supplier;
 
 public class SwerveDrivePIDToPose extends Command {
 
-        private final CommandSwerveDrivetrain swerve;
+        private final Swerve swerve;
 
     private final HolonomicDriveController controller;
 
@@ -72,7 +72,7 @@ public class SwerveDrivePIDToPose extends Command {
     }
 
     public SwerveDrivePIDToPose(Supplier<Pose2d> targetPose) {
-        swerve = CommandSwerveDrivetrain.getInstance();
+        swerve = Swerve.getInstance();
         controller = new HolonomicDriveController(
             new PIDController(Alignment.XY.kP, Alignment.XY.kI, Alignment.XY.kD),
             new PIDController(Alignment.XY.kP, Alignment.XY.kI, Alignment.XY.kD),
@@ -180,12 +180,7 @@ public class SwerveDrivePIDToPose extends Command {
             new Pose2d(translationSetpoint.get(), targetPose.get().getRotation()),
             0,
             targetPose.get().getRotation());
-        swerve.setControl(
-                swerve
-                        .getRobotCentricSwerveRequest()
-                        .withVelocityX(output.vxMetersPerSecond)
-                        .withVelocityY(output.vyMetersPerSecond)
-                        .withRotationalRate(output.omegaRadiansPerSecond));
+        swerve.runVelocity(output);
         DogLog.log("Alignment/Target x", targetPose.get().getX());
         DogLog.log("Alignment/Target y", targetPose.get().getY());
         DogLog.log("Alignment/Target Angle", targetPose.get().getRotation().getDegrees());
@@ -211,12 +206,7 @@ public class SwerveDrivePIDToPose extends Command {
 
     @Override
     public void end(boolean interrupted) {
-        swerve.setControl(
-                swerve
-                        .getFieldCentricSwerveRequest()
-                        .withVelocityX(0)
-                        .withVelocityY(0)
-                        .withRotationalRate(0));
+        swerve.stop();
         Field.clearFieldObject(targetPose2d);
     }
 }
