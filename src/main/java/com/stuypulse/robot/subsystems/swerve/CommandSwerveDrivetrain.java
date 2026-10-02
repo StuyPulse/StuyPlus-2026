@@ -17,11 +17,11 @@ import com.ctre.phoenix6.swerve.SwerveDrivetrainConstants;
 import com.ctre.phoenix6.swerve.SwerveModule.DriveRequestType;
 import com.ctre.phoenix6.swerve.SwerveModuleConstants;
 import com.ctre.phoenix6.swerve.SwerveRequest;
-import com.pathplanner.lib.auto.AutoBuilder;
-import com.pathplanner.lib.config.RobotConfig;
-import com.pathplanner.lib.controllers.PPHolonomicDriveController;
-import com.pathplanner.lib.path.PathPlannerPath;
-import com.pathplanner.lib.util.PathPlannerLogging;
+// import com.pathplanner.lib.auto.AutoBuilder;
+// import com.pathplanner.lib.config.RobotConfig;
+// import com.pathplanner.lib.controllers.PPHolonomicDriveController;
+// import com.pathplanner.lib.path.PathPlannerPath;
+// import com.pathplanner.lib.util.PathPlannerLogging;
 import com.stuypulse.robot.Robot;
 import com.stuypulse.robot.constants.Field;
 import com.stuypulse.robot.constants.Gains;
@@ -476,43 +476,43 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
         super.resetPose(pose);
     }
 
-    public void configureAutoBuilder() {
-        try {
-            AutoBuilder.configure(
-                    this::getPose,
-                    this::resetPose,
-                    this::getChassisSpeeds,
-                    this::setChassisSpeeds,
-                    new PPHolonomicDriveController(Gains.Swerve.Alignment.XY,
-                            Gains.Swerve.Alignment.THETA),
-                    RobotConfig.fromGUISettings(),
-                    () -> false,
-                    instance);
-            PathPlannerLogging.setLogActivePathCallback(
-                    (poses) -> {
-                        if (Robot.isBlue()) {
-                            Field.FIELD2D.getObject("path").setPoses(poses);
-                        } else {
-                            Field.FIELD2D.getObject("path").setPoses(
-                                    Field.transformToOppositeAlliance(poses));
-                        }
-                    });
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+//     public void configureAutoBuilder() {
+//         try {
+//             AutoBuilder.configure(
+//                     this::getPose,
+//                     this::resetPose,
+//                     this::getChassisSpeeds,
+//                     this::setChassisSpeeds,
+//                     new PPHolonomicDriveController(Gains.Swerve.Alignment.XY,
+//                             Gains.Swerve.Alignment.THETA),
+//                     RobotConfig.fromGUISettings(),
+//                     () -> false,
+//                     instance);
+//             PathPlannerLogging.setLogActivePathCallback(
+//                     (poses) -> {
+//                         if (Robot.isBlue()) {
+//                             Field.FIELD2D.getObject("path").setPoses(poses);
+//                         } else {
+//                             Field.FIELD2D.getObject("path").setPoses(
+//                                     Field.transformToOppositeAlliance(poses));
+//                         }
+//                     });
+//         } catch (Exception e) {
+//             e.printStackTrace();
+//         }
+//     }
 
-    public Command followPathCommand(String pathName) {
-        try {
-            return followPathCommand(PathPlannerPath.fromPathFile(pathName));
-        } catch (Exception e) {
-            throw new IllegalArgumentException(pathName + " does not exist");
-        }
-    }
+//     public Command followPathCommand(String pathName) {
+//         try {
+//             return followPathCommand(PathPlannerPath.fromPathFile(pathName));
+//         } catch (Exception e) {
+//             throw new IllegalArgumentException(pathName + " does not exist");
+//         }
+//     }
 
-    public Command followPathCommand(PathPlannerPath path) {
-        return AutoBuilder.followPath(path);
-    }
+//     public Command followPathCommand(PathPlannerPath path) {
+//         return AutoBuilder.followPath(path);
+//     }
 
     public SwerveModuleState[] getModuleStates() {
         SwerveModuleState[] moduleStates = new SwerveModuleState[4];
