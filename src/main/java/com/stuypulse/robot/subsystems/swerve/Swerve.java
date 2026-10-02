@@ -224,6 +224,11 @@ public class Swerve extends SubsystemBase implements VisionConsumer {
      * @param speeds Speeds in meters/sec
      */
     public void runVelocity(ChassisSpeeds speeds) {
+        if (!Settings.EnabledSubsystems.SWERVE.get()) {
+            stop();
+            return;
+        }
+
         // Calculate module setpoints
         ChassisSpeeds discreteSpeeds = ChassisSpeeds.discretize(speeds, 0.02);
         SwerveModuleState[] setpointStates = kinematics.toSwerveModuleStates(discreteSpeeds);
