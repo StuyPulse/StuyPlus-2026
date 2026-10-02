@@ -3,6 +3,7 @@ package com.stuypulse.robot.subsystems.shooter;
 import static edu.wpi.first.units.Units.*;
 
 import org.littletonrobotics.junction.AutoLog;
+import org.littletonrobotics.junction.AutoLogOutput;
 
 import edu.wpi.first.units.measure.*;
 
@@ -25,8 +26,13 @@ public interface ShooterIO {
     }
 
     public static class ShooterIOOutputs {
+        @AutoLogOutput(key = "Shooter/Mode")
         public ShooterIOOutputMode mode = ShooterIOOutputMode.STOP;
+
+        @AutoLogOutput(key = "Shooter/Target Velocity")
         public AngularVelocity targetVelocity = RPM.zero();
+        
+        @AutoLogOutput(key = "Shooter/Gain Slot")
         public int gainSlot = 0;
     }
 

@@ -3,6 +3,7 @@ package com.stuypulse.robot.subsystems.handoff;
 import static edu.wpi.first.units.Units.*;
 
 import org.littletonrobotics.junction.AutoLog;
+import org.littletonrobotics.junction.AutoLogOutput;
 
 import edu.wpi.first.units.measure.*;
 
@@ -25,7 +26,10 @@ public interface HandoffIO {
     }
 
     public static class HandoffIOOutputs {
+        @AutoLogOutput(key = "Handoff/Mode")
         public HandoffIOOutputMode mode = HandoffIOOutputMode.STOP;
+
+        @AutoLogOutput(key = "Handoff/Target Voltage")
         public Voltage voltage = Volts.zero();
     }
 
