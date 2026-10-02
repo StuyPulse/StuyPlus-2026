@@ -19,9 +19,16 @@ public interface ShooterIO {
 
     public default void updateInputs(ShooterIOInputs inputs) {};
 
-    public default void setGainsSlot(int slot) {};
-    public default void setTargetVelocity(AngularVelocity velocity) {};
-    public default void setTargetVoltage(Voltage voltage) {};
+    public static enum ShooterIOOutputMode {
+        VELOCITY,
+        STOP
+    }
 
-    public default void stopMotors() {};
+    public static class ShooterIOOutputs {
+        public ShooterIOOutputMode mode = ShooterIOOutputMode.STOP;
+        public AngularVelocity targetVelocity = RPM.zero();
+        public int gainSlot = 0;
+    }
+
+    public default void applyOutputs(ShooterIOOutputs outputs) {}
 }

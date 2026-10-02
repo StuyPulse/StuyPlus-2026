@@ -22,7 +22,6 @@ public abstract class ShooterIOTalonFXBase implements ShooterIO {
     private final TalonFX shooterMotorRight;
 
     private final VelocityTorqueCurrentFOC shooterController;
-    private final VoltageOut sysIdController;
     private final Follower shooterFollowerController;
 
     private final StatusSignal<Angle> position;
@@ -44,7 +43,6 @@ public abstract class ShooterIOTalonFXBase implements ShooterIO {
         Motors.Shooter.SHOOTER_MOTOR_LEFT.configure(shooterMotorLeft);
 
         this.shooterController = new VelocityTorqueCurrentFOC(0);
-        this.sysIdController = new VoltageOut(0).withEnableFOC(true);
 
         this.position = shooterMotorRight.getPosition();
         this.velocity = shooterMotorRight.getVelocity();
@@ -60,30 +58,6 @@ public abstract class ShooterIOTalonFXBase implements ShooterIO {
     }
 
     @Override
-    public void stopMotors() {
-        shooterMotorRight.stopMotor();
-        shooterMotorCenter.stopMotor();
-        shooterMotorLeft.stopMotor();
-        shooterMotorCenter.setControl(shooterFollowerController);
-        shooterMotorLeft.setControl(shooterFollowerController);
-    }
-
-    @Override
-    public void setGainsSlot(int slot) {
-        this.shooterController.withSlot(slot);
-    }
-
-    @Override
-    public void setTargetVelocity(AngularVelocity targetVelocity) {
-        shooterMotorRight.setControl(shooterController.withVelocity(targetVelocity));
-    }
-
-    @Override
-    public void setTargetVoltage(Voltage voltage) {
-        shooterMotorRight.setControl(sysIdController.withOutput(voltage));
-    }
-
-    @Override
     public void updateInputs(ShooterIOInputs inputs) {
         inputs.position = this.position.refresh().getValue();
         inputs.velocity = this.velocity.refresh().getValue();
@@ -91,5 +65,22 @@ public abstract class ShooterIOTalonFXBase implements ShooterIO {
         inputs.torqueCurrent = this.torqueCurrent.refresh().getValue();
         inputs.supplyCurrent = this.supplyCurrent.refresh().getValue();
         inputs.statorCurrent = this.statorCurrent.refresh().getValue();
+    }
+
+    @Override
+    public void applyOutputs(ShooterIOOutputs outputs) {
+        switch (outputs.mode) {
+            case VELOCITY -> shooterMotorRight.setControl(shooterController
+                                                            .withVelocity(outputs.targetVelocity)
+                                                            .withSlot(outputs.gainSlot));
+
+            case STOP -> {
+                shooterMotorRight.stopMotor();
+                shooterMotorCenter.stopMotor();
+                shooterMotorLeft.stopMotor();
+                shooterMotorCenter.setControl(shooterFollowerController);
+                shooterMotorLeft.setControl(shooterFollowerController);
+            }
+        }
     }
 }
