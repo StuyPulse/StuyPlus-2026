@@ -11,16 +11,16 @@ import com.stuypulse.robot.commands.auton.bline.LBDumpyBLine;
 import com.stuypulse.robot.commands.auton.bline.OutpostOnlyBLine;
 import com.stuypulse.robot.commands.auton.bline.RBDumpyBLine;
 import com.stuypulse.robot.commands.auton.bline.TwoMeterTestBLine;
-import com.stuypulse.robot.commands.auton.defensive.LBDisrupt;
-import com.stuypulse.robot.commands.auton.defensive.LBFerry;
-import com.stuypulse.robot.commands.auton.defensive.RBDisrupt;
-import com.stuypulse.robot.commands.auton.defensive.RBFerry;
-import com.stuypulse.robot.commands.auton.shooting.FrontHubShootPreloads;
-import com.stuypulse.robot.commands.auton.shooting.LBDumpy;
-import com.stuypulse.robot.commands.auton.shooting.RBDumpy;
-import com.stuypulse.robot.commands.auton.structures.CenterDepot;
+// import com.stuypulse.robot.commands.auton.defensive.LBDisrupt;
+// import com.stuypulse.robot.commands.auton.defensive.LBFerry;
+// import com.stuypulse.robot.commands.auton.defensive.RBDisrupt;
+// import com.stuypulse.robot.commands.auton.defensive.RBFerry;
+// import com.stuypulse.robot.commands.auton.shooting.FrontHubShootPreloads;
+// import com.stuypulse.robot.commands.auton.shooting.LBDumpy;
+// import com.stuypulse.robot.commands.auton.shooting.RBDumpy;
+// import com.stuypulse.robot.commands.auton.structures.CenterDepot;
 import com.stuypulse.robot.commands.auton.test.DoNothingAuton;
-import com.stuypulse.robot.commands.auton.test.TwoMeterTest;
+// import com.stuypulse.robot.commands.auton.test.TwoMeterTest;
 import com.stuypulse.robot.commands.compound.StopShooting;
 import com.stuypulse.robot.commands.feeder.FeederScramble;
 import com.stuypulse.robot.commands.feeder.FeederSetForward;
@@ -53,7 +53,7 @@ import com.stuypulse.robot.subsystems.shooter.Shooter;
 import com.stuypulse.robot.subsystems.swerve.CommandSwerveDrivetrain;
 import com.stuypulse.robot.subsystems.vision.LimelightVision;
 import com.stuypulse.robot.util.BlineUtil.BLineConfig;
-import com.stuypulse.robot.util.PathUtil.AutonConfig;
+// import com.stuypulse.robot.util.PathUtil.AutonConfig;
 
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -97,7 +97,7 @@ public class RobotContainer {
 
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
     public RobotContainer() {
-        swerve.configureAutoBuilder();
+        // swerve.configureAutoBuilder();
         configureDefaultCommands();
         configureButtonBindings();
         configureAutons();
@@ -217,65 +217,65 @@ public class RobotContainer {
         autonChooser.addOption("Do Nothing", new DoNothingAuton());
         // SHOOT
 
-        AutonConfig centerDepot = new AutonConfig("Center Depot", CenterDepot::new,
-            "Hub to Depot",
-            "Tower shoot");
-        centerDepot.register(autonChooser);
+        // AutonConfig centerDepot = new AutonConfig("Center Depot", CenterDepot::new,
+        //     "Hub to Depot",
+        //     "Tower shoot");
+        // centerDepot.register(autonChooser);
 
-        AutonConfig frontHubShootPreloads = new AutonConfig("Front Hub Shoot Preloads", FrontHubShootPreloads::new,
-            "Front Hub Shoot Preloads"
-        );
-        frontHubShootPreloads.register(autonChooser);
+        // AutonConfig frontHubShootPreloads = new AutonConfig("Front Hub Shoot Preloads", FrontHubShootPreloads::new,
+        //     "Front Hub Shoot Preloads"
+        // );
+        // frontHubShootPreloads.register(autonChooser);
 
-        AutonConfig LB_Dumpy = new AutonConfig("LB Dumpy", LBDumpy::new,
-            "LB to N Dumpy",
-            "LB Intake Dumpy",
-            "LB Backsweep Dumpy",
-            "LB Shoot Dumpy",
-            "LB Shoot to Depot");
-        LB_Dumpy.register(autonChooser);
+        // AutonConfig LB_Dumpy = new AutonConfig("LB Dumpy", LBDumpy::new,
+        //     "LB to N Dumpy",
+        //     "LB Intake Dumpy",
+        //     "LB Backsweep Dumpy",
+        //     "LB Shoot Dumpy",
+        //     "LB Shoot to Depot");
+        // LB_Dumpy.register(autonChooser);
 
-        AutonConfig RB_Dumpy = new AutonConfig("RB Dumpy", RBDumpy::new, 
-            "RB to N Dumpy",
-            "RB Intake Dumpy",
-            "RB Backsweep Dumpy",
-            "RB Shoot Dumpy"
-        );
-        RB_Dumpy.register(autonChooser);
+        // AutonConfig RB_Dumpy = new AutonConfig("RB Dumpy", RBDumpy::new, 
+        //     "RB to N Dumpy",
+        //     "RB Intake Dumpy",
+        //     "RB Backsweep Dumpy",
+        //     "RB Shoot Dumpy"
+        // );
+        // RB_Dumpy.register(autonChooser);
 
-        // FERRY
-        AutonConfig LB_Ferry = new AutonConfig("LB Disrupt", LBFerry::new, 
-            "LB to N Ferry",
-            "N to LT Ferry",
-            "LT Hub Ferry",
-            "N to Depot Ferry"
-        );
-        LB_Ferry.register(autonChooser);
+        // // FERRY
+        // AutonConfig LB_Ferry = new AutonConfig("LB Disrupt", LBFerry::new, 
+        //     "LB to N Ferry",
+        //     "N to LT Ferry",
+        //     "LT Hub Ferry",
+        //     "N to Depot Ferry"
+        // );
+        // LB_Ferry.register(autonChooser);
 
-        AutonConfig RB_Ferry = new AutonConfig("LB Disrupt", RBFerry::new, 
-            "RB to N Ferry",
-            "N to RT Ferry",
-            "RT Hub Ferry",
-            "N to Outpost Ferry"
-        );
-        RB_Ferry.register(autonChooser);
+        // AutonConfig RB_Ferry = new AutonConfig("LB Disrupt", RBFerry::new, 
+        //     "RB to N Ferry",
+        //     "N to RT Ferry",
+        //     "RT Hub Ferry",
+        //     "N to Outpost Ferry"
+        // );
+        // RB_Ferry.register(autonChooser);
 
-        // DISRUPT
-        AutonConfig LB_Disrupt = new AutonConfig("LB Disrupt", LBDisrupt::new, 
-            "LB to CN Disrupt",
-            "LN Disrupt Circle",
-            "LN Disrupt Circle",
-            "LB Disrupt Return"
-        );
-        LB_Disrupt.register(autonChooser);
+        // // DISRUPT
+        // AutonConfig LB_Disrupt = new AutonConfig("LB Disrupt", LBDisrupt::new, 
+        //     "LB to CN Disrupt",
+        //     "LN Disrupt Circle",
+        //     "LN Disrupt Circle",
+        //     "LB Disrupt Return"
+        // );
+        // LB_Disrupt.register(autonChooser);
 
-        AutonConfig RB_Disrupt = new AutonConfig("RB Disrupt", RBDisrupt::new, 
-            "RB to CN Disrupt",
-            "RN Circle Disrupt",
-            "RN Circle Disrupt",
-            "RB Disrupt Return"
-        );
-        RB_Disrupt.register(autonChooser);
+        // AutonConfig RB_Disrupt = new AutonConfig("RB Disrupt", RBDisrupt::new, 
+        //     "RB to CN Disrupt",
+        //     "RN Circle Disrupt",
+        //     "RN Circle Disrupt",
+        //     "RB Disrupt Return"
+        // );
+        // RB_Disrupt.register(autonChooser);
 
         BLineConfig LB_DUMPY_BLINE = new BLineConfig("LB Dumpy Bline", LBDumpyBLine::new,
         "dumpy-lb-to-nz",
