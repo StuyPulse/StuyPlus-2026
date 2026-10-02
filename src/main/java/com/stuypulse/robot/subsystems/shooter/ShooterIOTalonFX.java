@@ -11,8 +11,8 @@ public class ShooterIOTalonFX extends ShooterIOTalonFXBase {
     }
 
     public ShooterIOTalonFX() {
-        super(getShooterMotor(Ports.Shooter.SHOOTER_MOTOR_RIGHT),
-            getShooterMotor(Ports.Shooter.SHOOTER_MOTOR_CENTER),
-            getShooterMotor(Ports.Shooter.SHOOTER_MOTOR_LEFT));
+        super(getShooterMotor(ShooterConstants.ShooterDeviceIds.SHOOTER_MOTOR_RIGHT),
+            getShooterMotor(ShooterConstants.ShooterDeviceIds.SHOOTER_MOTOR_CENTER),
+            getShooterMotor(ShooterConstants.ShooterDeviceIds.SHOOTER_MOTOR_LEFT));
     }
 }

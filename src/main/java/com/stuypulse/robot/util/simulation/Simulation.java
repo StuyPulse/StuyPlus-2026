@@ -11,6 +11,7 @@ import com.stuypulse.robot.constants.Settings;
 import com.stuypulse.robot.subsystems.handoff.Handoff;
 import com.stuypulse.robot.subsystems.handoff.Handoff.HandoffState;
 import com.stuypulse.robot.subsystems.intake.Intake;
+import com.stuypulse.robot.subsystems.intake.IntakeConstants;
 import com.stuypulse.robot.subsystems.intake.Intake.IntakeState;
 import com.stuypulse.robot.subsystems.shooter.Shooter;
 import com.stuypulse.robot.subsystems.swerve.CommandSwerveDrivetrain;
@@ -124,7 +125,7 @@ public class Simulation {
     private double getIntakeArmEndX(Angle position) {
         return SimulationConstants.Intake.PIVOT_END_X
                 + // sin works because we're zeroed at horizontal
-                Settings.Intake.Pivot.PIVOT_ARM_LENGTH.in(Meters)
+                IntakeConstants.IntakeSettings.Pivot.PIVOT_ARM_LENGTH.in(Meters)
                         * Math.sin(
                                 position.in(Radians)
                                         + SimulationConstants.Intake.PIVOT_OFFSETS.toRotation3d().getX());

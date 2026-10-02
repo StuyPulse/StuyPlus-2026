@@ -24,7 +24,6 @@ import com.pathplanner.lib.path.PathPlannerPath;
 import com.pathplanner.lib.util.PathPlannerLogging;
 import com.stuypulse.robot.Robot;
 import com.stuypulse.robot.constants.Field;
-import com.stuypulse.robot.constants.Gains;
 import com.stuypulse.robot.constants.Settings;
 import com.stuypulse.robot.subsystems.swerve.TunerConstants.TunerSwerveDrivetrain;
 import com.stuypulse.robot.util.simulation.MapleSimSwerveDrivetrain;
@@ -84,14 +83,14 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
 
     private final SwerveRequest.FieldCentric fieldCentricRequest = new SwerveRequest.FieldCentric()
             .withDriveRequestType(DriveRequestType.OpenLoopVoltage)
-            .withDeadband(Settings.Swerve.MODULE_VELOCITY_DEADBAND_M_PER_S)
-            .withRotationalDeadband(Settings.Swerve.ROTATIONAL_DEADBAND_RAD_PER_S)
+            .withDeadband(SwerveConstants.SwerveSettings.MODULE_VELOCITY_DEADBAND_M_PER_S)
+            .withRotationalDeadband(SwerveConstants.SwerveSettings.ROTATIONAL_DEADBAND_RAD_PER_S)
             .withDesaturateWheelSpeeds(true);
 
     private final SwerveRequest.RobotCentric robotCentricRequest = new SwerveRequest.RobotCentric()
             .withDriveRequestType(DriveRequestType.OpenLoopVoltage)
-            .withDeadband(Settings.Swerve.MODULE_VELOCITY_DEADBAND_M_PER_S)
-            .withRotationalDeadband(Settings.Swerve.ROTATIONAL_DEADBAND_RAD_PER_S)
+            .withDeadband(SwerveConstants.SwerveSettings.MODULE_VELOCITY_DEADBAND_M_PER_S)
+            .withRotationalDeadband(SwerveConstants.SwerveSettings.ROTATIONAL_DEADBAND_RAD_PER_S)
             .withDesaturateWheelSpeeds(true);
 
     public SwerveRequest.FieldCentric getFieldCentricSwerveRequest() {
@@ -131,7 +130,7 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
                                            * supports "volts"
                                            */
                     Volts.of(
-                            Settings.Swerve.Constraints.MAX_VELOCITY_M_PER_S), // Use
+                            SwerveConstants.SwerveSettings.Constraints.MAX_VELOCITY_M_PER_S), // Use
                                                                                // default
                                                                                // timeout
                                                                                // (10 s)
@@ -440,7 +439,7 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
         Rotation2d targetAngle = new Rotation2d(
                 Math.atan2(target.getY() - currentPose.getY(), target.getX() - currentPose.getX()));
         return currentPose.getRotation().minus(targetAngle)
-                .getDegrees() < Settings.Swerve.Alignment.Tolerances.THETA_TOLERANCE.getDegrees();
+                .getDegrees() < SwerveConstants.SwerveSettings.Alignment.Tolerances.THETA_TOLERANCE.getDegrees();
     }
 
     public Pose2d getShooterPose() {
@@ -467,8 +466,8 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
                     this::resetPose,
                     this::getChassisSpeeds,
                     this::setChassisSpeeds,
-                    new PPHolonomicDriveController(Gains.Swerve.Alignment.XY,
-                            Gains.Swerve.Alignment.THETA),
+                    new PPHolonomicDriveController(SwerveConstants.SwerveGains.Alignment.XY,
+                            SwerveConstants.SwerveGains.Alignment.THETA),
                     RobotConfig.fromGUISettings(),
                     () -> false,
                     instance);
