@@ -5,6 +5,12 @@
 /***************************************************************/
 package com.stuypulse.robot;
 
+import com.stuypulse.robot.commands.auton.bline.CenterDepotBLine;
+import com.stuypulse.robot.commands.auton.bline.FrontHubShootBLine;
+import com.stuypulse.robot.commands.auton.bline.LBDumpyBLine;
+import com.stuypulse.robot.commands.auton.bline.OutpostOnlyBLine;
+import com.stuypulse.robot.commands.auton.bline.RBDumpyBLine;
+import com.stuypulse.robot.commands.auton.bline.TwoMeterTestBLine;
 import com.stuypulse.robot.commands.auton.defensive.LBDisrupt;
 import com.stuypulse.robot.commands.auton.defensive.LBFerry;
 import com.stuypulse.robot.commands.auton.defensive.RBDisrupt;
@@ -14,6 +20,7 @@ import com.stuypulse.robot.commands.auton.shooting.LBDumpy;
 import com.stuypulse.robot.commands.auton.shooting.RBDumpy;
 import com.stuypulse.robot.commands.auton.structures.CenterDepot;
 import com.stuypulse.robot.commands.auton.test.DoNothingAuton;
+import com.stuypulse.robot.commands.auton.test.TwoMeterTest;
 import com.stuypulse.robot.commands.compound.StopShooting;
 import com.stuypulse.robot.commands.feeder.FeederScramble;
 import com.stuypulse.robot.commands.feeder.FeederSetForward;
@@ -45,6 +52,7 @@ import com.stuypulse.robot.subsystems.leds.LEDController;
 import com.stuypulse.robot.subsystems.shooter.Shooter;
 import com.stuypulse.robot.subsystems.swerve.CommandSwerveDrivetrain;
 import com.stuypulse.robot.subsystems.vision.LimelightVision;
+import com.stuypulse.robot.util.BlineUtil.BLineConfig;
 import com.stuypulse.robot.util.PathUtil.AutonConfig;
 
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -268,6 +276,46 @@ public class RobotContainer {
             "RB Disrupt Return"
         );
         RB_Disrupt.register(autonChooser);
+
+        BLineConfig LB_DUMPY_BLINE = new BLineConfig("LB Dumpy Bline", LBDumpyBLine::new,
+        "dumpy-lb-to-nz",
+            "dumpy-lb-nz-intake",
+            "dumpy-lb-backsweep",
+            "dumpy-lb-shoot",
+            "dumpy-lb-shoot-depot"
+        );
+        LB_DUMPY_BLINE.register(autonChooser);
+
+        BLineConfig RB_DUMPY_BLINE = new BLineConfig("RB Dumpy Bline", RBDumpyBLine::new,
+            "dumpy-rb-to-nz",
+            "dumpy-rb-nz-intake",
+            "dumpy-rb-backsweep",
+            "dumpy-rb-shoot"
+        );
+        RB_DUMPY_BLINE.register(autonChooser);
+
+        BLineConfig FRONT_HUB_SHOOT_BLINE = new BLineConfig("Front Hub Shoot Bline", FrontHubShootBLine::new,
+            "front-hub-shoot"
+        );
+        FRONT_HUB_SHOOT_BLINE.register(autonChooser);
+
+        BLineConfig CENTER_DEPOT_BLINE = new BLineConfig("Center Depot Bline", CenterDepotBLine::new,
+            "hub-to-depot",
+            "tower-shoot"
+        );
+        CENTER_DEPOT_BLINE.register(autonChooser);
+
+        BLineConfig OUTPOST_ONLY_BLINE = new BLineConfig("Outpost Only Bline", OutpostOnlyBLine::new,
+            "outpost"
+        );
+        OUTPOST_ONLY_BLINE.register(autonChooser);
+
+        BLineConfig TWO_METER_TEST_BLINE = new BLineConfig("Two Meter Test Bline", TwoMeterTestBLine::new,
+            "two-meter"
+        );
+        TWO_METER_TEST_BLINE.register(autonChooser);
+
+        
 
         // autonChooser.addOption("SysID Module Translation Dynamic Forwards",
         // swerve.sysIdDynamic(Direction.kForward));
