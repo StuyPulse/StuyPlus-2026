@@ -24,6 +24,7 @@ import com.stuypulse.robot.constants.Settings;
 import com.stuypulse.robot.subsystems.swerve.CommandSwerveDrivetrain;
 import com.stuypulse.robot.subsystems.vision.LimelightVision;
 import com.stuypulse.robot.subsystems.vision.LimelightVision.MegaTagMode;
+import com.stuypulse.robot.util.FullSubsystem;
 import com.stuypulse.robot.util.LoggedSignals;
 import com.stuypulse.robot.util.simulation.RobotVisualizer;
 import com.stuypulse.robot.util.simulation.Simulation;
@@ -113,7 +114,10 @@ public class Robot extends LoggedRobot {
     @Override
     public void robotPeriodic() {
         LoggedSignals.refreshAll();
+        
         CommandScheduler.getInstance().run();
+        FullSubsystem.runAllPeriodicAfterScheduler();
+
         DogLog.forceNt.log("Bot/Alliance", alliance.name());
         DogLog.forceNt.log("Match Time", DriverStation.getMatchTime());
         SmartDashboard.putData("Command Scheduler", CommandScheduler.getInstance());
