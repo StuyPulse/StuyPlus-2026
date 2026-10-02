@@ -18,7 +18,7 @@ import com.stuypulse.robot.commands.auton.bline.TwoMeterTestBLine;
 // import com.stuypulse.robot.commands.auton.shooting.FrontHubShootPreloads;
 // import com.stuypulse.robot.commands.auton.shooting.LBDumpy;
 // import com.stuypulse.robot.commands.auton.shooting.RBDumpy;
-import com.stuypulse.robot.commands.auton.structures.CenterDepot;
+// import com.stuypulse.robot.commands.auton.structures.CenterDepot;
 import com.stuypulse.robot.commands.auton.test.DoNothingAuton;
 // import com.stuypulse.robot.commands.auton.test.TwoMeterTest;
 import com.stuypulse.robot.commands.compound.StopShooting;
