@@ -15,55 +15,6 @@ import edu.wpi.first.units.measure.Current;
 
 public class Gains {
 
-    public interface Shooter {
-
-        DoubleSubscriber kP = DogLog.tunable("Shooter/kP", 15.0);
-
-        DoubleSubscriber kI = DogLog.tunable("Shooter/kI", 0.0);
-
-        DoubleSubscriber kD = DogLog.tunable("Shooter/kD", 0.0);
-
-        DoubleSubscriber kS = DogLog.tunable("Shooter/kS", 2.5);
-
-        DoubleSubscriber kV = DogLog.tunable("Shooter/kV", 0.05);
-
-        DoubleSubscriber kA = DogLog.tunable("Shooter/kA", 0.0);
-
-        public interface FirstShot {
-            double kP = 20;
-            double kI = 0;
-            double kD = 0;
-        }
-    }
-
-    public interface Intake {
-
-        // pivot gains
-        double kP = 300;//300
-
-        double kI = 0;
-
-        double kD = 75;
-
-        Current kS = Amps.of(0);
-
-        Current kV = Amps.of(0);
-
-        Current kA = Amps.of(0);
-
-        Current kG = Amps.of(-12);
-
-        public interface Digestion {
-
-            double kP = 325;
-
-            double kI = 0;
-
-            // TODO: tune
-            double kD = 75;
-        }
-    }
-
     public interface Swerve {
 
         public interface Drive {

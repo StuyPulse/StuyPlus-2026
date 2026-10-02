@@ -62,21 +62,21 @@ public abstract class IntakeIOTalonFXBase implements IntakeIO {
 
     public IntakeIOTalonFXBase(TalonFX pivotMotor, TalonFX rollerMotorLeft, TalonFX rollerMotorRight) {
         this.pivotMotor = pivotMotor;
-        Motors.Intake.PIVOT_CONFIG.configure(pivotMotor);
-        pivotMotor.setPosition(Settings.Intake.Pivot.INITIAL_ANGLE);
+        IntakeConstants.IntakeMotorConfigs.PIVOT_CONFIG.configure(pivotMotor);
+        pivotMotor.setPosition(IntakeConstants.IntakeSettings.Pivot.INITIAL_ANGLE);
 
         this.rollerMotorLeft = rollerMotorLeft;
         this.rollerMotorRight = rollerMotorRight;
-        Motors.Intake.LEFT_ROLLER_CONFIG.configure(rollerMotorLeft);
-        Motors.Intake.RIGHT_ROLLER_CONFIG.configure(rollerMotorRight);
+        IntakeConstants.IntakeMotorConfigs.LEFT_ROLLER_CONFIG.configure(rollerMotorLeft);
+        IntakeConstants.IntakeMotorConfigs.RIGHT_ROLLER_CONFIG.configure(rollerMotorRight);
 
-        positionController = new PositionTorqueCurrentFOC(Settings.Intake.Pivot.INITIAL_ANGLE);
-        homingController = new VoltageOut(Settings.Intake.Pivot.HOMING_DOWN_VOLTAGE).withEnableFOC(true);
-        pushdownController = new TorqueCurrentFOC(Settings.Intake.Pivot.PUSHDOWN_CURRENT.getAsDouble());
+        positionController = new PositionTorqueCurrentFOC(IntakeConstants.IntakeSettings.Pivot.INITIAL_ANGLE);
+        homingController = new VoltageOut(IntakeConstants.IntakeSettings.Pivot.HOMING_DOWN_VOLTAGE).withEnableFOC(true);
+        pushdownController = new TorqueCurrentFOC(IntakeConstants.IntakeSettings.Pivot.PUSHDOWN_CURRENT.getAsDouble());
         sysIdController = new VoltageOut(0).withEnableFOC(true);
 
         rollerController = new DutyCycleOut(0).withEnableFOC(true);
-        followerController = new Follower(Ports.Intake.INTAKE_ROLLER_MOTOR_LEFT, MotorAlignmentValue.Opposed);
+        followerController = new Follower(IntakeConstants.IntakeDeviceIds.INTAKE_ROLLER_MOTOR_LEFT, MotorAlignmentValue.Opposed);
         rollerMotorRight.setControl(followerController);
 
         this.pivotPosition = pivotMotor.getPosition();
@@ -84,19 +84,19 @@ public abstract class IntakeIOTalonFXBase implements IntakeIO {
         this.pivotVoltage = pivotMotor.getMotorVoltage();
         this.pivotSupplyCurrent = pivotMotor.getSupplyCurrent();
         this.pivotStatorCurrent = pivotMotor.getStatorCurrent();
-        pivotLimitSwitch = new DigitalInput(Ports.Intake.PIVOT_LIMIT_SWITCH);
-        pivotStalling = () -> pivotMotor.getStatorCurrent().getValue().gt(Settings.Intake.Pivot.STALL_CURRENT);
+        pivotLimitSwitch = new DigitalInput(IntakeConstants.IntakeDeviceIds.PIVOT_LIMIT_SWITCH);
+        pivotStalling = () -> pivotMotor.getStatorCurrent().getValue().gt(IntakeConstants.IntakeSettings.Pivot.STALL_CURRENT);
 
         this.rollerVelocity = rollerMotorLeft.getVelocity();
         this.rollerVoltage = rollerMotorLeft.getMotorVoltage();
         this.rollerStatorCurrent = rollerMotorLeft.getStatorCurrent();
         this.rollerSupplyCurrent = rollerMotorLeft.getSupplyCurrent();
         this.rollerDutyCycle = rollerMotorLeft.getDutyCycle();
-        leftRollerStalling = () -> rollerMotorLeft.getStatorCurrent().getValue().gt(Settings.Intake.Roller.STALL_CURRENT);
-        rightRollerStalling = () -> rollerMotorRight.getStatorCurrent().getValue().gt(Settings.Intake.Roller.STALL_CURRENT);
+        leftRollerStalling = () -> rollerMotorLeft.getStatorCurrent().getValue().gt(IntakeConstants.IntakeSettings.Roller.STALL_CURRENT);
+        rightRollerStalling = () -> rollerMotorRight.getStatorCurrent().getValue().gt(IntakeConstants.IntakeSettings.Roller.STALL_CURRENT);
 
-        leftRollerDebouncer = new Debouncer(Settings.Intake.Roller.STALL_DEBOUNCE_SEC.in(Seconds), DebounceType.kBoth);
-        rightRollerDebouncer = new Debouncer(Settings.Intake.Roller.STALL_DEBOUNCE_SEC.in(Seconds), DebounceType.kBoth);
+        leftRollerDebouncer = new Debouncer(IntakeConstants.IntakeSettings.Roller.STALL_DEBOUNCE_SEC.in(Seconds), DebounceType.kBoth);
+        rightRollerDebouncer = new Debouncer(IntakeConstants.IntakeSettings.Roller.STALL_DEBOUNCE_SEC.in(Seconds), DebounceType.kBoth);
     }
 
     /*********************/
@@ -181,15 +181,15 @@ public abstract class IntakeIOTalonFXBase implements IntakeIO {
 
         // State
         // if (limitSwitchHit()) {
-        //     seedPivotAngle(Settings.Intake.Pivot.DEPLOY_ANGLE);
+        //     seedPivotAngle(IntakeConstants.IntakeSettings.Pivot.DEPLOY_ANGLE);
         // }
 
         // if (currentState == IntakeState.HOMING_DOWN && (pivotStalling || limitSwitchHit())) {
-        //     seedPivotAngle(Settings.Intake.Pivot.DEPLOY_ANGLE);
+        //     seedPivotAngle(IntakeConstants.IntakeSettings.Pivot.DEPLOY_ANGLE);
         //     setState(IntakeState.INTAKE);
         // }
         // if ((currentState == IntakeState.DOWN) && (pivotStalling || limitSwitchHit())) {
-        //     seedPivotAngle(Settings.Intake.Pivot.DEPLOY_ANGLE);
+        //     seedPivotAngle(IntakeConstants.IntakeSettings.Pivot.DEPLOY_ANGLE);
         // }
     }
 }

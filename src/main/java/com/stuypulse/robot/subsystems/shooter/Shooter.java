@@ -86,7 +86,7 @@ public class Shooter extends SubsystemBase {
         SHOOT(() -> InterpolationCalculator.interpolateShotInfo().targetRPM()),
         FERRY(() -> InterpolationCalculator.interpolateFerryingInfo().targetRPM()),
         /** Shooter wheels spin at a predetermined constant rate without interpolation. */
-        MANUAL_HUB(Settings.Shooter.MANUAL_HUB_RPM);
+        MANUAL_HUB(ShooterConstants.ShooterSettings.MANUAL_HUB_RPM);
 
         /** The supplier for the target RPM of the shooter in the corresponding state. */
         private DoubleSupplier RPMSupplier;
@@ -119,13 +119,13 @@ public class Shooter extends SubsystemBase {
 
     @AutoLogOutput(key = "Shooter/isSpunUp")
     public boolean shooterSpunUp() {
-        return getCurrentAngularVelocity().gte(getState().getTargetAngularVelocity().minus(Settings.Shooter.SHOOTER_SPUN_UP_TOLERANCE));
+        return getCurrentAngularVelocity().gte(getState().getTargetAngularVelocity().minus(ShooterConstants.ShooterSettings.SHOOTER_SPUN_UP_TOLERANCE));
     }
 
     public SysIdRoutine getShooterSysIdRoutine() {
         return SysId.getRoutine(
-                Settings.Shooter.RAMP_RATE,
-                Settings.Shooter.STEP_VOLTAGE,
+                ShooterConstants.ShooterSettings.RAMP_RATE,
+                ShooterConstants.ShooterSettings.STEP_VOLTAGE,
                 "Shooter",
                 this::setVoltageOverride,
                 () -> inputs.position,

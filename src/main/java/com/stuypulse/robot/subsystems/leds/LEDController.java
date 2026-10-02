@@ -41,15 +41,15 @@ public class LEDController extends SubsystemBase {
     }
 
     protected LEDController() {
-        this.led = new AddressableLED(Ports.LED.LED_PWM_PORT);
-        this.buffer = new AddressableLEDBuffer(Settings.LED.LED_LENGTH);
+        this.led = new AddressableLED(LEDConstants.LEDPorts.LED_PWM_PORT);
+        this.buffer = new AddressableLEDBuffer(LEDConstants.LEDSettings.LED_LENGTH);
         led.setLength(buffer.getLength());
         led.setData(buffer);
         led.start();
-        this.shooterView = buffer.createView(Settings.LED.SHOOTER_BUFFER[0], Settings.LED.SHOOTER_BUFFER[1]);
-        this.feederView = buffer.createView(Settings.LED.FEEDER_BUFFER[0], Settings.LED.FEEDER_BUFFER[1]);
-        this.intakeView = buffer.createView(Settings.LED.INTAKE_BUFFER[0], Settings.LED.INTAKE_BUFFER[1]);
-        this.handoffView = buffer.createView(Settings.LED.HANDOFF_BUFFER[0], Settings.LED.HANDOFF_BUFFER[1]);
+        this.shooterView = buffer.createView(LEDConstants.LEDSettings.SHOOTER_BUFFER[0], LEDConstants.LEDSettings.SHOOTER_BUFFER[1]);
+        this.feederView = buffer.createView(LEDConstants.LEDSettings.FEEDER_BUFFER[0], LEDConstants.LEDSettings.FEEDER_BUFFER[1]);
+        this.intakeView = buffer.createView(LEDConstants.LEDSettings.INTAKE_BUFFER[0], LEDConstants.LEDSettings.INTAKE_BUFFER[1]);
+        this.handoffView = buffer.createView(LEDConstants.LEDSettings.HANDOFF_BUFFER[0], LEDConstants.LEDSettings.HANDOFF_BUFFER[1]);
         applyPattern(defaultPattern);
         SmartDashboard.putData(instance);
     }
