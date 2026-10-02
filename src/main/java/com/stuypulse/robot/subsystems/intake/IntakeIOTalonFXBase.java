@@ -5,8 +5,6 @@
 /***************************************************************/
 package com.stuypulse.robot.subsystems.intake;
 
-import java.util.function.BooleanSupplier;
-
 import com.ctre.phoenix6.controls.DutyCycleOut;
 import com.ctre.phoenix6.controls.Follower;
 import com.ctre.phoenix6.controls.PositionTorqueCurrentFOC;
@@ -18,11 +16,7 @@ import com.stuypulse.robot.constants.Ports;
 import com.stuypulse.robot.constants.Settings;
 import com.stuypulse.robot.util.logged.LoggedTalonFX.LoggedTalonFX;
 
-import static edu.wpi.first.units.Units.*;
 import edu.wpi.first.units.measure.*;
-
-import edu.wpi.first.math.filter.Debouncer;
-import edu.wpi.first.math.filter.Debouncer.DebounceType;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 
@@ -40,12 +34,6 @@ public abstract class IntakeIOTalonFXBase implements IntakeIO {
     private final Follower followerController;
     
     private final DigitalInput pivotLimitSwitch;
-    private final BooleanSupplier pivotStalling;
-
-    private final BooleanSupplier leftRollerStalling;
-    private final BooleanSupplier rightRollerStalling;
-    private final Debouncer leftRollerDebouncer;
-    private final Debouncer rightRollerDebouncer;
 
     public IntakeIOTalonFXBase(LoggedTalonFX pivotMotor, LoggedTalonFX rollerMotorLeft, LoggedTalonFX rollerMotorRight) {
         this.pivotMotor = pivotMotor;
@@ -66,13 +54,6 @@ public abstract class IntakeIOTalonFXBase implements IntakeIO {
         rollerMotorRight.setControl(followerController);
 
         pivotLimitSwitch = new DigitalInput(Ports.Intake.PIVOT_LIMIT_SWITCH);
-        pivotStalling = () -> pivotMotor.getStatorCurrent().getValue().gt(Settings.Intake.Pivot.STALL_CURRENT);
-
-        leftRollerStalling = () -> rollerMotorLeft.getStatorCurrent().getValue().gt(Settings.Intake.Roller.STALL_CURRENT);
-        rightRollerStalling = () -> rollerMotorRight.getStatorCurrent().getValue().gt(Settings.Intake.Roller.STALL_CURRENT);
-
-        leftRollerDebouncer = new Debouncer(Settings.Intake.Roller.STALL_DEBOUNCE_SEC.in(Seconds), DebounceType.kBoth);
-        rightRollerDebouncer = new Debouncer(Settings.Intake.Roller.STALL_DEBOUNCE_SEC.in(Seconds), DebounceType.kBoth);
     }
 
     @Override
@@ -82,14 +63,12 @@ public abstract class IntakeIOTalonFXBase implements IntakeIO {
 
     @Override
     public void updateInputs(IntakeIOInputs inputs) {
+
         pivotMotor.updateInputs(inputs.pivotMotorInputs);
         inputs.limitSwitchHit = !pivotLimitSwitch.get();
-        inputs.pivotStalling = pivotStalling.getAsBoolean();
-        inputs.pivotPushingDown = pivotMotor.getAppliedControl() == pushdownController;
 
-        rollerMotorLeft.updateInputs(inputs.rollerMotorInputs);
-        inputs.leftRollerStalling = leftRollerDebouncer.calculate(leftRollerStalling.getAsBoolean());
-        inputs.rightRollerStalling = rightRollerDebouncer.calculate(rightRollerStalling.getAsBoolean());
+        rollerMotorLeft.updateInputs(inputs.leftRollerMotorInputs);
+        rollerMotorRight.updateInputs(inputs.rightRollerMotorInputs);
     }
 
     @Override

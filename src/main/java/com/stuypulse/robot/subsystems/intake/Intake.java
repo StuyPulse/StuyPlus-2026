@@ -15,18 +15,27 @@ import com.stuypulse.robot.subsystems.intake.IntakeIO.IntakeIOPivotOutputMode;
 import com.stuypulse.robot.subsystems.intake.IntakeIO.IntakeIORollerOutputMode;
 import com.stuypulse.robot.util.FullSubsystem;
 
-import static edu.wpi.first.units.Units.Amps;
-import static edu.wpi.first.units.Units.Rotations;
+import java.util.function.BooleanSupplier;
 
 import org.littletonrobotics.junction.AutoLogOutput;
 import org.littletonrobotics.junction.Logger;
 
+import edu.wpi.first.math.filter.Debouncer;
+
+import static edu.wpi.first.units.Units.*;
 import edu.wpi.first.units.measure.*;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Intake extends FullSubsystem {
     private static final Intake instance;
+
+    private final BooleanSupplier leftRollerStalling;
+    private final BooleanSupplier rightRollerStalling;
+    private final BooleanSupplier pivotStalling;
+
+    private final Debouncer leftRollerDebouncer;
+    private final Debouncer rightRollerDebouncer;
 
     static {
         if (Robot.isReal()) {
@@ -55,6 +64,13 @@ public class Intake extends FullSubsystem {
         this.inputs = new IntakeIOInputsAutoLogged();
         this.outputs = new IntakeIOOutputs();
         this.state = IntakeState.IDLE;
+
+        this.leftRollerStalling = () -> inputs.leftRollerMotorInputs.statorCurrent.gt(Settings.Intake.Roller.STALL_CURRENT);
+        this.rightRollerStalling = () -> inputs.rightRollerMotorInputs.statorCurrent.gt(Settings.Intake.Roller.STALL_CURRENT);
+        this.pivotStalling = () -> inputs.pivotMotorInputs.statorCurrent.gt(Settings.Intake.Pivot.STALL_CURRENT);
+
+        this.leftRollerDebouncer = new Debouncer(Settings.Intake.Roller.STALL_DEBOUNCE_SEC.in(Seconds), Debouncer.DebounceType.kBoth);
+        this.rightRollerDebouncer = new Debouncer(Settings.Intake.Roller.STALL_DEBOUNCE_SEC.in(Seconds), Debouncer.DebounceType.kBoth);
     }
 
     public void setState(IntakeState state) {
@@ -137,6 +153,21 @@ public class Intake extends FullSubsystem {
         return inputs.pivotMotorInputs.position;
     }
 
+    @AutoLogOutput(key = "Intake/Left Roller Stalling")
+    public boolean isLeftRollerStalling() {
+        return leftRollerDebouncer.calculate(leftRollerStalling.getAsBoolean());
+    }
+
+    @AutoLogOutput(key = "Intake/Right Roller Stalling")
+    public boolean isRightRollerStalling() {
+        return rightRollerDebouncer.calculate(rightRollerStalling.getAsBoolean());
+    }
+
+    @AutoLogOutput(key = "Intake/Pivot Stalling")
+    public boolean isPivotStalling() {
+        return pivotStalling.getAsBoolean();
+    }
+
     @AutoLogOutput(key = "Intake/Pivot/atTargetAngle")
     public boolean atTargetAngle() {
         return inputs.pivotMotorInputs.position.minus(getState().getTargetAngle())
@@ -201,20 +232,16 @@ public class Intake extends FullSubsystem {
             return;
         }
 
-        if (outputs.pivot.voltageOverride.isPresent()) {
-            return;
-        }
-
         if (inputs.limitSwitchHit) {
             io.seedPivotAngle(Settings.Intake.Pivot.DEPLOY_ANGLE);
         }
 
-        if (currentState == IntakeState.HOMING_DOWN && (inputs.pivotStalling || inputs.limitSwitchHit)) {
+        if (currentState == IntakeState.HOMING_DOWN && (isPivotStalling() || inputs.limitSwitchHit)) {
             io.seedPivotAngle(Settings.Intake.Pivot.DEPLOY_ANGLE);
             setState(IntakeState.INTAKE);
         }
 
-        if ((currentState == IntakeState.DOWN) && (inputs.pivotStalling || inputs.limitSwitchHit)) {
+        if ((currentState == IntakeState.DOWN) && (isPivotStalling() || inputs.limitSwitchHit)) {
             io.seedPivotAngle(Settings.Intake.Pivot.DEPLOY_ANGLE);
         }
 
@@ -231,8 +258,5 @@ public class Intake extends FullSubsystem {
     @Override
     public void periodicAfterScheduler() {
         io.applyOutputs(outputs);
-        if (outputs.pivot.voltageOverride.isPresent()) {
-            Logger.recordOutput("Intake/Pivot/Voltage Override", outputs.pivot.voltageOverride.get());
-        }
     }
 }

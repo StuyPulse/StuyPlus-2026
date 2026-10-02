@@ -8,23 +8,19 @@ import com.stuypulse.robot.util.logged.LoggedTalonFX.TalonFXInputs;
 
 import static edu.wpi.first.units.Units.*;
 
-import java.util.Optional;
-
 import edu.wpi.first.units.measure.*;
 
 public interface IntakeIO {
     @AutoLog
     public static class IntakeIOInputs {
+        public boolean limitSwitchHit = false;
+        
         // Pivot
         public TalonFXInputs pivotMotorInputs = new TalonFXInputs();
-        public boolean limitSwitchHit = false;
-        public boolean pivotStalling = false;
-        public boolean pivotPushingDown = false;
 
         // Roller
-        public TalonFXInputs rollerMotorInputs = new TalonFXInputs();
-        public boolean leftRollerStalling = false;
-        public boolean rightRollerStalling = false;
+        public TalonFXInputs leftRollerMotorInputs = new TalonFXInputs();
+        public TalonFXInputs rightRollerMotorInputs = new TalonFXInputs();
     }
 
     public enum IntakeIOPivotOutputMode {
@@ -58,8 +54,6 @@ public interface IntakeIO {
 
             @AutoLogOutput(key="Intake/Pivot/Homing Voltage")
             public Voltage homing = Volts.of(0.0);
-            
-            public Optional<Voltage> voltageOverride = Optional.empty();
         }
 
         public static class IntakeIORollerOutputs {

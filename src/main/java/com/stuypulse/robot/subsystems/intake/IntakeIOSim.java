@@ -76,6 +76,6 @@ public class IntakeIOSim extends IntakeIOTalonFXBase {
         rollerMotorRight.refresh();
         super.updateInputs(inputs);
 
-        RobotVisualizer.getInstance().updateIntake(inputs.pivotMotorInputs.position, inputs.rollerMotorInputs.velocity);
+        RobotVisualizer.getInstance().updateIntake(inputs.pivotMotorInputs.position, inputs.leftRollerMotorInputs.velocity);
     }
 }
