@@ -35,7 +35,6 @@ public abstract class IntakeIOTalonFXBase implements IntakeIO {
     private final PositionTorqueCurrentFOC positionController;
     private final VoltageOut homingController;
     private final TorqueCurrentFOC pushdownController;
-    private final VoltageOut sysIdController;
 
     private final DutyCycleOut rollerController;
     private final Follower followerController;
@@ -61,7 +60,6 @@ public abstract class IntakeIOTalonFXBase implements IntakeIO {
         positionController = new PositionTorqueCurrentFOC(Settings.Intake.Pivot.INITIAL_ANGLE);
         homingController = new VoltageOut(Settings.Intake.Pivot.HOMING_DOWN_VOLTAGE).withEnableFOC(true);
         pushdownController = new TorqueCurrentFOC(Settings.Intake.Pivot.PUSHDOWN_CURRENT.getAsDouble());
-        sysIdController = new VoltageOut(0).withEnableFOC(true);
 
         rollerController = new DutyCycleOut(0).withEnableFOC(true);
         followerController = new Follower(Ports.Intake.INTAKE_ROLLER_MOTOR_LEFT, MotorAlignmentValue.Opposed);
@@ -101,11 +99,6 @@ public abstract class IntakeIOTalonFXBase implements IntakeIO {
             case POSITION -> pivotMotor.setControl(positionController.withPosition(outputs.pivot.position).withSlot(outputs.pivot.positionGainsSlot));
             case PUSHDOWN -> pivotMotor.setControl(pushdownController.withOutput(outputs.pivot.pushdown));
             case HOMING -> pivotMotor.setControl(homingController.withOutput(outputs.pivot.homing));
-            case VOLTAGE_OVERRIDE -> {
-                if (outputs.pivot.voltageOverride.isPresent()) {
-                    pivotMotor.setControl(sysIdController.withOutput(outputs.pivot.voltageOverride.get()));
-                }
-            }
         }
 
         switch (outputs.roller.outputMode) {

@@ -14,12 +14,9 @@ import com.stuypulse.robot.subsystems.intake.IntakeIO.IntakeIOOutputs;
 import com.stuypulse.robot.subsystems.intake.IntakeIO.IntakeIOPivotOutputMode;
 import com.stuypulse.robot.subsystems.intake.IntakeIO.IntakeIORollerOutputMode;
 import com.stuypulse.robot.util.FullSubsystem;
-import com.stuypulse.robot.util.SysId;
 
 import static edu.wpi.first.units.Units.Amps;
 import static edu.wpi.first.units.Units.Rotations;
-
-import java.util.Optional;
 
 import org.littletonrobotics.junction.AutoLogOutput;
 import org.littletonrobotics.junction.Logger;
@@ -27,7 +24,6 @@ import org.littletonrobotics.junction.Logger;
 import edu.wpi.first.units.measure.*;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 
 public class Intake extends FullSubsystem {
     private static final Intake instance;
@@ -150,25 +146,6 @@ public class Intake extends FullSubsystem {
     @AutoLogOutput(key = "Intake/Pivot/aboveThreshold")
     public boolean isPivotAboveThreshold() {
         return inputs.pivotMotorInputs.position.gt(Settings.Intake.Pivot.PUSHDOWN_THRESHOLD);
-    }
-
-    // Sysid
-
-    public void setPivotVoltageOverride(Voltage voltage) {
-        outputs.pivot.outputMode = IntakeIOPivotOutputMode.VOLTAGE_OVERRIDE;
-        outputs.pivot.voltageOverride = Optional.of(voltage);
-    };
-
-    public SysIdRoutine getIntakeSysIdRoutine() {
-        return SysId.getRoutine(
-                Settings.Intake.Pivot.RAMP_RATE,
-                Settings.Intake.Pivot.STEP_VOLTAGE,
-                "Intake",
-                this::setPivotVoltageOverride,
-                () -> inputs.pivotMotorInputs.position,
-                () -> inputs.pivotMotorInputs.velocity,
-                () -> inputs.pivotMotorInputs.appliedVoltage,
-                getInstance());
     }
 
     /*********************/

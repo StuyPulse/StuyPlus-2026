@@ -32,7 +32,6 @@ public interface IntakeIO {
         POSITION,
         PUSHDOWN,
         HOMING,
-        VOLTAGE_OVERRIDE
     }
 
     public enum IntakeIORollerOutputMode {
