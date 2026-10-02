@@ -9,9 +9,9 @@ import static edu.wpi.first.units.Units.*;
 
 import com.stuypulse.robot.Robot;
 import com.stuypulse.robot.constants.Field;
-import com.stuypulse.robot.constants.Gains.Swerve.Alignment;
 import com.stuypulse.robot.constants.Settings;
 import com.stuypulse.robot.subsystems.swerve.CommandSwerveDrivetrain;
+import com.stuypulse.robot.subsystems.swerve.SwerveConstants;
 import com.stuypulse.robot.util.TranslationMotionProfile;
 
 import edu.wpi.first.math.controller.HolonomicDriveController;
@@ -74,18 +74,18 @@ public class SwerveDrivePIDToPose extends Command {
     public SwerveDrivePIDToPose(Supplier<Pose2d> targetPose) {
         swerve = CommandSwerveDrivetrain.getInstance();
         controller = new HolonomicDriveController(
-            new PIDController(Alignment.XY.kP, Alignment.XY.kI, Alignment.XY.kD),
-            new PIDController(Alignment.XY.kP, Alignment.XY.kI, Alignment.XY.kD),
+            new PIDController(SwerveConstants.SwerveGains.Alignment.XY.kP, SwerveConstants.SwerveGains.Alignment.XY.kI, SwerveConstants.SwerveGains.Alignment.XY.kD),
+            new PIDController(SwerveConstants.SwerveGains.Alignment.XY.kP, SwerveConstants.SwerveGains.Alignment.XY.kI, SwerveConstants.SwerveGains.Alignment.XY.kD),
             new ProfiledPIDController(
-                Alignment.THETA.kP,
-                Alignment.THETA.kI,
-                Alignment.THETA.kD,
+                SwerveConstants.SwerveGains.Alignment.THETA.kP,
+                SwerveConstants.SwerveGains.Alignment.THETA.kI,
+                SwerveConstants.SwerveGains.Alignment.THETA.kD,
                 new TrapezoidProfile.Constraints(
-                    Settings.Swerve.Alignment.Constraints.DEFAULT_MAX_ANGULAR_VELOCITY,
-                    Settings.Swerve.Alignment.Constraints.DEFAULT_MAX_ANGULAR_ACCELERATION))
+                    SwerveConstants.SwerveSettings.Alignment.Constraints.DEFAULT_MAX_ANGULAR_VELOCITY,
+                    SwerveConstants.SwerveSettings.Alignment.Constraints.DEFAULT_MAX_ANGULAR_ACCELERATION))
         );
-        maxVelocity = Settings.Swerve.Alignment.Constraints.DEFAULT_MAX_VELOCITY;
-        maxAcceleration = Settings.Swerve.Alignment.Constraints.DEFAULT_MAX_ACCELERATION;
+        maxVelocity = SwerveConstants.SwerveSettings.Alignment.Constraints.DEFAULT_MAX_VELOCITY;
+        maxAcceleration = SwerveConstants.SwerveSettings.Alignment.Constraints.DEFAULT_MAX_ACCELERATION;
         isMotionProfiled = true;
         translationSetpoint = getNewTranslationSetpointGenerator();
         this.targetPose = targetPose;
@@ -95,11 +95,11 @@ public class SwerveDrivePIDToPose extends Command {
                 && isAlignedY()
                 && isAlignedTheta()
                 && getVelocityError() < maxVelocityWhenAligned.doubleValue();
-        debounceRC =  new Debouncer(Settings.Swerve.Alignment.Tolerances.ALIGNMENT_DEBOUNCE.in(Seconds), DebounceType.kRising);
-        xTolerance = Settings.Swerve.Alignment.Tolerances.X_TOLERANCE.in(Meters);
-        yTolerance = Settings.Swerve.Alignment.Tolerances.Y_TOLERANCE.in(Meters);
-        thetaTolerance = Settings.Swerve.Alignment.Tolerances.THETA_TOLERANCE.getRadians();
-        maxVelocityWhenAligned = Settings.Swerve.Alignment.Tolerances.MAX_VELOCITY_WHEN_ALIGNED
+        debounceRC =  new Debouncer(SwerveConstants.SwerveSettings.Alignment.Tolerances.ALIGNMENT_DEBOUNCE.in(Seconds), DebounceType.kRising);
+        xTolerance = SwerveConstants.SwerveSettings.Alignment.Tolerances.X_TOLERANCE.in(Meters);
+        yTolerance = SwerveConstants.SwerveSettings.Alignment.Tolerances.Y_TOLERANCE.in(Meters);
+        thetaTolerance = SwerveConstants.SwerveSettings.Alignment.Tolerances.THETA_TOLERANCE.getRadians();
+        maxVelocityWhenAligned = SwerveConstants.SwerveSettings.Alignment.Tolerances.MAX_VELOCITY_WHEN_ALIGNED
                 .in(MetersPerSecond);
         canEnd = () -> true;
         addRequirements(swerve);
@@ -186,22 +186,22 @@ public class SwerveDrivePIDToPose extends Command {
                         .withVelocityX(output.vxMetersPerSecond)
                         .withVelocityY(output.vyMetersPerSecond)
                         .withRotationalRate(output.omegaRadiansPerSecond));
-        DogLog.log("Alignment/Target x", targetPose.get().getX());
-        DogLog.log("Alignment/Target y", targetPose.get().getY());
-        DogLog.log("Alignment/Target Angle", targetPose.get().getRotation().getDegrees());
+        DogLog.log("SwerveConstants.SwerveGains.Alignment/Target x", targetPose.get().getX());
+        DogLog.log("SwerveConstants.SwerveGains.Alignment/Target y", targetPose.get().getY());
+        DogLog.log("SwerveConstants.SwerveGains.Alignment/Target Angle", targetPose.get().getRotation().getDegrees());
         DogLog.log(
-                "Alignment/Target Velocity Robot Relative X (m/s)",
+                "SwerveConstants.SwerveGains.Alignment/Target Velocity Robot Relative X (m/s)",
                 output.vxMetersPerSecond);
         DogLog.log(
-                "Alignment/Target Velocity Robot Relative Y (m/s)",
+                "SwerveConstants.SwerveGains.Alignment/Target Velocity Robot Relative Y (m/s)",
                 output.vyMetersPerSecond);
         DogLog.log(
-                "Alignment/Target Angular Velocity (rad/s)",
+                "SwerveConstants.SwerveGains.Alignment/Target Angular Velocity (rad/s)",
                 output.omegaRadiansPerSecond);
-        DogLog.log("Alignment/Is Aligned", this.isAligned.getAsBoolean());
-        DogLog.log("Alignment/Is Aligned X", isAlignedX());
-        DogLog.log("Alignment/Is Aligned Y", isAlignedY());
-        DogLog.log("Alignment/Is Aligned Theta", isAlignedTheta());
+        DogLog.log("SwerveConstants.SwerveGains.Alignment/Is Aligned", this.isAligned.getAsBoolean());
+        DogLog.log("SwerveConstants.SwerveGains.Alignment/Is Aligned X", isAlignedX());
+        DogLog.log("SwerveConstants.SwerveGains.Alignment/Is Aligned Y", isAlignedY());
+        DogLog.log("SwerveConstants.SwerveGains.Alignment/Is Aligned Theta", isAlignedTheta());
     }
 
     @Override

@@ -6,10 +6,9 @@
 package com.stuypulse.robot.commands.swerve.driveAligned;
 
 import com.ctre.phoenix6.swerve.SwerveRequest;
-import com.stuypulse.robot.constants.Gains.Swerve.Alignment;
 import com.stuypulse.robot.constants.Settings.Driver.Drive;
-import com.stuypulse.robot.constants.Settings.Swerve;
 import com.stuypulse.robot.subsystems.swerve.CommandSwerveDrivetrain;
+import com.stuypulse.robot.subsystems.swerve.SwerveConstants;
 import com.stuypulse.robot.util.swerve.swerveinput.DriveInputProcessor;
 
 import dev.doglog.DogLog;
@@ -34,8 +33,8 @@ public class SwerveDriveDriveWhileAligned extends Command {
                 driver, 
                 Drive.DEADBAND, 
                 Drive.POWER, 
-                Swerve.Constraints.MAX_VELOCITY_M_PER_S, 
-                Swerve.Constraints.MAX_ACCEL_M_PER_S_SQUARED, 
+                SwerveConstants.SwerveSettings.Constraints.MAX_VELOCITY_M_PER_S, 
+                SwerveConstants.SwerveSettings.Constraints.MAX_ACCEL_M_PER_S_SQUARED, 
                 Drive.RC);
         this.driver = driver;
         this.targetPose = targetPose;
@@ -63,7 +62,9 @@ public class SwerveDriveDriveWhileAligned extends Command {
                         .withVelocityX(speed.get().getX())
                         .withVelocityY(speed.get().getY())
                         .withTargetDirection(getTargetAngle())
-                        .withHeadingPID(Alignment.akP, Alignment.akI, Alignment.akD));
+                        .withHeadingPID(SwerveConstants.SwerveGains.Alignment.akP, 
+                        SwerveConstants.SwerveGains.Alignment.akI, 
+                        SwerveConstants.SwerveGains.Alignment.akD));
         DogLog.log("Swerve/targetAngle", getTargetAngle().getDegrees());
         DogLog.log("Swerve/Target Pose X", targetPose.get().getX());
         DogLog.log("Swerve/Target Pose Y", targetPose.get().getY());

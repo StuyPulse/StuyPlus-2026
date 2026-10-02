@@ -7,8 +7,8 @@ package com.stuypulse.robot.commands.swerve;
 
 import com.stuypulse.robot.constants.Settings.Driver.Drive;
 import com.stuypulse.robot.constants.Settings.Driver.Turn;
-import com.stuypulse.robot.constants.Settings.Swerve;
 import com.stuypulse.robot.subsystems.swerve.CommandSwerveDrivetrain;
+import com.stuypulse.robot.subsystems.swerve.SwerveConstants;
 import com.stuypulse.robot.util.swerve.swerveinput.DriveInputProcessor;
 import com.stuypulse.robot.util.swerve.swerveinput.DriveTurnInputProcessor;
 
@@ -31,14 +31,14 @@ public class SwerveDriveDrive extends Command {
                 driver, 
                 Drive.DEADBAND, 
                 Drive.POWER, 
-                Swerve.Constraints.MAX_VELOCITY_M_PER_S, 
-                Swerve.Constraints.MAX_ACCEL_M_PER_S_SQUARED, 
+                SwerveConstants.SwerveSettings.Constraints.MAX_VELOCITY_M_PER_S, 
+                SwerveConstants.SwerveSettings.Constraints.MAX_ACCEL_M_PER_S_SQUARED, 
                 Drive.RC);
 		turn = new DriveTurnInputProcessor(
 			driver, 
 			Turn.DEADBAND, 
 			Turn.POWER, 
-			Swerve.Constraints.MAX_ANGULAR_VEL_RAD_PER_S, Turn.RC);
+			SwerveConstants.SwerveSettings.Constraints.MAX_ANGULAR_VEL_RAD_PER_S, Turn.RC);
 		this.driver = driver;
 		addRequirements(swerve);
 	}

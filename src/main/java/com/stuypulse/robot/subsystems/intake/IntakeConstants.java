@@ -5,7 +5,6 @@ import static edu.wpi.first.units.Units.*;
 import com.ctre.phoenix6.signals.GravityTypeValue;
 import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
-import com.stuypulse.robot.constants.Gains;
 import com.stuypulse.robot.constants.Motors.TalonFXConfig;
 
 import dev.doglog.DogLog;
