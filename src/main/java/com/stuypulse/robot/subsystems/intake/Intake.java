@@ -178,39 +178,27 @@ public class Intake extends FullSubsystem {
     public boolean isPivotAboveThreshold() {
         return inputs.pivotMotorInputs.position.gt(Settings.Intake.Pivot.PUSHDOWN_THRESHOLD);
     }
-
-    /*********************/
-    /** Pivot Controls ***/
-    /*********************/
   
-    private void setPivotPosition(Angle position, int gainsSlot) {
+    private void runPivotPosition(Angle position, int gainsSlot) {
         outputs.pivot.outputMode = IntakeIOPivotOutputMode.POSITION;
         outputs.pivot.position = position;
         outputs.pivot.positionGainsSlot = gainsSlot;
     }
 
-    private void setPivotPushdown(Current current) {
+    private void runPivotPushdown(Current current) {
         outputs.pivot.outputMode = IntakeIOPivotOutputMode.PUSHDOWN;
         outputs.pivot.pushdown = current;
     }
     
-    private void setPivotHoming(Voltage voltage) {
+    private void runPivotHoming(Voltage voltage) {
         outputs.pivot.outputMode = IntakeIOPivotOutputMode.HOMING;
         outputs.pivot.homing = voltage; 
     }
 
-    /*********************/
-    /** Roller Control ***/
-    /*********************/
-
-    private void setRollerDutyCycle(double dutyCycle) {
+    private void runRollerDutyCycle(double dutyCycle) {
         outputs.roller.outputMode = IntakeIORollerOutputMode.DUTY_CYCLE;
         outputs.roller.targetDutyCycle = dutyCycle;
     }
-
-    /*********************/
-    /** Pivot Commands ***/
-    /*********************/
 
     public void seedPivotAngle(Angle angle) {
         io.seedPivotAngle(angle);
@@ -246,13 +234,13 @@ public class Intake extends FullSubsystem {
         }
 
         switch (currentState) {
-            case INTAKE, OUTTAKE, DOWN -> setPivotPushdown(Amps.of(Settings.Intake.Pivot.PUSHDOWN_CURRENT.get()));
-            case HOMING_DOWN -> setPivotHoming(Settings.Intake.Pivot.HOMING_DOWN_VOLTAGE);
-            case AGITATE, AGITATE_DOWN -> setPivotPosition(currentState.getTargetAngle(), 1);
-            default -> setPivotPosition(currentState.getTargetAngle(), 0);
+            case INTAKE, OUTTAKE, DOWN -> runPivotPushdown(Amps.of(Settings.Intake.Pivot.PUSHDOWN_CURRENT.get()));
+            case HOMING_DOWN -> runPivotHoming(Settings.Intake.Pivot.HOMING_DOWN_VOLTAGE);
+            case AGITATE, AGITATE_DOWN -> runPivotPosition(currentState.getTargetAngle(), 1);
+            default -> runPivotPosition(currentState.getTargetAngle(), 0);
         }
 
-        setRollerDutyCycle(currentState.getTargetDutyCycle());
+        runRollerDutyCycle(currentState.getTargetDutyCycle());
     }
 
     @Override
