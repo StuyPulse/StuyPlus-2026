@@ -7,8 +7,8 @@ package com.stuypulse.robot.subsystems.handoff;
 
 import com.stuypulse.robot.constants.Settings;
 import com.stuypulse.robot.subsystems.feeder.FeederConstants;
-import com.stuypulse.robot.util.simulation.TalonSimulation.SystemSim;
-import com.stuypulse.robot.util.simulation.TalonSimulation.TalonFXSimulation;
+import com.stuypulse.robot.util.simulation.TalonFXSimulation.SystemSim;
+import com.stuypulse.robot.util.simulation.TalonFXSimulation.TalonFXSimulation;
 
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.math.system.plant.LinearSystemId;
