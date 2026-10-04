@@ -17,33 +17,7 @@ public interface Ports {
         int DEBUGGER = 2;
     }
 
-    public interface LED {
-
-        // TODO: Get actual port
-        int LED_PWM_PORT = 0;
-    }
-
     // public interface LED {
     // int PORT = 2;
     // }
-    public interface Shooter {
-
-        int SHOOTER_MOTOR_LEFT = 30;
-
-        // TODO: get after champs
-        int SHOOTER_MOTOR_CENTER = 54;
-
-        int SHOOTER_MOTOR_RIGHT = 47;
-    } 
-
-    public interface Intake {
-
-        int PIVOT_LIMIT_SWITCH = 0;
-
-        int INTAKE_ROLLER_MOTOR_LEFT = 22;
-
-        int INTAKE_ROLLER_MOTOR_RIGHT = 17;
-
-        int INTAKE_PIVOT_MOTOR = 10;
-    }
 }

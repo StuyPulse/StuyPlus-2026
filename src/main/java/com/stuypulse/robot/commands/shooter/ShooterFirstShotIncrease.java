@@ -5,6 +5,7 @@ import static edu.wpi.first.units.Units.Seconds;
 
 import com.stuypulse.robot.constants.Settings;
 import com.stuypulse.robot.subsystems.shooter.Shooter;
+import com.stuypulse.robot.subsystems.shooter.ShooterConstants;
 
 import dev.doglog.DogLog;
 import edu.wpi.first.math.filter.Debouncer;
@@ -24,7 +25,7 @@ public class ShooterFirstShotIncrease extends Command {
     public ShooterFirstShotIncrease() {
         shooter = Shooter.getInstance();
         currentFilter = LinearFilter.singlePoleIIR(0.1, Settings.DT.in(Seconds));
-        shotFinished = new Debouncer(Settings.Shooter.FIRST_SHOT_DEBOUNCE.in(Seconds), DebounceType.kRising);
+        shotFinished = new Debouncer(ShooterConstants.ShooterSettings.FIRST_SHOT_DEBOUNCE.in(Seconds), DebounceType.kRising);
         previousCurrent = 0;
 
         timer = new Timer();
@@ -34,7 +35,7 @@ public class ShooterFirstShotIncrease extends Command {
     public void initialize() {
         timer.restart();
 
-        shooter.addToBonusVelocity(Settings.Shooter.FIRST_SHOT_BONUS.get());
+        shooter.addToBonusVelocity(ShooterConstants.ShooterSettings.FIRST_SHOT_BONUS.get());
         shooter.setGainSlot(1);
     }
 

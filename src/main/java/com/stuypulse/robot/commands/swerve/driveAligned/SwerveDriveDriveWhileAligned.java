@@ -5,10 +5,10 @@
 /***************************************************************/
 package com.stuypulse.robot.commands.swerve.driveAligned;
 
-import com.stuypulse.robot.constants.Gains.Swerve.Alignment;
 import com.stuypulse.robot.constants.Settings.Driver.Drive;
-import com.stuypulse.robot.subsystems.swerve.SwerveConstants.SwerveSettings;
 import com.stuypulse.robot.subsystems.swerve.Swerve;
+import com.stuypulse.robot.subsystems.swerve.SwerveConstants;
+import com.stuypulse.robot.subsystems.swerve.SwerveConstants.SwerveGains;
 import com.stuypulse.robot.util.swerve.swerveinput.DriveInputProcessor;
 
 import dev.doglog.DogLog;
@@ -37,12 +37,12 @@ public class SwerveDriveDriveWhileAligned extends Command {
                 driver, 
                 Drive.DEADBAND, 
                 Drive.POWER, 
-                SwerveSettings.Constraints.MAX_VELOCITY_M_PER_S, 
-                SwerveSettings.Constraints.MAX_ACCEL_M_PER_S_SQUARED, 
+                SwerveConstants.SwerveSettings.Constraints.MAX_VELOCITY_M_PER_S, 
+                SwerveConstants.SwerveSettings.Constraints.MAX_ACCEL_M_PER_S_SQUARED, 
                 Drive.RC);
         this.driver = driver;
         this.targetPose = targetPose;
-        this.headingController = new PIDController(Alignment.akP, Alignment.akI, Alignment.akD);
+        this.headingController = new PIDController(SwerveGains.Alignment.akP, SwerveGains.Alignment.akI, SwerveGains.Alignment.akD);
         headingController.enableContinuousInput(-Math.PI, Math.PI);
         addRequirements(swerve);
     }

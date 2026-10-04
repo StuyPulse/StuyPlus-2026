@@ -5,9 +5,8 @@
 /***************************************************************/
 package com.stuypulse.robot.commands.swerve;
 
-import com.ctre.phoenix6.swerve.SwerveRequest;
-import com.stuypulse.robot.constants.Gains;
 import com.stuypulse.robot.constants.Settings.Driver.Drive;
+import com.stuypulse.robot.subsystems.swerve.SwerveConstants.SwerveGains;
 import com.stuypulse.robot.subsystems.swerve.SwerveConstants.SwerveSettings;
 import com.stuypulse.robot.subsystems.swerve.Swerve;
 import com.stuypulse.robot.util.swerve.swerveinput.DriveInputProcessor;
@@ -46,9 +45,9 @@ public class SwerveDriveRotate extends Command {
         addRequirements(swerve);
 
         headingController = new PIDController(
-                Gains.Swerve.Alignment.akP,
-                Gains.Swerve.Alignment.akI,
-                Gains.Swerve.Alignment.akD);
+                SwerveGains.Alignment.akP,
+                SwerveGains.Alignment.akI,
+                SwerveGains.Alignment.akD);
         headingController.enableContinuousInput(-Math.PI, Math.PI);
     }
 

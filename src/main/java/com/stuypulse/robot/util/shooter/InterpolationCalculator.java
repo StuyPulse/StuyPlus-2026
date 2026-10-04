@@ -6,10 +6,10 @@
 package com.stuypulse.robot.util.shooter;
 
 import com.stuypulse.robot.constants.Field;
-import com.stuypulse.robot.constants.Settings.Shooter.FerryRPMInterpolation;
-import com.stuypulse.robot.constants.Settings.Shooter.FerryTOFInterpolation;
-import com.stuypulse.robot.constants.Settings.Shooter.RPMInterpolation;
-import com.stuypulse.robot.constants.Settings.Shooter.TOFInterpolation;
+import com.stuypulse.robot.subsystems.shooter.ShooterConstants.ShooterSettings.FerryRPMInterpolation;
+import com.stuypulse.robot.subsystems.shooter.ShooterConstants.ShooterSettings.FerryTOFInterpolation;
+import com.stuypulse.robot.subsystems.shooter.ShooterConstants.ShooterSettings.RPMInterpolation;
+import com.stuypulse.robot.subsystems.shooter.ShooterConstants.ShooterSettings.TOFInterpolation;
 import com.stuypulse.robot.subsystems.swerve.Swerve;
 import dev.doglog.DogLog;
 import edu.wpi.first.math.geometry.Pose2d;

@@ -4,6 +4,7 @@ import static edu.wpi.first.units.Units.*;
 import edu.wpi.first.units.measure.*;
 import edu.wpi.first.math.util.Units;
 
+import com.pathplanner.lib.config.PIDConstants;
 import com.pathplanner.lib.path.PathConstraints;
 
 import edu.wpi.first.math.geometry.Pose2d;
@@ -67,6 +68,50 @@ public interface SwerveConstants {
 
                 Rotation2d HUB_RIGHT_CORNER = Rotation2d.fromDegrees(-45);
             }
+        }
+    }
+    public interface SwerveGains {
+
+        public interface Drive {
+
+            double kS = 0.0;
+
+            double kV = 0.124;
+
+            double kA = 0.0;
+
+            double kP = 0.1;
+
+            double kI = 0.0;
+
+            double kD = 0.0;
+        }
+
+        public interface Turn {
+
+            double kS = 0.1;
+
+            double kV = 2.66;
+
+            double kA = 0.0;
+
+            double kP = 100.0;
+
+            double kI = 0.0;
+
+            double kD = 0.5;
+        }
+
+        public interface Alignment {
+            double akP = 8.8624;
+
+            double akI = 0.0;
+
+            double akD = 0.0;
+
+            PIDConstants XY = new PIDConstants(10, 0.0, 0.0);
+
+            PIDConstants THETA = new PIDConstants(10, 0.0, 0.0);
         }
     }
 }

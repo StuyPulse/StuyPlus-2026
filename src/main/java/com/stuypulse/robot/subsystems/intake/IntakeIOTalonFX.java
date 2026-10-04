@@ -21,6 +21,8 @@ public class IntakeIOTalonFX extends IntakeIOTalonFXBase {
     }
 
     public IntakeIOTalonFX() {
-        super(getPivotMotor(Ports.Intake.INTAKE_PIVOT_MOTOR), getRollerMotor(Ports.Intake.INTAKE_ROLLER_MOTOR_LEFT), getRollerMotor(Ports.Intake.INTAKE_ROLLER_MOTOR_RIGHT));
+        super(getPivotMotor(IntakeConstants.IntakeDeviceIds.INTAKE_PIVOT_MOTOR), 
+        getRollerMotor(IntakeConstants.IntakeDeviceIds.INTAKE_ROLLER_MOTOR_LEFT), 
+        getRollerMotor(IntakeConstants.IntakeDeviceIds.INTAKE_ROLLER_MOTOR_RIGHT));
     }
 }

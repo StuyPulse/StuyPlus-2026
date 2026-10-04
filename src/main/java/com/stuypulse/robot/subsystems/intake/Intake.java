@@ -68,33 +68,33 @@ public class Intake extends SubsystemBase {
     /** Enum representing the different possible states of the intake. */
     public enum IntakeState {
 
-        AGITATE_DOWN(Settings.Intake.Pivot.AGITATE_DOWN_ANGLE, Settings.Intake.Roller.INTAKE_DUTY_CYCLE),
+        AGITATE_DOWN(IntakeConstants.IntakeSettings.Pivot.AGITATE_DOWN_ANGLE, IntakeConstants.IntakeSettings.Roller.INTAKE_DUTY_CYCLE),
         /** The intake is stowed and rollers are off. */
-        IDLE(Settings.Intake.Pivot.STOW_ANGLE, 0),
+        IDLE(IntakeConstants.IntakeSettings.Pivot.STOW_ANGLE, 0),
         /** The intake is deployed but rollers are off. */
-        DOWN(Settings.Intake.Pivot.DEPLOY_ANGLE, 0),
+        DOWN(IntakeConstants.IntakeSettings.Pivot.DEPLOY_ANGLE, 0),
         /** The intake is deployed and rollers are running to take in gamepieces. */
-        INTAKE(Settings.Intake.Pivot.DEPLOY_ANGLE, Settings.Intake.Roller.INTAKE_DUTY_CYCLE),
+        INTAKE(IntakeConstants.IntakeSettings.Pivot.DEPLOY_ANGLE, IntakeConstants.IntakeSettings.Roller.INTAKE_DUTY_CYCLE),
         /**
          * The intake is deployed and rollers are running in reverse to expel
          * gamepieces.
          */
-        OUTTAKE(Settings.Intake.Pivot.DEPLOY_ANGLE, Settings.Intake.Roller.OUTTAKE_DUTY_CYCLE),
+        OUTTAKE(IntakeConstants.IntakeSettings.Pivot.DEPLOY_ANGLE, IntakeConstants.IntakeSettings.Roller.OUTTAKE_DUTY_CYCLE),
         /**
          * The intake is brought up repeatedly to an angle between stowed and deployed
          * to dislodge
          * gamepieces. Rollers do not run.
          */
-        AGITATE(Settings.Intake.Pivot.AGITATE_UP_ANGLE, Settings.Intake.Roller.INTAKE_DUTY_CYCLE),
+        AGITATE(IntakeConstants.IntakeSettings.Pivot.AGITATE_UP_ANGLE, IntakeConstants.IntakeSettings.Roller.INTAKE_DUTY_CYCLE),
         
         /**
          * The intake is brought up once to an angle between stowed and deployed to
          * dislodge gamepieces.
          * Rollers do not run.
          */
-        DIGEST(Settings.Intake.Pivot.DIGEST_ANGLE, 0),
+        DIGEST(IntakeConstants.IntakeSettings.Pivot.DIGEST_ANGLE, 0),
         /** The intake is pushed against the bumpers to re-zero the pivot. */
-        HOMING_DOWN(Settings.Intake.Pivot.DEPLOY_ANGLE, 0);
+        HOMING_DOWN(IntakeConstants.IntakeSettings.Pivot.DEPLOY_ANGLE, 0);
 
         /** The target angle of the intake pivot. */
         private Angle targetAngle;
@@ -140,12 +140,12 @@ public class Intake extends SubsystemBase {
     @AutoLogOutput(key = "Intake/Pivot/atTargetAngle")
     public boolean atTargetAngle() {
         return inputs.pivotPosition.minus(getState().getTargetAngle())
-                .abs(Rotations) < Settings.Intake.Pivot.ANGLE_TOLERANCE.in(Rotations);
+                .abs(Rotations) < IntakeConstants.IntakeSettings.Pivot.ANGLE_TOLERANCE.in(Rotations);
     }
 
     @AutoLogOutput(key = "Intake/Pivot/aboveThreshold")
     public boolean isPivotAboveThreshold() {
-        return inputs.pivotPosition.gt(Settings.Intake.Pivot.PUSHDOWN_THRESHOLD);
+        return inputs.pivotPosition.gt(IntakeConstants.IntakeSettings.Pivot.PUSHDOWN_THRESHOLD);
     }
 
     // Sysid
@@ -157,8 +157,8 @@ public class Intake extends SubsystemBase {
 
     public SysIdRoutine getIntakeSysIdRoutine() {
         return SysId.getRoutine(
-                Settings.Intake.Pivot.RAMP_RATE,
-                Settings.Intake.Pivot.STEP_VOLTAGE,
+                IntakeConstants.IntakeSettings.Pivot.RAMP_RATE,
+                IntakeConstants.IntakeSettings.Pivot.STEP_VOLTAGE,
                 "Intake",
                 this::setPivotVoltageOverride,
                 () -> inputs.pivotPosition,
@@ -190,13 +190,13 @@ public class Intake extends SubsystemBase {
             switch (currentState) {
                 case INTAKE, OUTTAKE, DOWN:
                     if (isPivotAboveThreshold()) {
-                        io.setPivotPushdown(Amps.of(Settings.Intake.Pivot.PUSHDOWN_CURRENT.get()));
+                        io.setPivotPushdown(Amps.of(IntakeConstants.IntakeSettings.Pivot.PUSHDOWN_CURRENT.get()));
                     } else {
                         io.setPivotPosition(currentState.getTargetAngle());
                     };
                     break;
                 case HOMING_DOWN:
-                    io.setPivotHoming(Settings.Intake.Pivot.HOMING_DOWN_VOLTAGE);
+                    io.setPivotHoming(IntakeConstants.IntakeSettings.Pivot.HOMING_DOWN_VOLTAGE);
                     break;
                 case AGITATE, AGITATE_DOWN:
                     io.setPivotPosition(currentState.getTargetAngle());
