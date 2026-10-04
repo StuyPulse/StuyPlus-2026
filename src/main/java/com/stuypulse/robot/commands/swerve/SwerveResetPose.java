@@ -10,18 +10,7 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 
 public class SwerveResetPose extends InstantCommand {
-
-    private final Swerve swerve;
-
-    private final Pose2d newPose;
-
     public SwerveResetPose(Pose2d newPose) {
-        swerve = Swerve.getInstance();
-        this.newPose = newPose;
-    }
-
-    @Override
-    public void initialize() {
-        swerve.setPose(newPose);
+        super(() -> Swerve.getInstance().resetOdometry(newPose));
     }
 }
