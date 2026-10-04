@@ -15,13 +15,13 @@ import org.littletonrobotics.junction.Logger;
 import com.stuypulse.robot.Robot;
 import com.stuypulse.robot.constants.Settings;
 import com.stuypulse.robot.subsystems.shooter.ShooterIO.ShooterIOOutputs;
+import com.stuypulse.robot.util.FullSubsystem;
 import com.stuypulse.robot.util.shooter.InterpolationCalculator;
 import com.stuypulse.robot.util.simulation.RobotVisualizer;
 
 import edu.wpi.first.units.measure.AngularVelocity;
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-public class Shooter extends SubsystemBase {
+public class Shooter extends FullSubsystem {
     private static final Shooter instance;
 
     static {
@@ -138,6 +138,11 @@ public class Shooter extends SubsystemBase {
         if (!Robot.isReal()) {
             RobotVisualizer.getInstance().updateShooter(inputs.velocity);
         }
+    }
+    
+    @Override
+    public void periodicAfterScheduler() {
+        io.applyOutputs(outputs);
     }
 
     public void runVelocity(AngularVelocity velocity) {
