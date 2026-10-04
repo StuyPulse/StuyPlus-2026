@@ -11,9 +11,6 @@ import com.ctre.phoenix6.controls.PositionTorqueCurrentFOC;
 import com.ctre.phoenix6.controls.TorqueCurrentFOC;
 import com.ctre.phoenix6.controls.VoltageOut;
 import com.ctre.phoenix6.signals.MotorAlignmentValue;
-import com.stuypulse.robot.constants.Motors;
-import com.stuypulse.robot.constants.Ports;
-import com.stuypulse.robot.constants.Settings;
 import com.stuypulse.robot.util.logged.LoggedTalonFX.LoggedTalonFX;
 
 import edu.wpi.first.units.measure.*;
@@ -37,23 +34,23 @@ public abstract class IntakeIOTalonFXBase implements IntakeIO {
 
     public IntakeIOTalonFXBase(LoggedTalonFX pivotMotor, LoggedTalonFX rollerMotorLeft, LoggedTalonFX rollerMotorRight) {
         this.pivotMotor = pivotMotor;
-        Motors.Intake.PIVOT_CONFIG.configure(pivotMotor);
-        pivotMotor.setPosition(Settings.Intake.Pivot.INITIAL_ANGLE);
+        IntakeConstants.IntakeMotorConfigs.PIVOT_CONFIG.configure(pivotMotor);
+        pivotMotor.setPosition(IntakeConstants.IntakeSettings.Pivot.INITIAL_ANGLE);
 
         this.rollerMotorLeft = rollerMotorLeft;
         this.rollerMotorRight = rollerMotorRight;
-        Motors.Intake.LEFT_ROLLER_CONFIG.configure(rollerMotorLeft);
-        Motors.Intake.RIGHT_ROLLER_CONFIG.configure(rollerMotorRight);
+        IntakeConstants.IntakeMotorConfigs.LEFT_ROLLER_CONFIG.configure(rollerMotorLeft);
+        IntakeConstants.IntakeMotorConfigs.RIGHT_ROLLER_CONFIG.configure(rollerMotorRight);
 
-        positionController = new PositionTorqueCurrentFOC(Settings.Intake.Pivot.INITIAL_ANGLE);
-        homingController = new VoltageOut(Settings.Intake.Pivot.HOMING_DOWN_VOLTAGE).withEnableFOC(true);
-        pushdownController = new TorqueCurrentFOC(Settings.Intake.Pivot.PUSHDOWN_CURRENT.getAsDouble());
+        positionController = new PositionTorqueCurrentFOC(IntakeConstants.IntakeSettings.Pivot.INITIAL_ANGLE);
+        homingController = new VoltageOut(IntakeConstants.IntakeSettings.Pivot.HOMING_DOWN_VOLTAGE).withEnableFOC(true);
+        pushdownController = new TorqueCurrentFOC(IntakeConstants.IntakeSettings.Pivot.PUSHDOWN_CURRENT.getAsDouble());
 
         rollerController = new DutyCycleOut(0).withEnableFOC(true);
-        followerController = new Follower(Ports.Intake.INTAKE_ROLLER_MOTOR_LEFT, MotorAlignmentValue.Opposed);
+        followerController = new Follower(IntakeConstants.IntakeDeviceIds.INTAKE_ROLLER_MOTOR_LEFT, MotorAlignmentValue.Opposed);
         rollerMotorRight.setControl(followerController);
 
-        pivotLimitSwitch = new DigitalInput(Ports.Intake.PIVOT_LIMIT_SWITCH);
+        pivotLimitSwitch = new DigitalInput(IntakeConstants.IntakeDeviceIds.PIVOT_LIMIT_SWITCH);
     }
 
     @Override

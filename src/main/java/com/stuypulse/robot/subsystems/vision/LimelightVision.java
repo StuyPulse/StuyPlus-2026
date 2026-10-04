@@ -166,10 +166,10 @@ public class LimelightVision extends SubsystemBase {
                 DogLog.log("Vision/Pose Estimate Y", poseEstimate.pose.getY());
                 DogLog.log("Vision/Pose Estimate Theta", poseEstimate.pose.getRotation().getDegrees());
                 DogLog.log("Vision/Tag Count", poseEstimate.tagCount);
-                if (poseEstimate.pose.equals(Settings.Vision.INVALID_POSITION)) {
+                if (poseEstimate.pose.equals(LimelightConstants.VisionSettings.INVALID_POSITION)) {
                     poseAtOrigin = true;
                 }
-                if (CommandSwerveDrivetrain.getInstance().getChassisSpeeds().omegaRadiansPerSecond < Settings.Vision.MAX_ANGULAR_VELOCITY_RAD_SEC) {
+                if (CommandSwerveDrivetrain.getInstance().getChassisSpeeds().omegaRadiansPerSecond < LimelightConstants.VisionSettings.MAX_ANGULAR_VELOCITY_RAD_SEC) {
                     withinAngularVelocityTolerance = true;
                 }
                 Boolean isValidPose = notNull && withinAngularVelocityTolerance && !poseAtOrigin;
@@ -181,9 +181,9 @@ public class LimelightVision extends SubsystemBase {
                 Pose2d robotPose = poseEstimate.pose;
                 double timestamp = poseEstimate.timestampSeconds;
                 if (megaTagMode == MegaTagMode.MEGATAG1 && isValidPose) {
-                    CommandSwerveDrivetrain.getInstance().addVisionMeasurement(robotPose, timestamp, Settings.Vision.MT1_STDEVS);
+                    CommandSwerveDrivetrain.getInstance().addVisionMeasurement(robotPose, timestamp, LimelightConstants.VisionSettings.MT1_STDEVS);
                 } else if (megaTagMode == MegaTagMode.MEGATAG2 && isValidPose) {
-                    CommandSwerveDrivetrain.getInstance().addVisionMeasurement(robotPose, timestamp, Settings.Vision.MT2_STDEVS);
+                    CommandSwerveDrivetrain.getInstance().addVisionMeasurement(robotPose, timestamp, LimelightConstants.VisionSettings.MT2_STDEVS);
                 }
                 DogLog.log("Vision/Pose", robotPose);
                 DogLog.log("Vision/Pose X Component", robotPose.getX());

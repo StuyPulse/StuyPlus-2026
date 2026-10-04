@@ -20,11 +20,11 @@ public class ShooterIOSim extends ShooterIOTalonFXBase {
     private static final SystemSim<FlywheelSim> shooterSim = SystemSim.of(new FlywheelSim(
         LinearSystemId.createFlywheelSystem(
             DCMotor.getKrakenX60(3),
-            Settings.Shooter.J.in(KilogramSquareMeters),
-            Settings.Shooter.GEAR_RATIO),
+            ShooterConstants.ShooterSettings.J.in(KilogramSquareMeters),
+            ShooterConstants.ShooterSettings.GEAR_RATIO),
         DCMotor.getKrakenX60(3)));
     private static TalonFXSimulation getShooterMotor(int id) {
-        return new TalonFXSimulation(id, Settings.Shooter.GEAR_RATIO, shooterSim);
+        return new TalonFXSimulation(id, ShooterConstants.ShooterSettings.GEAR_RATIO, shooterSim);
     }
 
     private final TalonFXSimulation shooterMotorLeft;
@@ -32,9 +32,9 @@ public class ShooterIOSim extends ShooterIOTalonFXBase {
     private final TalonFXSimulation shooterMotorRight;
 
     public ShooterIOSim() {
-        this(getShooterMotor(Ports.Shooter.SHOOTER_MOTOR_RIGHT),
-            getShooterMotor(Ports.Shooter.SHOOTER_MOTOR_CENTER),
-            getShooterMotor(Ports.Shooter.SHOOTER_MOTOR_LEFT));
+        this(getShooterMotor(ShooterConstants.ShooterDeviceIds.SHOOTER_MOTOR_RIGHT),
+            getShooterMotor(ShooterConstants.ShooterDeviceIds.SHOOTER_MOTOR_CENTER),
+            getShooterMotor(ShooterConstants.ShooterDeviceIds.SHOOTER_MOTOR_LEFT));
     }
 
     private ShooterIOSim(TalonFXSimulation shooterMotorRight, TalonFXSimulation shooterMotorCenter, TalonFXSimulation shooterMotorLeft) {

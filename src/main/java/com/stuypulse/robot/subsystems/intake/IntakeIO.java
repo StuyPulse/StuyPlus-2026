@@ -44,7 +44,7 @@ public interface IntakeIO {
             public IntakeIOPivotOutputMode outputMode = IntakeIOPivotOutputMode.STOP;
 
             @AutoLogOutput(key="Intake/Pivot/Position")
-            public Angle position = Settings.Intake.Pivot.INITIAL_ANGLE;
+            public Angle position = IntakeConstants.IntakeSettings.Pivot.INITIAL_ANGLE;
 
             @AutoLogOutput(key="Intake/Pivot/Position Gains Slot")
             public int positionGainsSlot = 0;

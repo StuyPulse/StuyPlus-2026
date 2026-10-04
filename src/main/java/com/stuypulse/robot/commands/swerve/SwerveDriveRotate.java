@@ -6,10 +6,9 @@
 package com.stuypulse.robot.commands.swerve;
 
 import com.ctre.phoenix6.swerve.SwerveRequest;
-import com.stuypulse.robot.constants.Gains;
 import com.stuypulse.robot.constants.Settings.Driver.Drive;
-import com.stuypulse.robot.constants.Settings.Swerve;
 import com.stuypulse.robot.subsystems.swerve.CommandSwerveDrivetrain;
+import com.stuypulse.robot.subsystems.swerve.SwerveConstants;
 import com.stuypulse.robot.util.swerve.swerveinput.DriveInputProcessor;
 
 import dev.doglog.DogLog;
@@ -35,8 +34,8 @@ public class SwerveDriveRotate extends Command {
                 driver, 
                 Drive.DEADBAND, 
                 Drive.POWER, 
-                Swerve.Constraints.MAX_VELOCITY_M_PER_S, 
-                Swerve.Constraints.MAX_ACCEL_M_PER_S_SQUARED, 
+                SwerveConstants.SwerveSettings.Constraints.MAX_VELOCITY_M_PER_S, 
+                SwerveConstants.SwerveSettings.Constraints.MAX_ACCEL_M_PER_S_SQUARED, 
                 Drive.RC);
         addRequirements(swerve);
     }
@@ -50,7 +49,9 @@ public class SwerveDriveRotate extends Command {
                 .withVelocityX(speed.get().getX())
                 .withVelocityY(speed.get().getY())
                 .withHeadingPID(
-                        Gains.Swerve.Alignment.akP, Gains.Swerve.Alignment.akI, Gains.Swerve.Alignment.akD);
+                        SwerveConstants.SwerveGains.Alignment.akP, 
+                        SwerveConstants.SwerveGains.Alignment.akI, 
+                        SwerveConstants.SwerveGains.Alignment.akD);
         swerve.setControl(request);
         DogLog.log(
                 "Swerve/Angle Minus Target Angle",

@@ -14,6 +14,8 @@ import com.ctre.phoenix6.controls.VoltageOut;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.MotorAlignmentValue;
 import com.stuypulse.robot.constants.Motors;
+import com.stuypulse.robot.subsystems.shooter.ShooterConstants.ShooterSettings;
+
 import edu.wpi.first.units.measure.*;
 
 public abstract class ShooterIOTalonFXBase implements ShooterIO {
@@ -38,9 +40,9 @@ public abstract class ShooterIOTalonFXBase implements ShooterIO {
         this.shooterMotorLeft = shooterMotorLeft;
 
         // configure
-        Motors.Shooter.SHOOTER_MOTOR_RIGHT.configure(shooterMotorRight);
-        Motors.Shooter.SHOOTER_MOTOR_CENTER.configure(shooterMotorCenter);
-        Motors.Shooter.SHOOTER_MOTOR_LEFT.configure(shooterMotorLeft);
+        ShooterConstants.ShooterMotorConfigs.SHOOTER_MOTOR_RIGHT.configure(shooterMotorRight);
+        ShooterConstants.ShooterMotorConfigs.SHOOTER_MOTOR_CENTER.configure(shooterMotorCenter);
+        ShooterConstants.ShooterMotorConfigs.SHOOTER_MOTOR_LEFT.configure(shooterMotorLeft);
 
         this.shooterController = new VelocityTorqueCurrentFOC(0);
 

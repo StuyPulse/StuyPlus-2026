@@ -9,6 +9,7 @@ import com.stuypulse.robot.constants.Settings;
 import com.stuypulse.robot.subsystems.feeder.Feeder;
 import com.stuypulse.robot.subsystems.handoff.Handoff;
 import com.stuypulse.robot.subsystems.intake.Intake;
+import com.stuypulse.robot.subsystems.leds.LEDConstants;
 import com.stuypulse.robot.subsystems.leds.LEDController;
 import com.stuypulse.robot.subsystems.shooter.Shooter;
 import edu.wpi.first.wpilibj.DriverStation;
@@ -47,31 +48,31 @@ public class LEDDefaultCommand extends Command {
             return;
         }
         if (DriverStation.isDisabled()) {
-            leds.applyPattern(Settings.LED.DISABLED);
+            leds.applyPattern(LEDConstants.LEDSettings.DISABLED);
             return;
         }
         // These probably won't actually be what we want the LEDs to be showing
         // TODO: Figure out what we want the LEDs to show
         switch (shooter.getState()) {
-            case SHOOT -> leds.applyShoot(Settings.LED.SHOOTING);
-            case FERRY -> leds.applyShoot(Settings.LED.FERRYING);
-            case MANUAL_HUB -> leds.applyShoot(Settings.LED.MANUAL);
+            case SHOOT -> leds.applyShoot(LEDConstants.LEDSettings.SHOOTING);
+            case FERRY -> leds.applyShoot(LEDConstants.LEDSettings.FERRYING);
+            case MANUAL_HUB -> leds.applyShoot(LEDConstants.LEDSettings.MANUAL);
             case IDLE -> leds.applyShoot(LEDPattern.kOff);
         }
         switch (feeder.getState()) {
-            case FORWARD -> leds.applyFeed(Settings.LED.FEEDER_FORWARD);
-            case REVERSE -> leds.applyFeed(Settings.LED.FEEDER_REVERSE);
+            case FORWARD -> leds.applyFeed(LEDConstants.LEDSettings.FEEDER_FORWARD);
+            case REVERSE -> leds.applyFeed(LEDConstants.LEDSettings.FEEDER_REVERSE);
             case IDLE -> leds.applyFeed(LEDPattern.kOff);
         }
         switch (intake.getState()) {
-            case INTAKE -> leds.applyIntake(Settings.LED.INTAKING);
-            case OUTTAKE -> leds.applyIntake(Settings.LED.OUTTAKING);
-            case HOMING_DOWN -> leds.applyIntake(Settings.LED.HOMING_DOWN);
+            case INTAKE -> leds.applyIntake(LEDConstants.LEDSettings.INTAKING);
+            case OUTTAKE -> leds.applyIntake(LEDConstants.LEDSettings.OUTTAKING);
+            case HOMING_DOWN -> leds.applyIntake(LEDConstants.LEDSettings.HOMING_DOWN);
             default -> leds.applyIntake(LEDPattern.kOff);
         }
         switch (handoff.getState()) {
-            case FORWARD -> leds.applyHandoff(Settings.LED.HANDOFF_FORWARD);
-            case REVERSE -> leds.applyHandoff(Settings.LED.HANDOFF_REVERSE);
+            case FORWARD -> leds.applyHandoff(LEDConstants.LEDSettings.HANDOFF_FORWARD);
+            case REVERSE -> leds.applyHandoff(LEDConstants.LEDSettings.HANDOFF_REVERSE);
             case IDLE -> leds.applyHandoff(LEDPattern.kOff);
         }
     }
