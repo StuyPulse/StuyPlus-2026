@@ -8,14 +8,15 @@ package com.stuypulse.robot.subsystems.feeder;
 import static edu.wpi.first.units.Units.*;
 
 import com.stuypulse.robot.constants.Settings;
-import com.stuypulse.robot.util.simulation.TalonSimulation.SystemSim;
-import com.stuypulse.robot.util.simulation.TalonSimulation.TalonFXSimulation;
+import com.stuypulse.robot.util.simulation.RobotVisualizer;
+import com.stuypulse.robot.util.simulation.TalonFXSimulation.SystemSim;
+import com.stuypulse.robot.util.simulation.TalonFXSimulation.TalonFXSimulation;
 
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.math.system.plant.LinearSystemId;
 import edu.wpi.first.wpilibj.simulation.DCMotorSim;
 
-public class FeederIOSim extends FeederIOTalonFXBase {
+public class FeederIOSim extends FeederIOBase {
     private static final SystemSim<DCMotorSim> sim = SystemSim.of(new DCMotorSim(
             LinearSystemId.createDCMotorSystem(
                 DCMotor.getKrakenX60(2),
@@ -42,6 +43,8 @@ public class FeederIOSim extends FeederIOTalonFXBase {
     public void updateInputs(FeederIOInputs inputs) {
         sim.update(Settings.DT);
         feederMotor.refresh();
+
         super.updateInputs(inputs);
+        RobotVisualizer.getInstance().updateFeeder(inputs.feederMotorInputs.velocity);
     }
 }

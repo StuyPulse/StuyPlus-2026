@@ -5,10 +5,10 @@
 /***************************************************************/
 package com.stuypulse.robot.subsystems.intake;
 
-import com.stuypulse.robot.constants.Ports;
 import com.stuypulse.robot.constants.Settings;
-import com.stuypulse.robot.util.simulation.TalonSimulation.SystemSim;
-import com.stuypulse.robot.util.simulation.TalonSimulation.TalonFXSimulation;
+import com.stuypulse.robot.util.simulation.RobotVisualizer;
+import com.stuypulse.robot.util.simulation.TalonFXSimulation.SystemSim;
+import com.stuypulse.robot.util.simulation.TalonFXSimulation.TalonFXSimulation;
 
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.math.system.plant.LinearSystemId;
@@ -18,7 +18,7 @@ import static edu.wpi.first.units.Units.Radians;
 import edu.wpi.first.wpilibj.simulation.DCMotorSim;
 import edu.wpi.first.wpilibj.simulation.SingleJointedArmSim;
 
-public class IntakeIOSim extends IntakeIOTalonFXBase {
+public class IntakeIOSim extends IntakeIOBase {
     private static final SystemSim<SingleJointedArmSim> pivotSim = SystemSim.of(new SingleJointedArmSim(
             LinearSystemId.createDCMotorSystem(
                     DCMotor.getKrakenX60(1),
@@ -64,6 +64,8 @@ public class IntakeIOSim extends IntakeIOTalonFXBase {
         this.pivotMotor = pivotMotor;
         this.rollerMotorLeft = rollerMotorLeft;
         this.rollerMotorRight = rollerMotorRight;
+
+        rollerMotorLeft.linkToReference(rollerMotorRight);
     }
 
     @Override
@@ -74,5 +76,7 @@ public class IntakeIOSim extends IntakeIOTalonFXBase {
         rollerMotorLeft.refresh();
         rollerMotorRight.refresh();
         super.updateInputs(inputs);
+
+        RobotVisualizer.getInstance().updateIntake(inputs.pivotMotorInputs.position, inputs.leftRollerMotorInputs.velocity);
     }
 }

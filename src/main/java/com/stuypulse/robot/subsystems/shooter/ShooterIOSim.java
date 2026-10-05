@@ -7,16 +7,16 @@ package com.stuypulse.robot.subsystems.shooter;
 
 import static edu.wpi.first.units.Units.*;
 
-import com.stuypulse.robot.constants.Ports;
 import com.stuypulse.robot.constants.Settings;
-import com.stuypulse.robot.util.simulation.TalonSimulation.SystemSim;
-import com.stuypulse.robot.util.simulation.TalonSimulation.TalonFXSimulation;
+import com.stuypulse.robot.util.simulation.RobotVisualizer;
+import com.stuypulse.robot.util.simulation.TalonFXSimulation.SystemSim;
+import com.stuypulse.robot.util.simulation.TalonFXSimulation.TalonFXSimulation;
 
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.math.system.plant.LinearSystemId;
 import edu.wpi.first.wpilibj.simulation.FlywheelSim;
 
-public class ShooterIOSim extends ShooterIOTalonFXBase {
+public class ShooterIOSim extends ShooterIOBase {
     private static final SystemSim<FlywheelSim> shooterSim = SystemSim.of(new FlywheelSim(
         LinearSystemId.createFlywheelSystem(
             DCMotor.getKrakenX60(3),
@@ -51,5 +51,6 @@ public class ShooterIOSim extends ShooterIOTalonFXBase {
         shooterMotorCenter.refresh();
         shooterMotorLeft.refresh();
         super.updateInputs(inputs);
+        RobotVisualizer.getInstance().updateShooter(inputs.shooterMotorRightInputs.velocity);
     }
 }

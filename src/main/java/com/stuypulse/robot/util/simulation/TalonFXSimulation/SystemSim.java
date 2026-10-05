@@ -1,20 +1,59 @@
-package com.stuypulse.robot.util.simulation.TalonSimulation;
+package com.stuypulse.robot.util.simulation.TalonFXSimulation;
 
+import static edu.wpi.first.units.Units.*;
+
+import edu.wpi.first.units.measure.*;
 import edu.wpi.first.wpilibj.simulation.DCMotorSim;
 import edu.wpi.first.wpilibj.simulation.ElevatorSim;
 import edu.wpi.first.wpilibj.simulation.FlywheelSim;
 import edu.wpi.first.wpilibj.simulation.SingleJointedArmSim;
 
-import edu.wpi.first.units.measure.*;
-import static edu.wpi.first.units.Units.*;
-
+/**
+ *
+ *
+ * <h2>System Simulation</h2>
+ *
+ * <p>This interface defines the contract for a system simulation, which can be used to abstract the
+ * behavior of all WPILib linear system sims in one interface.
+ *
+ * @see TalonFXSimulation
+ * @author Faizaan (https://github.com/Faizaan-J)
+ */
 public interface SystemSim<T> {
+    /**
+     * Sets the input voltage for the simulation.
+     *
+     * @param voltage The input voltage to set for the simulation.
+     */
     void setInputVoltage(Voltage voltage);
-    void update(Time dt);
-    Angle getMechanismPosition();
-    AngularVelocity getMechanismVelocity();
-    T getLinearSystemSim();
 
+    /**
+     * Updates the simulation
+     *
+     * @param dt The time step to advance the simulation
+     */
+    void update(Time dt);
+
+    /**
+     * Gets the current position of the mechanism in the simulation.
+     *
+     * @return The current position of the mechanism.
+     */
+    Angle getMechanismPosition();
+
+    /**
+     * Gets the current velocity of the mechanism in the simulation.
+     *
+     * @return The current velocity of the mechanism.
+     */
+    AngularVelocity getMechanismVelocity();
+
+    /**
+     * Gets the wrapped WPILib linear system simulation instance.
+     *
+     * @return The wrapped WPILib linear system simulation instance.
+     */
+    T getLinearSystemSim();
 
     static SystemSim<DCMotorSim> of(DCMotorSim dcMotorSim) {
         return new SystemSim<DCMotorSim>() {
@@ -62,7 +101,7 @@ public interface SystemSim<T> {
 
             @Override
             public Angle getMechanismPosition() {
-                return position; 
+                return position;
             }
 
             @Override
@@ -125,7 +164,8 @@ public interface SystemSim<T> {
 
             @Override
             public AngularVelocity getMechanismVelocity() {
-                return RadiansPerSecond.of(elevatorSim.getVelocityMetersPerSecond() / drumRadius.in(Meters));
+                return RadiansPerSecond.of(
+                        elevatorSim.getVelocityMetersPerSecond() / drumRadius.in(Meters));
             }
 
             @Override

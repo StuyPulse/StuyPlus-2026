@@ -13,7 +13,6 @@ import com.pathplanner.lib.config.RobotConfig;
 import com.pathplanner.lib.controllers.PPHolonomicDriveController;
 import com.pathplanner.lib.path.PathPlannerPath;
 import com.pathplanner.lib.util.PathPlannerLogging;
-import com.stuypulse.robot.Robot;
 import com.stuypulse.robot.constants.Settings;
 import com.stuypulse.robot.constants.Settings.Mode;
 import com.stuypulse.robot.subsystems.vision.Vision.VisionConsumer;
@@ -78,14 +77,35 @@ public class Swerve extends SubsystemBase implements VisionConsumer {
     
     private static final Swerve instance;
     static {
-        if (Robot.isReal()) {
-            instance = new Swerve(new GyroIOReal(), new ModuleIOReal(TunerConstants.FrontLeft),
-                    new ModuleIOReal(TunerConstants.FrontRight), new ModuleIOReal(TunerConstants.BackLeft),
+        switch (Settings.CURRENT_MODE) {
+            case REAL -> {
+                instance = 
+                new Swerve(
+                    new GyroIOReal(), 
+                    new ModuleIOReal(TunerConstants.FrontLeft),
+                    new ModuleIOReal(TunerConstants.FrontRight), 
+                    new ModuleIOReal(TunerConstants.BackLeft),
                     new ModuleIOReal(TunerConstants.BackRight));
-        } else {
-            instance = new Swerve(new GyroIO() {
-            }, new ModuleIOSim(TunerConstants.FrontLeft), new ModuleIOSim(TunerConstants.FrontRight),
-                    new ModuleIOSim(TunerConstants.BackLeft), new ModuleIOSim(TunerConstants.BackRight));
+            }
+            case SIM -> {
+                instance = 
+                new Swerve(
+                    new GyroIO() {}, 
+                    new ModuleIOSim(TunerConstants.FrontLeft), 
+                    new ModuleIOSim(TunerConstants.FrontRight),
+                    new ModuleIOSim(TunerConstants.BackLeft), 
+                    new ModuleIOSim(TunerConstants.BackRight));
+            }
+
+            default -> {
+                instance = 
+                    new Swerve(
+                        new GyroIO() {}, 
+                        new ModuleIO() {}, 
+                        new ModuleIO() {}, 
+                        new ModuleIO() {}, 
+                        new ModuleIO() {});
+            }
         }
     }
 

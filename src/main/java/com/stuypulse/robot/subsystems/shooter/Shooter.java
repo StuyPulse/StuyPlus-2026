@@ -7,31 +7,28 @@ package com.stuypulse.robot.subsystems.shooter;
 
 import static edu.wpi.first.units.Units.RPM;
 
-import java.util.Optional;
 import java.util.function.DoubleSupplier;
 
 import org.littletonrobotics.junction.AutoLogOutput;
 import org.littletonrobotics.junction.Logger;
 
-import com.stuypulse.robot.Robot;
 import com.stuypulse.robot.constants.Settings;
-import com.stuypulse.robot.util.SysId;
+import com.stuypulse.robot.subsystems.shooter.ShooterIO.ShooterIOOutputs;
+import com.stuypulse.robot.util.FullSubsystem;
 import com.stuypulse.robot.util.shooter.InterpolationCalculator;
-import com.stuypulse.robot.util.simulation.RobotVisualizer;
 
 import edu.wpi.first.units.measure.AngularVelocity;
-import edu.wpi.first.units.measure.Voltage;
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 
-public class Shooter extends SubsystemBase {
+public class Shooter extends FullSubsystem {
     private static final Shooter instance;
 
     static {
-        if (Robot.isReal()) {
-            instance = new Shooter(new ShooterIOTalonFX());
-        } else {
-            instance = new Shooter(new ShooterIOSim());
+        switch (Settings.CURRENT_MODE) {
+            case REAL -> instance = new Shooter(new ShooterIOReal());
+
+            case SIM -> instance = new Shooter(new ShooterIOSim());
+
+            default -> instance = new Shooter(new ShooterIO() {});
         }
     }
 
@@ -41,23 +38,22 @@ public class Shooter extends SubsystemBase {
 
     private final ShooterIO io;
     private final ShooterIOInputsAutoLogged inputs;
+    private final ShooterIOOutputs outputs;
+
     @AutoLogOutput(key = "States/Shooter")
     private ShooterState state;
 
     private AngularVelocity bonusVelocity;
 
-    private Optional<Voltage> voltageOverride;
-
     private Shooter(ShooterIO io) {
         this.io = io;
         this.inputs = new ShooterIOInputsAutoLogged();
+        this.outputs = new ShooterIOOutputs();
         this.state = ShooterState.SHOOT;
 
-        io.setGainsSlot(0);
+        outputs.gainSlot = 0;
 
         bonusVelocity = RPM.zero();
-
-        voltageOverride = Optional.empty();
     }
 
     public ShooterState getState() {
@@ -69,7 +65,7 @@ public class Shooter extends SubsystemBase {
     }
 
     public void setGainSlot(int slot) {
-        io.setGainsSlot(slot);
+        outputs.gainSlot = slot;
     }
 
     /** Enum representing the different possible states of the shooter. */
@@ -108,30 +104,13 @@ public class Shooter extends SubsystemBase {
         }
     }
 
-    //getters
-    public void setVoltageOverride(Voltage voltage) {
-        this.voltageOverride = Optional.of(voltage);
-    }
-
     public AngularVelocity getCurrentAngularVelocity() {
-        return inputs.velocity;
+        return inputs.shooterMotorRightInputs.velocity;
     }
 
     @AutoLogOutput(key = "Shooter/isSpunUp")
     public boolean shooterSpunUp() {
         return getCurrentAngularVelocity().gte(getState().getTargetAngularVelocity().minus(ShooterConstants.ShooterSettings.SHOOTER_SPUN_UP_TOLERANCE));
-    }
-
-    public SysIdRoutine getShooterSysIdRoutine() {
-        return SysId.getRoutine(
-                ShooterConstants.ShooterSettings.RAMP_RATE,
-                ShooterConstants.ShooterSettings.STEP_VOLTAGE,
-                "Shooter",
-                this::setVoltageOverride,
-                () -> inputs.position,
-                () -> inputs.velocity,
-                () -> inputs.voltage,
-                getInstance());
     }
 
     //setters
@@ -147,15 +126,26 @@ public class Shooter extends SubsystemBase {
     public void periodic() {
         io.updateInputs(inputs);
         Logger.processInputs("Shooter", inputs);
-        final ShooterState currentState = getState();
 
         if (!Settings.EnabledSubsystems.SHOOTER.get()) {
-            io.stopMotors();
-        } else if (voltageOverride.isPresent()) {
-            io.setTargetVoltage(voltageOverride.get());
-        } else {
-            io.setTargetVelocity(currentState.getTargetAngularVelocity().plus(bonusVelocity));
-        }
-        RobotVisualizer.getInstance().updateShooter(inputs.velocity);
+            stopMotors();
+            return;
+        } 
+
+        runVelocity(state.getTargetAngularVelocity().plus(bonusVelocity));
+    }
+    
+    @Override
+    public void periodicAfterScheduler() {
+        io.applyOutputs(outputs);
+    }
+
+    private void runVelocity(AngularVelocity velocity) {
+        outputs.mode = ShooterIO.ShooterIOOutputMode.VELOCITY;
+        outputs.targetVelocity = velocity;
+    }
+
+    private void stopMotors() {
+        outputs.mode = ShooterIO.ShooterIOOutputMode.STOP;
     }
 }

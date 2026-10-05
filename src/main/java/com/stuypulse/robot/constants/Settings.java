@@ -14,6 +14,7 @@ import edu.wpi.first.networktables.BooleanSubscriber;
 import edu.wpi.first.units.measure.*;
 import edu.wpi.first.wpilibj.RobotBase;
 import com.ctre.phoenix6.CANBus;
+
 import dev.doglog.DogLog;
 
 /*-
@@ -33,6 +34,7 @@ public interface Settings {
 
     Mode SIMULATION_TASK = Mode.SIM; // What to do during simulation mode. Change this to REPLAY when replaying. Change to SIM when simulating code.
     Mode CURRENT_MODE = RobotBase.isReal() ? Mode.REAL : SIMULATION_TASK;
+    
     VisionMode VISION_MODE = VisionMode.LIMELIGHT_VISION;
 
     enum Mode {
