@@ -15,7 +15,6 @@ import org.littletonrobotics.junction.wpilog.WPILOGWriter;
 import com.stuypulse.robot.commands.shooter.ShooterSetShoot;
 import com.stuypulse.robot.commands.vision.SetMegaTagMode;
 import com.stuypulse.robot.commands.vision.SetVisionEnabled;
-import com.stuypulse.robot.constants.Field;
 import com.stuypulse.robot.constants.Settings;
 import com.stuypulse.robot.subsystems.swerve.Swerve;
 import com.stuypulse.robot.subsystems.vision.Vision;
@@ -24,12 +23,9 @@ import com.stuypulse.robot.util.FullSubsystem;
 import com.stuypulse.robot.util.LoggedSignals;
 import com.stuypulse.robot.util.simulation.RobotVisualizer;
 import com.stuypulse.robot.util.simulation.SimulationConstants;
-import com.stuypulse.robot.util.swerve.AlignmentUtil;
 
-import dev.doglog.DogLog;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
@@ -108,13 +104,6 @@ public class Robot extends LoggedRobot {
         
         CommandScheduler.getInstance().run();
         FullSubsystem.runAllPeriodicAfterScheduler();
-
-        DogLog.forceNt.log("Bot/Alliance", alliance.name());
-        DogLog.forceNt.log("Match Time", DriverStation.getMatchTime());
-        SmartDashboard.putData("Command Scheduler", CommandScheduler.getInstance());
-
-        DogLog.log("Alignment/Target Heading To Hub", 
-            AlignmentUtil.getTargetAlignmentAngle(Swerve.getInstance().getPose(), Field.getHubPose()).getDegrees());
     }
 
     /******************/
@@ -215,7 +204,7 @@ public class Robot extends LoggedRobot {
         CommandScheduler.getInstance().schedule(new SetVisionEnabled());
         Boolean autonWon = DriverStation.getGameSpecificMessage()
                 .equals(String.valueOf(alliance.name().charAt(0)).toUpperCase());
-        DogLog.log("Auton Won", autonWon);
+        Logger.recordOutput("Auton Won", autonWon);
     }
 
     /**

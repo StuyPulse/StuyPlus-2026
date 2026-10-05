@@ -9,18 +9,18 @@
  */
 package com.stuypulse.robot.constants;
 
-import static edu.wpi.first.units.Units.*;
-import edu.wpi.first.networktables.BooleanSubscriber;
-import edu.wpi.first.units.measure.*;
-import edu.wpi.first.wpilibj.RobotBase;
+import org.littletonrobotics.junction.networktables.LoggedNetworkBoolean;
+
 import com.ctre.phoenix6.CANBus;
 
-import dev.doglog.DogLog;
+import static edu.wpi.first.units.Units.Milliseconds;
+import edu.wpi.first.units.measure.Time;
+import edu.wpi.first.wpilibj.RobotBase;
 
 /*-
  * File containing tunable settings for every subsystem on the robot.
  *
- * We use DogLog's tunables in order to have tunable
+ * We use Advantagekit's tunables in order to have tunable
  * values that we can edit on whatever dashboard we
  * are using.
  */
@@ -55,25 +55,25 @@ public interface Settings {
 
     public interface EnabledSubsystems {
 
-        BooleanSubscriber FEEDER = DogLog.tunable("Enabled Subsystems/Feeder", true);
+        LoggedNetworkBoolean FEEDER = new LoggedNetworkBoolean("/Tuning/Enabled Subsystems/Feeder", true);
 
-        BooleanSubscriber INTAKE = DogLog.tunable("Enabled Subsystems/Intake", true);
+        LoggedNetworkBoolean INTAKE = new LoggedNetworkBoolean("/Tuning/Enabled Subsystems/Intake", true);
 
-        // BooleanSubscriber INTAKE_ROLLERS = DogLog.tunable("Enabled
+        // LoggedNetworkBoolean INTAKE_ROLLERS = new LoggedNetworkBoolean("/Tuning/Enabled
         // Subsystems/Intake/Rollers", true);
 
-        // BooleanSubscriber INTAKE_PIVOT = DogLog.tunable("Enabled
+        // LoggedNetworkBoolean INTAKE_PIVOT = new LoggedNetworkBoolean("/Tuning/Enabled
         // Subsystems/Intake/Pivot", true);
 
-        BooleanSubscriber LED = DogLog.tunable("Enabled Subsystems/LED", false);
+        LoggedNetworkBoolean LED = new LoggedNetworkBoolean("/Tuning/Enabled Subsystems/LED", false);
 
-        BooleanSubscriber HANDOFF = DogLog.tunable("Enabled Subsystems/Handoff", true);
+        LoggedNetworkBoolean HANDOFF = new LoggedNetworkBoolean("/Tuning/Enabled Subsystems/Handoff", true);
 
-        BooleanSubscriber SHOOTER = DogLog.tunable("Enabled Subsystems/Shooter", true);
+        LoggedNetworkBoolean SHOOTER = new LoggedNetworkBoolean("/Tuning/Enabled Subsystems/Shooter", true);
 
-        BooleanSubscriber VISION = DogLog.tunable("Enabled Subsystems/Vision", true);
+        LoggedNetworkBoolean VISION = new LoggedNetworkBoolean("/Tuning/Enabled Subsystems/Vision", true);
 
-        BooleanSubscriber SWERVE = DogLog.tunable("Enabled Subsystems/Swerve", true);
+        LoggedNetworkBoolean SWERVE = new LoggedNetworkBoolean("/Tuning/Enabled Subsystems/Swerve", true);
     }
 
     public interface Driver {
