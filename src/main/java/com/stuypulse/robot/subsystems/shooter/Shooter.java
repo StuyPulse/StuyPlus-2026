@@ -105,7 +105,7 @@ public class Shooter extends FullSubsystem {
     }
 
     public AngularVelocity getCurrentAngularVelocity() {
-        return inputs.velocity;
+        return inputs.shooterMotorRightInputs.velocity;
     }
 
     @AutoLogOutput(key = "Shooter/isSpunUp")
@@ -136,7 +136,7 @@ public class Shooter extends FullSubsystem {
         runVelocity(state.getTargetAngularVelocity().plus(bonusVelocity));
 
         if (!Robot.isReal()) {
-            RobotVisualizer.getInstance().updateShooter(inputs.velocity);
+            RobotVisualizer.getInstance().updateShooter(inputs.shooterMotorRightInputs.velocity);
         }
     }
     

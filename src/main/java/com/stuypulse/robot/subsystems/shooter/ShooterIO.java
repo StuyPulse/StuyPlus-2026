@@ -5,17 +5,16 @@ import static edu.wpi.first.units.Units.*;
 import org.littletonrobotics.junction.AutoLog;
 import org.littletonrobotics.junction.AutoLogOutput;
 
+import com.stuypulse.robot.util.logged.LoggedTalonFX.TalonFXInputs;
+
 import edu.wpi.first.units.measure.*;
 
 public interface ShooterIO {
     @AutoLog
     public static class ShooterIOInputs {
-        public Angle position = Radians.zero();
-        public AngularVelocity velocity = RPM.zero();
-        public Voltage voltage = Volts.zero();
-        public Current torqueCurrent = Amps.zero();
-        public Current supplyCurrent = Amps.zero();
-        public Current statorCurrent = Amps.zero();
+        public TalonFXInputs shooterMotorLeftInputs = new TalonFXInputs();
+        public TalonFXInputs shooterMotorRightInputs = new TalonFXInputs();
+        public TalonFXInputs shooterMotorCenterInputs = new TalonFXInputs();
     }
 
     public default void updateInputs(ShooterIOInputs inputs) {};

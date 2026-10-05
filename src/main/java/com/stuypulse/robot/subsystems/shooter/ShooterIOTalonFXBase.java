@@ -5,35 +5,20 @@
 /***************************************************************/
 package com.stuypulse.robot.subsystems.shooter;
 
-import static edu.wpi.first.units.Units.*;
-
-import com.ctre.phoenix6.StatusSignal;
 import com.ctre.phoenix6.controls.Follower;
 import com.ctre.phoenix6.controls.VelocityTorqueCurrentFOC;
-import com.ctre.phoenix6.controls.VoltageOut;
-import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.MotorAlignmentValue;
-import com.stuypulse.robot.constants.Motors;
-import com.stuypulse.robot.subsystems.shooter.ShooterConstants.ShooterSettings;
-
-import edu.wpi.first.units.measure.*;
+import com.stuypulse.robot.util.logged.LoggedTalonFX.LoggedTalonFX;
 
 public abstract class ShooterIOTalonFXBase implements ShooterIO {
-    private final TalonFX shooterMotorLeft;
-    private final TalonFX shooterMotorCenter;
-    private final TalonFX shooterMotorRight;
+    private final LoggedTalonFX shooterMotorLeft;
+    private final LoggedTalonFX shooterMotorCenter;
+    private final LoggedTalonFX shooterMotorRight;
 
     private final VelocityTorqueCurrentFOC shooterController;
     private final Follower shooterFollowerController;
 
-    private final StatusSignal<Angle> position;
-    private final StatusSignal<AngularVelocity> velocity;
-    private final StatusSignal<Voltage> voltage;
-    private final StatusSignal<Current> torqueCurrent;
-    private final StatusSignal<Current> supplyCurrent;
-    private final StatusSignal<Current> statorCurrent;
-
-    public ShooterIOTalonFXBase(TalonFX shooterMotorRight, TalonFX shooterMotorCenter, TalonFX shooterMotorLeft) {
+    public ShooterIOTalonFXBase(LoggedTalonFX shooterMotorRight, LoggedTalonFX shooterMotorCenter, LoggedTalonFX shooterMotorLeft) {
         // leader
         this.shooterMotorRight = shooterMotorRight;
         this.shooterMotorCenter = shooterMotorCenter;
@@ -46,14 +31,6 @@ public abstract class ShooterIOTalonFXBase implements ShooterIO {
 
         this.shooterController = new VelocityTorqueCurrentFOC(0);
 
-        this.position = shooterMotorRight.getPosition();
-        this.velocity = shooterMotorRight.getVelocity();
-        this.voltage = shooterMotorRight.getMotorVoltage();
-        this.torqueCurrent = shooterMotorRight.getTorqueCurrent();
-        this.torqueCurrent.setUpdateFrequency(Hertz.of(1000));
-        this.supplyCurrent = shooterMotorRight.getSupplyCurrent();
-        this.statorCurrent = shooterMotorRight.getStatorCurrent();
-
         shooterFollowerController = new Follower(shooterMotorRight.getDeviceID(), MotorAlignmentValue.Opposed);
         shooterMotorCenter.setControl(shooterFollowerController);
         shooterMotorLeft.setControl(shooterFollowerController);
@@ -61,12 +38,9 @@ public abstract class ShooterIOTalonFXBase implements ShooterIO {
 
     @Override
     public void updateInputs(ShooterIOInputs inputs) {
-        inputs.position = this.position.refresh().getValue();
-        inputs.velocity = this.velocity.refresh().getValue();
-        inputs.voltage = this.voltage.refresh().getValue();
-        inputs.torqueCurrent = this.torqueCurrent.refresh().getValue();
-        inputs.supplyCurrent = this.supplyCurrent.refresh().getValue();
-        inputs.statorCurrent = this.statorCurrent.refresh().getValue();
+        shooterMotorRight.updateInputs(inputs.shooterMotorRightInputs);
+        shooterMotorLeft.updateInputs(inputs.shooterMotorLeftInputs);
+        shooterMotorCenter.updateInputs(inputs.shooterMotorCenterInputs);
     }
 
     @Override
