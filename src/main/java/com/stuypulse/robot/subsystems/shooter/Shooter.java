@@ -12,7 +12,6 @@ import java.util.function.DoubleSupplier;
 import org.littletonrobotics.junction.AutoLogOutput;
 import org.littletonrobotics.junction.Logger;
 
-import com.stuypulse.robot.Robot;
 import com.stuypulse.robot.constants.Settings;
 import com.stuypulse.robot.subsystems.shooter.ShooterIO.ShooterIOOutputs;
 import com.stuypulse.robot.util.FullSubsystem;

@@ -44,7 +44,7 @@ public class Intake extends FullSubsystem {
 
             default -> instance = new Intake(new IntakeIO() {});
         }
-        
+
         // Elastic Commands
         SmartDashboard.putData("Intake/Seed Pivot Angle Stowed", new IntakeSeedPivotStowed());
         SmartDashboard.putData("Intake/Set Pivot Angle Deployed", new IntakeSeedPivotDeployed());
@@ -214,7 +214,6 @@ public class Intake extends FullSubsystem {
     public void periodic() {
         io.updateInputs(inputs);
         Logger.processInputs("Intake", inputs);
-        final IntakeState currentState = getState();
     
         if (!Settings.EnabledSubsystems.INTAKE.get()) {
             stopAllMotors();
@@ -225,23 +224,23 @@ public class Intake extends FullSubsystem {
             io.seedPivotAngle(IntakeConstants.IntakeSettings.Pivot.DEPLOY_ANGLE);
         }
 
-        if (currentState == IntakeState.HOMING_DOWN && (isPivotStalling() || inputs.limitSwitchHit)) {
+        if (state == IntakeState.HOMING_DOWN && (isPivotStalling() || inputs.limitSwitchHit)) {
             io.seedPivotAngle(IntakeConstants.IntakeSettings.Pivot.DEPLOY_ANGLE);
             setState(IntakeState.INTAKE);
         }
 
-        if ((currentState == IntakeState.DOWN) && (isPivotStalling() || inputs.limitSwitchHit)) {
+        if ((state == IntakeState.DOWN) && (isPivotStalling() || inputs.limitSwitchHit)) {
             io.seedPivotAngle(IntakeConstants.IntakeSettings.Pivot.DEPLOY_ANGLE);
         }
 
-        switch (currentState) {
+        switch (state) {
             case INTAKE, OUTTAKE, DOWN -> runPivotPushdown(Amps.of(IntakeConstants.IntakeSettings.Pivot.PUSHDOWN_CURRENT.get()));
             case HOMING_DOWN -> runPivotHoming(IntakeConstants.IntakeSettings.Pivot.HOMING_DOWN_VOLTAGE);
-            case AGITATE, AGITATE_DOWN -> runPivotPosition(currentState.getTargetAngle(), 1);
-            default -> runPivotPosition(currentState.getTargetAngle(), 0);
+            case AGITATE, AGITATE_DOWN -> runPivotPosition(state.getTargetAngle(), 1);
+            default -> runPivotPosition(state.getTargetAngle(), 0);
         }
 
-        runRollerDutyCycle(currentState.getTargetDutyCycle());
+        runRollerDutyCycle(state.getTargetDutyCycle());
     }
 
     @Override

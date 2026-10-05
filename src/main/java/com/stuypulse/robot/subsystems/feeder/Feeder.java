@@ -83,7 +83,7 @@ public class Feeder extends FullSubsystem {
             return;
         }
 
-        runVoltage(getState().getTargetVoltage());
+        runVoltage(state.getTargetVoltage());
     }
 
     @Override

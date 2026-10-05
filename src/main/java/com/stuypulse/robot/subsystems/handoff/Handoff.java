@@ -109,7 +109,7 @@ public class Handoff extends FullSubsystem {
             return;
         }
 
-        runVoltage(getState().getTargetVoltage());
+        runVoltage(state.getTargetVoltage());
     }
 
     @Override
