@@ -5,10 +5,10 @@
 /***************************************************************/
 package com.stuypulse.robot.subsystems.handoff;
 
-import com.ctre.phoenix6.hardware.TalonFX;
+import com.stuypulse.robot.util.logged.LoggedTalonFX.LoggedTalonFX;
 
 public class HandoffIOTalonFX extends HandoffIOTalonFXBase {
     public HandoffIOTalonFX() {
-        super(new TalonFX(HandoffConstants.HandoffDeviceIds.HANDOFF_MOTOR));
+        super(new LoggedTalonFX(HandoffConstants.HandoffDeviceIds.HANDOFF_MOTOR));
     }
 }

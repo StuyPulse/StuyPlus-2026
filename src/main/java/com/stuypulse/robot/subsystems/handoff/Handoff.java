@@ -48,7 +48,7 @@ public class Handoff extends FullSubsystem {
         this.outputs = new HandoffIOOutputs();
         this.state = HandoffState.IDLE;
 
-        this.handoffStalling = () -> inputs.statorCurrent.abs(Amps) > HandoffConstants.HandoffSettings.STALL_CURRENT;
+        this.handoffStalling = () -> inputs.handoffMotorInputs.statorCurrent.abs(Amps) > HandoffConstants.HandoffSettings.STALL_CURRENT;
         this.handoffDebouncer = new Debouncer(HandoffConstants.HandoffSettings.STALL_DEBOUNCE, DebounceType.kRising);
     }
 
