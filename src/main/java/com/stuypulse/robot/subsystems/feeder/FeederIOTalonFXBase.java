@@ -3,6 +3,7 @@ package com.stuypulse.robot.subsystems.feeder;
 import com.ctre.phoenix6.StatusSignal;
 import com.ctre.phoenix6.controls.VoltageOut;
 import com.ctre.phoenix6.hardware.TalonFX;
+import com.stuypulse.robot.util.logged.LoggedTalonFX.LoggedTalonFX;
 
 import edu.wpi.first.units.measure.Angle;
 import edu.wpi.first.units.measure.AngularVelocity;
@@ -10,7 +11,7 @@ import edu.wpi.first.units.measure.Current;
 import edu.wpi.first.units.measure.Voltage;
 
 public abstract class FeederIOTalonFXBase implements FeederIO {
-    private final TalonFX feederMotor;
+    private final LoggedTalonFX feederMotor;
 
     private final VoltageOut feederController;
     
@@ -19,7 +20,7 @@ public abstract class FeederIOTalonFXBase implements FeederIO {
     private final StatusSignal<Voltage> voltage;
     private final StatusSignal<Current> supplyCurrent;
 
-    protected FeederIOTalonFXBase(TalonFX feederMotor) {
+    protected FeederIOTalonFXBase(LoggedTalonFX feederMotor) {
         this.feederMotor = feederMotor;
         FeederConstants.FeederMotorConfigs.LEADER_CONFIG.configure(feederMotor);
         feederController = new VoltageOut(0).withEnableFOC(true);
@@ -32,10 +33,7 @@ public abstract class FeederIOTalonFXBase implements FeederIO {
 
     @Override
     public void updateInputs(FeederIOInputs inputs) {
-        inputs.position = position.refresh().getValue();
-        inputs.velocity = velocity.refresh().getValue();
-        inputs.voltage = voltage.refresh().getValue();
-        inputs.supplyCurrent = supplyCurrent.refresh().getValue();
+        feederMotor.updateInputs(inputs.feederMotorInputs);
     }
 
     @Override

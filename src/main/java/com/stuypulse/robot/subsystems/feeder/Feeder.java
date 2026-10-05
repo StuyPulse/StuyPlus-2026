@@ -87,7 +87,7 @@ public class Feeder extends FullSubsystem {
         }
         
         if (!Robot.isReal()) {
-            RobotVisualizer.getInstance().updateFeeder(inputs.velocity);
+            RobotVisualizer.getInstance().updateFeeder(inputs.feederMotorInputs.velocity);
         }
     }
 

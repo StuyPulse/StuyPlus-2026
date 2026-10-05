@@ -5,10 +5,10 @@
 /***************************************************************/
 package com.stuypulse.robot.subsystems.feeder;
 
-import com.ctre.phoenix6.hardware.TalonFX;
+import com.stuypulse.robot.util.logged.LoggedTalonFX.LoggedTalonFX;
 
 public class FeederIOTalonFX extends FeederIOTalonFXBase {
     public FeederIOTalonFX() {
-        super(new TalonFX(FeederConstants.FeederDeviceIds.FEEDER_MOTOR));
+        super(new LoggedTalonFX(FeederConstants.FeederDeviceIds.FEEDER_MOTOR));
     }
 }

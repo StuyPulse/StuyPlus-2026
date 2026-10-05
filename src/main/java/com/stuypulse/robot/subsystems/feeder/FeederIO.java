@@ -5,15 +5,14 @@ import static edu.wpi.first.units.Units.*;
 import org.littletonrobotics.junction.AutoLog;
 import org.littletonrobotics.junction.AutoLogOutput;
 
+import com.stuypulse.robot.util.logged.LoggedTalonFX.TalonFXInputs;
+
 import edu.wpi.first.units.measure.*;
 
 public interface FeederIO {
     @AutoLog
     public static class FeederIOInputs {
-        public Angle position = Radians.zero();
-        public AngularVelocity velocity = RPM.zero();
-        public Voltage voltage = Volts.zero();
-        public Current supplyCurrent = Amps.zero();
+        public TalonFXInputs feederMotorInputs = new TalonFXInputs();
     }
 
     public default void updateInputs(FeederIOInputs inputs) {};
