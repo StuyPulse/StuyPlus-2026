@@ -17,7 +17,6 @@ import com.stuypulse.robot.constants.Settings;
 import com.stuypulse.robot.subsystems.shooter.ShooterIO.ShooterIOOutputs;
 import com.stuypulse.robot.util.FullSubsystem;
 import com.stuypulse.robot.util.shooter.InterpolationCalculator;
-import com.stuypulse.robot.util.simulation.RobotVisualizer;
 
 import edu.wpi.first.units.measure.AngularVelocity;
 
@@ -128,16 +127,11 @@ public class Shooter extends FullSubsystem {
         Logger.processInputs("Shooter", inputs);
 
         if (!Settings.EnabledSubsystems.SHOOTER.get()) {
-            outputs.mode = ShooterIO.ShooterIOOutputMode.STOP;
-
+            stopMotors();
             return;
         } 
 
         runVelocity(state.getTargetAngularVelocity().plus(bonusVelocity));
-
-        if (!Robot.isReal()) {
-            RobotVisualizer.getInstance().updateShooter(inputs.shooterMotorRightInputs.velocity);
-        }
     }
     
     @Override
@@ -145,8 +139,12 @@ public class Shooter extends FullSubsystem {
         io.applyOutputs(outputs);
     }
 
-    public void runVelocity(AngularVelocity velocity) {
+    private void runVelocity(AngularVelocity velocity) {
         outputs.mode = ShooterIO.ShooterIOOutputMode.VELOCITY;
         outputs.targetVelocity = velocity;
+    }
+
+    private void stopMotors() {
+        outputs.mode = ShooterIO.ShooterIOOutputMode.STOP;
     }
 }

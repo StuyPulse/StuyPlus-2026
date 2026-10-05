@@ -3,7 +3,6 @@ package com.stuypulse.robot.subsystems.intake;
 import org.littletonrobotics.junction.AutoLog;
 import org.littletonrobotics.junction.AutoLogOutput;
 
-import com.stuypulse.robot.constants.Settings;
 import com.stuypulse.robot.util.logged.LoggedTalonFX.TalonFXInputs;
 
 import static edu.wpi.first.units.Units.*;

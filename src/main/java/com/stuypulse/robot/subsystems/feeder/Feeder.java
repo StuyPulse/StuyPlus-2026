@@ -10,7 +10,6 @@ import static edu.wpi.first.units.Units.*;
 import org.littletonrobotics.junction.AutoLogOutput;
 import org.littletonrobotics.junction.Logger;
 
-import com.stuypulse.robot.Robot;
 import com.stuypulse.robot.constants.Settings;
 import com.stuypulse.robot.subsystems.feeder.FeederIO.FeederIOOutputMode;
 import com.stuypulse.robot.subsystems.feeder.FeederIO.FeederIOOutputs;
@@ -18,7 +17,6 @@ import com.stuypulse.robot.subsystems.feeder.FeederIO.FeederIOOutputs;
 import edu.wpi.first.units.measure.*;
 
 import com.stuypulse.robot.util.FullSubsystem;
-import com.stuypulse.robot.util.simulation.RobotVisualizer;
 
 public class Feeder extends FullSubsystem {
     private static final Feeder instance;
@@ -80,15 +78,12 @@ public class Feeder extends FullSubsystem {
         io.updateInputs(inputs);
         Logger.processInputs("Feeder", inputs);
 
-        if (Settings.EnabledSubsystems.FEEDER.get()) {
-            runVoltage(getState().getTargetVoltage());
-        } else {
-            outputs.mode = FeederIOOutputMode.STOP;
+        if (!Settings.EnabledSubsystems.FEEDER.get()) {
+            stopMotor();
+            return;
         }
-        
-        if (!Robot.isReal()) {
-            RobotVisualizer.getInstance().updateFeeder(inputs.feederMotorInputs.velocity);
-        }
+
+        runVoltage(getState().getTargetVoltage());
     }
 
     @Override
@@ -99,5 +94,9 @@ public class Feeder extends FullSubsystem {
     private void runVoltage(Voltage voltage) {
         outputs.mode = FeederIOOutputMode.VOLTAGE;
         outputs.voltage = voltage;
+    }
+
+    private void stopMotor() {
+        outputs.mode = FeederIOOutputMode.STOP;
     }
 }

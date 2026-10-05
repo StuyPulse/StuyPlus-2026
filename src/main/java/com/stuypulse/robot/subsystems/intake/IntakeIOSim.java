@@ -5,7 +5,6 @@
 /***************************************************************/
 package com.stuypulse.robot.subsystems.intake;
 
-import com.stuypulse.robot.constants.Ports;
 import com.stuypulse.robot.constants.Settings;
 import com.stuypulse.robot.util.simulation.RobotVisualizer;
 import com.stuypulse.robot.util.simulation.TalonFXSimulation.SystemSim;

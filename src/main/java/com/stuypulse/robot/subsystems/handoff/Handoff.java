@@ -98,13 +98,13 @@ public class Handoff extends FullSubsystem {
     public void periodic() {
         io.updateInputs(inputs);
         Logger.processInputs("Handoff", inputs);
-        final HandoffState currentState = getState();
         
-        if (Settings.EnabledSubsystems.HANDOFF.get()) {
-            runVoltage(currentState.getTargetVoltage());
-        } else {
-            outputs.mode = HandoffIO.HandoffIOOutputMode.STOP;
+        if (!Settings.EnabledSubsystems.HANDOFF.get()) {
+            stopMotor();
+            return;
         }
+
+        runVoltage(getState().getTargetVoltage());
     }
 
     @Override
@@ -115,5 +115,9 @@ public class Handoff extends FullSubsystem {
     private void runVoltage(Voltage voltage) {
         outputs.mode = HandoffIO.HandoffIOOutputMode.VOLTAGE;
         outputs.voltage = voltage;
+    }
+
+    private void stopMotor() {
+        outputs.mode = HandoffIO.HandoffIOOutputMode.STOP;
     }
 }
