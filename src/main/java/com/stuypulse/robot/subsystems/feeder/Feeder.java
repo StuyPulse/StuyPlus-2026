@@ -16,8 +16,6 @@ import com.stuypulse.robot.subsystems.feeder.FeederIO.FeederIOOutputMode;
 import com.stuypulse.robot.subsystems.feeder.FeederIO.FeederIOOutputs;
 
 import edu.wpi.first.units.measure.*;
-import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.Commands;
 
 import com.stuypulse.robot.util.FullSubsystem;
 import com.stuypulse.robot.util.simulation.RobotVisualizer;
@@ -77,37 +75,10 @@ public class Feeder extends FullSubsystem {
         }
     }
 
-    private Command setStateCommand(FeederState state) {
-        return Commands.runOnce(() -> this.setState(state));
-    }
-
-    public Command setIdle() {
-        return setStateCommand(FeederState.IDLE);
-    }
-
-    public Command setForward() {
-        return setStateCommand(FeederState.FORWARD);
-    }
-
-    public Command setReverse() {
-        return setStateCommand(FeederState.REVERSE);
-    }
-
     @Override
     public void periodic() {
         io.updateInputs(inputs);
         Logger.processInputs("Feeder", inputs);
-        // Stop shooting if not aligned
-        // final Swerve swerve = Swerve.getInstance();
-        // final Shooter shooter = Shooter.getInstance();
-        // if (!(swerve.isAlignedToTarget(Field.getHubPose()))
-        //         && shooter.getState() == ShooterState.SHOOT) {
-        //     setState(FeederState.IDLE);
-        // }
-        // if (!(swerve.isAlignedToTarget(Field.getFerryZonePose(swerve.getPose().getTranslation())))
-        //         && shooter.getState() == ShooterState.FERRY) {
-        //     setState(FeederState.IDLE);
-        // }
 
         if (Settings.EnabledSubsystems.FEEDER.get()) {
             runVoltage(getState().getTargetVoltage());
