@@ -150,7 +150,7 @@ Files:
 - [`SimulationConstants.java`](https://github.com/StuyPulse/StuyPlus-2026/blob/main/src/main/java/com/stuypulse/robot/util/simulation/SimulationConstants.java)
 - [`MapleSimSwerveDrivetrain.java`](https://github.com/StuyPulse/StuyPlus-2026/blob/main/src/main/java/com/stuypulse/robot/util/simulation/MapleSimSwerveDrivetrain.java)
 
-Additionally, we modified our [`CommandSwerveDrivetrain.java`](https://github.com/StuyPulse/StuyPlus-2026/blob/main/src/main/java/com/stuypulse/robot/subsystems/swerve/CommandSwerveDrivetrain.java) in order to: 
+Additionally, we modified our [`Swerve.java`](https://github.com/StuyPulse/StuyPlus-2026/blob/main/src/main/java/com/stuypulse/robot/subsystems/swerve/Swerve.java) in order to: 
 - Replace the normal simulation instance with a `MapleSimSwerveDrivetrain` instance
 - Update the simulation instance with Maplesim's periodic method (`MapleSimSwerveDrivetrain::update`)
 - Publish our simulated swerve module states, chassis speeds, and drivetrain pose to `NetworkTables`

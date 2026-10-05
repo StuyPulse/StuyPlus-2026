@@ -5,18 +5,18 @@
 /***************************************************************/
 package com.stuypulse.robot.commands.vision;
 
-import com.stuypulse.robot.subsystems.vision.LimelightVision;
-import com.stuypulse.robot.subsystems.vision.LimelightVision.MegaTagMode;
+import com.stuypulse.robot.subsystems.vision.Vision;
+import com.stuypulse.robot.subsystems.vision.VisionIO.MegaTagMode;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 
 public class SetMegaTagMode extends InstantCommand {
 
-    private final LimelightVision vision;
+    private final Vision vision;
 
     private final MegaTagMode mode;
 
     public SetMegaTagMode(MegaTagMode mode) {
-        this.vision = LimelightVision.getInstance();
+        this.vision = Vision.getInstance();
         this.mode = mode;
     }
 

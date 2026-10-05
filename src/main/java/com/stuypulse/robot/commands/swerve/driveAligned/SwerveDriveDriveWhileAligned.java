@@ -5,28 +5,32 @@
 /***************************************************************/
 package com.stuypulse.robot.commands.swerve.driveAligned;
 
-import com.ctre.phoenix6.swerve.SwerveRequest;
 import com.stuypulse.robot.constants.Settings.Driver.Drive;
-import com.stuypulse.robot.subsystems.swerve.CommandSwerveDrivetrain;
+import com.stuypulse.robot.subsystems.swerve.Swerve;
 import com.stuypulse.robot.subsystems.swerve.SwerveConstants;
+import com.stuypulse.robot.subsystems.swerve.SwerveConstants.SwerveGains;
 import com.stuypulse.robot.util.swerve.swerveinput.DriveInputProcessor;
 
 import dev.doglog.DogLog;
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import java.util.function.Supplier;
 
 public class SwerveDriveDriveWhileAligned extends Command {
 
-    protected static final CommandSwerveDrivetrain swerve;
+    protected static final Swerve swerve;
 
     private final CommandXboxController driver;
 
     private final DriveInputProcessor speed;
 
     private final Supplier<Pose2d> targetPose;
+
+    private final PIDController headingController;
 
     public SwerveDriveDriveWhileAligned(CommandXboxController driver, Supplier<Pose2d> targetPose) {
         this.speed = new DriveInputProcessor(
@@ -38,11 +42,13 @@ public class SwerveDriveDriveWhileAligned extends Command {
                 Drive.RC);
         this.driver = driver;
         this.targetPose = targetPose;
+        this.headingController = new PIDController(SwerveGains.Alignment.akP, SwerveGains.Alignment.akI, SwerveGains.Alignment.akD);
+        headingController.enableContinuousInput(-Math.PI, Math.PI);
         addRequirements(swerve);
     }
 
     static {
-        swerve = CommandSwerveDrivetrain.getInstance();
+        swerve = Swerve.getInstance();
     }
 
     public Rotation2d getTargetAngle() {
@@ -57,14 +63,12 @@ public class SwerveDriveDriveWhileAligned extends Command {
     public void execute() {
         speed.update();
 
-        swerve.setControl(
-                new SwerveRequest.FieldCentricFacingAngle()
-                        .withVelocityX(speed.get().getX())
-                        .withVelocityY(speed.get().getY())
-                        .withTargetDirection(getTargetAngle())
-                        .withHeadingPID(SwerveConstants.SwerveGains.Alignment.akP, 
-                        SwerveConstants.SwerveGains.Alignment.akI, 
-                        SwerveConstants.SwerveGains.Alignment.akD));
+        double omega = headingController.calculate(
+                swerve.getRotation().getRadians(),
+                getTargetAngle().getRadians()); // rotation.get?
+
+        ChassisSpeeds speeds = new ChassisSpeeds(speed.get().getX(), speed.get().getY(), omega);
+        swerve.runVelocity(speeds);
         DogLog.log("Swerve/targetAngle", getTargetAngle().getDegrees());
         DogLog.log("Swerve/Target Pose X", targetPose.get().getX());
         DogLog.log("Swerve/Target Pose Y", targetPose.get().getY());

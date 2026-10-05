@@ -56,7 +56,6 @@ public class Intake extends FullSubsystem {
     private final IntakeIO io;
     private final IntakeIOInputsAutoLogged inputs;
     private final IntakeIOOutputs outputs;
-    @AutoLogOutput(key = "States/Intake")
     private IntakeState state;
 
     private Intake(IntakeIO io) {

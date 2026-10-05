@@ -14,7 +14,6 @@ import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.swerve.SwerveModuleConstants;
 import com.pathplanner.lib.config.PIDConstants;
 import com.stuypulse.robot.Robot;
-import com.stuypulse.robot.constants.Settings;
 import com.stuypulse.robot.subsystems.shooter.ShooterConstants;
 import com.stuypulse.robot.subsystems.swerve.TunerConstants;
 import edu.wpi.first.math.geometry.Pose2d;

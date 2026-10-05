@@ -1,19 +1,17 @@
 package com.stuypulse.robot.subsystems.swerve;
 
 import static edu.wpi.first.units.Units.*;
+import edu.wpi.first.units.measure.*;
+import edu.wpi.first.math.util.Units;
 
 import com.pathplanner.lib.config.PIDConstants;
 import com.pathplanner.lib.path.PathConstraints;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.util.Units;
-import edu.wpi.first.units.measure.Distance;
-import edu.wpi.first.units.measure.LinearVelocity;
-import edu.wpi.first.units.measure.Time;
 
 public interface SwerveConstants {
-     public interface SwerveSettings {
+    public interface SwerveSettings {
 
         double MODULE_VELOCITY_DEADBAND_M_PER_S = 0.1;
 
@@ -31,7 +29,8 @@ public interface SwerveConstants {
             // TODO: revert to 900
             double MAX_ANGULAR_ACCEL_RAD_PER_S = Units.degreesToRadians(300.0);
 
-            PathConstraints DEFAULT_CONSTRAINTS = new PathConstraints(MAX_VELOCITY_M_PER_S, MAX_ACCEL_M_PER_S_SQUARED, MAX_ANGULAR_VEL_RAD_PER_S, MAX_ANGULAR_ACCEL_RAD_PER_S);
+            PathConstraints DEFAULT_CONSTRAINTS = new PathConstraints(MAX_VELOCITY_M_PER_S, MAX_ACCEL_M_PER_S_SQUARED,
+                    MAX_ANGULAR_VEL_RAD_PER_S, MAX_ANGULAR_ACCEL_RAD_PER_S);
         }
 
         public interface Alignment {

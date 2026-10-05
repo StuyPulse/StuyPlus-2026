@@ -98,7 +98,7 @@ public class Feeder extends FullSubsystem {
         io.updateInputs(inputs);
         Logger.processInputs("Feeder", inputs);
         // Stop shooting if not aligned
-        // final CommandSwerveDrivetrain swerve = CommandSwerveDrivetrain.getInstance();
+        // final Swerve swerve = Swerve.getInstance();
         // final Shooter shooter = Shooter.getInstance();
         // if (!(swerve.isAlignedToTarget(Field.getHubPose()))
         //         && shooter.getState() == ShooterState.SHOOT) {
