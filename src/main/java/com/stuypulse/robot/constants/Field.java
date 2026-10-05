@@ -7,8 +7,11 @@ package com.stuypulse.robot.constants;
 
 import com.pathplanner.lib.util.FlippingUtil;
 import com.stuypulse.robot.Robot;
-import com.stuypulse.robot.subsystems.swerve.CommandSwerveDrivetrain;
+import com.stuypulse.robot.subsystems.swerve.Swerve;
 import com.stuypulse.robot.util.vision.AprilTag;
+
+import edu.wpi.first.apriltag.AprilTagFieldLayout;
+import edu.wpi.first.apriltag.AprilTagFields;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -63,9 +66,10 @@ public interface Field {
         public static final Pose2d allianceZone = new Pose2d(Units.inchesToMeters(182.11), WIDTH, new Rotation2d());
 
         public static boolean inAllianceZone() {
-                return CommandSwerveDrivetrain.getInstance().getPose().getX() < allianceZone.getX();
+                return Swerve.getInstance().getPose().getX() < allianceZone.getX();
         }
 
+        AprilTagFieldLayout APRIL_TAG_LAYOUT = AprilTagFieldLayout.loadField(AprilTagFields.k2026RebuiltWelded);
         /** APRILTAGS ** */
         enum NamedTags {
 

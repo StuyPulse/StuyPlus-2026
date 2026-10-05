@@ -9,8 +9,7 @@ import static edu.wpi.first.units.Units.*;
 
 import com.stuypulse.robot.Robot;
 import com.stuypulse.robot.constants.Field;
-import com.stuypulse.robot.constants.Settings;
-import com.stuypulse.robot.subsystems.swerve.CommandSwerveDrivetrain;
+import com.stuypulse.robot.subsystems.swerve.Swerve;
 import com.stuypulse.robot.subsystems.swerve.SwerveConstants;
 import com.stuypulse.robot.util.TranslationMotionProfile;
 
@@ -35,7 +34,7 @@ import java.util.function.Supplier;
 
 public class SwerveDrivePIDToPose extends Command {
 
-        private final CommandSwerveDrivetrain swerve;
+        private final Swerve swerve;
 
     private final HolonomicDriveController controller;
 
@@ -72,7 +71,7 @@ public class SwerveDrivePIDToPose extends Command {
     }
 
     public SwerveDrivePIDToPose(Supplier<Pose2d> targetPose) {
-        swerve = CommandSwerveDrivetrain.getInstance();
+        swerve = Swerve.getInstance();
         controller = new HolonomicDriveController(
             new PIDController(SwerveConstants.SwerveGains.Alignment.XY.kP, SwerveConstants.SwerveGains.Alignment.XY.kI, SwerveConstants.SwerveGains.Alignment.XY.kD),
             new PIDController(SwerveConstants.SwerveGains.Alignment.XY.kP, SwerveConstants.SwerveGains.Alignment.XY.kI, SwerveConstants.SwerveGains.Alignment.XY.kD),
@@ -180,15 +179,10 @@ public class SwerveDrivePIDToPose extends Command {
             new Pose2d(translationSetpoint.get(), targetPose.get().getRotation()),
             0,
             targetPose.get().getRotation());
-        swerve.setControl(
-                swerve
-                        .getRobotCentricSwerveRequest()
-                        .withVelocityX(output.vxMetersPerSecond)
-                        .withVelocityY(output.vyMetersPerSecond)
-                        .withRotationalRate(output.omegaRadiansPerSecond));
-        DogLog.log("SwerveConstants.SwerveGains.Alignment/Target x", targetPose.get().getX());
-        DogLog.log("SwerveConstants.SwerveGains.Alignment/Target y", targetPose.get().getY());
-        DogLog.log("SwerveConstants.SwerveGains.Alignment/Target Angle", targetPose.get().getRotation().getDegrees());
+        swerve.runVelocity(output);
+        DogLog.log("Alignment/Target x", targetPose.get().getX());
+        DogLog.log("Alignment/Target y", targetPose.get().getY());
+        DogLog.log("Alignment/Target Angle", targetPose.get().getRotation().getDegrees());
         DogLog.log(
                 "SwerveConstants.SwerveGains.Alignment/Target Velocity Robot Relative X (m/s)",
                 output.vxMetersPerSecond);
@@ -211,12 +205,7 @@ public class SwerveDrivePIDToPose extends Command {
 
     @Override
     public void end(boolean interrupted) {
-        swerve.setControl(
-                swerve
-                        .getFieldCentricSwerveRequest()
-                        .withVelocityX(0)
-                        .withVelocityY(0)
-                        .withRotationalRate(0));
+        swerve.stop();
         Field.clearFieldObject(targetPose2d);
     }
 }

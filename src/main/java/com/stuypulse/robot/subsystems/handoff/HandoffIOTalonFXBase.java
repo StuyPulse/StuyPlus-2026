@@ -43,7 +43,7 @@ public abstract class HandoffIOTalonFXBase implements HandoffIO {
         inputs.supplyCurrent = supplyCurrent.refresh().getValue();
         inputs.statorCurrent = statorCurrent.refresh().getValue();
         // final Shooter shooter = Shooter.getInstance();
-        // final CommandSwerveDrivetrain swerve = CommandSwerveDrivetrain.getInstance();
+        // final Swerve swerve = Swerve.getInstance();
         // if (!(swerve.isAlignedToTarget(Field.getHubPose()))
         //         && shooter.getState() == ShooterState.SHOOT) {
         //     setState(HandoffState.IDLE);

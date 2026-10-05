@@ -10,24 +10,11 @@
 package com.stuypulse.robot.constants;
 
 import static edu.wpi.first.units.Units.*;
-import edu.wpi.first.math.VecBuilder;
-import edu.wpi.first.math.Vector;
-import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.numbers.N3;
-import edu.wpi.first.math.util.Units;
 import edu.wpi.first.networktables.BooleanSubscriber;
-import edu.wpi.first.networktables.DoubleSubscriber;
-import edu.wpi.first.units.*;
 import edu.wpi.first.units.measure.*;
-import edu.wpi.first.wpilibj.LEDPattern;
-import edu.wpi.first.wpilibj.simulation.SingleJointedArmSim;
-import edu.wpi.first.wpilibj.util.Color;
+import edu.wpi.first.wpilibj.RobotBase;
 import com.ctre.phoenix6.CANBus;
 import dev.doglog.DogLog;
-
-import com.pathplanner.lib.path.PathConstraints;
-import com.stuypulse.robot.Robot;
 
 /*-
  * File containing tunable settings for every subsystem on the robot.
@@ -38,20 +25,30 @@ import com.stuypulse.robot.Robot;
  */
 public interface Settings {
 
-    Time DT = Seconds.of(0.020);
+    Time DT = Milliseconds.of(20);
 
     boolean DEBUG_MODE = true;
 
     CANBus CANBUS = new CANBus("rio");
 
-    Mode SIM_MODE = Mode.SIM;
-
-    Mode CURRENT_MODE = Robot.isReal() ? Mode.REAL : SIM_MODE;
+    Mode SIMULATION_TASK = Mode.SIM; // What to do during simulation mode. Change this to REPLAY when replaying. Change to SIM when simulating code.
+    Mode CURRENT_MODE = RobotBase.isReal() ? Mode.REAL : SIMULATION_TASK;
+    VisionMode VISION_MODE = VisionMode.LIMELIGHT_VISION;
 
     enum Mode {
+        /** Running on a real robot. */
         REAL,
+
+        /** Running a physics simulator. */
         SIM,
+
+        /** Replaying from a log file. */
         REPLAY
+    }
+
+    enum VisionMode {
+        LIMELIGHT_VISION,
+        PHOTON_VISION
     }
 
     public interface EnabledSubsystems {
@@ -60,9 +57,11 @@ public interface Settings {
 
         BooleanSubscriber INTAKE = DogLog.tunable("Enabled Subsystems/Intake", true);
 
-        // BooleanSubscriber INTAKE_ROLLERS = DogLog.tunable("Enabled Subsystems/Intake/Rollers", true);
+        // BooleanSubscriber INTAKE_ROLLERS = DogLog.tunable("Enabled
+        // Subsystems/Intake/Rollers", true);
 
-        // BooleanSubscriber INTAKE_PIVOT = DogLog.tunable("Enabled Subsystems/Intake/Pivot", true);
+        // BooleanSubscriber INTAKE_PIVOT = DogLog.tunable("Enabled
+        // Subsystems/Intake/Pivot", true);
 
         BooleanSubscriber LED = DogLog.tunable("Enabled Subsystems/LED", false);
 
