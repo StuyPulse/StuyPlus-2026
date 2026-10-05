@@ -38,11 +38,14 @@ public class Intake extends FullSubsystem {
     private final Debouncer rightRollerDebouncer;
 
     static {
-        if (Robot.isReal()) {
-            instance = new Intake(new IntakeIOTalonFX());
-        } else {
-            instance = new Intake(new IntakeIOSim());
+        switch (Settings.CURRENT_MODE) {
+            case REAL -> instance = new Intake(new IntakeIOTalonFX());
+
+            case SIM -> instance = new Intake(new IntakeIOSim());
+
+            default -> instance = new Intake(new IntakeIO() {});
         }
+        
         // Elastic Commands
         SmartDashboard.putData("Intake/Seed Pivot Angle Stowed", new IntakeSeedPivotStowed());
         SmartDashboard.putData("Intake/Set Pivot Angle Deployed", new IntakeSeedPivotDeployed());

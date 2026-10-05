@@ -12,7 +12,6 @@ import java.util.function.BooleanSupplier;
 import org.littletonrobotics.junction.AutoLogOutput;
 import org.littletonrobotics.junction.Logger;
 
-import com.stuypulse.robot.Robot;
 import com.stuypulse.robot.constants.Settings;
 import com.stuypulse.robot.subsystems.handoff.HandoffIO.HandoffIOOutputs;
 import com.stuypulse.robot.util.FullSubsystem;
@@ -25,7 +24,13 @@ public class Handoff extends FullSubsystem {
     private static final Handoff instance;
 
     static {
-        instance = Robot.isReal() ? new Handoff(new HandoffIOTalonFX()) : new Handoff(new HandoffIOSim());
+        switch (Settings.CURRENT_MODE) {
+            case REAL -> instance = new Handoff(new HandoffIOTalonFX());
+
+            case SIM -> instance = new Handoff(new HandoffIOSim());
+
+            default -> instance = new Handoff(new HandoffIO() {});
+        }
     }
 
     public static Handoff getInstance() {

@@ -24,10 +24,12 @@ public class Shooter extends FullSubsystem {
     private static final Shooter instance;
 
     static {
-        if (Robot.isReal()) {
-            instance = new Shooter(new ShooterIOTalonFX());
-        } else {
-            instance = new Shooter(new ShooterIOSim());
+        switch (Settings.CURRENT_MODE) {
+            case REAL -> instance = new Shooter(new ShooterIOTalonFX());
+
+            case SIM -> instance = new Shooter(new ShooterIOSim());
+
+            default -> instance = new Shooter(new ShooterIO() {});
         }
     }
 
