@@ -6,15 +6,9 @@
 package com.stuypulse.robot.subsystems.feeder;
 
 import com.ctre.phoenix6.hardware.TalonFX;
-import com.stuypulse.robot.constants.Settings;
 
 public class FeederIOTalonFX extends FeederIOTalonFXBase {
-    private static TalonFX getFeederMotor(int id) {
-        final TalonFX motor = new TalonFX(id, Settings.CANBUS);
-        return motor;
-    }
-
     public FeederIOTalonFX() {
-        super(getFeederMotor(FeederConstants.FeederDeviceIds.FEEDER_MOTOR));
+        super(new TalonFX(FeederConstants.FeederDeviceIds.FEEDER_MOTOR));
     }
 }

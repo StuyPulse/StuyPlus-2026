@@ -6,15 +6,9 @@
 package com.stuypulse.robot.subsystems.handoff;
 
 import com.ctre.phoenix6.hardware.TalonFX;
-import com.stuypulse.robot.constants.Settings;
 
 public class HandoffIOTalonFX extends HandoffIOTalonFXBase {
-    private static TalonFX getHandoffMotor(int id) {
-        final TalonFX motor = new TalonFX(id, Settings.CANBUS);
-        return motor;
-    }
-
     public HandoffIOTalonFX() {
-        super(getHandoffMotor(HandoffConstants.HandoffDeviceIds.HANDOFF_MOTOR));
+        super(new TalonFX(HandoffConstants.HandoffDeviceIds.HANDOFF_MOTOR));
     }
 }
