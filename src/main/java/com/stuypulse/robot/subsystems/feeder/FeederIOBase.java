@@ -3,12 +3,12 @@ package com.stuypulse.robot.subsystems.feeder;
 import com.ctre.phoenix6.controls.VoltageOut;
 import com.stuypulse.robot.util.logged.LoggedTalonFX.LoggedTalonFX;
 
-public abstract class FeederIOTalonFXBase implements FeederIO {
+public abstract class FeederIOBase implements FeederIO {
     private final LoggedTalonFX feederMotor;
 
     private final VoltageOut feederController;
 
-    protected FeederIOTalonFXBase(LoggedTalonFX feederMotor) {
+    protected FeederIOBase(LoggedTalonFX feederMotor) {
         this.feederMotor = feederMotor;
         FeederConstants.FeederMotorConfigs.LEADER_CONFIG.configure(feederMotor);
         feederController = new VoltageOut(0).withEnableFOC(true);

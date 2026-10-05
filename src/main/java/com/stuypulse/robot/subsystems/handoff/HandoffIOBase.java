@@ -3,12 +3,12 @@ package com.stuypulse.robot.subsystems.handoff;
 import com.ctre.phoenix6.controls.VoltageOut;
 import com.stuypulse.robot.util.logged.LoggedTalonFX.LoggedTalonFX;
 
-public abstract class HandoffIOTalonFXBase implements HandoffIO {
+public abstract class HandoffIOBase implements HandoffIO {
     private final LoggedTalonFX handoffMotor;
 
     private final VoltageOut handoffController;
 
-    public HandoffIOTalonFXBase(LoggedTalonFX motor) {
+    public HandoffIOBase(LoggedTalonFX motor) {
         handoffMotor = motor;
         handoffController = new VoltageOut(0).withEnableFOC(true);
 

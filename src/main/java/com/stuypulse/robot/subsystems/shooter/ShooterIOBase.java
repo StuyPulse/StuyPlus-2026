@@ -10,7 +10,7 @@ import com.ctre.phoenix6.controls.VelocityTorqueCurrentFOC;
 import com.ctre.phoenix6.signals.MotorAlignmentValue;
 import com.stuypulse.robot.util.logged.LoggedTalonFX.LoggedTalonFX;
 
-public abstract class ShooterIOTalonFXBase implements ShooterIO {
+public abstract class ShooterIOBase implements ShooterIO {
     private final LoggedTalonFX shooterMotorLeft;
     private final LoggedTalonFX shooterMotorCenter;
     private final LoggedTalonFX shooterMotorRight;
@@ -18,7 +18,7 @@ public abstract class ShooterIOTalonFXBase implements ShooterIO {
     private final VelocityTorqueCurrentFOC shooterController;
     private final Follower shooterFollowerController;
 
-    public ShooterIOTalonFXBase(LoggedTalonFX shooterMotorRight, LoggedTalonFX shooterMotorCenter, LoggedTalonFX shooterMotorLeft) {
+    public ShooterIOBase(LoggedTalonFX shooterMotorRight, LoggedTalonFX shooterMotorCenter, LoggedTalonFX shooterMotorLeft) {
         // leader
         this.shooterMotorRight = shooterMotorRight;
         this.shooterMotorCenter = shooterMotorCenter;

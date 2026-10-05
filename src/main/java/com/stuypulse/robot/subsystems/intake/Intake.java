@@ -5,7 +5,6 @@
 /***************************************************************/
 package com.stuypulse.robot.subsystems.intake;
 
-import com.stuypulse.robot.Robot;
 import com.stuypulse.robot.commands.intake.IntakeSeedPivotDeployed;
 import com.stuypulse.robot.commands.intake.IntakeSeedPivotNinety;
 import com.stuypulse.robot.commands.intake.IntakeSeedPivotStowed;
@@ -39,7 +38,7 @@ public class Intake extends FullSubsystem {
 
     static {
         switch (Settings.CURRENT_MODE) {
-            case REAL -> instance = new Intake(new IntakeIOTalonFX());
+            case REAL -> instance = new Intake(new IntakeIOReal());
 
             case SIM -> instance = new Intake(new IntakeIOSim());
 

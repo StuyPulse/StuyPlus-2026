@@ -23,7 +23,7 @@ public class Feeder extends FullSubsystem {
 
     static {
         switch (Settings.CURRENT_MODE) {
-            case REAL -> instance = new Feeder(new FeederIOTalonFX());
+            case REAL -> instance = new Feeder(new FeederIOReal());
 
             case SIM -> instance = new Feeder(new FeederIOSim());
 

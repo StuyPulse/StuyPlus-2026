@@ -14,7 +14,7 @@ import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.math.system.plant.LinearSystemId;
 import edu.wpi.first.wpilibj.simulation.DCMotorSim;
 
-public class HandoffIOSim extends HandoffIOTalonFXBase {
+public class HandoffIOSim extends HandoffIOBase {
     private static final SystemSim<DCMotorSim> sim = SystemSim.of(new DCMotorSim(
                 LinearSystemId.createDCMotorSystem(
                         DCMotor.getKrakenX60(1),

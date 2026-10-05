@@ -7,8 +7,8 @@ package com.stuypulse.robot.subsystems.intake;
 
 import com.stuypulse.robot.util.logged.LoggedTalonFX.LoggedTalonFX;
 
-public class IntakeIOTalonFX extends IntakeIOTalonFXBase {
-    public IntakeIOTalonFX() {
+public class IntakeIOReal extends IntakeIOBase {
+    public IntakeIOReal() {
         super(new LoggedTalonFX(IntakeConstants.IntakeDeviceIds.INTAKE_PIVOT_MOTOR), 
         new LoggedTalonFX(IntakeConstants.IntakeDeviceIds.INTAKE_ROLLER_MOTOR_LEFT), 
         new LoggedTalonFX(IntakeConstants.IntakeDeviceIds.INTAKE_ROLLER_MOTOR_RIGHT));

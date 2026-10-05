@@ -7,8 +7,8 @@ package com.stuypulse.robot.subsystems.feeder;
 
 import com.stuypulse.robot.util.logged.LoggedTalonFX.LoggedTalonFX;
 
-public class FeederIOTalonFX extends FeederIOTalonFXBase {
-    public FeederIOTalonFX() {
+public class FeederIOReal extends FeederIOBase {
+    public FeederIOReal() {
         super(new LoggedTalonFX(FeederConstants.FeederDeviceIds.FEEDER_MOTOR));
     }
 }

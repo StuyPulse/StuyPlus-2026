@@ -18,7 +18,7 @@ import static edu.wpi.first.units.Units.Radians;
 import edu.wpi.first.wpilibj.simulation.DCMotorSim;
 import edu.wpi.first.wpilibj.simulation.SingleJointedArmSim;
 
-public class IntakeIOSim extends IntakeIOTalonFXBase {
+public class IntakeIOSim extends IntakeIOBase {
     private static final SystemSim<SingleJointedArmSim> pivotSim = SystemSim.of(new SingleJointedArmSim(
             LinearSystemId.createDCMotorSystem(
                     DCMotor.getKrakenX60(1),

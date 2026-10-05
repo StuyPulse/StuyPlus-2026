@@ -7,8 +7,8 @@ package com.stuypulse.robot.subsystems.handoff;
 
 import com.stuypulse.robot.util.logged.LoggedTalonFX.LoggedTalonFX;
 
-public class HandoffIOTalonFX extends HandoffIOTalonFXBase {
-    public HandoffIOTalonFX() {
+public class HandoffIOReal extends HandoffIOBase {
+    public HandoffIOReal() {
         super(new LoggedTalonFX(HandoffConstants.HandoffDeviceIds.HANDOFF_MOTOR));
     }
 }

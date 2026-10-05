@@ -16,7 +16,7 @@ import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.math.system.plant.LinearSystemId;
 import edu.wpi.first.wpilibj.simulation.FlywheelSim;
 
-public class ShooterIOSim extends ShooterIOTalonFXBase {
+public class ShooterIOSim extends ShooterIOBase {
     private static final SystemSim<FlywheelSim> shooterSim = SystemSim.of(new FlywheelSim(
         LinearSystemId.createFlywheelSystem(
             DCMotor.getKrakenX60(3),

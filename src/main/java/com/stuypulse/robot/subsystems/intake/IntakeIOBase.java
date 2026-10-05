@@ -17,7 +17,7 @@ import edu.wpi.first.units.measure.*;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 
-public abstract class IntakeIOTalonFXBase implements IntakeIO {
+public abstract class IntakeIOBase implements IntakeIO {
     private final LoggedTalonFX pivotMotor;
 
     private final LoggedTalonFX rollerMotorLeft;
@@ -32,7 +32,7 @@ public abstract class IntakeIOTalonFXBase implements IntakeIO {
     
     private final DigitalInput pivotLimitSwitch;
 
-    public IntakeIOTalonFXBase(LoggedTalonFX pivotMotor, LoggedTalonFX rollerMotorLeft, LoggedTalonFX rollerMotorRight) {
+    public IntakeIOBase(LoggedTalonFX pivotMotor, LoggedTalonFX rollerMotorLeft, LoggedTalonFX rollerMotorRight) {
         this.pivotMotor = pivotMotor;
         IntakeConstants.IntakeMotorConfigs.PIVOT_CONFIG.configure(pivotMotor);
         pivotMotor.setPosition(IntakeConstants.IntakeSettings.Pivot.INITIAL_ANGLE);
