@@ -18,6 +18,7 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import com.stuypulse.robot.Robot;
 
 public class SwerveDriveRotate extends Command {
 
@@ -66,10 +67,14 @@ public class SwerveDriveRotate extends Command {
                 swerve.getRotation().getRadians(),
                 rotation.getRadians()); // rotation.get?
 
-        ChassisSpeeds fieldSpeeds = new ChassisSpeeds(velocity.getX(), velocity.getY(), omega);
+        ChassisSpeeds speeds = new ChassisSpeeds(velocity.getX(), velocity.getY(), omega);
 
-        swerve.runVelocity(ChassisSpeeds.fromFieldRelativeSpeeds(
-                fieldSpeeds, swerve.getRotation()));
+        boolean isFlipped = !Robot.isBlue();
+        swerve.runVelocity(
+                ChassisSpeeds.fromRobotRelativeSpeeds(speeds,
+                        isFlipped
+                                ? swerve.getRotation().plus(new Rotation2d(Math.PI))
+                                : swerve.getRotation()));
 
         DogLog.log(
                 "Swerve/Angle Minus Target Angle",
