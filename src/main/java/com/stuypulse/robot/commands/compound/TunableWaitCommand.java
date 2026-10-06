@@ -19,7 +19,7 @@ public class TunableWaitCommand extends WaitCommand {
 
     @NonNull
     private static String makeTunableName(String rawName) {
-        return rawName == null ? "Tunable_Wait_" + UUID.randomUUID().toString() : rawName;
+        return rawName == null ? "Tunable_Wait_" + UUID.randomUUID().toString() : "Tuning/" + rawName;
     }
 
     /**
