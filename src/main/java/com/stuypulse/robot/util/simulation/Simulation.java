@@ -16,7 +16,6 @@
 // import com.stuypulse.robot.subsystems.swerve.Swerve;
 // import com.stuypulse.robot.subsystems.swerve.Swerve;
 
-// import dev.doglog.DogLog;
 // import edu.wpi.first.math.geometry.Pose2d;
 // import edu.wpi.first.math.geometry.Pose3d;
 // import edu.wpi.first.math.geometry.Rotation2d;
@@ -158,7 +157,7 @@
 //             poses[i] = hopperPercentage >= (1 / (double) layers) * (i + 1) ? visiblePose : hiddenPose;
 //         }
 //         fuelLayers.set(poses);
-//         DogLog.log("Intake/hopperpercentage", hopperPercentage);
+//         Logger.recordOutput("Intake/hopperpercentage", hopperPercentage);
 //     }
 
 //     /**

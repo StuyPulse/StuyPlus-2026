@@ -1,20 +1,20 @@
 package com.stuypulse.robot.subsystems.feeder;
 
-import static edu.wpi.first.units.Units.*;
+import org.littletonrobotics.junction.networktables.LoggedNetworkNumber;
 
 import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 import com.stuypulse.robot.constants.Motors.TalonFXConfig;
 
-import dev.doglog.DogLog;
-import edu.wpi.first.networktables.DoubleSubscriber;
+import static edu.wpi.first.units.Units.KilogramSquareMeters;
+import static edu.wpi.first.units.Units.Volts;
 import edu.wpi.first.units.measure.MomentOfInertia;
 import edu.wpi.first.units.measure.Voltage;
 
 public interface FeederConstants {
     public interface FeederSettings{
         Voltage REVERSE_VOLTAGE = Volts.of(-10.0); // TODO: get
-        DoubleSubscriber REVERSE_TIME_BEFORE_SHOOT = DogLog.tunable("Feeder/Seconds To Reverse Before Shooting", 0.75);
+        LoggedNetworkNumber REVERSE_TIME_BEFORE_SHOOT = new LoggedNetworkNumber("/Tuning/Feeder/Seconds To Reverse Before Shooting", 0.75);
 
         Voltage FORWARD_VOLTAGE = Volts.of(10.0);
 

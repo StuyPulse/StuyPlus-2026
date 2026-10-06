@@ -126,11 +126,12 @@ public class Vision extends SubsystemBase {
     }
 
     public void enable() {
-        EnabledSubsystems.VISION.getTopic().publish().set(true);
+        EnabledSubsystems.VISION.set(true);
     }
 
     public void disable() {
-        EnabledSubsystems.VISION.getTopic().publish().set(false);
+        EnabledSubsystems.VISION.set(false);
+        
     }
 
     public void setMegaTagMode(MegaTagMode mode) {

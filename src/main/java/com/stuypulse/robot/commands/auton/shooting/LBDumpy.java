@@ -22,7 +22,7 @@ public class LBDumpy extends SequentialCommandGroup {
     public LBDumpy(PathPlannerPath... paths) {
         addCommands(
             new SwerveResetPose(paths[0].getStartingHolonomicPose().get()),
-            new TunableWaitCommand("LB Dumpy Delay"),
+            new TunableWaitCommand("Delay/LB Dumpy"),
             new IntakeSetIntake(),
             Swerve.getInstance().followPathCommand(paths[0]),
             Swerve.getInstance().followPathCommand(paths[1]),
