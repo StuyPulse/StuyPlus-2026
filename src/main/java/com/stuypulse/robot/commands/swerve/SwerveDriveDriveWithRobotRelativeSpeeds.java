@@ -36,7 +36,7 @@ public class SwerveDriveDriveWithRobotRelativeSpeeds extends Command {
         ChassisSpeeds speeds = new ChassisSpeeds(velocityX, velocityY, -angularVelocity);
         boolean isFlipped = !Robot.isBlue();
         swerve.runVelocity(
-                ChassisSpeeds.fromRobotRelativeSpeeds(speeds,
+                ChassisSpeeds.fromFieldRelativeSpeeds(speeds,
                         isFlipped
                                 ? swerve.getRotation().plus(new Rotation2d(Math.PI))
                                 : swerve.getRotation()));

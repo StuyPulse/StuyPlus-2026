@@ -67,7 +67,7 @@ public class SwerveDriveSetAlignment extends Command {
         ChassisSpeeds speeds = new ChassisSpeeds(0, 0, omega);
         boolean isFlipped = !Robot.isBlue();
         swerve.runVelocity(
-                ChassisSpeeds.fromRobotRelativeSpeeds(speeds,
+                ChassisSpeeds.fromFieldRelativeSpeeds(speeds,
                         isFlipped
                                 ? swerve.getRotation().plus(new Rotation2d(Math.PI))
                                 : swerve.getRotation()));
