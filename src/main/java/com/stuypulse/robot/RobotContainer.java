@@ -50,10 +50,9 @@ import com.stuypulse.robot.subsystems.handoff.Handoff;
 import com.stuypulse.robot.subsystems.intake.Intake;
 import com.stuypulse.robot.subsystems.leds.LEDController;
 import com.stuypulse.robot.subsystems.shooter.Shooter;
-import com.stuypulse.robot.subsystems.swerve.CommandSwerveDrivetrain;
-import com.stuypulse.robot.subsystems.vision.LimelightVision;
+import com.stuypulse.robot.subsystems.swerve.Swerve;
+import com.stuypulse.robot.subsystems.vision.Vision;
 import com.stuypulse.robot.util.BlineUtil.BLineConfig;
-// import com.stuypulse.robot.util.PathUtil.AutonConfig;
 
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -82,9 +81,9 @@ public class RobotContainer {
 
     private final Shooter shooter = Shooter.getInstance();
 
-    private final CommandSwerveDrivetrain swerve = CommandSwerveDrivetrain.getInstance();
+    private final Swerve swerve = Swerve.getInstance();
 
-    private final LimelightVision vision = LimelightVision.getInstance();
+    private final Vision vision = Vision.getInstance();
 
     private final LEDController leds = LEDController.getInstance();
 
@@ -97,7 +96,7 @@ public class RobotContainer {
 
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
     public RobotContainer() {
-        // swerve.configureAutoBuilder();
+        // swerve.configureAutoBuilder(); // done in swerve constructor
         configureDefaultCommands();
         configureButtonBindings();
         configureAutons();

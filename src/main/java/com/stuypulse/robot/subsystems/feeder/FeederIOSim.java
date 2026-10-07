@@ -7,31 +7,31 @@ package com.stuypulse.robot.subsystems.feeder;
 
 import static edu.wpi.first.units.Units.*;
 
-import com.stuypulse.robot.constants.Ports;
 import com.stuypulse.robot.constants.Settings;
-import com.stuypulse.robot.util.simulation.TalonSimulation.SystemSim;
-import com.stuypulse.robot.util.simulation.TalonSimulation.TalonFXSimulation;
+import com.stuypulse.robot.util.simulation.RobotVisualizer;
+import com.stuypulse.robot.util.simulation.TalonFXSimulation.SystemSim;
+import com.stuypulse.robot.util.simulation.TalonFXSimulation.TalonFXSimulation;
 
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.math.system.plant.LinearSystemId;
 import edu.wpi.first.wpilibj.simulation.DCMotorSim;
 
-public class FeederIOSim extends FeederIOTalonFXBase {
+public class FeederIOSim extends FeederIOBase {
     private static final SystemSim<DCMotorSim> sim = SystemSim.of(new DCMotorSim(
             LinearSystemId.createDCMotorSystem(
                 DCMotor.getKrakenX60(2),
-                Settings.Feeder.J.in(KilogramSquareMeters),
-                Settings.Feeder.GEAR_RATIO),
+                FeederConstants.FeederSettings.J.in(KilogramSquareMeters),
+                FeederConstants.FeederSettings.GEAR_RATIO),
             DCMotor.getKrakenX60(2)));
     private static TalonFXSimulation getFeederMotor(int id) {
-        final TalonFXSimulation motor = new TalonFXSimulation(id, Settings.Feeder.GEAR_RATIO, sim);
+        final TalonFXSimulation motor = new TalonFXSimulation(id, FeederConstants.FeederSettings.GEAR_RATIO, sim);
         return motor;
     }
 
     private final TalonFXSimulation feederMotor;
 
     public FeederIOSim() {
-        this(getFeederMotor(Ports.Feeder.FEEDER_MOTOR));
+        this(getFeederMotor(FeederConstants.FeederDeviceIds.FEEDER_MOTOR));
     }
 
     private FeederIOSim(TalonFXSimulation feederMotor) {
@@ -43,6 +43,8 @@ public class FeederIOSim extends FeederIOTalonFXBase {
     public void updateInputs(FeederIOInputs inputs) {
         sim.update(Settings.DT);
         feederMotor.refresh();
+
         super.updateInputs(inputs);
+        RobotVisualizer.getInstance().updateFeeder(inputs.feederMotorInputs.velocity);
     }
 }

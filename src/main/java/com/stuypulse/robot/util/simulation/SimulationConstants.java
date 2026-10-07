@@ -14,7 +14,7 @@ import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.swerve.SwerveModuleConstants;
 import com.pathplanner.lib.config.PIDConstants;
 import com.stuypulse.robot.Robot;
-import com.stuypulse.robot.constants.Settings;
+import com.stuypulse.robot.subsystems.shooter.ShooterConstants;
 import com.stuypulse.robot.subsystems.swerve.TunerConstants;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Pose3d;
@@ -85,7 +85,7 @@ public interface SimulationConstants {
         double COMPRESSION_METRES = Units.inchesToMeters(1.379342);
 
         public static double angularVelocityToMps(AngularVelocity angularVelocity) {
-            return ((Settings.Shooter.WHEEL_RADIUS.in(Meters) * 2 - COMPRESSION_METRES)
+            return ((ShooterConstants.ShooterSettings.WHEEL_RADIUS.in(Meters) * 2 - COMPRESSION_METRES)
                     * (angularVelocity.in(RPM))
                     * Math.PI)
                     / 60.0;

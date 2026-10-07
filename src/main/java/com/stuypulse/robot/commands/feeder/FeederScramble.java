@@ -1,7 +1,7 @@
 package com.stuypulse.robot.commands.feeder;
 
 import com.stuypulse.robot.commands.compound.TunableWaitCommand;
-import com.stuypulse.robot.constants.Settings;
+import com.stuypulse.robot.subsystems.feeder.FeederConstants;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
@@ -9,7 +9,7 @@ public class FeederScramble extends SequentialCommandGroup {
     public FeederScramble() {
         addCommands(
             new FeederSetReverse(),
-            new TunableWaitCommand(Settings.Feeder.REVERSE_TIME_BEFORE_SHOOT)
+            new TunableWaitCommand(FeederConstants.FeederSettings.REVERSE_TIME_BEFORE_SHOOT)
         );
     }
 }

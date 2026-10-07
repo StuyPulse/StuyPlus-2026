@@ -5,37 +5,46 @@
 /***************************************************************/
 package com.stuypulse.robot.subsystems.intake;
 
-import com.stuypulse.robot.Robot;
 import com.stuypulse.robot.commands.intake.IntakeSeedPivotDeployed;
 import com.stuypulse.robot.commands.intake.IntakeSeedPivotNinety;
 import com.stuypulse.robot.commands.intake.IntakeSeedPivotStowed;
 import com.stuypulse.robot.constants.Settings;
-import com.stuypulse.robot.util.SysId;
-import com.stuypulse.robot.util.simulation.RobotVisualizer;
+import com.stuypulse.robot.subsystems.intake.IntakeIO.IntakeIOOutputs;
+import com.stuypulse.robot.subsystems.intake.IntakeIO.IntakeIOPivotOutputMode;
+import com.stuypulse.robot.subsystems.intake.IntakeIO.IntakeIORollerOutputMode;
+import com.stuypulse.robot.util.FullSubsystem;
 
-import static edu.wpi.first.units.Units.Amps;
-import static edu.wpi.first.units.Units.Rotations;
-
-import java.util.Optional;
+import java.util.function.BooleanSupplier;
 
 import org.littletonrobotics.junction.AutoLogOutput;
 import org.littletonrobotics.junction.Logger;
 
-import edu.wpi.first.units.measure.Angle;
-import edu.wpi.first.units.measure.Voltage;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
+import edu.wpi.first.math.filter.Debouncer;
 
-public class Intake extends SubsystemBase {
+import static edu.wpi.first.units.Units.*;
+import edu.wpi.first.units.measure.*;
+
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
+public class Intake extends FullSubsystem {
     private static final Intake instance;
 
+    private final BooleanSupplier leftRollerStalling;
+    private final BooleanSupplier rightRollerStalling;
+    private final BooleanSupplier pivotStalling;
+
+    private final Debouncer leftRollerDebouncer;
+    private final Debouncer rightRollerDebouncer;
+
     static {
-        if (Robot.isReal()) {
-            instance = new Intake(new IntakeIOTalonFX());
-        } else {
-            instance = new Intake(new IntakeIOSim());
+        switch (Settings.CURRENT_MODE) {
+            case REAL -> instance = new Intake(new IntakeIOReal());
+
+            case SIM -> instance = new Intake(new IntakeIOSim());
+
+            default -> instance = new Intake(new IntakeIO() {});
         }
+
         // Elastic Commands
         SmartDashboard.putData("Intake/Seed Pivot Angle Stowed", new IntakeSeedPivotStowed());
         SmartDashboard.putData("Intake/Set Pivot Angle Deployed", new IntakeSeedPivotDeployed());
@@ -48,12 +57,23 @@ public class Intake extends SubsystemBase {
 
     private final IntakeIO io;
     private final IntakeIOInputsAutoLogged inputs;
+    private final IntakeIOOutputs outputs;
+
+    @AutoLogOutput(key = "States/Intake")
     private IntakeState state;
 
     private Intake(IntakeIO io) {
         this.io = io;
         this.inputs = new IntakeIOInputsAutoLogged();
+        this.outputs = new IntakeIOOutputs();
         this.state = IntakeState.IDLE;
+
+        this.leftRollerStalling = () -> inputs.leftRollerMotorInputs.statorCurrent.gt(IntakeConstants.IntakeSettings.Roller.STALL_CURRENT);
+        this.rightRollerStalling = () -> inputs.rightRollerMotorInputs.statorCurrent.gt(IntakeConstants.IntakeSettings.Roller.STALL_CURRENT);
+        this.pivotStalling = () -> inputs.pivotMotorInputs.statorCurrent.gt(IntakeConstants.IntakeSettings.Pivot.STALL_CURRENT);
+
+        this.leftRollerDebouncer = new Debouncer(IntakeConstants.IntakeSettings.Roller.STALL_DEBOUNCE_SEC.in(Seconds), Debouncer.DebounceType.kBoth);
+        this.rightRollerDebouncer = new Debouncer(IntakeConstants.IntakeSettings.Roller.STALL_DEBOUNCE_SEC.in(Seconds), Debouncer.DebounceType.kBoth);
     }
 
     public void setState(IntakeState state) {
@@ -67,33 +87,33 @@ public class Intake extends SubsystemBase {
     /** Enum representing the different possible states of the intake. */
     public enum IntakeState {
 
-        AGITATE_DOWN(Settings.Intake.Pivot.AGITATE_DOWN_ANGLE, Settings.Intake.Roller.INTAKE_DUTY_CYCLE),
+        AGITATE_DOWN(IntakeConstants.IntakeSettings.Pivot.AGITATE_DOWN_ANGLE, IntakeConstants.IntakeSettings.Roller.INTAKE_DUTY_CYCLE),
         /** The intake is stowed and rollers are off. */
-        IDLE(Settings.Intake.Pivot.STOW_ANGLE, 0),
+        IDLE(IntakeConstants.IntakeSettings.Pivot.STOW_ANGLE, 0),
         /** The intake is deployed but rollers are off. */
-        DOWN(Settings.Intake.Pivot.DEPLOY_ANGLE, 0),
+        DOWN(IntakeConstants.IntakeSettings.Pivot.DEPLOY_ANGLE, 0),
         /** The intake is deployed and rollers are running to take in gamepieces. */
-        INTAKE(Settings.Intake.Pivot.DEPLOY_ANGLE, Settings.Intake.Roller.INTAKE_DUTY_CYCLE),
+        INTAKE(IntakeConstants.IntakeSettings.Pivot.DEPLOY_ANGLE, IntakeConstants.IntakeSettings.Roller.INTAKE_DUTY_CYCLE),
         /**
          * The intake is deployed and rollers are running in reverse to expel
          * gamepieces.
          */
-        OUTTAKE(Settings.Intake.Pivot.DEPLOY_ANGLE, Settings.Intake.Roller.OUTTAKE_DUTY_CYCLE),
+        OUTTAKE(IntakeConstants.IntakeSettings.Pivot.DEPLOY_ANGLE, IntakeConstants.IntakeSettings.Roller.OUTTAKE_DUTY_CYCLE),
         /**
          * The intake is brought up repeatedly to an angle between stowed and deployed
          * to dislodge
          * gamepieces. Rollers do not run.
          */
-        AGITATE(Settings.Intake.Pivot.AGITATE_UP_ANGLE, Settings.Intake.Roller.INTAKE_DUTY_CYCLE),
+        AGITATE(IntakeConstants.IntakeSettings.Pivot.AGITATE_UP_ANGLE, IntakeConstants.IntakeSettings.Roller.INTAKE_DUTY_CYCLE),
         
         /**
          * The intake is brought up once to an angle between stowed and deployed to
          * dislodge gamepieces.
          * Rollers do not run.
          */
-        DIGEST(Settings.Intake.Pivot.DIGEST_ANGLE, 0),
+        DIGEST(IntakeConstants.IntakeSettings.Pivot.DIGEST_ANGLE, 0),
         /** The intake is pushed against the bumpers to re-zero the pivot. */
-        HOMING_DOWN(Settings.Intake.Pivot.DEPLOY_ANGLE, 0);
+        HOMING_DOWN(IntakeConstants.IntakeSettings.Pivot.DEPLOY_ANGLE, 0);
 
         /** The target angle of the intake pivot. */
         private Angle targetAngle;
@@ -133,78 +153,100 @@ public class Intake extends SubsystemBase {
     }
 
     public Angle getRelativePosition() {
-        return inputs.pivotPosition;
+        return inputs.pivotMotorInputs.position;
+    }
+
+    @AutoLogOutput(key = "Intake/Left Roller Stalling")
+    public boolean isLeftRollerStalling() {
+        return leftRollerDebouncer.calculate(leftRollerStalling.getAsBoolean());
+    }
+
+    @AutoLogOutput(key = "Intake/Right Roller Stalling")
+    public boolean isRightRollerStalling() {
+        return rightRollerDebouncer.calculate(rightRollerStalling.getAsBoolean());
+    }
+
+    @AutoLogOutput(key = "Intake/Pivot Stalling")
+    public boolean isPivotStalling() {
+        return pivotStalling.getAsBoolean();
     }
 
     @AutoLogOutput(key = "Intake/Pivot/atTargetAngle")
     public boolean atTargetAngle() {
-        return inputs.pivotPosition.minus(getState().getTargetAngle())
-                .abs(Rotations) < Settings.Intake.Pivot.ANGLE_TOLERANCE.in(Rotations);
+        return inputs.pivotMotorInputs.position.minus(getState().getTargetAngle())
+                .abs(Rotations) < IntakeConstants.IntakeSettings.Pivot.ANGLE_TOLERANCE.in(Rotations);
     }
 
     @AutoLogOutput(key = "Intake/Pivot/aboveThreshold")
     public boolean isPivotAboveThreshold() {
-        return inputs.pivotPosition.gt(Settings.Intake.Pivot.PUSHDOWN_THRESHOLD);
+        return inputs.pivotMotorInputs.position.gt(IntakeConstants.IntakeSettings.Pivot.PUSHDOWN_THRESHOLD);
+    }
+  
+    private void runPivotPosition(Angle position, int gainsSlot) {
+        outputs.pivot.outputMode = IntakeIOPivotOutputMode.POSITION;
+        outputs.pivot.position = position;
+        outputs.pivot.positionGainsSlot = gainsSlot;
     }
 
-    // Sysid
-    private Optional<Voltage> pivotVoltageOverride = Optional.empty();
+    private void runPivotPushdown(Current current) {
+        outputs.pivot.outputMode = IntakeIOPivotOutputMode.PUSHDOWN;
+        outputs.pivot.pushdown = current;
+    }
+    
+    private void runPivotHoming(Voltage voltage) {
+        outputs.pivot.outputMode = IntakeIOPivotOutputMode.HOMING;
+        outputs.pivot.homing = voltage; 
+    }
 
-    public void setPivotVoltageOverride(Voltage voltage) {
-        this.pivotVoltageOverride = Optional.of(voltage);
-    };
-
-    public SysIdRoutine getIntakeSysIdRoutine() {
-        return SysId.getRoutine(
-                Settings.Intake.Pivot.RAMP_RATE,
-                Settings.Intake.Pivot.STEP_VOLTAGE,
-                "Intake",
-                this::setPivotVoltageOverride,
-                () -> inputs.pivotPosition,
-                () -> inputs.pivotVelocity,
-                () -> inputs.pivotVoltage,
-                getInstance());
+    private void runRollerDutyCycle(double dutyCycle) {
+        outputs.roller.outputMode = IntakeIORollerOutputMode.DUTY_CYCLE;
+        outputs.roller.targetDutyCycle = dutyCycle;
     }
 
     public void seedPivotAngle(Angle angle) {
         io.seedPivotAngle(angle);
     }
 
+    private void stopAllMotors() {
+        outputs.pivot.outputMode = IntakeIOPivotOutputMode.STOP;
+        outputs.roller.outputMode = IntakeIORollerOutputMode.STOP;
+    }
+
     @Override
     public void periodic() {
         io.updateInputs(inputs);
         Logger.processInputs("Intake", inputs);
-        final IntakeState currentState = getState();
     
         if (!Settings.EnabledSubsystems.INTAKE.get()) {
-            io.stopAllMotors();
-        } else if (pivotVoltageOverride.isPresent()) {
-            io.setPivotHoming(pivotVoltageOverride.get());
-        } else {
-            // roller
-            io.setRollerDutyCycle(currentState.getTargetDutyCycle());
+            stopAllMotors();
+            return;
+        }
 
-            // pivot
-            // this structure doesn't support dynamic gains unless gainsSlot becomes part of IO
-            switch (currentState) {
-                case INTAKE, OUTTAKE, DOWN:
-                    if (isPivotAboveThreshold()) {
-                        io.setPivotPushdown(Amps.of(Settings.Intake.Pivot.PUSHDOWN_CURRENT.get()));
-                    } else {
-                        io.setPivotPosition(currentState.getTargetAngle());
-                    };
-                    break;
-                case HOMING_DOWN:
-                    io.setPivotHoming(Settings.Intake.Pivot.HOMING_DOWN_VOLTAGE);
-                    break;
-                case AGITATE, AGITATE_DOWN:
-                    io.setPivotPosition(currentState.getTargetAngle());
-                    break;
-                default: io.setPivotPosition(currentState.getTargetAngle());
-            };
+        if (inputs.limitSwitchHit) {
+            io.seedPivotAngle(IntakeConstants.IntakeSettings.Pivot.DEPLOY_ANGLE);
         }
-        if (!Robot.isReal()) {
-            RobotVisualizer.getInstance().updateIntake(inputs.pivotPosition, inputs.rollerVelocity);
+
+        if (state == IntakeState.HOMING_DOWN && (isPivotStalling() || inputs.limitSwitchHit)) {
+            io.seedPivotAngle(IntakeConstants.IntakeSettings.Pivot.DEPLOY_ANGLE);
+            setState(IntakeState.INTAKE);
         }
+
+        if ((state == IntakeState.DOWN) && (isPivotStalling() || inputs.limitSwitchHit)) {
+            io.seedPivotAngle(IntakeConstants.IntakeSettings.Pivot.DEPLOY_ANGLE);
+        }
+
+        switch (state) {
+            case INTAKE, OUTTAKE, DOWN -> runPivotPushdown(Amps.of(IntakeConstants.IntakeSettings.Pivot.PUSHDOWN_CURRENT.get()));
+            case HOMING_DOWN -> runPivotHoming(IntakeConstants.IntakeSettings.Pivot.HOMING_DOWN_VOLTAGE);
+            case AGITATE, AGITATE_DOWN -> runPivotPosition(state.getTargetAngle(), 1);
+            default -> runPivotPosition(state.getTargetAngle(), 0);
+        }
+
+        runRollerDutyCycle(state.getTargetDutyCycle());
+    }
+
+    @Override
+    public void periodicAfterScheduler() {
+        io.applyOutputs(outputs);
     }
 }

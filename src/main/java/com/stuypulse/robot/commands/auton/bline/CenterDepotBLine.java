@@ -9,7 +9,7 @@ import com.stuypulse.robot.commands.intake.IntakeSetIntake;
 import com.stuypulse.robot.commands.shooter.ShooterSetShoot;
 import com.stuypulse.robot.commands.shooter.ShooterWaitForSpinUp;
 import com.stuypulse.robot.commands.swerve.SwerveDriveXMode;
-import com.stuypulse.robot.subsystems.swerve.CommandSwerveDrivetrain;
+import com.stuypulse.robot.subsystems.swerve.Swerve;
 import com.stuypulse.robot.util.BlineUtil;
 
 import edu.wpi.first.math.geometry.Pose2d;
@@ -27,13 +27,13 @@ public class CenterDepotBLine extends SequentialCommandGroup {
 
     public CenterDepotBLine(String...pathNames) {
         
-        CommandSwerveDrivetrain swerve = CommandSwerveDrivetrain.getInstance();
+        Swerve swerve = Swerve.getInstance();
 
         addCommands(
             new IntakeSetIntake(),
 
-            followUntil(swerve, pathNames[0], HANDOFF_THRESHOLD_METERS, swerve::resetPose),
-            followUntil(swerve, pathNames[1], HANDOFF_THRESHOLD_METERS, swerve::resetPose),
+            followUntil(swerve, pathNames[0], HANDOFF_THRESHOLD_METERS, swerve::setPose),
+            followUntil(swerve, pathNames[1], HANDOFF_THRESHOLD_METERS, swerve::setPose),
 
             new SwerveDriveXMode(),
             new ShooterWaitForSpinUp(),
@@ -47,7 +47,7 @@ public class CenterDepotBLine extends SequentialCommandGroup {
         );
     }
 
-    private static Command followUntil(CommandSwerveDrivetrain swerve, String pathName, double thresholdMeters, Consumer<Pose2d> poseReset) {
+    private static Command followUntil(Swerve swerve, String pathName, double thresholdMeters, Consumer<Pose2d> poseReset) {
         FollowPath path = (FollowPath) swerve.getPathBuilder()
             .withPoseReset(poseReset)
             .build(new Path(BlineUtil.PATHS_DIR, pathName));

@@ -1,7 +1,7 @@
 /************************* PROJECT RON *************************/
 /* Copyright (c) 2026 StuyPulse Robotics. All rights reserved. */
 /* Use of this source code is governed by an MIT-style license */
-/* that can be found in the repository LICENSE file.           */
+/* that can be found in the repository LICENSE file.            */
 /***************************************************************/
 package com.stuypulse.robot;
 
@@ -12,32 +12,20 @@ import org.littletonrobotics.junction.networktables.NT4Publisher;
 import org.littletonrobotics.junction.wpilog.WPILOGReader;
 import org.littletonrobotics.junction.wpilog.WPILOGWriter;
 
-import com.ctre.phoenix6.SignalLogger;
-import com.google.flatbuffers.Constants;
 import com.stuypulse.robot.commands.shooter.ShooterSetShoot;
-import com.stuypulse.robot.commands.vision.SetIMUMode;
 import com.stuypulse.robot.commands.vision.SetMegaTagMode;
 import com.stuypulse.robot.commands.vision.SetVisionEnabled;
-import com.stuypulse.robot.commands.vision.WhitelistAllTags;
-import com.stuypulse.robot.constants.Field;
 import com.stuypulse.robot.constants.Settings;
-import com.stuypulse.robot.subsystems.swerve.CommandSwerveDrivetrain;
-import com.stuypulse.robot.subsystems.vision.LimelightVision;
-import com.stuypulse.robot.subsystems.vision.LimelightVision.MegaTagMode;
+import com.stuypulse.robot.subsystems.swerve.Swerve;
+import com.stuypulse.robot.subsystems.vision.Vision;
+import com.stuypulse.robot.subsystems.vision.VisionIO.MegaTagMode;
+import com.stuypulse.robot.util.FullSubsystem;
 import com.stuypulse.robot.util.LoggedSignals;
 import com.stuypulse.robot.util.simulation.RobotVisualizer;
-import com.stuypulse.robot.util.simulation.Simulation;
 import com.stuypulse.robot.util.simulation.SimulationConstants;
-import com.stuypulse.robot.util.swerve.AlignmentUtil;
 
-import dev.doglog.DogLog;
-import dev.doglog.DogLogOptions;
-import edu.wpi.first.wpilibj.DataLogManager;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
-import edu.wpi.first.wpilibj.PowerDistribution;
-import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
@@ -113,13 +101,9 @@ public class Robot extends LoggedRobot {
     @Override
     public void robotPeriodic() {
         LoggedSignals.refreshAll();
+        
         CommandScheduler.getInstance().run();
-        DogLog.forceNt.log("Bot/Alliance", alliance.name());
-        DogLog.forceNt.log("Match Time", DriverStation.getMatchTime());
-        SmartDashboard.putData("Command Scheduler", CommandScheduler.getInstance());
-
-        DogLog.log("Alignment/Target Heading To Hub", 
-            AlignmentUtil.getTargetAlignmentAngle(CommandSwerveDrivetrain.getInstance().getPose(), Field.getHubPose()).getDegrees());
+        FullSubsystem.runAllPeriodicAfterScheduler();
     }
 
     /******************/
@@ -132,8 +116,8 @@ public class Robot extends LoggedRobot {
     @Override
     public void simulationInit() {
         // start off in a convenient spot
-        CommandSwerveDrivetrain.getInstance()
-            .resetPose(SimulationConstants.ROBOTS_STARTING_POSITIONS[0]);
+        Swerve.getInstance()
+            .setPose(SimulationConstants.ROBOTS_STARTING_POSITIONS[0]);
     }
 
     /**
@@ -141,7 +125,7 @@ public class Robot extends LoggedRobot {
      */
     @Override
     public void simulationPeriodic() {
-        Simulation.getInstance().update();
+        // Simulation.getInstance().update();
         RobotVisualizer.getInstance().update();
     }
 
@@ -154,8 +138,8 @@ public class Robot extends LoggedRobot {
      */
     @Override
     public void disabledInit() {
-        CommandScheduler.getInstance().schedule(new SetIMUMode(1));
-        CommandScheduler.getInstance().schedule(new SetMegaTagMode(MegaTagMode.MEGATAG1));
+        // CommandScheduler.getInstance().schedule(new SetIMUMode(1));
+        CommandScheduler.getInstance().schedule(new SetMegaTagMode(MegaTagMode.MEGATAG_1));
     }
 
     /**
@@ -163,8 +147,8 @@ public class Robot extends LoggedRobot {
      */
     @Override
     public void disabledPeriodic() {
-        CommandScheduler.getInstance().schedule(new SetIMUMode(1));
-        CommandScheduler.getInstance().schedule(new SetMegaTagMode(MegaTagMode.MEGATAG1));
+        // CommandScheduler.getInstance().schedule(new SetIMUMode(1));
+        CommandScheduler.getInstance().schedule(new SetMegaTagMode(MegaTagMode.MEGATAG_1));
     }
 
     /***********************/
@@ -177,10 +161,10 @@ public class Robot extends LoggedRobot {
     @Override
     public void autonomousInit() {
         auto = robot.getAutonomousCommand();
-        CommandScheduler.getInstance().schedule(new SetMegaTagMode(MegaTagMode.MEGATAG2));
-        CommandScheduler.getInstance().schedule(new SetIMUMode(4));
-        CommandScheduler.getInstance().schedule(new WhitelistAllTags());
-        LimelightVision.getInstance().disable();
+        CommandScheduler.getInstance().schedule(new SetMegaTagMode(MegaTagMode.MEGATAG_2));
+        // CommandScheduler.getInstance().schedule(new SetIMUMode(4));
+        // CommandScheduler.getInstance().schedule(new WhitelistAllTags());
+        Vision.getInstance().disable();
         if (auto != null) {
             CommandScheduler.getInstance().schedule(auto);
         }
@@ -198,7 +182,7 @@ public class Robot extends LoggedRobot {
      */
     @Override
     public void autonomousExit() {
-        LimelightVision.getInstance().captureRewind(25);
+        // Vision.getInstance().captureRewind(25);
     }
 
     /*******************/
@@ -210,9 +194,9 @@ public class Robot extends LoggedRobot {
      */
     @Override
     public void teleopInit() {
-        CommandScheduler.getInstance().schedule(new SetMegaTagMode(MegaTagMode.MEGATAG2));
-        CommandScheduler.getInstance().schedule(new SetIMUMode(4));
-        CommandScheduler.getInstance().schedule(new WhitelistAllTags());
+        CommandScheduler.getInstance().schedule(new SetMegaTagMode(MegaTagMode.MEGATAG_2));
+        // CommandScheduler.getInstance().schedule(new SetIMUMode(4));
+        // CommandScheduler.getInstance().schedule(new WhitelistAllTags());
         CommandScheduler.getInstance().schedule(new ShooterSetShoot()); // start at SHOOT state
         if (auto != null) {
             auto.cancel();
@@ -220,7 +204,7 @@ public class Robot extends LoggedRobot {
         CommandScheduler.getInstance().schedule(new SetVisionEnabled());
         Boolean autonWon = DriverStation.getGameSpecificMessage()
                 .equals(String.valueOf(alliance.name().charAt(0)).toUpperCase());
-        DogLog.log("Auton Won", autonWon);
+        Logger.recordOutput("Auton Won", autonWon);
     }
 
     /**
@@ -235,7 +219,7 @@ public class Robot extends LoggedRobot {
      */
     @Override
     public void teleopExit() {
-        LimelightVision.getInstance().captureRewind(165);
+        // Vision.getInstance().captureRewind(165);
     }
 
     /*****************/

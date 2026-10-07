@@ -12,19 +12,25 @@ import java.util.function.BooleanSupplier;
 import org.littletonrobotics.junction.AutoLogOutput;
 import org.littletonrobotics.junction.Logger;
 
-import com.stuypulse.robot.Robot;
 import com.stuypulse.robot.constants.Settings;
+import com.stuypulse.robot.subsystems.handoff.HandoffIO.HandoffIOOutputs;
+import com.stuypulse.robot.util.FullSubsystem;
 
 import edu.wpi.first.math.filter.Debouncer;
 import edu.wpi.first.math.filter.Debouncer.DebounceType;
 import edu.wpi.first.units.measure.Voltage;
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-public class Handoff extends SubsystemBase {
+public class Handoff extends FullSubsystem {
     private static final Handoff instance;
 
     static {
-        instance = Robot.isReal() ? new Handoff(new HandoffIOTalonFX()) : new Handoff(new HandoffIOSim());
+        switch (Settings.CURRENT_MODE) {
+            case REAL -> instance = new Handoff(new HandoffIOReal());
+
+            case SIM -> instance = new Handoff(new HandoffIOSim());
+
+            default -> instance = new Handoff(new HandoffIO() {});
+        }
     }
 
     public static Handoff getInstance() {
@@ -33,6 +39,8 @@ public class Handoff extends SubsystemBase {
 
     private final HandoffIO io;
     private final HandoffIOInputsAutoLogged inputs;
+    private final HandoffIOOutputs outputs;
+
     @AutoLogOutput(key = "States/Handoff")
     private HandoffState state;
 
@@ -42,10 +50,11 @@ public class Handoff extends SubsystemBase {
     private Handoff(HandoffIO io) {
         this.io = io;
         this.inputs = new HandoffIOInputsAutoLogged();
+        this.outputs = new HandoffIOOutputs();
         this.state = HandoffState.IDLE;
 
-        this.handoffStalling = () -> inputs.statorCurrent.abs(Amps) > Settings.Handoff.STALL_CURRENT;
-        this.handoffDebouncer = new Debouncer(Settings.Handoff.STALL_DEBOUNCE, DebounceType.kRising);
+        this.handoffStalling = () -> inputs.handoffMotorInputs.statorCurrent.abs(Amps) > HandoffConstants.HandoffSettings.STALL_CURRENT;
+        this.handoffDebouncer = new Debouncer(HandoffConstants.HandoffSettings.STALL_DEBOUNCE, DebounceType.kRising);
     }
 
     public void setState(HandoffState state) {
@@ -59,11 +68,11 @@ public class Handoff extends SubsystemBase {
     /** Enum representing the different possible states of the handoff. */
     public enum HandoffState {
         /** Handoff is stopped. */
-        IDLE(Settings.Handoff.IDLE_VOLTAGE),
+        IDLE(HandoffConstants.HandoffSettings.IDLE_VOLTAGE),
         /** The handoff runs forward. */
-        FORWARD(Settings.Handoff.FORWARD_VOLTAGE),
+        FORWARD(HandoffConstants.HandoffSettings.FORWARD_VOLTAGE),
         /** The handoff runs backward. */
-        REVERSE(Settings.Handoff.REVERSE_VOLTAGE);
+        REVERSE(HandoffConstants.HandoffSettings.REVERSE_VOLTAGE);
 
         /** The target voltage of the handoff motor. */
         private Voltage targetVoltage;
@@ -94,12 +103,26 @@ public class Handoff extends SubsystemBase {
     public void periodic() {
         io.updateInputs(inputs);
         Logger.processInputs("Handoff", inputs);
-        final HandoffState currentState = getState();
         
-        if (Settings.EnabledSubsystems.HANDOFF.get()) {
-            io.setTargetVoltage(currentState.getTargetVoltage());
-        } else {
-            io.stopMotors();
+        if (!Settings.EnabledSubsystems.HANDOFF.get()) {
+            stopMotor();
+            return;
         }
+
+        runVoltage(state.getTargetVoltage());
+    }
+
+    @Override
+    public void periodicAfterScheduler() {
+        io.applyOutputs(outputs);
+    }
+
+    private void runVoltage(Voltage voltage) {
+        outputs.mode = HandoffIO.HandoffIOOutputMode.VOLTAGE;
+        outputs.voltage = voltage;
+    }
+
+    private void stopMotor() {
+        outputs.mode = HandoffIO.HandoffIOOutputMode.STOP;
     }
 }

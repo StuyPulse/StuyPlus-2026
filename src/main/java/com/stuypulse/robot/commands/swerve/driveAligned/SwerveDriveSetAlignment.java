@@ -10,37 +10,43 @@ import static edu.wpi.first.units.Units.*;
 import java.util.function.BooleanSupplier;
 import java.util.function.Supplier;
 
-import com.ctre.phoenix6.swerve.SwerveRequest;
-import com.stuypulse.robot.constants.Gains.Swerve.Alignment;
-import com.stuypulse.robot.constants.Settings;
-import com.stuypulse.robot.subsystems.swerve.CommandSwerveDrivetrain;
+import com.stuypulse.robot.subsystems.swerve.Swerve;
+import com.stuypulse.robot.subsystems.swerve.SwerveConstants;
+import com.stuypulse.robot.subsystems.swerve.SwerveConstants.SwerveGains;
 import com.stuypulse.robot.util.swerve.AlignmentUtil;
 
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.filter.Debouncer;
 import edu.wpi.first.math.filter.Debouncer.DebounceType;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj2.command.Command;
+import com.stuypulse.robot.Robot;
 
 public class SwerveDriveSetAlignment extends Command {
 
-    protected static final CommandSwerveDrivetrain swerve;
+    protected static final Swerve swerve;
 
     protected final BooleanSupplier isAligned;
     protected final Debouncer alignmentDebouncer;
+
+    private final PIDController headingController;
 
     private Supplier<Pose2d> pose;
 
     protected SwerveDriveSetAlignment(Supplier<Pose2d> pose) {
         this.isAligned = () -> Math.abs(swerve.getPose().getRotation().minus(getTargetAngle())
-                .getDegrees()) < Settings.Swerve.Alignment.Tolerances.THETA_TOLERANCE.getDegrees();
-        this.alignmentDebouncer = new Debouncer(Settings.Swerve.Alignment.Tolerances.ALIGNMENT_DEBOUNCE.in(Seconds), DebounceType.kBoth);
+                .getDegrees()) < SwerveConstants.SwerveSettings.Alignment.Tolerances.THETA_TOLERANCE.getDegrees();
+        this.alignmentDebouncer = new Debouncer(SwerveConstants.SwerveSettings.Alignment.Tolerances.ALIGNMENT_DEBOUNCE.in(Seconds), DebounceType.kBoth);
         this.pose = pose;
+        this.headingController = new PIDController(SwerveGains.Alignment.akP, SwerveGains.Alignment.akI, SwerveGains.Alignment.akD);
+        this.headingController.enableContinuousInput(-Math.PI, Math.PI);
         addRequirements(swerve);
     }
 
     static {
-        swerve = CommandSwerveDrivetrain.getInstance();
+        swerve = Swerve.getInstance();
     }
 
     public Rotation2d getTargetAngle() {
@@ -54,11 +60,16 @@ public class SwerveDriveSetAlignment extends Command {
 
     @Override
     public void execute() {
-        SwerveRequest request = new SwerveRequest.FieldCentricFacingAngle()
-                .withTargetDirection(getTargetAngle())
-                .withVelocityX(0)
-                .withVelocityY(0)
-                .withHeadingPID(Alignment.akP, Alignment.akI, Alignment.akD);
-        swerve.setControl(request);
+        double omega = headingController.calculate(
+                swerve.getRotation().getRadians(),
+                getTargetAngle().getRadians()); // rotation.get?
+
+        ChassisSpeeds speeds = new ChassisSpeeds(0, 0, omega);
+        boolean isFlipped = !Robot.isBlue();
+        swerve.runVelocity(
+                ChassisSpeeds.fromFieldRelativeSpeeds(speeds,
+                        isFlipped
+                                ? swerve.getRotation().plus(new Rotation2d(Math.PI))
+                                : swerve.getRotation()));
     }
 }

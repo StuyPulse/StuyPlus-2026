@@ -5,15 +5,15 @@
 /***************************************************************/
 package com.stuypulse.robot.util.shooter;
 
+import org.littletonrobotics.junction.Logger;
+
 import com.stuypulse.robot.constants.Field;
-import com.stuypulse.robot.constants.Settings;
-import com.stuypulse.robot.constants.Settings.Shooter.FerryRPMInterpolation;
-import com.stuypulse.robot.constants.Settings.Shooter.FerryTOFInterpolation;
-import com.stuypulse.robot.constants.Settings.Shooter.RPMInterpolation;
-import com.stuypulse.robot.constants.Settings.Shooter.TOFInterpolation;
-import com.stuypulse.robot.subsystems.swerve.CommandSwerveDrivetrain;
-import static edu.wpi.first.units.Units.RPM;
-import dev.doglog.DogLog;
+import com.stuypulse.robot.subsystems.shooter.ShooterConstants.ShooterSettings.FerryRPMInterpolation;
+import com.stuypulse.robot.subsystems.shooter.ShooterConstants.ShooterSettings.FerryTOFInterpolation;
+import com.stuypulse.robot.subsystems.shooter.ShooterConstants.ShooterSettings.RPMInterpolation;
+import com.stuypulse.robot.subsystems.shooter.ShooterConstants.ShooterSettings.TOFInterpolation;
+import com.stuypulse.robot.subsystems.swerve.Swerve;
+
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.interpolation.InterpolatingDoubleTreeMap;
@@ -51,7 +51,7 @@ public class InterpolationCalculator {
     }
 
     public static InterpolatedInfo interpolateShotInfo() {
-        CommandSwerveDrivetrain swerve = CommandSwerveDrivetrain.getInstance();
+        Swerve swerve = Swerve.getInstance();
         return interpolateShotInfo(swerve.getPose(), Field.getHubPose());
     }
 
@@ -61,15 +61,15 @@ public class InterpolationCalculator {
         double distanceMeters = currentPose.getDistance(hubPose);
         double targetRPM = shootingDistanceRPMInterpolator.get(distanceMeters);
         double flightTime = shootingDistanceTOFInterpolator.get(distanceMeters);
-        DogLog.log("InterpolationTesting/Interpolated RPM", targetRPM);
-        DogLog.log("InterpolationTesting/Interpolated TOF", flightTime);
+        Logger.recordOutput("InterpolationTesting/Interpolated RPM", targetRPM);
+        Logger.recordOutput("InterpolationTesting/Interpolated TOF", flightTime);
         // if (targetRPM < Settings.Shooter.MIN_SHOOTER_VELOCITY.in(RPM))
         //     targetRPM = Settings.Shooter.MIN_SHOOTER_VELOCITY.in(RPM);
         return new InterpolatedInfo(targetRPM, flightTime);
     }
 
     public static InterpolatedInfo interpolateFerryingInfo() {
-        CommandSwerveDrivetrain swerve = CommandSwerveDrivetrain.getInstance();
+        Swerve swerve = Swerve.getInstance();
         Pose2d shooterPose = swerve.getPose();
         Pose2d ferryPose = Field.getFerryZonePose(swerve.getPose().getTranslation());
         return interpolateFerryingInfo(shooterPose, ferryPose);
@@ -81,8 +81,8 @@ public class InterpolationCalculator {
         double distanceMeters = currentPose.getDistance(ferryPose);
         double targetRPM = ferryingDistanceRPMInterpolator.get(distanceMeters);
         double flightTime = ferryingDistanceTOFInterpolator.get(distanceMeters);
-        DogLog.log("Shooter/Interpolated Ferry RPM", targetRPM);
-        DogLog.log("Shooter/Interpolated Ferry TOF", flightTime);
+        Logger.recordOutput("Shooter/Interpolated Ferry RPM", targetRPM);
+        Logger.recordOutput("Shooter/Interpolated Ferry TOF", flightTime);
         return new InterpolatedInfo(targetRPM, flightTime);
     }
 }

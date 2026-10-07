@@ -5,12 +5,13 @@
 /***************************************************************/
 package com.stuypulse.robot.util;
 
-import com.ctre.phoenix6.BaseStatusSignal;
-import dev.doglog.DogLog;
-
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
+
+import org.littletonrobotics.junction.Logger;
+
+import com.ctre.phoenix6.BaseStatusSignal;
 
 public final class LoggedSignals {
     public enum SignalLocation {
@@ -95,7 +96,7 @@ public final class LoggedSignals {
         for (int i = 0; i < signals.size(); i++) {
             String key = keys.get(i);
             if (key != null) {
-                DogLog.log(key, signals.get(i).getValueAsDouble());
+                Logger.recordOutput(key, signals.get(i).getValueAsDouble());
             }
         }
     }

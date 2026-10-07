@@ -29,7 +29,7 @@ import java.util.Arrays;
  * </p>
  */
 public class RobotVisualizer {
-    public static RobotVisualizer instance;
+    private static RobotVisualizer instance;
 
     static {
         instance = new RobotVisualizer();

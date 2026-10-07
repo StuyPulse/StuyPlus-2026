@@ -5,21 +5,19 @@
 /***************************************************************/
 package com.stuypulse.robot.commands.swerve;
 
-import com.ctre.phoenix6.swerve.SwerveRequest;
-import com.stuypulse.robot.subsystems.swerve.CommandSwerveDrivetrain;
+import com.stuypulse.robot.subsystems.swerve.Swerve;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 
 public class SwerveDriveXMode extends InstantCommand {
-    private CommandSwerveDrivetrain swerve;
+    private Swerve swerve;
 
     public SwerveDriveXMode() {
-        swerve = CommandSwerveDrivetrain.getInstance();
+        swerve = Swerve.getInstance();
         addRequirements(swerve);
     }
 
     @Override
     public void initialize() {
-        SwerveRequest request = new SwerveRequest.SwerveDriveBrake();
-        swerve.setControl(request);
+        swerve.stopWithX();
     }
 }

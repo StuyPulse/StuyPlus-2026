@@ -5,21 +5,25 @@
 /***************************************************************/
 package com.stuypulse.robot.commands.swerve;
 
-import com.ctre.phoenix6.swerve.SwerveRequest;
-import com.stuypulse.robot.constants.Gains;
+import org.littletonrobotics.junction.Logger;
+
+import com.stuypulse.robot.Robot;
 import com.stuypulse.robot.constants.Settings.Driver.Drive;
-import com.stuypulse.robot.constants.Settings.Swerve;
-import com.stuypulse.robot.subsystems.swerve.CommandSwerveDrivetrain;
+import com.stuypulse.robot.subsystems.swerve.Swerve;
+import com.stuypulse.robot.subsystems.swerve.SwerveConstants.SwerveGains;
+import com.stuypulse.robot.subsystems.swerve.SwerveConstants.SwerveSettings;
 import com.stuypulse.robot.util.swerve.swerveinput.DriveInputProcessor;
 
-import dev.doglog.DogLog;
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 
 public class SwerveDriveRotate extends Command {
 
-    private final CommandSwerveDrivetrain swerve;
+    private final Swerve swerve;
 
     private Rotation2d rotation;
 
@@ -27,34 +31,55 @@ public class SwerveDriveRotate extends Command {
 
     private final DriveInputProcessor speed;
 
+    private final PIDController headingController;
+
     public SwerveDriveRotate(CommandXboxController driver, Rotation2d rotation) {
-        this.swerve = CommandSwerveDrivetrain.getInstance();
+        this.swerve = Swerve.getInstance();
         this.rotation = rotation;
         this.driver = driver;
         this.speed = new DriveInputProcessor(
-                driver, 
-                Drive.DEADBAND, 
-                Drive.POWER, 
-                Swerve.Constraints.MAX_VELOCITY_M_PER_S, 
-                Swerve.Constraints.MAX_ACCEL_M_PER_S_SQUARED, 
+                driver,
+                Drive.DEADBAND,
+                Drive.POWER,
+                SwerveSettings.Constraints.MAX_VELOCITY_M_PER_S,
+                SwerveSettings.Constraints.MAX_ACCEL_M_PER_S_SQUARED,
                 Drive.RC);
         addRequirements(swerve);
+
+        headingController = new PIDController(
+                SwerveGains.Alignment.akP,
+                SwerveGains.Alignment.akI,
+                SwerveGains.Alignment.akD);
+        headingController.enableContinuousInput(-Math.PI, Math.PI);
+    }
+
+    @Override
+    public void initialize() {
+        headingController.reset();
     }
 
     @Override
     public void execute() {
         speed.update();
 
-        SwerveRequest request = new SwerveRequest.FieldCentricFacingAngle()
-                .withTargetDirection(rotation)
-                .withVelocityX(speed.get().getX())
-                .withVelocityY(speed.get().getY())
-                .withHeadingPID(
-                        Gains.Swerve.Alignment.akP, Gains.Swerve.Alignment.akI, Gains.Swerve.Alignment.akD);
-        swerve.setControl(request);
-        DogLog.log(
+        Translation2d velocity = speed.get();
+
+        double omega = headingController.calculate(
+                swerve.getRotation().getRadians(),
+                rotation.getRadians()); // rotation.get?
+
+        ChassisSpeeds speeds = new ChassisSpeeds(velocity.getX(), velocity.getY(), omega);
+
+        boolean isFlipped = !Robot.isBlue();
+        swerve.runVelocity(
+                ChassisSpeeds.fromFieldRelativeSpeeds(speeds,
+                        isFlipped
+                                ? swerve.getRotation().plus(new Rotation2d(Math.PI))
+                                : swerve.getRotation()));
+
+        Logger.recordOutput(
                 "Swerve/Angle Minus Target Angle",
                 swerve.getPose().getRotation().minus(rotation).getDegrees());
-        DogLog.log("Swerve/Facing Angle", swerve.getPose().getRotation().getDegrees());
+        Logger.recordOutput("Swerve/Facing Angle", swerve.getPose().getRotation().getDegrees());
     }
 }
