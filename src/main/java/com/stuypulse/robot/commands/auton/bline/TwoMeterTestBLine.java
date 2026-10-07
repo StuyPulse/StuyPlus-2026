@@ -4,7 +4,6 @@ import com.stuypulse.robot.subsystems.swerve.Swerve;
 import com.stuypulse.robot.util.BlineUtil;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-
 import frc.robot.lib.BLine.Path;
 
 public class TwoMeterTestBLine extends SequentialCommandGroup {
