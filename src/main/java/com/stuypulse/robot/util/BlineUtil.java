@@ -23,7 +23,7 @@ import java.util.function.Function;
 
 public class BlineUtil {
 
-    public static final java.io.File PATHS_DIR = Paths.get("").toAbsolutePath().resolve("src/main/deploy/ron-bline/autos").toFile();
+    public static final java.io.File PATHS_DIR = Paths.get("").toAbsolutePath().resolve("src/main/deploy/bline/autos").toFile();
 
     public static class BLineConfig {
 
