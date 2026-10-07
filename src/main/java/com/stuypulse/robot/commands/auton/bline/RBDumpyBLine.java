@@ -11,7 +11,6 @@ import com.stuypulse.robot.commands.shooter.ShooterSetShoot;
 import com.stuypulse.robot.commands.shooter.ShooterWaitForSpinUp;
 import com.stuypulse.robot.commands.swerve.SwerveDriveXMode;
 import com.stuypulse.robot.subsystems.swerve.CommandSwerveDrivetrain;
-import com.stuypulse.robot.util.BlineUtil;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -20,7 +19,6 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
 import frc.robot.lib.BLine.FollowPath;
-import frc.robot.lib.BLine.Path;
 
 public class RBDumpyBLine extends SequentialCommandGroup {
 
@@ -52,9 +50,7 @@ public class RBDumpyBLine extends SequentialCommandGroup {
     }
 
     private static Command followUntil(CommandSwerveDrivetrain swerve, String pathName, double thresholdMeters, Consumer<Pose2d> poseReset) {
-        FollowPath path = (FollowPath) swerve.getPathBuilder()
-            .withPoseReset(poseReset)
-            .build(new Path(BlineUtil.PATHS_DIR, pathName));
+        FollowPath path = swerve.followPath(pathName);
 
         return path.raceWith(
             new WaitUntilCommand(() -> path.getRemainingPathDistanceMeters() < thresholdMeters)
