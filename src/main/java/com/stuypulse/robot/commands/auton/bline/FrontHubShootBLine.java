@@ -8,23 +8,14 @@ import com.stuypulse.robot.commands.shooter.ShooterSetShoot;
 import com.stuypulse.robot.commands.shooter.ShooterWaitForSpinUp;
 import com.stuypulse.robot.commands.swerve.SwerveDriveXMode;
 import com.stuypulse.robot.commands.swerve.driveAligned.SwerveDriveAlignToHub;
-import com.stuypulse.robot.subsystems.swerve.Swerve;
-import com.stuypulse.robot.util.BlineUtil;
 
 import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
-import frc.robot.lib.BLine.Path;
 
-public class FrontHubShootBLine extends SequentialCommandGroup {
+public class FrontHubShootBLine extends BLineAuton {
     public FrontHubShootBLine(String... pathNames) {
-
-        Swerve swerve = Swerve.getInstance();
-
         addCommands(
-            swerve.getPathBuilder()
-                .withPoseReset(swerve::setPose)
-                .build(new Path(BlineUtil.PATHS_DIR, pathNames[0])),
+            swerve.followBlinePath(pathNames[0]),
 
             new SwerveDriveAlignToHub(),
             new SwerveDriveXMode(),

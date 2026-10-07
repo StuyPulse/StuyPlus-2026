@@ -16,6 +16,8 @@ import com.pathplanner.lib.util.PathPlannerLogging;
 import com.stuypulse.robot.constants.Settings;
 import com.stuypulse.robot.constants.Settings.Mode;
 import com.stuypulse.robot.subsystems.vision.Vision.VisionConsumer;
+import com.stuypulse.robot.util.BlineUtil;
+
 import edu.wpi.first.hal.FRCNetComm.tInstances;
 import edu.wpi.first.hal.FRCNetComm.tResourceType;
 import edu.wpi.first.hal.HAL;
@@ -41,6 +43,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.robot.lib.BLine.FollowPath;
+import frc.robot.lib.BLine.Path;
 
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
@@ -107,7 +110,7 @@ public class Swerve extends SubsystemBase implements VisionConsumer {
         new PIDController(4.0, 0.0, 0.0),
         new PIDController(7.0, 0.0, 0.0),
         new PIDController(0.5, 0.0, 0.0)
-    ).withDefaultShouldFlip().withTRatioBasedTranslationHandoffs(true);
+    ).withDefaultShouldFlip().withTRatioBasedTranslationHandoffs(true).withPoseReset(this::resetPose);
 
     public FollowPath.Builder getPathBuilder() {
         return pathBuilder;
@@ -154,7 +157,7 @@ public class Swerve extends SubsystemBase implements VisionConsumer {
         try {
             AutoBuilder.configure(
                     this::getPose,
-                    this::setPose,
+                    this::resetPose,
                     this::getChassisSpeeds,
                     this::runVelocity,
                     new PPHolonomicDriveController(
@@ -298,8 +301,12 @@ public class Swerve extends SubsystemBase implements VisionConsumer {
         stop();
     }
 
-    public Command followPathCommand(PathPlannerPath path) {
+    public Command followPathPlannerPathCommand(PathPlannerPath path) {
         return AutoBuilder.followPath(path);
+    }
+
+    public FollowPath followBlinePath(String pathName) {
+        return pathBuilder.build(new Path(BlineUtil.PATHS_DIR, pathName));
     }
 
     /** Returns a command to run a quasistatic test in the specified direction. */
@@ -377,17 +384,12 @@ public class Swerve extends SubsystemBase implements VisionConsumer {
         return getPose().getRotation();
     }
 
-    /** Resets the current odometry pose. */
-    public void resetOdometry(Pose2d pose) {
-        poseEstimator.resetPosition(rawGyroRotation, getModulePositions(), pose);
-    }
-
     public void resetHeading(Rotation2d heading) {
         poseEstimator.resetRotation(heading);
     }
 
     /** Resets the current odometry pose. */
-    public void setPose(Pose2d pose) {
+    public void resetPose(Pose2d pose) {
         poseEstimator.resetPosition(rawGyroRotation, getModulePositions(), pose);
     }
 

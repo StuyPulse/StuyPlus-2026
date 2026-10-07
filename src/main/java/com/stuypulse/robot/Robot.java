@@ -117,7 +117,7 @@ public class Robot extends LoggedRobot {
     public void simulationInit() {
         // start off in a convenient spot
         Swerve.getInstance()
-            .setPose(SimulationConstants.ROBOTS_STARTING_POSITIONS[0]);
+            .resetPose(SimulationConstants.ROBOTS_STARTING_POSITIONS[0]);
     }
 
     /**

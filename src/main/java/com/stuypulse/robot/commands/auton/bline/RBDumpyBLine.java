@@ -1,6 +1,6 @@
 package com.stuypulse.robot.commands.auton.bline;
 
-import java.util.function.Consumer;
+import static edu.wpi.first.units.Units.Meters;
 
 import com.stuypulse.robot.commands.feeder.FeederSetForward;
 import com.stuypulse.robot.commands.handoff.HandoffSetForward;
@@ -10,33 +10,23 @@ import com.stuypulse.robot.commands.shooter.ShooterFirstShotIncrease;
 import com.stuypulse.robot.commands.shooter.ShooterSetShoot;
 import com.stuypulse.robot.commands.shooter.ShooterWaitForSpinUp;
 import com.stuypulse.robot.commands.swerve.SwerveDriveXMode;
-import com.stuypulse.robot.subsystems.swerve.Swerve;
-import com.stuypulse.robot.util.BlineUtil;
 
-import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.units.measure.Distance;
 import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
-import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
-import frc.robot.lib.BLine.FollowPath;
-import frc.robot.lib.BLine.Path;
 
-public class RBDumpyBLine extends SequentialCommandGroup {
+public class RBDumpyBLine extends BLineAuton {
 
-    private static final double HANDOFF_THRESHOLD_METERS = 0.15;
+    private final Distance HANDOFF_THRESHOLD_METERS = Meters.of(0.15);
 
     public RBDumpyBLine(String... pathNames) {
-        
-        Swerve swerve = Swerve.getInstance();
-
         addCommands(
             new IntakeSetIntake(),
 
-            followUntil(swerve, pathNames[0], HANDOFF_THRESHOLD_METERS, swerve::setPose),
-            followUntil(swerve, pathNames[1], HANDOFF_THRESHOLD_METERS, swerve::setPose),
-            followUntil(swerve, pathNames[2], HANDOFF_THRESHOLD_METERS, swerve::setPose),
-            followUntil(swerve, pathNames[3], HANDOFF_THRESHOLD_METERS, swerve::setPose),
+            followUntil(pathNames[0], HANDOFF_THRESHOLD_METERS),
+            followUntil(pathNames[1], HANDOFF_THRESHOLD_METERS),
+            followUntil(pathNames[2], HANDOFF_THRESHOLD_METERS),
+            followUntil(pathNames[3], HANDOFF_THRESHOLD_METERS),
 
             new SwerveDriveXMode(),
             new ShooterWaitForSpinUp(),
@@ -48,16 +38,6 @@ public class RBDumpyBLine extends SequentialCommandGroup {
                 new IntakeAgitateFastOnce().repeatedly(),
                 new ShooterFirstShotIncrease()
             )
-        );
-    }
-
-    private static Command followUntil(Swerve swerve, String pathName, double thresholdMeters, Consumer<Pose2d> poseReset) {
-        FollowPath path = (FollowPath) swerve.getPathBuilder()
-            .withPoseReset(poseReset)
-            .build(new Path(BlineUtil.PATHS_DIR, pathName));
-
-        return path.raceWith(
-            new WaitUntilCommand(() -> path.getRemainingPathDistanceMeters() < thresholdMeters)
         );
     }
 }
