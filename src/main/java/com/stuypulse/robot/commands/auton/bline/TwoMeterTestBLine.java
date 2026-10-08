@@ -1,9 +1,14 @@
 package com.stuypulse.robot.commands.auton.bline;
 
+import com.stuypulse.robot.commands.swerve.SwerveResetPose;
+
+import frc.robot.lib.BLine.Path;
+
 public class TwoMeterTestBLine extends BLineAuton {
-    public TwoMeterTestBLine(String... pathNames) {
+    public TwoMeterTestBLine(Path... paths) {
         addCommands(
-            swerve.followBlinePath(pathNames[0])
+            new SwerveResetPose(paths[0].getStartPose()),
+            swerve.followBlinePath(paths[0])
         );
     }
 }

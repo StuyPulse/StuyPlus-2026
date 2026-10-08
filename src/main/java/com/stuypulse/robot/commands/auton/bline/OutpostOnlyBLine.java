@@ -1,9 +1,14 @@
 package com.stuypulse.robot.commands.auton.bline;
 
+import com.stuypulse.robot.commands.swerve.SwerveResetPose;
+
+import frc.robot.lib.BLine.Path;
+
 public class OutpostOnlyBLine extends BLineAuton {
-    public OutpostOnlyBLine(String... pathNames) {
+    public OutpostOnlyBLine(Path... paths) {
         addCommands(
-            swerve.followBlinePath(pathNames[0])
+            new SwerveResetPose(paths[0].getStartPose()),
+            swerve.followBlinePath(paths[0])
         );
     }
 }

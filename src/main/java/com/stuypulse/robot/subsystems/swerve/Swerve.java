@@ -305,8 +305,8 @@ public class Swerve extends SubsystemBase implements VisionConsumer {
         return AutoBuilder.followPath(path);
     }
 
-    public FollowPath followBlinePath(String pathName) {
-        return pathBuilder.build(new Path(BlineUtil.PATHS_DIR, pathName));
+    public FollowPath followBlinePath(Path path) {
+        return pathBuilder.build(path);
     }
 
     /** Returns a command to run a quasistatic test in the specified direction. */

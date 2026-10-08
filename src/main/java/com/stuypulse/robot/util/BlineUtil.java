@@ -28,14 +28,14 @@ public class BlineUtil {
     public static class BLineConfig {
 
         private final String name;
-        private final Function<String[], Command> auton;
+        private final Function<Path[], Command> auton;
         private final String[] paths;
         private final Optional<Double> waitTimeOne;
         private final Optional<Double> waitTimeTwo;
 
         public BLineConfig(
                 String name, 
-                Function<String[], 
+                Function<Path[], 
                 Command> auton, 
                 double waitTimeOne, 
                 double waitTimeTwo, 
@@ -58,12 +58,12 @@ public class BlineUtil {
             }
         }
 
-        public BLineConfig(String name, Function<String[], Command> auton, String... paths) {
+        public BLineConfig(String name, Function<Path[], Command> auton, String... paths) {
             this(name, auton, 0.0, 0.0, paths);
         }
 
         private Command buildCommand() {
-            return auton.apply(paths);   // pass names straight through, no pre-loading
+            return auton.apply(loadPaths(paths));   // pass names straight through, no pre-loading
         }
 
         public BLineConfig register(SendableChooser<Command> chooser) {

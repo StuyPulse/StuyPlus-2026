@@ -9,21 +9,25 @@ import com.stuypulse.robot.commands.intake.IntakeSetIntake;
 import com.stuypulse.robot.commands.shooter.ShooterSetShoot;
 import com.stuypulse.robot.commands.shooter.ShooterWaitForSpinUp;
 import com.stuypulse.robot.commands.swerve.SwerveDriveXMode;
+import com.stuypulse.robot.commands.swerve.SwerveResetPose;
 
 import edu.wpi.first.units.measure.Distance;
 import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
+import frc.robot.lib.BLine.Path;
 
 public class CenterDepotBLine extends BLineAuton {
     
     private final Distance HANDOFF_THRESHOLD_METERS = Meters.of(0.15);
 
-    public CenterDepotBLine(String...pathNames) {
+    public CenterDepotBLine(Path... paths) {
         addCommands(
+            new SwerveResetPose(paths[0].getStartPose()),
+
             new IntakeSetIntake(),
 
-            followUntil(pathNames[0], HANDOFF_THRESHOLD_METERS),
-            followUntil(pathNames[1], HANDOFF_THRESHOLD_METERS),
+            followUntil(paths[0], HANDOFF_THRESHOLD_METERS),
+            followUntil(paths[1], HANDOFF_THRESHOLD_METERS),
 
             new SwerveDriveXMode(),
             new ShooterWaitForSpinUp(),
