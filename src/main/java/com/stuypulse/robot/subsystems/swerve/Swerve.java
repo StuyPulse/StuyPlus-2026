@@ -13,6 +13,8 @@ import com.pathplanner.lib.config.RobotConfig;
 import com.pathplanner.lib.controllers.PPHolonomicDriveController;
 import com.pathplanner.lib.path.PathPlannerPath;
 import com.pathplanner.lib.util.PathPlannerLogging;
+import com.stuypulse.robot.Robot;
+import com.stuypulse.robot.constants.Field;
 import com.stuypulse.robot.constants.Settings;
 import com.stuypulse.robot.constants.Settings.Mode;
 import com.stuypulse.robot.subsystems.vision.Vision.VisionConsumer;
@@ -171,6 +173,12 @@ public class Swerve extends SubsystemBase implements VisionConsumer {
         PathPlannerLogging.setLogActivePathCallback(
                 (activePath) -> {
                     Logger.recordOutput("Odometry/Trajectory", activePath.toArray(new Pose2d[0]));
+
+                    if (Robot.isBlue()) {
+                        Field.FIELD2D.getObject("path").setPoses(activePath);
+                    } else {
+                        Field.FIELD2D.getObject("path").setPoses(Field.transformToOppositeAlliance(activePath));
+                    }
                 });
         PathPlannerLogging.setLogTargetPoseCallback(
                 (targetPose) -> {
@@ -252,6 +260,8 @@ public class Swerve extends SubsystemBase implements VisionConsumer {
 
         // Update gyro alert
         gyroDisconnectedAlert.set(!gyroInputs.connected && Settings.CURRENT_MODE != Mode.SIM);
+
+        Field.FIELD2D.getRobotObject().setPose(getPose());
     }
 
     /**
