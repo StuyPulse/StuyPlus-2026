@@ -114,7 +114,7 @@ public class Swerve extends SubsystemBase implements VisionConsumer {
         new PIDController(4.0, 0.0, 0.0),
         new PIDController(7.0, 0.0, 0.0),
         new PIDController(0.5, 0.0, 0.0)
-    ).withDefaultShouldFlip().withTRatioBasedTranslationHandoffs(true).withPoseReset(this::resetPose);
+    ).withDefaultShouldFlip().withTRatioBasedTranslationHandoffs(true);
 
     public FollowPath.Builder getPathBuilder() {
         return pathBuilder;
