@@ -47,6 +47,7 @@ import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.robot.lib.BLine.FollowPath;
 import frc.robot.lib.BLine.Path;
 
+import java.util.Arrays;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 import org.littletonrobotics.junction.AutoLogOutput;
@@ -192,7 +193,16 @@ public class Swerve extends SubsystemBase implements VisionConsumer {
         FollowPath.setPoseLoggingConsumer(
             value -> Logger.recordOutput(value.getFirst(), value.getSecond()));
         FollowPath.setTranslationListLoggingConsumer(
-            value -> Logger.recordOutput(value.getFirst(), value.getSecond()));
+            value -> {
+                Logger.recordOutput(value.getFirst(), value.getSecond());
+                
+                if (Robot.isBlue()) {
+                    Field.FIELD2D.getObject(value.getFirst()).setPoses(Arrays.stream(value.getSecond()).map(t -> new Pose2d(t, new Rotation2d())).toList());
+                } else {
+                    Field.FIELD2D.getObject(value.getFirst())
+                            .setPoses(Field.transformToOppositeAlliance(Arrays.stream(value.getSecond()).map(t -> new Pose2d(t, new Rotation2d())).toList()));
+                }
+            });
 
         // Configure SysId
         sysId = new SysIdRoutine(
