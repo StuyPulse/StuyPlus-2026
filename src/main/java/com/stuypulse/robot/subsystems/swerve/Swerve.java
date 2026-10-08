@@ -48,6 +48,7 @@ import frc.robot.lib.BLine.FollowPath;
 import frc.robot.lib.BLine.Path;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 import org.littletonrobotics.junction.AutoLogOutput;
@@ -195,12 +196,14 @@ public class Swerve extends SubsystemBase implements VisionConsumer {
         FollowPath.setTranslationListLoggingConsumer(
             value -> {
                 Logger.recordOutput(value.getFirst(), value.getSecond());
+
+                List<Pose2d> poses = Arrays.stream(value.getSecond()).map(t -> new Pose2d(t, new Rotation2d())).toList();
                 
                 if (Robot.isBlue()) {
-                    Field.FIELD2D.getObject(value.getFirst()).setPoses(Arrays.stream(value.getSecond()).map(t -> new Pose2d(t, new Rotation2d())).toList());
+                    Field.FIELD2D.getObject(value.getFirst()).setPoses(poses);
                 } else {
                     Field.FIELD2D.getObject(value.getFirst())
-                            .setPoses(Field.transformToOppositeAlliance(Arrays.stream(value.getSecond()).map(t -> new Pose2d(t, new Rotation2d())).toList()));
+                            .setPoses(Field.transformToOppositeAlliance(poses));
                 }
             });
 
