@@ -177,6 +177,15 @@ public class Swerve extends SubsystemBase implements VisionConsumer {
                     Logger.recordOutput("Odometry/TrajectorySetpoint", targetPose);
                 });
 
+        FollowPath.setDoubleLoggingConsumer(
+            value -> Logger.recordOutput(value.getFirst(), value.getSecond()));
+        FollowPath.setBooleanLoggingConsumer(
+            value -> Logger.recordOutput(value.getFirst(), value.getSecond()));
+        FollowPath.setPoseLoggingConsumer(
+            value -> Logger.recordOutput(value.getFirst(), value.getSecond()));
+        FollowPath.setTranslationListLoggingConsumer(
+            value -> Logger.recordOutput(value.getFirst(), value.getSecond()));
+
         // Configure SysId
         sysId = new SysIdRoutine(
                 new SysIdRoutine.Config(
