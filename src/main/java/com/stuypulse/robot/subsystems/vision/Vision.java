@@ -6,6 +6,7 @@
 package com.stuypulse.robot.subsystems.vision;
 
 import edu.wpi.first.wpilibj.Alert;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -14,6 +15,7 @@ import edu.wpi.first.math.VecBuilder;
 import edu.wpi.first.math.numbers.N1;
 import edu.wpi.first.math.numbers.N3;
 
+import com.stuypulse.robot.commands.vision.SetPipeline;
 import com.stuypulse.robot.constants.Field;
 import com.stuypulse.robot.constants.Settings;
 import com.stuypulse.robot.constants.Settings.EnabledSubsystems;
@@ -73,6 +75,9 @@ public class Vision extends SubsystemBase {
         }
 
         instance = new Vision(swerve::accept, cameraIOMap);
+
+        SmartDashboard.putData("Vision/setLowSunPipeline", new SetPipeline(0));
+        SmartDashboard.putData("Vision/setHighSunPipeline", new SetPipeline(1));
     }
 
     public static Vision getInstance() {

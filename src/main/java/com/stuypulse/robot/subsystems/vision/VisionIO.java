@@ -11,6 +11,7 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import com.stuypulse.robot.constants.Field;
 
 import org.littletonrobotics.junction.AutoLog;
+import org.littletonrobotics.junction.AutoLogOutput;
 
 public interface VisionIO {
     @AutoLog
@@ -47,10 +48,13 @@ public interface VisionIO {
     }
 
     class VisionIOOutputs {
+        @AutoLogOutput(key = "Vision/Summary/MegaTagMode")
         public MegaTagMode megaTagMode = MegaTagMode.MEGATAG_1;
 
+        @AutoLogOutput(key = "Vision/Summary/Pipeline")
         public int pipeline = 0;
 
+        @AutoLogOutput(key = "Vision/Summary/TagWhitelist")
         public int[] aprilTagIDWhitelist = Field.ALL_TAGS;
     }
 
