@@ -255,7 +255,10 @@ public class Swerve extends SubsystemBase implements VisionConsumer {
      */
     public void runVelocity(ChassisSpeeds speeds) {
         if (!Settings.EnabledSubsystems.SWERVE.get()) {
-            stop();
+            for (var module : modules) {
+                module.stop();
+            }
+            
             return;
         }
 

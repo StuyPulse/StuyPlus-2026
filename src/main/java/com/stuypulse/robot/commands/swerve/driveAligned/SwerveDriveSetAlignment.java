@@ -10,6 +10,8 @@ import static edu.wpi.first.units.Units.*;
 import java.util.function.BooleanSupplier;
 import java.util.function.Supplier;
 
+import org.littletonrobotics.junction.Logger;
+
 import com.stuypulse.robot.subsystems.swerve.Swerve;
 import com.stuypulse.robot.subsystems.swerve.SwerveConstants;
 import com.stuypulse.robot.subsystems.swerve.SwerveConstants.SwerveGains;
@@ -60,16 +62,15 @@ public class SwerveDriveSetAlignment extends Command {
 
     @Override
     public void execute() {
+        Rotation2d targetAngle = getTargetAngle();
+
         double omega = headingController.calculate(
                 swerve.getRotation().getRadians(),
-                getTargetAngle().getRadians()); // rotation.get?
+                targetAngle.getRadians()); // rotation.get?
 
         ChassisSpeeds speeds = new ChassisSpeeds(0, 0, omega);
-        boolean isFlipped = !Robot.isBlue();
-        swerve.runVelocity(
-                ChassisSpeeds.fromFieldRelativeSpeeds(speeds,
-                        isFlipped
-                                ? swerve.getRotation().plus(new Rotation2d(Math.PI))
-                                : swerve.getRotation()));
+        swerve.runVelocity(speeds);
+        Logger.recordOutput("SwerveAlign/Target Angle", targetAngle);
+        Logger.recordOutput("SwerveAlign/isAligned", isAligned);
     }
 }

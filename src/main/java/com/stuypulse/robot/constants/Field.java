@@ -40,7 +40,7 @@ public interface Field {
                         Units.inchesToMeters(72), Rotation3d.kZero);
 
         public static Pose2d getHubPose() {
-                return hubCenter;
+                return Robot.isBlue() ? hubCenter : transformToOppositeAlliance(hubCenter);
         }
 
         // 1.0 meters from driverstation wall and field wall
