@@ -13,6 +13,8 @@ import edu.wpi.first.math.util.Units;
 import edu.wpi.first.networktables.*;
 import edu.wpi.first.wpilibj.RobotController;
 
+import static edu.wpi.first.units.Units.Degree;
+import static edu.wpi.first.units.Units.Degrees;
 import static edu.wpi.first.units.Units.Radians;
 
 import java.util.Arrays;
@@ -65,9 +67,9 @@ public class VisionIOLimelight implements VisionIO {
                     robotToCamera.getX(),
                     robotToCamera.getY(),
                     robotToCamera.getZ(),
-                    robotToCamera.getRotation().getMeasureX().in(Radians),
-                    robotToCamera.getRotation().getMeasureY().in(Radians),
-                    robotToCamera.getRotation().getMeasureZ().in(Radians)
+                    robotToCamera.getRotation().getMeasureX().in(Degrees),
+                    robotToCamera.getRotation().getMeasureY().in(Degrees),
+                    robotToCamera.getRotation().getMeasureZ().in(Degrees)
                 });
         }
 
