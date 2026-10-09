@@ -16,6 +16,8 @@ import frc.robot.lib.BLine.Path;
 
 public class FrontHubShootBLine extends BLineAuton {
     public FrontHubShootBLine(Path... paths) {
+        super(paths);
+
         addCommands(
             new SwerveResetPose(paths[0].getStartPose()),
 

@@ -7,7 +7,6 @@ package com.stuypulse.robot.util;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-import edu.wpi.first.wpilibj2.command.Command;
 
 import frc.robot.lib.BLine.Path;
 import java.io.IOException;
@@ -21,6 +20,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
 
+import com.stuypulse.robot.commands.auton.bline.BLineAuton;
+
 public class BlineUtil {
 
     public static final java.io.File PATHS_DIR = Paths.get("").toAbsolutePath().resolve("src/main/deploy/bline/autos").toFile();
@@ -28,7 +29,7 @@ public class BlineUtil {
     public static class BLineConfig {
 
         private final String name;
-        private final Function<Path[], Command> auton;
+        private final Function<Path[], BLineAuton> auton;
         private final String[] paths;
         private final Optional<Double> waitTimeOne;
         private final Optional<Double> waitTimeTwo;
@@ -36,7 +37,7 @@ public class BlineUtil {
         public BLineConfig(
                 String name, 
                 Function<Path[], 
-                Command> auton, 
+                BLineAuton> auton, 
                 double waitTimeOne, 
                 double waitTimeTwo, 
                 String... paths) {
@@ -58,21 +59,21 @@ public class BlineUtil {
             }
         }
 
-        public BLineConfig(String name, Function<Path[], Command> auton, String... paths) {
+        public BLineConfig(String name, Function<Path[], BLineAuton> auton, String... paths) {
             this(name, auton, 0.0, 0.0, paths);
         }
 
-        private Command buildCommand() {
+        private BLineAuton buildBLineAuton() {
             return auton.apply(loadPaths(paths));   // pass names straight through, no pre-loading
         }
 
-        public BLineConfig register(SendableChooser<Command> chooser) {
-            chooser.addOption(name, buildCommand());
+        public BLineConfig register(SendableChooser<BLineAuton> chooser) {
+            chooser.addOption(name, buildBLineAuton());
             return this;
         }
 
-        public BLineConfig registerDefault(SendableChooser<Command> chooser) {
-            chooser.setDefaultOption(name, buildCommand());
+        public BLineConfig registerDefault(SendableChooser<BLineAuton> chooser) {
+            chooser.setDefaultOption(name, buildBLineAuton());
             return this;
         }
     }

@@ -5,6 +5,7 @@
 /***************************************************************/
 package com.stuypulse.robot;
 
+import com.stuypulse.robot.commands.auton.bline.BLineAuton;
 import com.stuypulse.robot.commands.auton.bline.CenterDepotBLine;
 import com.stuypulse.robot.commands.auton.bline.FrontHubShootBLine;
 import com.stuypulse.robot.commands.auton.bline.LBDumpyBLine;
@@ -90,7 +91,7 @@ public class RobotContainer {
     private final Handoff handoff = Handoff.getInstance();
 
     // Autons
-    private static SendableChooser<Command> autonChooser = new SendableChooser<>();
+    private static SendableChooser<BLineAuton> autonChooser = new SendableChooser<>();
 
     // Robot container
 
@@ -339,7 +340,7 @@ public class RobotContainer {
      * Use this to pass the autonomous command to the main {@link Robot} class.
      * @return The command to run in autonomous
      */
-    public Command getAutonomousCommand() {
+    public BLineAuton getAutonomousCommand() {
         return autonChooser.getSelected();
     }
 }

@@ -22,6 +22,8 @@ public class RBDumpyBLine extends BLineAuton {
     private final Distance HANDOFF_THRESHOLD_METERS = Meters.of(0.15);
 
     public RBDumpyBLine(Path... paths) {
+        super(paths);
+
         addCommands(
             new SwerveResetPose(paths[0].getStartPose()),
             new IntakeSetIntake(),
