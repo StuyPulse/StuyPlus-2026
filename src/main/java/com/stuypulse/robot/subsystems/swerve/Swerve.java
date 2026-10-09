@@ -198,13 +198,7 @@ public class Swerve extends SubsystemBase implements VisionConsumer {
                 Logger.recordOutput(value.getFirst(), value.getSecond());
 
                 List<Pose2d> poses = Arrays.stream(value.getSecond()).map(t -> new Pose2d(t, new Rotation2d())).toList();
-                
-                if (Robot.isBlue()) {
-                    Field.FIELD2D.getObject(value.getFirst()).setPoses(poses);
-                } else {
-                    Field.FIELD2D.getObject(value.getFirst())
-                            .setPoses(Field.transformToOppositeAlliance(poses));
-                }
+                Field.FIELD2D.getObject(value.getFirst()).setPoses(poses);
             });
 
         // Configure SysId
