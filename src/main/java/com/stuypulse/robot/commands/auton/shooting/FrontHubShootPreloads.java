@@ -21,7 +21,7 @@ public class FrontHubShootPreloads extends SequentialCommandGroup {
         addCommands(
             new SwerveResetPose(paths[0].getStartingHolonomicPose().get()),
             Swerve.getInstance().followPathCommand(paths[0]),
-            new SwerveDriveAlignToHub(), // worth noting that alignment commands don't work so this may not aim correctly
+            new SwerveDriveAlignToHub(), 
             new SwerveDriveXMode(),
             new ShooterWaitForSpinUp(),
             new ShooterSetShoot(),

@@ -12,6 +12,7 @@ import com.stuypulse.robot.commands.shooter.ShooterSetShoot;
 import com.stuypulse.robot.commands.shooter.ShooterWaitForSpinUp;
 import com.stuypulse.robot.commands.swerve.SwerveDriveXMode;
 import com.stuypulse.robot.commands.swerve.SwerveResetPose;
+import com.stuypulse.robot.commands.swerve.driveAligned.SwerveDriveAlignToHub;
 import com.stuypulse.robot.subsystems.swerve.Swerve;
 
 import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
@@ -28,6 +29,7 @@ public class LBDumpy extends SequentialCommandGroup {
             Swerve.getInstance().followPathCommand(paths[1]),
             Swerve.getInstance().followPathCommand(paths[2]),
             Swerve.getInstance().followPathCommand(paths[3]),
+            new SwerveDriveAlignToHub(),
             new SwerveDriveXMode(),
             new ShooterWaitForSpinUp(),
             new ShooterSetShoot(),
