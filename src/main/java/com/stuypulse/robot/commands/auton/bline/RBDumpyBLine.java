@@ -25,7 +25,7 @@ public class RBDumpyBLine extends BLineAuton {
         super(paths);
 
         addCommands(
-            new SwerveResetPose(paths[0].getStartPose()),
+            resetPoseAtStart(paths[0].getStartPose()),
             new IntakeSetIntake(),
 
             followUntil(paths[0], HANDOFF_THRESHOLD_METERS),

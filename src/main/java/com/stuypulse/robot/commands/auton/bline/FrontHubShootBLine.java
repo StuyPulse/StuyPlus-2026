@@ -19,7 +19,7 @@ public class FrontHubShootBLine extends BLineAuton {
         super(paths);
 
         addCommands(
-            new SwerveResetPose(paths[0].getStartPose()),
+            resetPoseAtStart(paths[0].getStartPose()),
 
             swerve.followBlinePath(paths[0]),
 

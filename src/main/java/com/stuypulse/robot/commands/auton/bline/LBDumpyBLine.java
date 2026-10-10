@@ -27,7 +27,7 @@ public class LBDumpyBLine extends BLineAuton {
         super(paths);
         
         addCommands(
-            new SwerveResetPose(paths[0].getStartPose()),
+            resetPoseAtStart(paths[0].getStartPose()),
 
             new TunableWaitCommand("LB Dumpy Delay"),
             new IntakeSetIntake(),

@@ -6,9 +6,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.stuypulse.robot.Robot;
+import com.stuypulse.robot.commands.swerve.SwerveResetPose;
 import com.stuypulse.robot.constants.Field;
 import com.stuypulse.robot.subsystems.swerve.Swerve;
 
+import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.units.measure.Distance;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
@@ -52,5 +54,9 @@ public abstract class BLineAuton extends SequentialCommandGroup {
         return pathCommand.raceWith(
             new WaitUntilCommand(() -> pathCommand.getRemainingPathDistanceMeters() < threshold.in(Meters))
         );
+    }
+
+    protected Command resetPoseAtStart(Pose2d pose) {
+        return new SwerveResetPose(Robot.isBlue() ? pose : Field.transformToOppositeAlliance(pose));
     }
 }
