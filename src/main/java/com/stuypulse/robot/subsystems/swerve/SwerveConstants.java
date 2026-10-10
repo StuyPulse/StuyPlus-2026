@@ -52,7 +52,7 @@ public interface SwerveConstants {
 
                 Distance Y_TOLERANCE = Inches.of(2.0);
 
-                Rotation2d THETA_TOLERANCE = Rotation2d.fromDegrees(8);
+                Rotation2d THETA_TOLERANCE = Rotation2d.fromDegrees(5);
 
                 Pose2d POSE_TOLERANCE = new Pose2d(X_TOLERANCE.in(Meters), Y_TOLERANCE.in(Meters), THETA_TOLERANCE);
 
@@ -103,7 +103,7 @@ public interface SwerveConstants {
         }
 
         public interface Alignment {
-            double akP = 8.8624;
+            double akP = 14;
 
             double akI = 0.0;
 
