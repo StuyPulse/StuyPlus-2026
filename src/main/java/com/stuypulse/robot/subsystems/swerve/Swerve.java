@@ -416,7 +416,7 @@ public class Swerve extends SubsystemBase implements VisionConsumer {
     }
 
     public void resetHeading(Rotation2d heading) {
-        poseEstimator.resetRotation(heading);
+        poseEstimator.resetPose(new Pose2d(getPose().getTranslation(), heading));
     }
 
     /** Resets the current odometry pose. */
