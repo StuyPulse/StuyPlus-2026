@@ -24,7 +24,7 @@ public interface SwerveConstants {
             // TODO: revert to 15.0
             double MAX_ACCEL_M_PER_S_SQUARED = 200;
 
-            double MAX_ANGULAR_VEL_RAD_PER_S = Units.degreesToRadians(400.0);
+            double MAX_ANGULAR_VEL_RAD_PER_S = Units.degreesToRadians(1000.0);
 
             double MAX_ANGULAR_ACCEL_RAD_PER_S = Units.degreesToRadians(900.0);
 
