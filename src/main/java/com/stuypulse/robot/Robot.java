@@ -43,14 +43,15 @@ public class Robot extends LoggedRobot {
 
     private Command auto;
 
-    private static Alliance alliance;
-
     /**
      * Checks the alliance the robot is on
      * @return true if the robot is on the blue alliance, false if the robot is on the red alliance
      */
     public static boolean isBlue() {
-        return alliance == Alliance.Blue;
+        return DriverStation.getAlliance().isPresent() 
+                ? DriverStation.getAlliance().get() == Alliance.Blue
+                : true;
+
     }
 
     /** ********************* */
@@ -59,11 +60,6 @@ public class Robot extends LoggedRobot {
     @Override
     public void robotInit() {
         robot = new RobotContainer();
-        if (DriverStation.getAlliance().isPresent()) {
-            alliance = DriverStation.getAlliance().get();
-        } else {
-            alliance = Alliance.Blue;
-        }
         
         switch (Settings.CURRENT_MODE) {
             case REAL -> {
@@ -91,9 +87,7 @@ public class Robot extends LoggedRobot {
      * It is used to update the robot's current alliance.
      */
     @Override
-    public void driverStationConnected() {
-        alliance = DriverStation.getAlliance().get();
-    }
+    public void driverStationConnected() {}
 
     /**
      * This function is called every 20ms, regardless of the robot mode.
@@ -203,7 +197,7 @@ public class Robot extends LoggedRobot {
         }
         CommandScheduler.getInstance().schedule(new SetVisionEnabled());
         Boolean autonWon = DriverStation.getGameSpecificMessage()
-                .equals(String.valueOf(alliance.name().charAt(0)).toUpperCase());
+                .equals(isBlue() ? "B" : "R");
         Logger.recordOutput("Auton Won", autonWon);
     }
 
