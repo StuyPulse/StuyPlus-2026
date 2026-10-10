@@ -11,6 +11,8 @@ import edu.wpi.first.units.measure.Time;
 
 import static edu.wpi.first.units.Units.*;
 
+import org.littletonrobotics.junction.networktables.LoggedNetworkBoolean;
+
 public interface VisionConstants {
     public interface VisionSettings {
         int RESET_IMU_INDEX = 1;
@@ -30,6 +32,7 @@ public interface VisionConstants {
 
         double BUZZ_DEBOUNCE = 0.25;
         Time HDR_TIMEOUT = Seconds.of(0.5);
+        LoggedNetworkBoolean HDR_ENABLED = new LoggedNetworkBoolean("/Tuning/Vision/HDR Enabled", true);
     }
 
     record CameraData(String name, Transform3d robotToCamera, double stdDevFactor) {

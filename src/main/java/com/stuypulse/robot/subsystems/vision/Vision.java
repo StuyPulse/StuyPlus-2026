@@ -177,14 +177,19 @@ public class Vision extends SubsystemBase {
             return;
         }
 
-        if (hdrTimer.hasElapsed(VisionSettings.HDR_TIMEOUT)) {
-            int currentPipeline = getPipeline();
-            if (currentPipeline == Pipelines.LOW_SUN.getIndex()) {
-                setPipeline(Pipelines.HIGH_SUN.getIndex());
-            } else {
-                setPipeline(Pipelines.LOW_SUN.getIndex());
+        if (VisionSettings.HDR_ENABLED.get()) {
+            hdrTimer.start();
+            if (hdrTimer.hasElapsed(VisionSettings.HDR_TIMEOUT)) {
+                int currentPipeline = getPipeline();
+                if (currentPipeline == Pipelines.LOW_SUN.getIndex()) {
+                    setPipeline(Pipelines.HIGH_SUN.getIndex());
+                } else {
+                    setPipeline(Pipelines.LOW_SUN.getIndex());
+                }
+                hdrTimer.reset();
             }
-            hdrTimer.reset();
+        } else {
+            hdrTimer.stop();
         }
 
         // Initialize logging values
