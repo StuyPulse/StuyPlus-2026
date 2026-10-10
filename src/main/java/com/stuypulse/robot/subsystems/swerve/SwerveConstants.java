@@ -22,7 +22,7 @@ public interface SwerveConstants {
             double MAX_VELOCITY_M_PER_S = 4.3;
 
             // TODO: revert to 15.0
-            double MAX_ACCEL_M_PER_S_SQUARED = 20.0;
+            double MAX_ACCEL_M_PER_S_SQUARED = 22.0;
 
             double MAX_ANGULAR_VEL_RAD_PER_S = Units.degreesToRadians(400.0);
 

@@ -49,12 +49,13 @@ public class BlineUtil {
 
             for (String path : paths) {
                 try {
-                    new Path(PATHS_DIR, path);
+                    new Path(path);
                 } catch (Exception e) {
                     DriverStation.reportError(
                         "BLine path \"" + path + "\" not found. Did you mean \""
                             + BlineUtil.findClosestMatch(BlineUtil.getPathFileNames(), path) + "\"?",
                         false);
+                    
                 }
             }
         }
@@ -90,7 +91,7 @@ public class BlineUtil {
 
     public static Path load(String name) {
         try {
-            return new Path(PATHS_DIR, name);
+            return new Path(name);
         } catch (Exception e) {
             DriverStation.reportError("BLine path \"" + name + "\" not found.", false);
             return null;
