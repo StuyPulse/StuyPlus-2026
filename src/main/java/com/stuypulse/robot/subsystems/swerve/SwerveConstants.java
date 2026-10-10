@@ -19,7 +19,7 @@ public interface SwerveConstants {
 
         public interface Constraints {
 
-            double MAX_VELOCITY_M_PER_S = 10;
+            double MAX_VELOCITY_M_PER_S = 20;
 
             // TODO: revert to 15.0
             double MAX_ACCEL_M_PER_S_SQUARED = 200;
