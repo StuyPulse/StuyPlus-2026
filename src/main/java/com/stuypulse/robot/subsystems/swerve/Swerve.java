@@ -291,7 +291,9 @@ public class Swerve extends SubsystemBase implements VisionConsumer {
         SwerveDriveKinematics.desaturateWheelSpeeds(setpointStates, TunerConstants.kSpeedAt12Volts);
 
         // Log unoptimized setpoints and setpoint speeds
-        Logger.recordOutput("SwerveStates/Setpoints", setpointStates);
+        if (setpointStates.length > 0) {
+            Logger.recordOutput("SwerveStates/Setpoint", setpointStates[0]);
+        }
         Logger.recordOutput("SwerveChassisSpeeds/Setpoints", discreteSpeeds);
 
         // Send setpoints to modules

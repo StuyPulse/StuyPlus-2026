@@ -59,7 +59,7 @@ public class TunerConstants {
                 // Supply current limits can be larger than the breaker current rating.
                 .withSupplyCurrentLimit(Amps.of(70))
                 .withSupplyCurrentLimitEnable(true)
-                .withStatorCurrentLimit(kSlipCurrent)
+                .withStatorCurrentLimit(80)
                 .withStatorCurrentLimitEnable(true)
         );
     private static final TalonFXConfiguration steerInitialConfigs = new TalonFXConfiguration()
