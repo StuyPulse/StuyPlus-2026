@@ -11,6 +11,7 @@ import com.stuypulse.robot.commands.shooter.ShooterSetShoot;
 import com.stuypulse.robot.commands.shooter.ShooterWaitForSpinUp;
 import com.stuypulse.robot.commands.swerve.SwerveDriveXMode;
 import com.stuypulse.robot.commands.swerve.SwerveResetPose;
+import com.stuypulse.robot.commands.swerve.driveAligned.SwerveDriveAlignToHub;
 
 import edu.wpi.first.units.measure.Distance;
 import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
@@ -33,6 +34,7 @@ public class RBDumpyBLine extends BLineAuton {
             followUntil(paths[2], HANDOFF_THRESHOLD_METERS),
             followUntil(paths[3], HANDOFF_THRESHOLD_METERS),
 
+            new SwerveDriveAlignToHub(),
             new SwerveDriveXMode(),
             new ShooterWaitForSpinUp(),
             new ShooterSetShoot(),
