@@ -174,6 +174,7 @@ public class Vision extends SubsystemBase {
         }
 
         if (!Settings.EnabledSubsystems.VISION.get()) {
+            hdrTimer.stop();
             return;
         }
 
