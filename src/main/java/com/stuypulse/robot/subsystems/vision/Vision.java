@@ -6,6 +6,7 @@
 package com.stuypulse.robot.subsystems.vision;
 
 import edu.wpi.first.wpilibj.Alert;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Pose3d;
@@ -24,6 +25,7 @@ import com.stuypulse.robot.constants.Settings.VisionMode;
 import com.stuypulse.robot.subsystems.swerve.Swerve;
 import com.stuypulse.robot.subsystems.vision.VisionConstants.CameraData;
 import com.stuypulse.robot.subsystems.vision.VisionConstants.Cameras;
+import com.stuypulse.robot.subsystems.vision.VisionConstants.Pipelines;
 import com.stuypulse.robot.subsystems.vision.VisionConstants.VisionSettings;
 import com.stuypulse.robot.subsystems.vision.VisionIO.MegaTagMode;
 import com.stuypulse.robot.subsystems.vision.VisionIO.PoseObservationType;
@@ -39,6 +41,8 @@ import org.littletonrobotics.junction.Logger;
 
 public class Vision extends SubsystemBase {
     private static final Vision instance;
+
+    private final Timer hdrTimer;
 
     static {
         Swerve swerve = Swerve.getInstance();
@@ -76,8 +80,8 @@ public class Vision extends SubsystemBase {
 
         instance = new Vision(swerve::accept, cameraIOMap);
 
-        SmartDashboard.putData("Vision/setLowSunPipeline", new SetPipeline(0));
-        SmartDashboard.putData("Vision/setHighSunPipeline", new SetPipeline(1));
+        SmartDashboard.putData("Vision/setLowSunPipeline", new SetPipeline(Pipelines.LOW_SUN.getIndex()));
+        SmartDashboard.putData("Vision/setHighSunPipeline", new SetPipeline(Pipelines.HIGH_SUN.getIndex()));
     }
 
     public static Vision getInstance() {
@@ -102,6 +106,9 @@ public class Vision extends SubsystemBase {
 
         // Initialize disconnected alerts
         this.disconnectedAlerts = new EnumMap<>(Cameras.class);
+
+        this.hdrTimer = new Timer();
+        hdrTimer.start();
 
         for (Cameras camera : Cameras.values()) {
             inputs.put(camera, new VisionIOInputsAutoLogged());
@@ -151,6 +158,10 @@ public class Vision extends SubsystemBase {
         }
     }
 
+    public int getPipeline() {
+        return outputs.values().iterator().next().pipeline;
+    }
+
     @Override
     public void periodic() {
         maxTagCount = 0;
@@ -163,7 +174,23 @@ public class Vision extends SubsystemBase {
         }
 
         if (!Settings.EnabledSubsystems.VISION.get()) {
+            hdrTimer.stop();
             return;
+        }
+
+        if (VisionSettings.HDR_ENABLED.get()) {
+            hdrTimer.start();
+            if (hdrTimer.hasElapsed(VisionSettings.HDR_TIMEOUT)) {
+                int currentPipeline = getPipeline();
+                if (currentPipeline == Pipelines.LOW_SUN.getIndex()) {
+                    setPipeline(Pipelines.HIGH_SUN.getIndex());
+                } else {
+                    setPipeline(Pipelines.LOW_SUN.getIndex());
+                }
+                hdrTimer.reset();
+            }
+        } else {
+            hdrTimer.stop();
         }
 
         // Initialize logging values
