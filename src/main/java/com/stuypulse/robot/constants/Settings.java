@@ -32,7 +32,7 @@ public interface Settings {
 
     CANBus CANBUS = new CANBus("rio");
 
-    Mode SIMULATION_TASK = Mode.SIM; // What to do during simulation mode. Change this to REPLAY when replaying. Change to SIM when simulating code.
+    Mode SIMULATION_TASK = Mode.REPLAY; // What to do during simulation mode. Change this to REPLAY when replaying. Change to SIM when simulating code.
     Mode CURRENT_MODE = RobotBase.isReal() ? Mode.REAL : SIMULATION_TASK;
     
     VisionMode VISION_MODE = VisionMode.LIMELIGHT_VISION;
