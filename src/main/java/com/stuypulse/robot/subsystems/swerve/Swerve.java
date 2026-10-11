@@ -111,7 +111,7 @@ public class Swerve extends SubsystemBase implements VisionConsumer {
         this::getPose,
         this::getChassisSpeeds,
         this::runVelocity,
-        new PIDController(4.0, 0.0, 0.0),
+        new PIDController(12.0, 0.0, 0.0),
         new PIDController(7.0, 0.0, 0.0),
         new PIDController(0.5, 0.0, 0.0)
     ).withDefaultShouldFlip().withTRatioBasedTranslationHandoffs(true);
