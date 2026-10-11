@@ -32,6 +32,9 @@ public class Intake extends FullSubsystem {
     private final BooleanSupplier leftRollerStalling;
     private final BooleanSupplier rightRollerStalling;
     private final BooleanSupplier pivotStalling;
+    
+    private int loadCounter = 0;
+    private boolean lastLeftRollerStalling = false;
 
     private final Debouncer leftRollerDebouncer;
     private final Debouncer rightRollerDebouncer;
@@ -74,6 +77,15 @@ public class Intake extends FullSubsystem {
 
         this.leftRollerDebouncer = new Debouncer(IntakeConstants.IntakeSettings.Roller.STALL_DEBOUNCE_SEC.in(Seconds), Debouncer.DebounceType.kBoth);
         this.rightRollerDebouncer = new Debouncer(IntakeConstants.IntakeSettings.Roller.STALL_DEBOUNCE_SEC.in(Seconds), Debouncer.DebounceType.kBoth);
+    }
+
+    public void resetLoadCounter() {
+        this.loadCounter = 0;
+    }
+
+    @AutoLogOutput(key = "Intake/Load Count")
+    public int getLoadCount() {
+        return this.loadCounter;
     }
 
     public void setState(IntakeState state) {
@@ -248,5 +260,11 @@ public class Intake extends FullSubsystem {
     @Override
     public void periodicAfterScheduler() {
         io.applyOutputs(outputs);
+
+        final boolean isLeftRollerStalling = this.isLeftRollerStalling();
+        if (lastLeftRollerStalling && isLeftRollerStalling) {
+            loadCounter++;
+        }
+        this.lastLeftRollerStalling = isLeftRollerStalling;
     }
 }

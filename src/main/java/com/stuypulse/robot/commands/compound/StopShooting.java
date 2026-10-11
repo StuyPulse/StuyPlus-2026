@@ -2,6 +2,7 @@ package com.stuypulse.robot.commands.compound;
 
 import com.stuypulse.robot.commands.feeder.FeederSetIdle;
 import com.stuypulse.robot.commands.handoff.HandoffSetIdle;
+import com.stuypulse.robot.commands.intake.IntakeResetLoadCount;
 import com.stuypulse.robot.commands.intake.IntakeSetHomingDown;
 import com.stuypulse.robot.commands.shooter.ShooterSetGainSlot;
 
@@ -13,7 +14,8 @@ public class StopShooting extends ParallelCommandGroup{
             new HandoffSetIdle(),
             new FeederSetIdle(),
             new IntakeSetHomingDown(),
-            new ShooterSetGainSlot(0)
+            new ShooterSetGainSlot(0),
+            new IntakeResetLoadCount()
         );
     }
 }
