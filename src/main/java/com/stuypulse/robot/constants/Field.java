@@ -22,6 +22,8 @@ import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.FieldObject2d;
 import frc.robot.lib.BLine.FlippingUtil;
 
+import static edu.wpi.first.units.Units.Inches;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -43,6 +45,13 @@ public interface Field {
 
         public static Pose2d getHubPose() {
                 return Robot.isBlue() ? hubCenter : transformToOppositeAlliance(hubCenter);
+        }
+
+        //TODO: Get exact measurement
+        public static Pose2d manualShotPose = new Pose2d(Inches.of(79), Inches.of(WIDTH / 2), new Rotation2d());
+
+        public static Pose2d getManualShotPose() {
+                return Robot.isBlue() ? manualShotPose : transformToOppositeAlliance(manualShotPose);
         }
 
         // 1.0 meters from driverstation wall and field wall

@@ -42,6 +42,7 @@ import com.stuypulse.robot.commands.shooter.ShooterWaitForSpinUp;
 import com.stuypulse.robot.commands.swerve.SwerveDriveDrive;
 import com.stuypulse.robot.commands.swerve.SwerveDriveResetRotation;
 import com.stuypulse.robot.commands.swerve.SwerveDriveXMode;
+import com.stuypulse.robot.commands.swerve.SwerveResetPose;
 import com.stuypulse.robot.commands.swerve.driveAligned.SwerveDriveAlignToFerryZone;
 import com.stuypulse.robot.commands.swerve.driveAligned.SwerveDriveAlignToHub;
 import com.stuypulse.robot.constants.Field;
@@ -163,7 +164,8 @@ public class RobotContainer {
         // Manual shooting possibly from in front of the tower
         driver.a()
             .whileTrue(
-                new SwerveDriveXMode()
+                new SwerveResetPose(Field::getManualShotPose)
+                .andThen(new SwerveDriveXMode())
                     .andThen(new ShooterSetManual())
                     .andThen(new ShooterWaitForSpinUp().withDeadline(new FeederScramble()))
                     .andThen(new HandoffSetForward()
