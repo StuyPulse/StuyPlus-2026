@@ -34,11 +34,12 @@ public class CenterDepotBLine extends BLineAuton {
 
             new SwerveDriveAlignToHub(),
             new SwerveDriveXMode(),
+
             new ShooterWaitForSpinUp(),
-            new ShooterSetShoot(),
-            new HandoffSetForward(),
             new ParallelDeadlineGroup(
-            new WaitCommand(5),
+                new WaitCommand(5),
+                new ShooterSetShoot(),
+                new HandoffSetForward(),
                 new FeederSetForward(),
                 new IntakeAgitateFastOnce().repeatedly()
             )
