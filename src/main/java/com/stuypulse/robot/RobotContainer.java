@@ -281,8 +281,7 @@ public class RobotContainer {
         "dumpy-lb-to-nz",
             "dumpy-lb-nz-intake",
             "dumpy-lb-backsweep",
-            "dumpy-lb-shoot",
-            "dumpy-lb-shoot-depot"
+            "dumpy-lb-shoot"
         );
         LB_DUMPY_BLINE.register(autonChooser);
 
