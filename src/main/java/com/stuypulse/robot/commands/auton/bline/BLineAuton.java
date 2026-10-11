@@ -57,6 +57,6 @@ public abstract class BLineAuton extends SequentialCommandGroup {
     }
 
     protected Command resetPoseAtStart(Pose2d pose) {
-        return new SwerveResetPose(Robot.isBlue() ? pose : Field.transformToOppositeAlliance(pose));
+        return new SwerveResetPose(() -> Robot.isBlue() ? pose : Field.transformToOppositeAlliance(pose));
     }
 }
