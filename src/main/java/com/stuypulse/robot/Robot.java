@@ -53,6 +53,7 @@ public class Robot extends LoggedRobot {
         if (DriverStation.getAlliance().isPresent()) {
             return DriverStation.getAlliance().get() == Alliance.Blue;
         } else {
+            DriverStation.reportWarning("Alliance not present", true);
             return true;
         }
     }
