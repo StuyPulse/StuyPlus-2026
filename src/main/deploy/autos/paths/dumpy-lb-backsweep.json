@@ -83,6 +83,16 @@
       {
         "value": 1.5,
         "start_ordinal": 1,
+        "end_ordinal": 3
+      },
+      {
+        "value": 2.67,
+        "start_ordinal": 4,
+        "end_ordinal": 4
+      },
+      {
+        "value": 1.41,
+        "start_ordinal": 5,
         "end_ordinal": 6
       }
     ]
