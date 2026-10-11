@@ -42,24 +42,5 @@
         "profiled_rotation": true
       }
     }
-  ],
-  "constraints": {
-    "max_velocity_meters_per_sec": [
-      {
-        "value": 2.25,
-        "start_ordinal": 0,
-        "end_ordinal": 0
-      },
-      {
-        "value": 4.05,
-        "start_ordinal": 1,
-        "end_ordinal": 2
-      },
-      {
-        "value": 2.8,
-        "start_ordinal": 3,
-        "end_ordinal": 3
-      }
-    ]
-  }
+  ]
 }
