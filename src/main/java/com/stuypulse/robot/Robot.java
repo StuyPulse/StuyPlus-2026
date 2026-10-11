@@ -175,7 +175,7 @@ public class Robot extends LoggedRobot {
         CommandScheduler.getInstance().schedule(new SetMegaTagMode(MegaTagMode.MEGATAG_2));
         // CommandScheduler.getInstance().schedule(new SetIMUMode(4));
         // CommandScheduler.getInstance().schedule(new WhitelistAllTags());
-        Vision.getInstance().disable();
+        // Vision.getInstance().disable();
         if (auto != null) {
             CommandScheduler.getInstance().schedule(auto);
         }
