@@ -146,6 +146,6 @@ public class Shooter extends FullSubsystem {
     }
 
     private void stopMotors() {
-        outputs.mode = ShooterIO.ShooterIOOutputMode.STOP;
+        outputs.mode = ShooterIO.ShooterIOOutputMode.IDLE;
     }
 }

@@ -189,12 +189,12 @@ public class Intake extends FullSubsystem {
     }
 
     private void runPivotPushdown(Current current) {
-        outputs.pivot.outputMode = IntakeIOPivotOutputMode.PUSHDOWN;
+        outputs.pivot.outputMode = IntakeIOPivotOutputMode.VOLTAGE;
         outputs.pivot.pushdown = current;
     }
     
     private void runPivotHoming(Voltage voltage) {
-        outputs.pivot.outputMode = IntakeIOPivotOutputMode.HOMING;
+        outputs.pivot.outputMode = IntakeIOPivotOutputMode.TORQUE_CURRENT;
         outputs.pivot.homing = voltage; 
     }
 
@@ -208,8 +208,8 @@ public class Intake extends FullSubsystem {
     }
 
     private void stopAllMotors() {
-        outputs.pivot.outputMode = IntakeIOPivotOutputMode.STOP;
-        outputs.roller.outputMode = IntakeIORollerOutputMode.STOP;
+        outputs.pivot.outputMode = IntakeIOPivotOutputMode.IDLE;
+        outputs.roller.outputMode = IntakeIORollerOutputMode.IDLE;
     }
 
     @Override

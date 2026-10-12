@@ -20,13 +20,13 @@ public interface ShooterIO {
     public default void updateInputs(ShooterIOInputs inputs) {};
 
     public static enum ShooterIOOutputMode {
-        VELOCITY,
-        STOP
+        IDLE,
+        VELOCITY
     }
 
     public static class ShooterIOOutputs {
         @AutoLogOutput(key = "Shooter/Mode")
-        public ShooterIOOutputMode mode = ShooterIOOutputMode.STOP;
+        public ShooterIOOutputMode mode = ShooterIOOutputMode.IDLE;
 
         @AutoLogOutput(key = "Shooter/Target Velocity")
         public AngularVelocity targetVelocity = RPM.zero();

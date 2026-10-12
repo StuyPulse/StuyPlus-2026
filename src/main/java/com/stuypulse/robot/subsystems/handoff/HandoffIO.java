@@ -18,13 +18,13 @@ public interface HandoffIO {
     public default void updateInputs(HandoffIOInputs inputs) {};
 
     public static enum HandoffIOOutputMode {
-        VOLTAGE,
-        STOP
+        IDLE,
+        VOLTAGE
     }
 
     public static class HandoffIOOutputs {
         @AutoLogOutput(key = "Handoff/Mode")
-        public HandoffIOOutputMode mode = HandoffIOOutputMode.STOP;
+        public HandoffIOOutputMode mode = HandoffIOOutputMode.IDLE;
 
         @AutoLogOutput(key = "Handoff/Target Voltage")
         public Voltage voltage = Volts.zero();

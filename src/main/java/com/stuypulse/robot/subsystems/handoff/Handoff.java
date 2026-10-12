@@ -123,6 +123,6 @@ public class Handoff extends FullSubsystem {
     }
 
     private void stopMotor() {
-        outputs.mode = HandoffIO.HandoffIOOutputMode.STOP;
+        outputs.mode = HandoffIO.HandoffIOOutputMode.IDLE;
     }
 }
