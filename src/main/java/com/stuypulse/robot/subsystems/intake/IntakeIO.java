@@ -23,14 +23,14 @@ public interface IntakeIO {
     }
 
     public enum IntakeIOPivotOutputMode {
-        IDLE,
+        STOP,
         POSITION,
         VOLTAGE,
         TORQUE_CURRENT,
     }
 
     public enum IntakeIORollerOutputMode {
-        IDLE,
+        STOP,
         DUTY_CYCLE
     }
 
@@ -40,7 +40,7 @@ public interface IntakeIO {
 
         public static class IntakeIOPivotOutputs {
             @AutoLogOutput(key="Intake/Pivot/Output Mode")
-            public IntakeIOPivotOutputMode outputMode = IntakeIOPivotOutputMode.IDLE;
+            public IntakeIOPivotOutputMode outputMode = IntakeIOPivotOutputMode.STOP;
 
             @AutoLogOutput(key="Intake/Pivot/Target Position")
             public Angle position = IntakeConstants.IntakeSettings.Pivot.INITIAL_ANGLE;
@@ -57,7 +57,7 @@ public interface IntakeIO {
 
         public static class IntakeIORollerOutputs {
             @AutoLogOutput(key="Intake/Roller/Output Mode")
-            public IntakeIORollerOutputMode outputMode = IntakeIORollerOutputMode.IDLE;
+            public IntakeIORollerOutputMode outputMode = IntakeIORollerOutputMode.STOP;
 
             @AutoLogOutput(key="Intake/Roller/Target Duty Cycle")
             public double targetDutyCycle = 0.0;

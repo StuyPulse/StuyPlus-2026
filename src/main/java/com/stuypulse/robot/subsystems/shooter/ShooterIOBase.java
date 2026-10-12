@@ -50,7 +50,7 @@ public abstract class ShooterIOBase implements ShooterIO {
                                                             .withVelocity(outputs.targetVelocity)
                                                             .withSlot(outputs.gainSlot));
 
-            case IDLE -> {
+            case STOP -> {
                 shooterMotorRight.stopMotor();
                 shooterMotorCenter.stopMotor();
                 shooterMotorLeft.stopMotor();

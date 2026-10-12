@@ -71,14 +71,14 @@ public abstract class IntakeIOBase implements IntakeIO {
     @Override
     public void applyOutputs(IntakeIOOutputs outputs) {
         switch (outputs.pivot.outputMode) {
-            case IDLE -> pivotMotor.stopMotor();
+            case STOP -> pivotMotor.stopMotor();
             case POSITION -> pivotMotor.setControl(positionController.withPosition(outputs.pivot.position).withSlot(outputs.pivot.positionGainsSlot));
             case VOLTAGE -> pivotMotor.setControl(pushdownController.withOutput(outputs.pivot.pushdown));
             case TORQUE_CURRENT -> pivotMotor.setControl(homingController.withOutput(outputs.pivot.homing));
         }
 
         switch (outputs.roller.outputMode) {
-            case IDLE -> {
+            case STOP -> {
                 rollerMotorLeft.stopMotor();
                 rollerMotorRight.stopMotor();
 

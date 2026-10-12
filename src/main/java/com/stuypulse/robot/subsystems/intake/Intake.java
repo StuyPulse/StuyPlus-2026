@@ -208,8 +208,8 @@ public class Intake extends FullSubsystem {
     }
 
     private void stopAllMotors() {
-        outputs.pivot.outputMode = IntakeIOPivotOutputMode.IDLE;
-        outputs.roller.outputMode = IntakeIORollerOutputMode.IDLE;
+        outputs.pivot.outputMode = IntakeIOPivotOutputMode.STOP;
+        outputs.roller.outputMode = IntakeIORollerOutputMode.STOP;
     }
 
     @Override

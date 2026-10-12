@@ -25,7 +25,7 @@ public abstract class HandoffIOBase implements HandoffIO {
         switch (outputs.mode) {
             case VOLTAGE -> handoffMotor.setControl(handoffController.withOutput(outputs.voltage));
 
-            case IDLE -> handoffMotor.stopMotor();
+            case STOP -> handoffMotor.stopMotor();
         }
     }   
 }
