@@ -154,8 +154,13 @@ public class Robot extends LoggedRobot {
             auto = robot.getAutonomousCommand();
 
             auto.displayPaths();
-        } else {
+        } 
+        
+        if (auto == null) {
             auto = robot.getAutonomousCommand();
+            if (auto != null) {
+                auto.displayPaths();
+            }
         }
     }
 
