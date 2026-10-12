@@ -25,8 +25,8 @@
       "default_auto_velocity_merge_tolerance_meters_per_sec": 0.3
     }
   },
-  "active_path_file_name": "dumpy-lb-nz-intake.json",
-  "active_path_group_id": "group-d0f83cfd-b5ea-4b38-bab9-0f37cfa60f07",
+  "active_path_file_name": "dumpy-rb-to-nz.json",
+  "active_path_group_id": "group-dad6c948-0515-4f92-bb19-972b34fea77c",
   "path_groups": [
     {
       "group_id": "group-4ef663aa-3da8-4656-af5a-30ece285f516",
@@ -84,8 +84,8 @@
       "target_id": "target-c78ad783",
       "display_name": "Left Dumpy 1",
       "kind": "waypoint",
-      "x_meters": 6.89,
-      "y_meters": 6.2,
+      "x_meters": 6.91806,
+      "y_meters": 6.59782,
       "rotation_radians": -0.59341,
       "locked": true
     },
@@ -111,8 +111,8 @@
       "target_id": "target-6af5f293",
       "display_name": "Left Dumpy 4",
       "kind": "waypoint",
-      "x_meters": 2.6,
-      "y_meters": 4.47,
+      "x_meters": 1.99228,
+      "y_meters": 4.71685,
       "rotation_radians": -0.13963,
       "locked": true
     },
@@ -138,10 +138,9 @@
       "target_id": "target-1540fec4",
       "display_name": "Right Dumpy 1",
       "kind": "waypoint",
-      "x_meters": 6.89,
-      "y_meters": 1.8,
-      "rotation_radians": 0.59341,
-      "locked": true
+      "x_meters": 7.0121,
+      "y_meters": 1.38989,
+      "rotation_radians": 0.7854
     },
     {
       "target_id": "target-76510374",
@@ -164,12 +163,54 @@
       "target_id": "target-135a8e09",
       "display_name": "Right Dumpy 4",
       "kind": "waypoint",
-      "x_meters": 2.6,
-      "y_meters": 3.53,
-      "rotation_radians": 0.13963
+      "x_meters": 1.90999,
+      "y_meters": 3.97622,
+      "rotation_radians": 0.0,
+      "locked": true
     }
   ],
   "paths": {
+    "dumpy-lb-backsweep.json": {
+      "display_name": "dumpy-lb-backsweep",
+      "editor_metadata": {
+        "linked_targets": [
+          {
+            "element_index": 0.0,
+            "target_id": "target-d8c035ad"
+          },
+          {
+            "element_index": 2.0,
+            "target_id": "target-c8ab929b"
+          }
+        ]
+      }
+    },
+    "dumpy-lb-nz-intake.json": {
+      "display_name": "dumpy-lb-nz-intake",
+      "editor_metadata": {
+        "linked_targets": [
+          {
+            "element_index": 0.0,
+            "target_id": "target-c78ad783"
+          },
+          {
+            "element_index": 5.0,
+            "target_id": "target-d8c035ad"
+          }
+        ]
+      }
+    },
+    "dumpy-lb-shoot-depot.json": {
+      "display_name": "dumpy-lb-shoot-depot",
+      "editor_metadata": {
+        "linked_targets": [
+          {
+            "element_index": 0.0,
+            "target_id": "target-6af5f293"
+          }
+        ]
+      }
+    },
     "dumpy-lb-shoot.json": {
       "display_name": "dumpy-lb-shoot",
       "editor_metadata": {
@@ -185,17 +226,28 @@
         ]
       }
     },
-    "outpost.json": {
-      "display_name": "outpost",
-      "editor_metadata": null
+    "dumpy-lb-to-nz.json": {
+      "display_name": "dumpy-lb-to-nz",
+      "editor_metadata": {
+        "linked_targets": [
+          {
+            "element_index": 2.0,
+            "target_id": "target-c78ad783"
+          }
+        ]
+      }
     },
-    "dumpy-lb-shoot-depot.json": {
-      "display_name": "dumpy-lb-shoot-depot",
+    "dumpy-rb-backsweep.json": {
+      "display_name": "dumpy-rb-backsweep",
       "editor_metadata": {
         "linked_targets": [
           {
             "element_index": 0.0,
-            "target_id": "target-6af5f293"
+            "target_id": "target-76510374"
+          },
+          {
+            "element_index": 2.0,
+            "target_id": "target-b7a2eb1a"
           }
         ]
       }
@@ -224,8 +276,38 @@
             "target_id": "target-1540fec4"
           },
           {
-            "element_index": 3.0,
+            "element_index": 4.0,
             "target_id": "target-76510374"
+          }
+        ]
+      }
+    },
+    "dumpy-rb-shoot.json": {
+      "display_name": "dumpy-rb-shoot",
+      "editor_metadata": {
+        "ranged_constraints": [
+          {
+            "key": "max_velocity_meters_per_sec",
+            "value": 4.05,
+            "start_ordinal": 3,
+            "end_ordinal": 3,
+            "source": "auto_velocity",
+            "auto_velocity": {
+              "velocity_safety_factor": 0.9,
+              "acceleration_safety_factor": 0.8,
+              "merge_tolerance_meters_per_sec": 0.3,
+              "input_signature": "{\"pathElements\":[{\"type\":\"waypoint\",\"xMeters\":3.36,\"yMeters\":2.46,\"handoffRadiusMeters\":0.45,\"rotationRadians\":3.141592653589793,\"profiledRotation\":true},{\"type\":\"translation\",\"xMeters\":2.51,\"yMeters\":2.41,\"handoffRadiusMeters\":0.5},{\"type\":\"waypoint\",\"xMeters\":2.6,\"yMeters\":3.53,\"handoffRadiusMeters\":0.45,\"rotationRadians\":0.13962634015954636,\"profiledRotation\":true}],\"scalarConstraints\":{\"maxVelocityMps\":null,\"maxAccelerationMps2\":null,\"maxVelocityDegPerSec\":null,\"maxAccelerationDegPerSec\":null},\"rotationRangedConstraints\":[],\"config\":{\"maxVelocityMps\":4.5,\"maxAccelerationMps2\":12,\"handoffRadiusMeters\":0.45,\"maxVelocityDegPerSec\":720,\"maxAccelerationDegPerSec\":1500,\"autoVelocityVelocitySafetyFactor\":0.9,\"autoVelocityAccelerationSafetyFactor\":0.8},\"options\":{\"velocitySafetyFactor\":0.9,\"accelerationSafetyFactor\":0.8,\"sampleStepMeters\":null}}"
+            }
+          }
+        ],
+        "linked_targets": [
+          {
+            "element_index": 0.0,
+            "target_id": "target-b7a2eb1a"
+          },
+          {
+            "element_index": 2.0,
+            "target_id": "target-135a8e09"
           }
         ]
       }
@@ -240,6 +322,31 @@
           }
         ]
       }
+    },
+    "front-hub-shoot.json": {
+      "display_name": "front-hub-shoot",
+      "editor_metadata": {
+        "linked_targets": [
+          {
+            "element_index": 1.0,
+            "target_id": "target-dc37dda7"
+          }
+        ]
+      }
+    },
+    "hub-to-depot.json": {
+      "display_name": "hub-to-depot",
+      "editor_metadata": {
+        "linked_targets": [
+          {
+            "element_index": 3.0,
+            "target_id": "target-4519922c"
+          }
+        ]
+      }
+    },
+    "outpost.json": {
+      "display_name": "outpost"
     },
     "tower-shoot.json": {
       "display_name": "tower-shoot",
@@ -284,117 +391,8 @@
         ]
       }
     },
-    "dumpy-rb-backsweep.json": {
-      "display_name": "dumpy-rb-backsweep",
-      "editor_metadata": {
-        "linked_targets": [
-          {
-            "element_index": 0.0,
-            "target_id": "target-76510374"
-          },
-          {
-            "element_index": 2.0,
-            "target_id": "target-b7a2eb1a"
-          }
-        ]
-      }
-    },
     "two-meter.json": {
-      "display_name": "two-meter",
-      "editor_metadata": null
-    },
-    "front-hub-shoot.json": {
-      "display_name": "front-hub-shoot",
-      "editor_metadata": {
-        "linked_targets": [
-          {
-            "element_index": 1.0,
-            "target_id": "target-dc37dda7"
-          }
-        ]
-      }
-    },
-    "dumpy-lb-to-nz.json": {
-      "display_name": "dumpy-lb-to-nz",
-      "editor_metadata": {
-        "linked_targets": [
-          {
-            "element_index": 2.0,
-            "target_id": "target-c78ad783"
-          }
-        ]
-      }
-    },
-    "hub-to-depot.json": {
-      "display_name": "hub-to-depot",
-      "editor_metadata": {
-        "linked_targets": [
-          {
-            "element_index": 3.0,
-            "target_id": "target-4519922c"
-          }
-        ]
-      }
-    },
-    "dumpy-lb-backsweep.json": {
-      "display_name": "dumpy-lb-backsweep",
-      "editor_metadata": {
-        "linked_targets": [
-          {
-            "element_index": 0.0,
-            "target_id": "target-d8c035ad"
-          },
-          {
-            "element_index": 2.0,
-            "target_id": "target-c8ab929b"
-          }
-        ]
-      }
-    },
-    "dumpy-rb-shoot.json": {
-      "display_name": "dumpy-rb-shoot",
-      "editor_metadata": {
-        "ranged_constraints": [
-          {
-            "key": "max_velocity_meters_per_sec",
-            "value": 4.05,
-            "start_ordinal": 3,
-            "end_ordinal": 3,
-            "source": "auto_velocity",
-            "auto_velocity": {
-              "velocity_safety_factor": 0.9,
-              "acceleration_safety_factor": 0.8,
-              "merge_tolerance_meters_per_sec": 0.3,
-              "input_signature": "{\"pathElements\":[{\"type\":\"waypoint\",\"xMeters\":3.36,\"yMeters\":2.46,\"handoffRadiusMeters\":0.45,\"rotationRadians\":3.141592653589793,\"profiledRotation\":true},{\"type\":\"translation\",\"xMeters\":2.51,\"yMeters\":2.41,\"handoffRadiusMeters\":0.5},{\"type\":\"waypoint\",\"xMeters\":2.6,\"yMeters\":3.53,\"handoffRadiusMeters\":0.45,\"rotationRadians\":0.13962634015954636,\"profiledRotation\":true}],\"scalarConstraints\":{\"maxVelocityMps\":null,\"maxAccelerationMps2\":null,\"maxVelocityDegPerSec\":null,\"maxAccelerationDegPerSec\":null},\"rotationRangedConstraints\":[],\"config\":{\"maxVelocityMps\":4.5,\"maxAccelerationMps2\":12,\"handoffRadiusMeters\":0.45,\"maxVelocityDegPerSec\":720,\"maxAccelerationDegPerSec\":1500,\"autoVelocityVelocitySafetyFactor\":0.9,\"autoVelocityAccelerationSafetyFactor\":0.8},\"options\":{\"velocitySafetyFactor\":0.9,\"accelerationSafetyFactor\":0.8,\"sampleStepMeters\":null}}"
-            }
-          }
-        ],
-        "linked_targets": [
-          {
-            "element_index": 0.0,
-            "target_id": "target-b7a2eb1a"
-          },
-          {
-            "element_index": 2.0,
-            "target_id": "target-135a8e09"
-          }
-        ]
-      }
-    },
-    "dumpy-lb-nz-intake.json": {
-      "display_name": "dumpy-lb-nz-intake",
-      "editor_metadata": {
-        "linked_targets": [
-          {
-            "element_index": 0.0,
-            "target_id": "target-c78ad783"
-          },
-          {
-            "element_index": 4.0,
-            "target_id": "target-d8c035ad"
-          }
-        ]
-      }
+      "display_name": "two-meter"
     }
   },
   "field_assets": {}
