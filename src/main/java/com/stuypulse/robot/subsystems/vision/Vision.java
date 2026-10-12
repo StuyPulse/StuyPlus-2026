@@ -28,6 +28,7 @@ import com.stuypulse.robot.subsystems.vision.VisionConstants.VisionSettings;
 import com.stuypulse.robot.subsystems.vision.VisionIO.MegaTagMode;
 import com.stuypulse.robot.subsystems.vision.VisionIO.PoseObservationType;
 import com.stuypulse.robot.subsystems.vision.VisionIO.VisionIOOutputs;
+import com.stuypulse.robot.util.FullSubsystem;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -37,7 +38,7 @@ import java.util.List;
 import java.util.Map.Entry;
 import org.littletonrobotics.junction.Logger;
 
-public class Vision extends SubsystemBase {
+public class Vision extends FullSubsystem {
     private static final Vision instance;
 
     static {
@@ -273,6 +274,7 @@ public class Vision extends SubsystemBase {
                 allRobotPosesRejected.toArray(new Pose3d[allRobotPosesRejected.size()]));
     }
 
+    @Override
     public void periodicAfterScheduler() {
         for (Entry<Cameras, VisionIO> entry : io.entrySet()) {
             VisionIO currentIO = entry.getValue();
@@ -283,6 +285,8 @@ public class Vision extends SubsystemBase {
             Logger.recordOutput("Vision/" + entry.getKey().name() + "/Pipeline", currentOutputs.pipeline);
             currentIO.applyOutputs(currentOutputs);
         }
+
+        Logger.recordOutput("Vision/Pipeline", outputs.values().iterator().next().pipeline);
     }
 
     @FunctionalInterface

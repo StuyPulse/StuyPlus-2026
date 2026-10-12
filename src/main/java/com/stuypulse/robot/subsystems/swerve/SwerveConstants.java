@@ -19,15 +19,14 @@ public interface SwerveConstants {
 
         public interface Constraints {
 
-            double MAX_VELOCITY_M_PER_S = 4.3;
+            double MAX_VELOCITY_M_PER_S = 20;
 
             // TODO: revert to 15.0
-            double MAX_ACCEL_M_PER_S_SQUARED = 20.0;
+            double MAX_ACCEL_M_PER_S_SQUARED = 200;
 
-            double MAX_ANGULAR_VEL_RAD_PER_S = Units.degreesToRadians(400.0);
+            double MAX_ANGULAR_VEL_RAD_PER_S = Units.degreesToRadians(1000.0);
 
-            // TODO: revert to 900
-            double MAX_ANGULAR_ACCEL_RAD_PER_S = Units.degreesToRadians(300.0);
+            double MAX_ANGULAR_ACCEL_RAD_PER_S = Units.degreesToRadians(900.0);
 
             PathConstraints DEFAULT_CONSTRAINTS = new PathConstraints(MAX_VELOCITY_M_PER_S, MAX_ACCEL_M_PER_S_SQUARED,
                     MAX_ANGULAR_VEL_RAD_PER_S, MAX_ANGULAR_ACCEL_RAD_PER_S);

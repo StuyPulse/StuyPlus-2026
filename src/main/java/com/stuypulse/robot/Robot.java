@@ -5,6 +5,7 @@
 /***************************************************************/
 package com.stuypulse.robot;
 
+import org.littletonrobotics.junction.AutoLogOutput;
 import org.littletonrobotics.junction.LogFileUtil;
 import org.littletonrobotics.junction.LoggedRobot;
 import org.littletonrobotics.junction.Logger;
@@ -12,6 +13,7 @@ import org.littletonrobotics.junction.networktables.NT4Publisher;
 import org.littletonrobotics.junction.wpilog.WPILOGReader;
 import org.littletonrobotics.junction.wpilog.WPILOGWriter;
 
+import com.stuypulse.robot.commands.auton.bline.BLineAuton;
 import com.stuypulse.robot.commands.shooter.ShooterSetShoot;
 import com.stuypulse.robot.commands.vision.SetMegaTagMode;
 import com.stuypulse.robot.commands.vision.SetVisionEnabled;
@@ -26,7 +28,6 @@ import com.stuypulse.robot.util.simulation.SimulationConstants;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
-import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
 /**
@@ -41,17 +42,20 @@ public class Robot extends LoggedRobot {
 
     private RobotContainer robot;
 
-    private Command auto;
+    private BLineAuton auto;
 
     /**
      * Checks the alliance the robot is on
      * @return true if the robot is on the blue alliance, false if the robot is on the red alliance
      */
+    @AutoLogOutput(key = "Alliance/isBlue")
     public static boolean isBlue() {
-        return DriverStation.getAlliance().isPresent() 
-                ? DriverStation.getAlliance().get() == Alliance.Blue
-                : true;
-
+        if (DriverStation.getAlliance().isPresent()) {
+            return DriverStation.getAlliance().get() == Alliance.Blue;
+        } else {
+            DriverStation.reportWarning("Alliance not present", true);
+            return true;
+        }
     }
 
     /** ********************* */
@@ -111,7 +115,7 @@ public class Robot extends LoggedRobot {
     public void simulationInit() {
         // start off in a convenient spot
         Swerve.getInstance()
-            .setPose(SimulationConstants.ROBOTS_STARTING_POSITIONS[0]);
+            .resetPose(SimulationConstants.ROBOTS_STARTING_POSITIONS[0]);
     }
 
     /**
@@ -143,6 +147,21 @@ public class Robot extends LoggedRobot {
     public void disabledPeriodic() {
         // CommandScheduler.getInstance().schedule(new SetIMUMode(1));
         CommandScheduler.getInstance().schedule(new SetMegaTagMode(MegaTagMode.MEGATAG_1));
+
+        if (auto != robot.getAutonomousCommand() && auto != null) {
+            auto.clearPaths();
+
+            auto = robot.getAutonomousCommand();
+
+            auto.displayPaths();
+        } 
+        
+        if (auto == null) {
+            auto = robot.getAutonomousCommand();
+            if (auto != null) {
+                auto.displayPaths();
+            }
+        }
     }
 
     /***********************/
@@ -154,11 +173,15 @@ public class Robot extends LoggedRobot {
      */
     @Override
     public void autonomousInit() {
+        if (auto != null) {
+            auto.clearPaths();
+        }
+
         auto = robot.getAutonomousCommand();
         CommandScheduler.getInstance().schedule(new SetMegaTagMode(MegaTagMode.MEGATAG_2));
         // CommandScheduler.getInstance().schedule(new SetIMUMode(4));
         // CommandScheduler.getInstance().schedule(new WhitelistAllTags());
-        Vision.getInstance().disable();
+        // Vision.getInstance().disable();
         if (auto != null) {
             CommandScheduler.getInstance().schedule(auto);
         }
@@ -193,6 +216,7 @@ public class Robot extends LoggedRobot {
         // CommandScheduler.getInstance().schedule(new WhitelistAllTags());
         CommandScheduler.getInstance().schedule(new ShooterSetShoot()); // start at SHOOT state
         if (auto != null) {
+            auto.clearPaths();
             auto.cancel();
         }
         CommandScheduler.getInstance().schedule(new SetVisionEnabled());
