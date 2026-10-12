@@ -21,7 +21,6 @@ import com.stuypulse.robot.subsystems.vision.Vision;
 import com.stuypulse.robot.subsystems.vision.VisionIO.MegaTagMode;
 import com.stuypulse.robot.util.FullSubsystem;
 import com.stuypulse.robot.util.LoggedSignals;
-import com.stuypulse.robot.util.simulation.RobotVisualizer;
 import com.stuypulse.robot.util.simulation.SimulationConstants;
 
 import edu.wpi.first.wpilibj.DriverStation;
@@ -120,7 +119,6 @@ public class Robot extends LoggedRobot {
     @Override
     public void simulationPeriodic() {
         // Simulation.getInstance().update();
-        RobotVisualizer.getInstance().update();
     }
 
     /*********************/

@@ -6,7 +6,6 @@
 package com.stuypulse.robot.subsystems.intake;
 
 import com.stuypulse.robot.constants.Settings;
-import com.stuypulse.robot.util.simulation.RobotVisualizer;
 import com.stuypulse.robot.util.simulation.TalonFXSimulation.SystemSim;
 import com.stuypulse.robot.util.simulation.TalonFXSimulation.TalonFXSimulation;
 
@@ -77,6 +76,5 @@ public class IntakeIOSim extends IntakeIOBase {
         rollerMotorRight.refresh();
         super.updateInputs(inputs);
 
-        RobotVisualizer.getInstance().updateIntake(inputs.pivotMotorInputs.position, inputs.leftRollerMotorInputs.velocity);
     }
 }

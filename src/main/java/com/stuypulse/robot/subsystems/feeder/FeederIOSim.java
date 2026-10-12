@@ -8,7 +8,6 @@ package com.stuypulse.robot.subsystems.feeder;
 import static edu.wpi.first.units.Units.*;
 
 import com.stuypulse.robot.constants.Settings;
-import com.stuypulse.robot.util.simulation.RobotVisualizer;
 import com.stuypulse.robot.util.simulation.TalonFXSimulation.SystemSim;
 import com.stuypulse.robot.util.simulation.TalonFXSimulation.TalonFXSimulation;
 
@@ -45,6 +44,5 @@ public class FeederIOSim extends FeederIOBase {
         feederMotor.refresh();
 
         super.updateInputs(inputs);
-        RobotVisualizer.getInstance().updateFeeder(inputs.feederMotorInputs.velocity);
     }
 }
