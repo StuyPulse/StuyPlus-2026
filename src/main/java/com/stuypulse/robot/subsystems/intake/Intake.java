@@ -183,7 +183,7 @@ public class Intake extends FullSubsystem {
     }
   
     private void runPivotPosition(Angle position, int gainsSlot) {
-        outputs.pivot.outputMode = IntakeIOPivotOutputMode.POSITION;
+        outputs.pivot.outputMode = IntakeIOPivotOutputMode.POSITION_TORQUE_CURRENT;
         outputs.pivot.position = position;
         outputs.pivot.positionGainsSlot = gainsSlot;
     }

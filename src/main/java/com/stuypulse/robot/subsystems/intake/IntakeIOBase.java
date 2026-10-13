@@ -72,7 +72,7 @@ public abstract class IntakeIOBase implements IntakeIO {
     public void applyOutputs(IntakeIOOutputs outputs) {
         switch (outputs.pivot.outputMode) {
             case STOP -> pivotMotor.stopMotor();
-            case POSITION -> pivotMotor.setControl(positionController.withPosition(outputs.pivot.position).withSlot(outputs.pivot.positionGainsSlot));
+            case POSITION_TORQUE_CURRENT -> pivotMotor.setControl(positionController.withPosition(outputs.pivot.position).withSlot(outputs.pivot.positionGainsSlot));
             case VOLTAGE -> pivotMotor.setControl(pushdownController.withOutput(outputs.pivot.pushdown));
             case TORQUE_CURRENT -> pivotMotor.setControl(homingController.withOutput(outputs.pivot.homing));
         }

@@ -141,7 +141,7 @@ public class Shooter extends FullSubsystem {
     }
 
     private void runVelocity(AngularVelocity velocity) {
-        outputs.mode = ShooterIO.ShooterIOOutputMode.VELOCITY;
+        outputs.mode = ShooterIO.ShooterIOOutputMode.VELOCITY_TORQUE_CURRENT;
         outputs.targetVelocity = velocity;
     }
 
