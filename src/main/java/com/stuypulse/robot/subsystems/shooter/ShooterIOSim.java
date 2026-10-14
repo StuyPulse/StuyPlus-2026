@@ -19,10 +19,10 @@ import edu.wpi.first.wpilibj.simulation.FlywheelSim;
 public class ShooterIOSim extends ShooterIOBase {
     private static final SystemSim<FlywheelSim> shooterSim = SystemSim.of(new FlywheelSim(
         LinearSystemId.createFlywheelSystem(
-            DCMotor.getKrakenX60(3),
+            DCMotor.getKrakenX60Foc(3),
             ShooterConstants.ShooterSettings.J.in(KilogramSquareMeters),
             ShooterConstants.ShooterSettings.GEAR_RATIO),
-        DCMotor.getKrakenX60(3)));
+        DCMotor.getKrakenX60Foc(3)));
     private static TalonFXSimulation getShooterMotor(int id) {
         return new TalonFXSimulation(id, ShooterConstants.ShooterSettings.GEAR_RATIO, shooterSim);
     }
