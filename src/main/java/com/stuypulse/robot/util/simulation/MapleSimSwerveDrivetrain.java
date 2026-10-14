@@ -75,11 +75,11 @@ public class MapleSimSwerveDrivetrain {
          *                             the robot)
          * @param driveMotorModel      the {@link DCMotor} model for the drive motor,
          *                             typically <code>
-         *     DCMotor.getKrakenX60Foc()
+         *     DCMotor.getKrakenX60FocFoc()
          *     </code>
          * @param steerMotorModel      the {@link DCMotor} model for the steer motor,
          *                             typically <code>
-         *     DCMotor.getKrakenX60Foc()
+         *     DCMotor.getKrakenX60FocFoc()
          *     </code>
          * @param wheelCOF             the coefficient of friction of the drive wheels
          * @param moduleLocations      the locations of the swerve modules on the robot,

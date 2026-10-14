@@ -21,12 +21,12 @@
     {
       "type": "waypoint",
       "translation_target": {
-        "x_meters": 2.6,
-        "y_meters": 3.53,
+        "x_meters": 1.90999,
+        "y_meters": 3.97622,
         "intermediate_handoff_radius_meters": 0.45
       },
       "rotation_target": {
-        "rotation_radians": 0.13963,
+        "rotation_radians": 0.0,
         "profiled_rotation": true
       }
     }

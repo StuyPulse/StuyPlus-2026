@@ -51,6 +51,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
+import java.util.function.Supplier;
+
 import org.littletonrobotics.junction.AutoLogOutput;
 import org.littletonrobotics.junction.Logger;
 
@@ -416,12 +418,12 @@ public class Swerve extends SubsystemBase implements VisionConsumer {
     }
 
     public void resetHeading(Rotation2d heading) {
-        poseEstimator.resetPose(new Pose2d(getPose().getTranslation(), heading));
+        poseEstimator.resetRotation(heading);;
     }
 
     /** Resets the current odometry pose. */
     public void resetPose(Pose2d pose) {
-        poseEstimator.resetPosition(rawGyroRotation, getModulePositions(), pose);
+        poseEstimator.resetPose(pose);
     }
 
     /** Adds a new timestamped vision measurement. */
