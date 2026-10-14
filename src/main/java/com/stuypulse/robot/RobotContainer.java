@@ -25,22 +25,19 @@ import com.stuypulse.robot.commands.auton.test.DoNothingAuton;
 import com.stuypulse.robot.commands.compound.StopShooting;
 import com.stuypulse.robot.commands.feeder.FeederScramble;
 import com.stuypulse.robot.commands.feeder.FeederSetForward;
-import com.stuypulse.robot.commands.feeder.FeederSetReverse;
 import com.stuypulse.robot.commands.handoff.HandoffSetForward;
 import com.stuypulse.robot.commands.intake.IntakeAgitateFastOnce;
+import com.stuypulse.robot.commands.intake.IntakeSetDown;
 import com.stuypulse.robot.commands.intake.IntakeSetIdle;
 import com.stuypulse.robot.commands.intake.IntakeSetIntake;
 import com.stuypulse.robot.commands.intake.IntakeSetOuttake;
 import com.stuypulse.robot.commands.leds.LEDDefaultCommand;
-import com.stuypulse.robot.commands.shooter.ShooterAddToBonusVelocity;
 import com.stuypulse.robot.commands.shooter.ShooterFirstShotIncrease;
-import com.stuypulse.robot.commands.shooter.ShooterResetBonusVelocity;
 import com.stuypulse.robot.commands.shooter.ShooterSetFerry;
 import com.stuypulse.robot.commands.shooter.ShooterSetManual;
 import com.stuypulse.robot.commands.shooter.ShooterSetShoot;
 import com.stuypulse.robot.commands.shooter.ShooterWaitForSpinUp;
 import com.stuypulse.robot.commands.swerve.SwerveDriveDrive;
-import com.stuypulse.robot.commands.swerve.SwerveDriveResetRotation;
 import com.stuypulse.robot.commands.swerve.SwerveDriveXMode;
 import com.stuypulse.robot.commands.swerve.SwerveResetPose;
 import com.stuypulse.robot.commands.swerve.driveAligned.SwerveDriveAlignToFerryZone;
@@ -197,9 +194,11 @@ public class RobotContainer {
             );
 
         // Bottom Left Paddle
-        driver.x().whileTrue(new SwerveDriveXMode());
+        driver.x().onTrue(new IntakeSetDown());
+        
+        // driver.x().whileTrue(new SwerveDriveXMode());
 
-        driver.povLeft().whileTrue(new SwerveDriveResetRotation().repeatedly());
+        // driver.povLeft().onTrue(new SwerveDriveResetRotation());
         
         // driver.povUp()
         //     .onTrue(new ShooterAddToBonusVelocity(50));
