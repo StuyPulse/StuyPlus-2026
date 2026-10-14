@@ -46,7 +46,7 @@ public abstract class ShooterIOBase implements ShooterIO {
     @Override
     public void applyOutputs(ShooterIOOutputs outputs) {
         switch (outputs.mode) {
-            case VELOCITY_TORQUE_CURRENT -> shooterMotorRight.setControl(shooterController
+            case VELOCITY -> shooterMotorRight.setControl(shooterController
                                                             .withVelocity(outputs.targetVelocity)
                                                             .withSlot(outputs.gainSlot));
 

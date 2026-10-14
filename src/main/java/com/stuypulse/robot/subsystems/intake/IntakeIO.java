@@ -24,7 +24,7 @@ public interface IntakeIO {
 
     public enum IntakeIOPivotOutputMode {
         STOP,
-        POSITION_TORQUE_CURRENT,
+        POSITION,
         VOLTAGE,
         TORQUE_CURRENT,
     }

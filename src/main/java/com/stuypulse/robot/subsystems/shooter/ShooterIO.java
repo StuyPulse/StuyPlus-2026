@@ -21,7 +21,7 @@ public interface ShooterIO {
 
     public static enum ShooterIOOutputMode {
         STOP,
-        VELOCITY_TORQUE_CURRENT
+        VELOCITY
     }
 
     public static class ShooterIOOutputs {
