@@ -19,10 +19,10 @@ import edu.wpi.first.wpilibj.simulation.DCMotorSim;
 public class FeederIOSim extends FeederIOBase {
     private static final SystemSim<DCMotorSim> sim = SystemSim.of(new DCMotorSim(
             LinearSystemId.createDCMotorSystem(
-                DCMotor.getKrakenX60(2),
+                DCMotor.getKrakenX60Foc(2),
                 FeederConstants.FeederSettings.J.in(KilogramSquareMeters),
                 FeederConstants.FeederSettings.GEAR_RATIO),
-            DCMotor.getKrakenX60(2)));
+            DCMotor.getKrakenX60Foc(2)));
     private static TalonFXSimulation getFeederMotor(int id) {
         final TalonFXSimulation motor = new TalonFXSimulation(id, FeederConstants.FeederSettings.GEAR_RATIO, sim);
         return motor;

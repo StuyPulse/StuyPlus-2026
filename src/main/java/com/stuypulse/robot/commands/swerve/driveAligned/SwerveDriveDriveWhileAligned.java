@@ -5,20 +5,22 @@
 /***************************************************************/
 package com.stuypulse.robot.commands.swerve.driveAligned;
 
+import java.util.function.Supplier;
+
+import org.littletonrobotics.junction.Logger;
+
 import com.stuypulse.robot.constants.Settings.Driver.Drive;
 import com.stuypulse.robot.subsystems.swerve.Swerve;
 import com.stuypulse.robot.subsystems.swerve.SwerveConstants;
 import com.stuypulse.robot.subsystems.swerve.SwerveConstants.SwerveGains;
 import com.stuypulse.robot.util.swerve.swerveinput.DriveInputProcessor;
 
-import dev.doglog.DogLog;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
-import java.util.function.Supplier;
 
 public class SwerveDriveDriveWhileAligned extends Command {
 
@@ -69,8 +71,8 @@ public class SwerveDriveDriveWhileAligned extends Command {
 
         ChassisSpeeds speeds = new ChassisSpeeds(speed.get().getX(), speed.get().getY(), omega);
         swerve.runVelocity(speeds);
-        DogLog.log("Swerve/targetAngle", getTargetAngle().getDegrees());
-        DogLog.log("Swerve/Target Pose X", targetPose.get().getX());
-        DogLog.log("Swerve/Target Pose Y", targetPose.get().getY());
+        Logger.recordOutput("Swerve/targetAngle", getTargetAngle().getDegrees());
+        Logger.recordOutput("Swerve/Target Pose X", targetPose.get().getX());
+        Logger.recordOutput("Swerve/Target Pose Y", targetPose.get().getY());
     }
 }

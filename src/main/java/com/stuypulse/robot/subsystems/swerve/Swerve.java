@@ -13,13 +13,18 @@ import com.pathplanner.lib.config.RobotConfig;
 import com.pathplanner.lib.controllers.PPHolonomicDriveController;
 import com.pathplanner.lib.path.PathPlannerPath;
 import com.pathplanner.lib.util.PathPlannerLogging;
+import com.stuypulse.robot.Robot;
+import com.stuypulse.robot.constants.Field;
 import com.stuypulse.robot.constants.Settings;
 import com.stuypulse.robot.constants.Settings.Mode;
 import com.stuypulse.robot.subsystems.vision.Vision.VisionConsumer;
+import com.stuypulse.robot.util.BlineUtil;
+
 import edu.wpi.first.hal.FRCNetComm.tInstances;
 import edu.wpi.first.hal.FRCNetComm.tResourceType;
 import edu.wpi.first.hal.HAL;
 import edu.wpi.first.math.Matrix;
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -39,8 +44,15 @@ import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
+import frc.robot.lib.BLine.FollowPath;
+import frc.robot.lib.BLine.Path;
+
+import java.util.Arrays;
+import java.util.List;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
+import java.util.function.Supplier;
+
 import org.littletonrobotics.junction.AutoLogOutput;
 import org.littletonrobotics.junction.Logger;
 
@@ -55,23 +67,6 @@ public class Swerve extends SubsystemBase implements VisionConsumer {
             Math.max(
                     Math.hypot(TunerConstants.BackLeft.LocationX, TunerConstants.BackLeft.LocationY),
                     Math.hypot(TunerConstants.BackRight.LocationX, TunerConstants.BackRight.LocationY)));
-
-    // PathPlanner config constants
-    private static final double ROBOT_MASS_KG = 74.088;
-    private static final double ROBOT_MOI = 6.883;
-    private static final double WHEEL_COF = 1.2;
-    private static final RobotConfig PP_CONFIG = new RobotConfig(
-            ROBOT_MASS_KG,
-            ROBOT_MOI,
-            new ModuleConfig(
-                    TunerConstants.FrontLeft.WheelRadius,
-                    TunerConstants.kSpeedAt12Volts.in(MetersPerSecond),
-                    WHEEL_COF,
-                    DCMotor.getKrakenX60Foc(1)
-                            .withReduction(TunerConstants.FrontLeft.DriveMotorGearRatio),
-                    TunerConstants.FrontLeft.SlipCurrent,
-                    1),
-            getModuleTranslations());
 
     static final Lock odometryLock = new ReentrantLock();
     
@@ -113,6 +108,20 @@ public class Swerve extends SubsystemBase implements VisionConsumer {
         return instance;
     }
 
+    private final FollowPath.Builder pathBuilder = new FollowPath.Builder(
+        this,
+        this::getPose,
+        this::getChassisSpeeds,
+        this::runVelocity,
+        new PIDController(12.0, 0.0, 0.0),
+        new PIDController(7.0, 0.0, 0.0),
+        new PIDController(0.5, 0.0, 0.0)
+    ).withDefaultShouldFlip().withTRatioBasedTranslationHandoffs(true);
+
+    public FollowPath.Builder getPathBuilder() {
+        return pathBuilder;
+    }
+
     private final GyroIO gyroIO;
     private final GyroIOInputsAutoLogged gyroInputs = new GyroIOInputsAutoLogged();
     private final Module[] modules = new Module[4]; // FL, FR, BL, BR
@@ -151,24 +160,48 @@ public class Swerve extends SubsystemBase implements VisionConsumer {
         PhoenixOdometryThread.getInstance().start();
 
         // Configure AutoBuilder for PathPlanner
-        AutoBuilder.configure(
-                this::getPose,
-                this::setPose,
-                this::getChassisSpeeds,
-                this::runVelocity,
-                new PPHolonomicDriveController(
-                        new PIDConstants(5.0, 0.0, 0.0), new PIDConstants(5.0, 0.0, 0.0)),
-                PP_CONFIG,
-                () -> DriverStation.getAlliance().orElse(Alliance.Blue) == Alliance.Red,
-                this);
+        try {
+            AutoBuilder.configure(
+                    this::getPose,
+                    this::resetPose,
+                    this::getChassisSpeeds,
+                    this::runVelocity,
+                    new PPHolonomicDriveController(
+                            new PIDConstants(5.0, 0.0, 0.0), new PIDConstants(5.0, 0.0, 0.0)),
+                    RobotConfig.fromGUISettings(),
+                    () -> DriverStation.getAlliance().orElse(Alliance.Blue) == Alliance.Red,
+                    this);
+        } catch (Exception e) {
+            DriverStation.reportError("Failed to configure PathPlanner AutoBuilder: " + e.getMessage(), false);
+        }
         PathPlannerLogging.setLogActivePathCallback(
                 (activePath) -> {
                     Logger.recordOutput("Odometry/Trajectory", activePath.toArray(new Pose2d[0]));
+
+                    if (Robot.isBlue()) {
+                        Field.FIELD2D.getObject("path").setPoses(activePath);
+                    } else {
+                        Field.FIELD2D.getObject("path").setPoses(Field.transformToOppositeAlliance(activePath));
+                    }
                 });
         PathPlannerLogging.setLogTargetPoseCallback(
                 (targetPose) -> {
                     Logger.recordOutput("Odometry/TrajectorySetpoint", targetPose);
                 });
+
+        FollowPath.setDoubleLoggingConsumer(
+            value -> Logger.recordOutput(value.getFirst(), value.getSecond()));
+        FollowPath.setBooleanLoggingConsumer(
+            value -> Logger.recordOutput(value.getFirst(), value.getSecond()));
+        FollowPath.setPoseLoggingConsumer(
+            value -> Logger.recordOutput(value.getFirst(), value.getSecond()));
+        FollowPath.setTranslationListLoggingConsumer(
+            value -> {
+                Logger.recordOutput(value.getFirst(), value.getSecond());
+
+                List<Pose2d> poses = Arrays.stream(value.getSecond()).map(t -> new Pose2d(t, new Rotation2d())).toList();
+                Field.FIELD2D.getObject(value.getFirst()).setPoses(poses);
+            });
 
         // Configure SysId
         sysId = new SysIdRoutine(
@@ -236,6 +269,8 @@ public class Swerve extends SubsystemBase implements VisionConsumer {
 
         // Update gyro alert
         gyroDisconnectedAlert.set(!gyroInputs.connected && Settings.CURRENT_MODE != Mode.SIM);
+
+        Field.FIELD2D.getRobotObject().setPose(getPose());
     }
 
     /**
@@ -245,7 +280,10 @@ public class Swerve extends SubsystemBase implements VisionConsumer {
      */
     public void runVelocity(ChassisSpeeds speeds) {
         if (!Settings.EnabledSubsystems.SWERVE.get()) {
-            stop();
+            for (var module : modules) {
+                module.stop();
+            }
+            
             return;
         }
 
@@ -255,7 +293,9 @@ public class Swerve extends SubsystemBase implements VisionConsumer {
         SwerveDriveKinematics.desaturateWheelSpeeds(setpointStates, TunerConstants.kSpeedAt12Volts);
 
         // Log unoptimized setpoints and setpoint speeds
-        Logger.recordOutput("SwerveStates/Setpoints", setpointStates);
+        if (setpointStates.length > 0) {
+            Logger.recordOutput("SwerveStates/Setpoint", setpointStates[0]);
+        }
         Logger.recordOutput("SwerveChassisSpeeds/Setpoints", discreteSpeeds);
 
         // Send setpoints to modules
@@ -294,8 +334,12 @@ public class Swerve extends SubsystemBase implements VisionConsumer {
         stop();
     }
 
-    public Command followPathCommand(PathPlannerPath path) {
+    public Command followPathPlannerPathCommand(PathPlannerPath path) {
         return AutoBuilder.followPath(path);
+    }
+
+    public FollowPath followBlinePath(Path path) {
+        return pathBuilder.build(path);
     }
 
     /** Returns a command to run a quasistatic test in the specified direction. */
@@ -373,18 +417,13 @@ public class Swerve extends SubsystemBase implements VisionConsumer {
         return getPose().getRotation();
     }
 
-    /** Resets the current odometry pose. */
-    public void resetOdometry(Pose2d pose) {
-        poseEstimator.resetPosition(rawGyroRotation, getModulePositions(), pose);
-    }
-
     public void resetHeading(Rotation2d heading) {
-        poseEstimator.resetRotation(heading);
+        poseEstimator.resetRotation(heading);;
     }
 
     /** Resets the current odometry pose. */
-    public void setPose(Pose2d pose) {
-        poseEstimator.resetPosition(rawGyroRotation, getModulePositions(), pose);
+    public void resetPose(Pose2d pose) {
+        poseEstimator.resetPose(pose);
     }
 
     /** Adds a new timestamped vision measurement. */

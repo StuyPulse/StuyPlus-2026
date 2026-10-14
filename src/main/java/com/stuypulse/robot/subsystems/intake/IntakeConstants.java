@@ -1,14 +1,19 @@
 package com.stuypulse.robot.subsystems.intake;
 
-import static edu.wpi.first.units.Units.*;
+import org.littletonrobotics.junction.networktables.LoggedNetworkNumber;
 
 import com.ctre.phoenix6.signals.GravityTypeValue;
 import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 import com.stuypulse.robot.constants.Motors.TalonFXConfig;
 
-import dev.doglog.DogLog;
-import edu.wpi.first.networktables.DoubleSubscriber;
+import static edu.wpi.first.units.Units.Amps;
+import static edu.wpi.first.units.Units.Degrees;
+import static edu.wpi.first.units.Units.KilogramSquareMeters;
+import static edu.wpi.first.units.Units.Meters;
+import static edu.wpi.first.units.Units.Second;
+import static edu.wpi.first.units.Units.Seconds;
+import static edu.wpi.first.units.Units.Volts;
 import edu.wpi.first.units.VoltageUnit;
 import edu.wpi.first.units.measure.Angle;
 import edu.wpi.first.units.measure.Current;
@@ -42,7 +47,7 @@ public interface IntakeConstants {
 
             Angle PUSHDOWN_THRESHOLD = Degrees.of(-30);
 
-            DoubleSubscriber PUSHDOWN_CURRENT = DogLog.tunable("Intake/Pivot/Pushdown Current Tuning Amps", 13.0);
+            LoggedNetworkNumber PUSHDOWN_CURRENT = new LoggedNetworkNumber("/Tuning/Intake/Pivot/Pushdown Current Tuning Amps", 13.0);
 
             // amps
             Current STALL_CURRENT = Amps.of(25);

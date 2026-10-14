@@ -21,10 +21,10 @@ import edu.wpi.first.wpilibj.simulation.SingleJointedArmSim;
 public class IntakeIOSim extends IntakeIOBase {
     private static final SystemSim<SingleJointedArmSim> pivotSim = SystemSim.of(new SingleJointedArmSim(
             LinearSystemId.createDCMotorSystem(
-                    DCMotor.getKrakenX60(1),
+                    DCMotor.getKrakenX60Foc(1),
                     IntakeConstants.IntakeSettings.Pivot.MOI.in(KilogramSquareMeters),
                     IntakeConstants.IntakeSettings.Pivot.GEAR_RATIO),
-            DCMotor.getKrakenX60(1),
+            DCMotor.getKrakenX60Foc(1),
             IntakeConstants.IntakeSettings.Pivot.GEAR_RATIO,
             IntakeConstants.IntakeSettings.Pivot.PIVOT_ARM_LENGTH.in(Meters),
             IntakeConstants.IntakeSettings.Pivot.MAX_ANGLE.in(Radians),
@@ -38,10 +38,10 @@ public class IntakeIOSim extends IntakeIOBase {
     
     private static final SystemSim<DCMotorSim> rollerSim = SystemSim.of(new DCMotorSim(
         LinearSystemId.createDCMotorSystem(
-            DCMotor.getKrakenX60(2),
+            DCMotor.getKrakenX60Foc(2),
             IntakeConstants.IntakeSettings.Roller.J.in(KilogramSquareMeters),
             IntakeConstants.IntakeSettings.Roller.GEAR_RATIO),
-        DCMotor.getKrakenX60(2)));
+        DCMotor.getKrakenX60Foc(2)));
     private static TalonFXSimulation getRollerMotor(int id) {
         final TalonFXSimulation rollerMotor = new TalonFXSimulation(id, IntakeConstants.IntakeSettings.Roller.GEAR_RATIO, rollerSim);
         return rollerMotor;

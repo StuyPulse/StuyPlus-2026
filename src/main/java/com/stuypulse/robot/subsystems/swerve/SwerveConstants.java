@@ -19,15 +19,14 @@ public interface SwerveConstants {
 
         public interface Constraints {
 
-            double MAX_VELOCITY_M_PER_S = 4.3;
+            double MAX_VELOCITY_M_PER_S = 20;
 
             // TODO: revert to 15.0
-            double MAX_ACCEL_M_PER_S_SQUARED = 20.0;
+            double MAX_ACCEL_M_PER_S_SQUARED = 200;
 
-            double MAX_ANGULAR_VEL_RAD_PER_S = Units.degreesToRadians(400.0);
+            double MAX_ANGULAR_VEL_RAD_PER_S = Units.degreesToRadians(1000.0);
 
-            // TODO: revert to 900
-            double MAX_ANGULAR_ACCEL_RAD_PER_S = Units.degreesToRadians(300.0);
+            double MAX_ANGULAR_ACCEL_RAD_PER_S = Units.degreesToRadians(900.0);
 
             PathConstraints DEFAULT_CONSTRAINTS = new PathConstraints(MAX_VELOCITY_M_PER_S, MAX_ACCEL_M_PER_S_SQUARED,
                     MAX_ANGULAR_VEL_RAD_PER_S, MAX_ANGULAR_ACCEL_RAD_PER_S);
@@ -52,7 +51,7 @@ public interface SwerveConstants {
 
                 Distance Y_TOLERANCE = Inches.of(2.0);
 
-                Rotation2d THETA_TOLERANCE = Rotation2d.fromDegrees(8);
+                Rotation2d THETA_TOLERANCE = Rotation2d.fromDegrees(5);
 
                 Pose2d POSE_TOLERANCE = new Pose2d(X_TOLERANCE.in(Meters), Y_TOLERANCE.in(Meters), THETA_TOLERANCE);
 
@@ -103,7 +102,7 @@ public interface SwerveConstants {
         }
 
         public interface Alignment {
-            double akP = 8.8624;
+            double akP = 14;
 
             double akI = 0.0;
 

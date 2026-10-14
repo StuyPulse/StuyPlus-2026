@@ -6,6 +6,7 @@
 package com.stuypulse.robot.subsystems.vision;
 
 import edu.wpi.first.wpilibj.Alert;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -14,6 +15,7 @@ import edu.wpi.first.math.VecBuilder;
 import edu.wpi.first.math.numbers.N1;
 import edu.wpi.first.math.numbers.N3;
 
+import com.stuypulse.robot.commands.vision.SetPipeline;
 import com.stuypulse.robot.constants.Field;
 import com.stuypulse.robot.constants.Settings;
 import com.stuypulse.robot.constants.Settings.EnabledSubsystems;
@@ -26,6 +28,7 @@ import com.stuypulse.robot.subsystems.vision.VisionConstants.VisionSettings;
 import com.stuypulse.robot.subsystems.vision.VisionIO.MegaTagMode;
 import com.stuypulse.robot.subsystems.vision.VisionIO.PoseObservationType;
 import com.stuypulse.robot.subsystems.vision.VisionIO.VisionIOOutputs;
+import com.stuypulse.robot.util.FullSubsystem;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -35,7 +38,7 @@ import java.util.List;
 import java.util.Map.Entry;
 import org.littletonrobotics.junction.Logger;
 
-public class Vision extends SubsystemBase {
+public class Vision extends FullSubsystem {
     private static final Vision instance;
 
     static {
@@ -73,6 +76,9 @@ public class Vision extends SubsystemBase {
         }
 
         instance = new Vision(swerve::accept, cameraIOMap);
+
+        SmartDashboard.putData("Vision/setLowSunPipeline", new SetPipeline(0));
+        SmartDashboard.putData("Vision/setHighSunPipeline", new SetPipeline(1));
     }
 
     public static Vision getInstance() {
@@ -126,11 +132,12 @@ public class Vision extends SubsystemBase {
     }
 
     public void enable() {
-        EnabledSubsystems.VISION.getTopic().publish().set(true);
+        EnabledSubsystems.VISION.set(true);
     }
 
     public void disable() {
-        EnabledSubsystems.VISION.getTopic().publish().set(false);
+        EnabledSubsystems.VISION.set(false);
+        
     }
 
     public void setMegaTagMode(MegaTagMode mode) {
@@ -267,6 +274,7 @@ public class Vision extends SubsystemBase {
                 allRobotPosesRejected.toArray(new Pose3d[allRobotPosesRejected.size()]));
     }
 
+    @Override
     public void periodicAfterScheduler() {
         for (Entry<Cameras, VisionIO> entry : io.entrySet()) {
             VisionIO currentIO = entry.getValue();
@@ -277,6 +285,8 @@ public class Vision extends SubsystemBase {
             Logger.recordOutput("Vision/" + entry.getKey().name() + "/Pipeline", currentOutputs.pipeline);
             currentIO.applyOutputs(currentOutputs);
         }
+
+        Logger.recordOutput("Vision/Pipeline", outputs.values().iterator().next().pipeline);
     }
 
     @FunctionalInterface

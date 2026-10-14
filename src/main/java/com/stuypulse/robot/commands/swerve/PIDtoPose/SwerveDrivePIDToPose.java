@@ -5,7 +5,10 @@
 /***************************************************************/
 package com.stuypulse.robot.commands.swerve.PIDtoPose;
 
-import static edu.wpi.first.units.Units.*;
+import java.util.function.BooleanSupplier;
+import java.util.function.Supplier;
+
+import org.littletonrobotics.junction.Logger;
 
 import com.stuypulse.robot.Robot;
 import com.stuypulse.robot.constants.Field;
@@ -19,18 +22,16 @@ import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.filter.Debouncer;
 import edu.wpi.first.math.filter.Debouncer.DebounceType;
 import edu.wpi.first.math.filter.LinearFilter;
-
-import dev.doglog.DogLog;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
+import static edu.wpi.first.units.Units.Meters;
+import static edu.wpi.first.units.Units.MetersPerSecond;
+import static edu.wpi.first.units.Units.Seconds;
 import edu.wpi.first.wpilibj.smartdashboard.FieldObject2d;
 import edu.wpi.first.wpilibj2.command.Command;
-
-import java.util.function.BooleanSupplier;
-import java.util.function.Supplier;
 
 public class SwerveDrivePIDToPose extends Command {
 
@@ -180,22 +181,22 @@ public class SwerveDrivePIDToPose extends Command {
             0,
             targetPose.get().getRotation());
         swerve.runVelocity(output);
-        DogLog.log("Alignment/Target x", targetPose.get().getX());
-        DogLog.log("Alignment/Target y", targetPose.get().getY());
-        DogLog.log("Alignment/Target Angle", targetPose.get().getRotation().getDegrees());
-        DogLog.log(
+        Logger.recordOutput("Alignment/Target x", targetPose.get().getX());
+        Logger.recordOutput("Alignment/Target y", targetPose.get().getY());
+        Logger.recordOutput("Alignment/Target Angle", targetPose.get().getRotation().getDegrees());
+        Logger.recordOutput(
                 "SwerveConstants.SwerveGains.Alignment/Target Velocity Robot Relative X (m/s)",
                 output.vxMetersPerSecond);
-        DogLog.log(
+        Logger.recordOutput(
                 "SwerveConstants.SwerveGains.Alignment/Target Velocity Robot Relative Y (m/s)",
                 output.vyMetersPerSecond);
-        DogLog.log(
+        Logger.recordOutput(
                 "SwerveConstants.SwerveGains.Alignment/Target Angular Velocity (rad/s)",
                 output.omegaRadiansPerSecond);
-        DogLog.log("SwerveConstants.SwerveGains.Alignment/Is Aligned", this.isAligned.getAsBoolean());
-        DogLog.log("SwerveConstants.SwerveGains.Alignment/Is Aligned X", isAlignedX());
-        DogLog.log("SwerveConstants.SwerveGains.Alignment/Is Aligned Y", isAlignedY());
-        DogLog.log("SwerveConstants.SwerveGains.Alignment/Is Aligned Theta", isAlignedTheta());
+        Logger.recordOutput("SwerveConstants.SwerveGains.Alignment/Is Aligned", this.isAligned.getAsBoolean());
+        Logger.recordOutput("SwerveConstants.SwerveGains.Alignment/Is Aligned X", isAlignedX());
+        Logger.recordOutput("SwerveConstants.SwerveGains.Alignment/Is Aligned Y", isAlignedY());
+        Logger.recordOutput("SwerveConstants.SwerveGains.Alignment/Is Aligned Theta", isAlignedTheta());
     }
 
     @Override

@@ -5,20 +5,21 @@
 /***************************************************************/
 package com.stuypulse.robot.commands.swerve;
 
+import org.littletonrobotics.junction.Logger;
+
+import com.stuypulse.robot.Robot;
 import com.stuypulse.robot.constants.Settings.Driver.Drive;
+import com.stuypulse.robot.subsystems.swerve.Swerve;
 import com.stuypulse.robot.subsystems.swerve.SwerveConstants.SwerveGains;
 import com.stuypulse.robot.subsystems.swerve.SwerveConstants.SwerveSettings;
-import com.stuypulse.robot.subsystems.swerve.Swerve;
 import com.stuypulse.robot.util.swerve.swerveinput.DriveInputProcessor;
 
-import dev.doglog.DogLog;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
-import com.stuypulse.robot.Robot;
 
 public class SwerveDriveRotate extends Command {
 
@@ -71,14 +72,14 @@ public class SwerveDriveRotate extends Command {
 
         boolean isFlipped = !Robot.isBlue();
         swerve.runVelocity(
-                ChassisSpeeds.fromRobotRelativeSpeeds(speeds,
+                ChassisSpeeds.fromFieldRelativeSpeeds(speeds,
                         isFlipped
                                 ? swerve.getRotation().plus(new Rotation2d(Math.PI))
                                 : swerve.getRotation()));
 
-        DogLog.log(
+        Logger.recordOutput(
                 "Swerve/Angle Minus Target Angle",
                 swerve.getPose().getRotation().minus(rotation).getDegrees());
-        DogLog.log("Swerve/Facing Angle", swerve.getPose().getRotation().getDegrees());
+        Logger.recordOutput("Swerve/Facing Angle", swerve.getPose().getRotation().getDegrees());
     }
 }

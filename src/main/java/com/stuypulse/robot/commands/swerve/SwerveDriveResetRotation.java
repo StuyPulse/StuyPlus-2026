@@ -5,6 +5,7 @@
 /***************************************************************/
 package com.stuypulse.robot.commands.swerve;
 
+import com.stuypulse.robot.Robot;
 import com.stuypulse.robot.subsystems.swerve.Swerve;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
@@ -12,6 +13,6 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 public class SwerveDriveResetRotation extends InstantCommand {
 
     public SwerveDriveResetRotation() {
-        super(() -> Swerve.getInstance().resetHeading(Rotation2d.kZero));
+        super(() -> Swerve.getInstance().resetHeading(Robot.isBlue() ? Rotation2d.kZero : Rotation2d.k180deg));
     }
 }

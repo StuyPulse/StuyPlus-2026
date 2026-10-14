@@ -5,6 +5,8 @@
 /***************************************************************/
 package com.stuypulse.robot.commands.swerve;
 
+import org.littletonrobotics.junction.Logger;
+
 import com.stuypulse.robot.Robot;
 import com.stuypulse.robot.RobotContainer;
 import com.stuypulse.robot.constants.Settings.Driver.Drive;
@@ -54,11 +56,19 @@ public class SwerveDriveDrive extends Command {
         turn.update();
 
         ChassisSpeeds speeds = new ChassisSpeeds(speed.get().getX(), speed.get().getY(), -turn.get());
+
         boolean isFlipped = !Robot.isBlue();
-        swerve.runVelocity(
-                ChassisSpeeds.fromRobotRelativeSpeeds(speeds,
+
+        ChassisSpeeds robotRelative = ChassisSpeeds.fromFieldRelativeSpeeds(speeds,
                         isFlipped
                                 ? swerve.getRotation().plus(new Rotation2d(Math.PI))
-                                : swerve.getRotation()));
+                                : swerve.getRotation());
+
+        Logger.recordOutput("Drive/ChassisSpeeds/FromDriveInputProcessor", robotRelative);
+        swerve.runVelocity(robotRelative);
+
+        
+
+        
     }
 }
