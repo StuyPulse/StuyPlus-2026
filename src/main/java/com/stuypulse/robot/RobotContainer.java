@@ -53,6 +53,7 @@ import com.stuypulse.robot.subsystems.intake.Intake;
 import com.stuypulse.robot.subsystems.leds.LEDController;
 import com.stuypulse.robot.subsystems.shooter.Shooter;
 import com.stuypulse.robot.subsystems.swerve.Swerve;
+import com.stuypulse.robot.subsystems.swerve.SwerveConstants;
 import com.stuypulse.robot.subsystems.vision.Vision;
 import com.stuypulse.robot.util.BlineUtil.BLineConfig;
 
@@ -164,8 +165,7 @@ public class RobotContainer {
         // Manual shooting possibly from in front of the tower
         driver.a()
             .whileTrue(
-                new SwerveResetPose(Field::getManualShotPose)
-                .andThen(new SwerveDriveXMode())
+                new SwerveDriveXMode()
                     .andThen(new ShooterSetManual())
                     .andThen(new ShooterWaitForSpinUp().withDeadline(new FeederScramble()))
                     .andThen(new HandoffSetForward()
@@ -173,6 +173,8 @@ public class RobotContainer {
                             new FeederSetForward(),
                             new IntakeAgitateFastOnce().repeatedly(),
                             new ShooterFirstShotIncrease())));
+        driver.a()
+            .whileTrue(new SwerveResetPose(Field::getManualShotPose).repeatedly());
         driver.a()
             .onFalse(
                 new StopShooting()
@@ -197,7 +199,7 @@ public class RobotContainer {
         // Bottom Left Paddle
         driver.x().whileTrue(new SwerveDriveXMode());
 
-        driver.povLeft().onTrue(new SwerveDriveResetRotation());
+        driver.povLeft().whileTrue(new SwerveDriveResetRotation().repeatedly());
         
         // driver.povUp()
         //     .onTrue(new ShooterAddToBonusVelocity(50));
