@@ -26,6 +26,8 @@ public class TunerConstants {
         .withStaticFeedforwardSign(StaticFeedforwardSignValue.UseClosedLoopSign);
     // When using closed-loop control, the drive motor uses the control
     // output type specified by SwerveModuleConstants.DriveMotorClosedLoopOutput
+
+    // Multiply old gains by the drive gear ratio
     private static final Slot0Configs driveGains = new Slot0Configs()
         .withKP(0.16885 * 6.48).withKI(0).withKD(0)
         .withKS(0.29079).withKV(0.12244 * 6.48).withKA(0.0033252 * 6.48);
