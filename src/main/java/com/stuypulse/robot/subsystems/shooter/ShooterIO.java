@@ -20,8 +20,8 @@ public interface ShooterIO {
     public default void updateInputs(ShooterIOInputs inputs) {};
 
     public static enum ShooterIOOutputMode {
-        VELOCITY,
-        STOP
+        STOP,
+        VELOCITY
     }
 
     public static class ShooterIOOutputs {
