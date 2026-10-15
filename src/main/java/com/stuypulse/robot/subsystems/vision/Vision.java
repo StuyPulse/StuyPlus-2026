@@ -159,7 +159,7 @@ public class Vision extends SubsystemBase {
     }
 
     public int getPipeline() {
-        return outputs.values().iterator().next().pipeline;
+        return inputs.values().iterator().next().pipeline;
     }
 
     @Override
@@ -179,7 +179,6 @@ public class Vision extends SubsystemBase {
         }
 
         if (VisionSettings.HDR_ENABLED.get()) {
-            hdrTimer.start();
             if (hdrTimer.hasElapsed(VisionSettings.HDR_TIMEOUT)) {
                 int currentPipeline = getPipeline();
                 if (currentPipeline == Pipelines.LOW_SUN.getIndex()) {
@@ -187,7 +186,7 @@ public class Vision extends SubsystemBase {
                 } else {
                     setPipeline(Pipelines.LOW_SUN.getIndex());
                 }
-                hdrTimer.reset();
+                hdrTimer.restart();
             }
         } else {
             hdrTimer.stop();
