@@ -12,6 +12,7 @@ import com.stuypulse.robot.commands.vision.SetMegaTagMode;
 import com.stuypulse.robot.commands.vision.SetVisionEnabled;
 import com.stuypulse.robot.commands.vision.WhitelistAllTags;
 import com.stuypulse.robot.constants.Field;
+import com.stuypulse.robot.constants.Settings;
 import com.stuypulse.robot.subsystems.swerve.CommandSwerveDrivetrain;
 import com.stuypulse.robot.subsystems.vision.LimelightVision;
 import com.stuypulse.robot.subsystems.vision.LimelightVision.MegaTagMode;
@@ -173,6 +174,11 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void autonomousPeriodic() {
+        Settings.EnabledSubsystems.FEEDER.getTopic().publish().accept(true);
+        Settings.EnabledSubsystems.SHOOTER.getTopic().publish().accept(true);
+        Settings.EnabledSubsystems.SWERVE.getTopic().publish().accept(true);
+        Settings.EnabledSubsystems.INTAKE.getTopic().publish().accept(true);
+        Settings.EnabledSubsystems.FEEDER.getTopic().publish().accept(true);
     }
 
     /**
