@@ -18,8 +18,8 @@ public interface HandoffIO {
     public default void updateInputs(HandoffIOInputs inputs) {};
 
     public static enum HandoffIOOutputMode {
-        VOLTAGE,
-        STOP
+        STOP,
+        VOLTAGE
     }
 
     public static class HandoffIOOutputs {

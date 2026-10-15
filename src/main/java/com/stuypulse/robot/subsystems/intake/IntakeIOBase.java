@@ -73,8 +73,8 @@ public abstract class IntakeIOBase implements IntakeIO {
         switch (outputs.pivot.outputMode) {
             case STOP -> pivotMotor.stopMotor();
             case POSITION -> pivotMotor.setControl(positionController.withPosition(outputs.pivot.position).withSlot(outputs.pivot.positionGainsSlot));
-            case PUSHDOWN -> pivotMotor.setControl(pushdownController.withOutput(outputs.pivot.pushdown));
-            case HOMING -> pivotMotor.setControl(homingController.withOutput(outputs.pivot.homing));
+            case VOLTAGE -> pivotMotor.setControl(pushdownController.withOutput(outputs.pivot.pushdown));
+            case TORQUE_CURRENT -> pivotMotor.setControl(homingController.withOutput(outputs.pivot.homing));
         }
 
         switch (outputs.roller.outputMode) {
