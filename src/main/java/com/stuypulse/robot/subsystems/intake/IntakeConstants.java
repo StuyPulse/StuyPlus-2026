@@ -10,7 +10,9 @@ import com.stuypulse.robot.constants.Motors.TalonFXConfig;
 import static edu.wpi.first.units.Units.Amps;
 import static edu.wpi.first.units.Units.Degrees;
 import static edu.wpi.first.units.Units.KilogramSquareMeters;
+import static edu.wpi.first.units.Units.Kilograms;
 import static edu.wpi.first.units.Units.Meters;
+import static edu.wpi.first.units.Units.Pounds;
 import static edu.wpi.first.units.Units.Second;
 import static edu.wpi.first.units.Units.Seconds;
 import static edu.wpi.first.units.Units.Volts;
@@ -22,6 +24,7 @@ import edu.wpi.first.units.VoltageUnit;
 import edu.wpi.first.units.measure.Angle;
 import edu.wpi.first.units.measure.Current;
 import edu.wpi.first.units.measure.Distance;
+import edu.wpi.first.units.measure.Mass;
 import edu.wpi.first.units.measure.MomentOfInertia;
 import edu.wpi.first.units.measure.Time;
 import edu.wpi.first.units.measure.Velocity;
@@ -75,8 +78,9 @@ public interface IntakeConstants {
 
             Distance PIVOT_ARM_LENGTH = Meters.of(0.1439822);
 
+            Mass PIVOT_ARM_MASS = Pounds.of(15); // very rough estimate
             // mass in kg
-            MomentOfInertia MOI = KilogramSquareMeters.of(SingleJointedArmSim.estimateMOI(PIVOT_ARM_LENGTH.in(Meters), 1));
+            MomentOfInertia MOI = KilogramSquareMeters.of(SingleJointedArmSim.estimateMOI(PIVOT_ARM_LENGTH.in(Meters), PIVOT_ARM_MASS.in(Kilograms)));
         }
 
         public interface Roller {

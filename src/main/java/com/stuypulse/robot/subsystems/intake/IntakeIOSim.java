@@ -9,28 +9,15 @@ import com.stuypulse.robot.constants.Settings;
 import com.stuypulse.robot.util.simulation.TalonFXSimulation.SystemSim;
 import com.stuypulse.robot.util.simulation.TalonFXSimulation.TalonFXSimulation;
 
-import edu.wpi.first.math.geometry.Pose3d;
-import edu.wpi.first.math.geometry.Rotation3d;
-import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.math.system.plant.LinearSystemId;
-import edu.wpi.first.units.measure.Angle;
 
 import static edu.wpi.first.units.Units.KilogramSquareMeters;
 import static edu.wpi.first.units.Units.Meters;
 import static edu.wpi.first.units.Units.Radians;
 
-import org.littletonrobotics.junction.Logger;
-import org.littletonrobotics.junction.mechanism.LoggedMechanism2d;
-import org.littletonrobotics.junction.mechanism.LoggedMechanismLigament2d;
-import org.littletonrobotics.junction.mechanism.LoggedMechanismRoot2d;
-
 import edu.wpi.first.wpilibj.simulation.DCMotorSim;
 import edu.wpi.first.wpilibj.simulation.SingleJointedArmSim;
-import edu.wpi.first.wpilibj.util.Color8Bit;
-
-import com.stuypulse.robot.subsystems.intake.IntakeConstants.IntakeSettings;
-import com.stuypulse.robot.subsystems.intake.IntakeConstants.IntakeSimulationSettings;
 
 public class IntakeIOSim extends IntakeIOBase {
     private static final SystemSim<SingleJointedArmSim> pivotSim = SystemSim.of(new SingleJointedArmSim(
@@ -67,12 +54,6 @@ public class IntakeIOSim extends IntakeIOBase {
 
     private final TalonFXSimulation rollerMotorRight;
 
-    private final LoggedMechanism2d intakeMechanism;
-    private final LoggedMechanismRoot2d intakePivot;
-    private final LoggedMechanismLigament2d intakeArm;
-
-    private boolean hopperExpanded = false;
-
     public IntakeIOSim() {
         this(getPivotMotor(IntakeConstants.IntakeDeviceIds.INTAKE_PIVOT_MOTOR), 
             getRollerMotor(IntakeConstants.IntakeDeviceIds.INTAKE_ROLLER_MOTOR_LEFT), 
@@ -86,67 +67,6 @@ public class IntakeIOSim extends IntakeIOBase {
         this.rollerMotorRight = rollerMotorRight;
 
         rollerMotorLeft.linkToReference(rollerMotorRight);
-
-        this.intakeMechanism = new LoggedMechanism2d(1.0, 1.0, new Color8Bit(36, 36, 36));
-        this.intakePivot = intakeMechanism.getRoot("Intake Pivot", 0.5, 0.3);
-        this.intakeArm = intakePivot.append(
-            new LoggedMechanismLigament2d(
-                "Intake Arm", 
-                IntakeSettings.Pivot.PIVOT_ARM_LENGTH, 
-                IntakeSettings.Pivot.INITIAL_ANGLE, 
-                6.0, 
-                new Color8Bit(0, 180, 255)
-            )
-        );
-    }
-
-    private void updateMechanism(IntakeIOInputs inputs) {
-        Angle pivotAngle = inputs.pivotMotorInputs.position;
-        intakeArm.setAngle(pivotAngle);
-        Logger.recordOutput("Intake/Mechanism", intakeMechanism);
-        
-        Pose3d intakePose = new Pose3d(
-            IntakeSimulationSettings.PIVOT_OFFSET.getTranslation(),
-            IntakeSimulationSettings.PIVOT_OFFSET.getRotation().plus(
-                new Rotation3d(
-                    0,
-                    pivotAngle.in(Radians),
-                    0
-                )
-            )
-        );
-        Logger.recordOutput("Intake/MechanismPose", intakePose);
-
-        double armEndX = IntakeSimulationSettings.PIVOT_END_X
-            + IntakeSettings.Pivot.PIVOT_ARM_LENGTH.in(Meters)
-                * Math.sin(pivotAngle.in(Radians));
-
-        Transform3d hopperOffset = IntakeSimulationSettings.HOPPER_OFFSET;
-
-        double hopperX;
-        if (hopperExpanded) {
-            hopperX = IntakeSimulationSettings.EXPANDED_HOPPER_X;
-        } else {
-            hopperX = Math.max(
-                IntakeSimulationSettings.MIN_HOPPER_X,
-                armEndX + hopperOffset.getX()
-            );
-        }
-
-        Pose3d hopperPose = new Pose3d(
-            hopperX,
-            hopperOffset.getY(),
-            hopperOffset.getZ(),
-            hopperOffset.getRotation()
-        );
-
-        Logger.recordOutput("Hopper/MechanismPose", hopperPose);
-
-        if (!hopperExpanded) {
-            if (Math.abs(hopperX - IntakeSimulationSettings.EXPANDED_HOPPER_X) <= IntakeSimulationSettings.EXPANDED_TOLERANCE) {
-                hopperExpanded = true;
-            }
-        }
     }
 
     @Override
@@ -157,7 +77,5 @@ public class IntakeIOSim extends IntakeIOBase {
         rollerMotorLeft.refresh();
         rollerMotorRight.refresh();
         super.updateInputs(inputs);
-
-        updateMechanism(inputs);
     }
 }
