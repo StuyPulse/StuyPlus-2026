@@ -85,13 +85,15 @@ public interface VisionConstants {
         }
     }
 
-    public enum Pipelines {
-        LOW_SUN(0),
-        HIGH_SUN(1);
+    public enum Pipeline {
+        NO_SUN(3),
+        LOW_SUN(2),
+        MED_SUN(1),
+        HIGH_SUN(0);
 
         private final int index;
 
-        private Pipelines(int index) {
+        private Pipeline(int index) {
             this.index = index;
         }
 

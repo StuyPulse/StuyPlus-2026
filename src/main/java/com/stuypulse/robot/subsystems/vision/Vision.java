@@ -25,7 +25,7 @@ import com.stuypulse.robot.constants.Settings.VisionMode;
 import com.stuypulse.robot.subsystems.swerve.Swerve;
 import com.stuypulse.robot.subsystems.vision.VisionConstants.CameraData;
 import com.stuypulse.robot.subsystems.vision.VisionConstants.Cameras;
-import com.stuypulse.robot.subsystems.vision.VisionConstants.Pipelines;
+import com.stuypulse.robot.subsystems.vision.VisionConstants.Pipeline;
 import com.stuypulse.robot.subsystems.vision.VisionConstants.VisionSettings;
 import com.stuypulse.robot.subsystems.vision.VisionIO.MegaTagMode;
 import com.stuypulse.robot.subsystems.vision.VisionIO.PoseObservationType;
@@ -80,8 +80,8 @@ public class Vision extends SubsystemBase {
 
         instance = new Vision(swerve::accept, cameraIOMap);
 
-        SmartDashboard.putData("Vision/setLowSunPipeline", new SetPipeline(Pipelines.LOW_SUN.getIndex()));
-        SmartDashboard.putData("Vision/setHighSunPipeline", new SetPipeline(Pipelines.HIGH_SUN.getIndex()));
+        SmartDashboard.putData("Vision/setLowSunPipeline", new SetPipeline(Pipeline.LOW_SUN.getIndex()));
+        SmartDashboard.putData("Vision/setHighSunPipeline", new SetPipeline(Pipeline.HIGH_SUN.getIndex()));
     }
 
     public static Vision getInstance() {
@@ -181,10 +181,10 @@ public class Vision extends SubsystemBase {
         if (VisionSettings.HDR_ENABLED.get()) {
             if (hdrTimer.hasElapsed(VisionSettings.HDR_TIMEOUT)) {
                 int currentPipeline = getPipeline();
-                if (currentPipeline == Pipelines.LOW_SUN.getIndex()) {
-                    setPipeline(Pipelines.HIGH_SUN.getIndex());
+                if (currentPipeline == Pipeline.LOW_SUN.getIndex()) {
+                    setPipeline(Pipeline.HIGH_SUN.getIndex());
                 } else {
-                    setPipeline(Pipelines.LOW_SUN.getIndex());
+                    setPipeline(Pipeline.LOW_SUN.getIndex());
                 }
                 hdrTimer.restart();
             }
