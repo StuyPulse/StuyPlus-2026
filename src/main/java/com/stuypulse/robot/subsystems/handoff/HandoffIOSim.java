@@ -17,10 +17,10 @@ import edu.wpi.first.wpilibj.simulation.DCMotorSim;
 public class HandoffIOSim extends HandoffIOBase {
     private static final SystemSim<DCMotorSim> sim = SystemSim.of(new DCMotorSim(
                 LinearSystemId.createDCMotorSystem(
-                        DCMotor.getKrakenX60(1),
+                        DCMotor.getKrakenX60Foc(1),
                         HandoffConstants.HandoffSettings.J_KG_METERS_SQUARED,
                         HandoffConstants.HandoffSettings.GEAR_RATIO),
-                DCMotor.getKrakenX60(1)));
+                DCMotor.getKrakenX60Foc(1)));
     private static TalonFXSimulation getHandoffMotor(int id) {
         final TalonFXSimulation motor = new TalonFXSimulation(id, HandoffConstants.HandoffSettings.GEAR_RATIO, sim);
         return motor;

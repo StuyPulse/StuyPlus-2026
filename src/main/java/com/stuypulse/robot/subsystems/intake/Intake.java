@@ -171,13 +171,13 @@ public class Intake extends FullSubsystem {
         return pivotStalling.getAsBoolean();
     }
 
-    @AutoLogOutput(key = "Intake/Pivot/atTargetAngle")
+    @AutoLogOutput(key = "Intake/Pivot/At Target Angle")
     public boolean atTargetAngle() {
         return inputs.pivotMotorInputs.position.minus(getState().getTargetAngle())
                 .abs(Rotations) < IntakeConstants.IntakeSettings.Pivot.ANGLE_TOLERANCE.in(Rotations);
     }
 
-    @AutoLogOutput(key = "Intake/Pivot/aboveThreshold")
+    @AutoLogOutput(key = "Intake/Pivot/Past Pushdown Threshold")
     public boolean isPivotAboveThreshold() {
         return inputs.pivotMotorInputs.position.gt(IntakeConstants.IntakeSettings.Pivot.PUSHDOWN_THRESHOLD);
     }
@@ -189,12 +189,12 @@ public class Intake extends FullSubsystem {
     }
 
     private void runPivotPushdown(Current current) {
-        outputs.pivot.outputMode = IntakeIOPivotOutputMode.PUSHDOWN;
+        outputs.pivot.outputMode = IntakeIOPivotOutputMode.VOLTAGE;
         outputs.pivot.pushdown = current;
     }
     
     private void runPivotHoming(Voltage voltage) {
-        outputs.pivot.outputMode = IntakeIOPivotOutputMode.HOMING;
+        outputs.pivot.outputMode = IntakeIOPivotOutputMode.TORQUE_CURRENT;
         outputs.pivot.homing = voltage; 
     }
 

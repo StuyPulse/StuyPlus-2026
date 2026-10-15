@@ -5,7 +5,6 @@
 /***************************************************************/
 package com.stuypulse.robot.constants;
 
-import com.pathplanner.lib.util.FlippingUtil;
 import com.stuypulse.robot.Robot;
 import com.stuypulse.robot.subsystems.swerve.Swerve;
 import com.stuypulse.robot.util.vision.AprilTag;
@@ -21,7 +20,13 @@ import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.FieldObject2d;
+import frc.robot.lib.BLine.FlippingUtil;
+
+import static edu.wpi.first.units.Units.Inches;
+import static edu.wpi.first.units.Units.Meters;
+
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /** This interface stores information about the field elements. */
@@ -41,6 +46,13 @@ public interface Field {
 
         public static Pose2d getHubPose() {
                 return Robot.isBlue() ? hubCenter : transformToOppositeAlliance(hubCenter);
+        }
+
+        //TODO: Get exact measurement
+        public static Pose2d manualShotPose = new Pose2d(Inches.of(43.51 + 16.55), Meters.of(WIDTH / 2), new Rotation2d());
+
+        public static Pose2d getManualShotPose() {
+                return Robot.isBlue() ? manualShotPose : transformToOppositeAlliance(manualShotPose);
         }
 
         // 1.0 meters from driverstation wall and field wall
@@ -560,6 +572,10 @@ public interface Field {
                         newPoses.add(transformToOppositeAlliance(pose));
                 }
                 return newPoses;
+        }
+
+        public static Pose2d[] transformToOppositeAlliance(Pose2d[] poses) {
+                return Arrays.stream(poses).map(Field::transformToOppositeAlliance).toArray(Pose2d[]::new);
         }
 
         /** * EMPTY FIELD POSES *** */

@@ -52,7 +52,7 @@ public interface VisionIO {
         public MegaTagMode megaTagMode = MegaTagMode.MEGATAG_1;
 
         @AutoLogOutput(key = "Vision/Summary/Pipeline")
-        public int pipeline = 0;
+        public int pipeline = 2;
 
         @AutoLogOutput(key = "Vision/Summary/TagWhitelist")
         public int[] aprilTagIDWhitelist = Field.ALL_TAGS;
