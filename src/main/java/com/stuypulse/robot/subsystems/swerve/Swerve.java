@@ -207,7 +207,7 @@ public class Swerve extends SubsystemBase implements VisionConsumer {
         sysId = new SysIdRoutine(
                 new SysIdRoutine.Config(
                         null,
-                        null,
+                        Volts.of(4),
                         null,
                         (state) -> Logger.recordOutput("Drive/SysIdState", state.toString())),
                 new SysIdRoutine.Mechanism(
