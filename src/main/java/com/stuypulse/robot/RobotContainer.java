@@ -60,6 +60,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
 
 /**
  * <h2>Robot Container Class</h2>
@@ -101,6 +102,9 @@ public class RobotContainer {
         configureButtonBindings();
         configureAutons();
         SmartDashboard.putData("Field", Field.FIELD2D);
+
+        // COMMENT OUT BEFORE MATCHES
+        configureSysID();
     }
 
     /** ************ */
@@ -336,6 +340,17 @@ public class RobotContainer {
         // autonChooser.addOption("SysID Rotation Translation Quasi Backwards",
         // swerve.sysidRotationQuasiStatic(Direction.kReverse));
         SmartDashboard.putData("Autonomous", autonChooser);
+    }
+    
+    public void configureSysID() {
+        autonChooser.addOption("SysID Module Translation Dynamic Forwards",
+        swerve.sysIdDynamic(Direction.kForward));
+        autonChooser.addOption("SysID Module Translation Dynamic Backwards",
+        swerve.sysIdDynamic(Direction.kReverse));
+        autonChooser.addOption("SysID Module Translation Quasi Forwards",
+        swerve.sysIdQuasistatic(Direction.kForward));
+        autonChooser.addOption("SysID Module Translation Quasi Backwards",
+        swerve.sysIdQuasistatic(Direction.kReverse));
     }
 
     /**
