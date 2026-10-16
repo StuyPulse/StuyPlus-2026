@@ -10,14 +10,21 @@ import com.stuypulse.robot.constants.Motors.TalonFXConfig;
 import static edu.wpi.first.units.Units.Amps;
 import static edu.wpi.first.units.Units.Degrees;
 import static edu.wpi.first.units.Units.KilogramSquareMeters;
+import static edu.wpi.first.units.Units.Kilograms;
 import static edu.wpi.first.units.Units.Meters;
+import static edu.wpi.first.units.Units.Pounds;
 import static edu.wpi.first.units.Units.Second;
 import static edu.wpi.first.units.Units.Seconds;
 import static edu.wpi.first.units.Units.Volts;
+
+import edu.wpi.first.math.geometry.Rotation3d;
+import edu.wpi.first.math.geometry.Transform3d;
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.units.VoltageUnit;
 import edu.wpi.first.units.measure.Angle;
 import edu.wpi.first.units.measure.Current;
 import edu.wpi.first.units.measure.Distance;
+import edu.wpi.first.units.measure.Mass;
 import edu.wpi.first.units.measure.MomentOfInertia;
 import edu.wpi.first.units.measure.Time;
 import edu.wpi.first.units.measure.Velocity;
@@ -71,8 +78,9 @@ public interface IntakeConstants {
 
             Distance PIVOT_ARM_LENGTH = Meters.of(0.1439822);
 
+            Mass PIVOT_ARM_MASS = Pounds.of(15); // very rough estimate
             // mass in kg
-            MomentOfInertia MOI = KilogramSquareMeters.of(SingleJointedArmSim.estimateMOI(PIVOT_ARM_LENGTH.in(Meters), 1));
+            MomentOfInertia MOI = KilogramSquareMeters.of(SingleJointedArmSim.estimateMOI(PIVOT_ARM_LENGTH.in(Meters), PIVOT_ARM_MASS.in(Kilograms)));
         }
 
         public interface Roller {
@@ -171,4 +179,33 @@ public interface IntakeConstants {
 						.withNeutralMode(NeutralModeValue.Coast)
 						.withSensorToMechanismRatio(IntakeConstants.IntakeSettings.Roller.GEAR_RATIO);
 	}
+
+    public interface IntakeSimulationSettings {
+        Transform3d PIVOT_OFFSET = new Transform3d(
+            0.2393388152,
+            0.0,
+            0.19685,
+            new Rotation3d(
+                Units.degreesToRadians(-40),
+                0,
+                Units.degreesToRadians(90)
+            )
+        );
+
+        double PIVOT_END_X = 0;
+
+        Transform3d HOPPER_OFFSET = new Transform3d(
+            -0.06,
+            0,
+            0.25,
+            new Rotation3d(
+                Units.degreesToRadians(90),
+                0,
+                Units.degreesToRadians(90)
+            )
+        );
+        double MIN_HOPPER_X = -0.12;
+        double EXPANDED_HOPPER_X = 0.082;
+        double EXPANDED_TOLERANCE = 0.03;
+    }
 }

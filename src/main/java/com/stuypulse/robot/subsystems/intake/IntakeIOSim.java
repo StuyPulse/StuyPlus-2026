@@ -6,15 +6,16 @@
 package com.stuypulse.robot.subsystems.intake;
 
 import com.stuypulse.robot.constants.Settings;
-import com.stuypulse.robot.util.simulation.RobotVisualizer;
 import com.stuypulse.robot.util.simulation.TalonFXSimulation.SystemSim;
 import com.stuypulse.robot.util.simulation.TalonFXSimulation.TalonFXSimulation;
 
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.math.system.plant.LinearSystemId;
+
 import static edu.wpi.first.units.Units.KilogramSquareMeters;
 import static edu.wpi.first.units.Units.Meters;
 import static edu.wpi.first.units.Units.Radians;
+
 import edu.wpi.first.wpilibj.simulation.DCMotorSim;
 import edu.wpi.first.wpilibj.simulation.SingleJointedArmSim;
 
@@ -76,7 +77,5 @@ public class IntakeIOSim extends IntakeIOBase {
         rollerMotorLeft.refresh();
         rollerMotorRight.refresh();
         super.updateInputs(inputs);
-
-        RobotVisualizer.getInstance().updateIntake(inputs.pivotMotorInputs.position, inputs.leftRollerMotorInputs.velocity);
     }
 }

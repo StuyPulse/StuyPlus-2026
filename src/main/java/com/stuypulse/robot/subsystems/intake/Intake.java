@@ -246,6 +246,11 @@ public class Intake extends FullSubsystem {
     }
 
     @Override
+    public void simulationPeriodic() {
+        IntakeVisualizer.getInstance().update(inputs.pivotMotorInputs.position);
+    }
+
+    @Override
     public void periodicAfterScheduler() {
         io.applyOutputs(outputs);
     }
