@@ -303,10 +303,6 @@ public class Vision extends FullSubsystem {
         for (Entry<Cameras, VisionIO> entry : io.entrySet()) {
             VisionIO currentIO = entry.getValue();
             VisionIOOutputs currentOutputs = outputs.get(entry.getKey());
-
-            Logger.recordOutput(
-                    "Vision/" + entry.getKey().name() + "/MegaTagMode", currentOutputs.megaTagMode);
-            Logger.recordOutput("Vision/" + entry.getKey().name() + "/Pipeline", currentOutputs.pipeline);
             currentIO.applyOutputs(currentOutputs);
         }
     }
