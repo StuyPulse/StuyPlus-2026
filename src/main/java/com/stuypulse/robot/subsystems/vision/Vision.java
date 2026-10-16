@@ -304,6 +304,10 @@ public class Vision extends FullSubsystem {
             VisionIO currentIO = entry.getValue();
             VisionIOOutputs currentOutputs = outputs.get(entry.getKey());
             currentIO.applyOutputs(currentOutputs);
+
+            Logger.recordOutput("Vision/" + entry.getKey().name() + "/MegaTag Mode", currentOutputs.megaTagMode);
+            Logger.recordOutput("Vision/" + entry.getKey().name() + "/Pipeline", currentOutputs.pipeline);
+            Logger.recordOutput("Vision/" + entry.getKey().name() + "/AprilTag Whitelist", currentOutputs.aprilTagIDWhitelist);
         }
     }
 
