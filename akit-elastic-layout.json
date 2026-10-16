@@ -354,6 +354,19 @@
               "true_icon": "None",
               "false_icon": "None"
             }
+          },
+          {
+            "title": "HDR Enabled",
+            "x": 1300.0,
+            "y": 0.0,
+            "width": 150.0,
+            "height": 150.0,
+            "type": "Toggle Switch",
+            "properties": {
+              "topic": "/Tuning/Vision/HDR Enabled",
+              "period": 0.06,
+              "data_type": "boolean"
+            }
           }
         ]
       }

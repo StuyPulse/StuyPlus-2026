@@ -7,8 +7,11 @@ package com.stuypulse.robot.subsystems.vision;
 
 import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.geometry.Transform3d;
+import edu.wpi.first.units.measure.Time;
 
 import static edu.wpi.first.units.Units.*;
+
+import org.littletonrobotics.junction.networktables.LoggedNetworkBoolean;
 
 public interface VisionConstants {
     public interface VisionSettings {
@@ -28,6 +31,8 @@ public interface VisionConstants {
         double ANGULAR_STD_DEV_MEGATAG_2_FACTOR = Double.POSITIVE_INFINITY; // No rotation data available
 
         double BUZZ_DEBOUNCE = 0.25;
+        Time HDR_TIMEOUT = Seconds.of(0.5);
+        LoggedNetworkBoolean HDR_ENABLED = new LoggedNetworkBoolean("/Tuning/Vision/HDR Enabled", true);
     }
 
     record CameraData(String name, Transform3d robotToCamera, double stdDevFactor) {
@@ -77,6 +82,23 @@ public interface VisionConstants {
 
         public CameraData getData() {
             return data;
+        }
+    }
+
+    public enum Pipeline {
+        NO_SUN(3),
+        LOW_SUN(2),
+        MED_SUN(1),
+        HIGH_SUN(0);
+
+        private final int index;
+
+        private Pipeline(int index) {
+            this.index = index;
+        }
+
+        public int getIndex() {
+            return index;
         }
     }
 }

@@ -6,6 +6,7 @@
 package com.stuypulse.robot.subsystems.vision;
 
 import edu.wpi.first.wpilibj.Alert;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Pose3d;
@@ -24,13 +25,12 @@ import com.stuypulse.robot.constants.Settings.VisionMode;
 import com.stuypulse.robot.subsystems.swerve.Swerve;
 import com.stuypulse.robot.subsystems.vision.VisionConstants.CameraData;
 import com.stuypulse.robot.subsystems.vision.VisionConstants.Cameras;
+import com.stuypulse.robot.subsystems.vision.VisionConstants.Pipeline;
 import com.stuypulse.robot.subsystems.vision.VisionConstants.VisionSettings;
 import com.stuypulse.robot.subsystems.vision.VisionIO.MegaTagMode;
 import com.stuypulse.robot.subsystems.vision.VisionIO.PoseObservationType;
 import com.stuypulse.robot.subsystems.vision.VisionIO.VisionIOOutputs;
 import com.stuypulse.robot.util.FullSubsystem;
-
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import java.util.EnumMap;
 import java.util.LinkedList;
@@ -40,6 +40,8 @@ import org.littletonrobotics.junction.Logger;
 
 public class Vision extends FullSubsystem {
     private static final Vision instance;
+
+    private final Timer hdrTimer;
 
     static {
         Swerve swerve = Swerve.getInstance();
@@ -77,8 +79,8 @@ public class Vision extends FullSubsystem {
 
         instance = new Vision(swerve::accept, cameraIOMap);
 
-        SmartDashboard.putData("Vision/setLowSunPipeline", new SetPipeline(0));
-        SmartDashboard.putData("Vision/setHighSunPipeline", new SetPipeline(1));
+        SmartDashboard.putData("Vision/setLowSunPipeline", new SetPipeline(Pipeline.LOW_SUN.getIndex()));
+        SmartDashboard.putData("Vision/setHighSunPipeline", new SetPipeline(Pipeline.HIGH_SUN.getIndex()));
     }
 
     public static Vision getInstance() {
@@ -103,6 +105,9 @@ public class Vision extends FullSubsystem {
 
         // Initialize disconnected alerts
         this.disconnectedAlerts = new EnumMap<>(Cameras.class);
+
+        this.hdrTimer = new Timer();
+        hdrTimer.start();
 
         for (Cameras camera : Cameras.values()) {
             inputs.put(camera, new VisionIOInputsAutoLogged());
@@ -152,6 +157,10 @@ public class Vision extends FullSubsystem {
         }
     }
 
+    public int getPipeline() {
+        return inputs.values().iterator().next().pipeline;
+    }
+
     @Override
     public void periodic() {
         maxTagCount = 0;
@@ -164,7 +173,22 @@ public class Vision extends FullSubsystem {
         }
 
         if (!Settings.EnabledSubsystems.VISION.get()) {
+            hdrTimer.stop();
             return;
+        }
+
+        if (VisionSettings.HDR_ENABLED.get()) {
+            if (hdrTimer.hasElapsed(VisionSettings.HDR_TIMEOUT)) {
+                int currentPipeline = getPipeline();
+                if (currentPipeline == Pipeline.LOW_SUN.getIndex()) {
+                    setPipeline(Pipeline.HIGH_SUN.getIndex());
+                } else {
+                    setPipeline(Pipeline.LOW_SUN.getIndex());
+                }
+                hdrTimer.reset();
+            }
+        } else {
+            hdrTimer.stop();
         }
 
         // Initialize logging values
@@ -279,14 +303,12 @@ public class Vision extends FullSubsystem {
         for (Entry<Cameras, VisionIO> entry : io.entrySet()) {
             VisionIO currentIO = entry.getValue();
             VisionIOOutputs currentOutputs = outputs.get(entry.getKey());
-
-            Logger.recordOutput(
-                    "Vision/" + entry.getKey().name() + "/MegaTagMode", currentOutputs.megaTagMode);
-            Logger.recordOutput("Vision/" + entry.getKey().name() + "/Pipeline", currentOutputs.pipeline);
             currentIO.applyOutputs(currentOutputs);
-        }
 
-        Logger.recordOutput("Vision/Pipeline", outputs.values().iterator().next().pipeline);
+            Logger.recordOutput("Vision/" + entry.getKey().name() + "/MegaTag Mode", currentOutputs.megaTagMode);
+            Logger.recordOutput("Vision/" + entry.getKey().name() + "/Pipeline", currentOutputs.pipeline);
+            Logger.recordOutput("Vision/" + entry.getKey().name() + "/AprilTag Whitelist", currentOutputs.aprilTagIDWhitelist);
+        }
     }
 
     @FunctionalInterface
