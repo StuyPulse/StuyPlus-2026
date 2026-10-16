@@ -20,6 +20,7 @@ public interface VisionIO {
         public TargetObservation latestTargetObservation = new TargetObservation(new Rotation2d(), new Rotation2d());
         public PoseObservation[] poseObservations = new PoseObservation[0];
         public int[] tagIds = new int[0];
+        public int pipeline = 0;
     }
 
     /** Represents the angle to a simple target, not used for pose estimation. */
@@ -52,7 +53,7 @@ public interface VisionIO {
         public MegaTagMode megaTagMode = MegaTagMode.MEGATAG_1;
 
         @AutoLogOutput(key = "Vision/Summary/Pipeline")
-        public int pipeline = 2;
+        public int pipeline = 0;
 
         @AutoLogOutput(key = "Vision/Summary/TagWhitelist")
         public int[] aprilTagIDWhitelist = Field.ALL_TAGS;

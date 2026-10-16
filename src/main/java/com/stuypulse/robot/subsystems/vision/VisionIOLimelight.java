@@ -37,6 +37,7 @@ public class VisionIOLimelight implements VisionIO {
     private final DoubleSubscriber tySubscriber;
     private final DoubleArraySubscriber megatag1Subscriber;
     private final DoubleArraySubscriber megatag2Subscriber;
+    private final IntegerSubscriber pipelineSubscriber;
 
     private MegaTagMode megaTagMode;
 
@@ -61,6 +62,7 @@ public class VisionIOLimelight implements VisionIO {
         tySubscriber = table.getDoubleTopic("ty").subscribe(0.0);
         megatag1Subscriber = table.getDoubleArrayTopic("botpose_wpiblue").subscribe(new double[] {});
         megatag2Subscriber = table.getDoubleArrayTopic("botpose_orb_wpiblue").subscribe(new double[] {});
+        pipelineSubscriber = table.getIntegerTopic("pipeline").subscribe(0);
 
         cameraPosePublisher.accept(
                 new double[] {
@@ -78,6 +80,8 @@ public class VisionIOLimelight implements VisionIO {
         // Update connection status based on whether an update has been seen in the last
         // 250ms
         inputs.connected = ((RobotController.getTime() - latencySubscriber.getLastChange()) / 1000) < 250;
+
+        inputs.pipeline = (int) pipelineSubscriber.get();
 
         // Update target observation
         inputs.latestTargetObservation = new TargetObservation(
