@@ -185,7 +185,7 @@ public class Vision extends FullSubsystem {
                 } else {
                     setPipeline(Pipeline.LOW_SUN.getIndex());
                 }
-                hdrTimer.restart();
+                hdrTimer.reset();
             }
         } else {
             hdrTimer.stop();
