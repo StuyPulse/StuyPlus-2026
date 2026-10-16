@@ -351,6 +351,8 @@ public class RobotContainer {
         swerve.sysIdQuasistatic(Direction.kForward));
         autonChooser.addOption("SysID Module Translation Quasi Backwards",
         swerve.sysIdQuasistatic(Direction.kReverse));
+
+        autonChooser.addOption("Swerve FF Characterization", swerve.feedforwardCharacterization());
     }
 
     /**

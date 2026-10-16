@@ -42,13 +42,18 @@ import edu.wpi.first.wpilibj.Alert;
 import edu.wpi.first.wpilibj.Alert.AlertType;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.robot.lib.BLine.FollowPath;
 import frc.robot.lib.BLine.Path;
 
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
@@ -315,7 +320,7 @@ public class Swerve extends SubsystemBase implements VisionConsumer {
         }
     }
 
-    /** Stops the drive. */
+    /** Stops the  */
     public void stop() {
         runVelocity(new ChassisSpeeds());
     }
@@ -353,6 +358,67 @@ public class Swerve extends SubsystemBase implements VisionConsumer {
     /** Returns a command to run a dynamic test in the specified direction. */
     public BLineAuton sysIdDynamic(SysIdRoutine.Direction direction) {
         return new BLineAuton(run(() -> runCharacterization(0.0)).withTimeout(1.0).andThen(sysId.dynamic(direction)));
+    }
+
+    public BLineAuton feedforwardCharacterization() {
+        List<Double> velocitySamples = new LinkedList<>();
+        List<Double> voltageSamples = new LinkedList<>();
+        Timer timer = new Timer();
+
+        double FF_START_DELAY_SEC = 2.0; 
+        double FF_RAMP_RATE_VOLTS_PER_SEC = 0.1; 
+
+        return new BLineAuton(
+            Commands.sequence(
+                // Reset data
+                runOnce(
+                    () -> {
+                    velocitySamples.clear();
+                    voltageSamples.clear();
+                    }),
+
+                // Allow modules to orient
+                run(
+                        () -> {
+                        runCharacterization(0.0);
+                        })
+                    .withTimeout(FF_START_DELAY_SEC),
+
+                // Start timer
+                runOnce(timer::restart),
+
+                // Accelerate and gather data
+                run(
+                        () -> {
+                        double voltage = timer.get() * FF_RAMP_RATE_VOLTS_PER_SEC;
+                        runCharacterization(voltage);
+                        velocitySamples.add(getFFCharacterizationVelocity());
+                        voltageSamples.add(voltage);
+                        })
+
+                    // When cancelled, calculate and print results
+                    .finallyDo(
+                        () -> {
+                        int n = velocitySamples.size();
+                        double sumX = 0.0;
+                        double sumY = 0.0;
+                        double sumXY = 0.0;
+                        double sumX2 = 0.0;
+                        for (int i = 0; i < n; i++) {
+                            sumX += velocitySamples.get(i);
+                            sumY += voltageSamples.get(i);
+                            sumXY += velocitySamples.get(i) * voltageSamples.get(i);
+                            sumX2 += velocitySamples.get(i) * velocitySamples.get(i);
+                        }
+                        double kS = (sumY * sumX2 - sumX * sumXY) / (n * sumX2 - sumX * sumX);
+                        double kV = (n * sumXY - sumX * sumY) / (n * sumX2 - sumX * sumX);
+
+                        NumberFormat formatter = new DecimalFormat("#0.00000");
+                        System.out.println("********** Drive FF Characterization Results **********");
+                        System.out.println("\tkS: " + formatter.format(kS));
+                        System.out.println("\tkV: " + formatter.format(kV));
+                        }))
+            );
     }
 
     /**
