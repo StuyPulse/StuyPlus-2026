@@ -14,6 +14,7 @@ import com.pathplanner.lib.controllers.PPHolonomicDriveController;
 import com.pathplanner.lib.path.PathPlannerPath;
 import com.pathplanner.lib.util.PathPlannerLogging;
 import com.stuypulse.robot.Robot;
+import com.stuypulse.robot.commands.auton.bline.BLineAuton;
 import com.stuypulse.robot.constants.Field;
 import com.stuypulse.robot.constants.Settings;
 import com.stuypulse.robot.constants.Settings.Mode;
@@ -343,15 +344,15 @@ public class Swerve extends SubsystemBase implements VisionConsumer {
     }
 
     /** Returns a command to run a quasistatic test in the specified direction. */
-    public Command sysIdQuasistatic(SysIdRoutine.Direction direction) {
-        return run(() -> runCharacterization(0.0))
+    public BLineAuton sysIdQuasistatic(SysIdRoutine.Direction direction) {
+        return new BLineAuton(run(() -> runCharacterization(0.0))
                 .withTimeout(1.0)
-                .andThen(sysId.quasistatic(direction));
+                .andThen(sysId.quasistatic(direction)));
     }
 
     /** Returns a command to run a dynamic test in the specified direction. */
-    public Command sysIdDynamic(SysIdRoutine.Direction direction) {
-        return run(() -> runCharacterization(0.0)).withTimeout(1.0).andThen(sysId.dynamic(direction));
+    public BLineAuton sysIdDynamic(SysIdRoutine.Direction direction) {
+        return new BLineAuton(run(() -> runCharacterization(0.0)).withTimeout(1.0).andThen(sysId.dynamic(direction)));
     }
 
     /**

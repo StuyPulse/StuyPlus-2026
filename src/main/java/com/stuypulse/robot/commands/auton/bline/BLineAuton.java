@@ -20,7 +20,7 @@ import frc.robot.lib.BLine.BLineField;
 import frc.robot.lib.BLine.FollowPath;
 import frc.robot.lib.BLine.Path;
 
-public abstract class BLineAuton extends SequentialCommandGroup {
+public class BLineAuton extends SequentialCommandGroup {
     private final List<Path> displayedPaths = new ArrayList<>();
 
     protected final Swerve swerve = Swerve.getInstance();
@@ -30,6 +30,13 @@ public abstract class BLineAuton extends SequentialCommandGroup {
             displayedPaths.add(path.copy());
         }
     }
+
+    // For non path related autons like sysid routines
+    public BLineAuton(Command... commands) {
+        addCommands(commands);
+    }
+
+    public BLineAuton() {}
 
     public void displayPaths() {
         for (Path path : displayedPaths) {
