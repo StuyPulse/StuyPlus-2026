@@ -147,6 +147,9 @@ public class Swerve extends SubsystemBase implements VisionConsumer {
     private SwerveDrivePoseEstimator poseEstimator = new SwerveDrivePoseEstimator(kinematics, rawGyroRotation,
             lastModulePositions, Pose2d.kZero);
 
+    @AutoLogOutput
+    public boolean shouldIgnoreJoysticks = false;
+
     public Swerve(
             GyroIO gyroIO,
             ModuleIO flModuleIO,

@@ -40,7 +40,9 @@ import com.stuypulse.robot.commands.shooter.ShooterWaitForSpinUp;
 import com.stuypulse.robot.commands.swerve.SwerveDriveDrive;
 import com.stuypulse.robot.commands.swerve.SwerveDriveResetRotation;
 import com.stuypulse.robot.commands.swerve.SwerveDriveXMode;
+import com.stuypulse.robot.commands.swerve.SwerveIgnoreJoysticks;
 import com.stuypulse.robot.commands.swerve.SwerveResetPose;
+import com.stuypulse.robot.commands.swerve.SwerveUseJoysticks;
 import com.stuypulse.robot.commands.swerve.driveAligned.SwerveDriveAlignToFerryZone;
 import com.stuypulse.robot.commands.swerve.driveAligned.SwerveDriveAlignToHub;
 import com.stuypulse.robot.constants.Field;
@@ -134,7 +136,8 @@ public class RobotContainer {
         driver.leftBumper().onFalse(new IntakeSetIntake());
 
         rightTrigger.whileTrue(
-                new WaitCommand(1.5).raceWith(new SwerveDriveAlignToHub())
+                new SwerveIgnoreJoysticks()
+                .andThen(new WaitCommand(1.5).raceWith(new SwerveDriveAlignToHub()))
                 .andThen(new SwerveDriveXMode())
                 .andThen(new ShooterSetShoot())
                 .andThen(new ShooterWaitForSpinUp().withDeadline(new FeederScramble()))
@@ -143,7 +146,7 @@ public class RobotContainer {
                         new IntakeAgitateFastOnce().repeatedly(),
                         new ShooterFirstShotIncrease())));
         rightTrigger.onFalse(
-            new StopShooting()
+            new StopShooting().alongWith(new SwerveUseJoysticks())
         );
 
         // Top Left Paddle

@@ -52,6 +52,10 @@ public class SwerveDriveDrive extends Command {
 
     @Override
     public void execute() {
+        if (swerve.shouldIgnoreJoysticks) {
+            return;
+        }
+
         speed.update();
         turn.update();
 
