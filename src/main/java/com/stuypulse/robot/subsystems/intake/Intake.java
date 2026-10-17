@@ -29,6 +29,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class Intake extends FullSubsystem {
     private static final Intake instance;
 
+    private int loadCounter = 0;
+    private boolean lastLeftRollerStalling = false;
+
     private final BooleanSupplier leftRollerStalling;
     private final BooleanSupplier rightRollerStalling;
     private final BooleanSupplier pivotStalling;
@@ -74,6 +77,15 @@ public class Intake extends FullSubsystem {
 
         this.leftRollerDebouncer = new Debouncer(IntakeConstants.IntakeSettings.Roller.STALL_DEBOUNCE_SEC.in(Seconds), Debouncer.DebounceType.kBoth);
         this.rightRollerDebouncer = new Debouncer(IntakeConstants.IntakeSettings.Roller.STALL_DEBOUNCE_SEC.in(Seconds), Debouncer.DebounceType.kBoth);
+    }
+    
+    public void resetLoadCounter() {
+        this.loadCounter = 0;
+    }
+
+    @AutoLogOutput(key = "Intake/Load Count")
+    public int getLoadCount() {
+        return this.loadCounter;
     }
 
     public void setState(IntakeState state) {
@@ -248,5 +260,11 @@ public class Intake extends FullSubsystem {
     @Override
     public void periodicAfterScheduler() {
         io.applyOutputs(outputs);
+
+        final boolean isLeftRollerStalling = this.isLeftRollerStalling();
+        if (lastLeftRollerStalling && isLeftRollerStalling) {
+            loadCounter++;
+        }
+        this.lastLeftRollerStalling = isLeftRollerStalling;
     }
 }
