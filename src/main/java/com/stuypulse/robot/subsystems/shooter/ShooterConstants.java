@@ -23,7 +23,7 @@ import edu.wpi.first.units.measure.Voltage;
 public interface ShooterConstants {
 
     public interface ShooterSettings {
-        LoggedNetworkNumber FIRST_SHOT_BONUS = new LoggedNetworkNumber("Shooter/First_shot_bonus_RPM", 250.0);
+        LoggedNetworkNumber FIRST_SHOT_BONUS = new LoggedNetworkNumber("Tuning/Shooter/First_shot_bonus_RPM", 250.0);
         Time FIRST_SHOT_DEBOUNCE = Seconds.of(6.7);
 
         Time SHOOT_TIME_AUTO = Seconds.of(1.5);
@@ -43,12 +43,12 @@ public interface ShooterConstants {
         Distance FLYWHEEL_RADIUS = Inches.of(3);
 
         // TODO: Test for manual shooting RPM
-        LoggedNetworkNumber MANUAL_HUB_RPM = new LoggedNetworkNumber("Shooter/Manual Shot Tuning RPM", 3650.0);
+        LoggedNetworkNumber MANUAL_HUB_RPM = new LoggedNetworkNumber("/Tuning/Shooter/Manual Shot Tuning RPM", 3650.0);
 
         AngularVelocity MIN_SHOOTER_VELOCITY = RPM.of(1740);
 
-        LoggedNetworkNumber SHOOT_TUNING_RPM = new LoggedNetworkNumber("Shooter/Shoot Tuning RPM", 0.0);
-        LoggedNetworkNumber FERRY_TUNING_RPM = new LoggedNetworkNumber("Shooter/Ferry Tuning RPM", 0.0);
+        LoggedNetworkNumber SHOOT_TUNING_RPM = new LoggedNetworkNumber("/Tuning/Shooter/Shoot Tuning RPM", 0.0);
+        LoggedNetworkNumber FERRY_TUNING_RPM = new LoggedNetworkNumber("/Tuning/Shooter/Ferry Tuning RPM", 0.0);
 
         AngularVelocity SHOOTER_SPUN_UP_TOLERANCE = RPM.of(100);
         public interface RPMInterpolation {

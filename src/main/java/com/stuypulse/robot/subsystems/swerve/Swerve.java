@@ -243,6 +243,8 @@ public class Swerve extends SubsystemBase implements VisionConsumer {
             Logger.recordOutput("SwerveStates/SetpointsOptimized", new SwerveModuleState[] {});
         }
 
+        Logger.recordOutput("Swerve/DistanceFromHub", getPose().getTranslation().getDistance(Field.getHubPose().getTranslation()));
+
         // Update odometry
         double[] sampleTimestamps = modules[0].getOdometryTimestamps(); // All signals are sampled together
         int sampleCount = sampleTimestamps.length;

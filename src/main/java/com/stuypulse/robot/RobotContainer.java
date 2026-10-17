@@ -174,8 +174,8 @@ public class RobotContainer {
                             new FeederSetForward(),
                             new IntakeAgitateFastOnce().repeatedly(),
                             new ShooterFirstShotIncrease())));
-        driver.a()
-            .whileTrue(new SwerveResetPose(Field::getManualShotPose).repeatedly());
+        // driver.a()
+        //     .whileTrue(new SwerveResetPose(Field::getManualShotPose).repeatedly());
         driver.a()
             .onFalse(
                 new StopShooting()
