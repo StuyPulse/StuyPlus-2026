@@ -12,6 +12,7 @@ import java.util.function.BooleanSupplier;
 import org.littletonrobotics.junction.AutoLogOutput;
 import org.littletonrobotics.junction.Logger;
 
+import com.fasterxml.jackson.annotation.JsonTypeInfo.Id;
 import com.stuypulse.robot.constants.Settings;
 import com.stuypulse.robot.subsystems.handoff.HandoffIO.HandoffIOOutputs;
 import com.stuypulse.robot.util.FullSubsystem;
@@ -109,7 +110,11 @@ public class Handoff extends FullSubsystem {
             return;
         }
 
-        runVoltage(state.getTargetVoltage());
+        if (state == HandoffState.IDLE) {
+            stopMotor();
+        } else {
+            runVoltage(state.getTargetVoltage());
+        }
     }
 
     @Override
