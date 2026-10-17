@@ -38,6 +38,7 @@ import com.stuypulse.robot.commands.shooter.ShooterSetManual;
 import com.stuypulse.robot.commands.shooter.ShooterSetShoot;
 import com.stuypulse.robot.commands.shooter.ShooterWaitForSpinUp;
 import com.stuypulse.robot.commands.swerve.SwerveDriveDrive;
+import com.stuypulse.robot.commands.swerve.SwerveDriveResetRotation;
 import com.stuypulse.robot.commands.swerve.SwerveDriveXMode;
 import com.stuypulse.robot.commands.swerve.SwerveResetPose;
 import com.stuypulse.robot.commands.swerve.driveAligned.SwerveDriveAlignToFerryZone;
@@ -202,7 +203,7 @@ public class RobotContainer {
         
         // driver.x().whileTrue(new SwerveDriveXMode());
 
-        // driver.povLeft().onTrue(new SwerveDriveResetRotation());
+        driver.povLeft().onTrue(new SwerveDriveResetRotation());
         
         // driver.povUp()
         //     .onTrue(new ShooterAddToBonusVelocity(50));
