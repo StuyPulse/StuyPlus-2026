@@ -13,6 +13,9 @@ import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.Alert;
 import edu.wpi.first.wpilibj.Alert.AlertType;
+
+import static edu.wpi.first.units.Units.RadiansPerSecond;
+
 import org.littletonrobotics.junction.Logger;
 
 public class Module {
@@ -74,8 +77,11 @@ public class Module {
     state.optimize(getAngle());
     state.cosineScale(inputs.turnPosition);
 
+    double setpoint = state.speedMetersPerSecond / constants.WheelRadius;
+
+    Logger.recordOutput("Swerve/Drive Wheel Setpoint", RadiansPerSecond.of(setpoint));
     // Apply setpoints
-    io.setDriveVelocity(state.speedMetersPerSecond / constants.WheelRadius);
+    io.setDriveVelocity(setpoint);
     io.setTurnPosition(state.angle);
   }
 
