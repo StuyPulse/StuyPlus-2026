@@ -35,7 +35,7 @@ public interface HandoffConstants {
 
 		TalonFXConfig HANDOFF_MOTOR_CONFIG = new TalonFXConfig()
 			.withStatorCurrentLimitAmps(80)
-			.withNeutralMode(NeutralModeValue.Coast)
+			.withNeutralMode(NeutralModeValue.Brake)
 			.withInvertedValue(InvertedValue.CounterClockwise_Positive)
 			.withSensorToMechanismRatio(HandoffConstants.HandoffSettings.GEAR_RATIO);
 	}
