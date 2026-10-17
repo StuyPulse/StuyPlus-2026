@@ -262,7 +262,7 @@ public class Intake extends FullSubsystem {
         io.applyOutputs(outputs);
 
         final boolean isLeftRollerStalling = this.isLeftRollerStalling();
-        if (lastLeftRollerStalling && isLeftRollerStalling) {
+        if (!lastLeftRollerStalling && isLeftRollerStalling) {
             loadCounter++;
         }
         this.lastLeftRollerStalling = isLeftRollerStalling;

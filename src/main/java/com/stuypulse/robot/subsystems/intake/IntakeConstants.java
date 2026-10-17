@@ -77,9 +77,9 @@ public interface IntakeConstants {
 
         public interface Roller {
 
-            Current STALL_CURRENT = Amps.of(50);
+            Current STALL_CURRENT = Amps.of(15);
 
-            Time STALL_DEBOUNCE_SEC = Seconds.of(0.1);
+            Time STALL_DEBOUNCE_SEC = Seconds.of(0.15);
 
             double GEAR_RATIO = 16.0 / 27.0;
 
