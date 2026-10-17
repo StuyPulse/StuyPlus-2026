@@ -2,6 +2,7 @@ package com.stuypulse.robot.commands.auton.bline;
 
 import static edu.wpi.first.units.Units.Meters;
 
+import com.stuypulse.robot.commands.compound.TunableWaitCommand;
 import com.stuypulse.robot.commands.feeder.FeederSetForward;
 import com.stuypulse.robot.commands.handoff.HandoffSetForward;
 import com.stuypulse.robot.commands.intake.IntakeAgitateFastOnce;
@@ -27,6 +28,7 @@ public class RBDumpyBLine extends BLineAuton {
 
         addCommands(
             resetPoseAtStart(paths[0].getStartPose()),
+            new TunableWaitCommand("RB Dumpy Delay"),
             new IntakeSetIntake(),
 
             followUntil(paths[0], HANDOFF_THRESHOLD_METERS),
