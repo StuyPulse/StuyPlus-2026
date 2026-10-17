@@ -248,20 +248,6 @@
             }
           },
           {
-            "title": "LB Dumpy Delay",
-            "x": 1300.0,
-            "y": 150.0,
-            "width": 200.0,
-            "height": 150.0,
-            "type": "Text Display",
-            "properties": {
-              "topic": "Tuning/LB Dumpy Delay",
-              "period": 0.06,
-              "data_type": "double",
-              "show_submit_button": false
-            }
-          },
-          {
             "title": "Auton Won",
             "x": 0.0,
             "y": 400.0,
@@ -271,10 +257,25 @@
             "properties": {
               "topic": "/AdvantageKit/RealOutputs/Auton Won",
               "period": 0.06,
+              "data_type": "boolean",
               "true_color": 4283215696,
               "false_color": 4294198070,
               "true_icon": "None",
               "false_icon": "None"
+            }
+          },
+          {
+            "title": "LB Dumpy Delay",
+            "x": 1300.0,
+            "y": 150.0,
+            "width": 150.0,
+            "height": 150.0,
+            "type": "Text Display",
+            "properties": {
+              "topic": "Tuning/LB Dumpy Delay",
+              "period": 0.06,
+              "data_type": "double",
+              "show_submit_button": false
             }
           }
         ]
@@ -1072,14 +1073,14 @@
             }
           },
           {
-            "title": "Above Threshold",
+            "title": "Past Pushdown Threshold",
             "x": 450.0,
-            "y": 650.0,
+            "y": 600.0,
             "width": 150.0,
-            "height": 50.0,
+            "height": 100.0,
             "type": "Boolean Box",
             "properties": {
-              "topic": "/Robot/Intake/Pivot/Above Threshold",
+              "topic": "/AdvantageKit/RealOutputs/Intake/Pivot/Past Pushdown Threshold",
               "period": 0.06,
               "data_type": "boolean",
               "true_color": 4283215696,
@@ -1096,24 +1097,7 @@
             "height": 100.0,
             "type": "Boolean Box",
             "properties": {
-              "topic": "/Robot/Intake/Pivot/At Target Angle",
-              "period": 0.06,
-              "data_type": "boolean",
-              "true_color": 4283215696,
-              "false_color": 4294198070,
-              "true_icon": "None",
-              "false_icon": "None"
-            }
-          },
-          {
-            "title": "Pushing Down",
-            "x": 300.0,
-            "y": 700.0,
-            "width": 150.0,
-            "height": 100.0,
-            "type": "Boolean Box",
-            "properties": {
-              "topic": "/Robot/Intake/Pivot/Pushing Down",
+              "topic": "/AdvantageKit/RealOutputs/Intake/Pivot/At Target Angle",
               "period": 0.06,
               "data_type": "boolean",
               "true_color": 4283215696,

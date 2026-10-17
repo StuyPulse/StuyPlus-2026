@@ -13,7 +13,7 @@ public class IntakeResetLoadCount extends InstantCommand {
 
     public IntakeResetLoadCount() {
         this.intake = Intake.getInstance();
-        addRequirements(intake);
+        // addRequirements(intake);
     }
 
     @Override
